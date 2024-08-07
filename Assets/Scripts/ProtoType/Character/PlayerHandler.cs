@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.Profiling.Memory.Experimental;
@@ -208,7 +209,7 @@ public class PlayerHandler : MonoBehaviour
     #region 플레이어 기본 조작
     public float DeTransformtime = 2;
     float DeTransformtimer = 0;
-    event Action Dimensionchangeevent;
+   
     public void RegisterChange3DEvent(Action a)
     {
         Dimensionchangeevent += a;
@@ -241,18 +242,73 @@ public class PlayerHandler : MonoBehaviour
     public bool firstDownInput;
     public bool doubleDownInput;
     [Header("일반 or 스킬 체크")]
-    public bool onAttack;    
+    public bool onAttack;
 
+    [HideInInspector]
+    public bool DImensionChangeDisturb;
+    event Action Dimensionchangeevent;
+    event Action CorutineRegisterEvent;
+    IEnumerator CameraRotateCorutine;
+  public void registerCorutineRegisterEvent(Action CorutineRegister)
+    {
+        this.CorutineRegisterEvent += CorutineRegister;
+    }
+    public void RegisterCameraRotateCorutine(IEnumerator corutine)//외부에서 받는 중
+    {
+        CameraRotateCorutine = corutine;
+
+    }
+    IEnumerator InvokeDimensionEvent()
+    {
+        Dimensionchangeevent?.Invoke();
+        yield return null;
+    }
+
+    bool Changing;
+    IEnumerator ChangeDimension()
+    {
+        Changing = true;
+        CorutineRegisterEvent?.Invoke();
+        //3D로 갈 때는 카메라 먼저 이 후 이벤트
+        //2D로 갈 때는 반대로 이벤트 이 후 카메라
+        if (!PlayerStat.instance.Trans3D)
+        {//3D에서 2D로
+            yield return StartCoroutine(InvokeDimensionEvent());
+
+            //이벤트 처리
+
+            if (CameraRotateCorutine != null)
+                yield return StartCoroutine(CameraRotateCorutine);
+            //카메라처리
+        }
+        else
+        {
+
+            if (CameraRotateCorutine != null)
+                yield return StartCoroutine(CameraRotateCorutine);
+            //카메라처리
+            yield return StartCoroutine(InvokeDimensionEvent());
+
+            //이벤트 처리
+
+        }
+    
+        //이벤트 완
+        Changing = false;
+       
+        
+    }
     void charactermove()
     {
         if (!CurrentPlayer.downAttack)
         {
             CurrentPlayer.Move();
         }
-        if (Input.GetKeyDown(KeyCode.Space)&&CurrentPlayer.onGround)
+        if (Input.GetKeyDown(KeyCode.Space)&&CurrentPlayer.onGround&& !Changing&& !DImensionChangeDisturb)
         {
-            //PlayerStat.instance.Trans3D = !PlayerStat.instance.Trans3D;
-            Dimensionchangeevent?.Invoke();
+  
+            StartCoroutine(ChangeDimension());
+            //Dimensionchangeevent?.Invoke();
            
         }
 

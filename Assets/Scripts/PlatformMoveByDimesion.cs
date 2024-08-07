@@ -6,6 +6,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 public class PlatformMoveByDimesion : MonoBehaviour
 {
     public float Zmove = 1;
+    public bool Move;
 
     private void Start()
     {
@@ -15,19 +16,21 @@ public class PlatformMoveByDimesion : MonoBehaviour
     {
 
         transform.Translate(Vector3.back * Zmove);
+        Move = true;
     }
  public virtual  void PlatformChange2D()
 {
 
     transform.Translate(Vector3.forward * Zmove);
+        Move = false;
 }
     void changePlatform()
     {
-        if (PlayerStat.instance.Trans3D)
+        if (!Move)
         {
             PlatformChange3D();
         }
-        else if (!PlayerStat.instance.Trans3D)
+        else if (Move)
         {
             PlatformChange2D();
         }
