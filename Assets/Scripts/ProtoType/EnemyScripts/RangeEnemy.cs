@@ -17,7 +17,7 @@ public class RangeEnemy : Enemy
 
     IEnumerator WaitNextBehavior()
     {
-        yield return new WaitForSeconds(attackDelay);
+        yield return new WaitForSeconds(eStat.attackDelay);
 
         InitAttackCoolTime();
     }

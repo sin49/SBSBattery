@@ -4671,7 +4671,8 @@ MonoBehaviour:
   rightPatrolRange: 0
   patrolDistance: 0
   onPatrol: 0
-  patrolPos: {fileID: 0}
+  yWidth: 0
+  zWidth: 0
   rangeCollider: {fileID: 0}
   rangePos: {x: 0, y: 0, z: 0}
   rangeSize: {x: 0, y: 0, z: 0}
@@ -11629,33 +11630,8 @@ PrefabInstance:
       objectReference: {fileID: 1062930791}
     - target: {fileID: 879045053675682833, guid: 182321a561f69434e8780d30419bdeb2,
         type: 3}
-      propertyPath: patrolDistance
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 879045053675682833, guid: 182321a561f69434e8780d30419bdeb2,
-        type: 3}
-      propertyPath: leftPatrolRange
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 879045053675682833, guid: 182321a561f69434e8780d30419bdeb2,
-        type: 3}
       propertyPath: testPatrolRange
       value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 879045053675682833, guid: 182321a561f69434e8780d30419bdeb2,
-        type: 3}
-      propertyPath: rightPatrolRange
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1876247488755515892, guid: 182321a561f69434e8780d30419bdeb2,
-        type: 3}
-      propertyPath: atk
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1876247488755515892, guid: 182321a561f69434e8780d30419bdeb2,
-        type: 3}
-      propertyPath: rotationSpeed
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1879788557861014041, guid: 182321a561f69434e8780d30419bdeb2,
         type: 3}
@@ -17786,6 +17762,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  ZPin: 0
   CameraUPViewportPos: 0
   CameraDownViewportPos: 0
   CameraTrakingTime: 0
@@ -24289,35 +24266,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2021320125}
     m_Modifications:
-    - target: {fileID: 1436342978272507966, guid: ada8eda3f7b2e5a47b560895f2ea72e1,
-        type: 3}
-      propertyPath: patrolType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1436342978272507966, guid: ada8eda3f7b2e5a47b560895f2ea72e1,
-        type: 3}
-      propertyPath: activeAttack
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1436342978272507966, guid: ada8eda3f7b2e5a47b560895f2ea72e1,
-        type: 3}
-      propertyPath: patrolWaitTime
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1436342978272507966, guid: ada8eda3f7b2e5a47b560895f2ea72e1,
-        type: 3}
-      propertyPath: testPatrolRange
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4439787244619641238, guid: ada8eda3f7b2e5a47b560895f2ea72e1,
         type: 3}
       propertyPath: m_Name
       value: BulbEnemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 6418714577508714290, guid: ada8eda3f7b2e5a47b560895f2ea72e1,
-        type: 3}
-      propertyPath: rotationSpeed
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6513247298425961137, guid: ada8eda3f7b2e5a47b560895f2ea72e1,
         type: 3}
@@ -24949,7 +24901,7 @@ PrefabInstance:
     - target: {fileID: 7774432933691627993, guid: 27d43a75952ae564db023b0474c2bb5b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.89
+      value: 15.78
       objectReference: {fileID: 0}
     - target: {fileID: 7774432933691627993, guid: 27d43a75952ae564db023b0474c2bb5b,
         type: 3}
@@ -26865,11 +26817,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8243888719237057114, guid: 06511a03621618a4f8bd0ad830ab2be7,
-        type: 3}
-      propertyPath: hp
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -33259,11 +33206,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1613567425}
     m_Modifications:
-    - target: {fileID: 1436342978272507966, guid: ada8eda3f7b2e5a47b560895f2ea72e1,
-        type: 3}
-      propertyPath: patrolType
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4439787244619641238, guid: ada8eda3f7b2e5a47b560895f2ea72e1,
         type: 3}
       propertyPath: m_Name
