@@ -6,6 +6,7 @@ using static UnityEngine.GraphicsBuffer;
 public class BasicCamera : MonoBehaviour
 {
     public Transform target;
+    
     protected Vector3 camPos;
     protected Vector3 camRot;
     public bool ZPin;
@@ -21,7 +22,44 @@ public class BasicCamera : MonoBehaviour
     protected Camera CurrentCamera;
 
     protected Vector3 CalculateVector;
+    [Header("카메라 흔들림 효과")]
+    [Header("흔드는 시간")]
+    public float shakeDuration = 0.5f;
 
+    [Header("흔드는 정도")]
+    public float shakeMagnitude = 0.2f;
+    [Header("회복 속도")]
+    public float dampingSpeed = 1.0f;
+
+    private Vector3 initialPosition;
+    private float currentShakeDuration;
+    public void StartCameraShake()
+    {
+     
+        currentShakeDuration = shakeDuration;
+        initialPosition = CurrentCamera.transform.localPosition;
+    }
+    void CameraShake()
+    {
+        if (currentShakeDuration > 0)
+        {
+            CurrentCamera.transform.localPosition = CurrentCamera.transform.localPosition + Random.insideUnitSphere * shakeMagnitude;
+            currentShakeDuration -= Time.deltaTime * dampingSpeed;
+        }
+        else
+        {
+            currentShakeDuration = 0;
+            if (target)
+            {
+                CurrentCamera.transform.position = target.position + camPos;
+            }
+            else
+            {
+                CurrentCamera.transform.localPosition = initialPosition;
+            }
+        }
+        
+    }
     protected virtual void Awake()
     {
         bindingcamera=GetComponent<CameraMoveRange>();
@@ -96,11 +134,15 @@ public class BasicCamera : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        TargetIsPlayer();
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+            StartCameraShake();
+            TargetIsPlayer();
         if (target == null || CurrentCamera == null)
             return;
         CameraMove(CurrentCamera, CalculateCameraVector());
         if(CurrentCamera!=null)
         PlayerHandler.instance.CurrentCamera = CurrentCamera;
+
+        CameraShake();
     }
 }

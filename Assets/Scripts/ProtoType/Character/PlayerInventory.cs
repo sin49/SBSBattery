@@ -95,8 +95,13 @@ public class PlayerInventory : MonoBehaviour
    public InvetorySaveData LoadData()
     {
         string filePath = Path.Combine(Application.persistentDataPath, "InventorySave.json");
-        var a = File.ReadAllText(filePath);
-       return JsonUtility.FromJson<InvetorySaveData>(a);
+        if (File.Exists(filePath))
+        {
+            var a = File.ReadAllText(filePath);
+            return JsonUtility.FromJson<InvetorySaveData>(a);
+        }
+        else
+            return null;
     }
     public void LoadInventoryData()
     {
