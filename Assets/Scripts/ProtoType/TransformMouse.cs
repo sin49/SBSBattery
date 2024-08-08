@@ -16,7 +16,7 @@ public class TransformMouse: TransformPlace
       
         ShootingGame.gameObject.SetActive(true);
     }
-    public override void transformStart(Collider other)
+    public override void transformStart(GameObject other)
     {
         if (PlayerHandler.instance.CurrentType == TransformType.Default&&!ShootingGame.active)
         {

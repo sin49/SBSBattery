@@ -21,7 +21,7 @@ public class RemoteTV : RemoteObject
     {
         tvMaterials = new Material[GetComponent<MeshRenderer>().materials.Length];
         tvMaterials = GetComponent<MeshRenderer>().materials;
-        tvLight = transform.GetChild(0).gameObject.GetComponent<Light>();
+        tvLight = transform.GetChild(1).gameObject.GetComponent<Light>();
         tvLight.enabled = onActive;
     }
     void Start()

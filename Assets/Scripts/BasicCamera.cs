@@ -31,13 +31,17 @@ public class BasicCamera : MonoBehaviour
     [Header("회복 속도")]
     public float dampingSpeed = 1.0f;
 
+  
+
     private Vector3 initialPosition;
     private float currentShakeDuration;
+    bool CameraShakingChecker;
     public void StartCameraShake()
     {
      
         currentShakeDuration = shakeDuration;
         initialPosition = CurrentCamera.transform.localPosition;
+        CameraShakingChecker = true;
     }
     void CameraShake()
     {
@@ -46,7 +50,7 @@ public class BasicCamera : MonoBehaviour
             CurrentCamera.transform.localPosition = CurrentCamera.transform.localPosition + Random.insideUnitSphere * shakeMagnitude;
             currentShakeDuration -= Time.deltaTime * dampingSpeed;
         }
-        else
+        else if(CameraShakingChecker)
         {
             currentShakeDuration = 0;
             if (target)
@@ -57,6 +61,7 @@ public class BasicCamera : MonoBehaviour
             {
                 CurrentCamera.transform.localPosition = initialPosition;
             }
+            CameraShakingChecker = false;
         }
         
     }

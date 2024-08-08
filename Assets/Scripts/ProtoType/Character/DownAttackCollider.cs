@@ -31,10 +31,14 @@ public class DownAttackCollider : MeleeCollider
             if (other.TryGetComponent<TransformPlace>(out transformPlace))
             {
                 Debug.Log("Æ®·£½ºÆû¿ÀºêÁ§Æ® Å½Áö");
+                transformPlace.transformStart(player.gameObject);
                 PlayerHandler.instance.CurrentPlayer.onTransform = true;
             }
+            else
+            {
 
-            gameObject.SetActive(false);
+                gameObject.SetActive(false);
+            }
         }        
     }
 

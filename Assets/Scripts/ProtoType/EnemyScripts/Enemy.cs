@@ -86,8 +86,8 @@ public class Enemy: Character,DamagedByPAttack
         }
 
         InitPatrolPoint();
-        if(patrolType == PatrolType.movePatrol &&onPatrol)
-            StartCoroutine(InitPatrolTarget());
+        //if(patrolType == PatrolType.movePatrol &&onPatrol)
+        //    StartCoroutine(InitPatrolTarget());
     }
 
     public void InitPatrolPoint()
@@ -223,14 +223,14 @@ public class Enemy: Character,DamagedByPAttack
             enemyRb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
         }
 
-        if (patrolType == PatrolType.movePatrol && onPatrol)
-        {
-            if (testTarget.magnitude < patrolDistance)
-            {
-                tracking = false;
-                StartCoroutine(InitPatrolTarget());
-            }
-        }
+        //if (patrolType == PatrolType.movePatrol && onPatrol)
+        //{
+        //    if (testTarget.magnitude < patrolDistance)
+        //    {
+        //        tracking = false;
+        //        StartCoroutine(InitPatrolTarget());
+        //    }
+        //}
     }
 
     bool setPatrol;

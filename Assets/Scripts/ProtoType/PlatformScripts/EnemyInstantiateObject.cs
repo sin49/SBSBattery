@@ -15,6 +15,7 @@ public class EnemyInstantiateObject : MonoBehaviour
         if (other.CompareTag("Player") && !checkPlayer)
         {
             checkPlayer = true;
+            if(boxAnim!=null)
             boxAnim.SetTrigger("Open");
         }
     }
