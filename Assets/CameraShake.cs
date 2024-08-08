@@ -3,8 +3,12 @@ using UnityEngine;
 public class CameraShake : MonoBehaviour
 {
      Transform cameraTransform;
+    [Header("흔드는 시간")]
     public float shakeDuration = 0.5f;
+
+    [Header("흔드는 정도")]
     public float shakeMagnitude = 0.2f;
+    [Header("회복 속도")]
     public float dampingSpeed = 1.0f;
 
     private Vector3 initialPosition;
