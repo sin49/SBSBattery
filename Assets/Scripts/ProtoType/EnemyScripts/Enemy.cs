@@ -234,11 +234,17 @@ public class Enemy: Character,DamagedByPAttack
         if (SetRotation())
         {            
             enemyRb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
-        }        
+        }
+        var a = new Vector3(testTarget.x, testTarget.y);
+        float f = testTarget.z-transform.position.z; // -> 절대값을 하여 z값이 3보다 크면 false로 빠져나가도록 
+        f= Mathf.Abs(f);
+        disToPlayer = a.magnitude;
 
-        if (testTarget.magnitude > trackingDistance)
+        if (disToPlayer > trackingDistance || f > 5)
         {
-            searchPlayer = false;            
+            searchPlayer = false;
+            target = null;
+            onPatrol = true;
         }
     }
 
