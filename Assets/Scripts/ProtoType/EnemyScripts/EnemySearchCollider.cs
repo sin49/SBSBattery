@@ -26,10 +26,11 @@ public class EnemySearchCollider : MonoBehaviour
             enemy.onPatrol = false;
             enemy.target = other.transform;
             enemy.tracking = true;
+            enemy.searchPlayer = true;
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    /*private void OnTriggerExit(Collider other)
     {
      
         if (other.CompareTag("Player"))
@@ -37,5 +38,5 @@ public class EnemySearchCollider : MonoBehaviour
             //enemy.tracking = false;
             enemy.onPatrol = true;
         }
-    }
+    }*/
 }

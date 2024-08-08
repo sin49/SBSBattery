@@ -4663,15 +4663,19 @@ MonoBehaviour:
   searchCollider: {fileID: 0}
   searchColliderRange: {x: 0, y: 0, z: 0}
   searchColliderPos: {x: 0, y: 0, z: 0}
-  activeSearchMesh: 0
+  searchPlayer: 0
+  trackingDistance: 0
+  disToPlayer: 0
   patrolGroup: []
   targetPatrol: {x: 0, y: 0, z: 0}
   patrolWaitTime: 0
   leftPatrolRange: 0
   rightPatrolRange: 0
   patrolDistance: 0
+  trackingTime: 0
   onPatrol: 0
-  patrolPos: {fileID: 0}
+  yWidth: 0
+  zWidth: 0
   rangeCollider: {fileID: 0}
   rangePos: {x: 0, y: 0, z: 0}
   rangeSize: {x: 0, y: 0, z: 0}
@@ -11647,6 +11651,11 @@ PrefabInstance:
       propertyPath: rightPatrolRange
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 879045053675682833, guid: 182321a561f69434e8780d30419bdeb2,
+        type: 3}
+      propertyPath: trackingDistance
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1876247488755515892, guid: 182321a561f69434e8780d30419bdeb2,
         type: 3}
       propertyPath: atk
@@ -17786,6 +17795,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  ZPin: 0
   CameraUPViewportPos: 0
   CameraDownViewportPos: 0
   CameraTrakingTime: 0

@@ -27,17 +27,26 @@ public class Enemy: Character,DamagedByPAttack
     public GameObject searchCollider; // 탐지 범위 콜라이더
     public Vector3 searchColliderRange;
     public Vector3 searchColliderPos;
-    public bool activeSearchMesh;
-    [Header("정찰 이동관련(정찰 그룹, 정찰 대기, 좌우 정찰 위치, 정찰거리값(도착/이동 사이 거리?)")]
+    public bool searchPlayer;
+    [Header("추격 범위 ")]
+    public float trackingDistance;
+    public float disToPlayer;
+    [Header("정찰 이동관련(정찰 그룹, 정찰목표값, 정찰 대기시간)")]
     public Vector3[] patrolGroup; // 0번째: 왼쪽, 1번째: 오른쪽
     public Vector3 targetPatrol; // 정찰 목표지점-> patrolGroup에서 지정
     public float patrolWaitTime; // 정찰 대기시간
+    [Header("좌우 정찰 위치, 정찰거리값, 플레이어 추적타임")]
     public float leftPatrolRange; // 좌측 정찰 범위
     public float rightPatrolRange; // 우측 정찰 범위
     public float patrolDistance; // 정찰 거리
+    public float trackingTime;
     Vector3 leftPatrol, rightPatrol;
+    [HideInInspector]
     public bool onPatrol;
-    public Transform patrolPos; // 정찰 위치 테스트 
+    [Header("그려질 정찰 큐브 사이즈 결정")]
+    public float yWidth;
+    public float zWidth;
+    Vector3 center;
     [Header("공격 활성화 콜라이더 큐브 조정")]
     public GameObject rangeCollider; // 공격 범위 콜라이더 오브젝트
     public Vector3 rangePos;
@@ -47,10 +56,14 @@ public class Enemy: Character,DamagedByPAttack
     public float attackTimer; // 공격 대기시간
     public float attackInitCoolTime; // 공격 대기시간 초기화 변수
     public float attackDelay; // 공격 후 딜레이
-    
-    public bool callCheck;        
+
+    [HideInInspector]
+    public bool callCheck;
+    [HideInInspector]
     public bool onAttack; // 공격 활성화 여부 (공격 범위 내에 플레이어를 인식했을 때 true 변환)
+    [HideInInspector]
     public bool activeAttack; // 공격 가능한 상태인지 체크
+    [HideInInspector]
     public bool checkPlayer; // 범위 내 플레이어 체크    
 
     [Header("목표 회전을 테스트하기 위한 변수")]
@@ -193,7 +206,11 @@ public class Enemy: Character,DamagedByPAttack
             {
                 if (!activeAttack && !onAttack)
                 {
-                    TrackingMove();
+                    if (patrolType == PatrolType.movePatrol && onPatrol)
+                        PatrolTracking();
+                    
+                    if(searchPlayer)
+                        TrackingMove();
                 }
             }
 
@@ -206,29 +223,41 @@ public class Enemy: Character,DamagedByPAttack
     #region 추격
     public void TrackingMove()
     {
-        if (patrolType == PatrolType.movePatrol && !onPatrol)
-            testTarget = target.position - transform.position;
-        else
-            testTarget = targetPatrol - transform.position;
+        testTarget = target.position - transform.position;
         testTarget.y = 0;        
 
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), eStat.rotationSpeed * Time.deltaTime);
-        rotationY = transform.localRotation.y;
+        /*rotationY = transform.localRotation.y;
         notMinusRotation = 360 - rotationY;
-        eulerAnglesY = transform.eulerAngles.y;
+        eulerAnglesY = transform.eulerAngles.y;*/
 
         if (SetRotation())
         {            
             enemyRb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
+        }        
+
+        if (testTarget.magnitude > trackingDistance)
+        {
+            searchPlayer = false;            
+        }
+    }
+
+    public void PatrolTracking()
+    {
+        testTarget = targetPatrol - transform.position;
+        testTarget.y = 0;
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), eStat.rotationSpeed * Time.deltaTime);
+
+        if (SetRotation())
+        {
+            enemyRb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
         }
 
-        if (patrolType == PatrolType.movePatrol && onPatrol)
+        if (testTarget.magnitude < patrolDistance)
         {
-            if (testTarget.magnitude < patrolDistance)
-            {
-                tracking = false;
-                StartCoroutine(InitPatrolTarget());
-            }
+            tracking = false;
+            StartCoroutine(InitPatrolTarget());
         }
     }
 
@@ -246,8 +275,7 @@ public class Enemy: Character,DamagedByPAttack
             SetPatrolTarget();
             yield return null;
         }
-
-        patrolPos.position = targetPatrol;        
+      
         
         tracking = true;
     }    
@@ -343,12 +371,27 @@ public class Enemy: Character,DamagedByPAttack
         }
     }
 
-    /*private void OnDrawGizmos()
+
+    private void OnDrawGizmos()
     {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(transform.position + searchCubePos, searchCubeRange * 2f);
+        if (patrolType == PatrolType.movePatrol)
+        {
+            center = (patrolGroup[0] + patrolGroup[1]) / 2;
+            float xPoint = patrolGroup[1].x - patrolGroup[0].x;
+            Vector3 size = new(xPoint, yWidth, zWidth);
+            Gizmos.color = Color.red;
+
+            Gizmos.DrawWireCube(center, size);
+
+            Gizmos.color = Color.yellow;
+
+            Gizmos.DrawWireSphere(transform.position, trackingDistance); 
+        }
+        //Gizmos.DrawWireSphere(patrolGroup[0], 10f);
+        //Gizmos.DrawWireSphere(patrolGroup[1], 10f);
+        //Gizmos.DrawWireCube(transform.position + searchCubePos, searchCubeRange * 2f);
         //Gizmos.DrawWireSphere(transform.position, searchRange);
-    }*/
+    }
 
     #endregion
 
