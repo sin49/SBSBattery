@@ -36,6 +36,13 @@ public class BasicCamera : MonoBehaviour
     private Vector3 initialPosition;
     private float currentShakeDuration;
     bool CameraShakingChecker;
+
+    void initializeCameraPosition()
+    {
+        if(target!=null)
+        CurrentCamera.transform.position = target.position + camPos;
+     
+    }
     public void StartCameraShake()
     {
      
@@ -69,6 +76,10 @@ public class BasicCamera : MonoBehaviour
     {
         bindingcamera=GetComponent<CameraMoveRange>();
     }
+    protected virtual void Start()
+    {
+        PlayerHandler.instance.registerPlayerFallEvent(initializeCameraPosition);
+    }
     protected virtual float CalculateCameraVector()
     {
 
@@ -95,15 +106,15 @@ public class BasicCamera : MonoBehaviour
  
             Yvector = target.position.y + camPos.y;
 
-            if (target.position.y - transform.position.y < 0)
-                Yvector = c.transform.position.y;
+            //if (target.position.y - transform.position.y < 0)
+            //    Yvector = c.transform.position.y;
         }
         else if (targetPosYInViewport < CameraDownViewportPos)
         {
 
             Yvector = target.position.y + camPos.y;
-            if (target.position.y - transform.position.y > 0)
-                Yvector = c.transform.position.y;
+            //if (target.position.y - transform.position.y > 0)
+            //    Yvector = c.transform.position.y;
         }
         //Debug.Log("target.position.y-transform.position" + (target.position.y - transform.position.y));
 

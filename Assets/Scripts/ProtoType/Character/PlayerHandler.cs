@@ -74,6 +74,11 @@ public class PlayerHandler : MonoBehaviour
     }
     [Header("플레이어 낙사 높이?")]
     public float characterFallLimit;
+    event Action PlayerFallEvent;
+    public void registerPlayerFallEvent(Action action)
+    {
+        PlayerFallEvent =action;
+    }
     void PlayerFallOut()
     {
         if (CurrentPlayer != null && CurrentPlayer.transform.position.y < -1 * characterFallLimit)
@@ -84,6 +89,7 @@ public class PlayerHandler : MonoBehaviour
                 rb.velocity = Vector3.zero;
             }
             CurrentPlayer.transform.position = PlayerSpawnManager.Instance. CurrentCheckPoint.transform.position;
+            PlayerFallEvent?.Invoke();
         }
     }
     private void FixedUpdate()
