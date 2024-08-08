@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2707872398562621924}
   - component: {fileID: 8871161388901101245}
-  - component: {fileID: 3579277905376112824}
   m_Layer: 0
   m_Name: SwitchingCamera
   m_TagString: Untagged
@@ -47,6 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ca264915b4e6c4c8085ca1446f164d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  ZPin: 0
+  CameraUPViewportPos: 0
+  CameraDownViewportPos: 0
+  CameraTrakingTime: 0
+  shakeDuration: 0.5
+  shakeMagnitude: 0.2
+  dampingSpeed: 1
   Camera2D: {fileID: 8977378622787475321}
   Camera3D: {fileID: 4994280006005182597}
   camrot2D: {x: 0, y: 0, z: 0}
@@ -60,25 +67,7 @@ MonoBehaviour:
   nearClipPlane3D: 0.1
   farClipPlane3D: 1000
   is2D: 1
-  CameraTrackingTime: 0
   CameraChangeDuration: 1
---- !u!114 &3579277905376112824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1874498237705874076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77444c65461a782468a539bb6321ecd0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Center: {x: 0, y: 0, z: 0}
-  Range: {x: 0, y: 0, z: 0}
-  Xpin: 0
-  YPin: 0
-  Zpin: 0
 --- !u!1 &2725559534017727347
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,7 +184,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -323,7 +312,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0

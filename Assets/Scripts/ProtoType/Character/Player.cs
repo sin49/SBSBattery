@@ -5,6 +5,7 @@ using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using UnityEngine.Windows.Speech;
 
@@ -644,6 +645,8 @@ public class Player : Character
     #region 피격
     public override void Damaged(float damage)
     {
+        if (onInvincible)
+            return;
         onInvincible = true;
 
         PlayerStat.instance.pState = PlayerState.hitted;
@@ -691,7 +694,11 @@ public class Player : Character
     public override void Dead()
     {
         PlayerStat.instance.pState = PlayerState.dead;
-        gameObject.SetActive(false);
+        gameObject.SetActive(false);//사망에니메이션 자리
+        if (!PlayerSpawnManager.Instance.DontSave)
+            GameManager.instance.LoadingSceneWithKariEffect(GameManager.instance.LoadLastestStage());
+        else
+            GameManager.instance.LoadingSceneWithKariEffect(SceneManager.GetActiveScene().name);
     }
     #endregion
 
