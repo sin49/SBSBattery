@@ -644,6 +644,7 @@ public class Player : Character
     #region ÇÇ°Ý
     public override void Damaged(float damage)
     {
+
         onInvincible = true;
 
         PlayerStat.instance.pState = PlayerState.hitted;

@@ -47,6 +47,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ca264915b4e6c4c8085ca1446f164d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  ZPin: 0
+  CameraUPViewportPos: 0
+  CameraDownViewportPos: 0
+  CameraTrakingTime: 0
+  shakeDuration: 0.5
+  shakeMagnitude: 0.2
+  dampingSpeed: 1
   Camera2D: {fileID: 8977378622787475321}
   Camera3D: {fileID: 4994280006005182597}
   camrot2D: {x: 0, y: 0, z: 0}
@@ -60,7 +68,6 @@ MonoBehaviour:
   nearClipPlane3D: 0.1
   farClipPlane3D: 1000
   is2D: 1
-  CameraTrackingTime: 0
   CameraChangeDuration: 1
 --- !u!114 &3579277905376112824
 MonoBehaviour:
@@ -195,7 +202,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -323,7 +330,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0

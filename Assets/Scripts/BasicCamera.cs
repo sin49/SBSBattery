@@ -87,7 +87,7 @@ public class BasicCamera : MonoBehaviour
         //Debug.Log(targetPosYInViewport);
         if (targetPosYInViewport > CameraUPViewportPos)
         {
-            Debug.Log("지금 카메라가 올라가야함");
+ 
             Yvector = target.position.y + camPos.y;
 
             if (target.position.y - transform.position.y < 0)

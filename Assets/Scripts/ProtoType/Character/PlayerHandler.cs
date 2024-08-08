@@ -197,6 +197,7 @@ public class PlayerHandler : MonoBehaviour
             if (CurrentType == TransformType.remoteform)
             {
                 CurrentPlayer.GetComponent<RemoteTransform>().RemoteObjectEvent += ingameUIManger.UpdateRemoteTargetUI;
+                Debug.Log("이벤트 추가");
             }
             #endregion
             if(formChange)

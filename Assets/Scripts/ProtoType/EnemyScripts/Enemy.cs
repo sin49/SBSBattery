@@ -143,7 +143,8 @@ public class Enemy: Character,DamagedByPAttack
     #region 피격함수
     public override void Damaged(float damage)
     {
-
+        if (eStat.onInvincible)
+            return;
         eStat.hp -= damage;
         if (eStat.hp <= 0)
         {

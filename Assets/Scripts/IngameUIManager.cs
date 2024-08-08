@@ -24,14 +24,16 @@ public class IngameUIManager : MonoBehaviour
     {
         if (target != null)
         {
+
             RemoteTargetUI.SetActive(true);
-            RemoteTargetUI.transform.position = PlayerHandler.instance.CurrentCamera.WorldToScreenPoint(
+            RemoteTargetUI.transform.GetChild(0).position = PlayerHandler.instance.CurrentCamera.WorldToScreenPoint(
        target.transform.position
                 );
 
         }
         else
         {
+
             RemoteTargetUI.SetActive(false);
         }
     }

@@ -1,10 +1,9 @@
 using UnityEngine;
 
-public class DownAttackCollider : MonoBehaviour
+public class DownAttackCollider : MeleeCollider
 {
-    public float damage;
-    public GameObject hitEffect;
-    public ParticleSystem saveEffect;
+ 
+
     Player player;
     Rigidbody playerRb;
 
@@ -17,31 +16,14 @@ public class DownAttackCollider : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {        
+        
         if (other.CompareTag("Enemy"))
         {
-            Enemy enemy;
-
-            if (!other.GetComponent<Enemy>())
-            {
-                enemy = other.transform.parent.GetComponent<Enemy>();
-            }
-            else
-            {
-                enemy = other.GetComponent<Enemy>();
-            }
-
-            /*playerRb.velocity = Vector3.zero;
-            playerRb.AddForce((Vector3.up*2 + Vector3.right * DecideDirection()) * 80);*/
-            if (!enemy.eStat.onInvincible)
-            {
-                enemy.Damaged(damage);
-                saveEffect.transform.position = other.transform.position;
-                saveEffect.Play();
-                gameObject.SetActive(false);
-            }
+            DamageCollider(other);
         }
+        
         
         if (other.CompareTag("Ground"))
         {
