@@ -123,8 +123,7 @@ public class BasicCamera : MonoBehaviour
             c.transform.position = Vector2.Lerp(c.transform.position, CalculateVector, Time.deltaTime * cameraspeed);
 
 
-        if (bindingcamera!=null)
-        bindingcamera.BindingCamera(c);
+     
 
 
     }
@@ -149,5 +148,8 @@ public class BasicCamera : MonoBehaviour
         PlayerHandler.instance.CurrentCamera = CurrentCamera;
 
         CameraShake();
+
+        if (bindingcamera != null)
+            bindingcamera.BindingCamera(CurrentCamera);
     }
 }

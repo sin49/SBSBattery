@@ -43,9 +43,9 @@ public class CameraMoveRange : MonoBehaviour
         {
             float distance=0;
             if (!PlayerStat.instance.Trans3D)
-            distance = Mathf.Abs(this.transform.position.z - Center.z);
+            distance = Mathf.Abs(c.transform.position.z - Center.z);
             else if(PlayerHandler.instance.CurrentPlayer)
-                distance = Mathf.Abs(this.transform.position.z -
+                distance = Mathf.Abs(c.transform.position.z -
                     PlayerHandler.instance.CurrentPlayer.transform.position.z);
             height = 2 * Mathf.Tan(c.fieldOfView * 0.5f * Mathf.Deg2Rad) * distance;
 
@@ -57,20 +57,20 @@ public class CameraMoveRange : MonoBehaviour
         width = height * Screen.width / Screen.height;
         if (!PlayerStat.instance.Trans3D)
         {
-            ApplyCameraBinding(Center, Range, width, height);
+            ApplyCameraBinding(Center, Range,c.transform, width, height);
         }
         else
         {
-            ApplyCameraZBinding(Center, Range, width);
+            ApplyCameraZBinding(Center,c.transform, Range, width);
         }
     }
-    void ApplyCameraBinding(Vector3 center,Vector3 range,float width,float height)
+    void ApplyCameraBinding(Vector3 center,Vector3 range,Transform CameraTransform,float width,float height)
     {
         float clampX = Center.x;
         if (!Xpin)
         {
             float lx = Range.x * 0.5f - width * 0.5f;
-            clampX = Mathf.Clamp(transform.position.x, -lx + Center.x,
+            clampX = Mathf.Clamp(CameraTransform.position.x, -lx + Center.x,
                lx + Center.x);
  
         }
@@ -78,24 +78,24 @@ public class CameraMoveRange : MonoBehaviour
         if (!YPin)
         {
             float ly = Range.y * 0.5f - height * 0.5f;
-            clampY = Mathf.Clamp(transform.position.y, -ly + Center.y,
+            clampY = Mathf.Clamp(CameraTransform.position.y, -ly + Center.y,
                 ly + Center.y);
             if (clampY == ly + Center.y || clampY == -ly + Center.y)
                 Debug.Log("Y좌표가 한계에 걸림");
         }
-        transform.position = new Vector3(clampX, clampY, transform.position.z);
+        CameraTransform.position = new Vector3(clampX, clampY, CameraTransform.position.z);
     }
-   void ApplyCameraZBinding(Vector3 center, Vector3 range, float width)
+   void ApplyCameraZBinding(Vector3 center, Transform CameraTransform, Vector3 range, float width)
     {
         float clampZ = Center.z;
         if (!Zpin)
         {
             float lz = Range.z * 0.5f - width * 0.5f;
-            clampZ = Mathf.Clamp(transform.position.z, -lz + Center.z,
+            clampZ = Mathf.Clamp(CameraTransform.position.z, -lz + Center.z,
                 lz + Center.z);
             if (clampZ == lz + Center.z || clampZ == -lz + Center.z)
                 Debug.Log("Z좌표가 한계에 걸림");
         }
-        transform.position = new Vector3(transform.position.x, transform.position.y, clampZ);
+        CameraTransform.position = new Vector3(CameraTransform.position.x, CameraTransform.position.y, clampZ);
     }
 }
