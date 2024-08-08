@@ -96,8 +96,8 @@ public class Enemy: Character,DamagedByPAttack
         }
 
         InitPatrolPoint();
-        if(patrolType == PatrolType.movePatrol &&onPatrol)
-            StartCoroutine(InitPatrolTarget());
+        //if(patrolType == PatrolType.movePatrol &&onPatrol)
+        //    StartCoroutine(InitPatrolTarget());
     }
 
     public void InitPatrolPoint()
@@ -153,7 +153,8 @@ public class Enemy: Character,DamagedByPAttack
     #region 피격함수
     public override void Damaged(float damage)
     {
-
+        if (eStat.onInvincible)
+            return;
         eStat.hp -= damage;
         if (eStat.hp <= 0)
         {
@@ -232,14 +233,14 @@ public class Enemy: Character,DamagedByPAttack
             enemyRb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
         }
 
-        if (patrolType == PatrolType.movePatrol && onPatrol)
-        {
-            if (testTarget.magnitude < patrolDistance)
-            {
-                tracking = false;
-                StartCoroutine(InitPatrolTarget());
-            }
-        }
+        //if (patrolType == PatrolType.movePatrol && onPatrol)
+        //{
+        //    if (testTarget.magnitude < patrolDistance)
+        //    {
+        //        tracking = false;
+        //        StartCoroutine(InitPatrolTarget());
+        //    }
+        //}
     }
 
     bool setPatrol;

@@ -31,12 +31,14 @@ public class BasicCamera : MonoBehaviour
     [Header("회복 속도")]
     public float dampingSpeed = 1.0f;
 
+  
+
     private Vector3 initialPosition;
     private float currentShakeDuration;
     bool CameraShakingChecker;
     public void StartCameraShake()
     {
-
+     
         currentShakeDuration = shakeDuration;
         initialPosition = CurrentCamera.transform.localPosition;
         CameraShakingChecker = true;
@@ -48,7 +50,7 @@ public class BasicCamera : MonoBehaviour
             CurrentCamera.transform.localPosition = CurrentCamera.transform.localPosition + Random.insideUnitSphere * shakeMagnitude;
             currentShakeDuration -= Time.deltaTime * dampingSpeed;
         }
-        else if (CameraShakingChecker)
+        else if(CameraShakingChecker)
         {
             currentShakeDuration = 0;
             if (target)
@@ -61,7 +63,7 @@ public class BasicCamera : MonoBehaviour
             }
             CameraShakingChecker = false;
         }
-
+        
     }
     protected virtual void Awake()
     {
@@ -90,7 +92,7 @@ public class BasicCamera : MonoBehaviour
         //Debug.Log(targetPosYInViewport);
         if (targetPosYInViewport > CameraUPViewportPos)
         {
-            Debug.Log("지금 카메라가 올라가야함");
+ 
             Yvector = target.position.y + camPos.y;
 
             if (target.position.y - transform.position.y < 0)
@@ -121,8 +123,7 @@ public class BasicCamera : MonoBehaviour
             c.transform.position = Vector2.Lerp(c.transform.position, CalculateVector, Time.deltaTime * cameraspeed);
 
 
-        if (bindingcamera!=null)
-        bindingcamera.BindingCamera(c);
+     
 
 
     }
@@ -146,6 +147,9 @@ public class BasicCamera : MonoBehaviour
         if(CurrentCamera!=null)
         PlayerHandler.instance.CurrentCamera = CurrentCamera;
 
-        //CameraShake();
+        CameraShake();
+
+        if (bindingcamera != null)
+            bindingcamera.BindingCamera(CurrentCamera);
     }
 }

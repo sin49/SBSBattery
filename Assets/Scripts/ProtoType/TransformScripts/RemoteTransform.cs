@@ -58,6 +58,8 @@ public class RemoteTransform : Player
    
         //for문 사용했으니 최적화 필요함
         UpdateClosestRemoteObjectEffect();
+
+        RemoteObjectEvent?.Invoke(closestObject);
         /*if (chargingBufferTimer > 0 && !Charging)
         {
             chargingBufferTimer -= Time.deltaTime;
@@ -67,7 +69,7 @@ public class RemoteTransform : Player
     {
         float closestdistance = float.MaxValue;
         GameObject newclosestobject = null;
-
+       
         foreach (var obj in remoteObj)
         {
             float distance = Vector3.Distance(transform.position, obj.transform.position);
@@ -89,7 +91,7 @@ public class RemoteTransform : Player
 
 
         }
-        RemoteObjectEvent?.Invoke(closestObject);
+       
     }
     public override void Skill1()
     {

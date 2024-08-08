@@ -5,40 +5,31 @@ using UnityEngine;
 public class BrokenPlatform : MonoBehaviour
 {
    public GameObject Mesh;
- public   ParticleSystem ParticleSystem;
+ public   ParticleSystem ParticleSystem_;
     private void Awake()
     {
-        ParticleSystem.gameObject.SetActive(false);
-        Mesh.gameObject.SetActive(true);
+        ParticleSystem_.gameObject.SetActive(false);
+      gameObject.SetActive(true);
     }
     void BoxBroke()
     {
-        ParticleSystem.gameObject.SetActive(true);
-        Mesh.gameObject.SetActive(false);
+        ParticleSystem_.gameObject.SetActive(true);
+        ParticleSystem_.transform.SetParent(null);
+      gameObject.SetActive(false);
     }
-    private void FixedUpdate()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            BoxBroke();
-        }
-    }
-    private void OnDisable()
-    {
-        ParticleSystem.gameObject.SetActive(false);
-        Mesh.gameObject.SetActive(true);
-    }
+  
+    
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("PlayerAttack"))
         {
-            Player p;
-            if(other.TryGetComponent<Player>(out p))
+            DownAttackCollider p;
+            if(other.TryGetComponent<DownAttackCollider>(out p))
             {
-                if (p.downAttack)
-                {
+                //if (p.downAttack)
+                //{
                     BoxBroke();
-                }
+                //}
             }
         }
     }

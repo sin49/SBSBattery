@@ -39,7 +39,7 @@ public class PlayerSpawnManager : MonoBehaviour
     }
     public CheckPoint GetCurrentCheckpoint()
     {
-        if (!DontSave)
+        if (!DontSave&& GameManager.instance.LoadCheckPointIndexKey()< Checkpoints.Length)
             return Checkpoints[GameManager.instance.LoadCheckPointIndexKey()];
         else
             return Checkpoints[0];
@@ -63,6 +63,9 @@ public class PlayerSpawnManager : MonoBehaviour
     //}
     public void Spawn()
     {
+        PlayerFormList p;
+        if (TryGetComponent<PlayerFormList>(out p))
+            DefaultForm = p.playerformlist[GameManager.instance.LOadPlayerTransformtype()];
         var a = CurrentCheckPoint.spawn(DefaultForm);
         CurrentPlayer = a;
         PlayerHandler.instance.registerPlayer(a);

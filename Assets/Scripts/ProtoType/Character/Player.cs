@@ -60,7 +60,7 @@ public class Player : Character
     public float waitTime; // 코루틴 yield return 시간 조절
     public bool formChange; // 오브젝트 변신 중인지 체크    
     public GameObject changeEffect; // 변신 완료 이펙트
-    public bool onTransform; // 
+    public bool onTransform;// 
 
     [Space(15f)]
     public bool onGround; // 지상 판정 유무
@@ -694,9 +694,8 @@ public class Player : Character
     public override void Dead()
     {
         PlayerStat.instance.pState = PlayerState.dead;
-        gameObject.SetActive(false);//사망에니메이션 자리
-        if (!PlayerSpawnManager.Instance.DontSave)
-            GameManager.instance.LoadingSceneWithKariEffect(GameManager.instance.LoadLastestStage());
+        if(!PlayerSpawnManager.Instance.DontSave)
+        GameManager.instance.LoadingSceneWithKariEffect(GameManager.instance.LoadLastestStage());
         else
             GameManager.instance.LoadingSceneWithKariEffect(SceneManager.GetActiveScene().name);
     }
