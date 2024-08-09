@@ -100,7 +100,10 @@ public class Player : Character
     public Vector3 boxRaySize; // box 레이캐스트 >> 벽에 고정되는 것 방지를 위한
     public float distanceRay; // box 캐스트의 거리
     RaycastHit boxHit;
-
+    protected override void Awake()
+    {
+        base.Awake();
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -644,6 +647,8 @@ public class Player : Character
     #region 피격
     public override void Damaged(float damage)
     {
+        if (onInvincible)
+            return;
         onInvincible = true;
 
         PlayerStat.instance.pState = PlayerState.hitted;

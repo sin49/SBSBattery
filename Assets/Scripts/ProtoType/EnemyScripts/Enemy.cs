@@ -1,5 +1,6 @@
 
 using System.Collections;
+using System.Linq;
 using System.Net.Http.Headers;
 
 using UnityEngine;
@@ -14,10 +15,9 @@ public class Enemy: Character,DamagedByPAttack
 {
     public EnemyStat eStat;
     public PatrolType patrolType;
-    public Rigidbody enemyRb; // 적 리지드바디
+    //public Rigidbody enemyRb; // 적 리지드바디
     public GameObject attackCollider; // 적의 공격 콜라이더 오브젝트    
     public ParticleSystem deadEffect;
-    
     bool posRetry;
 
     [Header("플레이어 탐색 큐브 조정(드로우 기즈모)")]
@@ -27,7 +27,10 @@ public class Enemy: Character,DamagedByPAttack
     public GameObject searchCollider; // 탐지 범위 콜라이더
     public Vector3 searchColliderRange;
     public Vector3 searchColliderPos;
-    public bool activeSearchMesh;    
+    public bool searchPlayer;
+    [Header("추격 범위 ")]
+    public float trackingDistance;
+    public float disToPlayer;
     [Header("정찰 이동관련(정찰 그룹, 정찰목표값, 정찰 대기시간)")]
     public Vector3[] patrolGroup; // 0번째: 왼쪽, 1번째: 오른쪽
     public Vector3 targetPatrol; // 정찰 목표지점-> patrolGroup에서 지정
@@ -79,25 +82,29 @@ public class Enemy: Character,DamagedByPAttack
     public bool reachCheck;
     bool complete;    
 
-    private void Awake()
+   protected override void Awake()
     {
-        //eStat = gameObject.AddComponent<EnemyStat>();
+
+        base.Awake();
         eStat = GetComponent<EnemyStat>();
-        //attackCollider.GetComponent<EnemyMeleeAttack>().SetDamage(eStat.atk);        
-        if(attackCollider !=null)
-            attackCollider.SetActive(false);
+        
 
-        enemyRb = GetComponent<Rigidbody>();
-
-        if (rangeCollider != null)
+        if (patrolType == PatrolType.movePatrol)
         {
-            rangePos = rangeCollider.GetComponent<BoxCollider>().center;
-            rangeSize = rangeCollider.GetComponent<BoxCollider>().size;
+            InitPatrolPoint();
+            if(onPatrol)
+                StartCoroutine(InitPatrolTarget());
         }
+    }
 
-        InitPatrolPoint();
-        if(patrolType == PatrolType.movePatrol &&onPatrol)
-            StartCoroutine(InitPatrolTarget());
+    public virtual void InitAwakeSource()
+    {
+
+    }
+
+    public virtual void InitStartSource()
+    {
+
     }
 
     public void InitPatrolPoint()
@@ -142,7 +149,7 @@ public class Enemy: Character,DamagedByPAttack
     {
         eStat.onInvincible = true;
         transform.rotation = Quaternion.Euler(0, -90 * (int)PlayerStat.instance.direction, 0);
-        enemyRb.AddForce(-((transform.forward + transform.up)*5f), ForceMode.Impulse);
+        rb.AddForce(-((transform.forward + transform.up)*5f), ForceMode.Impulse);
 
         yield return new WaitForSeconds(eStat.invincibleTimer);
 
@@ -163,7 +170,7 @@ public class Enemy: Character,DamagedByPAttack
         }
         else
         {
-            enemyRb.velocity = Vector3.zero;
+            rb.velocity = Vector3.zero;
             attackCollider.SetActive(false);
             if (target != null)
             {
@@ -176,7 +183,7 @@ public class Enemy: Character,DamagedByPAttack
                     transform.rotation = Quaternion.Euler(0, -90, 0);
                 }
             }
-            enemyRb.AddForce(-transform.forward * 3f, ForceMode.Impulse);
+            rb.AddForce(-transform.forward * 3f, ForceMode.Impulse);
             InitAttackCoolTime();
         }
     }
@@ -203,7 +210,11 @@ public class Enemy: Character,DamagedByPAttack
             {
                 if (!activeAttack && !onAttack)
                 {
-                    TrackingMove();
+                    if (patrolType == PatrolType.movePatrol && onPatrol)
+                        PatrolTracking();
+                    
+                    if(searchPlayer)
+                        TrackingMove();
                 }
             }
 
@@ -216,29 +227,49 @@ public class Enemy: Character,DamagedByPAttack
     #region 추격
     public void TrackingMove()
     {
-        if (patrolType == PatrolType.movePatrol && !onPatrol)
-            testTarget = target.position - transform.position;
-        else
-            testTarget = targetPatrol - transform.position;
+        testTarget = target.position - transform.position;
+        //var vector = testTarget;
         testTarget.y = 0;        
 
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), eStat.rotationSpeed * Time.deltaTime);
-        rotationY = transform.localRotation.y;
+        /*rotationY = transform.localRotation.y;
         notMinusRotation = 360 - rotationY;
-        eulerAnglesY = transform.eulerAngles.y;
+        eulerAnglesY = transform.eulerAngles.y;*/
 
         if (SetRotation())
         {            
-            enemyRb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
+            rb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
+        }
+        /*var a = new Vector3(vector.x, vector.y);
+        float f = testTarget.z - transform.position.z; // -> 절대값을 하여 z값이 n보다 크면 false로 빠져나가도록 
+        f = Mathf.Abs(f);
+        disToPlayer = a.magnitude;*/
+        disToPlayer = testTarget.magnitude;
+
+        if (disToPlayer > trackingDistance /*|| f > 6*/)
+        {
+            searchPlayer = false;
+            target = null;
+            onPatrol = true;
+        }
+    }
+
+    public void PatrolTracking()
+    {
+        testTarget = targetPatrol - transform.position;
+        testTarget.y = 0;
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), eStat.rotationSpeed * Time.deltaTime);
+
+        if (SetRotation())
+        {
+            rb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
         }
 
-        if (patrolType == PatrolType.movePatrol && onPatrol)
+        if (testTarget.magnitude < patrolDistance)
         {
-            if (testTarget.magnitude < patrolDistance)
-            {
-                tracking = false;
-                StartCoroutine(InitPatrolTarget());
-            }
+            tracking = false;
+            StartCoroutine(InitPatrolTarget());
         }
     }
 
@@ -355,14 +386,20 @@ public class Enemy: Character,DamagedByPAttack
 
     private void OnDrawGizmos()
     {
-        if (patrolType == PatrolType.movePatrol && onPatrol)
+        if (patrolType == PatrolType.movePatrol)
         {
-            center = (patrolGroup[0] + patrolGroup[1]) / 2;
-            float xPoint = patrolGroup[1].x - patrolGroup[0].x;
-            Vector3 size = new(xPoint, yWidth, zWidth);
-            Gizmos.color = Color.red;
+            if (patrolGroup.Length >= 2)
+            {
+                center = (patrolGroup[0] + patrolGroup[1]) / 2; //s
+                float xPoint = patrolGroup[1].x - patrolGroup[0].x;
+                Vector3 size = new(xPoint, yWidth, zWidth);
+                Gizmos.color = Color.red;
 
-            Gizmos.DrawWireCube(center, size);
+                Gizmos.DrawWireCube(center, size);
+            }
+            Gizmos.color = Color.yellow;
+
+            Gizmos.DrawWireSphere(transform.position, trackingDistance); 
         }
         //Gizmos.DrawWireSphere(patrolGroup[0], 10f);
         //Gizmos.DrawWireSphere(patrolGroup[1], 10f);

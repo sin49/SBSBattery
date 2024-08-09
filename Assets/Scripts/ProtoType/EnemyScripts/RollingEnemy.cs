@@ -26,7 +26,7 @@ public class RollingEnemy : Enemy
 
     public void RollingMove()
     {
-        enemyRb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);        
+        rb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);        
     }
 
     public void RollingPatrol()
@@ -68,7 +68,7 @@ public class RollingEnemy : Enemy
 
     IEnumerator WaitHittedDelay()
     {
-        enemyRb.velocity = Vector3.zero;
+        rb.velocity = Vector3.zero;
         activeAttack = true;
         yield return new WaitForSeconds(.5f);
         activeAttack = false;

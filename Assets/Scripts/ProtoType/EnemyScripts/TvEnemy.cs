@@ -15,12 +15,9 @@ public class TvEnemy : Enemy
     public float rayRange; // 레이캐스트 길이 조절
     public float rayHeight; // 레이캐스트 높이 조절
 
-    private void Awake()
+    protected override void Awake()
     {
-        //eStat = gameObject.AddComponent<EnemyStat>();
-        eStat = GetComponent<EnemyStat>();
-        //attackCollider.GetComponent<ReachAttack>().SetDamage(eStat.atk);
-        enemyRb = GetComponent<Rigidbody>();
+        base.Awake();        
     }
 
     private void FixedUpdate()
@@ -47,7 +44,7 @@ public class TvEnemy : Enemy
                     if (TV.onActive)
                     {
                         checkTv = true;
-                        enemyRb.constraints = RigidbodyConstraints.FreezePosition |
+                        rb.constraints = RigidbodyConstraints.FreezePosition |
                     RigidbodyConstraints.FreezeRotation;
                     }
                 }
@@ -70,7 +67,7 @@ public class TvEnemy : Enemy
 
                     if (Quaternion.Angle(transform.rotation, Quaternion.LookRotation(testTarget)) < 0.8f)
                     {
-                        enemyRb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
+                        rb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
                     }
                 }
             }
@@ -126,7 +123,7 @@ public class TvEnemy : Enemy
                     activeTv = true;
                     tracking = true;
 
-                    enemyRb.constraints = RigidbodyConstraints.FreezeRotation |
+                    rb.constraints = RigidbodyConstraints.FreezeRotation |
                         RigidbodyConstraints.FreezePositionY;
 
                 }
@@ -140,7 +137,7 @@ public class TvEnemy : Enemy
         {
             if (!activeTv)
             {
-                enemyRb.constraints = RigidbodyConstraints.FreezePosition | 
+                rb.constraints = RigidbodyConstraints.FreezePosition | 
                     RigidbodyConstraints.FreezeRotation;                 
             }
         }
