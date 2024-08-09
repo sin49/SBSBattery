@@ -11,11 +11,6 @@ public class BulbEnemy : Enemy
     private void Update()
     {
         ReadyAttackTime();
-        if (rangeCollider != null)
-        {
-            rangeCollider.GetComponent<BoxCollider>().center = rangePos;
-            rangeCollider.GetComponent<BoxCollider>().size = rangeSize;
-        }
 
         if (reachCheck)
         {

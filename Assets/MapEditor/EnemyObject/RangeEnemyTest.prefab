@@ -632,7 +632,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eStat: {fileID: 0}
   patrolType: 1
-  enemyRb: {fileID: 0}
   attackCollider: {fileID: 7760997083194175977}
   deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
     type: 3}
@@ -641,14 +640,21 @@ MonoBehaviour:
   searchCollider: {fileID: 5917569411468154374}
   searchColliderRange: {x: 2, y: 2, z: 2}
   searchColliderPos: {x: 0, y: 0, z: 0}
-  activeSearchMesh: 0
+  searchPlayer: 0
+  trackingDistance: 0
+  disToPlayer: 0
   patrolGroup:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   targetPatrol: {x: 0, y: 0, z: 0}
   patrolWaitTime: 0.5
-  testPatrolRange: 1
+  leftPatrolRange: 0
+  rightPatrolRange: 0
+  patrolDistance: 0
+  trackingTime: 0
   onPatrol: 0
+  yWidth: 0
+  zWidth: 0
   rangeCollider: {fileID: 2202126381614901408}
   rangePos: {x: 0, y: 0, z: 0}
   rangeSize: {x: 1, y: 1, z: 1}
@@ -721,7 +727,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7135976549529522104
 Transform:
   m_ObjectHideFlags: 0

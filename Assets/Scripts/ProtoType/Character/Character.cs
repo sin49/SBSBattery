@@ -8,4 +8,11 @@ public abstract class Character: MonoBehaviour
     public abstract void Damaged(float damage);
     public abstract void Move();
     public abstract void Dead();
+
+    protected Rigidbody rb;
+    protected virtual void Awake()
+    {
+        rb= GetComponent<Rigidbody>();
+            
+    }
 }

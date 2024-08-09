@@ -1,5 +1,6 @@
 
 using System.Collections;
+using System.Linq;
 using System.Net.Http.Headers;
 
 using UnityEngine;
@@ -14,10 +15,9 @@ public class Enemy: Character,DamagedByPAttack
 {
     public EnemyStat eStat;
     public PatrolType patrolType;
-    public Rigidbody enemyRb; // 적 리지드바디
+    //public Rigidbody enemyRb; // 적 리지드바디
     public GameObject attackCollider; // 적의 공격 콜라이더 오브젝트    
     public ParticleSystem deadEffect;
-    
     bool posRetry;
 
     [Header("플레이어 탐색 큐브 조정(드로우 기즈모)")]
@@ -82,25 +82,29 @@ public class Enemy: Character,DamagedByPAttack
     public bool reachCheck;
     bool complete;    
 
-    private void Awake()
+   protected override void Awake()
     {
-        //eStat = gameObject.AddComponent<EnemyStat>();
+
+        base.Awake();
         eStat = GetComponent<EnemyStat>();
-        //attackCollider.GetComponent<EnemyMeleeAttack>().SetDamage(eStat.atk);        
-        if(attackCollider !=null)
-            attackCollider.SetActive(false);
+        
 
-        enemyRb = GetComponent<Rigidbody>();
-
-        if (rangeCollider != null)
+        if (patrolType == PatrolType.movePatrol)
         {
-            rangePos = rangeCollider.GetComponent<BoxCollider>().center;
-            rangeSize = rangeCollider.GetComponent<BoxCollider>().size;
+            InitPatrolPoint();
+            if(onPatrol)
+                StartCoroutine(InitPatrolTarget());
         }
+    }
 
-        InitPatrolPoint();
-        if(patrolType == PatrolType.movePatrol &&onPatrol)
-            StartCoroutine(InitPatrolTarget());
+    public virtual void InitAwakeSource()
+    {
+
+    }
+
+    public virtual void InitStartSource()
+    {
+
     }
 
     public void InitPatrolPoint()
@@ -145,7 +149,7 @@ public class Enemy: Character,DamagedByPAttack
     {
         eStat.onInvincible = true;
         transform.rotation = Quaternion.Euler(0, -90 * (int)PlayerStat.instance.direction, 0);
-        enemyRb.AddForce(-((transform.forward + transform.up)*5f), ForceMode.Impulse);
+        rb.AddForce(-((transform.forward + transform.up)*5f), ForceMode.Impulse);
 
         yield return new WaitForSeconds(eStat.invincibleTimer);
 
@@ -166,7 +170,7 @@ public class Enemy: Character,DamagedByPAttack
         }
         else
         {
-            enemyRb.velocity = Vector3.zero;
+            rb.velocity = Vector3.zero;
             attackCollider.SetActive(false);
             if (target != null)
             {
@@ -179,7 +183,7 @@ public class Enemy: Character,DamagedByPAttack
                     transform.rotation = Quaternion.Euler(0, -90, 0);
                 }
             }
-            enemyRb.AddForce(-transform.forward * 3f, ForceMode.Impulse);
+            rb.AddForce(-transform.forward * 3f, ForceMode.Impulse);
             InitAttackCoolTime();
         }
     }
@@ -224,6 +228,7 @@ public class Enemy: Character,DamagedByPAttack
     public void TrackingMove()
     {
         testTarget = target.position - transform.position;
+        //var vector = testTarget;
         testTarget.y = 0;        
 
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), eStat.rotationSpeed * Time.deltaTime);
@@ -233,14 +238,15 @@ public class Enemy: Character,DamagedByPAttack
 
         if (SetRotation())
         {            
-            enemyRb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
+            rb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
         }
-        var a = new Vector3(testTarget.x, testTarget.y);
-        float f = testTarget.z-transform.position.z; // -> 절대값을 하여 z값이 3보다 크면 false로 빠져나가도록 
-        f= Mathf.Abs(f);
-        disToPlayer = a.magnitude;
+        /*var a = new Vector3(vector.x, vector.y);
+        float f = testTarget.z - transform.position.z; // -> 절대값을 하여 z값이 n보다 크면 false로 빠져나가도록 
+        f = Mathf.Abs(f);
+        disToPlayer = a.magnitude;*/
+        disToPlayer = testTarget.magnitude;
 
-        if (disToPlayer > trackingDistance || f > 5)
+        if (disToPlayer > trackingDistance /*|| f > 6*/)
         {
             searchPlayer = false;
             target = null;
@@ -257,7 +263,7 @@ public class Enemy: Character,DamagedByPAttack
 
         if (SetRotation())
         {
-            enemyRb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
+            rb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
         }
 
         if (testTarget.magnitude < patrolDistance)
@@ -382,13 +388,15 @@ public class Enemy: Character,DamagedByPAttack
     {
         if (patrolType == PatrolType.movePatrol)
         {
-            center = (patrolGroup[0] + patrolGroup[1]) / 2;
-            float xPoint = patrolGroup[1].x - patrolGroup[0].x;
-            Vector3 size = new(xPoint, yWidth, zWidth);
-            Gizmos.color = Color.red;
+            if (patrolGroup.Length >= 2)
+            {
+                center = (patrolGroup[0] + patrolGroup[1]) / 2; //s
+                float xPoint = patrolGroup[1].x - patrolGroup[0].x;
+                Vector3 size = new(xPoint, yWidth, zWidth);
+                Gizmos.color = Color.red;
 
-            Gizmos.DrawWireCube(center, size);
-
+                Gizmos.DrawWireCube(center, size);
+            }
             Gizmos.color = Color.yellow;
 
             Gizmos.DrawWireSphere(transform.position, trackingDistance); 
