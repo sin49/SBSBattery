@@ -82,6 +82,14 @@ public class Player : Character
 
     public bool inputCheck;
 
+    private void OnBecameInvisible()
+    {
+        if (PlayerHandler.instance.CurrentPlayer == this)
+        {
+            PlayerHandler.instance.PlayerFallOut();
+        }
+    }
+
     [Header("이동에 따른 값 변화 테스트")]
     public Vector3 velocityMove; // 벨로시티 이동 테스트
     public Vector3 rigidbodyPos; // 리지드바디 포지션 확인용

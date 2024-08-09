@@ -44,8 +44,9 @@ public class SwitchingCamera : BasicCamera
 
 
 
-    void Start()
+   protected override void Start()
     {
+        base.Start();
         Apply2DSettings();
         Apply3DSettings();
         Camera3D.transform.rotation=Camera2D.transform.rotation;

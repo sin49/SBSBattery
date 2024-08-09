@@ -74,17 +74,23 @@ public class PlayerHandler : MonoBehaviour
     }
     [Header("플레이어 낙사 높이?")]
     public float characterFallLimit;
-    void PlayerFallOut()
+    float CalculateCharacterFallLimit;
+    event Action PlayerFallEvent;
+    public void registerPlayerFallEvent(Action action)
     {
-        if (CurrentPlayer != null && CurrentPlayer.transform.position.y < -1 * characterFallLimit)
-        {
+        PlayerFallEvent =action;
+    }
+   public void PlayerFallOut()
+    {
+       
             Rigidbody rb=null;
           if(CurrentPlayer.TryGetComponent<Rigidbody>(out rb))
             {
                 rb.velocity = Vector3.zero;
             }
             CurrentPlayer.transform.position = PlayerSpawnManager.Instance. CurrentCheckPoint.transform.position;
-        }
+            PlayerFallEvent?.Invoke();
+      
     }
     private void FixedUpdate()
     {
@@ -93,7 +99,7 @@ public class PlayerHandler : MonoBehaviour
         //    CurrentPower -= Time.deltaTime;
      
         //}
-        PlayerFallOut();
+        //PlayerFallOut();
 
         #region 캐릭터 조작
         if(CurrentPlayer != null && !formChange)

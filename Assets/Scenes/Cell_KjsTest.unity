@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 88e40284c238ef2429ca443c9d130a64, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -4670,8 +4670,10 @@ MonoBehaviour:
   leftPatrolRange: 0
   rightPatrolRange: 0
   patrolDistance: 0
+  trackingTime: 0
   onPatrol: 0
-  patrolPos: {fileID: 0}
+  yWidth: 0
+  zWidth: 0
   rangeCollider: {fileID: 0}
   rangePos: {x: 0, y: 0, z: 0}
   rangeSize: {x: 0, y: 0, z: 0}
@@ -17716,8 +17718,8 @@ Camera:
   m_GameObject: {fileID: 1665716759}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.30405825, g: 0.6324863, b: 0.82641506, a: 1}
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -17766,13 +17768,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1665716759}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.05151458, y: 0.12623766, z: 0.021558387, w: 0.99042696}
   m_LocalPosition: {x: 6, y: 1.5, z: -40.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2021320125}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 5.543, y: 14.683, z: 3.209}
 --- !u!114 &1665716764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17786,9 +17788,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  ZPin: 0
   CameraUPViewportPos: 0
   CameraDownViewportPos: 0
   CameraTrakingTime: 0
+  shakeDuration: 0.5
+  shakeMagnitude: 0.2
+  dampingSpeed: 1
   InitCamPos: {x: 0, y: 0.5, z: -4}
   InitCamrot: {x: 0, y: 0, z: 0}
 --- !u!1 &1675398373
