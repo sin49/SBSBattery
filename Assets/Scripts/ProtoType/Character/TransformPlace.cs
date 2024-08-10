@@ -15,58 +15,63 @@ public class TransformPlace: MonoBehaviour
             TransformPlaceEffect.gameObject.SetActive(true);
         }
     }
-    public virtual void transformStart(Collider other)
+    public virtual void transformStart(GameObject other)
     {
-        if (PlayerHandler.instance.CurrentType == TransformType.Default)
-        {
+       
             other.transform.position = this.transform.position;
             PlayerHandler.instance.LastTransformPlace = this;
             gameObject.SetActive(false);
 
             other.GetComponent<Player>().FormChange(type);
-        }
+   
     }
 
-    private void OnTriggerStay(Collider other)
-    { 
+    //private void OnTriggerStay(Collider other)
+    //{ 
 
-        if (other.CompareTag("Player") && Input.GetKeyDown(KeyCode.F) || other.CompareTag("Player"))
-        {
-            if (PlayerHandler.instance.CurrentPlayer.onTransform)
-            {
-                if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.X))
-                {                   
-                    if (!PlayerHandler.instance.OnDeformField)
-                    {
-                        transformStart(other);
+    //    if (other.CompareTag("Player") && Input.GetKeyDown(KeyCode.F) || other.CompareTag("Player"))
+    //    {
+    //        if (PlayerHandler.instance.CurrentPlayer.onTransform)
+    //        {
+    //            if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.X))
+    //            {                   
+    //                if (!PlayerHandler.instance.OnDeformField)
+    //                {
+    //                    transformStart(other);
 
-                    }
-                }
-            }                
-        }
-    }
+    //                }
+    //            }
+    //        }                
+    //    }
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("PlayerAttack"))
         {
-            if (PlayerHandler.instance.CurrentPlayer.onTransform)
+            Debug.Log("트랜스폼 플레이스 체크");
+            DownAttackCollider p;
+            if (other.TryGetComponent<DownAttackCollider>(out p))
             {
-                PlayerHandler.instance.CurrentPlayer.onTransform = false;
-                transformStart(other);
+                transformStart(PlayerHandler.instance.CurrentPlayer.gameObject);
             }
-            else
-            {
-                PlayerHandler.instance.CurrentPlayer.onTransform = true;
+                //if (PlayerHandler.instance.CurrentPlayer.onTransform)
+                //{
+                //    PlayerHandler.instance.CurrentPlayer.onTransform = false;
+                //    transformStart(other);
+                //}
+                //else
+                //{
+                //    PlayerHandler.instance.CurrentPlayer.onTransform = true;
+                //}
             }
-        }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            PlayerHandler.instance.CurrentPlayer.onTransform = false;
-        }
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        PlayerHandler.instance.CurrentPlayer.onTransform = false;
+    //    }
+    //}
 }

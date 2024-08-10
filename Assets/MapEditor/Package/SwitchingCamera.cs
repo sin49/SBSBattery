@@ -44,15 +44,18 @@ public class SwitchingCamera : BasicCamera
 
 
 
-    void Start()
+   protected override void Start()
     {
+        base.Start();
         Apply2DSettings();
         Apply3DSettings();
         Camera3D.transform.rotation=Camera2D.transform.rotation;
         SwapCurrentCamera();
         PlayerStat.instance.Trans3D = !is2D;
-        PlayerHandler.instance.RegisterChange3DEvent(StartChangeCameraCorutine);
+        PlayerHandler.instance.registerCorutineRegisterEvent(StartChangeCameraCorutine);
+
     }
+
     protected override float CalculateCameraVector()
     {
         camPos = is2D ? camPos2D : camPos3D;
@@ -90,15 +93,13 @@ public class SwitchingCamera : BasicCamera
     }
     public void StartChangeCameraCorutine()
     {
-        if ( !isTransitioning)
-        {
-            StartCoroutine(SwitchCameraMode());
-        }
+        PlayerHandler.instance.RegisterCameraRotateCorutine(SwitchCameraMode());
     }
   
 
     IEnumerator SwitchCameraMode()
     {
+        Debug.Log("실행됨");
         //다른 이벤트 적용의 시간을 잠깐 준다
         //yield return new WaitForSeconds(0.06f);
         CalculateCameraVector();
@@ -118,12 +119,14 @@ public class SwitchingCamera : BasicCamera
 
         if (is2D)
         {
+            Debug.Log("2D로");
             // 3D에서 2D로 전환
             yield return StartCoroutine(TransitionCamera(camPos2D, camrot2D, true));
            
         }
         else
         {
+            Debug.Log("3D로");
             // 2D에서 3D로 전환
             yield return StartCoroutine(TransitionCamera(camPos3D, camrot3D, false));
         

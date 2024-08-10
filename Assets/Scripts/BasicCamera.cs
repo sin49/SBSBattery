@@ -6,6 +6,7 @@ using static UnityEngine.GraphicsBuffer;
 public class BasicCamera : MonoBehaviour
 {
     public Transform target;
+    
     protected Vector3 camPos;
     protected Vector3 camRot;
     public bool ZPin;
@@ -21,10 +22,63 @@ public class BasicCamera : MonoBehaviour
     protected Camera CurrentCamera;
 
     protected Vector3 CalculateVector;
+    [Header("카메라 흔들림 효과")]
+    [Header("흔드는 시간")]
+    public float shakeDuration = 0.5f;
 
+    [Header("흔드는 정도")]
+    public float shakeMagnitude = 0.2f;
+    [Header("회복 속도")]
+    public float dampingSpeed = 1.0f;
+
+  
+
+    private Vector3 initialPosition;
+    private float currentShakeDuration;
+    bool CameraShakingChecker;
+
+    void initializeCameraPosition()
+    {
+        if(target!=null)
+        CurrentCamera.transform.position = target.position + camPos;
+     
+    }
+    public void StartCameraShake()
+    {
+     
+        currentShakeDuration = shakeDuration;
+        initialPosition = CurrentCamera.transform.localPosition;
+        CameraShakingChecker = true;
+    }
+    void CameraShake()
+    {
+        if (currentShakeDuration > 0)
+        {
+            CurrentCamera.transform.localPosition = CurrentCamera.transform.localPosition + Random.insideUnitSphere * shakeMagnitude;
+            currentShakeDuration -= Time.deltaTime * dampingSpeed;
+        }
+        else if(CameraShakingChecker)
+        {
+            currentShakeDuration = 0;
+            if (target)
+            {
+                CurrentCamera.transform.position = target.position + camPos;
+            }
+            else
+            {
+                CurrentCamera.transform.localPosition = initialPosition;
+            }
+            CameraShakingChecker = false;
+        }
+        
+    }
     protected virtual void Awake()
     {
         bindingcamera=GetComponent<CameraMoveRange>();
+    }
+    protected virtual void Start()
+    {
+        PlayerHandler.instance.registerPlayerFallEvent(initializeCameraPosition);
     }
     protected virtual float CalculateCameraVector()
     {
@@ -49,18 +103,18 @@ public class BasicCamera : MonoBehaviour
         //Debug.Log(targetPosYInViewport);
         if (targetPosYInViewport > CameraUPViewportPos)
         {
-            Debug.Log("지금 카메라가 올라가야함");
+ 
             Yvector = target.position.y + camPos.y;
 
-            if (target.position.y - transform.position.y < 0)
-                Yvector = c.transform.position.y;
+            //if (target.position.y - transform.position.y < 0)
+            //    Yvector = c.transform.position.y;
         }
         else if (targetPosYInViewport < CameraDownViewportPos)
         {
 
             Yvector = target.position.y + camPos.y;
-            if (target.position.y - transform.position.y > 0)
-                Yvector = c.transform.position.y;
+            //if (target.position.y - transform.position.y > 0)
+            //    Yvector = c.transform.position.y;
         }
         //Debug.Log("target.position.y-transform.position" + (target.position.y - transform.position.y));
 
@@ -80,8 +134,7 @@ public class BasicCamera : MonoBehaviour
             c.transform.position = Vector2.Lerp(c.transform.position, CalculateVector, Time.deltaTime * cameraspeed);
 
 
-        if (bindingcamera!=null)
-        bindingcamera.BindingCamera(c);
+     
 
 
     }
@@ -96,11 +149,18 @@ public class BasicCamera : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        TargetIsPlayer();
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+            StartCameraShake();
+            TargetIsPlayer();
         if (target == null || CurrentCamera == null)
             return;
         CameraMove(CurrentCamera, CalculateCameraVector());
         if(CurrentCamera!=null)
         PlayerHandler.instance.CurrentCamera = CurrentCamera;
+
+        CameraShake();
+
+        if (bindingcamera != null)
+            bindingcamera.BindingCamera(CurrentCamera);
     }
 }

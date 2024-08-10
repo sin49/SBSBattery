@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Mesh: {fileID: 2383365171884396213}
-  ParticleSystem: {fileID: 4721742807092742017}
+  ParticleSystem_: {fileID: 4721742807092742017}
 --- !u!65 &5388013338154773498
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -65,7 +65,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -112,7 +112,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5366623466459195317}
   - component: {fileID: 5437451041892555668}
-  - component: {fileID: 8208210225743594737}
   m_Layer: 0
   m_Name: solidShatter2
   m_TagString: Ground
@@ -197,27 +196,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 0, y: 0.45182768, z: -0.00000011920929}
     m_Extent: {x: 0.45, y: 0.4512088, z: 0.4500001}
   m_DirtyAABB: 0
---- !u!65 &8208210225743594737
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2383365171884396213}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.9, y: 0.9024176, z: 0.9000002}
-  m_Center: {x: 0, y: 0.37620878, z: -0.00000011920929}
 --- !u!1 &2572740501748539516
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,6 +514,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BoxBreakParticle
+      objectReference: {fileID: 0}
+    - target: {fileID: 7907614408668008824, guid: a49cee705e2dbe943a4eaa11efbc90a6,
+        type: 3}
+      propertyPath: stopAction
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

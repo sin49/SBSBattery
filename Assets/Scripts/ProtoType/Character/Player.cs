@@ -5,6 +5,7 @@ using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using UnityEngine.Windows.Speech;
 
@@ -59,7 +60,7 @@ public class Player : Character
     public float waitTime; // 코루틴 yield return 시간 조절
     public bool formChange; // 오브젝트 변신 중인지 체크    
     public GameObject changeEffect; // 변신 완료 이펙트
-    public bool onTransform; // 
+    public bool onTransform;// 
 
     [Space(15f)]
     public bool onGround; // 지상 판정 유무
@@ -80,6 +81,14 @@ public class Player : Character
     #endregion
 
     public bool inputCheck;
+
+    private void OnBecameInvisible()
+    {
+        if (PlayerHandler.instance.CurrentPlayer == this)
+        {
+            PlayerHandler.instance.PlayerFallOut();
+        }
+    }
 
     [Header("이동에 따른 값 변화 테스트")]
     public Vector3 velocityMove; // 벨로시티 이동 테스트
@@ -696,7 +705,10 @@ public class Player : Character
     public override void Dead()
     {
         PlayerStat.instance.pState = PlayerState.dead;
-        gameObject.SetActive(false);
+        if(!PlayerSpawnManager.Instance.DontSave)
+        GameManager.instance.LoadingSceneWithKariEffect(GameManager.instance.LoadLastestStage());
+        else
+            GameManager.instance.LoadingSceneWithKariEffect(SceneManager.GetActiveScene().name);
     }
     #endregion
 
