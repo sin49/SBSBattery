@@ -19,7 +19,15 @@ public class AnimationEvent : MonoBehaviour
 
     public void BoxOpend()
     {
-        GetComponentInParent<EnemyInstantiateObject>().SpawnBoxEnemy();
+        if (GetComponentInParent<EnemyInstantiateObject>() != null)
+        {
+            GetComponentInParent<EnemyInstantiateObject>().SpawnBoxEnemy();
+        }
+        else
+        {
+            GetComponentInParent<BossStageBox>().SpawnBoxEnemy();
+        }
+        
         transform.parent.gameObject.SetActive(false);        
     }
 }

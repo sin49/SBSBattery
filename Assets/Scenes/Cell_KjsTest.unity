@@ -10463,7 +10463,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 656011999}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1c27326e7dc604d449c54d8a3b70cf04, type: 3}
   m_Name: 
@@ -12057,7 +12057,7 @@ Transform:
   m_GameObject: {fileID: 817009599}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.494, y: 0, z: 0}
+  m_LocalPosition: {x: -0.5, y: 0.5, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12648,7 +12648,7 @@ Transform:
   m_GameObject: {fileID: 852575415}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.13, y: -1.79, z: -6.71}
+  m_LocalPosition: {x: -15.73, y: -1.28, z: -6.71}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13472,6 +13472,7 @@ GameObject:
   m_Component:
   - component: {fileID: 953037531}
   - component: {fileID: 953037530}
+  - component: {fileID: 953037532}
   m_Layer: 0
   m_Name: KjsTestS1Boss (1)
   m_TagString: Untagged
@@ -13494,7 +13495,7 @@ MonoBehaviour:
   Monitor: {fileID: 629039769}
   LHand: {fileID: 685958889}
   RHand: {fileID: 441645182}
-  Spotlight: {fileID: 656011999}
+  bf: {fileID: 953037532}
   lifeCount: 0
   lifeCountMax: 0
 --- !u!4 &953037531
@@ -13515,6 +13516,30 @@ Transform:
   - {fileID: 441645183}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &953037532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953037529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36d1226a0a1abae4687f3c26a8f450cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fallingObj:
+  - {fileID: 166877589986499431, guid: 1eee304738f8dae4b904dd146b874c6f, type: 3}
+  - {fileID: 9190717355191805024, guid: cd2fa4d0223ac6d46aace0f7753eccda, type: 3}
+  - {fileID: 4929648963815187467, guid: 07e75f2d0e6944646836a5069d99fe61, type: 3}
+  - {fileID: 2373335053027229543, guid: 033dd9f5d9a4e5e4e9899dcedd04de68, type: 3}
+  damage: 1
+  createTime: 1.2
+  minSpeed: 1
+  maxSpeed: 6
+  createCountMax: 30
+  fallingHeight: 3
+  bossField: {fileID: 1276334023607860866}
 --- !u!1 &970392165
 GameObject:
   m_ObjectHideFlags: 0
@@ -16845,6 +16870,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 76356394766338755, guid: 04b5e7c62857ca4469474fb531d18114,
+        type: 3}
+      propertyPath: yWidth
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 76356394766338755, guid: 04b5e7c62857ca4469474fb531d18114,
+        type: 3}
+      propertyPath: zWidth
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 76356394766338755, guid: 04b5e7c62857ca4469474fb531d18114,
+        type: 3}
+      propertyPath: patrolDistance
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 76356394766338755, guid: 04b5e7c62857ca4469474fb531d18114,
+        type: 3}
+      propertyPath: patrolWaitTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 76356394766338755, guid: 04b5e7c62857ca4469474fb531d18114,
+        type: 3}
+      propertyPath: leftPatrolRange
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 76356394766338755, guid: 04b5e7c62857ca4469474fb531d18114,
+        type: 3}
+      propertyPath: rightPatrolRange
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 76356394766338755, guid: 04b5e7c62857ca4469474fb531d18114,
+        type: 3}
+      propertyPath: trackingDistance
+      value: 2.07
+      objectReference: {fileID: 0}
     - target: {fileID: 4100606063395682568, guid: 04b5e7c62857ca4469474fb531d18114,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -18115,7 +18175,7 @@ Transform:
   m_GameObject: {fileID: 1599139504}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.475, y: 0, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0.5, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
