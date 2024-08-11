@@ -31,10 +31,15 @@ public class BossFalling : MonoBehaviour
     [Header("낙하물 카운트 제한, 낙하 높이")]   
     public int createCountMax;
     public float fallingHeight;
+    [Header("낙하 범위 조정")]
+    public float fallingRange;
     public Transform bossField;
     Vector3 fallingPoint;
     Vector3 fieldMin;
     Vector3 fieldMax;
+
+    Vector3 fixMin;
+    Vector3 fixMax;
 
     // Start is called before the first frame update
     void Start()
@@ -85,11 +90,24 @@ public class BossFalling : MonoBehaviour
 
     public Vector3 RandomSpawn()
     {
-        float posX = Random.Range(fieldMin.x, fieldMax.x);
-        float posZ = Random.Range(fieldMin.z, fieldMax.z);
+        Vector3 min = new(-0.5f / fallingRange, 0.5f, -0.5f / fallingRange);
+        Vector3 max = new(0.5f / fallingRange, 0.5f, 0.5f / fallingRange);
+        fixMin = bossField.TransformPoint(min);
+        fixMax = bossField.TransformPoint(max);
+
+        float posX = Random.Range(fixMin.x, fixMax.x);
+        float posZ = Random.Range(fixMin.z, fixMax.z);
 
         fallingPoint = new(posX, transform.position.y * fallingHeight, posZ);
 
         return fallingPoint;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Vector3 center = (fieldMin + fieldMax)/2;
+        Vector3 size = new(Mathf.Abs(fieldMax.x - fieldMin.x) / fallingRange, fieldMin.y, Mathf.Abs(fieldMax.z - fieldMin.z) / fallingRange);
+        Gizmos.DrawWireCube(center, size);
     }
 }

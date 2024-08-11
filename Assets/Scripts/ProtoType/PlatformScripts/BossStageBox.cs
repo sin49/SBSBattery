@@ -20,10 +20,7 @@ public class BossStageBox : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        Collider collider = GetComponent<Collider>();
-        Vector3 fallingSize = collider.bounds.size;
-        warningObj.transform.localScale = new(fallingSize.x, fallingSize.y, 1);
+        rb = GetComponent<Rigidbody>();        
         warningPos = new(transform.position.x, fieldPos.y+0.1f, transform.position.z);
     }
 

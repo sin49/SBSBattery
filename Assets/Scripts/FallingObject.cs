@@ -18,8 +18,6 @@ public class FallingObject : MonoBehaviour
     void Start()
     { 
         rb = GetComponent<Rigidbody>();
-        Renderer renderer = GetComponent<Renderer>();
-        Vector3 fallingSize = renderer.bounds.size;
         circlePos = new(transform.position.x, fieldPos.y+ 0.1f, transform.position.z);
     }
 
