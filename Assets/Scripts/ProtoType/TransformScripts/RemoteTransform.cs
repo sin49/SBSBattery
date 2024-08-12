@@ -24,7 +24,7 @@ public class RemoteTransform : Player
 
 
 
-    GameObject closestObject;
+ public   GameObject closestObject;
     GameObject activeEffectInstance;
     public float minimumdistance;
 
