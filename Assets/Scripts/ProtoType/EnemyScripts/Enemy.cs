@@ -481,8 +481,7 @@ public class Enemy: Character,DamagedByPAttack
 
     // 공격 초기화
     public void InitAttackCoolTime()
-    {
-        activeAttack = false;
+    {        
         onAttack = false;
     }
     #endregion

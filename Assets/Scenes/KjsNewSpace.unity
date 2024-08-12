@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 4565ba3556f52ef4ea8c729bbe382155, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -16061,6 +16061,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TvObjectBlue
       objectReference: {fileID: 0}
+    - target: {fileID: 1838147635839018791, guid: cc8177bbe5986a54e95495f8757e1b13,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1869306106636050830, guid: cc8177bbe5986a54e95495f8757e1b13,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -16650,11 +16655,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1661135809}
     m_Modifications:
-    - target: {fileID: 2446822294638418499, guid: 182321a561f69434e8780d30419bdeb2,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 91dab7fc6ba34fc469d50a3fe416ff95, type: 2}
     - target: {fileID: 4100606063395682568, guid: 182321a561f69434e8780d30419bdeb2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -25787,6 +25787,31 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 76356394766338755, guid: 04b5e7c62857ca4469474fb531d18114,
+        type: 3}
+      propertyPath: searchColliderPos.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 76356394766338755, guid: 04b5e7c62857ca4469474fb531d18114,
+        type: 3}
+      propertyPath: searchColliderPos.z
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 76356394766338755, guid: 04b5e7c62857ca4469474fb531d18114,
+        type: 3}
+      propertyPath: searchColliderRange.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 76356394766338755, guid: 04b5e7c62857ca4469474fb531d18114,
+        type: 3}
+      propertyPath: searchColliderRange.y
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 76356394766338755, guid: 04b5e7c62857ca4469474fb531d18114,
+        type: 3}
+      propertyPath: searchColliderRange.z
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2357994283437468990, guid: 04b5e7c62857ca4469474fb531d18114,
         type: 3}
       propertyPath: m_Controller
@@ -25841,6 +25866,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5333237541237593352, guid: 04b5e7c62857ca4469474fb531d18114,
+        type: 3}
+      propertyPath: rotationSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5333237541237593352, guid: 04b5e7c62857ca4469474fb531d18114,
+        type: 3}
+      propertyPath: initattackCoolTime
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 5972430000464431206, guid: 04b5e7c62857ca4469474fb531d18114,
         type: 3}
@@ -35479,20 +35514,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlueMonsterTvEnemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 451230839903378919, guid: d883542c6661d664f932a1e80d4277df,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2297294443717286002, guid: d883542c6661d664f932a1e80d4277df,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.485
+      value: 2.455
       objectReference: {fileID: 0}
     - target: {fileID: 2297294443717286002, guid: d883542c6661d664f932a1e80d4277df,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.22
+      value: 0.48000002
       objectReference: {fileID: 0}
     - target: {fileID: 2297294443717286002, guid: d883542c6661d664f932a1e80d4277df,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7.64
+      value: -6.94
       objectReference: {fileID: 0}
     - target: {fileID: 2297294443717286002, guid: d883542c6661d664f932a1e80d4277df,
         type: 3}
@@ -35547,20 +35587,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: RedMonsterTvEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 4343172627482462887, guid: c7f6248c9a6e62c45893e176ef545c48,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5232573617736085762, guid: c7f6248c9a6e62c45893e176ef545c48,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.2
+      value: 3.17
       objectReference: {fileID: 0}
     - target: {fileID: 5232573617736085762, guid: c7f6248c9a6e62c45893e176ef545c48,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.22
+      value: 0.48
       objectReference: {fileID: 0}
     - target: {fileID: 5232573617736085762, guid: c7f6248c9a6e62c45893e176ef545c48,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7.64
+      value: -6.94
       objectReference: {fileID: 0}
     - target: {fileID: 5232573617736085762, guid: c7f6248c9a6e62c45893e176ef545c48,
         type: 3}

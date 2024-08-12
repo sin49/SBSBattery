@@ -12,6 +12,7 @@ public class RushEnemy : Enemy
         //공격 콜라이더 오브젝트 활성화
         attackCollider.SetActive(true);
         //앞으로 돌진
+        base.Attack();
         rb.AddForce(transform.forward * rushForce, ForceMode.Impulse);
 
         attackCollider.GetComponent<EnemyMeleeAttack>().AttackReady(this, attackDelay);
