@@ -7,6 +7,7 @@ public class MeleeEnemy : Enemy
     public override void Attack()
     {
         attackCollider.SetActive(true);
+        base.Attack();
         attackCollider.GetComponent<EnemyMeleeAttack>().AttackReady(this, eStat.attackDelay);
     }
 }

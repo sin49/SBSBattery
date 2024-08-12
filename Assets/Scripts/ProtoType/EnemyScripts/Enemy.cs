@@ -442,7 +442,8 @@ public class Enemy: Character,DamagedByPAttack
     #region 공격함수
     public override void Attack()
     {
-
+        if(animaor != null)
+            animaor.Play("EnemyAttack");
     }
 
     // 공격 준비시간

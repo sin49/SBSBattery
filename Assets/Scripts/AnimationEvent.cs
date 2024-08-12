@@ -46,4 +46,9 @@ public class AnimationEvent : MonoBehaviour
         enemy.skinRenderer.materials = materials;
         enemy.activeAttack = false;
     }
+
+    public void EnemyAttackEvent()
+    {
+
+    }    
 }
