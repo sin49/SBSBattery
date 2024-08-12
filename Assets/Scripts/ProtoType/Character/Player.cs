@@ -433,7 +433,7 @@ public class Player : Character
         }
         rotateVector += new Vector3(0, 90, 0);
 
-        transform.rotation = Quaternion.Euler(rotateVector);
+        transform.GetChild(0).GetChild(0).rotation = Quaternion.Euler(rotateVector);
     }
     public void rotateBy3Dto2D()
     {
