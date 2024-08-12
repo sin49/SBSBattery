@@ -10,6 +10,8 @@ public class BulbEnemy : Enemy
 
     private void Update()
     {
+        ReadyAttackTime();
+
         if (reachCheck)
         {
             Debug.Log("ÀÚÆø");

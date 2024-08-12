@@ -5,10 +5,18 @@ using UnityEngine;
 public class AnimationEvent : MonoBehaviour
 {
     public Player player;
+    public Enemy enemy;
 
     private void Awake()
     {
-        player = GetComponentInParent<Player>();
+        if (GetComponentInParent<Player>() != null)
+        {
+            player = GetComponentInParent<Player>();
+        }
+        else
+        {
+            enemy= GetComponentInParent<Enemy>();
+        }
     }
 
     public void TransformEnd()
@@ -19,7 +27,23 @@ public class AnimationEvent : MonoBehaviour
 
     public void BoxOpend()
     {
-        GetComponentInParent<EnemyInstantiateObject>().SpawnBoxEnemy();
+        if (GetComponentInParent<EnemyInstantiateObject>() != null)
+        {
+            GetComponentInParent<EnemyInstantiateObject>().SpawnBoxEnemy();
+        }
+        else
+        {
+            GetComponentInParent<BossStageBox>().SpawnBoxEnemy();
+        }
+        
         transform.parent.gameObject.SetActive(false);        
+    }
+
+    public void EnemyHitted()
+    {
+        Material[] materials = enemy.skinRenderer.materials;
+        materials[1] = enemy.idleMat;
+        enemy.skinRenderer.materials = materials;
+        enemy.activeAttack = false;
     }
 }

@@ -8,7 +8,7 @@ public class BossTv : MonoBehaviour
     public BossHandle LHand;
     public BossHandle RHand;
 
-    public GameObject Spotlight;
+    public BossFalling bf;
 
     public int lifeCount;
     public int lifeCountMax;
@@ -16,7 +16,8 @@ public class BossTv : MonoBehaviour
     private void Start()
     {
         //LSweaper();
-        RSpotlight();
+        //RSpotlight();
+        FallingAttack();
     }
     public void LSweaper()
     {
@@ -25,16 +26,10 @@ public class BossTv : MonoBehaviour
     public void RSweaper()
     {
         StartCoroutine(RHand.Sweaper());
-    }
-    public void RSpotlight()
+    }    
+
+    public void FallingAttack()
     {
-        RHand.SpotLightSHow();
-        //StartCoroutine(RHand.SpotLightShow());
-    }
-    
-    public void LSpotlight()
-    {
-        LHand.SpotLightSHow();
-        //StartCoroutine(LHand.SpotLightShow());
+        bf.CreateFallingObject();
     }
 }
