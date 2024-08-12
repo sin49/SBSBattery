@@ -1098,7 +1098,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 2, z: 6}
+  m_Size: {x: 4, y: 2, z: 3}
   m_Center: {x: 0, y: 0.5, z: 0.2}
 --- !u!114 &6413879201968333993
 MonoBehaviour:
@@ -1221,7 +1221,8 @@ MonoBehaviour:
   animaor: {fileID: 2446822294638418499}
   idleMat: {fileID: 2100000, guid: e05bcd830f8909d4aa73cfc0fd455522, type: 2}
   hittedMat: {fileID: 2100000, guid: f7b3a12ef30f40544b225d4665485f28, type: 2}
-  renderer: {fileID: 5487582872936014451}
+  skinRenderer: {fileID: 5487582872936014451}
+  isMove: 0
   searchCubeRange: {x: 3.5, y: 0.63, z: 0.7}
   searchCubePos: {x: 0, y: 0.61, z: 0}
   searchCollider: {fileID: 5917569411468154374}
@@ -1286,7 +1287,7 @@ MonoBehaviour:
   attackSpeed: 0
   attackCoolTimebonus: 0
   initattackCoolTime: 1.5
-  attackDelay: 0
+  attackDelay: 1
   canMove: 1
   canAttack: 1
   eState: 0
@@ -1588,6 +1589,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8252638664993472453}
   - component: {fileID: 2446822294638418499}
+  - component: {fileID: 8810650962469661859}
   m_Layer: 0
   m_Name: CommonEnermy
   m_TagString: Untagged
@@ -1624,10 +1626,10 @@ Animator:
   m_GameObject: {fileID: 8290176016248668541}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: e5e927332e1c39d4bbdfda25fdf141ce, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7be8d0f7fa957634993c8957bb82796d, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -1635,6 +1637,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8810650962469661859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8290176016248668541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fe0255936039f54cbd2f38c26a5c1a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  enemy: {fileID: 0}
 --- !u!1 &8495724986988992419
 GameObject:
   m_ObjectHideFlags: 0

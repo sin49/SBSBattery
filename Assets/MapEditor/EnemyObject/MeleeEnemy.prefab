@@ -280,7 +280,8 @@ MonoBehaviour:
   animaor: {fileID: 7477330049228919783}
   idleMat: {fileID: 2100000, guid: e05bcd830f8909d4aa73cfc0fd455522, type: 2}
   hittedMat: {fileID: 2100000, guid: f7b3a12ef30f40544b225d4665485f28, type: 2}
-  renderer: {fileID: 7225222973139956466}
+  skinRenderer: {fileID: 7225222973139956466}
+  isMove: 0
   searchCubeRange: {x: 2, y: 0.5, z: 0.5}
   searchCubePos: {x: 0, y: 0.5, z: 0}
   searchCollider: {fileID: 772453129297269744}
@@ -841,6 +842,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3234895078922946737}
   - component: {fileID: 7477330049228919783}
+  - component: {fileID: 5343910180008614279}
   m_Layer: 0
   m_Name: CommonEnermy
   m_TagString: Untagged
@@ -887,6 +889,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5343910180008614279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2703359832040041659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fe0255936039f54cbd2f38c26a5c1a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  enemy: {fileID: 0}
 --- !u!1 &2735605009447870284
 GameObject:
   m_ObjectHideFlags: 0

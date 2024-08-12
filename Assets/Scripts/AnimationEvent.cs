@@ -9,7 +9,14 @@ public class AnimationEvent : MonoBehaviour
 
     private void Awake()
     {
-        player = GetComponentInParent<Player>();
+        if (GetComponentInParent<Player>() != null)
+        {
+            player = GetComponentInParent<Player>();
+        }
+        else
+        {
+            enemy= GetComponentInParent<Enemy>();
+        }
     }
 
     public void TransformEnd()
@@ -34,8 +41,9 @@ public class AnimationEvent : MonoBehaviour
 
     public void EnemyHitted()
     {
-        Material[] materials = enemy.renderer.materials;
+        Material[] materials = enemy.skinRenderer.materials;
         materials[1] = enemy.idleMat;
-        enemy.renderer.materials = materials;
+        enemy.skinRenderer.materials = materials;
+        enemy.activeAttack = false;
     }
 }

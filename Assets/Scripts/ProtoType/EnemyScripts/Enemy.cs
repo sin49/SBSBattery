@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Linq;
 using System.Net.Http.Headers;
-
+using Unity.VisualScripting;
 using UnityEngine;
 
 public interface DamagedByPAttack
@@ -23,7 +23,9 @@ public class Enemy: Character,DamagedByPAttack
     public Animator animaor;
     public Material idleMat;
     public Material hittedMat;
-    public Renderer renderer;
+    public Renderer skinRenderer;
+    [HideInInspector]
+    public bool isMove;
     [Header("플레이어 탐색 큐브 조정(드로우 기즈모)")]
     public Vector3 searchCubeRange; // 플레이어 인지 범위를 Cube 사이즈로 설정
     public Vector3 searchCubePos; // Cube 위치 조정
@@ -137,6 +139,20 @@ public class Enemy: Character,DamagedByPAttack
         {
             Move();
         }
+
+        if (tracking && !onAttack)
+        {
+            isMove = true;
+        }
+        else
+        {
+            isMove = false;
+        }
+
+        if (animaor != null)
+        {
+            animaor.SetBool("isMove", isMove);
+        }
     }
 
     IEnumerator WaitStunTime()
@@ -181,11 +197,15 @@ public class Enemy: Character,DamagedByPAttack
             if (animaor != null)
             {
                 animaor.SetTrigger("isHitted");
-                Material[] materials = renderer.materials;
+                activeAttack = true;
+                Debug.Log("aaa"  + activeAttack);
+                attackTimer = attackInitCoolTime;
+                Material[] materials = skinRenderer.materials;
                 materials[1] = hittedMat;
-                renderer.materials = materials;
+                skinRenderer.materials = materials;
             }
-            InitAttackCoolTime();
+            else
+                InitAttackCoolTime();
         }
     }
 
@@ -433,17 +453,19 @@ public class Enemy: Character,DamagedByPAttack
     {
         if (onAttack && eStat.eState != EnemyState.dead)
         {
-            if (attackTimer > 0 && !activeAttack)
+            if(!activeAttack)
             {
-                attackTimer -= Time.deltaTime;
-            }
-            else if (attackTimer <= 0)
-            {
-                activeAttack = true;
-                attackTimer = eStat.initattackCoolTime;
-                Attack();
-            }
-
+                if (attackTimer > 0)
+                {
+                    attackTimer -= Time.deltaTime;
+                }
+                else
+                {
+                    activeAttack = true;
+                    attackTimer = eStat.initattackCoolTime;
+                    Attack();
+                }
+            }           
         }        
     }
 
