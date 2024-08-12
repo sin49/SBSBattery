@@ -196,16 +196,13 @@ public class Enemy: Character,DamagedByPAttack
             rb.AddForce(-transform.forward * 3f, ForceMode.Impulse);
             if (animaor != null)
             {
-                animaor.SetTrigger("isHitted");
-                activeAttack = true;
-                Debug.Log("aaa"  + activeAttack);
+                animaor.SetTrigger("isHitted");                
                 attackTimer = attackInitCoolTime;
                 Material[] materials = skinRenderer.materials;
                 materials[1] = hittedMat;
                 skinRenderer.materials = materials;
             }
-            else
-                InitAttackCoolTime();
+            InitAttackCoolTime();
         }
     }
 
