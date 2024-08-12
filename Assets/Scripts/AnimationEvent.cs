@@ -5,7 +5,8 @@ using UnityEngine;
 public class AnimationEvent : MonoBehaviour
 {
     public Player player;
-    public Enemy enemy;
+    Enemy enemy;
+    BossStageEnemy bse;
 
     private void Awake()
     {
@@ -13,9 +14,13 @@ public class AnimationEvent : MonoBehaviour
         {
             player = GetComponentInParent<Player>();
         }
-        else
+        else if(GetComponentInParent<Enemy>() != null)
         {
             enemy= GetComponentInParent<Enemy>();
+        }
+        else
+        {
+            bse = GetComponentInParent<BossStageEnemy>();
         }
     }
 
@@ -41,10 +46,20 @@ public class AnimationEvent : MonoBehaviour
 
     public void EnemyHitted()
     {
-        Material[] materials = enemy.skinRenderer.materials;
-        materials[1] = enemy.idleMat;
-        enemy.skinRenderer.materials = materials;
-        enemy.activeAttack = false;
+        if (enemy != null)
+        {
+            Material[] materials = enemy.skinRenderer.materials;
+            materials[1] = enemy.idleMat;
+            enemy.skinRenderer.materials = materials;
+            enemy.activeAttack = false;
+        }
+        else
+        {
+            Material[] materials = bse.skinRenderer.materials;
+            materials[1] = bse.idleMat;
+            bse.skinRenderer.materials = materials;
+            bse.activeAttack = false;
+        }
     }
 
     public void EnemyAttackEvent()
