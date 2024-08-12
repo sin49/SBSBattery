@@ -24,6 +24,7 @@ public class BossStageEnemy : Character, DamagedByPAttack
     public float attackTimer;
     public float attackTimerMax;
     public float attackDelay;
+    public float knockbackForce;
 
     public bool onAttack;
     public bool activeAttack;
@@ -125,6 +126,8 @@ public class BossStageEnemy : Character, DamagedByPAttack
             materials[1] = hittedMat;
             skinRenderer.materials = materials;
         }
+        rb.velocity = Vector3.zero;
+        rb.AddForce(-transform.forward * knockbackForce, ForceMode.Force);
     }
 
     public override void Dead()

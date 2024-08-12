@@ -48,6 +48,9 @@ public class Player : Character
     [Header("#키 선입력 관련")]
     public float attackBufferTimeMax;
     public float attackBufferTimer;
+    [Header("착지 이펙트 활성화 관련")]
+    public float flyTimer;
+    public float flyTime;
 
     [Header("애니메이션 관련 변수")]
     public bool isJump, jumpAnim;
@@ -141,6 +144,15 @@ public class Player : Character
         {            
             attackBufferTimer -= Time.deltaTime;
         }        
+
+        if (!onGround)
+        {
+            if (flyTimer > 0)
+            {
+                flyTimer -= Time.deltaTime;
+            }
+        }
+
     }
 
     public void BaseBufferTimer()
@@ -190,8 +202,10 @@ public class Player : Character
                     downAttack = false;
                     PlayerStat.instance.doubleJump = true;
 
-                    if (LandingEffect != null)
+                    if (LandingEffect != null && flyTimer < 0)
                         LandingEffect.SetActive(true);
+
+                    flyTimer = flyTime;
                 }
 
 

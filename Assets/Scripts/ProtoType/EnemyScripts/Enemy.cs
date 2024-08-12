@@ -24,6 +24,7 @@ public class Enemy: Character,DamagedByPAttack
     public Material idleMat;
     public Material hittedMat;
     public Renderer skinRenderer;
+    public ParticleSystem moveEffect;
     [HideInInspector]
     public bool isMove;
     [Header("플레이어 탐색 큐브 조정(드로우 기즈모)")]
