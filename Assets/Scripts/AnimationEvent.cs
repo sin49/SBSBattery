@@ -5,6 +5,7 @@ using UnityEngine;
 public class AnimationEvent : MonoBehaviour
 {
     public Player player;
+    public Enemy enemy;
 
     private void Awake()
     {
@@ -29,5 +30,12 @@ public class AnimationEvent : MonoBehaviour
         }
         
         transform.parent.gameObject.SetActive(false);        
+    }
+
+    public void EnemyHitted()
+    {
+        Material[] materials = enemy.renderer.materials;
+        materials[1] = enemy.idleMat;
+        enemy.renderer.materials = materials;
     }
 }

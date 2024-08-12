@@ -111,7 +111,7 @@ Animator:
   m_Controller: {fileID: 0}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -1182,24 +1182,28 @@ MonoBehaviour:
   attackCollider: {fileID: 7760997083194175977}
   deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
     type: 3}
+  animaor: {fileID: 2357994283437468990}
+  idleMat: {fileID: 2100000, guid: e05bcd830f8909d4aa73cfc0fd455522, type: 2}
+  hittedMat: {fileID: 2100000, guid: f7b3a12ef30f40544b225d4665485f28, type: 2}
+  renderer: {fileID: 6372661884425909668}
   searchCubeRange: {x: 2, y: 0.45, z: 0.7}
   searchCubePos: {x: 0, y: 0.45, z: 0}
   searchCollider: {fileID: 8107239841027509953}
   searchColliderRange: {x: 0, y: 0, z: 0}
   searchColliderPos: {x: 0, y: 0, z: 0}
   searchPlayer: 0
-  trackingDistance: 0
+  trackingDistance: 2.07
   disToPlayer: 0
   patrolGroup: []
   targetPatrol: {x: 0, y: 0, z: 0}
-  patrolWaitTime: 0
-  leftPatrolRange: 0
-  rightPatrolRange: 0
-  patrolDistance: 0
+  patrolWaitTime: 1
+  leftPatrolRange: 0.5
+  rightPatrolRange: 1.2
+  patrolDistance: 0.1
   trackingTime: 0
   onPatrol: 0
-  yWidth: 0
-  zWidth: 0
+  yWidth: 3
+  zWidth: 3
   rangeCollider: {fileID: 2202126381614901408}
   rangePos: {x: 0, y: 0, z: 0}
   rangeSize: {x: 0, y: 0, z: 0}

@@ -19,7 +19,11 @@ public class Enemy: Character,DamagedByPAttack
     public GameObject attackCollider; // 적의 공격 콜라이더 오브젝트    
     public ParticleSystem deadEffect;
     bool posRetry;
-
+    [Header("적 애니메이션 관련")]
+    public Animator animaor;
+    public Material idleMat;
+    public Material hittedMat;
+    public Renderer renderer;
     [Header("플레이어 탐색 큐브 조정(드로우 기즈모)")]
     public Vector3 searchCubeRange; // 플레이어 인지 범위를 Cube 사이즈로 설정
     public Vector3 searchCubePos; // Cube 위치 조정
@@ -95,16 +99,6 @@ public class Enemy: Character,DamagedByPAttack
             if(onPatrol)
                 StartCoroutine(InitPatrolTarget());
         }
-    }
-
-    public virtual void InitAwakeSource()
-    {
-
-    }
-
-    public virtual void InitStartSource()
-    {
-
     }
 
     public void InitPatrolPoint()
@@ -184,6 +178,13 @@ public class Enemy: Character,DamagedByPAttack
                 }
             }
             rb.AddForce(-transform.forward * 3f, ForceMode.Impulse);
+            if (animaor != null)
+            {
+                animaor.SetTrigger("isHitted");
+                Material[] materials = renderer.materials;
+                materials[1] = hittedMat;
+                renderer.materials = materials;
+            }
             InitAttackCoolTime();
         }
     }
