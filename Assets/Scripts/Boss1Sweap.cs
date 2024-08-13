@@ -15,23 +15,28 @@ public class Boss1Sweap : EnemyAction
     public Boss1Hand RHand;
 
     Transform target;
-
-   public Transform BossField;
+    [Header("보스 스테이지 바닥")]
+    public Transform BossField;
 
     Vector3 fieldMin;
     Vector3 fieldMax;
-
+    [Header("손 크기(손 y축 오프셋 전용)")]
     public float handsize = 1;
-
+    [Header("휩쓸기 한 번 후 다음 휩쓸기 까지의 간격")]
     public float SweaperPatternDealy;
-    
-    
+    [Header("테스트 중 숫자가 0이되면 고장남")]
+    [Header("휩쓸기 위해 손이 휩쓸기 시작 지점까지 가는 시간")]
     public float SweaperStartMoveTime;
+    [Header("시작지정에서 대기하는 시간")]
     public float sweaperwaitTime;
+    [Header("시작지점에서 목표지점까지 가는 시간")]
     public float SweaperEndMoveTime;
+    [Header("목표지점까지 이동 후 다시 원위치하는 시간")]
     public float sweaperReturnTime;
+    
     float sweapertimer;
     bool OnAction;
+    [HideInInspector]
     public float SweapDistanceRandomWeight;
     protected override void CancelActionEvent()
     {
@@ -224,6 +229,7 @@ public class Boss1Sweap : EnemyAction
         }
 
         sweapertimer = 0;
+        yield return new WaitForSeconds(SweaperPatternDealy);
         //한번더
         tuple = calculateSweapvector(StartPos, hand.position, randdistance, SweaperEndMoveTime);
         vec = tuple.Item1;
