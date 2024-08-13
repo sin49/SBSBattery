@@ -24,14 +24,18 @@ using UnityEngine.Rendering;
 [Serializable]
 public class Boss1FallObj
 {
+    [Header("생성 오브젝트")]
     public GameObject fallingobj;//오브젝트 인스턴스한 프리팹
+    [Header("무조건 생성 갯수")]
     public int number = 0;//확률 상관없이 무조건 이정도만 나옴 0이면 확률
+    [Header("확률")]
     public int possibility;//확률
 }
 [Serializable]
 public class Boss1BoxFallCreateObj
 {
     public GameObject Createobj;//오브젝트 인스턴스한 프리팹
+    [Header("확률")]
     public int possibility;//확률
 }
 
@@ -49,15 +53,15 @@ public class BossFalling : EnemyAction
     [Header("낙하물 오브젝트")]
     public List<Boss1FallObj> fallingObj2;
 
-    List<GameObject> fallingobjects=new List<GameObject>();
+    List<GameObject> fallingobjects = new List<GameObject>();
 
-    HashSet<GameObject> EssenetialFallObjectHashSet= new HashSet<GameObject>();
+    HashSet<GameObject> EssenetialFallObjectHashSet = new HashSet<GameObject>();
 
     [Header("낙하 상자 오브젝트 생성")]
     public List<Boss1BoxFallCreateObj> fallingBoxCreateObj;
 
     List<GameObject> BoxFallCreateObjects;
-
+    [Header("데미지")]
     public float damage;
     [Header("생성시간, 최소/최대속도")]
     public float createTime;
@@ -65,11 +69,12 @@ public class BossFalling : EnemyAction
     public float maxSpeed;
 
     int createCount;
-    [Header("낙하물 카운트 제한, 낙하 높이")]   
+    [Header("낙하물 카운트 제한, 낙하 높이")]
     public int createCountMax;
     public float fallingHeight;
     [Header("낙하 범위 조정")]
     public float fallingRange;
+    [Header("보스 스테이지 바닥")]
     public Transform bossField;
     Vector3 fallingPoint;
     Vector3 fieldMin;

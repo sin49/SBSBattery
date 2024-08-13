@@ -11,27 +11,36 @@ public class Boss1Sweap : EnemyAction
 {
     public Boss1Hand Lhand;
     Vector3 LHandPosition;
+    Vector3 LhandOneRotation;
     Vector3 RHandPosition;
+    Vector3 RhandOneRotation;
     public Boss1Hand RHand;
 
     Transform target;
-
-   public Transform BossField;
+    [Header("보스 스테이지 바닥")]
+    public Transform BossField;
 
     Vector3 fieldMin;
     Vector3 fieldMax;
-
+    //[Header("휩쓸기 손 회전?")]
+    //public Vector3 HandRotation;
+    [Header("손 크기(손 y축 오프셋 전용)")]
     public float handsize = 1;
-
+    [Header("휩쓸기 한 번 후 다음 휩쓸기 까지의 간격")]
     public float SweaperPatternDealy;
-    
-    
+    [Header("테스트 중 숫자가 0이되면 고장남")]
+    [Header("휩쓸기 위해 손이 휩쓸기 시작 지점까지 가는 시간")]
     public float SweaperStartMoveTime;
+    [Header("시작지정에서 대기하는 시간")]
     public float sweaperwaitTime;
+    [Header("시작지점에서 목표지점까지 가는 시간")]
     public float SweaperEndMoveTime;
+    [Header("목표지점까지 이동 후 다시 원위치하는 시간")]
     public float sweaperReturnTime;
+    
     float sweapertimer;
     bool OnAction;
+    [HideInInspector]
     public float SweapDistanceRandomWeight;
     protected override void CancelActionEvent()
     {
@@ -45,10 +54,11 @@ public class Boss1Sweap : EnemyAction
         var Lvec = Ltuple.Item1;
         var Rvec = Rtuple.Item1;
        var speed = Ltuple.Item2;
+        sweapertimer = 0;
         while (sweapertimer <= sweaperReturnTime)
         {
-            Lhand.transform.Translate(Lvec.normalized * speed * Time.fixedDeltaTime);
-            RHand.transform.Translate(Rvec.normalized * speed * Time.fixedDeltaTime);
+            Lhand.transform.Translate(Lvec.normalized * speed * Time.fixedDeltaTime, Space.World);
+            RHand.transform.Translate(Rvec.normalized * speed * Time.fixedDeltaTime, Space.World);
             sweapertimer += Time.fixedDeltaTime;
             yield return null;
         }
@@ -93,9 +103,15 @@ public class Boss1Sweap : EnemyAction
         }
 
         if (Lhand != null)
+        {
             LHandPosition = Lhand.transform.position;
-        if(RHand!=null)
-            RHandPosition= RHand.transform.position;
+            LhandOneRotation = Lhand.transform.rotation.eulerAngles;
+        }
+        if (RHand != null)
+        {
+            RHandPosition = RHand.transform.position;
+            RhandOneRotation = RHand.transform.rotation.eulerAngles;
+        }
     }
     public Tuple<Vector3, float> calculateSweapvector(Vector3 goal, Vector3 startpos, float time)
     {
@@ -157,7 +173,7 @@ public class Boss1Sweap : EnemyAction
         float speed = tuple.Item2;
         while (sweapertimer <= SweaperStartMoveTime)
         {
-            hand.Translate(vec.normalized * speed * Time.fixedDeltaTime);
+            hand.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
             sweapertimer += Time.fixedDeltaTime;
             yield return null;
         }
@@ -170,7 +186,7 @@ public class Boss1Sweap : EnemyAction
         speed = tuple.Item2;
         while (sweapertimer <= SweaperEndMoveTime)
         {
-            hand.Translate(vec.normalized * speed * Time.fixedDeltaTime);
+            hand.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
             sweapertimer += Time.fixedDeltaTime;
             yield return null;
         }
@@ -182,7 +198,7 @@ public class Boss1Sweap : EnemyAction
         speed = tuple.Item2;
         while (sweapertimer <= sweaperReturnTime)
         {
-            hand.Translate(vec.normalized * speed * Time.fixedDeltaTime);
+            hand.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
             sweapertimer += Time.fixedDeltaTime;
             yield return null;
         }
@@ -196,6 +212,7 @@ public class Boss1Sweap : EnemyAction
         Vector3 HandOnepositon = hand.position;
         float randdistance = UnityEngine.Random.Range(0, SweapDistanceRandomWeight);
         int randomValue = UnityEngine.Random.Range(0, 2) * 2 - 1;
+
         randdistance *= randomValue;
 
         //시작지점으로 손이 감
@@ -203,9 +220,11 @@ public class Boss1Sweap : EnemyAction
         Vector3 vec = tuple.Item1;
         vec.y += handsize * 0.5f;
         float speed = tuple.Item2;
+        var rotationspeed = 90 / SweaperStartMoveTime;
         while (sweapertimer <= SweaperStartMoveTime)
         {
-            hand.Translate(vec.normalized * speed * Time.fixedDeltaTime);
+            hand.Translate(vec.normalized * speed * Time.fixedDeltaTime,Space.World);
+       
             sweapertimer += Time.fixedDeltaTime;
             yield return null;
         }
@@ -216,14 +235,16 @@ public class Boss1Sweap : EnemyAction
         vec = tuple.Item1;
         vec.y = 0;
         speed = tuple.Item2;
+        
         while (sweapertimer <= SweaperEndMoveTime)
         {
-            hand.Translate(vec.normalized * speed * Time.fixedDeltaTime);
+            hand.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
             sweapertimer += Time.fixedDeltaTime;
             yield return null;
         }
 
         sweapertimer = 0;
+        yield return new WaitForSeconds(SweaperPatternDealy);
         //한번더
         tuple = calculateSweapvector(StartPos, hand.position, randdistance, SweaperEndMoveTime);
         vec = tuple.Item1;
@@ -231,7 +252,7 @@ public class Boss1Sweap : EnemyAction
         speed = tuple.Item2;
         while (sweapertimer <= SweaperEndMoveTime)
         {
-            hand.Translate(vec.normalized * speed * Time.fixedDeltaTime);
+            hand.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
             sweapertimer += Time.fixedDeltaTime;
             yield return null;
         }
@@ -243,7 +264,7 @@ public class Boss1Sweap : EnemyAction
         speed = tuple.Item2;
         while (sweapertimer <= sweaperReturnTime)
         {
-            hand.Translate(vec.normalized * speed * Time.fixedDeltaTime);
+            hand.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
             sweapertimer += Time.fixedDeltaTime;
             yield return null;
         }

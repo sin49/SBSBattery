@@ -14,13 +14,19 @@ public class BossTv : RemoteObject
 
     public EnemyAction TestAction;
     List<EnemyAction> actions=new List<EnemyAction>();
-    public int lifeCount;
+    int lifeCount;
+    [Header("보스 모니터 체력(노기능)")]
     public int lifeCountMax;
 
     bool onPattern;
-    int index;
-    public bool randomPattern;
 
+
+    int index;
+    [Header("랜덤 패턴(끄면 순서대로)")]
+    public bool randomPattern;
+    [Header("테스트 패턴만 사용(우선순위 높음)")]
+    public bool OnlyTestPattern;
+    [Header("손 체력")]
     public float HandHP;
 
 
@@ -114,19 +120,22 @@ public class BossTv : RemoteObject
     {
         if (!onPattern)
         {
-            //if (randomPattern)
-            //{
-            //    int rand = UnityEngine.Random.Range(0, actions.Count);
-            //    TestAction = actions[rand];
-            //}
-            //else
-            //{
-            //    TestAction = actions[index];
+            if (!OnlyTestPattern)
+            {
+                if (randomPattern)
+                {
+                    int rand = UnityEngine.Random.Range(0, actions.Count);
+                    TestAction = actions[rand];
+                }
+                else
+                {
+                    TestAction = actions[index];
 
-            //    index++;
-            //    if (index>=actions.Count)
-            //        index = 0;
-            //}
+                    index++;
+                    if (index >= actions.Count)
+                        index = 0;
+                }
+            }
             TestAction.Invoke(patternComplete,target);
             Debug.Log("실행됨");
             onPattern = true;

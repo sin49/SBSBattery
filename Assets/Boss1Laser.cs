@@ -10,13 +10,13 @@ public class Boss1Laser : EnemyAction
 
 
 
-
+    [Header("레이저 속도")]
     public float LaserSpeed;
 
     public Transform warning;
 
     float laserlifetime;
-
+    [Header("레이저 활성화 까지의 시간")]
     public float laserActiveTimer = 1.5f;
 
     public Transform ColliderSpawnPoint;
@@ -24,11 +24,11 @@ public class Boss1Laser : EnemyAction
     public Transform Laser;
 
     public Transform laserBeam;
-
+    [Header("장판 범위")]
     public float TrailColScale = 1;
-
+    [Header("장판 지속 시간")]
     public float TrailDuration;
-
+    [Header("장판 공격 판정 생성 간격")]
     public float ColliderSpawnTime;
 
     public TrailRenderer TrailRenderer;
@@ -142,7 +142,7 @@ public class Boss1Laser : EnemyAction
         }
         ActiveTrailColNumber++;
 
-        col.initLaserCollider(TrailDuration, Vector3.one* TrailColScale,
+        col.initLaserCollider(TrailDuration-0.07f, Vector3.one* TrailColScale,
               laserpullingevent);
     }
 
