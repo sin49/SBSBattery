@@ -102,8 +102,9 @@ public class Boss1Sweap : EnemyAction
    
         Vector3 vec = goal - startpos;
         float distance = vec.magnitude;
-        float speed = distance / time;
-
+     
+            float speed = distance / time;
+      
         return new Tuple<Vector3, float>(vec, speed);
     }
     public Tuple<Vector3, float> calculateSweapvector(Vector3 goal, Vector3 startpos,float randomweight, float time)

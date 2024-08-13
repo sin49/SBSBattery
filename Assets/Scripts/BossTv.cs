@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+//주석처리
+//패턴 테스트 편하게
 public class BossTv : RemoteObject
 {
     public GameObject Monitor;
@@ -126,13 +127,12 @@ public class BossTv : RemoteObject
             //    if (index>=actions.Count)
             //        index = 0;
             //}
-            TestAction.Invoke(patternComplete, target);
+            TestAction.Invoke(patternComplete,target);
             Debug.Log("실행됨");
             onPattern = true;
         }
 
     }
-
     void patternComplete()
     {
         onPattern = false;
