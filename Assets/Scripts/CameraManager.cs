@@ -1,27 +1,37 @@
  using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Cinemachine;
 public class CameraManager : MonoBehaviour
 {
-    public Camera DefaultCamera;
-    public Camera camera2D;
-    public Camera Camera3D;
-
-    public void ChangeCamera(Camera camera)
+    public CinemachineVirtualCamera[] VirtualCameras;
+    public CinemachineVirtualCamera activedcamera;
+    public BoxCollider BasicCameraConfiner;
+ protected  virtual void initializeCamera()
     {
-
-    }
-    void CameraHandle()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        VirtualCameras=this.transform.GetComponentsInChildren<CinemachineVirtualCamera>();
+        for(int n=0;n<VirtualCameras.Length;n++)
         {
-            
+            VirtualCameras[n].gameObject.SetActive(false);
+            VirtualCameras[n].GetComponent<CineMachineBasicCamera>().CameraIndex = n;
         }
+        VirtualCameras[0].gameObject.SetActive(true);
+       var a=  VirtualCameras[0].GetComponent<CinemachineConfiner>();
+        a.m_BoundingVolume = BasicCameraConfiner;
+        activedcamera = VirtualCameras[0];
     }
-   
-    void Update()
+
+    protected virtual void Awake()
     {
-        
+        initializeCamera();
+    }
+
+    public virtual void ActiveCamera(int n)
+    {
+        if (n >= VirtualCameras.Length)
+            return;
+        activedcamera.gameObject.SetActive(false);
+        VirtualCameras[n].gameObject.SetActive(true);
+        activedcamera = VirtualCameras[n];
     }
 }

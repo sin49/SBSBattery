@@ -1,9 +1,11 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CctvEnemy : Enemy
 {
     public GameObject cctvHead;
+    public GameObject cctvNeck;
     [Header("Á¤Âû Æ÷ÀÎÆ®")]
     public Transform[] patrolPoint;
     int pointElement;    
@@ -15,8 +17,11 @@ public class CctvEnemy : Enemy
     public float callTime;
     public float stopTime;
 
-    public Quaternion rot;    
-    
+    public Quaternion rot;
+
+    public float headValue;
+    public float neckValue;
+
     private void Start()
     {
         pointCheck = true;
@@ -55,7 +60,7 @@ public class CctvEnemy : Enemy
             {
                 if (!activeAttack && !onAttack)
                 {
-                    CctvTrackingMove();
+                    TrackingMove();
                 }
             }
 
@@ -78,14 +83,14 @@ public class CctvEnemy : Enemy
             endWait = false;
         }
 
-        if (!pointCheck)
+        /*if (!pointCheck)
         {
             testTarget = target.position - cctvHead.transform.position;
-
-            Quaternion lookRot = Quaternion.LookRotation(testTarget);            
-            rot = lookRot;            
-            /*float angleValue = Quaternion.Angle(cctvHead.transform.rotation, lookRot);
-            float finalSpeed = rotationSpeed * (angleValue / 180f);*/
+            
+            Quaternion lookRot = Quaternion.LookRotation(testTarget);
+            rot = lookRot;
+            //float angleValue = Quaternion.Angle(cctvHead.transform.rotation, lookRot);
+            //float finalSpeed = rotationSpeed * (angleValue / 180f);
             cctvHead.transform.rotation = Quaternion.RotateTowards(cctvHead.transform.rotation, lookRot, eStat.rotationSpeed * Time.deltaTime);
 
             if (Quaternion.Angle(cctvHead.transform.rotation, lookRot) < 0.2f)
@@ -93,6 +98,47 @@ public class CctvEnemy : Enemy
                 pointCheck = true;
                 StartCoroutine(CctvWaitTime());              
             }
+        }*/
+    }
+
+    public void TestCctvPatrol()
+    {
+        if (pointCheck && endWait)
+        {
+            if (pointElement >= patrolPoint.Length)
+            {
+                pointElement = 0;
+            }
+            target = patrolPoint[pointElement++];
+            pointCheck = false;
+            endWait = false;
+        }
+
+        if (!pointCheck)
+        {
+            //testTarget = target.position - transform.position;
+            //Quaternion a=Quaternion.LookRotation(testTarget);
+            //Vector3 CCTVrotation = new Vector3(cctvNeck.transform.rotation.x, 0, cctvHead.transform.rotation.z);
+            //var b = Vector3.RotateTowards(CCTVrotation, testTarget, eStat.rotationSpeed * Time.deltaTime,0);
+            //cctvNeck.transform.rotation = Quaternion.Euler(Vector3.right * b.x);
+            //cctvHead.transform.rotation = Quaternion.Euler(Vector3.forward * b.z);
+            Vector3 neckTarget = target.position - cctvNeck.transform.position;
+
+            Quaternion lookRot = Quaternion.LookRotation(testTarget);
+            Quaternion neckLook = Quaternion.LookRotation(neckTarget);
+
+            rot = lookRot;
+
+            cctvHead.transform.rotation = Quaternion.RotateTowards(cctvHead.transform.rotation, lookRot, eStat.rotationSpeed * Time.deltaTime);
+            cctvNeck.transform.rotation = Quaternion.RotateTowards(cctvNeck.transform.rotation, neckLook, eStat.rotationSpeed * Time.deltaTime);
+
+            headValue = Quaternion.Angle(cctvHead.transform.rotation, lookRot);
+            neckValue = Quaternion.Angle(cctvNeck.transform.rotation, neckLook);
+            /*if (Quaternion.Angle(cctvHead.transform.rotation, lookRot) < 0.2f)
+            {
+                pointCheck = true;
+                StartCoroutine(CctvWaitTime());
+            }*/
         }
     }
 
@@ -105,9 +151,10 @@ public class CctvEnemy : Enemy
     void CctvTrackingMove()
     {
         testTarget = target.position - cctvHead.transform.position;
+        //testTarget.y = 0;
+        //cctvHead.transform.LookAt(testTarget);
         Quaternion lookRot = Quaternion.LookRotation(testTarget);
-        /*float angleValue = Quaternion.Angle(cctvHead.transform.rotation, lookRot);
-        float finalSpeed = rotationSpeed * (angleValue / 180f);*/
+        //lookRot = Quaternion.Euler(lookRot.eulerAngles.x, cctvHead.transform.eulerAngles.y, lookRot.eulerAngles.z);        
         //cctvHead.transform.rotation = Quaternion.Lerp(cctvHead.transform.rotation, lookRot,rotationSpeed * Time.deltaTime);
         cctvHead.transform.rotation = Quaternion.RotateTowards(cctvHead.transform.rotation, lookRot, eStat.rotationSpeed * Time.deltaTime);
         //cctvHead.transform.rotation = Vector3.RotateTowards();

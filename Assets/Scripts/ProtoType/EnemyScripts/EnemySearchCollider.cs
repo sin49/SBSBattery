@@ -6,8 +6,7 @@ public class EnemySearchCollider : MonoBehaviour
 {
     Enemy enemy;
     BoxCollider searchCollider;
-    Coroutine ct;
-
+    
     private void Awake()
     {
         enemy = GetComponentInParent<Enemy>();
@@ -24,36 +23,20 @@ public class EnemySearchCollider : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (ct != null)
-            {
-                StopCoroutine(ct);
-            }
             enemy.onPatrol = false;
             enemy.target = other.transform;
             enemy.tracking = true;
+            enemy.searchPlayer = true;
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    /*private void OnTriggerExit(Collider other)
     {
      
         if (other.CompareTag("Player"))
         {
-            if (ct != null)
-            {
-                StopCoroutine(ct);
-            }
-            ct = StartCoroutine(WaitAndPatrol());
-
             //enemy.tracking = false;
-            //enemy.onPatrol = true;
+            enemy.onPatrol = true;
         }
-    }
-
-    IEnumerator WaitAndPatrol()
-    {
-        yield return new WaitForSeconds(enemy.trackingTime);
-        enemy.target = null;
-        enemy.onPatrol = true;
-    }
+    }*/
 }

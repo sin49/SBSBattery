@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2420440538365693853}
-  m_Mesh: {fileID: -7160776938542221209, guid: 16b70a2a10ee3e84b8797ffb1c3f0b11, type: 3}
+  m_Mesh: {fileID: -2468195641501520197, guid: 5110b4f06d7fd7143b5248b3485580fb, type: 3}
 --- !u!23 &4851932595311129495
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -205,11 +205,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eStat: {fileID: 0}
-  enemyRb: {fileID: 0}
+  patrolType: 0
   attackCollider: {fileID: 4543952635435368992}
-  rangeCollider: {fileID: 2888497688095314422}
+  deadEffect: {fileID: 0}
+  animaor: {fileID: 0}
+  idleMat: {fileID: 0}
+  hittedMat: {fileID: 0}
+  skinRenderer: {fileID: 0}
+  isMove: 0
   searchCubeRange: {x: 0, y: 0, z: 0}
   searchCubePos: {x: 0, y: 0, z: 0}
+  searchCollider: {fileID: 0}
+  searchColliderRange: {x: 0, y: 0, z: 0}
+  searchColliderPos: {x: 0, y: 0, z: 0}
+  searchPlayer: 0
+  trackingDistance: 0
+  disToPlayer: 0
+  patrolGroup: []
+  targetPatrol: {x: 0, y: 0, z: 0}
+  patrolWaitTime: 0
+  leftPatrolRange: 0
+  rightPatrolRange: 0
+  patrolDistance: 0
+  trackingTime: 0
+  onPatrol: 0
+  yWidth: 0
+  zWidth: 0
+  rangeCollider: {fileID: 2888497688095314422}
   rangePos: {x: 0, y: 0, z: 0}
   rangeSize: {x: 0, y: 0, z: 0}
   attackTimer: 0
