@@ -97,12 +97,13 @@ public class PlayerHandler : MonoBehaviour
         //if (CurrentType != TransformType.Default)
         //{
         //    CurrentPower -= Time.deltaTime;
-     
+
         //}
-        //PlayerFallOut();
+        if(CurrentPlayer.transform.position.y<-Mathf.Abs(characterFallLimit)+-5)
+        PlayerFallOut();
 
         #region 캐릭터 조작
-        if(CurrentPlayer != null && !formChange)
+        if (CurrentPlayer != null && !formChange)
         charactermove();
         #endregion
     }
