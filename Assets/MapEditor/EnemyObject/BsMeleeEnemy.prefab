@@ -816,7 +816,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3294068082175523137}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.743, y: 0.344, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -826,7 +826,7 @@ Transform:
   - {fileID: 5396140946397887897}
   - {fileID: 6124082339749279999}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &2904901020213420140
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -899,13 +899,21 @@ MonoBehaviour:
   hp: 0
   damage: 1
   moveSpeed: 1.5
-  rotateSpeed: 3
+  rotateSpeed: 4
   attackTimer: 0
   attackTimerMax: 1.5
   attackDelay: 1
   knockbackForce: 3
   onAttack: 0
   activeAttack: 0
+  completeSpawn: 0
+  attackRange: 0
+  distanceValue: {x: 0.8, y: 1, z: 1}
+  disToTarget: 0
+  min: {x: -1, y: 0.5, z: -1}
+  max: {x: 1, y: 1.5, z: 1}
+  forceInfo: {x: 0, y: 0, z: 0}
+  testValue: 0
 --- !u!1 &3608025985864248766
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class BossStageEnemy : Character, DamagedByPAttack
@@ -28,9 +29,22 @@ public class BossStageEnemy : Character, DamagedByPAttack
 
     public bool onAttack;
     public bool activeAttack;
+    [HideInInspector]
+    public bool completeSpawn;
+    [HideInInspector]
+    public bool attackRange;
     bool tracking;
     bool isMove;
 
+    [Header("스폰 포물선 관련")]
+    Vector3 targetPos, rotPos;
+    Vector3 vec;
+    public Vector3 distanceValue;    
+    public float disToTarget;
+    public Vector3 min, max;
+    public Vector3 forceInfo;
+
+    public float testValue;
     protected override void Awake()
     {
         base.Awake();
@@ -44,18 +58,68 @@ public class BossStageEnemy : Character, DamagedByPAttack
         {
             target = PlayerHandler.instance.CurrentPlayer.transform;
         }
+        RandomDistanceValue();
+        SetTargetPoint();
+    }
+    
+    public void RandomDistanceValue()
+    {
+        distanceValue.x = Random.Range(min.x, max.x);
+        distanceValue.y = Random.Range(min.y, max.y);
+        distanceValue.z = Random.Range(min.z, max.z);
+    }
+
+    public void SetTargetPoint()
+    {
+        InitRotation();
+        SpawnJump(distanceValue);        
+    }
+
+    public void InitRotation()
+    {
+        rotPos = transform.position + distanceValue;
+        vec = rotPos - transform.position;
+        Vector3 normalVec = vec.normalized;
+        Vector3 angleAxis = Vector3.Cross(transform.forward, normalVec);
+        float angle = Mathf.Acos(Vector3.Dot(transform.forward, normalVec)) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, angleAxis);
+        transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);        
+    }
+
+    public void SpawnJump(Vector3 value)
+    {
+        float v_y = Mathf.Sqrt(2 * -Physics.gravity.y * value.y);
+
+        float v_x = value.x * v_y / (2 * value.y);
+
+        float v_z = value.z * v_y / (2 * value.y);
+
+        Vector3 force = rb.mass * (new Vector3(v_x, v_y, v_z) - rb.velocity);
+        forceInfo = force;
+        rb.AddForce(force, ForceMode.Impulse);
     }
 
     private void Update()
     {
         ReadyAttackTime();
+
+        if (!completeSpawn)
+        {
+            vec = rotPos - transform.position;            
+            disToTarget = vec.magnitude;
+            if (disToTarget < 0.1f)
+            {
+                completeSpawn = true;
+                //rb.velocity = new Vector3(0, rb.velocity.y, 0);
+            }
+        }
     }
 
     public void FixedUpdate()
     {
         if (animator != null)
         {
-            if (!onAttack)
+            if (!onAttack && completeSpawn && !attackRange)
             {
                 isMove = true;
             }
@@ -67,7 +131,7 @@ public class BossStageEnemy : Character, DamagedByPAttack
             animator.SetBool("isMove", isMove);
         }
 
-        if (!onAttack)
+        if (!onAttack && completeSpawn && !attackRange)
         {
             Move();            
         }
@@ -111,6 +175,8 @@ public class BossStageEnemy : Character, DamagedByPAttack
 
     public override void Damaged(float damage)
     {
+        if (!completeSpawn)
+            completeSpawn = true;
         hp -= damage;
         if (hp <= 0)
         {
@@ -145,10 +211,12 @@ public class BossStageEnemy : Character, DamagedByPAttack
             Quaternion lookRot = Quaternion.LookRotation(vec);
             transform.rotation = Quaternion.Lerp(transform.rotation, lookRot, rotateSpeed * Time.deltaTime);
 
-            if (vec.magnitude > 0.5f)
+            testValue = Quaternion.Angle(transform.rotation, lookRot);
+            rb.MovePosition(transform.position + transform.forward * moveSpeed * Time.deltaTime);
+            /*if (testValue < 0.5f)
             {
                 rb.MovePosition(transform.position + transform.forward * moveSpeed * Time.deltaTime);
-            }
+            }*/
         }
-    }
+    }    
 }
