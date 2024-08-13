@@ -14,7 +14,8 @@ public class BossTv : RemoteObject
 
     public EnemyAction TestAction;
     List<EnemyAction> actions=new List<EnemyAction>();
-    int lifeCount;
+    [HideInInspector]
+    public int lifeCount;
     [Header("보스 모니터 체력(노기능)")]
     public int lifeCountMax;
 

@@ -57,6 +57,8 @@ public class BossFalling : EnemyAction
 
     HashSet<GameObject> EssenetialFallObjectHashSet = new HashSet<GameObject>();
 
+   
+    
     [Header("낙하 상자 오브젝트 생성")]
     public List<Boss1BoxFallCreateObj> fallingBoxCreateObj;
 
@@ -104,6 +106,8 @@ public class BossFalling : EnemyAction
         fallingobjects = new List<GameObject>();
         foreach (var a in fallingObj2)
         {
+            a.fallingobj.AddComponent<EnemyAttackFor2D>();
+            a.fallingobj.AddComponent<BoxCollider2D>();
             if (a.number != 0)
             {
                 for (int n = 0; n < a.number; n++) {
@@ -193,7 +197,10 @@ public class BossFalling : EnemyAction
                 a.fallingSpeed = UnityEngine.Random.Range(minSpeed, maxSpeed);
                 a.fieldPos = fieldMax;
             }
+        
             
+                
+
             createCount++;
             yield return new WaitForSeconds(createTime);
         }
