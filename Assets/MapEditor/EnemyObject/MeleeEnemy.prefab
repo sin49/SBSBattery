@@ -272,7 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4981e4ac21ac1e4c87802ce1b5d2ba5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eStat: {fileID: 0}
+  eStat: {fileID: 8243888719237057114}
   patrolType: 1
   attackCollider: {fileID: 3003010046744970119}
   deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
@@ -285,37 +285,39 @@ MonoBehaviour:
   searchCubeRange: {x: 2, y: 0.5, z: 0.5}
   searchCubePos: {x: 0, y: 0.5, z: 0}
   searchCollider: {fileID: 772453129297269744}
-  searchColliderRange: {x: 2, y: 1.5, z: 5}
-  searchColliderPos: {x: 0, y: 0.1, z: 0.5}
-  searchPlayer: 0
+  searchColliderRange: {x: 2, y: 3, z: 5.5}
+  searchColliderPos: {x: 0, y: 1, z: 0.5}
+  searchPlayer: 1
   trackingDistance: 3
-  disToPlayer: 0
-  patrolGroup: []
-  targetPatrol: {x: 0, y: 0, z: 0}
-  patrolWaitTime: 1
-  leftPatrolRange: 0.5
-  rightPatrolRange: 0.8
+  disToPlayer: 0.7455273
+  patrolGroup:
+  - {x: 24.9, y: 2, z: 0}
+  - {x: 28.8, y: 1, z: 0}
+  targetPatrol: {x: 23.476704, y: 0.9999199, z: 0}
+  patrolWaitTime: 1.8
+  leftPatrolRange: 1
+  rightPatrolRange: 1
   patrolDistance: 0.1
-  trackingTime: 0
+  trackingTime: 0.5
   onPatrol: 0
-  yWidth: 3
-  zWidth: 3
+  yWidth: 2
+  zWidth: 1
   rangeCollider: {fileID: 7523205838727179985}
-  rangePos: {x: 0, y: 0, z: 0}
-  rangeSize: {x: 0, y: 0, z: 0}
-  attackTimer: 0
+  rangePos: {x: 0, y: 0.42, z: 0.61}
+  rangeSize: {x: 1.16, y: 0.97, z: 0.96}
+  attackTimer: 1.2837995
   attackInitCoolTime: 1.5
   attackDelay: 0.1
   callCheck: 0
-  onAttack: 0
+  onAttack: 1
   activeAttack: 0
   checkPlayer: 0
   target: {fileID: 0}
-  tracking: 0
-  testTarget: {x: 0, y: 0, z: 0}
+  tracking: 1
+  testTarget: {x: -0.74552727, y: 0, z: -1.6492675e-12}
   rotationSpeed: 8
   onStun: 0
-  reachCheck: 0
+  reachCheck: 1
   rotLevel: 85
 --- !u!114 &8243888719237057114
 MonoBehaviour:
