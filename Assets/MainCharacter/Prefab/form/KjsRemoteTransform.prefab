@@ -534,11 +534,11 @@ Transform:
   m_GameObject: {fileID: 2506438967954024782}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.17599, z: 0.046}
-  m_LocalScale: {x: 0.06, y: 0.1912856, z: 0.08307301}
+  m_LocalPosition: {x: 0, y: 0.17599, z: 0.046000004}
+  m_LocalScale: {x: 0.060000002, y: 0.1912856, z: 0.08307301}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6694174433823802773}
+  m_Father: {fileID: 7131001087042498551}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4587047100110338922
 MeshFilter:
@@ -752,6 +752,7 @@ Transform:
   m_Children:
   - {fileID: 4204834512375511582}
   - {fileID: 4639124268808889834}
+  - {fileID: 3246825527264209902}
   m_Father: {fileID: 661293882350894433}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1425173963908620738
@@ -788,6 +789,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  enemy: {fileID: 0}
 --- !u!1 &4505933958495846868
 GameObject:
   m_ObjectHideFlags: 0
@@ -1088,6 +1090,7 @@ MonoBehaviour:
   chargingBufferTimer: 0
   chargingBufferTimeMax: 0
   remoteObj: []
+  closestObject: {fileID: 0}
   minimumdistance: 0
   Charging: 0
   laserPrefab: {fileID: 8906621709063784198, guid: c95aa4697be2c7341959ffcec170d214,
@@ -1337,7 +1340,6 @@ Transform:
   - {fileID: 7599378028163488949}
   - {fileID: 4897481150841746211}
   - {fileID: 3852787268940778463}
-  - {fileID: 3246825527264209902}
   m_Father: {fileID: 3103236764559981538}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7251639947537884206

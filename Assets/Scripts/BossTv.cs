@@ -1,35 +1,165 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossTv : MonoBehaviour
+//주석처리
+//패턴 테스트 편하게
+public class BossTv : RemoteObject
 {
     public GameObject Monitor;
-    public BossHandle LHand;
-    public BossHandle RHand;
+    public EnemyAction BossSweap;
+    public EnemyAction BossLaser;
+    public EnemyAction BossFall;
 
-    public BossFalling bf;
-
+    public EnemyAction TestAction;
+    List<EnemyAction> actions=new List<EnemyAction>();
+    [HideInInspector]
     public int lifeCount;
+    [Header("보스 모니터 체력(노기능)")]
     public int lifeCountMax;
 
+    bool onPattern;
+
+
+    int index;
+    [Header("랜덤 패턴(끄면 순서대로)")]
+    public bool randomPattern;
+    [Header("테스트 패턴만 사용(우선순위 높음)")]
+    public bool OnlyTestPattern;
+    [Header("손 체력")]
+    public float HandHP;
+
+
+   public Boss1Hand LHand;
+
+    public Boss1Hand RHand;
+
+
+
+    public Transform target;
+ 
+    private void Awake()
+    {
+     
+        actions.Add(BossSweap);
+        actions.Add(BossLaser);
+        actions.Add(BossFall);
+    }
     private void Start()
     {
-        //LSweaper();
-        //RSpotlight();
-        FallingAttack();
-    }
-    public void LSweaper()
-    {
-        StartCoroutine(LHand.Sweaper());
-    }
-    public void RSweaper()
-    {
-        StartCoroutine(RHand.Sweaper());
-    }    
+        Debug.Log("보스 활성화 연출이 들어간다");
+        LHand.HP = HandHP;
+        RHand.HP = HandHP;
 
-    public void FallingAttack()
+        LHand.active = true;
+        RHand.active = true;
+        LHand.HandDominateEvent += LhandDominateEvent;
+        RHand.HandDominateEvent += RhandDominateEvent;
+        lifeCount = lifeCountMax;
+        CanControl = false;
+    }
+    void LhandDominateEvent()
     {
-        bf.CreateFallingObject();
+        LHand.active = false;
+        HandDominateEvent();
+    }
+    void RhandDominateEvent()
+    {
+        RHand.active = false;
+        HandDominateEvent();
+    }
+    void HandDominateEvent()
+    {
+        CancelAction();
+        if (!LHand.active && !RHand.active)
+        {
+            CanControl = true;
+        }
+    }
+   
+    private void FixedUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Debug.Log("테스트 왼팔이 때짐");
+            LHand.HP = 1;
+            LHand.Damaged(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            Debug.Log("테스트 오른팔이 때짐");
+            RHand.HP = 1;
+            RHand.Damaged(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            Debug.Log("테스트 모니터가 조종 당함");
+            if (CanControl)
+                Active();
+        }
+        if (CanControl)
+        {
+            if (PlayerHandler.instance.CurrentType == TransformType.remoteform && PlayerHandler.instance.CurrentPlayer.GetComponent<RemoteTransform>().closestObject != this.gameObject)
+            {
+                PlayerHandler.instance.CurrentPlayer.GetComponent<RemoteTransform>().closestObject = this.gameObject;
+            }
+            return;
+        }
+        if (!LHand.active && !RHand.active)
+            return;
+        DoAction();
+    }
+    void CancelAction()
+    {
+        Debug.Log("행동이 취소당함");
+        TestAction.StopAction();
+    }
+    void DoAction()
+    {
+        if (!onPattern)
+        {
+            if (!OnlyTestPattern)
+            {
+                if (randomPattern)
+                {
+                    int rand = UnityEngine.Random.Range(0, actions.Count);
+                    TestAction = actions[rand];
+                }
+                else
+                {
+                    TestAction = actions[index];
+
+                    index++;
+                    if (index >= actions.Count)
+                        index = 0;
+                }
+            }
+            TestAction.Invoke(patternComplete,target);
+            Debug.Log("실행됨");
+            onPattern = true;
+        }
+
+    }
+    void patternComplete()
+    {
+        onPattern = false;
+        Debug.Log("실행 완료");
+        //어쩌구저쩌구
+    }
+
+    public override void Active()
+    {
+        Debug.Log("모니터 공격 연출이 들어간다");
+        CanControl = false;
+        lifeCount = 0;
+        Debug.Log("보스를 클리어 한다");
+    }
+
+    public override void Deactive()
+    {
+        throw new NotImplementedException();
     }
 }

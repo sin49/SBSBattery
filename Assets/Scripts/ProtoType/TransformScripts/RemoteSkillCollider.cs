@@ -13,8 +13,13 @@ public class RemoteSkillCollider : MonoBehaviour
     {
         if (other.CompareTag("GameController"))
         {
-            Debug.Log($"{other.name}추가");
-            remocon.remoteObj.Add(other.gameObject);
+            RemoteObject r;
+            if(other.TryGetComponent<RemoteObject>(out r))
+            {
+                if(r.CanControl)
+                    remocon.remoteObj.Add(other.gameObject);
+            }
+      
         }
     }
 
@@ -22,7 +27,7 @@ public class RemoteSkillCollider : MonoBehaviour
     {
         if (other.CompareTag("GameController"))
         {
-            Debug.Log($"{other.name}추가");
+       
             if(remocon.remoteObj.Contains(other.gameObject))
                 remocon.remoteObj.Remove(other.gameObject);
         }
