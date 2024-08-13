@@ -23,7 +23,7 @@ public class CineMachineBasicCamera : MonoBehaviour
     private void Awake()
     {
         virtualcamera = GetComponent<CinemachineVirtualCamera>();
-        InitCamSetting();
+        //InitCamSetting();
     }
     void InitCamSetting()
     {
@@ -44,7 +44,7 @@ public class CineMachineBasicCamera : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         TargetIsPlayer();
-        InitCamSetting();
+        //InitCamSetting();
     }
     protected virtual void TargetIsPlayer()
     {
