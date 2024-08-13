@@ -113,25 +113,26 @@ public class BossTv : RemoteObject
     {
         if (!onPattern)
         {
-            if (randomPattern)
-            {
-                int rand = UnityEngine.Random.Range(0, actions.Count);
-                TestAction = actions[rand];
-            }
-            else
-            {
-                TestAction = actions[index];
+            //if (randomPattern)
+            //{
+            //    int rand = UnityEngine.Random.Range(0, actions.Count);
+            //    TestAction = actions[rand];
+            //}
+            //else
+            //{
+            //    TestAction = actions[index];
 
-                index++;
-                if (index>=actions.Count)
-                    index = 0;
-            }
-            TestAction.Invoke(patternComplete,target);
+            //    index++;
+            //    if (index>=actions.Count)
+            //        index = 0;
+            //}
+            TestAction.Invoke(patternComplete, target);
             Debug.Log("½ÇÇàµÊ");
             onPattern = true;
         }
 
     }
+
     void patternComplete()
     {
         onPattern = false;

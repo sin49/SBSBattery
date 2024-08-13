@@ -23,7 +23,7 @@ public class CineMachineBasicCamera : MonoBehaviour
     private void Awake()
     {
         virtualcamera = GetComponent<CinemachineVirtualCamera>();
-        InitCamSetting();
+        //InitCamSetting();
     }
     void InitCamSetting()
     {
@@ -37,14 +37,14 @@ public class CineMachineBasicCamera : MonoBehaviour
             transposer.m_DeadZoneHeight = CameraYDeadZonr;
             transposer.m_DeadZoneWidth = CameraXViewportPos;
         }
-       
+
 
         virtualcamera.transform.rotation = Quaternion.Euler(camrot);
     }
     protected virtual void FixedUpdate()
     {
         TargetIsPlayer();
-        InitCamSetting();
+        //InitCamSetting();
     }
     protected virtual void TargetIsPlayer()
     {
@@ -54,8 +54,8 @@ public class CineMachineBasicCamera : MonoBehaviour
             target = PlayerHandler.instance.CurrentPlayer.transform;
             virtualcamera.Follow = target;
         }
-          
+
 
     }
-   
+
 }
