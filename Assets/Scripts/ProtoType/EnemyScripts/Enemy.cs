@@ -425,6 +425,13 @@ public class Enemy: Character,DamagedByPAttack
 
             Gizmos.DrawWireSphere(transform.position, trackingDistance); 
         }
+
+        if (searchCollider != null)
+        {
+            searchCollider.GetComponent<BoxCollider>().size = searchColliderRange;
+            searchCollider.GetComponent<BoxCollider>().center = searchColliderPos;
+        }
+
         //Gizmos.DrawWireSphere(patrolGroup[0], 10f);
         //Gizmos.DrawWireSphere(patrolGroup[1], 10f);
         //Gizmos.DrawWireCube(transform.position + searchCubePos, searchCubeRange * 2f);

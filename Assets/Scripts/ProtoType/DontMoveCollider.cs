@@ -16,7 +16,7 @@ public class DontMoveCollider : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {        
-        if (other.CompareTag("Ground") && !other.GetComponent<TransformPlace>() || other.CompareTag("Enemy") || other.CompareTag("GameController") && !other.GetComponent<RemoteObject>().onActive ||
+        if (other.CompareTag("Ground") && !other.GetComponent<TransformPlace>() || other.CompareTag("Enemy") || other.CompareTag("GameController")||
             other.CompareTag("InteractivePlatform") && !PlayerHandler.instance.CurrentPlayer.CullingPlatform)
         {
             if ( PlayerHandler.instance.CurrentPlayer != null)
