@@ -197,7 +197,7 @@ public class Player : Character
             if (Physics.Raycast(this.transform.position, Vector3.down, out hit, 0.3f*sizeY))
             {
 
-                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy"))
+                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController"))
                 {
                     onGround = true;
                     isJump = false;
@@ -930,7 +930,8 @@ public class Player : Character
         #region 바닥 상호작용
         if (collision.gameObject.CompareTag("Ground") ||
             collision.gameObject.CompareTag("InteractivePlatform") ||
-            collision.gameObject.CompareTag("Enemy"))
+            collision.gameObject.CompareTag("Enemy") ||
+            collision.gameObject.CompareTag("GameController"))
         {
             onGround = false;
      
@@ -976,6 +977,11 @@ public class Player : Character
                 Debug.Log("무적 상태입니다");
             }
 
+            jumpRaycastCheck();
+        }
+
+        if (collision.gameObject.CompareTag("GameController"))
+        {
             jumpRaycastCheck();
         }
         #endregion
