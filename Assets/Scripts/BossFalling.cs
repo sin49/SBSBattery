@@ -85,6 +85,7 @@ public class BossFalling : EnemyAction
     Vector3 fixMin;
     Vector3 fixMax;
 
+    public GameObject enemy;
     // Start is called before the first frame update
     void Start()
     {
@@ -96,10 +97,14 @@ public class BossFalling : EnemyAction
             fieldMin = bossField.TransformPoint(min);
             fieldMax = bossField.TransformPoint(max);
         }
-        MakeBossFallingObjectsPossibility();
+        //MakeBossFallingObjectsPossibility();
+        Falling();
     }
 
-   
+   public void Falling()
+    {
+        StartCoroutine(FallingAttack());
+    }
 
     void MakeBossFallingObjectsPossibility()
     {
@@ -176,7 +181,30 @@ public class BossFalling : EnemyAction
     }
     IEnumerator FallingAttack()
     {
-        yield return null;
+        while (createCount < createCountMax)
+        {
+            GameObject obj = Instantiate(enemy, RandomSpawn(), Quaternion.identity);
+
+            if (obj.GetComponent<FallingObject>() != null)
+            {
+                var a = obj.GetComponent<FallingObject>();
+                a.fallingSpeed = UnityEngine.Random.Range(minSpeed, maxSpeed);
+                a.fieldPos = fieldMax;
+                a.damage = damage;
+            }
+            else
+            {
+                var a = obj.GetComponent<BossStageBox>();
+                a.fallingSpeed = UnityEngine.Random.Range(minSpeed, maxSpeed);
+                a.fieldPos = fieldMax;
+            }
+
+            createCount++;
+
+            yield return new WaitForSeconds(createTime);
+        }
+
+       /* yield return null;
         var queue = ReturnFallObjectList();
         while (queue.Count!=0)
         {
@@ -204,7 +232,7 @@ public class BossFalling : EnemyAction
             createCount++;
             yield return new WaitForSeconds(createTime);
         }
-        yield return StartCoroutine(DisableAction(0.1f));
+        yield return StartCoroutine(DisableAction(0.1f));*/
 
     }    
 

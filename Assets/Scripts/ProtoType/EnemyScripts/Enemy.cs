@@ -87,7 +87,8 @@ public class Enemy: Character,DamagedByPAttack
     [HideInInspector]
     public bool onStun;
     public bool reachCheck;
-    bool complete;    
+    bool complete;
+    public bool attackRange;
 
    protected override void Awake()
     {
@@ -141,7 +142,7 @@ public class Enemy: Character,DamagedByPAttack
             Move();
         }
 
-        if (tracking && !onAttack)
+        if (tracking && !onAttack && !attackRange)
         {
             isMove = true;
         }
@@ -197,13 +198,17 @@ public class Enemy: Character,DamagedByPAttack
             rb.AddForce(-transform.forward * 3f, ForceMode.Impulse);
             if (animaor != null)
             {
-                animaor.SetTrigger("isHitted");                
-                attackTimer = attackInitCoolTime;
-                Material[] materials = skinRenderer.materials;
-                materials[1] = hittedMat;
-                skinRenderer.materials = materials;
+                animaor.SetTrigger("isHitted");
+                activeAttack = true;
+                attackTimer = eStat.initattackCoolTime;           
+                if (skinRenderer != null)
+                {
+                    Material[] materials = skinRenderer.materials;
+                    materials[1] = hittedMat;
+                    skinRenderer.materials = materials;
+                }
             }
-            InitAttackCoolTime();
+            //InitAttackCoolTime();
         }
     }
 
@@ -227,7 +232,7 @@ public class Enemy: Character,DamagedByPAttack
 
             if (tracking)
             {
-                if (!activeAttack && !onAttack)
+                if (!activeAttack && !onAttack && !attackRange)
                 {
                     if (patrolType == PatrolType.movePatrol && onPatrol)
                         PatrolTracking();
@@ -484,6 +489,8 @@ public class Enemy: Character,DamagedByPAttack
     public void InitAttackCoolTime()
     {        
         onAttack = false;
+        activeAttack = false;
+        attackTimer = eStat.initattackCoolTime;
     }
     #endregion
 

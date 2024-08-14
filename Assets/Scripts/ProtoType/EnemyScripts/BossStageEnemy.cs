@@ -37,8 +37,9 @@ public class BossStageEnemy : Character, DamagedByPAttack
     bool isMove;
 
     [Header("스폰 포물선 관련")]
-    Vector3 targetPos, rotPos;
-    Vector3 vec;
+    Vector3 targetPos;
+    public Vector3 rotPos;
+    public Vector3 vec;
     public Vector3 distanceValue;    
     public float disToTarget;
     public Vector3 min, max;
@@ -57,47 +58,9 @@ public class BossStageEnemy : Character, DamagedByPAttack
         if (PlayerHandler.instance.CurrentPlayer != null)
         {
             target = PlayerHandler.instance.CurrentPlayer.transform;
-        }
-        RandomDistanceValue();
-        SetTargetPoint();
-    }
+        }        
+    }    
     
-    public void RandomDistanceValue()
-    {
-        distanceValue.x = Random.Range(min.x, max.x);
-        distanceValue.y = Random.Range(min.y, max.y);
-        distanceValue.z = Random.Range(min.z, max.z);
-    }
-
-    public void SetTargetPoint()
-    {
-        InitRotation();
-        SpawnJump(distanceValue);        
-    }
-
-    public void InitRotation()
-    {
-        rotPos = transform.position + distanceValue;
-        vec = rotPos - transform.position;
-        Vector3 normalVec = vec.normalized;
-        Vector3 angleAxis = Vector3.Cross(transform.forward, normalVec);
-        float angle = Mathf.Acos(Vector3.Dot(transform.forward, normalVec)) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle, angleAxis);
-        transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);        
-    }
-
-    public void SpawnJump(Vector3 value)
-    {
-        float v_y = Mathf.Sqrt(2 * -Physics.gravity.y * value.y);
-
-        float v_x = value.x * v_y / (2 * value.y);
-
-        float v_z = value.z * v_y / (2 * value.y);
-
-        Vector3 force = rb.mass * (new Vector3(v_x, v_y, v_z) - rb.velocity);
-        forceInfo = force;
-        rb.AddForce(force, ForceMode.Impulse);
-    }
 
     private void Update()
     {
@@ -105,7 +68,7 @@ public class BossStageEnemy : Character, DamagedByPAttack
 
         if (!completeSpawn)
         {
-            vec = rotPos - transform.position;            
+            vec = rotPos - transform.position;
             disToTarget = vec.magnitude;
             if (disToTarget < 0.1f)
             {
@@ -133,7 +96,7 @@ public class BossStageEnemy : Character, DamagedByPAttack
 
         if (!onAttack && completeSpawn && !attackRange)
         {
-            Move();            
+            Move();
         }
     }
 
@@ -188,9 +151,12 @@ public class BossStageEnemy : Character, DamagedByPAttack
             animator.SetTrigger("isHitted");
             activeAttack = true;
             attackTimer = attackTimerMax;
-            Material[] materials = skinRenderer.materials;
-            materials[1] = hittedMat;
-            skinRenderer.materials = materials;
+            if (skinRenderer != null)
+            {
+                Material[] materials = skinRenderer.materials;
+                materials[1] = hittedMat;
+                skinRenderer.materials = materials;
+            }
         }
         rb.velocity = Vector3.zero;
         rb.AddForce(-transform.forward * knockbackForce, ForceMode.Force);

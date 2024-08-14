@@ -48,16 +48,22 @@ public class AnimationEvent : MonoBehaviour
     {
         if (enemy != null)
         {
-            Material[] materials = enemy.skinRenderer.materials;
-            materials[1] = enemy.idleMat;
-            enemy.skinRenderer.materials = materials;
+            if (enemy.skinRenderer != null)
+            {
+                Material[] materials = enemy.skinRenderer.materials;
+                materials[1] = enemy.idleMat;
+                enemy.skinRenderer.materials = materials;
+            }
             enemy.activeAttack = false;
         }
         else
         {
-            Material[] materials = bse.skinRenderer.materials;
-            materials[1] = bse.idleMat;
-            bse.skinRenderer.materials = materials;
+            if (bse.skinRenderer != null)
+            {
+                Material[] materials = bse.skinRenderer.materials;
+                materials[1] = bse.idleMat;
+                bse.skinRenderer.materials = materials;
+            }
             bse.activeAttack = false;
         }
     }
