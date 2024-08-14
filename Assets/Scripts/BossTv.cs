@@ -23,6 +23,9 @@ public class BossTv : RemoteObject
 
 
     int index;
+    [Header("플레이어 추격")]
+    public bool TargetPlayer;
+
     [Header("랜덤 패턴(끄면 순서대로)")]
     public bool randomPattern;
     [Header("테스트 패턴만 사용(우선순위 높음)")]
@@ -80,6 +83,8 @@ public class BossTv : RemoteObject
    
     private void FixedUpdate()
     {
+        if (TargetPlayer && PlayerHandler.instance != null)
+            target = PlayerHandler.instance.CurrentPlayer.transform;
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             Debug.Log("테스트 왼팔이 때짐");
