@@ -97,8 +97,8 @@ public class BossFalling : EnemyAction
             fieldMin = bossField.TransformPoint(min);
             fieldMax = bossField.TransformPoint(max);
         }
-        //MakeBossFallingObjectsPossibility();
-        Falling();
+        MakeBossFallingObjectsPossibility();
+        //Falling();
     }
 
    public void Falling()
@@ -181,34 +181,34 @@ public class BossFalling : EnemyAction
     }
     IEnumerator FallingAttack()
     {
-        while (createCount < createCountMax)
-        {
-            GameObject obj = Instantiate(enemy, RandomSpawn(), Quaternion.identity);
+        //while (createCount < createCountMax)
+        //{
+        //    GameObject obj = Instantiate(enemy, RandomSpawn(), Quaternion.identity);
 
-            if (obj.GetComponent<FallingObject>() != null)
-            {
-                var a = obj.GetComponent<FallingObject>();
-                a.fallingSpeed = UnityEngine.Random.Range(minSpeed, maxSpeed);
-                a.fieldPos = fieldMax;
-                a.damage = damage;
-            }
-            else
-            {
-                var a = obj.GetComponent<BossStageBox>();
-                a.fallingSpeed = UnityEngine.Random.Range(minSpeed, maxSpeed);
-                a.fieldPos = fieldMax;
-            }
+        //    if (obj.GetComponent<FallingObject>() != null)
+        //    {
+        //        var a = obj.GetComponent<FallingObject>();
+        //        a.fallingSpeed = UnityEngine.Random.Range(minSpeed, maxSpeed);
+        //        a.fieldPos = fieldMax;
+        //        a.damage = damage;
+        //    }
+        //    else
+        //    {
+        //        var a = obj.GetComponent<BossStageBox>();
+        //        a.fallingSpeed = UnityEngine.Random.Range(minSpeed, maxSpeed);
+        //        a.fieldPos = fieldMax;
+        //    }
 
-            createCount++;
+        //    createCount++;
 
-            yield return new WaitForSeconds(createTime);
-        }
+        //    yield return new WaitForSeconds(createTime);
+        //}
 
-       /* yield return null;
+        yield return null;
         var queue = ReturnFallObjectList();
-        while (queue.Count!=0)
+        while (queue.Count != 0)
         {
-       var tuple= queue.Dequeue();
+            var tuple = queue.Dequeue();
             GameObject obj = Instantiate(tuple.Item1, tuple.Item2, Quaternion.identity);
             if (obj.GetComponent<FallingObject>() != null)
             {
@@ -220,19 +220,19 @@ public class BossFalling : EnemyAction
             else
             {
                 var a = obj.GetComponent<BossStageBox>();
-                int rand2=UnityEngine.Random.Range(0, BoxFallCreateObjects.Count);
-                a.enemyPrefab= BoxFallCreateObjects[rand2];
+                int rand2 = UnityEngine.Random.Range(0, BoxFallCreateObjects.Count);
+                a.enemyPrefab = BoxFallCreateObjects[rand2];
                 a.fallingSpeed = UnityEngine.Random.Range(minSpeed, maxSpeed);
                 a.fieldPos = fieldMax;
             }
-        
-            
-                
+
+
+
 
             createCount++;
             yield return new WaitForSeconds(createTime);
         }
-        yield return StartCoroutine(DisableAction(0.1f));*/
+        yield return StartCoroutine(DisableAction(0.1f));
 
     }    
 
