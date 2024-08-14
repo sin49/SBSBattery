@@ -6,14 +6,9 @@ using UnityEngine;
 public class DontMoveCollider : MonoBehaviour
 {
 
-    Collider collider_;
 
-    private void Awake()
-    {
-        Player player = transform.parent.parent.GetComponent<Player>();
-        player.dmCollider = this;
-    }
 
+ 
     private void OnTriggerStay(Collider other)
     {        
         if (other.CompareTag("Ground") && !other.GetComponent<TransformPlace>() || other.CompareTag("Enemy") || other.CompareTag("GameController")||
@@ -33,9 +28,6 @@ public class DontMoveCollider : MonoBehaviour
         }
 
 
-
-
-        collider_ = other;
     }
 
     private void OnTriggerExit(Collider other)
