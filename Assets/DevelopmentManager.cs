@@ -92,7 +92,7 @@ public class DevelopmentManager : MonoBehaviour
     public void ChangeTransform()
     {
        
-        TransformType t= PlayerHandler.instance.CurrentType++;
+        TransformType t= PlayerHandler.instance.CurrentType+1;
         if (t >= TransformType.mouseform)
         {
             t = TransformType.Default;
@@ -154,10 +154,10 @@ public class DevelopmentManager : MonoBehaviour
         if (index >= Object.Count)
             index = 0;
         CurrentObjectName.text = "현재 오브젝트:" + Object[index].name;
-        if (Object.Count > 1)
+        if (Object.Count-1 > index + 1)
             NextObjectName.text = "다음 오브젝트:" + Object[index + 1].name;
         else
-            NextObjectName.text = "다음 오브젝트: 없음";
+            NextObjectName.text = "다음 오브젝트: " + Object[0].name;
     }
     public void Changecam()
     {

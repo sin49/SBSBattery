@@ -11,11 +11,9 @@ public class RemoteTransform : Player
     [Header("차징 스킬 변수")]
     //public float handleMaxTime; // 최대 차징 시간
     //float handletimer; // 차징 타이머 (시간이 증가하는 만큼 범위 증가)
-    public float handlediameterrangemax; // 차징 최대 범위
-    public float handlediameterrangemin; // 차징 최소 범위
+
     public SphereCollider handlerange; // 차징 범위 콜라이더
-    public float chargingBufferTimer;
-    public float chargingBufferTimeMax;
+
 
 
     public event Action<GameObject> RemoteObjectEvent;
@@ -26,6 +24,7 @@ public class RemoteTransform : Player
 
  public   GameObject closestObject;
     GameObject activeEffectInstance;
+    [Header("조종 오브젝트 감지 최소 범위")]
     public float minimumdistance;
 
     public bool Charging;
@@ -33,7 +32,7 @@ public class RemoteTransform : Player
     [Header("빔 관련 변수")]
     public GameObject laserPrefab; // 빔 스킬 프리팹
     public GameObject laserEffect; // 빔 이펙트 오브젝트
-
+    public GameObject HitPoint;
     //[Header("체인 라이트닝 변수")]
     //public List<GameObject> enemies; 
     //public GameObject chain; // 체인 오브젝트    
@@ -45,13 +44,7 @@ public class RemoteTransform : Player
 
 
 
-    private void Awake()
-    {
-        //handlerange.
-        handlerange = transform.Find("SKillChargeRadius").GetComponent<SphereCollider>();
-
-    }
-
+   
     private void Update()
     {
         BaseBufferTimer();
@@ -141,15 +134,20 @@ public class RemoteTransform : Player
         if (PoolingManager.instance != null)
             PoolingManager.instance.GetPoolObject("Laser", firePoint);
         else
-            Instantiate(laserPrefab, this.gameObject.transform.position, this.transform.rotation);
+            Instantiate(laserPrefab, HitPoint.transform.position, HitPoint.transform.rotation);
         yield return new WaitForSeconds(PlayerStat.instance.attackDelay);
 
         canAttack = true;
     }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
 
-  
+        Gizmos.DrawSphere(this.transform.position, minimumdistance);
+    }
+
     #region 오버랩스피어 시도
- 
+
     #endregion
     public GameObject ACtiveGameObject;
     public void SearchRemoteObjectList()

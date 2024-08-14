@@ -439,7 +439,7 @@ public class Enemy: Character,DamagedByPAttack
     public override void Dead()
     {
         eStat.eState = EnemyState.dead;
-        PlayerHandler.instance.CurrentPlayer.dmCollider.OtherCheck(this.gameObject);
+        PlayerHandler.instance.CurrentPlayer.wallcheck = false;
         Instantiate(deadEffect,transform.position, Quaternion.identity);
         gameObject.SetActive(false);
     }
