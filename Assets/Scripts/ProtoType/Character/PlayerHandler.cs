@@ -115,7 +115,16 @@ public class PlayerHandler : MonoBehaviour
     Dictionary<TransformType, GameObject> CreatedTransformlist = new Dictionary<TransformType, GameObject>();
 
     #endregion
-
+    public void registerRemoteUI(GameObject obj)
+    {
+        RemoteTransform transform;
+        if (
+            obj.TryGetComponent<RemoteTransform>(out transform))
+        {
+            transform.RemoteObjectEvent += ingameUIManger.UpdateRemoteTargetUI;
+            Debug.Log("이벤트 추가");
+        }
+    }
     public void transformed(TransformType type,Action eventhandler=null)
 {
      
@@ -177,6 +186,10 @@ public class PlayerHandler : MonoBehaviour
             {
                 p = Instantiate(PlayerTransformList[CurrentType]);
                 CreatedTransformlist.Add(CurrentType, p);
+                if (CurrentType == TransformType.remoteform)
+                {
+                    registerRemoteUI(p);
+                }
             }
             
             Playerprefab = p;
@@ -201,11 +214,7 @@ public class PlayerHandler : MonoBehaviour
                
                 Ehandler.GetEvent(eventhandler);
             }
-            if (CurrentType == TransformType.remoteform)
-            {
-                CurrentPlayer.GetComponent<RemoteTransform>().RemoteObjectEvent += ingameUIManger.UpdateRemoteTargetUI;
-                Debug.Log("이벤트 추가");
-            }
+        
             #endregion
             if(formChange)
                 CurrentPlayer.Humonoidanimator.Play("TransformEnd");
@@ -338,9 +347,7 @@ public class PlayerHandler : MonoBehaviour
         {
           
                 Debug.Log("점프키 입력 중");
-                CurrentPlayer.jumpInputValue = 1;
-                if (!CurrentPlayer.jumpLimitInput)
-                    CurrentPlayer.jumpBufferTimer = CurrentPlayer.jumpBufferTimeMax;
+            CurrentPlayer.GetJumpBuffer();
             
             
         }

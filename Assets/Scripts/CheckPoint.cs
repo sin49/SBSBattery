@@ -12,8 +12,9 @@ public class CheckPoint : MonoBehaviour
     public int index;
     public GameObject spawn(GameObject obj)
     {
-    
-       return Instantiate(obj, ChkPointTestPrefab.position, ChkPointTestPrefab.rotation);
+        var player= Instantiate(obj, ChkPointTestPrefab.position, ChkPointTestPrefab.rotation);
+     PlayerHandler.instance.   registerRemoteUI(player);
+        return player;
     }
     private void OnTriggerEnter(Collider other)
     {

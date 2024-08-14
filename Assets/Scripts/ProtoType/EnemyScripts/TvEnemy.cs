@@ -15,17 +15,19 @@ public class TvEnemy : Enemy
     public float rayRange; // 레이캐스트 길이 조절
     public float rayHeight; // 레이캐스트 높이 조절
 
+    bool isRotate;
+
     protected override void Awake()
     {
         base.Awake();        
     }
 
-    private void FixedUpdate()
+    /*private void FixedUpdate()
     {
         Move();
 
         TrackingCheck();
-    }
+    }*/
     #region CCTV이동
     public void TrackingCheck()
     {
@@ -46,6 +48,7 @@ public class TvEnemy : Enemy
                         checkTv = true;
                         rb.constraints = RigidbodyConstraints.FreezePosition |
                     RigidbodyConstraints.FreezeRotation;
+                        tracking = false;
                     }
                 }
             }
@@ -67,11 +70,18 @@ public class TvEnemy : Enemy
 
                     if (Quaternion.Angle(transform.rotation, Quaternion.LookRotation(testTarget)) < 0.8f)
                     {
+                        isRotate = false;
                         rb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
                     }
+                    else
+                    {
+                        isRotate = true;
+                    }
+                    animaor.SetBool("isRotate", isRotate);
                 }
             }
         }
+        TrackingCheck();
     }
     #endregion
     public override void Attack()

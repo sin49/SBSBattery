@@ -24,6 +24,7 @@ public class Enemy: Character,DamagedByPAttack
     public Material idleMat;
     public Material hittedMat;
     public Renderer skinRenderer;
+    public ParticleSystem moveEffect;
     [HideInInspector]
     public bool isMove;
     [Header("플레이어 탐색 큐브 조정(드로우 기즈모)")]
@@ -86,7 +87,8 @@ public class Enemy: Character,DamagedByPAttack
     [HideInInspector]
     public bool onStun;
     public bool reachCheck;
-    bool complete;    
+    bool complete;
+    public bool attackRange;
 
    protected override void Awake()
     {
@@ -140,7 +142,7 @@ public class Enemy: Character,DamagedByPAttack
             Move();
         }
 
-        if (tracking && !onAttack)
+        if (tracking && !onAttack && !attackRange)
         {
             isMove = true;
         }
@@ -196,13 +198,17 @@ public class Enemy: Character,DamagedByPAttack
             rb.AddForce(-transform.forward * 3f, ForceMode.Impulse);
             if (animaor != null)
             {
-                animaor.SetTrigger("isHitted");                
-                attackTimer = attackInitCoolTime;
-                Material[] materials = skinRenderer.materials;
-                materials[1] = hittedMat;
-                skinRenderer.materials = materials;
+                animaor.SetTrigger("isHitted");
+                activeAttack = true;
+                attackTimer = eStat.initattackCoolTime;           
+                if (skinRenderer != null)
+                {
+                    Material[] materials = skinRenderer.materials;
+                    materials[1] = hittedMat;
+                    skinRenderer.materials = materials;
+                }
             }
-            InitAttackCoolTime();
+            //InitAttackCoolTime();
         }
     }
 
@@ -226,7 +232,7 @@ public class Enemy: Character,DamagedByPAttack
 
             if (tracking)
             {
-                if (!activeAttack && !onAttack)
+                if (!activeAttack && !onAttack && !attackRange)
                 {
                     if (patrolType == PatrolType.movePatrol && onPatrol)
                         PatrolTracking();
@@ -433,7 +439,7 @@ public class Enemy: Character,DamagedByPAttack
     public override void Dead()
     {
         eStat.eState = EnemyState.dead;
-        PlayerHandler.instance.CurrentPlayer.dmCollider.OtherCheck(this.gameObject);
+        PlayerHandler.instance.CurrentPlayer.wallcheck = false;
         Instantiate(deadEffect,transform.position, Quaternion.identity);
         gameObject.SetActive(false);
     }
@@ -442,7 +448,8 @@ public class Enemy: Character,DamagedByPAttack
     #region 공격함수
     public override void Attack()
     {
-
+        if(animaor != null)
+            animaor.Play("EnemyAttack");
     }
 
     // 공격 준비시간
@@ -480,9 +487,10 @@ public class Enemy: Character,DamagedByPAttack
 
     // 공격 초기화
     public void InitAttackCoolTime()
-    {
-        activeAttack = false;
+    {        
         onAttack = false;
+        activeAttack = false;
+        attackTimer = eStat.initattackCoolTime;
     }
     #endregion
 

@@ -4,13 +4,10 @@ public class DownAttackCollider : MeleeCollider
 {
  
 
-    Player player;
-    Rigidbody playerRb;
 
     private void Start()
     {
-        player = transform.parent.parent.GetComponent<Player>();
-        playerRb = player.GetComponent<Rigidbody>();
+
         saveEffect = Instantiate(hitEffect).GetComponent<ParticleSystem>();
         damage = PlayerStat.instance.atk;
         gameObject.SetActive(false);
@@ -31,7 +28,7 @@ public class DownAttackCollider : MeleeCollider
             if (other.TryGetComponent<TransformPlace>(out transformPlace))
             {
                 Debug.Log("Æ®·£½ºÆû¿ÀºêÁ§Æ® Å½Áö");
-                transformPlace.transformStart(player.gameObject);
+                transformPlace.transformStart(PlayerHandler.instance.CurrentPlayer.gameObject);
                 PlayerHandler.instance.CurrentPlayer.onTransform = true;
             }
             else

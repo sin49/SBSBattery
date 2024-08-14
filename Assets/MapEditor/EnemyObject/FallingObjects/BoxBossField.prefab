@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2266150720774904572}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Box_Bone02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7739289031429269712}
   - component: {fileID: 4606161166618903647}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4714649200147979003}
   - component: {fileID: 2084098339375276492}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -215,7 +215,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7891767434610707464}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Box_Bone05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -249,7 +249,8 @@ GameObject:
   - component: {fileID: 8574163832076291515}
   - component: {fileID: 4310204922073092290}
   - component: {fileID: 6002476333607591595}
-  m_Layer: 0
+  - component: {fileID: -382074272905512783}
+  m_Layer: 9
   m_Name: BoxBossField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -333,7 +334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5f8c17d668f1a34fab5f7eb1f800306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 557678266298197566, guid: 06511a03621618a4f8bd0ad830ab2be7,
+  enemyPrefab: {fileID: 3294068082175523137, guid: 7a2304b68bcbcd2498a3ffb793facc23,
     type: 3}
   onGround: 0
   boxAnim: {fileID: 218065610057546115}
@@ -344,7 +345,21 @@ MonoBehaviour:
   fieldPos: {x: 0, y: 0, z: 0}
   warningPos: {x: 0, y: 0, z: 0}
   disToField: 0
-  firstDistance: 0
+  distanceValue: {x: 0, y: 0, z: 0}
+  min: {x: -1, y: 0.5, z: -1}
+  max: {x: 1, y: 1.5, z: 1}
+--- !u!114 &-382074272905512783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4929648963815187467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05743783bbd88b44bbfa57eb9df0ff13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6523415728238052697
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,7 +369,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 370213188100027360}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Box_Bone04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -385,7 +400,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845423732080232255}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Box_Bone01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -416,7 +431,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1907709808820972863}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Box_Bone03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -449,7 +464,7 @@ GameObject:
   - component: {fileID: 9220640655874468161}
   - component: {fileID: 218065610057546115}
   - component: {fileID: 1463671718137140294}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Boxbody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
