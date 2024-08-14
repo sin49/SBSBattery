@@ -46,6 +46,7 @@ public class Boss1Sweap : EnemyAction
     {
         StopAllCoroutines();
         StartCoroutine(InitializeHandPosition());
+
     }
     IEnumerator InitializeHandPosition()
     {

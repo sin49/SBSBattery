@@ -9,7 +9,7 @@ public class PlayerSpawnManager : MonoBehaviour
 
 
     public Camera CheckpointChkCamera;
-
+    TransformType DefaultSpawntype;
     public CheckPoint[] Checkpoints = new CheckPoint[0];
     Dictionary<int, CheckPoint> ChkPointsDic = new Dictionary<int, CheckPoint>();
     public GameObject DefaultForm;
@@ -64,9 +64,21 @@ public class PlayerSpawnManager : MonoBehaviour
     public void Spawn()
     {
         PlayerFormList p;
-        if (TryGetComponent<PlayerFormList>(out p))
-            DefaultForm = p.playerformlist[GameManager.instance.LOadPlayerTransformtype()];
-        var a = CurrentCheckPoint.spawn(DefaultForm);
+       
+            if (TryGetComponent<PlayerFormList>(out p))
+            {
+            if (!DontSave)
+            {
+                DefaultForm = p.playerformlist[GameManager.instance.LOadPlayerTransformtype()];
+            }
+            else
+            {
+                DefaultForm = p.playerformlist[0];
+            }
+        }
+                
+        
+            var a = CurrentCheckPoint.spawn(DefaultForm);
         CurrentPlayer = a;
         PlayerHandler.instance.registerPlayer(a);
     }

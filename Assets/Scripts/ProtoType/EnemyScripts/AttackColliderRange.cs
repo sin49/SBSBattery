@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class AttackColliderRange : MonoBehaviour
 {
@@ -41,6 +42,15 @@ public class AttackColliderRange : MonoBehaviour
             }
 
             enemy.onAttack = true;
+            enemy.attackRange = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player") && enemy.target != null && !enemy.onStun)
+        {
+            enemy.attackRange = false;
         }
     }
 }

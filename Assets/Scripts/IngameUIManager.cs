@@ -26,7 +26,7 @@ public class IngameUIManager : MonoBehaviour
         {
 
             RemoteTargetUI.SetActive(true);
-            RemoteTargetUI.transform.GetChild(0).position = PlayerHandler.instance.CurrentCamera.WorldToScreenPoint(
+            RemoteTargetUI.transform.position = PlayerHandler.instance.CurrentCamera.WorldToScreenPoint(
        target.transform.position
                 );
 

@@ -17,7 +17,7 @@ public class Player : Character
     #region 변수
     public Rigidbody playerRb;
     public CapsuleCollider capsuleCollider;
-    public DontMoveCollider dmCollider;
+
 
     Vector3 EnvironmentPower;
 
@@ -48,6 +48,9 @@ public class Player : Character
     [Header("#키 선입력 관련")]
     public float attackBufferTimeMax;
     public float attackBufferTimer;
+    [Header("착지 이펙트 활성화 관련")]
+    public float flyTimer;
+    public float flyTime;
 
     [Header("애니메이션 관련 변수")]
     public bool isJump, jumpAnim;
@@ -79,6 +82,8 @@ public class Player : Character
     public bool canAttack; // 공격 가능
     public bool wallcheck;
     #endregion
+
+    float jumpkeyinputCheck = 0.5f;
 
     public bool inputCheck;
 
@@ -141,6 +146,15 @@ public class Player : Character
         {            
             attackBufferTimer -= Time.deltaTime;
         }        
+
+        if (!onGround)
+        {
+            if (flyTimer > 0)
+            {
+                flyTimer -= Time.deltaTime;
+            }
+        }
+
     }
 
     public void BaseBufferTimer()
@@ -175,7 +189,7 @@ public class Player : Character
 
      
         //+Vector3.down * sizeY * 0.15f
-        if (!onGround)
+        if (!onGround&&jumpkeyinputCheck<0)
         {
             RaycastHit hit;
 
@@ -190,8 +204,10 @@ public class Player : Character
                     downAttack = false;
                     PlayerStat.instance.doubleJump = true;
 
-                    if (LandingEffect != null)
+                    if (LandingEffect != null && flyTimer < 0)
                         LandingEffect.SetActive(true);
+
+                    flyTimer = flyTime;
                 }
 
 
@@ -284,6 +300,9 @@ public class Player : Character
         InteractivePlatformrayCheck();
         InteractivePlatformrayCheck2();
 
+        if (jumpkeyinputCheck > 0)
+            jumpkeyinputCheck -= Time.fixedDeltaTime;
+
         JumpKeyInput();
         if(!downAttack)
         Attack();
@@ -291,8 +310,8 @@ public class Player : Character
         /* chrmat.SetColor("_Emissive_Color", color);*///emission 건들기
         if (Input.GetKeyDown(KeyCode.Tab)) { HittedTest(); }
 
-        if (onGround && isJump && playerRb.velocity.y <= 0)
-            jumpRaycastCheck();
+        //if (onGround && isJump && playerRb.velocity.y <= 0)
+        //    jumpRaycastCheck();
         if (Humonoidanimator != null)
         {
             Humonoidanimator.SetBool("run", isRun);
@@ -436,7 +455,7 @@ public class Player : Character
         }
         rotateVector += new Vector3(0, 90, 0);
 
-        transform.GetChild(0).GetChild(0).rotation = Quaternion.Euler(rotateVector);
+        transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
     }
     public void rotateBy3Dto2D()
     {
@@ -616,6 +635,7 @@ public class Player : Character
     {
         if (!downAttack)
         {
+            Debug.Log("내려찍기");
             downAttack = true;
             StartCoroutine(GoDownAttack());
         }
@@ -764,7 +784,13 @@ public class Player : Character
             }
         }
     }
-
+    public void GetJumpBuffer()
+    {
+        jumpkeyinputCheck = 0.5f;
+        jumpInputValue = 1;
+        if (!jumpLimitInput)
+            jumpBufferTimer = jumpBufferTimeMax;
+    }
     public void jumphold()
     {
         //jumpLimitInput = false;
@@ -917,6 +943,7 @@ public class Player : Character
                 PlayerHandler.instance.doubleDownInput = false;
                 CullingPlatform = true;
                 Physics.IgnoreLayerCollision(6, 11, true);
+                Debug.Log("CullingPlatform==true");
             }
         }
 
@@ -982,7 +1009,7 @@ public class Player : Character
 
                     CullingPlatform = true;
                     Physics.IgnoreLayerCollision(6, 11, true);
-
+                    Debug.Log("CullingPlatform==true");
 
                 }
 
@@ -1005,7 +1032,7 @@ public class Player : Character
     public void InteractivePlatformrayCheck()
     {
 
-        Debug.DrawRay(transform.position, Vector3.up * 0.2f * sizeY, Color.green);
+        Debug.DrawRay(transform.position + Vector3.up * (sizeY - 1), Vector3.up * 0.2f * sizeY, Color.green);
         RaycastHit hit;
         //if ()
         //{
@@ -1013,7 +1040,7 @@ public class Player : Character
         if (CullingPlatform && playerRb.velocity.y <= 0)
         {
 
-            if (Physics.Raycast(this.transform.position, Vector3.up, out hit, 0.2f*sizeY))
+            if (Physics.Raycast(this.transform.position+Vector3.up*(sizeY-1), Vector3.up, out hit, 0.2f*sizeY))
             {
 
                 if (hit.collider.CompareTag("InteractivePlatform"))
@@ -1022,7 +1049,7 @@ public class Player : Character
                     CullingPlatform = false;
                     Physics.IgnoreLayerCollision(6, 11, false);
                     platformDisableTimer = 0;
-
+                    Debug.Log("CullingPlatform==false");
                 }
 
             }
