@@ -36,6 +36,11 @@ public class EnemyMeleeAttack : MonoBehaviour
 
     IEnumerator MeleeAttack(Enemy enemy, float timer)
     {
+        yield return new WaitForSeconds(0.2f);
+
+        GetComponent<MeshRenderer>().enabled = false;
+        GetComponent<SphereCollider>().enabled = false;
+
         yield return new WaitForSeconds(timer);
         this.gameObject.SetActive(false);
         Debug.Log("초기화하자");

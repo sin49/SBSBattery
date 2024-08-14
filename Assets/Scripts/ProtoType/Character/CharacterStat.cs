@@ -35,10 +35,10 @@ public class CharacterStat : MonoBehaviour
     [HideInInspector]
     public float attackCoolTimebonus;
 
-    [Header("#공격딜레이 관련 변수")]
+    [Header("#공격 활성화 시 준비시간#")]
     public float initattackCoolTime;
     public float attackCoolTime { get { if (initattackCoolTime <= attackCoolTimebonus) return 0.1f; return initattackCoolTime - attackCoolTime; } } // 공격 딜레이
-    [Header("공격 후 딜레이")]
+    [Header("공격 후 대기시간")]
     public float attackDelay; // 공격 후 딜레이
 
 

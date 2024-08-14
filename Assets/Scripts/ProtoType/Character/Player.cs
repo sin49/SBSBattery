@@ -502,6 +502,7 @@ public class Player : Character
         Vector3 moveInput = new Vector3(hori, 0, Vert);
         if (hori != 0 || Vert != 0)
         {
+            if(canAttack)
             rotate(moveInput.x, moveInput.z);
         }
         //Vert 회전 추가

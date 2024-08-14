@@ -27,41 +27,47 @@ public class Enemy: Character,DamagedByPAttack
     public ParticleSystem moveEffect;
     [HideInInspector]
     public bool isMove;
-    [Header("플레이어 탐색 큐브 조정(드로우 기즈모)")]
-    public Vector3 searchCubeRange; // 플레이어 인지 범위를 Cube 사이즈로 설정
-    public Vector3 searchCubePos; // Cube 위치 조정
-    [Header("플레이어 탐색 범위 조정(콜라이더)")]
-    public GameObject searchCollider; // 탐지 범위 콜라이더
-    public Vector3 searchColliderRange;
-    public Vector3 searchColliderPos;
-    public bool searchPlayer;
-    [Header("추격 범위 ")]
-    public float trackingDistance;
-    public float disToPlayer;
-    [Header("정찰 이동관련(정찰 그룹, 정찰목표값, 정찰 대기시간)")]
-    public Vector3[] patrolGroup; // 0번째: 왼쪽, 1번째: 오른쪽
-    public Vector3 targetPatrol; // 정찰 목표지점-> patrolGroup에서 지정
-    public float patrolWaitTime; // 정찰 대기시간
+    [Header("#플레이어 탐색 큐브 조정#\n(현재 CCTV 몬스터에서만)")]
+    [Tooltip("범위")] public Vector3 searchCubeRange; // 플레이어 인지 범위를 Cube 사이즈로 설정
+    [Tooltip("위치")] public Vector3 searchCubePos; // Cube 위치 조정       
+
+    [Header("#공격 활성화 콜라이더 큐브 조정#")]
+    [Tooltip("활성화 콜라이더")] public GameObject rangeCollider; // 공격 범위 콜라이더 오브젝트
+    [Tooltip("활성화 범위")] public Vector3 rangeSize;
+    [Tooltip("활성화 위치")] public Vector3 rangePos;    
+
+    [Header("#플레이어 탐색 큐브 조정(콜라이더)#")]
+    [Tooltip("탐색 콜라이더")] public GameObject searchCollider; // 탐지 범위 콜라이더
+    [Tooltip("탐색 범위")] public Vector3 searchColliderRange;
+    [Tooltip("탐색 위치")] public Vector3 searchColliderPos;
+    [HideInInspector]public bool searchPlayer;
+
+    [Header("#추격 범위#")]
+    [Tooltip("탐색 후 추격 유지 범위")]public float trackingDistance;
+    [Tooltip("설정 X")] public float disToPlayer;
+
+    [Header("#정찰 이동관련(정찰 그룹, 정찰목표값, 정찰 대기시간)#")]
+    [Tooltip("설정 X")]public Vector3[] patrolGroup; // 0번째: 왼쪽, 1번째: 오른쪽
+    [Tooltip("설정 X")]public Vector3 targetPatrol; // 정찰 목표지점-> patrolGroup에서 지정
+    [Tooltip("정찰 대기시간")]public float patrolWaitTime; // 정찰 대기시간
+
     [Header("좌우 정찰 위치, 정찰거리값, 플레이어 추적타임")]
-    public float leftPatrolRange; // 좌측 정찰 범위
-    public float rightPatrolRange; // 우측 정찰 범위
-    public float patrolDistance; // 정찰 거리
-    public float trackingTime;
+    [Tooltip("왼쪽 정찰 범위")]public float leftPatrolRange; // 좌측 정찰 범위
+    [Tooltip("오른쪽 정찰 범위")]public float rightPatrolRange; // 우측 정찰 범위
+    [Tooltip("정찰 거리(설정 안해도됨)")]public float patrolDistance; // 정찰 거리
+    
     Vector3 leftPatrol, rightPatrol;
     [HideInInspector]
     public bool onPatrol;
-    [Header("그려질 정찰 큐브 사이즈 결정")]
-    public float yWidth;
-    public float zWidth;
+    [Header("#그려질 정찰 큐브 사이즈 결정#")]
+    [Tooltip("붉은색 높이")] public float yWidth;
+    [Tooltip("붉은색 z축 넓이")] public float zWidth;
     Vector3 center;
-    [Header("공격 활성화 콜라이더 큐브 조정")]
-    public GameObject rangeCollider; // 공격 범위 콜라이더 오브젝트
-    public Vector3 rangePos;
-    public Vector3 rangeSize;
 
-    [Header("적 공격딜레이 관련(보류중)")]
+    [HideInInspector]
     public float attackTimer; // 공격 대기시간
-    public float attackInitCoolTime; // 공격 대기시간 초기화 변수
+    //public float attackInitCoolTime; // 공격 대기시간 초기화 변수
+    [HideInInspector]
     public float attackDelay; // 공격 후 딜레이
 
     [HideInInspector]
@@ -421,6 +427,19 @@ public class Enemy: Character,DamagedByPAttack
 
                 Gizmos.DrawWireCube(center, size);
             }
+            else
+            {
+                Vector3 p1 = transform.position;
+                Vector3 p2 = transform.position;
+                p1.x = p1.x -leftPatrolRange*2;
+                p2.x = p2.x + rightPatrolRange*2;
+                center = (p1 + p2) / 2;
+                float xPoint = p2.x - p1.x;
+                Vector3 size = new(xPoint, yWidth, zWidth);
+                Gizmos.color = Color.red;
+                Gizmos.DrawWireCube(center, size);
+                targetPatrol = p2;
+            }
             Gizmos.color = Color.yellow;
 
             Gizmos.DrawWireSphere(transform.position, trackingDistance); 
@@ -431,6 +450,13 @@ public class Enemy: Character,DamagedByPAttack
             searchCollider.GetComponent<BoxCollider>().size = searchColliderRange;
             searchCollider.GetComponent<BoxCollider>().center = searchColliderPos;
         }
+
+        if (rangeCollider != null)
+        {
+            rangeCollider.GetComponent<BoxCollider>().size = rangeSize;
+            rangeCollider.GetComponent<BoxCollider>().center = rangePos;
+        }
+
 
         //Gizmos.DrawWireSphere(patrolGroup[0], 10f);
         //Gizmos.DrawWireSphere(patrolGroup[1], 10f);
