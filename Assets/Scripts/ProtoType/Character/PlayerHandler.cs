@@ -25,6 +25,8 @@ public class PlayerHandler : MonoBehaviour
     #endregion
     InteractiveObject interactobject;
     float InteractTimer;
+    [Header("항시 무적")]
+    public bool AlwaysInvincible;
     public void GetInteratObject(InteractiveObject i)
     {
         interactobject = i;
@@ -89,7 +91,9 @@ public class PlayerHandler : MonoBehaviour
                 rb.velocity = Vector3.zero;
             }
             CurrentPlayer.transform.position = PlayerSpawnManager.Instance. CurrentCheckPoint.transform.position;
-            PlayerFallEvent?.Invoke();
+        if(!AlwaysInvincible)
+        CurrentPlayer.DamagedIgnoreInvincible(1);
+        PlayerFallEvent?.Invoke();
       
     }
     private void FixedUpdate()
@@ -102,11 +106,16 @@ public class PlayerHandler : MonoBehaviour
         if(CurrentPlayer.transform.position.y<-Mathf.Abs(characterFallLimit)+-5)
         PlayerFallOut();
 
+        if (AlwaysInvincible)
+            CurrentPlayer.onInvincible = true;
+
         #region 캐릭터 조작
-        if (CurrentPlayer != null && !formChange)
+        if ((CurrentPlayer != null && !formChange)/*|| CantHandle*/)
         charactermove();
         #endregion
     }
+    //public bool CantHandle;
+    //public float CantHandleTimer;
     #region 변신 시스템
     #region 변수
    public TransformType CurrentType =0;

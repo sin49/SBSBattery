@@ -49,8 +49,17 @@ public class ItemListUI : MonoBehaviour
     public void ActiveItemListUI()
     {
         OnHandle = true;
-        index = EssentialItemList.Count - 1;
-        handleitemlist = EssentialItemList;
+        if (EssentialItemList.Count != 0)
+        {
+            index = EssentialItemList.Count - 1;
+
+            handleitemlist = EssentialItemList;
+        }
+        else
+        {
+            index = MultiplyItemList.Count - 1;
+            handleitemlist = MultiplyItemList;
+        }
         UpdateSelectInfo();
     }
  

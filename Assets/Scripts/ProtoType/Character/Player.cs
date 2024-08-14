@@ -83,7 +83,7 @@ public class Player : Character
     public bool wallcheck;
     #endregion
 
-    float jumpkeyinputCheck = 0.5f;
+    float jumpkeyinputCheck = 0.15f;
 
     public bool inputCheck;
 
@@ -674,6 +674,27 @@ public class Player : Character
     #endregion
 
     #region ÇÇ°Ý
+    public void DamagedIgnoreInvincible(float damage)
+    {
+        onInvincible = true;
+
+        PlayerStat.instance.pState = PlayerState.hitted;
+        HittedEffect.gameObject.SetActive(true);
+        PlayerStat.instance.hp -= damage;
+
+
+        if (PlayerStat.instance.hp <= 0)
+        {
+            //Dead()
+            PlayerStat.instance.hp = 0;
+            Dead();
+        }
+        else
+        {
+            StartCoroutine(ActiveInvincible());
+            StartCoroutine(WaitEndDamaged());
+        }
+    }
     public override void Damaged(float damage)
     {
         if (onInvincible)
@@ -786,7 +807,7 @@ public class Player : Character
     }
     public void GetJumpBuffer()
     {
-        jumpkeyinputCheck = 0.5f;
+        jumpkeyinputCheck = 0.15f;
         jumpInputValue = 1;
         if (!jumpLimitInput)
             jumpBufferTimer = jumpBufferTimeMax;
