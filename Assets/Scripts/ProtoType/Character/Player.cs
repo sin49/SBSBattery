@@ -1076,7 +1076,7 @@ public class Player : Character
 
     //      Debug.Log("Velocity"+playerRb.velocity);
     //  }
-    protected float InteractiveUprayDistance=0.2f;
+    protected float InteractiveUprayDistance=0.4f;
     public void InteractivePlatformrayCheck()
     {
 
