@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 201079461699058226}
   - component: {fileID: 3445347700582328181}
+  - component: {fileID: 8649570016583478519}
   m_Layer: 0
   m_Name: GameManager 1
   m_TagString: Untagged
@@ -54,6 +55,24 @@ MonoBehaviour:
   pauseActive: 0
   LoadingEffect: {fileID: 6484557584999357712}
   MinimumLoadingTime: 0.5
+--- !u!114 &8649570016583478519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786857927608999866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3902a8bf02b10b149a31356c1b3606e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultMIxergroup: {fileID: 24100000, guid: 312bf2824884aa2498ec2e88766fcad0, type: 2}
+  SE: {fileID: 966100010275369420, guid: 312bf2824884aa2498ec2e88766fcad0, type: 2}
+  BG: {fileID: -1390576044470264239, guid: 312bf2824884aa2498ec2e88766fcad0, type: 2}
+  BGVolume: 0
+  SEVolume: 0
+  MasterVolume: 0
 --- !u!1 &1042892926911940595
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,6 +551,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EffectTime: 0.5
+  IntesityTime: 0.5
   volume: {fileID: 3629419246064788396}
   FadeOff: 0
   LoadingComplete: 0

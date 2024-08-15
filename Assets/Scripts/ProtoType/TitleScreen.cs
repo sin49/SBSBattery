@@ -8,6 +8,8 @@ public class TitleScreen : MonoBehaviour
     public List<TItleText> titletexts;
     public int index;
     public TextMeshProUGUI ResetText;
+    public ButtonSoundEffectPlayer ButtionSoundEffectPlayer_;
+
     public void StartNewGame()
     {
         GameManager.instance.DeleteSaveSetting();
@@ -42,7 +44,7 @@ public class TitleScreen : MonoBehaviour
         {
             LastIndex = index;
             index++;
-          
+            ButtionSoundEffectPlayer_.PlaySelectAudio();
             if (!PlayerPrefs.HasKey("LastestStageName") && index == 1)
             {
                 index++;
@@ -56,7 +58,7 @@ public class TitleScreen : MonoBehaviour
         {
             LastIndex = index;
             index--;
-            
+            ButtionSoundEffectPlayer_.PlaySelectAudio();
             if (!PlayerPrefs.HasKey("LastestStageName") && index == 1)
             {
                 index--;
@@ -68,6 +70,7 @@ public class TitleScreen : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.X)|| Input.GetKeyDown(KeyCode.C))
         {
+            ButtionSoundEffectPlayer_.PlayActiveAudio();
             titletexts[index].ButtonActive();
         }
 
@@ -97,7 +100,7 @@ public class TitleScreen : MonoBehaviour
     }
     private void Awake()
     {
-        
+        ButtionSoundEffectPlayer_ = gameObject.GetComponent<ButtonSoundEffectPlayer>();
     }
     private void Start()
     {

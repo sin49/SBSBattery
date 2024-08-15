@@ -11,6 +11,9 @@ using UnityEngine.UIElements;
 
 public class PlayerHandler : MonoBehaviour
 {
+
+    float Skill1InputTimer;
+    float Skill1InputCheck = 0.12f;
     public bool formChange;
     #region 플레이어 변신관련 스탯
     public float CurrentPower;
@@ -25,8 +28,8 @@ public class PlayerHandler : MonoBehaviour
     #endregion
     InteractiveObject interactobject;
     float InteractTimer;
-    [Header("항시 무적")]
-    public bool AlwaysInvincible;
+    //[Header("항시 무적")]
+    //public bool AlwaysInvincible;
     public void GetInteratObject(InteractiveObject i)
     {
         interactobject = i;
@@ -91,7 +94,7 @@ public class PlayerHandler : MonoBehaviour
                 rb.velocity = Vector3.zero;
             }
             CurrentPlayer.transform.position = PlayerSpawnManager.Instance. CurrentCheckPoint.transform.position;
-        if(!AlwaysInvincible)
+        //if(!AlwaysInvincible)
         CurrentPlayer.DamagedIgnoreInvincible(1);
         PlayerFallEvent?.Invoke();
       
@@ -103,11 +106,11 @@ public class PlayerHandler : MonoBehaviour
         //    CurrentPower -= Time.deltaTime;
 
         //}
-        if(CurrentPlayer.transform.position.y<-Mathf.Abs(characterFallLimit)+-5)
+        if(CurrentPlayer!=null&&CurrentPlayer.transform.position.y<-Mathf.Abs(characterFallLimit)+-5)
         PlayerFallOut();
 
-        if (AlwaysInvincible)
-            CurrentPlayer.onInvincible = true;
+     
+    
 
         #region 캐릭터 조작
         if ((CurrentPlayer != null && !formChange)/*|| CantHandle*/)
@@ -400,7 +403,7 @@ public class PlayerHandler : MonoBehaviour
                         if (DeTransformtimer > DeTransformtime)
                         {
                             DeTransformtimer = 0;
-                            Deform();
+                            //Deform();
                         }
                         break;
                     default:
@@ -442,14 +445,21 @@ public class PlayerHandler : MonoBehaviour
             firstDownInput = false;
             doubleDownInput = false;
         }
-        
-        if (Input.GetKey(KeyCode.X)/* &&
+        if (doubleUpInput && Input.GetKey(KeyCode.X)&&CurrentType!=TransformType.Default)
+        {
+            CurrentPlayer.Skill1();
+         
+                Skill1InputTimer = Skill1InputCheck;
+        }    
+        else
+        if (Input.GetKey(KeyCode.X)&& Skill1InputTimer<=0/* &&
                 PlayerInventory.instance.checkessesntialitem("item01")*/)
         {
             //CurrentPlayer.Attack();
             CurrentPlayer.attackBufferTimer = CurrentPlayer.attackBufferTimeMax;
         }
-
+        if (Skill1InputTimer > 0)
+            Skill1InputTimer -= Time.fixedDeltaTime;
         //if (Input.GetKeyDown(KeyCode.Space))
         //{
         //    if (CurrentType == TransformType.Default)
@@ -458,8 +468,7 @@ public class PlayerHandler : MonoBehaviour
         //    
         //}
 
-        if(doubleUpInput && Input.GetKey(KeyCode.X))
-            CurrentPlayer.Skill1();
+
         //CurrentPlayer.Skill2();
 
     }

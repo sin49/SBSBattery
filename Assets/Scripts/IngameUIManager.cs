@@ -39,12 +39,13 @@ public class IngameUIManager : MonoBehaviour
     }
     public void UpdateInteractUI(GameObject target)
     {
-
+        if (PlayerHandler.instance.CurrentCamera != null)
+        {
             InteractTargetUI.SetActive(true);
             InteractTargetUI.transform.position = PlayerHandler.instance.CurrentCamera.WorldToScreenPoint(
                     target.transform.GetChild(0).position
                 );
-
+        }
      
        
     }

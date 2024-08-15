@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.RenderGraphModule;
 using UnityEngine.PlayerLoop;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
@@ -83,8 +84,8 @@ public class Player : Character
     public bool wallcheck;
     #endregion
 
-    float jumpkeyinputCheck = 0.15f;
-
+  public  float jumpkeyinputCheck = 0.15f;
+    float jumpkeyinputcheckvalue;
     public bool inputCheck;
 
     private void OnBecameInvisible()
@@ -117,6 +118,7 @@ public class Player : Character
     protected override void Awake()
     {
         base.Awake();
+        SoundPlayer = GetComponent<PlayerSoundPlayer>();
     }
     // Start is called before the first frame update
     void Start()
@@ -181,24 +183,25 @@ public class Player : Character
         onInvincible = false;
     }
     #endregion
-
+    protected float JumprayDistance=0.28f;
     #region 레이 체크
     void jumpRaycastCheck()
     {
 
 
-     
+        Debug.DrawRay(this.transform.position,  Vector3.down * JumprayDistance, Color.blue);
         //+Vector3.down * sizeY * 0.15f
-        if (!onGround&&jumpkeyinputCheck<0)
+        if (!onGround&&playerRb.velocity.y<=0)
         {
             RaycastHit hit;
 
-
-            if (Physics.Raycast(this.transform.position, Vector3.down, out hit, 0.3f*sizeY))
+      
+            if (Physics.Raycast(this.transform.position , Vector3.down, out hit, JumprayDistance))
             {
 
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController"))
                 {
+     
                     onGround = true;
                     isJump = false;
                     downAttack = false;
@@ -240,7 +243,7 @@ public class Player : Character
             {
                 wallcheck = true;
                 Debug.Log("벽 체크됨");
-                Debug.Log("Blue Ray:" + hit.collider.name + "\nWall Check:" + wallcheck);
+            
             }
         }
         else
@@ -296,16 +299,19 @@ public class Player : Character
 
     private void FixedUpdate()
     {
-        Debug.DrawRay(transform.position, Vector3.down * 0.3f * sizeY, Color.blue);
+
         InteractivePlatformrayCheck();
         InteractivePlatformrayCheck2();
 
-        if (jumpkeyinputCheck > 0)
-            jumpkeyinputCheck -= Time.fixedDeltaTime;
+        if (jumpkeyinputcheckvalue > 0)
+            jumpkeyinputcheckvalue -= Time.fixedDeltaTime;
 
         JumpKeyInput();
         if(!downAttack)
         Attack();
+
+        if (onGround == true&& isJump == true)
+            isJump = false;
 
         /* chrmat.SetColor("_Emissive_Color", color);*///emission 건들기
         if (Input.GetKeyDown(KeyCode.Tab)) { HittedTest(); }
@@ -388,6 +394,10 @@ public class Player : Character
     public GameObject JumpEffect;
 
     Vector3 translateFix;
+
+    [Header("PlayerSoundPlayer")]
+    public PlayerSoundPlayer SoundPlayer;
+
 
     #region 추상화 오버라이드 함수
 
@@ -578,6 +588,14 @@ public class Player : Character
     #endregion
 
     #region 공격
+    protected void AttackEvents()
+    {
+        canAttack = false;
+        if (Humonoidanimator != null)
+            Humonoidanimator.Play("Attack");
+        if (SoundPlayer != null)
+            SoundPlayer.PlayAttackAudio();
+    }
     public override void Attack()
     {
         if (PlayerHandler.instance.onAttack)
@@ -588,7 +606,7 @@ public class Player : Character
                 if (PlayerStat.instance.attackType == AttackType.melee && canAttack && !downAttack)
                 {
                     attackBufferTimer = 0;
-                    canAttack = false;
+                
                     if (!onGround)
                     {
                         attackSky = true;
@@ -598,9 +616,7 @@ public class Player : Character
                         attackGround = true;
                     }
 
-                    if (Humonoidanimator != null)
-                        Humonoidanimator.Play("Attack");
-
+                    AttackEvents();
                     StartCoroutine(TestMeleeAttack());
                 }
             }
@@ -664,7 +680,7 @@ public class Player : Character
     #region 특수공격
     public virtual void Skill1()
     {
-
+        attackBufferTimer = attackBufferTimeMax;
     }
     public virtual void Skill2()
     {
@@ -763,7 +779,7 @@ public class Player : Character
         jumpBufferTimer = 0;
         canjumpInput = false;
         jumpLimitInput = true;
-
+       
         if (Humonoidanimator != null)
         {
             Humonoidanimator.SetTrigger("jump");
@@ -773,9 +789,11 @@ public class Player : Character
             JumpEffect.SetActive(true);
 
         isRun = false;
+        if (SoundPlayer != null)
+            SoundPlayer.PlayJumpAudio();
         playerRb.velocity = Vector3.zero;
         playerRb.AddForce(Vector3.up * PlayerStat.instance.jumpForce, ForceMode.Impulse);
-
+        onGround = false;
         Debug.Log("점프 누르는 중?");
 
     }
@@ -808,7 +826,8 @@ public class Player : Character
     }
     public void GetJumpBuffer()
     {
-        jumpkeyinputCheck = 0.15f;
+        if(jumpkeyinputcheckvalue <= 0&&onGround)
+            jumpkeyinputcheckvalue = jumpkeyinputCheck;
         jumpInputValue = 1;
         if (!jumpLimitInput)
             jumpBufferTimer = jumpBufferTimeMax;
@@ -941,7 +960,7 @@ public class Player : Character
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Ground") && onGround == false)
+        if (other.CompareTag("Ground")&& jumpkeyinputcheckvalue <= 0 )
         {
             jumpRaycastCheck();
         }
@@ -950,13 +969,13 @@ public class Player : Character
     private void OnCollisionStay(Collision collision)
     {
         //#region 바닥 상호작용
-        if (collision.gameObject.CompareTag("Ground") && onGround == false)
+        if (collision.gameObject.CompareTag("Ground") && jumpkeyinputcheckvalue <= 0)
         {
             jumpRaycastCheck();
         }
         //#endregion
 
-        if (collision.gameObject.CompareTag("InteractivePlatform"))
+        if (collision.gameObject.CompareTag("InteractivePlatform") && jumpkeyinputcheckvalue <= 0)
         {
             jumpRaycastCheck();
            
@@ -1060,7 +1079,7 @@ public class Player : Character
     public void InteractivePlatformrayCheck()
     {
 
-        Debug.DrawRay(transform.position + Vector3.up * (sizeY - 1), Vector3.up * 0.2f * sizeY, Color.green);
+        //Debug.DrawRay(transform.position + Vector3.up * (sizeY - 1), Vector3.up * 0.2f * sizeY, Color.green);
         RaycastHit hit;
         //if ()
         //{

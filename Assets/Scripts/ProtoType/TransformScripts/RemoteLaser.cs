@@ -8,13 +8,7 @@ public class RemoteLaser : PlayerAttack
     public ParticleSystem saveEffect;
 
     // Start is called before the first frame update
-    void Awake()
-    {
-        //saveEffect = Instantiate(hitEffect).GetComponent<ParticleSystem>();
-        
-        //gameObject.SetActive(false);
-    }
-
+  
     private void Start()
     {
         damage = PlayerStat.instance.atk;
@@ -25,9 +19,22 @@ public class RemoteLaser : PlayerAttack
     {
         transform.Translate(transform.forward * rangeSpeed * Time.deltaTime, Space.World);
     }
+    public override void DamageCollider(Collider other)
+    {
+        base.DamageCollider(other);
+        Debug.Log("콜라이딩");
+        if (saveEffect != null)
+        {
+            saveEffect.transform.position = new(other.transform.position.x, other.transform.position.y + .5f, other.transform.position.z);
+            saveEffect.Play();
+        }
+    }
 
- 
-
+    protected override void OnTriggerEnter(Collider other)
+    {
+        base.OnTriggerEnter(other);
+        Debug.Log("콜라이딩" + other.name);
+    }
     private void OnBecameInvisible()
     {
         if (PoolingManager.instance != null)
@@ -35,4 +42,5 @@ public class RemoteLaser : PlayerAttack
         else
             Destroy(gameObject);
     }
+   
 }
