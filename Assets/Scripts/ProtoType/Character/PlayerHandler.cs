@@ -11,6 +11,9 @@ using UnityEngine.UIElements;
 
 public class PlayerHandler : MonoBehaviour
 {
+
+    float Skill1InputTimer;
+    float Skill1InputCheck = 0.12f;
     public bool formChange;
     #region 플레이어 변신관련 스탯
     public float CurrentPower;
@@ -400,7 +403,7 @@ public class PlayerHandler : MonoBehaviour
                         if (DeTransformtimer > DeTransformtime)
                         {
                             DeTransformtimer = 0;
-                            Deform();
+                            //Deform();
                         }
                         break;
                     default:
@@ -442,16 +445,21 @@ public class PlayerHandler : MonoBehaviour
             firstDownInput = false;
             doubleDownInput = false;
         }
-        if (doubleUpInput && Input.GetKey(KeyCode.X))
+        if (doubleUpInput && Input.GetKey(KeyCode.X)&&CurrentType!=TransformType.Default)
+        {
             CurrentPlayer.Skill1();
+         
+                Skill1InputTimer = Skill1InputCheck;
+        }    
         else
-        if (Input.GetKey(KeyCode.X)/* &&
+        if (Input.GetKey(KeyCode.X)&& Skill1InputTimer<=0/* &&
                 PlayerInventory.instance.checkessesntialitem("item01")*/)
         {
             //CurrentPlayer.Attack();
             CurrentPlayer.attackBufferTimer = CurrentPlayer.attackBufferTimeMax;
         }
-
+        if (Skill1InputTimer > 0)
+            Skill1InputTimer -= Time.fixedDeltaTime;
         //if (Input.GetKeyDown(KeyCode.Space))
         //{
         //    if (CurrentType == TransformType.Default)
@@ -460,7 +468,7 @@ public class PlayerHandler : MonoBehaviour
         //    
         //}
 
-       
+
         //CurrentPlayer.Skill2();
 
     }

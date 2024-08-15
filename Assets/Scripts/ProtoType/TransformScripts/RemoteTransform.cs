@@ -98,15 +98,18 @@ public class RemoteTransform : Player
     }
     public override void Skill1()
     {
-        if (Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.X))
-        {
+       
             //Charging = true;
             if (closestObject != null)
             {
                 Humonoidanimator.Play("Charge");
                 ActiveRemoteObject();
-            }
         }
+        else
+        {
+            base.Skill1();
+        }
+    
 
         //if (!Input.GetKey(KeyCode.UpArrow) && Charging
         //    || !Input.GetKey(KeyCode.X) && Charging)
