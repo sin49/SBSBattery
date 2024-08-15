@@ -17,17 +17,16 @@ public class ButtonSoundEffectPlayer : MonoBehaviour,SEPlayer
     [Header("취소 사운드 볼륨"), Range(0, 1)]
     public float DeActiveVolume;
     AudioType audiotype = AudioType.SE;
-    [Header("무시해도 됨")]
-    public AudioSource audiosource;
+
+AudioSource audiosource;
     private void Awake()
     {
-        if (!audiosource.TryGetComponent<AudioSource>(out audiosource))
-        {
+
             audiosource = gameObject.AddComponent<AudioSource>();
             audiosource.minDistance = audiosource.maxDistance;
             audiosource.dopplerLevel = 0;
             audiosource.loop = false;
-        }
+
 
     }
     private void Start()

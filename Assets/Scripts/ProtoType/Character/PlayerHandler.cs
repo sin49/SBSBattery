@@ -103,7 +103,7 @@ public class PlayerHandler : MonoBehaviour
         //    CurrentPower -= Time.deltaTime;
 
         //}
-        if(CurrentPlayer.transform.position.y<-Mathf.Abs(characterFallLimit)+-5)
+        if(CurrentPlayer!=null&&CurrentPlayer.transform.position.y<-Mathf.Abs(characterFallLimit)+-5)
         PlayerFallOut();
 
      
