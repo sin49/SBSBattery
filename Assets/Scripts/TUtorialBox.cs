@@ -22,7 +22,8 @@ public class TUtorialBox : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             //Destroy(TutorialText.transform.parent.gameObject);
-            Canvas.gameObject.SetActive(false);
+            if (Canvas != null)
+                Canvas.gameObject.SetActive(false);
             //TutorialText.gameObject.SetActive(false);
         }
     }

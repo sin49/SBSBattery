@@ -74,8 +74,28 @@ public class RemoteTransform : Player
         float closestdistance = float.MaxValue;
         GameObject newclosestobject = null;
        
+        for(int n = 0; n < remoteObj.Count; n++)
+        {
+            if (remoteObj[n] == null)
+            {
+                remoteObj.RemoveAt(n);
+                n--;
+                continue;
+            }
+            float distance = Vector3.Distance(transform.position, remoteObj[n].transform.position);
+            if (distance < closestdistance)
+            {
+                closestdistance = distance;
+                newclosestobject = remoteObj[n];
+            }
+        }
         foreach (var obj in remoteObj)
         {
+            if(obj==null)
+            {
+                remoteObj.Remove(obj);
+                continue;
+            }
             float distance = Vector3.Distance(transform.position, obj.transform.position);
             if (distance < closestdistance)
             {

@@ -104,7 +104,7 @@ public class DevelopmentManager : MonoBehaviour
     {
         if (CreateObject != null)
         {
-            Destroy(CreateObject);
+            CreateObject.SetActive(false);
             CreateObject = null;
         }
     }

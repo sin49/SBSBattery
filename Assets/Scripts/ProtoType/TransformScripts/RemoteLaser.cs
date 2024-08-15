@@ -22,7 +22,7 @@ public class RemoteLaser : PlayerAttack
     public override void DamageCollider(Collider other)
     {
         base.DamageCollider(other);
-        Debug.Log("콜라이딩");
+
         if (saveEffect != null)
         {
             saveEffect.transform.position = new(other.transform.position.x, other.transform.position.y + .5f, other.transform.position.z);
@@ -30,11 +30,7 @@ public class RemoteLaser : PlayerAttack
         }
     }
 
-    protected override void OnTriggerEnter(Collider other)
-    {
-        base.OnTriggerEnter(other);
-        Debug.Log("콜라이딩" + other.name);
-    }
+   
     private void OnBecameInvisible()
     {
         if (PoolingManager.instance != null)
