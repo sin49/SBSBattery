@@ -21,13 +21,13 @@ public class RemoteTV : RemoteObject
     {
         tvMaterials = new Material[GetComponent<MeshRenderer>().materials.Length];
         tvMaterials = GetComponent<MeshRenderer>().materials;
-        tvLight = transform.GetChild(1).gameObject.GetComponent<Light>();
+        tvLight = transform.GetComponentInChildren<Light>();
+        activeCollider = transform.GetChild(1).GetComponent<BoxCollider>();
         tvLight.enabled = onActive;
     }
     void Start()
     {
         //Frontrenderer=FrontOBj.GetComponent<MeshRenderer>();         
-        activeCollider = GetComponent<BoxCollider>();
         Deactive();
     }
 

@@ -15,6 +15,6 @@ public class RushEnemy : Enemy
         base.Attack();
         rb.AddForce(transform.forward * rushForce, ForceMode.Impulse);
 
-        attackCollider.GetComponent<EnemyMeleeAttack>().AttackReady(this, attackDelay);
+        attackCollider.GetComponent<EnemyMeleeAttack>().AttackReady(this, eStat.attackDelay);
     }
 }

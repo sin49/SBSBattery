@@ -1186,9 +1186,13 @@ MonoBehaviour:
   idleMat: {fileID: 2100000, guid: e05bcd830f8909d4aa73cfc0fd455522, type: 2}
   hittedMat: {fileID: 2100000, guid: f7b3a12ef30f40544b225d4665485f28, type: 2}
   skinRenderer: {fileID: 0}
+  moveEffect: {fileID: 0}
   isMove: 0
   searchCubeRange: {x: 2, y: 0.45, z: 0.7}
   searchCubePos: {x: 0, y: 0.45, z: 0}
+  attackActiveCollider: {fileID: 2202126381614901408}
+  attackActiveRange: {x: 0, y: 0, z: 0}
+  attackActivePos: {x: 0, y: 0, z: 0}
   searchCollider: {fileID: 8107239841027509953}
   searchColliderRange: {x: 0, y: 0, z: 0}
   searchColliderPos: {x: 0, y: 0, z: 0}
@@ -1221,6 +1225,7 @@ MonoBehaviour:
   rotationSpeed: 3
   onStun: 0
   reachCheck: 0
+  attackRange: 0
   rotLevel: 85
   rushForce: 6
 --- !u!114 &5333237541237593352
@@ -1747,8 +1752,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 2, z: 6}
-  m_Center: {x: 0, y: 0.5, z: 0.2}
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4900020733469963229
 MonoBehaviour:
   m_ObjectHideFlags: 0

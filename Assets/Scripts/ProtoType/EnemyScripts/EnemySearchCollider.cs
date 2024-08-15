@@ -15,8 +15,11 @@ public class EnemySearchCollider : MonoBehaviour
 
     private void FixedUpdate()
     {
-        searchCollider.center = enemy.searchColliderPos;
-        searchCollider.size = enemy.searchColliderRange;
+        if (enemy.searchCollider != null && searchCollider != null)
+        {
+            searchCollider.center = enemy.searchColliderPos;
+            searchCollider.size = enemy.searchColliderRange;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
