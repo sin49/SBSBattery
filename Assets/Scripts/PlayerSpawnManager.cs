@@ -18,6 +18,7 @@ public class PlayerSpawnManager : MonoBehaviour
     public GameObject SaveEffect;
     public GameObject CurrentPlayer;// 행동 작업
     public bool DontSave;
+    public bool dontloadTransformInfo = false;
     public void ChangeCheckPoint(CheckPoint ChkPoint)
     {
         if (LastestCheckPointID >= ChkPoint.index)
@@ -131,12 +132,15 @@ public class PlayerSpawnManager : MonoBehaviour
         {
             PlayerInventory.instance.LoadInventoryData();
             PlayerStat.instance.hp = GameManager.instance.LoadPlayerHP();
-            PlayerHandler.instance.CurrentType = (TransformType)GameManager.instance.LOadPlayerTransformtype();
+            
         }else
         {
-            PlayerHandler.instance.CurrentType = TransformType.Default;
             PlayerStat.instance.hp = PlayerStat.instance.hpMax;
         }
+        if(!dontloadTransformInfo)
+        PlayerHandler.instance.CurrentType = (TransformType)GameManager.instance.LOadPlayerTransformtype();
+        else
+            PlayerHandler.instance.CurrentType = TransformType.Default;
         FindCheckpoint(GameManager.instance.LoadCheckPointIndexKey());
         Spawn();
     }
