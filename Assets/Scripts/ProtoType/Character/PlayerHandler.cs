@@ -442,7 +442,9 @@ public class PlayerHandler : MonoBehaviour
             firstDownInput = false;
             doubleDownInput = false;
         }
-        
+        if (doubleUpInput && Input.GetKey(KeyCode.X))
+            CurrentPlayer.Skill1();
+        else
         if (Input.GetKey(KeyCode.X)/* &&
                 PlayerInventory.instance.checkessesntialitem("item01")*/)
         {
@@ -458,8 +460,7 @@ public class PlayerHandler : MonoBehaviour
         //    
         //}
 
-        if(doubleUpInput && Input.GetKey(KeyCode.X))
-            CurrentPlayer.Skill1();
+       
         //CurrentPlayer.Skill2();
 
     }

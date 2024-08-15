@@ -183,24 +183,25 @@ public class Player : Character
         onInvincible = false;
     }
     #endregion
-
+    protected float JumprayDistance=0.28f;
     #region 레이 체크
     void jumpRaycastCheck()
     {
 
 
-        Debug.DrawRay(this.transform.position, Vector3.down * 0.08f * sizeY, Color.red);
+        Debug.DrawRay(this.transform.position,  Vector3.down * JumprayDistance, Color.blue);
         //+Vector3.down * sizeY * 0.15f
         if (!onGround&&playerRb.velocity.y<=0)
         {
             RaycastHit hit;
-            
 
-            if (Physics.Raycast(this.transform.position, Vector3.down, out hit, 0.08f*sizeY))
+      
+            if (Physics.Raycast(this.transform.position , Vector3.down, out hit, JumprayDistance))
             {
 
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController"))
                 {
+     
                     onGround = true;
                     isJump = false;
                     downAttack = false;
@@ -242,7 +243,7 @@ public class Player : Character
             {
                 wallcheck = true;
                 Debug.Log("벽 체크됨");
-                Debug.Log("Blue Ray:" + hit.collider.name + "\nWall Check:" + wallcheck);
+            
             }
         }
         else
@@ -298,7 +299,7 @@ public class Player : Character
 
     private void FixedUpdate()
     {
-        Debug.DrawRay(transform.position, Vector3.down * 0.3f * sizeY, Color.blue);
+
         InteractivePlatformrayCheck();
         InteractivePlatformrayCheck2();
 
@@ -679,7 +680,7 @@ public class Player : Character
     #region 특수공격
     public virtual void Skill1()
     {
-
+        attackBufferTimer = attackBufferTimeMax;
     }
     public virtual void Skill2()
     {
