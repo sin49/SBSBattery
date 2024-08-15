@@ -33,7 +33,7 @@ public class IngameUIManager : MonoBehaviour
         }
         else
         {
-
+            if(RemoteTargetUI!=null)
             RemoteTargetUI.SetActive(false);
         }
     }
