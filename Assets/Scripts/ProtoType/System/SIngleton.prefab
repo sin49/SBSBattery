@@ -1234,6 +1234,120 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &4361981046450960177
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 554559611403563875}
+  - component: {fileID: 4502307306226572261}
+  m_Layer: 0
+  m_Name: PoolingManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &554559611403563875
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4361981046450960177}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 11.869205, y: -70.04, z: -1.4823444}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2038173147941107366}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4502307306226572261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4361981046450960177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d54bee88cba7612478527395b7eaa9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hittedEffect: {fileID: 0}
+  attackEffect: []
+  landingEffect: []
+  jumpEffect: []
+  poolObjects:
+  - poolName: Laser
+    poolPrefab: {fileID: 8906621709063784198, guid: c95aa4697be2c7341959ffcec170d214,
+      type: 3}
+    poolPrefabs:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    poolList:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - poolName: EnemyBullet
+    poolPrefab: {fileID: 3806260107179428244, guid: 1ec0785a34f952545bd162c5b7dd9f4d,
+      type: 3}
+    poolPrefabs:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    poolList:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - poolName: HitEffect
+    poolPrefab: {fileID: 5024009746357069194, guid: ec3f674830402cc45bce805cf6493db7,
+      type: 3}
+    poolPrefabs:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    poolList:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
 --- !u!1 &5087480316582707134
 GameObject:
   m_ObjectHideFlags: 0
@@ -1946,6 +2060,7 @@ Transform:
   - {fileID: 5795159272143504703}
   - {fileID: 1333157293526879897}
   - {fileID: 7205619687273144100}
+  - {fileID: 554559611403563875}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6175487160633950384
@@ -2008,6 +2123,7 @@ MonoBehaviour:
   LastTransformPlace: {fileID: 0}
   ingameUIManger: {fileID: 4121660563523913439}
   CurrentCamera: {fileID: 0}
+  AlwaysInvincible: 0
   CurrentPlayer: {fileID: 0}
   pStat: {fileID: 0}
   lastDirection: 1

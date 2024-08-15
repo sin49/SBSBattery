@@ -67,7 +67,10 @@ public class Enemy: Character,DamagedByPAttack
     [Header("벽 체크 레이캐스트")]
     [Tooltip("벽 Ray 높이")] public float wallRayHeight;
     [Tooltip("벽 Ray 길이")] public float wallRayLength;
-
+    [Tooltip("벽 Ray 높이와 병행")] public float wallRayPos;
+    public Collider wall;
+    public float disToWall;
+    public bool wallCheck;
     [HideInInspector]
     public float attackTimer; // 공격 대기시간
     //public float attackInitCoolTime; // 공격 대기시간 초기화 변수
@@ -164,6 +167,41 @@ public class Enemy: Character,DamagedByPAttack
         if (animaor != null)
         {
             animaor.SetBool("isMove", isMove);
+        }
+
+        WallRayCheck();
+    }
+
+    public void WallRayCheck()
+    {
+        Debug.DrawRay(transform.position + Vector3.up * wallRayHeight, transform.forward * wallRayLength, Color.magenta, 0.05f);
+        RaycastHit[] hits = Physics.RaycastAll(transform.position + Vector3.up * wallRayHeight, transform.forward, wallRayLength);
+        bool isWall = false;
+        wall = null;
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].collider.CompareTag("Ground"))
+            {
+                wall = hits[i].collider;
+                isWall = true;
+            }
+
+            if (wall != null)
+            {
+                Vector3 targetWall = wall.transform.position - transform.position;
+                disToWall = targetWall.magnitude;
+                if (target != null&& PlayerHandler.instance != null)
+                {
+                    if (PlayerHandler.instance.CurrentPlayer != null && target == PlayerHandler.instance.CurrentPlayer)
+                    {
+                        if (disToPlayer > disToWall)
+                        {
+                            isWall = false;
+                        }
+                    }
+                }
+            }
+            wallCheck = isWall;
         }
     }
 
@@ -443,6 +481,8 @@ public class Enemy: Character,DamagedByPAttack
                 Gizmos.color = Color.red;
                 Gizmos.DrawWireCube(center, size);
                 targetPatrol = p2;
+
+                WallRayCheck();                               
             }
             Gizmos.color = Color.yellow;
 

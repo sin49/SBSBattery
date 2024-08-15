@@ -160,8 +160,8 @@ public class TvEnemy : Enemy
         {
             if (!activeTv)
             {
-                rb.constraints = RigidbodyConstraints.FreezePosition | 
-                    RigidbodyConstraints.FreezeRotation;                 
+                rb.constraints = RigidbodyConstraints.FreezePosition |
+                    RigidbodyConstraints.FreezeRotation;
             }
         }
     }
