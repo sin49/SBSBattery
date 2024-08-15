@@ -83,6 +83,7 @@ public class BossStageBox : MonoBehaviour
     public void SetJumpVector(GameObject obj)
     {
         targetVec = transform.position + distanceValue;
+        RetryTargetVec();
         Vector3 vec = targetVec - transform.position;
         Vector3 normalVec = vec.normalized;
 
@@ -97,6 +98,51 @@ public class BossStageBox : MonoBehaviour
         {
             bse.rotPos = targetVec;
         }
+    }
+
+    public void RetryTargetVec()
+    {
+        if (targetVec.x > fieldPos.x)
+        {
+            fixVec = false;
+            targetVec.x =targetVec.x-6;
+            distanceValue.x = -distanceValue.x;
+            Debug.Log("fixVec.x is Big");
+        }
+        else
+        {
+            fixVec = true;
+        }
+
+        if (targetVec.x < fieldMin.x)
+        {
+            fixVec = false;
+            targetVec.x= targetVec.x+6;
+            Mathf.Abs(distanceValue.x);
+            Debug.Log("fixVec.x is Small");
+        }
+        else
+        {
+            fixVec = true;
+        }
+
+        if (targetVec.z > fieldPos.z)
+        {
+            
+            targetVec.z = targetVec.z - 6;
+            distanceValue.z = -distanceValue.z;
+            Debug.Log("fixVec.z is Big");
+        }
+
+
+        if (targetVec.z < fieldMin.z)
+        {
+            targetVec.z = targetVec.z + 6;
+            Mathf.Abs(distanceValue.z);
+            Debug.Log("fixVec.z is Small");
+        }        
+
+        targetVec = transform.position + distanceValue;
     }
 
     public void ObjectJump(Vector3 distanceValue, GameObject obj)

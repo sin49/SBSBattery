@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum CraneZMOVE {forward=-1,back=1 }
+public enum CraneZMOVE {back=-1,forward=1 }
 public class Crane_Xmove : Crane
 {
-    public CraneZMOVE MOveDirection;
+    public CraneZMOVE CraneMOveDirection;
     public override Vector3 GetMoveVector(Vector3 Target, Vector3 origin)
     {
         float f = 0;
@@ -28,7 +28,7 @@ public class Crane_Xmove : Crane
          
             if (origin.position.z< Target.z)
             {
-                origin.Translate((int)MOveDirection * vector * CraneSpeed * Time.fixedDeltaTime);
+                origin.Translate((int)CraneMOveDirection * vector * CraneSpeed * Time.fixedDeltaTime);
                 if (origin.position.z >= Target.z)
                     origin.position = new Vector3(Target.x,origin.position.y, Target.z);
             }
@@ -38,7 +38,7 @@ public class Crane_Xmove : Crane
         {
             if (origin.position.z > Target.z)
             {
-                origin.Translate((int)MOveDirection * vector * CraneSpeed * Time.fixedDeltaTime);
+                origin.Translate((int)CraneMOveDirection * vector * CraneSpeed * Time.fixedDeltaTime);
                 if (origin.position.z <= Target.z)
                     origin.position = new Vector3(Target.x, origin.position.y, Target.z);
             }
