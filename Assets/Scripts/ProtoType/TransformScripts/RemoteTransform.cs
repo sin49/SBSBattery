@@ -51,12 +51,18 @@ public class RemoteTransform : Player
    
         //for문 사용했으니 최적화 필요함
         UpdateClosestRemoteObjectEffect();
-
+        if(ClosestObjectScript!=null)
         RemoteObjectEvent?.Invoke(ClosestObjectScript.HudTarget);
         /*if (chargingBufferTimer > 0 && !Charging)
         {
             chargingBufferTimer -= Time.deltaTime;
         }*/
+    }
+    private void OnDisable()
+    {
+        closestObject = null;
+        ClosestObjectScript = null;
+        RemoteObjectEvent?.Invoke(null);
     }
     void UpdateClosestRemoteObjectEffect()
     {

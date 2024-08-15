@@ -12,17 +12,16 @@ public class BackGroundAudioPlayer : MonoBehaviour
     [Header("이 오디오의 볼륨"), Range(0, 1)]
     public float volume;
 
-    [Header("무시해도 됨")]
-    public AudioSource audiosource;
+
+ AudioSource audiosource;
     private void Awake()
     {
-        if(!audiosource.TryGetComponent<AudioSource>(out audiosource))
-        {
+
            audiosource= gameObject.AddComponent<AudioSource>();
             audiosource.minDistance = audiosource.maxDistance;
             audiosource.dopplerLevel = 0;
             audiosource.loop = true;
-        }
+
     }
     private void Update()
     {

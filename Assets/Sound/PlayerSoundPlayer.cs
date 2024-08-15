@@ -21,17 +21,16 @@ public class PlayerSoundPlayer : MonoBehaviour, SEPlayer
 
 
     AudioType audiotype = AudioType.SE;
-    [Header("¹«½ÃÇØµµ µÊ")]
-    public AudioSource audiosource;
+
+ AudioSource audiosource;
     private void Awake()
     {
-        if (!audiosource.TryGetComponent<AudioSource>(out audiosource))
-        {
+
             audiosource = gameObject.AddComponent<AudioSource>();
             audiosource.minDistance = audiosource.maxDistance;
             audiosource.dopplerLevel = 0;
             audiosource.loop = false;
-        }
+
 
     }
     private void Start()
