@@ -117,6 +117,7 @@ public class Player : Character
     protected override void Awake()
     {
         base.Awake();
+        SoundPlayer = GetComponent<PlayerSoundPlayer>();
     }
     // Start is called before the first frame update
     void Start()
@@ -389,6 +390,10 @@ public class Player : Character
 
     Vector3 translateFix;
 
+    [Header("PlayerSoundPlayer")]
+    public PlayerSoundPlayer SoundPlayer;
+
+
     #region 추상화 오버라이드 함수
 
     #region 이동
@@ -578,6 +583,14 @@ public class Player : Character
     #endregion
 
     #region 공격
+    protected void AttackEvents()
+    {
+        canAttack = false;
+        if (Humonoidanimator != null)
+            Humonoidanimator.Play("Attack");
+        if (SoundPlayer != null)
+            SoundPlayer.PlayAttackAudio();
+    }
     public override void Attack()
     {
         if (PlayerHandler.instance.onAttack)
@@ -588,7 +601,7 @@ public class Player : Character
                 if (PlayerStat.instance.attackType == AttackType.melee && canAttack && !downAttack)
                 {
                     attackBufferTimer = 0;
-                    canAttack = false;
+                
                     if (!onGround)
                     {
                         attackSky = true;
@@ -598,9 +611,7 @@ public class Player : Character
                         attackGround = true;
                     }
 
-                    if (Humonoidanimator != null)
-                        Humonoidanimator.Play("Attack");
-
+                    AttackEvents();
                     StartCoroutine(TestMeleeAttack());
                 }
             }
@@ -773,6 +784,8 @@ public class Player : Character
             JumpEffect.SetActive(true);
 
         isRun = false;
+        if (SoundPlayer != null)
+            SoundPlayer.PlayJumpAudio();
         playerRb.velocity = Vector3.zero;
         playerRb.AddForce(Vector3.up * PlayerStat.instance.jumpForce, ForceMode.Impulse);
 
@@ -808,7 +821,8 @@ public class Player : Character
     }
     public void GetJumpBuffer()
     {
-        jumpkeyinputCheck = 0.15f;
+        if(jumpkeyinputCheck<=0)
+            jumpkeyinputCheck = 0.15f;
         jumpInputValue = 1;
         if (!jumpLimitInput)
             jumpBufferTimer = jumpBufferTimeMax;

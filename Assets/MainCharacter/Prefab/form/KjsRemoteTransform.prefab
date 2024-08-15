@@ -966,6 +966,7 @@ GameObject:
   - component: {fileID: 2166734876067594961}
   - component: {fileID: 7086418212037067646}
   - component: {fileID: 2926304373543175106}
+  - component: {fileID: 5879961033110769795}
   m_Layer: 6
   m_Name: KjsRemoteTransform
   m_TagString: Player
@@ -1110,6 +1111,7 @@ MonoBehaviour:
   AttackEffect: {fileID: 676002087169428122}
   LandingEffect: {fileID: 619247877868134136}
   JumpEffect: {fileID: 6963524531328094719}
+  SoundPlayer: {fileID: 0}
   Decelatate: 2
   hori: 0
   Vert: 0
@@ -1239,6 +1241,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32177de85efdfc943b70253b78ba038e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5879961033110769795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5892187899129608376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab58d2e89b14edd4bb013c33c8f0cd8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttackClip: {fileID: 0}
+  AttackVolume: 0
+  JumpClip: {fileID: 8300000, guid: 85ea7b8994df41b45ad65459747ef044, type: 3}
+  JumpVolume: 0
+  audiosource: {fileID: 0}
 --- !u!1 &6286116493072327673
 GameObject:
   m_ObjectHideFlags: 0
