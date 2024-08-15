@@ -275,7 +275,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2003971247160268920}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.50000036, y: 0.49999967, z: 0.49999967, w: 0.50000036}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 1}
   m_ConstrainProportionsScale: 0
@@ -283,7 +283,7 @@ Transform:
   - {fileID: 5388581211485337013}
   - {fileID: 4952050440474440284}
   m_Father: {fileID: 8420095485283886126}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &2202126381614901408
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,8 +349,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.01, y: 0.05, z: 1}
-  m_Center: {x: 0, y: 0.3, z: 0.8}
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2232304906567453703
 GameObject:
   m_ObjectHideFlags: 0
@@ -1190,9 +1190,9 @@ MonoBehaviour:
   isMove: 0
   searchCubeRange: {x: 2, y: 0.45, z: 0.7}
   searchCubePos: {x: 0, y: 0.45, z: 0}
-  attackActiveCollider: {fileID: 2202126381614901408}
-  attackActiveRange: {x: 0, y: 0, z: 0}
-  attackActivePos: {x: 0, y: 0, z: 0}
+  rangeCollider: {fileID: 2202126381614901408}
+  rangeSize: {x: 0, y: 0, z: 0}
+  rangePos: {x: 0, y: 0, z: 0}
   searchCollider: {fileID: 8107239841027509953}
   searchColliderRange: {x: 0, y: 0, z: 0}
   searchColliderPos: {x: 0, y: 0, z: 0}
@@ -1200,20 +1200,17 @@ MonoBehaviour:
   trackingDistance: 2.07
   disToPlayer: 0
   patrolGroup: []
-  targetPatrol: {x: 0, y: 0, z: 0}
+  targetPatrol: {x: 17.44, y: -4, z: -2.21}
   patrolWaitTime: 1
   leftPatrolRange: 0.5
   rightPatrolRange: 1.2
   patrolDistance: 0.1
-  trackingTime: 0
   onPatrol: 0
   yWidth: 3
   zWidth: 3
-  rangeCollider: {fileID: 2202126381614901408}
-  rangePos: {x: 0, y: 0, z: 0}
-  rangeSize: {x: 0, y: 0, z: 0}
+  wallRayHeight: 0
+  wallRayLength: 0
   attackTimer: 0
-  attackInitCoolTime: 1.5
   attackDelay: 2
   callCheck: 0
   onAttack: 0
