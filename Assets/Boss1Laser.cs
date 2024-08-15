@@ -94,8 +94,9 @@ public class Boss1Laser : EnemyAction
         yield return new WaitForSeconds(laserActiveTimer);
         warning.gameObject.SetActive(false);
         laserBeam.gameObject.SetActive(true);
-        particle.Play();
         ColliderSpawnPoint.gameObject.SetActive(true);
+        particle.Play();
+
      
         while (true)
         {

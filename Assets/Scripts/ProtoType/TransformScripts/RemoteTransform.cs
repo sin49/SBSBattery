@@ -122,15 +122,15 @@ public class RemoteTransform : Player
     {
         if (attackBufferTimer > 0 && canAttack)
         {
-            canAttack = false;
-
+   
+            AttackEvents();
             StartCoroutine(LaserAttack());
         }
     }
 
     IEnumerator LaserAttack()
     {
-        Humonoidanimator.Play("Attack");
+
         if (PoolingManager.instance != null)
             PoolingManager.instance.GetPoolObject("Laser", firePoint);
         else
@@ -143,7 +143,7 @@ public class RemoteTransform : Player
     {
         Gizmos.color = Color.yellow;
 
-        Gizmos.DrawSphere(this.transform.position, minimumdistance);
+        Gizmos.DrawWireSphere(this.transform.position, minimumdistance);
     }
 
     #region 오버랩스피어 시도

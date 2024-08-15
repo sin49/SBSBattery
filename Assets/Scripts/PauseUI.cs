@@ -10,7 +10,7 @@ public class PauseUI : MonoBehaviour
 {
     public RectTransform pauseUI;
     bool pauseActive;
-
+    public ButtonSoundEffectPlayer ButtonSoundEffectPlayer_;
     //public string TitleSceneName;
     
     //public ItemListUI itemListUI;
@@ -35,6 +35,7 @@ public class PauseUI : MonoBehaviour
         pauseUI.gameObject.SetActive(false);
         pauseActive = false;
         Time.timeScale = 1f;
+        ButtonSoundEffectPlayer_=gameObject.GetComponent<ButtonSoundEffectPlayer>();
         //SelectedUIImage= SelectedUIChecker.GetComponent<Image>();
     }
     //public void ReturnPauseUI()
@@ -78,6 +79,22 @@ public class PauseUI : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Escape))
             PauseUiActive();
 
+        if (pauseActive)
+        {
+            if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.UpArrow)
+                || Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                ButtonSoundEffectPlayer_.PlaySelectAudio();
+            }
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                ButtonSoundEffectPlayer_.PlayActiveAudio();
+            }
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                ButtonSoundEffectPlayer_.PlayDeActiveAudio();
+            }
+        }
         //if (pauseActive/*e&&!UISelected*/)
         //{
             //if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -135,10 +152,12 @@ public class PauseUI : MonoBehaviour
         if (pauseActive)
         {
             Time.timeScale = 0f;
+            ButtonSoundEffectPlayer_.PlayDeActiveAudio();
             //activeUI();
         }
         else
         {
+            ButtonSoundEffectPlayer_.PlayActiveAudio();
             Time.timeScale = 1f;
         }
         pauseUI.gameObject.SetActive(pauseActive);

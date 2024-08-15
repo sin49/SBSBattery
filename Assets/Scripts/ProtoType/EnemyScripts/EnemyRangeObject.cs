@@ -6,7 +6,11 @@ public class EnemyRangeObject : MonoBehaviour
 {
     public float rangeSpeed;
     public float damage;
-
+    PoolingManager poolManager;
+    private void Start()
+    {
+        poolManager = PoolingManager.instance;
+    }
     public void SetDamage(float damageValue)
     {
         damage = damageValue;
@@ -23,12 +27,14 @@ public class EnemyRangeObject : MonoBehaviour
             && !PlayerHandler.instance.CurrentPlayer.onInvincible)
         {
             PlayerHandler.instance.CurrentPlayer.Damaged(damage);
-            PoolingManager.instance.ReturnPoolObject(this.gameObject);
+            if(poolManager != null)
+                poolManager.ReturnPoolObject(this.gameObject);
         }
         else if (other.CompareTag("Ground") || other.CompareTag("InteractiveObject")
             || other.CompareTag("InteractivePlatform") || other.CompareTag("GameController"))
         {
-            PoolingManager.instance.ReturnPoolObject(this.gameObject);
+            if (poolManager != null)
+                poolManager.ReturnPoolObject(this.gameObject);
         }
     }
 
@@ -37,12 +43,14 @@ public class EnemyRangeObject : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("InteractiveObject")
             || collision.gameObject.CompareTag("InteractivePlatform") || collision.gameObject.CompareTag("GameController"))
         {
-            PoolingManager.instance.ReturnPoolObject(this.gameObject);
+            if (poolManager != null)
+                poolManager.ReturnPoolObject(this.gameObject);
         }
     }
 
     private void OnBecameInvisible()
     {
-        PoolingManager.instance.ReturnPoolObject(this.gameObject);
+        if (poolManager != null)
+            poolManager.ReturnPoolObject(this.gameObject);
     }
 }
