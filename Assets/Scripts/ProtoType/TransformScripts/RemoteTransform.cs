@@ -44,7 +44,11 @@ public class RemoteTransform : Player
 
 
     RemoteObject ClosestObjectScript;
-   
+    protected override void Awake()
+    {
+        base.Awake();
+        JumprayDistance = 0.07f;
+    }
     private void Update()
     {
         BaseBufferTimer();
