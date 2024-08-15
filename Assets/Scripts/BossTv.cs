@@ -11,7 +11,7 @@ public class BossTv : RemoteObject
     public EnemyAction BossSweap;
     public EnemyAction BossLaser;
     public EnemyAction BossFall;
-
+   
     public EnemyAction TestAction;
     List<EnemyAction> actions=new List<EnemyAction>();
     [HideInInspector]

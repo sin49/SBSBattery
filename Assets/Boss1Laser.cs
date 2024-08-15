@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 public class Boss1Laser : EnemyAction
 {
@@ -14,7 +15,7 @@ public class Boss1Laser : EnemyAction
     public float LaserSpeed;
 
     public Transform warning;
-
+    public ParticleSystem particle;
     float laserlifetime;
     [Header("레이저 활성화 까지의 시간")]
     public float laserActiveTimer = 1.5f;
@@ -31,9 +32,7 @@ public class Boss1Laser : EnemyAction
     [Header("장판 공격 판정 생성 간격")]
     public float ColliderSpawnTime;
 
-    public TrailRenderer TrailRenderer;
-
-    int ActiveTrailColNumber;
+    //public TrailRenderer TrailRenderer;
 
     public Transform pullingtransform;
 
@@ -64,7 +63,7 @@ public class Boss1Laser : EnemyAction
     {
         laserlifetime = 0;
         laserBeam.gameObject.SetActive(false);
-        TrailRenderer.gameObject.SetActive(false);
+        ColliderSpawnPoint.gameObject.SetActive(false);
         warning.gameObject.SetActive(false);
         var a = pullingtransform.GetComponentsInChildren<Boss1LaserCollider>();
         foreach(var t in a)
@@ -85,10 +84,7 @@ public class Boss1Laser : EnemyAction
 
     private void Awake()
     {
-        if (TrailRenderer != null)
-        {
-            TrailRenderer.time = TrailDuration;
-        }
+       
         laserBeam.gameObject.SetActive(false);
         ColliderSpawnPoint.gameObject.SetActive(false);
     }
@@ -98,8 +94,9 @@ public class Boss1Laser : EnemyAction
         yield return new WaitForSeconds(laserActiveTimer);
         warning.gameObject.SetActive(false);
         laserBeam.gameObject.SetActive(true);
+        particle.Play();
         ColliderSpawnPoint.gameObject.SetActive(true);
-        TrailRenderer.emitting = true;
+     
         while (true)
         {
             if (!laserBeam.gameObject.activeSelf)
@@ -107,7 +104,7 @@ public class Boss1Laser : EnemyAction
             CreateLaser();
             yield return new WaitForSeconds(ColliderSpawnTime);
         }
-        TrailRenderer.emitting = false;
+      
         
     }
     void laserMove()
@@ -122,7 +119,7 @@ public class Boss1Laser : EnemyAction
     void laserpullingevent(Boss1LaserCollider collider)
     {
         LaserPulling.Enqueue(collider);
-        ActiveTrailColNumber--;
+
         collider.gameObject.SetActive(false);
     }
     void CreateLaser()
@@ -140,9 +137,9 @@ public class Boss1Laser : EnemyAction
             col.transform.position = ColliderSpawnPoint.transform.position;
             col.gameObject.SetActive(true);
         }
-        ActiveTrailColNumber++;
 
-        col.initLaserCollider(TrailDuration-0.07f, Vector3.one* TrailColScale,
+
+        col.initLaserCollider(TrailDuration-0.1f, Vector3.one* TrailColScale,
               laserpullingevent);
     }
 
@@ -156,11 +153,14 @@ public class Boss1Laser : EnemyAction
         if(laserlifetime < 0)
         {
             laserBeam.gameObject.SetActive(false);
-        }else
+            particle.Stop();
+            //TrailRenderer.enabled = false;
+        }
+        else
             laserlifetime -= Time.fixedDeltaTime;
-
-        if (!TrailRenderer.emitting && ActiveTrailColNumber == 0&& TrailRenderer.gameObject.activeSelf)
-            TrailRenderer.gameObject.SetActive(false);
+     
+        //if (!TrailRenderer.emitting && ActiveTrailColNumber == 0&& TrailRenderer.gameObject.activeSelf)
+        //    ColliderSpawnPoint.gameObject.SetActive(false);
     }
 
     private void OnTriggerStay(Collider other)
