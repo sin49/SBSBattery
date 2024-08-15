@@ -43,7 +43,7 @@ public class RemoteTransform : Player
     //public bool onChain; // 스킬 사용 시 true변환
 
 
-
+    RemoteObject ClosestObjectScript;
    
     private void Update()
     {
@@ -52,7 +52,7 @@ public class RemoteTransform : Player
         //for문 사용했으니 최적화 필요함
         UpdateClosestRemoteObjectEffect();
 
-        RemoteObjectEvent?.Invoke(closestObject);
+        RemoteObjectEvent?.Invoke(ClosestObjectScript.HudTarget);
         /*if (chargingBufferTimer > 0 && !Charging)
         {
             chargingBufferTimer -= Time.deltaTime;
@@ -81,7 +81,7 @@ public class RemoteTransform : Player
         if (newclosestobject != closestObject)
         {
             closestObject = newclosestobject;
-
+            ClosestObjectScript = closestObject.GetComponent<RemoteObject>();
 
         }
        

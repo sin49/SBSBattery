@@ -7,12 +7,14 @@ public class Boss1LaserCollider : MonoBehaviour
 {
     float lifetime;
     float ScaleDecreaseSpeed;
+
  public   event Action<Boss1LaserCollider> PullingAction;
     public void initLaserCollider(float lifetime,Vector3 Scale,Action<Boss1LaserCollider> pullingevent)
     {
         this.lifetime = lifetime;
+
         this.transform.localScale = Scale;
-        ScaleDecreaseSpeed = transform.localScale.x / lifetime;
+        ScaleDecreaseSpeed = transform.localScale.x*0.35f / lifetime;
         PullingAction = pullingevent;
         StartCoroutine(LasercolHandle());
     }

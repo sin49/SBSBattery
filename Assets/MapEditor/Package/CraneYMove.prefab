@@ -601,7 +601,8 @@ Transform:
   m_LocalPosition: {x: 0, y: -0.62166667, z: 0}
   m_LocalScale: {x: 0.5000001, y: 0.116660014, z: 0.5000001}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6356209984019562424}
   m_Father: {fileID: 5235426193196239710}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8995073835041084997
@@ -794,8 +795,6 @@ GameObject:
   - component: {fileID: 7831450945936006412}
   - component: {fileID: 3402256507647365123}
   - component: {fileID: 1592393287810428784}
-  - component: {fileID: 3529679713486994411}
-  - component: {fileID: 5321438684292614413}
   m_Layer: 0
   m_Name: CraneYMove
   m_TagString: GameController
@@ -939,13 +938,46 @@ MonoBehaviour:
   Line: 0.08
   CraneObject: {fileID: 5235426193196239710}
   CranePlatform: {fileID: 29525900225749041}
---- !u!114 &3529679713486994411
+--- !u!1 &7666151478575536088
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6356209984019562424}
+  - component: {fileID: 2597029047883001501}
+  - component: {fileID: 4728838636354790550}
+  m_Layer: 0
+  m_Name: Cranescript
+  m_TagString: GameController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6356209984019562424
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7666151478575536088}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 29525900225749041}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2597029047883001501
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7423763303963884298}
+  m_GameObject: {fileID: 7666151478575536088}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f28e29af7eedc8746a64077d872c5e06, type: 3}
@@ -953,17 +985,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onActive: 0
   CanControl: 1
+  HudTarget: {fileID: 6651627021268840601}
   MoveObject: {fileID: 6651627021268840601}
   CraneSpeed: 2
   ActiveTransform: {fileID: 7225739929595540204}
   DeActiveTransform: {fileID: 4397020064335183277}
---- !u!65 &5321438684292614413
+--- !u!65 &4728838636354790550
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7423763303963884298}
+  m_GameObject: {fileID: 7666151478575536088}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -976,8 +1009,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.39, y: 0.2, z: 0.26}
-  m_Center: {x: 0.004503687, y: -0.11, z: 0.06}
+  m_Size: {x: 0.9999998, y: 5.7417064, z: 0.9999998}
+  m_Center: {x: 0, y: 2.370852, z: 0}
 --- !u!1 &7704014565187611679
 GameObject:
   m_ObjectHideFlags: 0
