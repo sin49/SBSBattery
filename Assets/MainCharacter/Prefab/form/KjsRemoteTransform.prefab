@@ -982,14 +982,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5892187899129608376}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.8, y: 2.8, z: 2.8}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3146835434897735655}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!136 &8686286565664874215
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1094,6 +1094,7 @@ MonoBehaviour:
   isMove: 0
   canAttack: 0
   wallcheck: 0
+  jumpkeyinputCheck: 0.15
   inputCheck: 0
   velocityMove: {x: 0, y: 0, z: 0}
   rigidbodyPos: {x: 0, y: 0, z: 0}
@@ -1120,7 +1121,7 @@ MonoBehaviour:
   handlerange: {fileID: 1079836473686256018}
   remoteObj: []
   closestObject: {fileID: 0}
-  minimumdistance: 6
+  minimumdistance: 4
   Charging: 0
   laserPrefab: {fileID: 8906621709063784198, guid: c95aa4697be2c7341959ffcec170d214,
     type: 3}
@@ -1257,7 +1258,6 @@ MonoBehaviour:
   AttackVolume: 0
   JumpClip: {fileID: 8300000, guid: 85ea7b8994df41b45ad65459747ef044, type: 3}
   JumpVolume: 0
-  audiosource: {fileID: 0}
 --- !u!1 &6286116493072327673
 GameObject:
   m_ObjectHideFlags: 0
