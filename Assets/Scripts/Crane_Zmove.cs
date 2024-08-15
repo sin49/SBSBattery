@@ -22,7 +22,7 @@ public class Crane_Zmove : Crane
     }
     public override void MoveCrane(Vector3 vector, Vector3 Target, Transform origin)
     {
-        Debug.Log("origin:" + origin.position + "Target:" + Target);
+
         if (vector.x > 0)
         {
 
