@@ -14,7 +14,7 @@ public class PlayerInteract : MonoBehaviour
     {
 
         RaycastHit hit;
-        Debug.DrawRay(transform.position * (int)PlayerStat.instance.direction, Vector3.right * 0.15f * (int)PlayerStat.instance.direction, Color.black);
+        Debug.DrawRay(transform.position * (int)PlayerStat.instance.direction, Vector3.right * 0.15f * (int)PlayerStat.instance.direction, Color.red);
         if (Physics.Raycast(this.transform.position * (int)PlayerStat.instance.direction, Vector3.right * (int)PlayerStat.instance.direction, out hit, 0.15f))
         {
    
@@ -63,7 +63,7 @@ public class PlayerInteract : MonoBehaviour
             }
             else
             {
-                PlayerHandler.instance.GetInteratObject(obj);
+
                 if (obj == PlayerHandler.instance.ReturnInteractObject())
                     PlayerHandler.instance.InitInteratObject();
             }

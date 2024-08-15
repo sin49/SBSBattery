@@ -48,6 +48,7 @@ public class RemoteTransform : Player
     {
         base.Awake();
         JumprayDistance = 0.07f;
+        InteractiveUprayDistance = 0.9f;
     }
     private void Update()
     {
