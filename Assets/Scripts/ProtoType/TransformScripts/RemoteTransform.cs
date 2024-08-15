@@ -89,20 +89,7 @@ public class RemoteTransform : Player
                 newclosestobject = remoteObj[n];
             }
         }
-        foreach (var obj in remoteObj)
-        {
-            if(obj==null)
-            {
-                remoteObj.Remove(obj);
-                continue;
-            }
-            float distance = Vector3.Distance(transform.position, obj.transform.position);
-            if (distance < closestdistance)
-            {
-                closestdistance = distance;
-                newclosestobject = obj;
-            }
-        }
+     
         if (closestdistance > minimumdistance)
         {
             closestObject = null;
