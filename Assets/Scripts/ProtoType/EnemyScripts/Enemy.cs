@@ -51,7 +51,7 @@ public class Enemy: Character,DamagedByPAttack
     [Tooltip("설정 X")]public Vector3 targetPatrol; // 정찰 목표지점-> patrolGroup에서 지정
     [Tooltip("정찰 대기시간")]public float patrolWaitTime; // 정찰 대기시간
 
-    [Header("좌우 정찰 위치, 정찰거리값, 플레이어 추적타임")]
+    [Header("#정찰 범위 관련#")]
     [Tooltip("왼쪽 정찰 범위")]public float leftPatrolRange; // 좌측 정찰 범위
     [Tooltip("오른쪽 정찰 범위")]public float rightPatrolRange; // 우측 정찰 범위
     [Tooltip("정찰 거리(설정 안해도됨)")]public float patrolDistance; // 정찰 거리
@@ -63,6 +63,10 @@ public class Enemy: Character,DamagedByPAttack
     [Tooltip("붉은색 높이")] public float yWidth;
     [Tooltip("붉은색 z축 넓이")] public float zWidth;
     Vector3 center;
+
+    [Header("벽 체크 레이캐스트")]
+    [Tooltip("벽 Ray 높이")] public float wallRayHeight;
+    [Tooltip("벽 Ray 길이")] public float wallRayLength;
 
     [HideInInspector]
     public float attackTimer; // 공격 대기시간
