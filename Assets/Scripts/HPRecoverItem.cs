@@ -9,8 +9,11 @@ public class HPRecoverItem : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerStat.instance.RecoverHP(HPRecoverPoint);
-            Destroy(gameObject);
+            if (PlayerStat.instance.hp < PlayerStat.instance.hpMax)
+            {
+                PlayerStat.instance.RecoverHP(HPRecoverPoint);
+                Destroy(gameObject);
+            }
         }
     }
 }

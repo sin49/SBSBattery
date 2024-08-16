@@ -14,7 +14,7 @@ public class CollisionPortalMovetransform :MonoBehaviour
         if (other.CompareTag("Player"))
         {
             //GameManager.instance.LoadingScene(SceneName);
-            PlayerHandler.instance.CantHandle = true;
+
             GameManager.instance.LoadingEffectToAction(MoveEvent);
         }
     }
@@ -23,8 +23,7 @@ public class CollisionPortalMovetransform :MonoBehaviour
         if (other.CompareTag("Player"))
         {
             //GameManager.instance.LoadingScene(SceneName);
-            PlayerHandler.instance.CantHandle = false;
-            GameManager.instance.LoadingEffectDeActive();
+
         }
 
     }

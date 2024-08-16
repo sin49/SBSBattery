@@ -154,19 +154,15 @@ public class ShootingFIeld: signalSender
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(this.transform.position+ (Vector3)Center, new Vector3(0,FieldSize.y,FieldSize.x));
     }
-    signalReceiver receiver;
-    int signalnumber;
+
+ 
     public override void register(signalReceiver receiver, int index)
     {
-        this.receiver = receiver;
+        Receiver = receiver;
         signalnumber = index;
     }
 
-    public override void Send(bool signal)
-    {
-        receiver.Receive(signal, signalnumber);
-    }
-
+   
 
     void snapFieldPosition(Transform tf)
     {

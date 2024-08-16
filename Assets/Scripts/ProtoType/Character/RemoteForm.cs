@@ -24,7 +24,7 @@ public class RemoteForm : Player
     [Header("ºö °ü·Ã º¯¼ö")]
     public GameObject laserPrefab; // ºö ½ºÅ³ ÇÁ¸®ÆÕ
     
-    private void Awake()
+    protected override void Awake()
     {
         //handlerange.
         handlerange = transform.Find("Sphere").GetComponent<SphereCollider>();

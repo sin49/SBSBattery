@@ -10,7 +10,7 @@ public abstract class Crane : RemoteObject
     public Transform ActiveTransform;
 Vector3 DeActiveTransform;
     Vector3 MoveVector;
-    private void Awake()
+    protected override void Awake()
     {
         DeActiveTransform = MoveObject.transform.position;
     }
@@ -23,12 +23,14 @@ Vector3 DeActiveTransform;
             return;
         }
         onActive = true;
+        base.Active();
     }
 
     public override void Deactive()
     {
         Debug.Log("Deactive()");
         onActive = false;
+        base.Deactive();
     }
     public abstract Vector3 GetMoveVector(Vector3 Target, Vector3 origin);
     public abstract void MoveCrane(Vector3 vector, Vector3 Target, Transform origin);

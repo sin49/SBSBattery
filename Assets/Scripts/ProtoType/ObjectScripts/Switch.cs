@@ -23,15 +23,12 @@ public class Switch :  signalSender
         }
     }
    
-    signalReceiver Receiver;
-    int signalnumber;
-    public override void Send(bool signal)
-    {
-        Receiver.Receive(signal, signalnumber);
-    }
+   
+   
 
     public override void register(signalReceiver receiver, int index)
     {
+       
         Receiver = receiver;
         signalnumber = index;
     }

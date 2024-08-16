@@ -276,8 +276,13 @@ public class PlayerHandler : MonoBehaviour
     [HideInInspector]
     public bool DImensionChangeDisturb;
     event Action Dimensionchangeevent;
+    event Action CAmeraChangeevent;
     event Action CorutineRegisterEvent;
     IEnumerator CameraRotateCorutine;
+    public void registerCameraChangeAction(Action a)
+    {
+        CAmeraChangeevent += a;
+    }
   public void registerCorutineRegisterEvent(Action CorutineRegister)
     {
         this.CorutineRegisterEvent += CorutineRegister;
@@ -307,14 +312,20 @@ public class PlayerHandler : MonoBehaviour
             //이벤트 처리
 
             if (CameraRotateCorutine != null)
+            {
+                CAmeraChangeevent?.Invoke();
                 yield return StartCoroutine(CameraRotateCorutine);
+            }
             //카메라처리
         }
         else
         {
 
             if (CameraRotateCorutine != null)
+            {
+                CAmeraChangeevent?.Invoke();
                 yield return StartCoroutine(CameraRotateCorutine);
+            }
             //카메라처리
             yield return StartCoroutine(InvokeDimensionEvent());
 

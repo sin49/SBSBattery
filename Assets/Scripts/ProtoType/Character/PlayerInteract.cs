@@ -31,7 +31,7 @@ public class PlayerInteract : MonoBehaviour
                 {
                     Debug.Log("GetObjectByray");
                     PlayerHandler.instance.GetInteratObject(interactobject);
-                    if (interactobject.InteractOption != InteractOption.ray)
+                    //if (interactobject.InteractOption != InteractOption.ray)
                         PlayerHandler.instance.GetInteratObject(interactobject);
                 }
             }
@@ -90,7 +90,7 @@ public class PlayerInteract : MonoBehaviour
                 {
                     Debug.Log("GetObjectBycollision");
                     PlayerHandler.instance.GetInteratObject(i);
-                    if (i.InteractOption != InteractOption.collider)
+                    //if (i.InteractOption != InteractOption.collider)
                         PlayerHandler.instance.GetInteratObject(i);
                 }
             }
