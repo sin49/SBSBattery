@@ -65,6 +65,7 @@ public class PlayerSpawnManager : MonoBehaviour
     public void Spawn()
     {
         PlayerFormList p;
+        Debug.Log("SpawnTest");
        
             if (TryGetComponent<PlayerFormList>(out p))
             {

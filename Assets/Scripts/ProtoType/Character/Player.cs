@@ -502,7 +502,7 @@ public class Player : Character
                 break;
             case PlayerMoveState.SideZ:
        
-                Vert = -1 * Input.GetAxisRaw("Horizontal");
+                Vert =  Input.GetAxisRaw("Horizontal");
                 break;
             case PlayerMoveState.Trans3D:
                 hori = Input.GetAxisRaw("Vertical");
