@@ -74,6 +74,14 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         trans3D = !trans3D;
         if (trans3D)
         {
+            PlayerStat.instance.MoveState =PlayerMoveState.Trans3D;
+        }
+        else
+        {
+            PlayerStat.instance.MoveState = PlayerMoveState.SideX;
+        }
+        if (trans3D)
+        {
             yield return StartCoroutine(SwitchCameraCoroutine(camera3D));
         }
         else

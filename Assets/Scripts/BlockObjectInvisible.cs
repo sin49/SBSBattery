@@ -14,7 +14,7 @@ public class BlockObjectInvisible : MonoBehaviour
             target = PlayerHandler.instance.CurrentPlayer.transform;
         else
             target = null;
-        if (target != null && PlayerStat.instance.Trans3D)
+        if (target != null /*&& PlayerStat.instance.MoveState == PlayerMoveState.Trans3D*/)
         {
             CheckRaycast();
         }
@@ -25,8 +25,8 @@ public class BlockObjectInvisible : MonoBehaviour
     }
     public void InitializeTransparent()
     {
-        if (!PlayerStat.instance.Trans3D)
-        {
+        //if (!PlayerStat.instance.Trans3D)
+        //{
 
             foreach (TransparentObj obj in transparentObjects)
             {
@@ -35,7 +35,7 @@ public class BlockObjectInvisible : MonoBehaviour
 
             }
             transparentObjects.Clear();
-        }
+        //}
     }
     void CheckRaycast()
     {

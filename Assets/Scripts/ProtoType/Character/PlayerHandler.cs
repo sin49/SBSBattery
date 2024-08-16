@@ -113,15 +113,15 @@ public class PlayerHandler : MonoBehaviour
     
 
         #region 캐릭터 조작
-        if ((CurrentPlayer != null && !formChange)/*|| CantHandle*/)
+        if ((CurrentPlayer != null && !formChange) || CantHandle)
         charactermove();
         #endregion
     }
-    //public bool CantHandle;
+    public bool CantHandle;
     //public float CantHandleTimer;
     #region 변신 시스템
     #region 변수
-   public TransformType CurrentType =0;
+    public TransformType CurrentType =0;
     Dictionary<TransformType, GameObject> PlayerTransformList = new Dictionary<TransformType, GameObject>();
 
     Dictionary<TransformType, GameObject> CreatedTransformlist = new Dictionary<TransformType, GameObject>();
@@ -300,7 +300,7 @@ public class PlayerHandler : MonoBehaviour
         CorutineRegisterEvent?.Invoke();
         //3D로 갈 때는 카메라 먼저 이 후 이벤트
         //2D로 갈 때는 반대로 이벤트 이 후 카메라
-        if (!PlayerStat.instance.Trans3D)
+        if (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D)
         {//3D에서 2D로
             yield return StartCoroutine(InvokeDimensionEvent());
 
