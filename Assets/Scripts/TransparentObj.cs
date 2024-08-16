@@ -39,7 +39,7 @@ public class TransparentObj : MonoBehaviour
     private IEnumerator SetTransparency(float targetAlpha)
     {
         transparent.SetFloat("_Surface", 1);
-        Color color = transparent.color;
+        Color color = transparent.GetColor("_Color");
         float startAlpha = color.a;
         float Timer = 0f;
 
@@ -48,10 +48,13 @@ public class TransparentObj : MonoBehaviour
             Timer += Time.deltaTime;
             float t = Mathf.Clamp01(Timer / returnTimer);
             color.a = Mathf.Lerp(startAlpha, targetAlpha, t);
+            transparent.SetColor("_Color", color);
+
             transparent.color = color;
             yield return null;
         }
         color.a = targetAlpha;
+        transparent.SetColor("_Color", color);
         transparent.color = color;
 
         
