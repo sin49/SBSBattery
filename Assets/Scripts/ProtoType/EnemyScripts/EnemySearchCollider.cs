@@ -22,14 +22,23 @@ public class EnemySearchCollider : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            enemy.onPatrol = false;
             enemy.target = other.transform;
-            enemy.tracking = true;
             enemy.searchPlayer = true;
+            if (!enemy.wallCheck)
+            {
+                enemy.onPatrol = false;
+                enemy.tracking = true;
+                
+            }
+            else
+            {
+                enemy.onPatrol = true;
+                enemy.searchPlayer = false;
+            }
         }
     }
 

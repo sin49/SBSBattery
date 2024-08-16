@@ -28,8 +28,9 @@ public class PlayerHandler : MonoBehaviour
     #endregion
     InteractiveObject interactobject;
     float InteractTimer;
-    //[Header("항시 무적")]
-    //public bool AlwaysInvincible;
+    [Header("항시 무적")]
+    [Tooltip("무적 on/off기능")]public bool AlwaysInvincible;
+    [Tooltip("이거 체크해야 위에 것 가능")]public bool alwaysFuncActive;
     public void GetInteratObject(InteractiveObject i)
     {
         interactobject = i;
@@ -108,8 +109,14 @@ public class PlayerHandler : MonoBehaviour
         //}
         if(CurrentPlayer!=null&&CurrentPlayer.transform.position.y<-Mathf.Abs(characterFallLimit)+-5)
         PlayerFallOut();
-
-     
+        
+        if (alwaysFuncActive)
+        {
+            if (AlwaysInvincible)
+                CurrentPlayer.onInvincible = true;
+            else
+                CurrentPlayer.onInvincible = false;
+        }
     
 
         #region 캐릭터 조작

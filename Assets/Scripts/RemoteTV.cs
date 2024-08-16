@@ -44,7 +44,6 @@ public class RemoteTV : RemoteObject
         if (onActive)
         {
             tvMaterials[1] = ActiveMaterial;
-            GetComponent<MeshRenderer>().materials = tvMaterials;
 
             activeCollider.enabled = onActive;
             tvLight.enabled = onActive;
@@ -52,7 +51,6 @@ public class RemoteTV : RemoteObject
         else
         {            
             tvMaterials[1] = DeactiveMaterial;
-            GetComponent<MeshRenderer>().materials = tvMaterials;
             
             activeCollider.enabled = onActive;
             tvLight.enabled = onActive;

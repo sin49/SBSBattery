@@ -10,7 +10,10 @@ public class BulbEnemy : Enemy
 
     private void Update()
     {
-        ReadyAttackTime();
+        if (!wallCheck)
+        {
+            ReadyAttackTime();
+        }
 
         if (reachCheck)
         {
