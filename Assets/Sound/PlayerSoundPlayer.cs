@@ -10,6 +10,11 @@ public interface SEPlayer
 
 public class PlayerSoundPlayer : MonoBehaviour, SEPlayer
 {
+    [Header("이동 사운드")]
+    public AudioClip MoveClip;
+    [Header("이동 사운드 볼륨"), Range(0, 1)]
+    public float MoveVolume;
+
     [Header("공격 사운드")]
     public AudioClip AttackClip;
     [Header("공격 사운드 볼륨"),Range(0,1)]

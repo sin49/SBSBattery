@@ -7,9 +7,10 @@ public class CameraManager : MonoBehaviour
     public CinemachineVirtualCamera[] VirtualCameras;
     public CinemachineVirtualCamera activedcamera;
     public BoxCollider BasicCameraConfiner;
+    public Transform VirtualCameraTransform;
  protected  virtual void initializeCamera()
     {
-        VirtualCameras=this.transform.GetComponentsInChildren<CinemachineVirtualCamera>();
+        VirtualCameras= VirtualCameraTransform.GetComponentsInChildren<CinemachineVirtualCamera>();
         for(int n=0;n<VirtualCameras.Length;n++)
         {
             VirtualCameras[n].gameObject.SetActive(false);
