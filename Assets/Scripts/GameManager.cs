@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
     {
         if (TimerTest)
         {
-            if (SceneManager.GetActiveScene().name == "TitleTest" || pauseActive || SceneManager.GetActiveScene().name == loadingscenename)
+            if (SceneManager.GetActiveScene().name == "TitleTest" || pauseActive || SceneManager.GetActiveScene().name == name)
             {
                 TimerText.gameObject.SetActive(false);
             }
@@ -123,6 +123,16 @@ public class GameManager : MonoBehaviour
         StartCoroutine(LoadingTest(scenename));
     }
     public LoadingEffectKari LoadingEffect;
+    public void LoadingEffectToAction(Action<string> act)
+    {
+
+        LoadingEffect.EffectEnd += act;
+        LoadingEffect.gameObject.SetActive(true);
+    }
+    public void LoadingEffectDeActive()
+    {
+        LoadingEffect.LoadingComplete = true;
+    }
     public void LoadingSceneWithKariEffect(string scenename)
     {
         if (PlayerHandler.instance != null)

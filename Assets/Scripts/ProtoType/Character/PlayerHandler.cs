@@ -113,15 +113,15 @@ public class PlayerHandler : MonoBehaviour
     
 
         #region 캐릭터 조작
-        if ((CurrentPlayer != null && !formChange)/*|| CantHandle*/)
+        if ((CurrentPlayer != null && !formChange) || CantHandle)
         charactermove();
         #endregion
     }
-    //public bool CantHandle;
+    public bool CantHandle;
     //public float CantHandleTimer;
     #region 변신 시스템
     #region 변수
-   public TransformType CurrentType =0;
+    public TransformType CurrentType =0;
     Dictionary<TransformType, GameObject> PlayerTransformList = new Dictionary<TransformType, GameObject>();
 
     Dictionary<TransformType, GameObject> CreatedTransformlist = new Dictionary<TransformType, GameObject>();
