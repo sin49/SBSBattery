@@ -44,7 +44,11 @@ public class PlayerInventory : MonoBehaviour
 {
     public static PlayerInventory instance;
    Dictionary<string, Essentialitem> EssentialItems = new Dictionary<string, Essentialitem>();
-   
+   event Action itemGetAction;
+    public void registerItemGetAction(Action a)
+    {
+        itemGetAction += a;
+    }
     public List<Essentialitem> returnEssentialItems()
     {
         List<Essentialitem> list= new List<Essentialitem>();
@@ -190,6 +194,7 @@ public class PlayerInventory : MonoBehaviour
         if(!EssentialItems.ContainsKey(i.itemcode))
             EssentialItems.Add(i.itemcode, i);
         SaveInventoryData();
+        itemGetAction?.Invoke();
         itemui.activeUI(i);
 
     }
@@ -201,7 +206,7 @@ public class PlayerInventory : MonoBehaviour
             MultiplyitemDict[s].GetItem(MultiplyitemNumberDict[s]);
 
             //SaveInventoryData();
-
+            itemGetAction?.Invoke();
             itemui.activeUI(MultiplyitemDict[s]);
         }
     }

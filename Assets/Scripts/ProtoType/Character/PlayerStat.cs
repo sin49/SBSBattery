@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -42,12 +43,16 @@ public class PlayerStat : CharacterStat
 
     [Header("이동 상태")]
     public PlayerMoveState MoveState;
-    
-    
-   
+
+    event Action recoverevent;
+   public void registerRecoverAction(Action a)
+    {
+        recoverevent += a;
+    }
     public void RecoverHP(float hppoint)
     {
         this.hp += hppoint;
+        recoverevent?.Invoke();
         if (this.hp > hpMax)
         {
             this.hp = hpMax;

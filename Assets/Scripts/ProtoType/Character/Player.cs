@@ -51,6 +51,7 @@ public class Player : Character
     [Header("#키 선입력 관련")]
     public float attackBufferTimeMax;
     public float attackBufferTimer;
+    public int attackInputValue;
     [Header("착지 이펙트 활성화 관련")]
     public float flyTimer;
     public float flyTime;

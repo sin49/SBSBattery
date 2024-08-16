@@ -4,9 +4,19 @@ using UnityEngine;
 
 public abstract class InteractiveObject : MonoBehaviour
 {
+    
     protected direction direct;
-    public InteractOption InteractOption;
-    public abstract void Active(direction direct);
+    //public InteractOption InteractOption;
+    [Header("0번 활성화 소리")]
+    public SoundEffectListPlayer soundEffectListPlayer;
+    protected virtual void Awake()
+    {
+        soundEffectListPlayer.GetComponent<SoundEffectListPlayer>();
+    }
+    public virtual void Active(direction direct)
+    {
+        soundEffectListPlayer.PlayAudio(0);
+    }
 
     }
 public enum InteractOption {ray,collider }

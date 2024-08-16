@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -30,18 +31,22 @@ public class AttackColliderRange : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         //ebug.Log($"트리거 감지 중 {other.gameObject}");   
-        if (other.CompareTag("Player") &&enemy.target!=null/*&& !enemy.activeTv*/ && !enemy.onAttack && !enemy.onStun)
+        if (other.CompareTag("Player") &&enemy.target!=null && !enemy.onStun && !enemy.onAttack)
         {
-            if (enemy.transform.position.x < enemy.target.position.x)
+            if (!enemy.wallCheck)
             {
-                enemy.transform.rotation = Quaternion.Euler(0, 90, 0);
-            }
-            else
-            {
-                enemy.transform.rotation = Quaternion.Euler(0, -90, 0);
+                if (enemy.transform.position.x < enemy.target.position.x)
+                {
+                    enemy.transform.rotation = Quaternion.Euler(0, 90, 0);
+                }
+                else
+                {
+                    enemy.transform.rotation = Quaternion.Euler(0, -90, 0);
+                }
+
+                enemy.onAttack = true;
             }
 
-            enemy.onAttack = true;
             enemy.attackRange = true;
         }
     }

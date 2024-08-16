@@ -22,6 +22,7 @@ public class PlayerXChangePortal : InteractiveObject
    
     public override void Active(direction direct)
     {
+        base.Active(direct);
         if (!HasLoadingEffect)
             MovePosition();
         else

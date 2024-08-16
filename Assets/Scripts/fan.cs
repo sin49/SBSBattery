@@ -4,6 +4,7 @@ using UnityEngine;
 [ExecuteAlways]
 public class fan : RemoteObject
 {
+    [Header("2번 활성화 중 돌아가는 소리")]
     public ConvayerBelt Air;
     [Header("풍력")]
     public float AirPower;
@@ -34,9 +35,14 @@ public class fan : RemoteObject
         if (onActive)
         {
             Air.gameObject.SetActive(true);
+            Particle.gameObject.SetActive(true);
+            soundEffectListPlayer.PlayAudioNoCancel(2);
         }
         else
+        {
             Air.gameObject.SetActive(false);
+            Particle.gameObject.SetActive(false);
+        }
     }
     private void Update()
     {
@@ -52,12 +58,16 @@ public class fan : RemoteObject
         }
         onActive = true;
         Air.gameObject.SetActive(true);
+        Particle.gameObject.SetActive(true);
+        base.Active();
     }
 
     public override void Deactive()
     {
         onActive = false;
         Air.gameObject.SetActive(false);
+        Particle.gameObject.SetActive(false);
+        base.Deactive();
     }
 
     

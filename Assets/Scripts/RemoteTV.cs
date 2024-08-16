@@ -17,7 +17,7 @@ public class RemoteTV : RemoteObject
 
     bool onViewPort;
 
-    private void Awake()
+    protected override void Awake()
     {
         tvMaterials = new Material[transform.parent.GetComponent<MeshRenderer>().materials.Length];
         tvMaterials = transform.parent.GetComponent<MeshRenderer>().materials;
@@ -67,6 +67,7 @@ public class RemoteTV : RemoteObject
 
         //Frontrenderer.material = DeactiveMaterial;
         onActive = false;
+        base.Deactive();
         activeCollider.enabled = onActive;
         tvLight.enabled = onActive;
     }
@@ -76,6 +77,7 @@ public class RemoteTV : RemoteObject
         transform.parent.GetComponent<MeshRenderer>().materials = tvMaterials;
 
         onActive = true;
+        base.Active();
         activeCollider.enabled = onActive;
         tvLight.enabled = onActive;
     }

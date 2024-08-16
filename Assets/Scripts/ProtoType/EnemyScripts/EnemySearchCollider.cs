@@ -22,14 +22,21 @@ public class EnemySearchCollider : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            enemy.onPatrol = false;
             enemy.target = other.transform;
-            enemy.tracking = true;
-            enemy.searchPlayer = true;
+            if (!enemy.wallCheck)
+            {
+                enemy.searchPlayer = true;
+                enemy.onPatrol = false;
+            }
+            else
+            {
+                enemy.searchPlayer = false;
+                enemy.onPatrol = true;
+            }            
         }
     }
 
@@ -38,8 +45,10 @@ public class EnemySearchCollider : MonoBehaviour
      
         if (other.CompareTag("Player"))
         {
-            //enemy.tracking = false;
-            enemy.onPatrol = true;
+            if (enemy.onPatrol)
+            {
+                enemy.searchPlayer = false;
+            }
         }
     }*/
 }

@@ -5,13 +5,11 @@ using UnityEngine;
 public class DOor : InteractiveObject
 {
     public Animator animator;
-    private void Awake()
-    {
-        InteractOption = InteractOption.ray;
-    }
+  
     bool Open;
     public override void Active(direction direct)
     {
+        base.Active(direct);
         animator.SetInteger("direction", (int)direct);
   
         animator.SetBool("Open", true);

@@ -9,7 +9,7 @@ public class ForkLift : signalReceiver
 
 
 
-    private void Awake()
+    protected override void Awake()
     {
         ani = GetComponent<Animator>();
         register();

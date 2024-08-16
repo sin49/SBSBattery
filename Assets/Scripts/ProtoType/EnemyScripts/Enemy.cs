@@ -42,7 +42,7 @@ public class Enemy: Character,DamagedByPAttack
     [Tooltip("탐색 콜라이더")] public GameObject searchCollider; // 탐지 범위 콜라이더
     [Tooltip("탐색 범위")] public Vector3 searchColliderRange;
     [Tooltip("탐색 위치")] public Vector3 searchColliderPos;
-    [HideInInspector]public bool searchPlayer;
+    public bool searchPlayer;
 
     [Header("#추격 범위#")]
     [Tooltip("탐색 후 추격 유지 범위")]public float trackingDistance;
@@ -59,7 +59,7 @@ public class Enemy: Character,DamagedByPAttack
     [Tooltip("정찰 거리(설정 안해도됨)")]public float patrolDistance; // 정찰 거리
     
     Vector3 leftPatrol, rightPatrol;
-    [HideInInspector]
+    
     public bool onPatrol;
     [Header("#그려질 정찰 큐브 사이즈 결정#")]
     [Tooltip("붉은색 높이")] public float yWidth;
@@ -67,10 +67,16 @@ public class Enemy: Character,DamagedByPAttack
     Vector3 center;
 
     [Header("벽 체크 레이캐스트")]
-    [Tooltip("벽 Ray 높이")] public float wallRayHeight;
-    [Tooltip("벽 Ray 길이")] public float wallRayLength;
-
-    [HideInInspector]
+    [Tooltip("벽 체크 Ray의 높이")] public float wallRayHeight;
+    [Tooltip("정면 Ray 길이")] public float wallRayLength;
+    [Tooltip("위쪽 Ray 길이")] public float wallRayUpLength;    
+    
+    public Collider forwardWall;
+    public Collider upWall;
+    public float disToWall;    
+    public bool wallCheck;
+    bool forwardCheck, upCheck;
+    
     public float attackTimer; // 공격 대기시간
     //public float attackInitCoolTime; // 공격 대기시간 초기화 변수
     [HideInInspector]
@@ -78,9 +84,9 @@ public class Enemy: Character,DamagedByPAttack
 
     [HideInInspector]
     public bool callCheck;
-    [HideInInspector]
+    
     public bool onAttack; // 공격 활성화 여부 (공격 범위 내에 플레이어를 인식했을 때 true 변환)
-    [HideInInspector]
+    
     public bool activeAttack; // 공격 가능한 상태인지 체크
     [HideInInspector]
     public bool checkPlayer; // 범위 내 플레이어 체크    
@@ -140,21 +146,26 @@ public class Enemy: Character,DamagedByPAttack
     private void Update()
     {
         ReadyAttackTime();
+
         if (rangeCollider != null)
         {
             rangeCollider.GetComponent<BoxCollider>().center = rangePos;
             rangeCollider.GetComponent<BoxCollider>().size = rangeSize;
         }
+
     }
     
     private void FixedUpdate()
     {
+        /*if (searchPlayer)
+            DistanceToPlayer();*/
+
         if (!onStun)
         {
             Move();
         }
 
-        if (tracking && !onAttack && !attackRange)
+        if (tracking && !onAttack)
         {
             isMove = true;
         }
@@ -167,6 +178,179 @@ public class Enemy: Character,DamagedByPAttack
         {
             animaor.SetBool("isMove", isMove);
         }
+        ForwardWallRayCheck();
+        UpWallRayCheck();
+        WallCheckResult();
+    }
+
+    void DistanceToPlayer()
+    {
+        if (target != null && PlayerHandler.instance.CurrentPlayer != null)
+        {
+            if (target == PlayerHandler.instance.CurrentPlayer)
+            {
+                testTarget = target.position - transform.position;
+                testTarget.y = 0;
+                disToPlayer = testTarget.magnitude;
+            }
+        }
+    }
+
+    public void ForwardWallRayCheck()
+    {
+        bool isWall = false;
+        forwardWall = null;
+        Debug.DrawRay(transform.position + Vector3.up * wallRayHeight, transform.forward * wallRayLength, Color.magenta, 0.02f);
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position + Vector3.up * wallRayHeight, transform.forward, out hit, wallRayLength, LayerMask.GetMask("Platform")))
+        {
+            if (hit.collider.CompareTag("Ground"))
+            {
+                forwardWall = hit.collider;
+                isWall = true;
+                //Debug.Log("Forward탐지");
+            }
+
+            if (forwardWall != null)
+            {
+                Vector3 targetWall = forwardWall.transform.position - transform.position;
+                disToWall = targetWall.magnitude;
+                if (target != null && PlayerHandler.instance != null)
+                {
+                    if (PlayerHandler.instance.CurrentPlayer != null && target.gameObject == PlayerHandler.instance.CurrentPlayer.gameObject)
+                    {
+                        if (disToPlayer < disToWall)
+                        {
+                            isWall = false; // 플레이어와의 거리가 벽과의 거리보다 가까울 경우
+                        }
+                        else
+                        {
+                            isWall = true;
+                        }
+                    }
+                }
+            }
+        }
+        /*RaycastHit[] forwardHits = Physics.RaycastAll(transform.position + Vector3.up * wallRayHeight, transform.forward, wallRayLength);
+        for (int i = 0; i < forwardHits.Length; i++)
+        {
+            if (forwardHits[i].collider.CompareTag("Ground"))
+            {
+                forwardWall = forwardHits[i].collider;
+                isWall = true;
+                Debug.Log("Forward탐지");
+            }
+
+            if (forwardWall != null)
+            {
+                Vector3 targetWall = forwardWall.transform.position - transform.position;
+                disToWall = targetWall.magnitude;
+                if (target != null && PlayerHandler.instance != null)
+                {
+                    if (PlayerHandler.instance.CurrentPlayer != null && target.gameObject == PlayerHandler.instance.CurrentPlayer.gameObject)
+                    {
+                        if (disToPlayer < disToWall)
+                        {
+                            isWall = false; // 플레이어와의 거리가 벽과의 거리보다 가까울 경우
+                        }
+                        else
+                        {
+                            isWall = true;
+                        }
+                    }
+                }
+            }
+        }*/
+        if (forwardWall == null)
+        {
+            isWall = false;
+        }
+
+        forwardCheck = isWall;
+    }
+
+    public void UpWallRayCheck()
+    {
+        bool isWall = false;
+        upWall = null;
+        Debug.DrawRay(transform.position + Vector3.up * wallRayHeight, transform.up * wallRayUpLength, Color.magenta, 0.02f);
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position + Vector3.up * wallRayHeight, transform.up, out hit, wallRayUpLength, LayerMask.GetMask("Platform")))
+        {
+            if (hit.collider.CompareTag("Ground"))
+            {
+                upWall = hit.collider;
+                isWall = true;
+                //Debug.Log("Up탐지");
+            }
+
+            if (upWall != null)
+            {
+                if (target != null && PlayerHandler.instance != null)
+                {
+                    if (PlayerHandler.instance.CurrentPlayer != null && target.gameObject == PlayerHandler.instance.CurrentPlayer.gameObject)
+                    {
+                        if (target.transform.position.y < upWall.transform.position.y)
+                        {
+                            //Debug.Log("플레이어는 천장에 있지 않음");
+                            isWall = false; //플레이어 y축이 위쪽 바닥의 y축 보다 값이 작으면 false
+                        }
+                        else
+                        {
+                            isWall = true;
+                            if (searchPlayer && !onPatrol)
+                            {
+                                searchPlayer = false;
+                                onPatrol = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        /*RaycastHit[] upHits = Physics.RaycastAll(transform.position + Vector3.up * wallRayHeight, transform.up, wallRayUpLength);
+        for (int j = 0; j < upHits.Length; j++)
+        {
+            if (upHits[j].collider.CompareTag("Ground"))
+            {
+                upWall = upHits[j].collider;
+                isWall = true;
+                Debug.Log("Up탐지");
+            }
+
+            if (upWall != null)
+            {
+                if (target != null && PlayerHandler.instance != null)
+                {
+                    if (PlayerHandler.instance.CurrentPlayer != null && target.gameObject == PlayerHandler.instance.CurrentPlayer.gameObject)
+                    {
+                        if (target.transform.position.y < upWall.transform.position.y)
+                        {
+                            isWall = false; //플레이어 y축이 위쪽 바닥의 y축 보다 값이 작으면 false
+                        }
+                        else
+                        {
+                            isWall = true;
+                        }
+                    }
+                }
+            }
+        }*/
+
+        if (upWall == null)
+        {
+            isWall = false;
+        }
+
+        upCheck = isWall;
+    }
+
+    public void WallCheckResult()
+    {
+        if (forwardCheck || upCheck || forwardCheck && upCheck)
+            wallCheck = true;
+        else
+            wallCheck = false;
     }
 
     IEnumerator WaitStunTime()
@@ -244,7 +428,7 @@ public class Enemy: Character,DamagedByPAttack
 
             if (tracking)
             {
-                if (!activeAttack && !onAttack && !attackRange)
+                if (!activeAttack && !onAttack)
                 {
                     if (patrolType == PatrolType.movePatrol && onPatrol)
                         PatrolTracking();
@@ -265,7 +449,8 @@ public class Enemy: Character,DamagedByPAttack
     {
         testTarget = target.position - transform.position;
         //var vector = testTarget;
-        testTarget.y = 0;        
+        testTarget.y = 0;
+        disToPlayer = testTarget.magnitude;
 
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), eStat.rotationSpeed * Time.deltaTime);
         /*rotationY = transform.localRotation.y;
@@ -282,7 +467,6 @@ public class Enemy: Character,DamagedByPAttack
         float f = testTarget.z - transform.position.z; // -> 절대값을 하여 z값이 n보다 크면 false로 빠져나가도록 
         f = Mathf.Abs(f);
         disToPlayer = a.magnitude;*/
-        disToPlayer = testTarget.magnitude;
 
         if (disToPlayer > trackingDistance /*|| f > 6*/)
         {
@@ -450,6 +634,10 @@ public class Enemy: Character,DamagedByPAttack
                 Gizmos.color = Color.red;
                 Gizmos.DrawWireCube(center, size);
                 targetPatrol = p2;
+
+                ForwardWallRayCheck();
+                UpWallRayCheck();               
+                WallCheckResult();
             }
             Gizmos.color = Color.yellow;
 

@@ -444,8 +444,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 2, z: 4}
-  m_Center: {x: 0, y: -0.19, z: 0}
+  m_Size: {x: 2, y: 2, z: 3}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1877478978774989018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -988,8 +988,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4439787244619641238}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -24.59, y: 3.253, z: 0.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -999,7 +999,7 @@ Transform:
   - {fileID: 7374863779315376107}
   - {fileID: 6076286279727721560}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &1436342978272507966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1029,22 +1029,24 @@ MonoBehaviour:
   rangeSize: {x: 0, y: 0, z: 0}
   rangePos: {x: 0, y: 0, z: 0}
   searchCollider: {fileID: 2268291284102243975}
-  searchColliderRange: {x: 1, y: 2, z: 4}
-  searchColliderPos: {x: 0, y: -0.19, z: 0}
+  searchColliderRange: {x: 2, y: 2, z: 3}
+  searchColliderPos: {x: 0, y: 0, z: 0}
   searchPlayer: 0
-  trackingDistance: 2
+  trackingDistance: 0
   disToPlayer: 0
   patrolGroup: []
-  targetPatrol: {x: 2, y: 0, z: 0}
-  patrolWaitTime: 1
-  leftPatrolRange: 1
-  rightPatrolRange: 1
-  patrolDistance: 0.1
+  targetPatrol: {x: -24.59, y: 3.253, z: 0.34}
+  patrolWaitTime: 0
+  leftPatrolRange: 0
+  rightPatrolRange: 0
+  patrolDistance: 0
   onPatrol: 0
-  yWidth: 2
-  zWidth: 1
+  yWidth: 3
+  zWidth: 3
   wallRayHeight: 0
   wallRayLength: 0
+  wallRayPos: 0
+  wallCheck: 0
   attackTimer: 0
   attackDelay: 0
   callCheck: 0
@@ -1107,7 +1109,7 @@ MonoBehaviour:
   rotationSpeed: 1
   attackSpeed: 0
   attackCoolTimebonus: 0
-  initattackCoolTime: 1
+  initattackCoolTime: 5
   attackDelay: 0
   canMove: 1
   canAttack: 1

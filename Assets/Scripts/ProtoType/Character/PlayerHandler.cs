@@ -28,8 +28,9 @@ public class PlayerHandler : MonoBehaviour
     #endregion
     InteractiveObject interactobject;
     float InteractTimer;
-    //[Header("항시 무적")]
-    //public bool AlwaysInvincible;
+    [Header("항시 무적")]
+    [Tooltip("무적 on/off기능")]public bool AlwaysInvincible;
+    [Tooltip("이거 체크해야 위에 것 가능")]public bool alwaysFuncActive;
     public void GetInteratObject(InteractiveObject i)
     {
         interactobject = i;
@@ -108,8 +109,14 @@ public class PlayerHandler : MonoBehaviour
         //}
         if(CurrentPlayer!=null&&CurrentPlayer.transform.position.y<-Mathf.Abs(characterFallLimit)+-5)
         PlayerFallOut();
-
-     
+        
+        if (alwaysFuncActive)
+        {
+            if (AlwaysInvincible)
+                CurrentPlayer.onInvincible = true;
+            else
+                CurrentPlayer.onInvincible = false;
+        }
     
 
         #region 캐릭터 조작
@@ -276,8 +283,13 @@ public class PlayerHandler : MonoBehaviour
     [HideInInspector]
     public bool DImensionChangeDisturb;
     event Action Dimensionchangeevent;
+    event Action CAmeraChangeevent;
     event Action CorutineRegisterEvent;
     IEnumerator CameraRotateCorutine;
+    public void registerCameraChangeAction(Action a)
+    {
+        CAmeraChangeevent += a;
+    }
   public void registerCorutineRegisterEvent(Action CorutineRegister)
     {
         this.CorutineRegisterEvent += CorutineRegister;
@@ -307,14 +319,20 @@ public class PlayerHandler : MonoBehaviour
             //이벤트 처리
 
             if (CameraRotateCorutine != null)
+            {
+                CAmeraChangeevent?.Invoke();
                 yield return StartCoroutine(CameraRotateCorutine);
+            }
             //카메라처리
         }
         else
         {
 
             if (CameraRotateCorutine != null)
+            {
+                CAmeraChangeevent?.Invoke();
                 yield return StartCoroutine(CameraRotateCorutine);
+            }
             //카메라처리
             yield return StartCoroutine(InvokeDimensionEvent());
 
