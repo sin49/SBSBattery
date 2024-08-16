@@ -20,6 +20,7 @@ public abstract class RemoteObject : MonoBehaviour
 
     public virtual void Deactive()
     {
+        if(soundEffectListPlayer !=null)
         soundEffectListPlayer.PlayAudio(1);
     }
 
