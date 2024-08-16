@@ -82,9 +82,9 @@ public class Enemy: Character,DamagedByPAttack
 
     [HideInInspector]
     public bool callCheck;
-    [HideInInspector]
+    
     public bool onAttack; // 공격 활성화 여부 (공격 범위 내에 플레이어를 인식했을 때 true 변환)
-    [HideInInspector]
+    
     public bool activeAttack; // 공격 가능한 상태인지 체크
     [HideInInspector]
     public bool checkPlayer; // 범위 내 플레이어 체크    
@@ -155,15 +155,15 @@ public class Enemy: Character,DamagedByPAttack
     
     private void FixedUpdate()
     {
-        if (searchPlayer)
-            DistanceToPlayer();
+        /*if (searchPlayer)
+            DistanceToPlayer();*/
 
         if (!onStun)
         {
             Move();
         }
 
-        if (tracking && !onAttack && !attackRange)
+        if (tracking && !onAttack)
         {
             isMove = true;
         }
@@ -176,11 +176,9 @@ public class Enemy: Character,DamagedByPAttack
         {
             animaor.SetBool("isMove", isMove);
         }
-
-        UpWallRayCheck();
         ForwardWallRayCheck();
+        UpWallRayCheck();
         WallCheckResult();
-        
     }
 
     void DistanceToPlayer()
@@ -200,7 +198,7 @@ public class Enemy: Character,DamagedByPAttack
     {
         bool isWall = false;
         forwardWall = null;
-        Debug.DrawRay(transform.position + Vector3.up * wallRayHeight, transform.forward * wallRayLength, Color.magenta, 0.01f);
+        Debug.DrawRay(transform.position + Vector3.up * wallRayHeight, transform.forward * wallRayLength, Color.magenta, 0.02f);
         RaycastHit hit;
         if (Physics.Raycast(transform.position + Vector3.up * wallRayHeight, transform.forward, out hit, wallRayLength, LayerMask.GetMask("Platform")))
         {
@@ -208,7 +206,7 @@ public class Enemy: Character,DamagedByPAttack
             {
                 forwardWall = hit.collider;
                 isWall = true;
-                Debug.Log("Forward탐지");
+                //Debug.Log("Forward탐지");
             }
 
             if (forwardWall != null)
@@ -231,12 +229,12 @@ public class Enemy: Character,DamagedByPAttack
                 }
             }
         }
-        /*RaycastHit[] forwardHits = Physics.RaycastAll(transform.position + Vector3.up * wallRayHeight, transform.forward, wallRayLength);                
+        /*RaycastHit[] forwardHits = Physics.RaycastAll(transform.position + Vector3.up * wallRayHeight, transform.forward, wallRayLength);
         for (int i = 0; i < forwardHits.Length; i++)
         {
             if (forwardHits[i].collider.CompareTag("Ground"))
             {
-                forwardWall = forwardHits[i].collider;                
+                forwardWall = forwardHits[i].collider;
                 isWall = true;
                 Debug.Log("Forward탐지");
             }
@@ -245,7 +243,7 @@ public class Enemy: Character,DamagedByPAttack
             {
                 Vector3 targetWall = forwardWall.transform.position - transform.position;
                 disToWall = targetWall.magnitude;
-                if (target != null&& PlayerHandler.instance != null)
+                if (target != null && PlayerHandler.instance != null)
                 {
                     if (PlayerHandler.instance.CurrentPlayer != null && target.gameObject == PlayerHandler.instance.CurrentPlayer.gameObject)
                     {
@@ -255,7 +253,7 @@ public class Enemy: Character,DamagedByPAttack
                         }
                         else
                         {
-                            isWall = true;                            
+                            isWall = true;
                         }
                     }
                 }
@@ -273,7 +271,7 @@ public class Enemy: Character,DamagedByPAttack
     {
         bool isWall = false;
         upWall = null;
-        Debug.DrawRay(transform.position + Vector3.up * wallRayHeight, transform.up * wallRayUpLength, Color.magenta, 0.01f);
+        Debug.DrawRay(transform.position + Vector3.up * wallRayHeight, transform.up * wallRayUpLength, Color.magenta, 0.02f);
         RaycastHit hit;
         if (Physics.Raycast(transform.position + Vector3.up * wallRayHeight, transform.up, out hit, wallRayUpLength, LayerMask.GetMask("Platform")))
         {
@@ -281,7 +279,7 @@ public class Enemy: Character,DamagedByPAttack
             {
                 upWall = hit.collider;
                 isWall = true;
-                Debug.Log("Up탐지");
+                //Debug.Log("Up탐지");
             }
 
             if (upWall != null)
@@ -292,11 +290,17 @@ public class Enemy: Character,DamagedByPAttack
                     {
                         if (target.transform.position.y < upWall.transform.position.y)
                         {
+                            //Debug.Log("플레이어는 천장에 있지 않음");
                             isWall = false; //플레이어 y축이 위쪽 바닥의 y축 보다 값이 작으면 false
                         }
                         else
                         {
                             isWall = true;
+                            if (searchPlayer && !onPatrol)
+                            {
+                                searchPlayer = false;
+                                onPatrol = true;
+                            }
                         }
                     }
                 }
@@ -307,13 +311,13 @@ public class Enemy: Character,DamagedByPAttack
         {
             if (upHits[j].collider.CompareTag("Ground"))
             {
-                upWall = upHits[j].collider;                
+                upWall = upHits[j].collider;
                 isWall = true;
                 Debug.Log("Up탐지");
             }
 
             if (upWall != null)
-            {                
+            {
                 if (target != null && PlayerHandler.instance != null)
                 {
                     if (PlayerHandler.instance.CurrentPlayer != null && target.gameObject == PlayerHandler.instance.CurrentPlayer.gameObject)
@@ -422,7 +426,7 @@ public class Enemy: Character,DamagedByPAttack
 
             if (tracking)
             {
-                if (!activeAttack && !onAttack && !attackRange)
+                if (!activeAttack && !onAttack)
                 {
                     if (patrolType == PatrolType.movePatrol && onPatrol)
                         PatrolTracking();

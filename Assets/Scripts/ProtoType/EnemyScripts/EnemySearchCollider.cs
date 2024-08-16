@@ -27,7 +27,6 @@ public class EnemySearchCollider : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             enemy.target = other.transform;
-
             if (!enemy.wallCheck)
             {
                 enemy.searchPlayer = true;
