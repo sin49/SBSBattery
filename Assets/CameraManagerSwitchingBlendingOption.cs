@@ -15,6 +15,11 @@ public class CameraManagerSwitchingBlendingOption : CameraManager
     {
         cinemachineBrain = this.GetComponent<CinemachineBrain>();
     }
+    public override void ActiveCamera(CinemachineVirtualCamera camera)
+    {
+        base.ActiveCamera(camera);
+        SwitchToCamera(camera);
+    }
     public override void ActiveCamera(int n)
     {
         if (n >= VirtualCameras.Length)

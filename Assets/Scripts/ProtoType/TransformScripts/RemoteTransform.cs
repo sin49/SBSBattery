@@ -111,6 +111,7 @@ public class RemoteTransform : Player
             if (closestObject != null)
             {
                 Humonoidanimator.Play("Charge");
+            SoundPlayer.PlaySkillSound();
                 ActiveRemoteObject();
         }
         else

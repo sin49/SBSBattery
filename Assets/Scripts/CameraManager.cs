@@ -31,6 +31,13 @@ public class CameraManager : MonoBehaviour
         if (PlayerHandler.instance != null)
             PlayerHandler.instance.CurrentCamera = GetComponent<Camera>();
     }
+    public virtual void ActiveCamera(CinemachineVirtualCamera camera)
+    {
+      
+        activedcamera.gameObject.SetActive(false);
+        camera.gameObject.SetActive(true);
+        activedcamera = camera;
+    }
     public virtual void ActiveCamera(int n)
     {
         if (n >= VirtualCameras.Length)

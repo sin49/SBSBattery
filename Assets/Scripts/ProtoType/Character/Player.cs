@@ -206,7 +206,7 @@ public class Player : Character
                     isJump = false;
                     downAttack = false;
                     PlayerStat.instance.doubleJump = true;
-
+                    SoundPlayer.PlayLandingSound();
                     if (LandingEffect != null && flyTimer < 0)
                         LandingEffect.SetActive(true);
 
@@ -514,6 +514,8 @@ public class Player : Character
         {
             if(canAttack)
             rotate(moveInput.x, moveInput.z);
+            SoundPlayer.PlayMoveSound();
+            
         }
         //Vert 회전 추가
         //translateFix = new(hori, 0, 0);
@@ -527,7 +529,7 @@ public class Player : Character
         Movevelocity = desiredVector - playerRb.velocity.x * Vector3.right - playerRb.velocity.z * Vector3.forward;
 
       
-        if (!wallcheck)
+        if (!wallcheck) 
             playerRb.AddForce(Movevelocity, ForceMode.VelocityChange);
         else
             playerRb.AddForce(EnvironmentPower, ForceMode.VelocityChange);
@@ -763,6 +765,7 @@ public class Player : Character
     public override void Dead()
     {
         PlayerStat.instance.pState = PlayerState.dead;
+        SoundPlayer.PlayCharacterDieClip();
         if(!PlayerSpawnManager.Instance.DontSave)
         GameManager.instance.LoadingSceneWithKariEffect(GameManager.instance.LoadLastestStage());
         else
