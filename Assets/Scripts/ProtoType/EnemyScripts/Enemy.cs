@@ -13,6 +13,8 @@ public interface DamagedByPAttack
 
 public class Enemy: Character,DamagedByPAttack
 {
+   
+
     public EnemyStat eStat;
     public PatrolType patrolType;
     //public Rigidbody enemyRb; // 적 리지드바디
@@ -273,6 +275,8 @@ public class Enemy: Character,DamagedByPAttack
         if (SetRotation())
         {            
             rb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
+            if (soundplayer != null)
+                soundplayer.PlayMoveSound();
         }
         /*var a = new Vector3(vector.x, vector.y);
         float f = testTarget.z - transform.position.z; // -> 절대값을 하여 z값이 n보다 크면 false로 빠져나가도록 
@@ -298,6 +302,8 @@ public class Enemy: Character,DamagedByPAttack
         if (SetRotation())
         {
             rb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
+            if (soundplayer != null)
+                soundplayer.PlayMoveSound();
         }
 
         if (testTarget.magnitude < patrolDistance)
@@ -305,6 +311,7 @@ public class Enemy: Character,DamagedByPAttack
             tracking = false;
             StartCoroutine(InitPatrolTarget());
         }
+    
     }
 
     bool setPatrol;
@@ -477,6 +484,8 @@ public class Enemy: Character,DamagedByPAttack
     {
         eStat.eState = EnemyState.dead;
         PlayerHandler.instance.CurrentPlayer.wallcheck = false;
+        if (soundplayer != null)
+            soundplayer.PlayCharacterDieClip();
         Instantiate(deadEffect,transform.position, Quaternion.identity);
         gameObject.SetActive(false);
     }
@@ -487,6 +496,8 @@ public class Enemy: Character,DamagedByPAttack
     {
         if(animaor != null)
             animaor.Play("EnemyAttack");
+        if (soundplayer != null)
+            soundplayer.PlayAttackAudio();
     }
 
     // 공격 준비시간

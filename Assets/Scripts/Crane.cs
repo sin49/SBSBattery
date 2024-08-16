@@ -8,8 +8,12 @@ public abstract class Crane : RemoteObject
     public float CraneSpeed;
 
     public Transform ActiveTransform;
-    public Transform DeActiveTransform;
+Vector3 DeActiveTransform;
     Vector3 MoveVector;
+    private void Awake()
+    {
+        DeActiveTransform = MoveObject.transform.position;
+    }
     public override void Active()
     {
         Debug.Log("active()");
@@ -41,8 +45,8 @@ public abstract class Crane : RemoteObject
         else
         {
 
-            MoveVector = GetMoveVector(DeActiveTransform.position, MoveObject.transform.position);
-            MoveCrane(MoveVector, DeActiveTransform.position, MoveObject.transform);
+            MoveVector = GetMoveVector(DeActiveTransform, MoveObject.transform.position);
+            MoveCrane(MoveVector, DeActiveTransform, MoveObject.transform);
         }
     }
 

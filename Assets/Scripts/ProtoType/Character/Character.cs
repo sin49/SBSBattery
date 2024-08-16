@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class Character: MonoBehaviour
 {
+    protected CharacterSoundPlayer soundplayer;
+
     public abstract void Attack();
     public abstract void Damaged(float damage);
     public abstract void Move();
@@ -13,6 +15,7 @@ public abstract class Character: MonoBehaviour
     protected virtual void Awake()
     {
         rb= GetComponent<Rigidbody>();
-            
+
+            soundplayer = GetComponent<CharacterSoundPlayer>();
     }
 }
