@@ -65,9 +65,9 @@ public class Enemy: Character,DamagedByPAttack
     Vector3 center;
 
     [Header("벽 체크 레이캐스트")]
-    [Tooltip("벽 Ray 높이")] public float wallRayHeight;
-    [Tooltip("벽 앞쪽 Ray 길이")] public float wallRayLength;
-    [Tooltip("벽 위쪽 Ray 길이")] public float wallRayUpLength;    
+    [Tooltip("벽 체크 Ray의 높이")] public float wallRayHeight;
+    [Tooltip("정면 Ray 길이")] public float wallRayLength;
+    [Tooltip("위쪽 Ray 길이")] public float wallRayUpLength;    
     
     public Collider forwardWall;
     public Collider upWall;
@@ -154,7 +154,10 @@ public class Enemy: Character,DamagedByPAttack
     }
     
     private void FixedUpdate()
-    {        
+    {
+        if (searchPlayer)
+            DistanceToPlayer();
+
         if (!onStun)
         {
             Move();
@@ -177,6 +180,20 @@ public class Enemy: Character,DamagedByPAttack
         UpWallRayCheck();
         ForwardWallRayCheck();
         WallCheckResult();
+        
+    }
+
+    void DistanceToPlayer()
+    {
+        if (target != null && PlayerHandler.instance.CurrentPlayer != null)
+        {
+            if (target == PlayerHandler.instance.CurrentPlayer)
+            {
+                testTarget = target.position - transform.position;
+                testTarget.y = 0;
+                disToPlayer = testTarget.magnitude;
+            }
+        }
     }
 
     public void ForwardWallRayCheck()
@@ -184,7 +201,37 @@ public class Enemy: Character,DamagedByPAttack
         bool isWall = false;
         forwardWall = null;
         Debug.DrawRay(transform.position + Vector3.up * wallRayHeight, transform.forward * wallRayLength, Color.magenta, 0.01f);
-        RaycastHit[] forwardHits = Physics.RaycastAll(transform.position + Vector3.up * wallRayHeight, transform.forward, wallRayLength);                
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position + Vector3.up * wallRayHeight, transform.forward, out hit, wallRayLength, LayerMask.GetMask("Platform")))
+        {
+            if (hit.collider.CompareTag("Ground"))
+            {
+                forwardWall = hit.collider;
+                isWall = true;
+                Debug.Log("Forward탐지");
+            }
+
+            if (forwardWall != null)
+            {
+                Vector3 targetWall = forwardWall.transform.position - transform.position;
+                disToWall = targetWall.magnitude;
+                if (target != null && PlayerHandler.instance != null)
+                {
+                    if (PlayerHandler.instance.CurrentPlayer != null && target.gameObject == PlayerHandler.instance.CurrentPlayer.gameObject)
+                    {
+                        if (disToPlayer < disToWall)
+                        {
+                            isWall = false; // 플레이어와의 거리가 벽과의 거리보다 가까울 경우
+                        }
+                        else
+                        {
+                            isWall = true;
+                        }
+                    }
+                }
+            }
+        }
+        /*RaycastHit[] forwardHits = Physics.RaycastAll(transform.position + Vector3.up * wallRayHeight, transform.forward, wallRayLength);                
         for (int i = 0; i < forwardHits.Length; i++)
         {
             if (forwardHits[i].collider.CompareTag("Ground"))
@@ -204,7 +251,7 @@ public class Enemy: Character,DamagedByPAttack
                     {
                         if (disToPlayer < disToWall)
                         {
-                            isWall = false;
+                            isWall = false; // 플레이어와의 거리가 벽과의 거리보다 가까울 경우
                         }
                         else
                         {
@@ -213,7 +260,7 @@ public class Enemy: Character,DamagedByPAttack
                     }
                 }
             }
-        }
+        }*/
         if (forwardWall == null)
         {
             isWall = false;
@@ -227,7 +274,35 @@ public class Enemy: Character,DamagedByPAttack
         bool isWall = false;
         upWall = null;
         Debug.DrawRay(transform.position + Vector3.up * wallRayHeight, transform.up * wallRayUpLength, Color.magenta, 0.01f);
-        RaycastHit[] upHits = Physics.RaycastAll(transform.position + Vector3.up * wallRayHeight, transform.up, wallRayUpLength);
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position + Vector3.up * wallRayHeight, transform.up, out hit, wallRayUpLength, LayerMask.GetMask("Platform")))
+        {
+            if (hit.collider.CompareTag("Ground"))
+            {
+                upWall = hit.collider;
+                isWall = true;
+                Debug.Log("Up탐지");
+            }
+
+            if (upWall != null)
+            {
+                if (target != null && PlayerHandler.instance != null)
+                {
+                    if (PlayerHandler.instance.CurrentPlayer != null && target.gameObject == PlayerHandler.instance.CurrentPlayer.gameObject)
+                    {
+                        if (target.transform.position.y < upWall.transform.position.y)
+                        {
+                            isWall = false; //플레이어 y축이 위쪽 바닥의 y축 보다 값이 작으면 false
+                        }
+                        else
+                        {
+                            isWall = true;
+                        }
+                    }
+                }
+            }
+        }
+        /*RaycastHit[] upHits = Physics.RaycastAll(transform.position + Vector3.up * wallRayHeight, transform.up, wallRayUpLength);
         for (int j = 0; j < upHits.Length; j++)
         {
             if (upHits[j].collider.CompareTag("Ground"))
@@ -245,7 +320,7 @@ public class Enemy: Character,DamagedByPAttack
                     {
                         if (target.transform.position.y < upWall.transform.position.y)
                         {
-                            isWall = false;
+                            isWall = false; //플레이어 y축이 위쪽 바닥의 y축 보다 값이 작으면 false
                         }
                         else
                         {
@@ -254,7 +329,7 @@ public class Enemy: Character,DamagedByPAttack
                     }
                 }
             }
-        }
+        }*/
 
         if (upWall == null)
         {
