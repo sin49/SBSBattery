@@ -5,6 +5,7 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -123,11 +124,25 @@ public class GameManager : MonoBehaviour
         StartCoroutine(LoadingTest(scenename));
     }
     public LoadingEffectKari LoadingEffect;
+ 
+    
+
     public void LoadingEffectToAction(Action<string> act)
     {
 
+        StartCoroutine(LoadingEffectActionCorutine(MinimumLoadingTime, act));
+    }
+    IEnumerator LoadingEffectActionCorutine(float timer, Action<string> act)
+    {
         LoadingEffect.EffectEnd += act;
         LoadingEffect.gameObject.SetActive(true);
+        PlayerHandler.instance.CantHandle = true;
+        yield return new WaitForSeconds(LoadingEffect.EffectTime + LoadingEffect.IntesityTime);
+        yield return new WaitForSeconds(timer);
+        LoadingEffect.LoadingComplete = true;
+        yield return new WaitForSeconds(LoadingEffect.EffectTime );
+        PlayerHandler.instance.CantHandle = false;
+
     }
     public void LoadingEffectDeActive()
     {

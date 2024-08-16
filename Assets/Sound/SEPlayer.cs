@@ -6,6 +6,7 @@ public class SEPlayer : MonoBehaviour
 {
    protected AudioSource audiosource;
     protected AudioType audiotype = AudioType.SE;
+
     protected virtual void Awake()
     {
 

@@ -26,7 +26,9 @@ public class RollingEnemy : Enemy
 
     public void RollingMove()
     {
-        rb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);        
+        rb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
+        if(soundplayer!= null)
+        soundplayer.PlayMoveSound();
     }
 
     public void RollingPatrol()

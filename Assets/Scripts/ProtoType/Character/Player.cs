@@ -19,6 +19,8 @@ public class Player : Character
     public Rigidbody playerRb;
     public CapsuleCollider capsuleCollider;
 
+    [Header("PlayerSoundPlayer")]
+    public PlayerSoundPlayer SoundPlayer;
 
     Vector3 EnvironmentPower;
 
@@ -395,8 +397,6 @@ public class Player : Character
 
     Vector3 translateFix;
 
-    [Header("PlayerSoundPlayer")]
-    public PlayerSoundPlayer SoundPlayer;
 
 
     #region 추상화 오버라이드 함수
