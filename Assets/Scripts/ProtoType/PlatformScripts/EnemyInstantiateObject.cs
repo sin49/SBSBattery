@@ -34,7 +34,7 @@ public class EnemyInstantiateObject : MonoBehaviour
     {
         Instantiate(deadEffect, transform.position, Quaternion.identity);
         Instantiate(enemyPrefab, transform.position, enemyPrefab.transform.rotation);
-        soundEffectListPlayer.PlayAudio(0);
+        //soundEffectListPlayer.PlayAudio(0);
     }
 
     private void OnDrawGizmos()
