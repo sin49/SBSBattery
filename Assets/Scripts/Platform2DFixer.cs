@@ -9,7 +9,7 @@ public class Platform2DFixer : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
 
-            if (!PlayerStat.instance.Trans3D)
+            if (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D)
             {
          
                 Transform player = collision.transform.parent;

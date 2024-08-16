@@ -207,7 +207,7 @@ public class Player : Character
                     isJump = false;
                     downAttack = false;
                     PlayerStat.instance.doubleJump = true;
-
+                    SoundPlayer.PlayLandingSound();
                     if (LandingEffect != null && flyTimer < 0)
                         LandingEffect.SetActive(true);
 
@@ -470,9 +470,10 @@ public class Player : Character
     }
     public void rotateBy3Dto2D()
     {
-        if (!PlayerStat.instance.Trans3D)
+        Vector3 rotateVector = Vector3.zero;
+        if (PlayerStat.instance.MoveState==PlayerMoveState.SideX)
         {
-            Vector3 rotateVector = Vector3.zero;
+           
             if (direction == direction.Right||direction==direction.none)
             {
                 rotateVector = new Vector3(0, 90, 0);
@@ -483,6 +484,7 @@ public class Player : Character
             }
             transform.rotation = Quaternion.Euler(rotateVector);
         }
+       
     }
 
     public float Decelatate = 2;
@@ -494,15 +496,21 @@ public class Player : Character
     {
         hori = 0;
         Vert=0;
-        if (PlayerStat.instance.Trans3D)
+        switch (PlayerStat.instance.MoveState)
         {
-            hori = Input.GetAxisRaw("Vertical");
-            Vert = -1* Input.GetAxisRaw("Horizontal");
+            case PlayerMoveState.SideX:
+                hori = Input.GetAxisRaw("Horizontal");
+                break;
+            case PlayerMoveState.SideZ:
+       
+                Vert = -1 * Input.GetAxisRaw("Horizontal");
+                break;
+            case PlayerMoveState.Trans3D:
+                hori = Input.GetAxisRaw("Vertical");
+                Vert = -1 * Input.GetAxisRaw("Horizontal");
+                break;
         }
-        else
-        {
-            hori = Input.GetAxisRaw("Horizontal");
-        }        
+       
    
         if (!canAttack && onGround)
         {
@@ -515,6 +523,8 @@ public class Player : Character
         {
             if(canAttack)
             rotate(moveInput.x, moveInput.z);
+            SoundPlayer.PlayMoveSound();
+            
         }
         //Vert 회전 추가
         //translateFix = new(hori, 0, 0);
@@ -528,7 +538,7 @@ public class Player : Character
         Movevelocity = desiredVector - playerRb.velocity.x * Vector3.right - playerRb.velocity.z * Vector3.forward;
 
       
-        if (!wallcheck)
+        if (!wallcheck) 
             playerRb.AddForce(Movevelocity, ForceMode.VelocityChange);
         else
             playerRb.AddForce(EnvironmentPower, ForceMode.VelocityChange);
@@ -603,7 +613,7 @@ public class Player : Character
         {
             if (attackBufferTimer > 0 && canAttack)
             {
-                Debug.Log("공격 입력중");
+             
                 if (PlayerStat.instance.attackType == AttackType.melee && canAttack && !downAttack)
                 {
                     attackBufferTimer = 0;
@@ -628,11 +638,11 @@ public class Player : Character
     {
         if (!wallcheck)
         {
-            if (!PlayerStat.instance.Trans3D && directionz != directionZ.none && hori == 0)
+            if (PlayerStat.instance.MoveState!=PlayerMoveState.Trans3D && directionz != directionZ.none && hori == 0)
             {
                 playerRb.AddForce(transform.forward * 7, ForceMode.Impulse);
             }
-            else if (PlayerStat.instance.Trans3D)
+            else if (PlayerStat.instance.MoveState == PlayerMoveState.Trans3D)
             {
                 if (direction != direction.none && Vert != 0 || directionz != directionZ.none && hori != 0)
                 {
@@ -764,6 +774,7 @@ public class Player : Character
     public override void Dead()
     {
         PlayerStat.instance.pState = PlayerState.dead;
+        SoundPlayer.PlayCharacterDieClip();
         if(!PlayerSpawnManager.Instance.DontSave)
         GameManager.instance.LoadingSceneWithKariEffect(GameManager.instance.LoadLastestStage());
         else
@@ -795,7 +806,7 @@ public class Player : Character
         playerRb.velocity = Vector3.zero;
         playerRb.AddForce(Vector3.up * PlayerStat.instance.jumpForce, ForceMode.Impulse);
         onGround = false;
-        Debug.Log("점프 누르는 중?");
+      
 
     }
 
@@ -821,7 +832,7 @@ public class Player : Character
                         Jump();
                     }*/
                 }
-                Debug.Log("누르는 중입니다만");
+   
             }
         }
     }
@@ -986,7 +997,7 @@ public class Player : Character
                 PlayerHandler.instance.doubleDownInput = false;
                 CullingPlatform = true;
                 Physics.IgnoreLayerCollision(6, 11, true);
-                Debug.Log("CullingPlatform==true");
+             
             }
         }
 
@@ -1044,12 +1055,12 @@ public class Player : Character
         //if (playerRb.velocity.y <=0)
         //{
 
-        Debug.DrawRay(transform.position, Vector3.up * 0.2f*sizeY, Color.green);
+        //Debug.DrawRay(transform.position, Vector3.up * 0.2f*sizeY, Color.green);
         if (!CullingPlatform && playerRb.velocity.y > 0)
         {
          
 
-            if (Physics.Raycast(this.transform.position , Vector3.up, out hit, 0.2f*sizeY))
+            if (Physics.Raycast(this.transform.position , Vector3.up, out hit, InteractiveUprayDistance))
             {
 
                 if (hit.collider.CompareTag("InteractivePlatform"))
@@ -1057,7 +1068,7 @@ public class Player : Character
 
                     CullingPlatform = true;
                     Physics.IgnoreLayerCollision(6, 11, true);
-                    Debug.Log("CullingPlatform==true");
+                
 
                 }
 
@@ -1077,10 +1088,11 @@ public class Player : Character
 
     //      Debug.Log("Velocity"+playerRb.velocity);
     //  }
+    protected float InteractiveUprayDistance=0.4f;
     public void InteractivePlatformrayCheck()
     {
 
-        //Debug.DrawRay(transform.position + Vector3.up * (sizeY - 1), Vector3.up * 0.2f * sizeY, Color.green);
+        Debug.DrawRay(transform.position, Vector3.up * InteractiveUprayDistance, Color.green);
         RaycastHit hit;
         //if ()
         //{
@@ -1088,7 +1100,7 @@ public class Player : Character
         if (CullingPlatform && playerRb.velocity.y <= 0)
         {
 
-            if (Physics.Raycast(this.transform.position+Vector3.up*(sizeY-1), Vector3.up, out hit, 0.2f*sizeY))
+            if (Physics.Raycast(this.transform.position, Vector3.up, out hit, InteractiveUprayDistance))
             {
 
                 if (hit.collider.CompareTag("InteractivePlatform"))
@@ -1097,7 +1109,7 @@ public class Player : Character
                     CullingPlatform = false;
                     Physics.IgnoreLayerCollision(6, 11, false);
                     platformDisableTimer = 0;
-                    Debug.Log("CullingPlatform==false");
+               
                 }
 
             }

@@ -11,18 +11,18 @@ public class RemoteTV : RemoteObject
     public Material[] tvMaterials;
     public Material ActiveMaterial;
     public Material DeactiveMaterial;
-    public GameObject FrontOBj;
+
     public Light tvLight;
-    BoxCollider activeCollider;
+   public BoxCollider activeCollider;
 
     bool onViewPort;
 
     private void Awake()
     {
-        tvMaterials = new Material[GetComponent<MeshRenderer>().materials.Length];
-        tvMaterials = GetComponent<MeshRenderer>().materials;
-        tvLight = transform.GetComponentInChildren<Light>();
-        activeCollider = transform.GetChild(1).GetComponent<BoxCollider>();
+        tvMaterials = new Material[transform.parent.GetComponent<MeshRenderer>().materials.Length];
+        tvMaterials = transform.parent.GetComponent<MeshRenderer>().materials;
+        //tvLight = transform.GetComponentInChildren<Light>();
+        //activeCollider = transform.GetChild(1).GetComponent<BoxCollider>();
         tvLight.enabled = onActive;
     }
     void Start()
@@ -44,6 +44,7 @@ public class RemoteTV : RemoteObject
         if (onActive)
         {
             tvMaterials[1] = ActiveMaterial;
+            transform.parent.GetComponent<MeshRenderer>().materials = tvMaterials;
 
             activeCollider.enabled = onActive;
             tvLight.enabled = onActive;
@@ -51,6 +52,7 @@ public class RemoteTV : RemoteObject
         else
         {            
             tvMaterials[1] = DeactiveMaterial;
+            transform.parent.GetComponent<MeshRenderer>().materials = tvMaterials;
             
             activeCollider.enabled = onActive;
             tvLight.enabled = onActive;
@@ -61,7 +63,7 @@ public class RemoteTV : RemoteObject
     {
         //GetComponent<MeshRenderer>().materials[1] = DeactiveMaterial;
         tvMaterials[1] = DeactiveMaterial;
-        GetComponent<MeshRenderer>().materials = tvMaterials;
+      transform.parent.  GetComponent<MeshRenderer>().materials = tvMaterials;
 
         //Frontrenderer.material = DeactiveMaterial;
         onActive = false;
@@ -71,7 +73,7 @@ public class RemoteTV : RemoteObject
     public override void Active() { 
 
         tvMaterials[1] = ActiveMaterial;
-        GetComponent<MeshRenderer>().materials = tvMaterials;
+        transform.parent.GetComponent<MeshRenderer>().materials = tvMaterials;
 
         onActive = true;
         activeCollider.enabled = onActive;

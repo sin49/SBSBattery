@@ -15,6 +15,9 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
 {
    public CinemachineVirtualCamera camera2D;
     public CinemachineVirtualCamera camera3D;
+    public Vector3 Camera2Drotation;
+    public Vector3 Camera3Drotation;
+
     //[Header("2D 카메라 orthographic 사이즈")]
     //public float orthographicSize2D = 5f;
     //[Header("2D 카메라 near/far clipping planes")]
@@ -29,7 +32,7 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     bool trans3D;
     protected override void initializeCamera()
     {
-        var a = this.transform.GetComponentsInChildren<CinemachineVirtualCamera>();
+        var a = VirtualCameraTransform.GetComponentsInChildren<CinemachineVirtualCamera>();
         VirtualCameras = new CinemachineVirtualCamera[a.Length - 1];
         GetCameraSettingByTrans3D();
         camera3D.GetComponent<CineMachineBasicCamera>().CameraIndex = 0;
@@ -69,6 +72,14 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     IEnumerator SwitchCameraForTransDimensionCorutine()
     {
         trans3D = !trans3D;
+        if (trans3D)
+        {
+            PlayerStat.instance.MoveState =PlayerMoveState.Trans3D;
+        }
+        else
+        {
+            PlayerStat.instance.MoveState = PlayerMoveState.SideX;
+        }
         if (trans3D)
         {
             yield return StartCoroutine(SwitchCameraCoroutine(camera3D));
