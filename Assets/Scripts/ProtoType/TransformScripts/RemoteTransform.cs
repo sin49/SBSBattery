@@ -44,34 +44,52 @@ public class RemoteTransform : Player
 
 
     RemoteObject ClosestObjectScript;
-   
+    protected override void Awake()
+    {
+        base.Awake();
+        JumprayDistance = 0.07f;
+        InteractiveUprayDistance = 0.9f;
+    }
     private void Update()
     {
         BaseBufferTimer();
    
         //for문 사용했으니 최적화 필요함
         UpdateClosestRemoteObjectEffect();
-
+        if(ClosestObjectScript!=null)
         RemoteObjectEvent?.Invoke(ClosestObjectScript.HudTarget);
         /*if (chargingBufferTimer > 0 && !Charging)
         {
             chargingBufferTimer -= Time.deltaTime;
         }*/
     }
+    private void OnDisable()
+    {
+        closestObject = null;
+        ClosestObjectScript = null;
+        RemoteObjectEvent?.Invoke(null);
+    }
     void UpdateClosestRemoteObjectEffect()
     {
         float closestdistance = float.MaxValue;
         GameObject newclosestobject = null;
        
-        foreach (var obj in remoteObj)
+        for(int n = 0; n < remoteObj.Count; n++)
         {
-            float distance = Vector3.Distance(transform.position, obj.transform.position);
+            if (remoteObj[n] == null)
+            {
+                remoteObj.RemoveAt(n);
+                n--;
+                continue;
+            }
+            float distance = Vector3.Distance(transform.position, remoteObj[n].transform.position);
             if (distance < closestdistance)
             {
                 closestdistance = distance;
-                newclosestobject = obj;
+                newclosestobject = remoteObj[n];
             }
         }
+     
         if (closestdistance > minimumdistance)
         {
             closestObject = null;
@@ -88,15 +106,18 @@ public class RemoteTransform : Player
     }
     public override void Skill1()
     {
-        if (Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.X))
-        {
+       
             //Charging = true;
             if (closestObject != null)
             {
                 Humonoidanimator.Play("Charge");
                 ActiveRemoteObject();
-            }
         }
+        else
+        {
+            base.Skill1();
+        }
+    
 
         //if (!Input.GetKey(KeyCode.UpArrow) && Charging
         //    || !Input.GetKey(KeyCode.X) && Charging)
@@ -122,15 +143,15 @@ public class RemoteTransform : Player
     {
         if (attackBufferTimer > 0 && canAttack)
         {
-            canAttack = false;
-
+   
+            AttackEvents();
             StartCoroutine(LaserAttack());
         }
     }
 
     IEnumerator LaserAttack()
     {
-        Humonoidanimator.Play("Attack");
+
         if (PoolingManager.instance != null)
             PoolingManager.instance.GetPoolObject("Laser", firePoint);
         else
@@ -143,7 +164,7 @@ public class RemoteTransform : Player
     {
         Gizmos.color = Color.yellow;
 
-        Gizmos.DrawSphere(this.transform.position, minimumdistance);
+        Gizmos.DrawWireSphere(this.transform.position, minimumdistance);
     }
 
     #region 오버랩스피어 시도

@@ -546,7 +546,7 @@ GameObject:
   - component: {fileID: 1922376582028299946}
   - component: {fileID: 263644317334024532}
   - component: {fileID: 7952796276940404651}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: dontMoveCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1653,6 +1653,7 @@ GameObject:
   - component: {fileID: 7390080442552347909}
   - component: {fileID: 8388948640546611985}
   - component: {fileID: 745289941222913913}
+  - component: {fileID: 8351386327054744753}
   m_Layer: 6
   m_Name: KjsDefaultForm
   m_TagString: Player
@@ -1727,11 +1728,12 @@ MonoBehaviour:
   attackSky: 0
   attackGround: 0
   velocityValue: {x: 0, y: 0, z: 0}
-  onInvincible: 1
+  onInvincible: 0
   onDash: 0
   isMove: 0
   canAttack: 0
   wallcheck: 0
+  jumpkeyinputCheck: 0.15
   inputCheck: 0
   velocityMove: {x: 0, y: 0, z: 0}
   rigidbodyPos: {x: 0, y: 0, z: 0}
@@ -1750,6 +1752,7 @@ MonoBehaviour:
   AttackEffect: {fileID: 4736781096793473584}
   LandingEffect: {fileID: 7281951006512747657}
   JumpEffect: {fileID: 2803013037455162963}
+  SoundPlayer: {fileID: 0}
   Decelatate: 2
   hori: 0
   Vert: 0
@@ -1958,6 +1961,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32177de85efdfc943b70253b78ba038e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8351386327054744753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7664586703414084814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab58d2e89b14edd4bb013c33c8f0cd8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttackClip: {fileID: 0}
+  AttackVolume: 0
+  JumpClip: {fileID: 8300000, guid: 85ea7b8994df41b45ad65459747ef044, type: 3}
+  JumpVolume: 0
 --- !u!1 &7687757393293647033
 GameObject:
   m_ObjectHideFlags: 0

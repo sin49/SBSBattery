@@ -8,7 +8,7 @@ public class Shutter : signalReceiver
 
  
     
-    private void Awake()
+    protected virtual void Awake()
     {
         ani = GetComponent<Animator>();
         register();

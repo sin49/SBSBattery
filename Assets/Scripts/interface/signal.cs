@@ -13,7 +13,7 @@ public abstract class signalReceiver:MonoBehaviour
     public List<signalSender> signalSenders;
     //bool[] signals;
    public bool active;
-    public void CheckSignal()
+    public virtual void CheckSignal()
     {
         bool chk = true;
         foreach(signalSender a in signalSenders)
@@ -30,6 +30,7 @@ public abstract class signalReceiver:MonoBehaviour
     {
        for(int i = 0; i < signalSenders.Count; i++)
         {
+            if (signalSenders[i]!=null)
             signalSenders[i].register(this,i);
         }
         //signals = new bool[signalSenders.Count];

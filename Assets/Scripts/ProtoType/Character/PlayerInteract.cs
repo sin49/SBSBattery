@@ -9,12 +9,13 @@ public class PlayerInteract : MonoBehaviour
     Player p;
 
 
+    
   
     void InteractrayCast()
     {
 
         RaycastHit hit;
-        Debug.DrawRay(transform.position * (int)PlayerStat.instance.direction, Vector3.right * 0.15f * (int)PlayerStat.instance.direction, Color.black);
+        Debug.DrawRay(transform.position * (int)PlayerStat.instance.direction, Vector3.right * 0.15f * (int)PlayerStat.instance.direction, Color.red);
         if (Physics.Raycast(this.transform.position * (int)PlayerStat.instance.direction, Vector3.right * (int)PlayerStat.instance.direction, out hit, 0.15f))
         {
    
@@ -28,6 +29,7 @@ public class PlayerInteract : MonoBehaviour
                 }
                 else
                 {
+                    Debug.Log("GetObjectByray");
                     PlayerHandler.instance.GetInteratObject(interactobject);
                     if (interactobject.InteractOption != InteractOption.ray)
                         PlayerHandler.instance.GetInteratObject(interactobject);
@@ -42,50 +44,57 @@ public class PlayerInteract : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (p != null)
-            InteractrayCast();
+        //if (p != null)
+        //    InteractrayCast();
 
     }
     private void Awake()
     {
         p= GetComponent<Player>();
+    
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("InteractiveObject"))
-        {
-            InteractiveObject obj;
-            if (!other.TryGetComponent<InteractiveObject>(out obj))
+        
+       
+            if (other.CompareTag("InteractiveObject"))
             {
-                
-                Debug.Log("Fatal Error? Can't Find Script instance");
+                InteractiveObject obj;
+                if (!other.TryGetComponent<InteractiveObject>(out obj))
+                {
+
+                    Debug.Log("Fatal Error? Can't Find Script instance");
+                }
+                else
+                {
+                    Debug.Log("RemoveObjectBycollision");
+                    if (obj == PlayerHandler.instance.ReturnInteractObject())
+                        PlayerHandler.instance.InitInteratObject();
+                }
             }
-            else
-            {
-                PlayerHandler.instance.GetInteratObject(obj);
-                if (obj == PlayerHandler.instance.ReturnInteractObject())
-                    PlayerHandler.instance.InitInteratObject();
-            }
-        }
+        
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("InteractiveObject"))
-        {
-            InteractiveObject i;
-            if (!other.TryGetComponent<InteractiveObject>(out i))
+        
+            if (other.CompareTag("InteractiveObject"))
             {
-                
-                Debug.Log("Fatal Error? Can't Find Script instance");
-            }
-            else
-            {
-                PlayerHandler.instance.GetInteratObject(i);
-                if (i.InteractOption != InteractOption.collider)
+                InteractiveObject i;
+                if (!other.TryGetComponent<InteractiveObject>(out i))
+                {
+
+                    Debug.Log("Fatal Error? Can't Find Script instance");
+                }
+                else
+                {
+                    Debug.Log("GetObjectBycollision");
                     PlayerHandler.instance.GetInteratObject(i);
+                    if (i.InteractOption != InteractOption.collider)
+                        PlayerHandler.instance.GetInteratObject(i);
+                }
             }
-        }
+        
     }
 
 }
