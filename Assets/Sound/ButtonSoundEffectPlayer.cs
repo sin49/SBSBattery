@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ButtonSoundEffectPlayer : MonoBehaviour,SEPlayer
+public class ButtonSoundEffectPlayer : SEPlayer
 {
     [Header("선택 사운드")]
     public AudioClip SelectClip;
@@ -16,26 +16,9 @@ public class ButtonSoundEffectPlayer : MonoBehaviour,SEPlayer
     public AudioClip DeActiveClip;
     [Header("취소 사운드 볼륨"), Range(0, 1)]
     public float DeActiveVolume;
-    AudioType audiotype = AudioType.SE;
-
-AudioSource audiosource;
-    private void Awake()
-    {
-
-            audiosource = gameObject.AddComponent<AudioSource>();
-            audiosource.minDistance = audiosource.maxDistance;
-            audiosource.dopplerLevel = 0;
-            audiosource.loop = false;
 
 
-    }
-    private void Start()
-    {
-        if (AudioManager.instance != null)
-        {
-            AudioManager.instance.GetAudioSetting(audiotype, audiosource);
-        }
-    }
+   
 
     public void PlaySelectAudio()
     {
@@ -58,11 +41,5 @@ AudioSource audiosource;
         audiosource.volume = DeActiveVolume;
         audiosource.Play();
     }
-    private void OnDestroy()
-    {
-        if (AudioManager.instance != null)
-        {
-            AudioManager.instance.RemoveSEMember(this);
-        }
-    }
+  
 }
