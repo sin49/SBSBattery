@@ -469,9 +469,10 @@ public class Player : Character
     }
     public void rotateBy3Dto2D()
     {
-        if (!PlayerStat.instance.Trans3D)
+        Vector3 rotateVector = Vector3.zero;
+        if (PlayerStat.instance.MoveState==PlayerMoveState.SideX)
         {
-            Vector3 rotateVector = Vector3.zero;
+           
             if (direction == direction.Right||direction==direction.none)
             {
                 rotateVector = new Vector3(0, 90, 0);
@@ -482,6 +483,7 @@ public class Player : Character
             }
             transform.rotation = Quaternion.Euler(rotateVector);
         }
+       
     }
 
     public float Decelatate = 2;
@@ -493,15 +495,21 @@ public class Player : Character
     {
         hori = 0;
         Vert=0;
-        if (PlayerStat.instance.Trans3D)
+        switch (PlayerStat.instance.MoveState)
         {
-            hori = Input.GetAxisRaw("Vertical");
-            Vert = -1* Input.GetAxisRaw("Horizontal");
+            case PlayerMoveState.SideX:
+                hori = Input.GetAxisRaw("Horizontal");
+                break;
+            case PlayerMoveState.SideZ:
+       
+                Vert = -1 * Input.GetAxisRaw("Horizontal");
+                break;
+            case PlayerMoveState.Trans3D:
+                hori = Input.GetAxisRaw("Vertical");
+                Vert = -1 * Input.GetAxisRaw("Horizontal");
+                break;
         }
-        else
-        {
-            hori = Input.GetAxisRaw("Horizontal");
-        }        
+       
    
         if (!canAttack && onGround)
         {
@@ -629,11 +637,11 @@ public class Player : Character
     {
         if (!wallcheck)
         {
-            if (!PlayerStat.instance.Trans3D && directionz != directionZ.none && hori == 0)
+            if (PlayerStat.instance.MoveState!=PlayerMoveState.Trans3D && directionz != directionZ.none && hori == 0)
             {
                 playerRb.AddForce(transform.forward * 7, ForceMode.Impulse);
             }
-            else if (PlayerStat.instance.Trans3D)
+            else if (PlayerStat.instance.MoveState == PlayerMoveState.Trans3D)
             {
                 if (direction != direction.none && Vert != 0 || directionz != directionZ.none && hori != 0)
                 {

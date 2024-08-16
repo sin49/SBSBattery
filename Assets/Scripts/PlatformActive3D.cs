@@ -33,22 +33,22 @@ public class PlatformActive3D : MonoBehaviour
     {
         if (BcolliderActive3D)
         {
-            if (!Bcollider.enabled && PlayerStat.instance.Trans3D)
+            if (!Bcollider.enabled && PlayerStat.instance.MoveState == PlayerMoveState.Trans3D)
             {
                 PlatformChange3D();
             }
-            else if (Bcollider.enabled && !PlayerStat.instance.Trans3D)
+            else if (Bcollider.enabled && PlayerStat.instance.MoveState != PlayerMoveState.Trans3D)
             {
                 PlatformChange2D();
             }
         }
         else
         {
-            if (Bcollider.enabled && PlayerStat.instance.Trans3D)
+            if (Bcollider.enabled && PlayerStat.instance.MoveState == PlayerMoveState.Trans3D)
             {
                 PlatformChange3D();
             }
-            else if (!Bcollider.enabled && !PlayerStat.instance.Trans3D)
+            else if (!Bcollider.enabled && PlayerStat.instance.MoveState != PlayerMoveState.Trans3D)
             {
                 PlatformChange2D();
             }

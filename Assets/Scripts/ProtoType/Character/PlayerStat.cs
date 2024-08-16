@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 public enum CurrentAttack { ground, sky }
+public enum PlayerMoveState { SideX,SideZ,Trans3D}
 
 public class PlayerStat : CharacterStat
 {
@@ -39,9 +40,9 @@ public class PlayerStat : CharacterStat
     //public float dashCoolTime; // 대쉬 최대 쿨타임    
 
 
-
-    public bool Trans3D;
-
+    [Header("이동 상태")]
+    public PlayerMoveState MoveState;
+    
     
    
     public void RecoverHP(float hppoint)
@@ -59,7 +60,7 @@ public class PlayerStat : CharacterStat
         {
             instance = this;
         }
-        Trans3D = false;
+        MoveState = PlayerMoveState.SideX;
     }
     
   
