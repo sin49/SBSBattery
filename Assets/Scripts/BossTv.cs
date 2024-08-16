@@ -7,6 +7,9 @@ using UnityEngine;
 //패턴 테스트 편하게
 public class BossTv : RemoteObject
 {
+    [Header("보스는 SoundEffectListPlayer와")]
+    [Header("boss1SoundManager 둘다 넣으면 됨")]
+
     public GameObject Monitor;
     public EnemyAction BossSweap;
     public EnemyAction BossLaser;
@@ -44,7 +47,7 @@ public class BossTv : RemoteObject
  
     protected override void Awake()
     {
-     
+        bossaudioplayer = GetComponent<Boss1SOundManager>();
         actions.Add(BossSweap);
         actions.Add(BossLaser);
         actions.Add(BossFall);
@@ -154,11 +157,13 @@ public class BossTv : RemoteObject
         Debug.Log("실행 완료");
         //어쩌구저쩌구
     }
-
+    Boss1SOundManager bossaudioplayer;
     public override void Active()
     {
      base.Active();
         Debug.Log("모니터 공격 연출이 들어간다");
+        if(bossaudioplayer!=null)
+        bossaudioplayer.MonitiorHittedClipPlay();
         CanControl = false;
         lifeCount = 0;
         Debug.Log("보스를 클리어 한다");

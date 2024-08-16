@@ -11,7 +11,12 @@ using UnityEngine.UIElements;
 
 public class PlayerHandler : MonoBehaviour
 {
-
+  public  event Action PlayerDeathEvent;
+    public void InvokePlayerDeathEvent()
+    {
+        PlayerDeathEvent?.Invoke();
+        PlayerDeathEvent = null;
+    }
     float Skill1InputTimer;
     float Skill1InputCheck = 0.12f;
     public bool formChange;

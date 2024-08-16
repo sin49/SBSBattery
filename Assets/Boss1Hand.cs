@@ -8,8 +8,12 @@ public class Boss1Hand : MonoBehaviour,DamagedByPAttack
     public float HP;
     public BossTv bosstv;
    public bool active;
-
+    public Boss1HandSoundPlayer soundplayer;
     public event Action HandDominateEvent;
+    private void Awake()
+    {
+        soundplayer = GetComponent<Boss1HandSoundPlayer>();
+    }
     public void Damaged(float f)
     {
         if (HP > 0)
@@ -20,7 +24,12 @@ public class Boss1Hand : MonoBehaviour,DamagedByPAttack
                 HandDominateEvent?.Invoke();
                 active = false;
                 HandDominateEvent = null;
+                if(soundplayer!=null)
+                soundplayer.HandDestoryClipPlay();
+                return;
             }
+            if (soundplayer != null)
+                soundplayer.HandHittedClipPlay();
         }
 
         

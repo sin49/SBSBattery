@@ -10,7 +10,7 @@ public class Boss1Laser : EnemyAction
     Transform Target;
 
 
-
+    Boss1SOundManager boss1SOundManager;
     [Header("레이저 속도")]
     public float LaserSpeed;
 
@@ -84,20 +84,23 @@ public class Boss1Laser : EnemyAction
 
     private void Awake()
     {
-       
+        boss1SOundManager=this.GetComponent<Boss1SOundManager>();
         laserBeam.gameObject.SetActive(false);
         ColliderSpawnPoint.gameObject.SetActive(false);
     }
    
     IEnumerator laserPattern()
     {
+        if(boss1SOundManager!=null)
+        boss1SOundManager.LazerinitClipPlay();
         yield return new WaitForSeconds(laserActiveTimer);
         warning.gameObject.SetActive(false);
         laserBeam.gameObject.SetActive(true);
         ColliderSpawnPoint.gameObject.SetActive(true);
         particle.Play();
+        if (boss1SOundManager != null)
+            boss1SOundManager.LazerStartClipPlay();
 
-     
         while (true)
         {
             if (!laserBeam.gameObject.activeSelf)
@@ -155,21 +158,22 @@ public class Boss1Laser : EnemyAction
         {
             laserBeam.gameObject.SetActive(false);
             particle.Stop();
-            //TrailRenderer.enabled = false;
+            if (boss1SOundManager != null)
+                boss1SOundManager.LazerStartClipEnd();
+        
         }
         else
             laserlifetime -= Time.fixedDeltaTime;
      
-        //if (!TrailRenderer.emitting && ActiveTrailColNumber == 0&& TrailRenderer.gameObject.activeSelf)
-        //    ColliderSpawnPoint.gameObject.SetActive(false);
+       
     }
 
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player") && !PlayerHandler.instance.CurrentPlayer.onInvincible)
         {
-            Debug.Log("레이저 피해");
-            //other.GetComponent<Player>().Damaged(1);
+
+            other.GetComponent<Player>().Damaged(1);
         }
     }
 }

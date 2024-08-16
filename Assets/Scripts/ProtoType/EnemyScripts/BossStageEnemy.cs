@@ -168,8 +168,7 @@ public class BossStageEnemy : Character, DamagedByPAttack
 
     public override void Dead()
     {
-        if (soundplayer != null)
-            soundplayer.PlayCharacterDieClip();
+
         Instantiate(deathEffect, transform.position, Quaternion.identity);
         gameObject.SetActive(false);
     }

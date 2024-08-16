@@ -774,7 +774,7 @@ public class Player : Character
     public override void Dead()
     {
         PlayerStat.instance.pState = PlayerState.dead;
-        SoundPlayer.PlayCharacterDieClip();
+        PlayerHandler.instance.InvokePlayerDeathEvent();
         if(!PlayerSpawnManager.Instance.DontSave)
         GameManager.instance.LoadingSceneWithKariEffect(GameManager.instance.LoadLastestStage());
         else
