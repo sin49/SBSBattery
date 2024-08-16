@@ -18,14 +18,14 @@ public class DontMoveCollider : MonoBehaviour
                  PlayerHandler.instance.CurrentPlayer.SetWallcheck(true);
         }        
 
-        if (other.CompareTag("InteractiveObject"))
-        {
-            if (other.GetComponent<InteractiveObject>().InteractOption != InteractOption.collider&& PlayerHandler.instance.CurrentPlayer!=null)
-            {
-                if (PlayerHandler.instance.CurrentPlayer != null)
-                    PlayerHandler.instance.CurrentPlayer.SetWallcheck(true);
-            }
-        }
+        //if (other.CompareTag("InteractiveObject"))
+        //{
+        //    if (other.GetComponent<InteractiveObject>().InteractOption != InteractOption.collider&& PlayerHandler.instance.CurrentPlayer!=null)
+        //    {
+        //        if (PlayerHandler.instance.CurrentPlayer != null)
+        //            PlayerHandler.instance.CurrentPlayer.SetWallcheck(true);
+        //    }
+        //}
 
 
     }
@@ -39,14 +39,14 @@ public class DontMoveCollider : MonoBehaviour
                 PlayerHandler.instance.CurrentPlayer.SetWallcheck(false);
         }
 
-        if (other.CompareTag("InteractiveObject"))
-        {
-            if (other.GetComponent<InteractiveObject>().InteractOption != InteractOption.collider )
-            {
-                if (PlayerHandler.instance.CurrentPlayer != null)
-                    PlayerHandler.instance.CurrentPlayer.SetWallcheck(false);
-            }
-        }
+        //if (other.CompareTag("InteractiveObject"))
+        //{
+        //    if (other.GetComponent<InteractiveObject>().InteractOption != InteractOption.collider )
+        //    {
+        //        if (PlayerHandler.instance.CurrentPlayer != null)
+        //            PlayerHandler.instance.CurrentPlayer.SetWallcheck(false);
+        //    }
+        //}
 
 
     }

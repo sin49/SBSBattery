@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 public class Shutter : signalReceiver
 {
@@ -8,8 +9,9 @@ public class Shutter : signalReceiver
 
  
     
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         ani = GetComponent<Animator>();
         register();
     }

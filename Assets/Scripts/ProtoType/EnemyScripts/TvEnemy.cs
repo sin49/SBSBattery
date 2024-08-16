@@ -72,6 +72,8 @@ public class TvEnemy : Enemy
                     {
                         isRotate = false;
                         rb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
+                 if(soundplayer!=null)
+                        soundplayer.PlayMoveSound();
                     }
                     else
                     {

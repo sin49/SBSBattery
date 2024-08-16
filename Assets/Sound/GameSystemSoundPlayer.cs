@@ -18,7 +18,13 @@ public class GameSystemSoundPlayer : SEPlayer
     public AudioClip RecoverHPClip;
     [Header("체력 회복 볼륨"), Range(0, 1)]
     public float RecoverHPVolume;
- 
+    private void Start()
+    {
+        PlayerHandler.instance.registerCameraChangeAction(PlayChangeDimensionSound);
+        PlayerInventory.instance.registerItemGetAction(PlayGetItemSound);
+        PlayerStat.instance.registerRecoverAction(PlayRecoverHPSound);
+    }
+
     public void PlayChangeDimensionSound()
     {
         if (ChangeDimensionClip != null)

@@ -41,13 +41,8 @@ public class RemoteTransformV2 : Player
 
 
 
-    private void Awake()
-    {
-        //handlerange.
-        handlerange = transform.Find("SKillChargeRadius").GetComponent<SphereCollider>();
-        RemoteObjectEffect.SetActive(false);
-    }
 
+   
     private void Update()
     {
         BaseBufferTimer();

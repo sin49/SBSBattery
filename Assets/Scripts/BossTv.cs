@@ -42,7 +42,7 @@ public class BossTv : RemoteObject
 
     public Transform target;
  
-    private void Awake()
+    protected override void Awake()
     {
      
         actions.Add(BossSweap);
@@ -157,6 +157,7 @@ public class BossTv : RemoteObject
 
     public override void Active()
     {
+     base.Active();
         Debug.Log("모니터 공격 연출이 들어간다");
         CanControl = false;
         lifeCount = 0;

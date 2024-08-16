@@ -14,16 +14,16 @@ public class SoundEffectPlayer :  SEPlayer
 
  
 
-    bool OnViewport;
+    //bool OnViewport;
  
-    private void OnBecameVisible()
-    {
-        OnViewport = true;
-    }
-    private void OnBecameInvisible()
-    {
-        OnViewport = false;
-    }
+    //private void OnBecameVisible()
+    //{
+    //    OnViewport = true;
+    //}
+    //private void OnBecameInvisible()
+    //{
+    //    OnViewport = false;
+    //}
   
     private void Update()
     {

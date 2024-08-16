@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class BossStageEnemy : Character, DamagedByPAttack
 {
+ 
+
     public Transform target;
     [Header("애니메이션 관련")]
     public Animator animator;
@@ -49,6 +51,7 @@ public class BossStageEnemy : Character, DamagedByPAttack
     protected override void Awake()
     {
         base.Awake();
+
     }
 
     private void Start()
@@ -125,7 +128,8 @@ public class BossStageEnemy : Character, DamagedByPAttack
 
     public override void Attack()
     {
-        animator.Play("EnemyAttack");
+        if(soundplayer!=null)
+        soundplayer.PlayAttackAudio();
         meleeAttack.MeleeAttack();
         StartCoroutine(WaitAttackDelay());
     }
@@ -164,6 +168,8 @@ public class BossStageEnemy : Character, DamagedByPAttack
 
     public override void Dead()
     {
+        if (soundplayer != null)
+            soundplayer.PlayCharacterDieClip();
         Instantiate(deathEffect, transform.position, Quaternion.identity);
         gameObject.SetActive(false);
     }
@@ -179,6 +185,8 @@ public class BossStageEnemy : Character, DamagedByPAttack
 
             testValue = Quaternion.Angle(transform.rotation, lookRot);
             rb.MovePosition(transform.position + transform.forward * moveSpeed * Time.deltaTime);
+            if (soundplayer != null)
+                soundplayer.PlayMoveSound();
             /*if (testValue < 0.5f)
             {
                 rb.MovePosition(transform.position + transform.forward * moveSpeed * Time.deltaTime);

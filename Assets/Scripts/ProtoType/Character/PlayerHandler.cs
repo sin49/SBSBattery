@@ -120,15 +120,15 @@ public class PlayerHandler : MonoBehaviour
     
 
         #region 캐릭터 조작
-        if ((CurrentPlayer != null && !formChange)/*|| CantHandle*/)
+        if ((CurrentPlayer != null && !formChange) || CantHandle)
         charactermove();
         #endregion
     }
-    //public bool CantHandle;
+    public bool CantHandle;
     //public float CantHandleTimer;
     #region 변신 시스템
     #region 변수
-   public TransformType CurrentType =0;
+    public TransformType CurrentType =0;
     Dictionary<TransformType, GameObject> PlayerTransformList = new Dictionary<TransformType, GameObject>();
 
     Dictionary<TransformType, GameObject> CreatedTransformlist = new Dictionary<TransformType, GameObject>();
@@ -283,8 +283,13 @@ public class PlayerHandler : MonoBehaviour
     [HideInInspector]
     public bool DImensionChangeDisturb;
     event Action Dimensionchangeevent;
+    event Action CAmeraChangeevent;
     event Action CorutineRegisterEvent;
     IEnumerator CameraRotateCorutine;
+    public void registerCameraChangeAction(Action a)
+    {
+        CAmeraChangeevent += a;
+    }
   public void registerCorutineRegisterEvent(Action CorutineRegister)
     {
         this.CorutineRegisterEvent += CorutineRegister;
@@ -314,14 +319,20 @@ public class PlayerHandler : MonoBehaviour
             //이벤트 처리
 
             if (CameraRotateCorutine != null)
+            {
+                CAmeraChangeevent?.Invoke();
                 yield return StartCoroutine(CameraRotateCorutine);
+            }
             //카메라처리
         }
         else
         {
 
             if (CameraRotateCorutine != null)
+            {
+                CAmeraChangeevent?.Invoke();
                 yield return StartCoroutine(CameraRotateCorutine);
+            }
             //카메라처리
             yield return StartCoroutine(InvokeDimensionEvent());
 

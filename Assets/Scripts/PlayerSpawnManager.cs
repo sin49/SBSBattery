@@ -10,6 +10,7 @@ public class PlayerSpawnManager : MonoBehaviour
 
     public Camera CheckpointChkCamera;
     TransformType DefaultSpawntype;
+    public Transform CheckPointTransform;
     public CheckPoint[] Checkpoints = new CheckPoint[0];
     Dictionary<int, CheckPoint> ChkPointsDic = new Dictionary<int, CheckPoint>();
     public GameObject DefaultForm;
@@ -114,10 +115,14 @@ public class PlayerSpawnManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        foreach(CheckPoint obj in Checkpoints)
+        if(CheckPointTransform!=null)
+        Checkpoints = CheckPointTransform.GetComponentsInChildren<CheckPoint>();
+       
+        for(int n = 0; n < Checkpoints.Length; n++)
         {
-            ChkPointsDic.Add(obj.index, obj);
+            ChkPointsDic.Add(n, Checkpoints[n]);
         }
+      
       
         //PlayerSpawn이 아니라 0번 체크포인트를 찿아서 스폰되도록
         //PlayerSpawn = GameObject.Find("PlayerSpawn").transform;
