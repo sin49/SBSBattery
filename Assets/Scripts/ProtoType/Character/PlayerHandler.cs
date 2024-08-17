@@ -481,7 +481,7 @@ public class PlayerHandler : MonoBehaviour
             firstDownInput = false;
             doubleDownInput = false;
         }
-        if (doubleUpInput && Input.GetKey(KeyCode.X)&&CurrentType!=TransformType.Default)
+        if (doubleUpInput && Input.GetKeyDown(KeyCode.X)&&CurrentType!=TransformType.Default)
         {
             CurrentPlayer.Skill1();
          
