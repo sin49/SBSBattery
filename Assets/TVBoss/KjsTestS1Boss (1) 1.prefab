@@ -416,6 +416,8 @@ GameObject:
   - component: {fileID: 3715751788046449860}
   - component: {fileID: 1058498811892394508}
   - component: {fileID: 1561318454975055217}
+  - component: {fileID: 6581118630854958948}
+  - component: {fileID: 3023562827182172201}
   m_Layer: 0
   m_Name: KjsTestS1Boss (1) 1
   m_TagString: Untagged
@@ -455,6 +457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9750b3b57a078d9499fcca8efc2fc5d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundEffectListPlayer: {fileID: 0}
   onActive: 0
   CanControl: 1
   HudTarget: {fileID: 8317646022107918091}
@@ -487,22 +490,23 @@ MonoBehaviour:
   Possibility: 1
   ActionLifeTIme: 0
   fallingObj2:
-  - fallingobj: {fileID: 4929648963815187467, guid: 07e75f2d0e6944646836a5069d99fe61,
+  - fallingobj: {fileID: 4006880101536269725, guid: c893fd765a9a01d4eb3c9f0487912a37,
       type: 3}
     number: 1
     possibility: 1
-  - fallingobj: {fileID: 9190717355191805024, guid: cd2fa4d0223ac6d46aace0f7753eccda,
+  - fallingobj: {fileID: 1975036747362771099, guid: dbc0de5fe612b08479e0596338c883cd,
       type: 3}
     number: 0
     possibility: 8
-  - fallingobj: {fileID: 166877589986499431, guid: 1eee304738f8dae4b904dd146b874c6f,
+  - fallingobj: {fileID: 5326211950569126072, guid: 5420f4ca1ab7f9e4087551c79b57d315,
       type: 3}
     number: 0
     possibility: 4
-  - fallingobj: {fileID: 2373335053027229543, guid: 033dd9f5d9a4e5e4e9899dcedd04de68,
+  - fallingobj: {fileID: 4756603030403936131, guid: b59293f5176b4214bb91859110bf7f57,
       type: 3}
     number: 0
     possibility: 2
+  soundmanager: {fileID: 0}
   fallingBoxCreateObj:
   - Createobj: {fileID: 557678266298197566, guid: 06511a03621618a4f8bd0ad830ab2be7,
       type: 3}
@@ -567,6 +571,45 @@ MonoBehaviour:
   pullingtransform: {fileID: 5554753117505871416}
   LaserCollider: {fileID: 5226116098530326790, guid: 6121d6bc9c1c2d94dbe28ad33c3648bc,
     type: 3}
+--- !u!114 &6581118630854958948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012597944601740804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c358efc4e7446f147a9d6a4f71757744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list: []
+--- !u!114 &3023562827182172201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012597944601740804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a72a4db4d1619b44a2fa3873d490a31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HandSwerapStartclip: {fileID: 0}
+  HandSwerapStartVolume: 0
+  HandSwerapEndclip: {fileID: 0}
+  HandSwerapEndVolume: 0
+  LazerStartclip: {fileID: 0}
+  LazerStartVolume: 0
+  Lazerinitclip: {fileID: 0}
+  LazerinitVolume: 0
+  ObjectFallingclip: {fileID: 0}
+  ObjectFallingVolume: 0
+  Objectgroundedclip: {fileID: 0}
+  ObjectgroundedVolume: 0
+  MonitiorHittedclip: {fileID: 0}
+  MonitiorHittedVolume: 0
 --- !u!1 &1077743016411524663
 GameObject:
   m_ObjectHideFlags: 0
@@ -1881,6 +1924,7 @@ GameObject:
   - component: {fileID: 6124693056501081543}
   - component: {fileID: 6602919900276604124}
   - component: {fileID: 3809410390818187616}
+  - component: {fileID: 4989782961914689225}
   m_Layer: 0
   m_Name: TVBoss_LHand
   m_TagString: Enemy
@@ -2017,6 +2061,7 @@ MonoBehaviour:
   HP: 0
   bosstv: {fileID: 2849135284605516961}
   active: 0
+  soundplayer: {fileID: 0}
 --- !u!114 &3809410390818187616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2030,6 +2075,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+--- !u!114 &4989782961914689225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5240444313098218687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 802a701e922fae84c94a1c7c40dd6ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HandHittedclip: {fileID: 0}
+  HandHittedVolume: 0
+  HandDestoryclip: {fileID: 0}
+  HandDestoryVolume: 0
 --- !u!1 &5580091231082257511
 GameObject:
   m_ObjectHideFlags: 0
@@ -2045,6 +2106,7 @@ GameObject:
   - component: {fileID: 4199448946113701755}
   - component: {fileID: 4055101929726195839}
   - component: {fileID: 9101453383425819064}
+  - component: {fileID: 5651709710095370630}
   m_Layer: 0
   m_Name: TVBoss_RHand
   m_TagString: Enemy
@@ -2182,6 +2244,7 @@ MonoBehaviour:
   HP: 0
   bosstv: {fileID: 2849135284605516961}
   active: 0
+  soundplayer: {fileID: 0}
 --- !u!114 &9101453383425819064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2195,6 +2258,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+--- !u!114 &5651709710095370630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5580091231082257511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 802a701e922fae84c94a1c7c40dd6ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HandHittedclip: {fileID: 0}
+  HandHittedVolume: 0
+  HandDestoryclip: {fileID: 0}
+  HandDestoryVolume: 0
 --- !u!1 &6740840042313153940
 GameObject:
   m_ObjectHideFlags: 0

@@ -45,6 +45,7 @@ public class AudioManager : MonoBehaviour
                 source.outputAudioMixerGroup = BG;
                 break;
                 case AudioType.SE:
+                if(source.GetComponent<SEPlayer>()!=null)
                 SEAudioSources.Add(source.GetComponent<SEPlayer>());
                 source.outputAudioMixerGroup = SE;
                 break;

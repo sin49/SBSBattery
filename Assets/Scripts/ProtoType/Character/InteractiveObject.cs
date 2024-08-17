@@ -11,12 +11,12 @@ public abstract class InteractiveObject : MonoBehaviour
     public SoundEffectListPlayer soundEffectListPlayer;
     protected virtual void Awake()
     {
-        if(soundEffectListPlayer != null)
+        if(soundEffectListPlayer!=null)
         soundEffectListPlayer.GetComponent<SoundEffectListPlayer>();
     }
     public virtual void Active(direction direct)
     {
-        if(soundEffectListPlayer == null)
+        if(soundEffectListPlayer!=null)
         soundEffectListPlayer.PlayAudio(0);
     }
 

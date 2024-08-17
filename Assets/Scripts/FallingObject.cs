@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,16 +14,27 @@ public class FallingObject : MonoBehaviour
     public GameObject warningObj;
     public Vector3 circlePos;
     public float disToField;
-    
+
+
+    public Action ObjectgroundedSoundEvent;
     // Start is called before the first frame update
+  
+    
     void Start()
-    { 
+    {
+        
         rb = GetComponent<Rigidbody>();
         circlePos = new(transform.position.x, fieldPos.y+ 0.1f, transform.position.z);
     }
 
+    private void OnDestroy()
+    {
+        ObjectgroundedSoundEvent?.Invoke();
+        ObjectgroundedSoundEvent = null;
+    }
     private void Update()
     {
+
         transform.Translate(Vector3.down * fallingSpeed * Time.deltaTime, Space.World);
         warningObj.transform.position = circlePos;
         WarningValue();
