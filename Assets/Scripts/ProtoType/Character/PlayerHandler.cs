@@ -14,6 +14,7 @@ public class PlayerHandler : MonoBehaviour
   public  event Action PlayerDeathEvent;
     public void InvokePlayerDeathEvent()
     {
+
         PlayerDeathEvent?.Invoke();
         PlayerDeathEvent = null;
     }
@@ -94,17 +95,28 @@ public class PlayerHandler : MonoBehaviour
     }
    public void PlayerFallOut()
     {
-       
-            Rigidbody rb=null;
-          if(CurrentPlayer.TryGetComponent<Rigidbody>(out rb))
+        if (PlayerStat.instance.hp != 1)
+        {
+            Rigidbody rb = null;
+            if (CurrentPlayer.TryGetComponent<Rigidbody>(out rb))
             {
                 rb.velocity = Vector3.zero;
             }
-            CurrentPlayer.transform.position = PlayerSpawnManager.Instance. CurrentCheckPoint.transform.position;
-        //if(!AlwaysInvincible)
-        CurrentPlayer.DamagedIgnoreInvincible(1);
-        PlayerFallEvent?.Invoke();
-      
+            CurrentPlayer.transform.position = PlayerSpawnManager.Instance.CurrentCheckPoint.transform.position;
+            //if(!AlwaysInvincible)
+            CurrentPlayer.DamagedIgnoreInvincible(1);
+            PlayerFallEvent?.Invoke();
+
+        }
+        else
+        {
+            CurrentPlayer.DamagedIgnoreInvincible(1);
+            CurrentPlayer = null;
+        }
+
+        
+  
+
     }
     private void FixedUpdate()
     {
