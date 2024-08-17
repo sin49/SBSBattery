@@ -55,12 +55,14 @@ public class SMHChanger : volumeParameterChanger
         {
             LoadPreset();
             volume.enabled = true;
+            if(GlobalPostProcessingManager.instance!=null)
             GlobalPostProcessingManager.instance.DisableGlobalPreset();
         }
     }
     private void OnTriggerExit(Collider other)
     {
         volume.enabled = false;
-        GlobalPostProcessingManager.instance.EnableGlobalPreset();
+        if (GlobalPostProcessingManager.instance != null)
+            GlobalPostProcessingManager.instance.EnableGlobalPreset();
     }
 }
