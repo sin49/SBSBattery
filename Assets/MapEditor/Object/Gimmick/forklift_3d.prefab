@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2717352331741773336}
   - component: {fileID: 4404359202769945502}
   - component: {fileID: 1882682220013068323}
+  - component: {fileID: 1288146172039846736}
   m_Layer: 0
   m_Name: forklift_3d
   m_TagString: Ground
@@ -26,14 +27,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3764111787107024937}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7086969, y: 0, z: 0, w: 0.70551306}
-  m_LocalPosition: {x: 0, y: 0, z: -15.88}
+  m_LocalRotation: {x: 0.0000020489094, y: 0.70551294, z: -0.7086971, w: 0.00000205636}
+  m_LocalPosition: {x: 5.816049, y: 0, z: 3.523817}
   m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6501473425762376619}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 90.257996, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90.25702, y: 180, z: 0}
 --- !u!95 &4404359202769945502
 Animator:
   serializedVersion: 5
@@ -71,6 +72,23 @@ MonoBehaviour:
   signalSenders:
   - {fileID: 0}
   active: 0
+--- !u!114 &1288146172039846736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3764111787107024937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c358efc4e7446f147a9d6a4f71757744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list:
+  - clip: {fileID: 0}
+    volume: 0
+  - clip: {fileID: 0}
+    volume: 0
 --- !u!1 &4417815775980594811
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,17 +320,17 @@ PrefabInstance:
     - target: {fileID: 2530425320496601739, guid: 35393896611e78c45b692b96bdf90516,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.14
+      value: 0.14000009
       objectReference: {fileID: 0}
     - target: {fileID: 2530425320496601739, guid: 35393896611e78c45b692b96bdf90516,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.08
+      value: -8.708532
       objectReference: {fileID: 0}
     - target: {fileID: 2530425320496601739, guid: 35393896611e78c45b692b96bdf90516,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.31
+      value: 6.32634
       objectReference: {fileID: 0}
     - target: {fileID: 2530425320496601739, guid: 35393896611e78c45b692b96bdf90516,
         type: 3}
@@ -358,6 +376,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pallet (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6459272358902698669, guid: 35393896611e78c45b692b96bdf90516,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1.1183553
+      objectReference: {fileID: 0}
+    - target: {fileID: 6459272358902698669, guid: 35393896611e78c45b692b96bdf90516,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 1.1368493
+      objectReference: {fileID: 0}
+    - target: {fileID: 6459272358902698669, guid: 35393896611e78c45b692b96bdf90516,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0.0000000016448175
+      objectReference: {fileID: 0}
+    - target: {fileID: 6459272358902698669, guid: 35393896611e78c45b692b96bdf90516,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0.05917769
+      objectReference: {fileID: 0}
+    - target: {fileID: 6459272358902698669, guid: 35393896611e78c45b692b96bdf90516,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 8.1106157e-11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
