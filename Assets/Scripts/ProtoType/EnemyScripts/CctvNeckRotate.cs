@@ -7,11 +7,12 @@ using UnityEngine;
 public class CctvNeckRotate : MonoBehaviour
 {
     public Transform target;
-    public float rotateSpeed;
-
-    public float angleValue;
+    [Tooltip("회전 속도")]public float rotateSpeed;
+    
 
     public CctvEnemy cctv;
+    [HideInInspector]
+    public float angleValue;
     public float waitTimer;
     private void Awake()
     {
@@ -45,7 +46,8 @@ public class CctvNeckRotate : MonoBehaviour
   
         if (target != null) {
          
-            Vector3 vec = (target.position - transform.position);
+            Vector3 vec = (target.position - transform.position).normalized;
+            vec.y = 0;
             var a = Quaternion.LookRotation(vec);
             
             //a.y += 90;
