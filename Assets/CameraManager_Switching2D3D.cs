@@ -130,12 +130,14 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         if (trans3D)
         {
             SwapDefaultCamera(camera3D);
+            if(camera2D!=null)
             camera2D.gameObject.SetActive(false);
         }
         else
         {
             SwapDefaultCamera(camera2D);
-            camera3D.gameObject.SetActive(false);
+            if (camera3D != null)
+                camera3D.gameObject.SetActive(false);
         }
     }
 

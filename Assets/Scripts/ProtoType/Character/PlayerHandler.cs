@@ -333,7 +333,7 @@ public class PlayerHandler : MonoBehaviour
         //3D로 갈 때는 카메라 먼저 이 후 이벤트
         //2D로 갈 때는 반대로 이벤트 이 후 카메라
 
-        if (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D)
+        if (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D||PlayerStat.instance.MoveState!= PlayerMoveState.Trans3D2)
         {//3D에서 2D로
             yield return StartCoroutine(InvokeDimensionEvent());
 
