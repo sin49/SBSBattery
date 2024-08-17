@@ -137,7 +137,8 @@ public class Player : Character
 
         canAttack = true;
         onDash = true;
-        PlayerHandler.instance.RegisterChange3DEvent(rotateBy3Dto2D);
+        rotateBy3Dto2D();
+
     }
 
     void Update()
@@ -482,7 +483,18 @@ public class Player : Character
             {
                 rotateVector = new Vector3(0, -90, 0);
             }
-            transform.rotation = Quaternion.Euler(rotateVector);
+            transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
+        }else if(PlayerStat.instance.MoveState == PlayerMoveState.SideZ)
+        {
+            if (directionz == directionZ.forward || directionz == directionZ.none)
+            {
+                rotateVector = new Vector3(0, 180, 0);
+            }
+            else if (directionz == directionZ.back)
+            {
+                rotateVector = new Vector3(0, 0, 0);
+            }
+            transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
         }
        
     }

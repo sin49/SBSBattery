@@ -15,7 +15,8 @@ public class CheckPoint : MonoBehaviour
     public int index;
     public GameObject spawn(GameObject obj)
     {
-        var player= Instantiate(obj, ChkPointParticle.transform.position, ChkPointParticle.transform.rotation);
+        var player= Instantiate(obj, ChkPointParticle.transform.position, Quaternion.identity);
+        player.transform.GetChild(0).rotation =ChkPointParticle.transform.rotation;
         ChkPointParticle.gameObject.SetActive(true);
      PlayerHandler.instance.   registerRemoteUI(player);
         return player;

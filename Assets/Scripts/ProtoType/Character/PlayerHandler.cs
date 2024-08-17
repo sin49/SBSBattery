@@ -332,6 +332,7 @@ public class PlayerHandler : MonoBehaviour
         CorutineRegisterEvent?.Invoke();
         //3D로 갈 때는 카메라 먼저 이 후 이벤트
         //2D로 갈 때는 반대로 이벤트 이 후 카메라
+
         if (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D)
         {//3D에서 2D로
             yield return StartCoroutine(InvokeDimensionEvent());
@@ -359,7 +360,7 @@ public class PlayerHandler : MonoBehaviour
             //이벤트 처리
 
         }
-    
+        CurrentPlayer.rotateBy3Dto2D();
         //이벤트 완
         Changing = false;
        

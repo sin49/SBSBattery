@@ -11,7 +11,7 @@ public class Boss1Hand2DColliderTrigger : MonoBehaviour
         {
             if (hand.AttackState)
             {
-                Debug.Log("2D¼Õ°ø°Ý");
+               
                 hand.Damaged(1);
             }
      

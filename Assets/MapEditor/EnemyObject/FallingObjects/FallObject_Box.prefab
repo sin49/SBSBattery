@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6717358036214733121}
   - component: {fileID: 8364546396851309416}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1276627195652648004}
   - component: {fileID: 6898354747596451355}
-  m_Layer: 9
+  - component: {fileID: 6603188226799333914}
+  m_Layer: 0
   m_Name: Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,6 +150,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6603188226799333914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3196181201536066768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fe0255936039f54cbd2f38c26a5c1a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!1 &4006880101536269725
 GameObject:
   m_ObjectHideFlags: 0
@@ -161,9 +175,9 @@ GameObject:
   - component: {fileID: 797704179966145835}
   - component: {fileID: 3149116786750076651}
   - component: {fileID: 9034781977501518973}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: FallObject_Box
-  m_TagString: Untagged
+  m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -178,7 +192,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.0008821589, y: 0.06742167, z: 0.0036088515}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1276627195652648004}
@@ -205,8 +219,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.45502707, y: 0.4182737, z: 0.70412946}
+  m_Center: {x: 0.0014444739, y: 0.17748576, z: 0.0023676157}
 --- !u!54 &3149116786750076651
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -270,7 +284,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3818836494960717879}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Box_Bone05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -302,9 +316,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2050287031879807296}
   - component: {fileID: 1129495490485468302}
-  - component: {fileID: 3579233174106905055}
-  - component: {fileID: 6889246006704958735}
-  m_Layer: 9
+  - component: {fileID: 8473676931134081682}
+  m_Layer: 0
   m_Name: 2DCollider
   m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
@@ -319,13 +332,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6427501886485200862}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6925466360843956676}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!61 &1129495490485468302
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -355,10 +368,10 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.017809391, y: 0.20212021}
+  m_Offset: {x: -0.0062924325, y: 0.14973772}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -369,36 +382,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.6211138, y: 0.5514614}
+  m_Size: {x: 0.5257959, y: 0.4466964}
   m_EdgeRadius: 0
---- !u!50 &3579233174106905055
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6427501886485200862}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &6889246006704958735
+--- !u!114 &8473676931134081682
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -407,7 +393,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6427501886485200862}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05743783bbd88b44bbfa57eb9df0ff13, type: 3}
+  m_Script: {fileID: 11500000, guid: 30b3895174da2454fab7fd9b16211c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7527749261731780495
@@ -419,7 +405,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 957071026951039501}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Box_Bone01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -440,7 +426,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1276627195652648004}
-  m_LocalEulerAnglesHint: {x: 3.4668865, y: -179.22269, z: 90.02353}
+  m_LocalEulerAnglesHint: {x: -0, y: -179.2234, z: 90}
 --- !u!1 &7585204492089381594
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,7 +437,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2347110316849698925}
   - component: {fileID: 399783258347072296}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -535,7 +521,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2594725601914223584}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Box_Bone02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -556,7 +542,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1276627195652648004}
-  m_LocalEulerAnglesHint: {x: 3.8269157, y: 90.56323, z: 90.018814}
+  m_LocalEulerAnglesHint: {x: -0, y: 90.562614, z: 90}
 --- !u!1 &8624625901491715534
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,7 +552,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6752657987212953732}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Box_Bone03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -587,7 +573,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1276627195652648004}
-  m_LocalEulerAnglesHint: {x: -3.4669666, y: -179.99998, z: 89.99999}
+  m_LocalEulerAnglesHint: {x: -7.01671e-15, y: -180, z: 90}
 --- !u!1 &8707110170226108872
 GameObject:
   m_ObjectHideFlags: 0
@@ -597,7 +583,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2542292967189621118}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Box_Bone04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -618,4 +604,4 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1276627195652648004}
-  m_LocalEulerAnglesHint: {x: -0.00000080099, y: -179.99998, z: 86.17302}
+  m_LocalEulerAnglesHint: {x: -8.1422195e-13, y: -179.99998, z: 90}

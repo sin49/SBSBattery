@@ -44,6 +44,7 @@ public class BossStageBox : MonoBehaviour
   
     private void OnDestroy()
     {
+        SpawnBoxEnemy();
         ObjectgroundedSoundEvent?.Invoke();
         ObjectgroundedSoundEvent = null;
     }
@@ -66,13 +67,18 @@ public class BossStageBox : MonoBehaviour
         warningColor.a += 0.45f * Time.deltaTime;
         warningObj.GetComponent<SpriteRenderer>().color = warningColor;
     }
-
+    
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            onGround = true;
-            boxAnim.SetTrigger("Open");
+            Destroy(gameObject);
+        }
+        else if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("상자에 플레이어 피격");
+            PlayerHandler.instance.CurrentPlayer.Damaged(1);
+            Destroy(gameObject);
         }
     }
 
