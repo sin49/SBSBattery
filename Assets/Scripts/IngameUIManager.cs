@@ -29,6 +29,7 @@ public class IngameUIManager : MonoBehaviour
             RemoteTargetUI.transform.position = PlayerHandler.instance.CurrentCamera.WorldToScreenPoint(
        target.transform.position
                 );
+            RemoteTargetUI.transform.localScale = target.transform.localScale;
 
         }
         else
@@ -45,6 +46,7 @@ public class IngameUIManager : MonoBehaviour
             InteractTargetUI.transform.position = PlayerHandler.instance.CurrentCamera.WorldToScreenPoint(
                     target.transform.GetChild(0).position
                 );
+            //InteractTargetUI.transform.localScale = target.transform.localScale;
         }
      
        

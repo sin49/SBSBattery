@@ -12,10 +12,12 @@ public class Boss1Sweap : EnemyAction
     public Boss1Hand Lhand;
     Vector3 LHandPosition;
     Vector3 LhandOneRotation;
+    public Transform LhandDefeatTransform;
+    public Transform RhandDefeatTransform;
     Vector3 RHandPosition;
     Vector3 RhandOneRotation;
     public Boss1Hand RHand;
-
+    Boss1Hand activehand;
     Transform target;
     [Header("보스 스테이지 바닥")]
     public Transform BossField;
@@ -50,22 +52,41 @@ public class Boss1Sweap : EnemyAction
     }
     IEnumerator InitializeHandPosition()
     {
-        var Ltuple = calculateSweapvector(LHandPosition, Lhand.transform.position, sweaperReturnTime);
-        var Rtuple= calculateSweapvector(RHandPosition, RHand.transform.position, sweaperReturnTime);
-        var Lvec = Ltuple.Item1;
-        var Rvec = Rtuple.Item1;
-       var speed = Ltuple.Item2;
-        sweapertimer = 0;
-        while (sweapertimer <= sweaperReturnTime)
+        if (activehand == Lhand)
         {
-            Lhand.transform.Translate(Lvec.normalized * speed * Time.fixedDeltaTime, Space.World);
-            RHand.transform.Translate(Rvec.normalized * speed * Time.fixedDeltaTime, Space.World);
-            sweapertimer += Time.fixedDeltaTime;
-            yield return null;
+            var Ltuple = calculateSweapvector(LhandDefeatTransform.position, Lhand.transform.position, sweaperReturnTime);
+            var Lvec = Ltuple.Item1;
+            var Lspeed = Ltuple.Item2;
+            sweapertimer = 0;
+            while (sweapertimer <= sweaperReturnTime)
+            {
+                Lhand.transform.Translate(Lvec.normalized * Lspeed * Time.fixedDeltaTime, Space.World);
+                
+                sweapertimer += Time.fixedDeltaTime;
+                yield return null;
+            }
+            Lhand.transform.position = LhandDefeatTransform.position;
+        }
+        else if (activehand == RHand)
+        {
+
+            var Rtuple = calculateSweapvector(RhandDefeatTransform.position, RHand.transform.position, sweaperReturnTime);
+
+            var Rvec = Rtuple.Item1;
+            var Rspeed = Rtuple.Item2;
+            sweapertimer = 0;
+            while (sweapertimer <= sweaperReturnTime)
+            {
+              
+                RHand.transform.Translate(Rvec.normalized * Rspeed * Time.fixedDeltaTime, Space.World);
+                sweapertimer += Time.fixedDeltaTime;
+                yield return null;
+            }
+            RHand.transform.position = RhandDefeatTransform.position;
         }
         sweapertimer = 0;
-        Lhand.transform.position = LHandPosition;
-        RHand.transform.position = RHandPosition;
+       
+      
         StartCoroutine(DisableAction(0));
     }
     private void OnDrawGizmos()
@@ -165,7 +186,7 @@ public class Boss1Sweap : EnemyAction
     }
     public IEnumerator Sweaper(Boss1Hand hand,Vector3 StartPos,Vector3 EndPos)
     {
-
+        activehand = hand;
         Transform handtransform=hand.transform;
         Vector3 HandOnepositon= handtransform.position;
         float randdistance = UnityEngine.Random.Range(0, SweapDistanceRandomWeight);
@@ -216,11 +237,13 @@ public class Boss1Sweap : EnemyAction
         }
         sweapertimer = 0;
         handtransform.position = HandOnepositon;
+        activehand = null;
 
-  
+
     }
     public IEnumerator Sweaper2(Boss1Hand hand, Vector3 StartPos, Vector3 EndPos)
     {
+        activehand = hand;
         Transform handtransform = hand.transform;
         Vector3 HandOnepositon = handtransform.position;
         float randdistance = UnityEngine.Random.Range(0, SweapDistanceRandomWeight);
@@ -291,7 +314,7 @@ public class Boss1Sweap : EnemyAction
         sweapertimer = 0;
         handtransform.position = HandOnepositon;
 
-
+        activehand = null;
     }
 
 }

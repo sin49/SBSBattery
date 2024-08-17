@@ -47,6 +47,7 @@ public class BossTv : RemoteObject
  
     protected override void Awake()
     {
+        base.Awake();
         bossaudioplayer = GetComponent<Boss1SOundManager>();
         actions.Add(BossSweap);
         actions.Add(BossLaser);
@@ -114,9 +115,9 @@ public class BossTv : RemoteObject
         {
             if (PlayerHandler.instance.CurrentType == TransformType.remoteform && PlayerHandler.instance.CurrentPlayer.GetComponent<RemoteTransform>().closestObject != this.gameObject)
             {
-                Debug.Log("제압당함!");
-                PlayerHandler.instance.CurrentPlayer.GetComponent<RemoteTransform>().IgnoreRemoteTrigger = true;
-                PlayerHandler.instance.CurrentPlayer.GetComponent<RemoteTransform>().closestObject = this.gameObject;
+             
+                PlayerHandler.instance.CurrentPlayer.GetComponent<RemoteTransform>().GetClosestObjectIgnoreTrigger(this.gameObject);
+
             }
             return;
         }
@@ -169,6 +170,7 @@ public class BossTv : RemoteObject
         if(bossaudioplayer!=null)
         bossaudioplayer.MonitiorHittedClipPlay();
         CanControl = false;
+        PlayerHandler.instance.CurrentPlayer.GetComponent<RemoteTransform>().RemoveClosesObject();
         lifeCount = 0;
         Debug.Log("보스를 클리어 한다");
     }
