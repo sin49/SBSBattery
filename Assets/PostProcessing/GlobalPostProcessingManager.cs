@@ -12,6 +12,8 @@ public class GlobalPostProcessingManager : volumeParameterChanger
 
 
     public static GlobalPostProcessingManager instance;
+
+    SMHChanger ActiveProcessing;
     protected override void Awake()
     {
         base.Awake();
@@ -24,13 +26,20 @@ public class GlobalPostProcessingManager : volumeParameterChanger
         volume.enabled = true;
     }
 
-    public void DisableGlobalPreset()
+    public void DisableGlobalPreset(SMHChanger processing)
     {
         volume.enabled = false;
+        if (ActiveProcessing != null)
+            ActiveProcessing.volume.enabled = false;
+        ActiveProcessing = processing;
+        ActiveProcessing.volume.enabled = true;
     }
     public void EnableGlobalPreset()
     {
         volume.enabled = true;
+        if(ActiveProcessing!=null)
+        ActiveProcessing.volume.enabled = false;
+
     }
 
 
