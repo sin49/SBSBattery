@@ -45,7 +45,7 @@ public class Boss1Laser : EnemyAction
     public override void Invoke(Action ActionENd, Transform target = null)
     {
         this.Target = target;
-        Laser.transform.position = new Vector3(target.position.x, -8,
+        Laser.transform.position = new Vector3(target.position.x, -6.4f,
            target.position.z);
         laserBeam.gameObject.SetActive(false);
         warning.position = Laser.transform.position-Vector3.up*2;

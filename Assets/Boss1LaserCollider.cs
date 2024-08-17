@@ -35,8 +35,8 @@ public class Boss1LaserCollider : MonoBehaviour
     {
         if (other.CompareTag("Player") && !PlayerHandler.instance.CurrentPlayer.onInvincible)
         {
-            Debug.Log("레이저 피해");
-            //other.GetComponent<Player>().Damaged(1);
+          
+            other.GetComponent<Player>().Damaged(1);
         }
     }
 }

@@ -14,7 +14,10 @@ public class RemoteLaser : PlayerAttack
     {
         damage = PlayerStat.instance.atk;
     }
-
+    protected override void OnTriggerEnter(Collider other)
+    {
+        base.OnTriggerEnter(other);
+    }
     // Update is called once per frame
     private void FixedUpdate()
     {

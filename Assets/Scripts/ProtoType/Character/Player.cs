@@ -725,6 +725,7 @@ public class Player : Character
     }
     public override void Damaged(float damage)
     {
+   
         if (onInvincible)
             return;
         onInvincible = true;
