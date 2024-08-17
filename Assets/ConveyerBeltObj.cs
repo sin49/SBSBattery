@@ -9,6 +9,8 @@ public class ConveyerBeltObj : MonoBehaviour
     public float beltSpeed;
     [Header("벨트 방향")]
     public Vector3 beltDirection;
+    [Header("벨트 에니메이션 속도 조절")]
+    public float beltanimationspeed;
     [Header("벨트 에니메이션 반대로")]
     public bool ReverseScroll;
     public MeshRenderer beltrenderer;
@@ -22,9 +24,9 @@ public class ConveyerBeltObj : MonoBehaviour
         belt.conveyorSpeed = beltSpeed;
         belt.conveyorDirection = beltDirection;
         if(!ReverseScroll)
-        beltmaterial.SetFloat("_ScrollSpeed", beltSpeed*  Time.timeScale);
+        beltmaterial.SetFloat("_ScrollSpeed", beltSpeed* beltanimationspeed *  Time.timeScale);
         else
-            beltmaterial.SetFloat("_ScrollSpeed", beltSpeed *-1* Time.timeScale);
+            beltmaterial.SetFloat("_ScrollSpeed", beltanimationspeed * beltSpeed *-1* Time.timeScale);
     }
   
 }
