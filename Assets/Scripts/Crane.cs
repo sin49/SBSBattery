@@ -14,6 +14,7 @@ Vector3 DeActiveTransform;
     protected override void Awake()
     {
         DeActiveTransform = MoveObject.transform.position;
+        PlayerHandler.instance.registerPlayerFallEvent(Deactive);
     }
     public override void Active()
     {
@@ -23,8 +24,11 @@ Vector3 DeActiveTransform;
             Deactive();
             return;
         }
-        onActive = true;
-        base.Active();
+        else
+        {
+            onActive = true;
+            base.Active();
+        }
     }
     protected void StopMove(Transform origin,Vector3 Target)
     {
@@ -33,9 +37,11 @@ Vector3 DeActiveTransform;
     }
     public override void Deactive()
     {
-        Debug.Log("Deactive()");
-        onActive = false;
-        base.Deactive();
+        if (onActive)
+        {
+            onActive = false;
+            base.Deactive();
+        }
     }
     public abstract Vector3 GetMoveVector(Vector3 Target, Vector3 origin);
     public abstract void MoveCrane(Vector3 vector, Vector3 Target, Transform origin);
