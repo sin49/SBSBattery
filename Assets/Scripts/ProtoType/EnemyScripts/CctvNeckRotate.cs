@@ -7,6 +7,9 @@ public class CctvNeckRotate : MonoBehaviour
     public Transform target;
     public float rotateSpeed;
     Enemy enemy;
+
+    public float angleValue;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +37,7 @@ public class CctvNeckRotate : MonoBehaviour
             transform.rotation = c;
 
 
-
+            angleValue = Quaternion.Angle(target.rotation, transform.rotation);
         }
     }
 }

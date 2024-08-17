@@ -64,7 +64,7 @@ public class CctvEnemy : Enemy
                 }
             }
 
-            //Patrol();
+            
             if (!tracking)
                 CctvPatrol();
         }
@@ -129,10 +129,10 @@ public class CctvEnemy : Enemy
 
             rot = lookRot;
 
-            cctvHead.transform.rotation = Quaternion.RotateTowards(cctvHead.transform.rotation, lookRot, eStat.rotationSpeed * Time.deltaTime);
+            //cctvHead.transform.rotation = Quaternion.RotateTowards(cctvHead.transform.rotation, lookRot, eStat.rotationSpeed * Time.deltaTime);
             cctvNeck.transform.rotation = Quaternion.RotateTowards(cctvNeck.transform.rotation, neckLook, eStat.rotationSpeed * Time.deltaTime);
 
-            headValue = Quaternion.Angle(cctvHead.transform.rotation, lookRot);
+            //headValue = Quaternion.Angle(cctvHead.transform.rotation, lookRot);
             neckValue = Quaternion.Angle(cctvNeck.transform.rotation, neckLook);
             /*if (Quaternion.Angle(cctvHead.transform.rotation, lookRot) < 0.2f)
             {
@@ -150,13 +150,15 @@ public class CctvEnemy : Enemy
 
     void CctvTrackingMove()
     {
-        testTarget = target.position - cctvHead.transform.position;
+
+
+        //testTarget = target.position - cctvHead.transform.position;
         //testTarget.y = 0;
         //cctvHead.transform.LookAt(testTarget);
-        Quaternion lookRot = Quaternion.LookRotation(testTarget);
+        //Quaternion lookRot = Quaternion.LookRotation(testTarget);
         //lookRot = Quaternion.Euler(lookRot.eulerAngles.x, cctvHead.transform.eulerAngles.y, lookRot.eulerAngles.z);        
         //cctvHead.transform.rotation = Quaternion.Lerp(cctvHead.transform.rotation, lookRot,rotationSpeed * Time.deltaTime);
-        cctvHead.transform.rotation = Quaternion.RotateTowards(cctvHead.transform.rotation, lookRot, eStat.rotationSpeed * Time.deltaTime);
+        //cctvHead.transform.rotation = Quaternion.RotateTowards(cctvHead.transform.rotation, lookRot, eStat.rotationSpeed * Time.deltaTime);
         //cctvHead.transform.rotation = Vector3.RotateTowards();
     }
 }
