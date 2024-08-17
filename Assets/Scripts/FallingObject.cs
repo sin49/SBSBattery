@@ -35,7 +35,7 @@ public class FallingObject : MonoBehaviour
     {
 
         transform.Translate(Vector3.down * fallingSpeed * Time.deltaTime, Space.World);
-        warningObj.transform.position = circlePos;
+        //warningObj.transform.position = circlePos;
         WarningValue();
     }
 
@@ -44,9 +44,9 @@ public class FallingObject : MonoBehaviour
         Vector3 vec = circlePos - transform.position;
         disToField = vec.magnitude;
 
-        Color warningColor = warningObj.GetComponent<SpriteRenderer>().color;
-        warningColor.a += 0.45f * Time.deltaTime;
-        warningObj.GetComponent<SpriteRenderer>().color = warningColor;
+        //Color warningColor = warningObj.GetComponent<SpriteRenderer>().color;
+        //warningColor.a += 0.45f * Time.deltaTime;
+        //warningObj.GetComponent<SpriteRenderer>().color = warningColor;
     }
 
     private void OnTriggerEnter(Collider other)

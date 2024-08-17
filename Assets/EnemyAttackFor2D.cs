@@ -14,7 +14,7 @@ public class EnemyAttackFor2D : MonoBehaviour
     {
         if (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D && collision.CompareTag("Player"))
         {
-            Debug.Log("2D АјАн");
+    
             Attack();
         }
     }

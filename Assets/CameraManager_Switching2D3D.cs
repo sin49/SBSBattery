@@ -17,7 +17,8 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     public CinemachineVirtualCamera camera3D;
     public Vector3 Camera2Drotation;
     public Vector3 Camera3Drotation;
-
+    float orthosize;
+    float fovview;
     //[Header("2D 카메라 orthographic 사이즈")]
     //public float orthographicSize2D = 5f;
     //[Header("2D 카메라 near/far clipping planes")]
@@ -64,6 +65,8 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     {
         base.Start();
         PlayerHandler.instance.registerCorutineRegisterEvent(RegiserCameraChangeHandler);
+        orthosize = camera2D.m_Lens.OrthographicSize;
+        fovview = camera3D.m_Lens.FieldOfView;
     }
     void RegiserCameraChangeHandler()
     {
@@ -85,10 +88,14 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         PlayerHandler.instance.CantHandle = true;
         if (trans3D)
         {
+            camera2D.m_Lens.Orthographic = false;
+            camera2D.m_Lens.FieldOfView = fovview;
             yield return StartCoroutine(SwitchCameraCoroutine(camera3D));
         }
         else
         {
+            camera2D.m_Lens.Orthographic = true;
+            camera2D.m_Lens.OrthographicSize = orthosize;
             yield return StartCoroutine(SwitchCameraCoroutine(camera2D));
         }
         PlayerHandler.instance.CantHandle = false;

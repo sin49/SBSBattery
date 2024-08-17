@@ -53,7 +53,7 @@ public class BossStageBox : MonoBehaviour
         if (!onGround)
         {
             transform.Translate(Vector3.down.normalized * fallingSpeed * Time.deltaTime, Space.World);
-            warningObj.transform.position = warningPos;
+            //warningObj.transform.position = warningPos;
         }
         WarningValue();
     }
@@ -63,9 +63,9 @@ public class BossStageBox : MonoBehaviour
         Vector3 vec = warningPos - transform.position;
         disToField = vec.magnitude;
 
-        Color warningColor = warningObj.GetComponent<SpriteRenderer>().color;
-        warningColor.a += 0.45f * Time.deltaTime;
-        warningObj.GetComponent<SpriteRenderer>().color = warningColor;
+        //Color warningColor = warningObj.GetComponent<SpriteRenderer>().color;
+        //warningColor.a += 0.45f * Time.deltaTime;
+        //warningObj.GetComponent<SpriteRenderer>().color = warningColor;
     }
     
     private void OnCollisionEnter(Collision collision)
