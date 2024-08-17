@@ -29,6 +29,10 @@ public class SoundEffectListPlayer : SEPlayer
             }
         }
     }
+    public void StopSound()
+    {
+        audiosource.Stop();
+    }
     public void PlayAudio(int n)
     {
         if(audiosource.loop)

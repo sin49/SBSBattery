@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
 public abstract class Crane : RemoteObject
 {
@@ -25,7 +26,11 @@ Vector3 DeActiveTransform;
         onActive = true;
         base.Active();
     }
-
+    protected void StopMove(Transform origin,Vector3 Target)
+    {
+        origin.position = new Vector3(origin.position.x, Target.y, origin.position.z);
+        soundEffectListPlayer.StopSound();
+    }
     public override void Deactive()
     {
         Debug.Log("Deactive()");

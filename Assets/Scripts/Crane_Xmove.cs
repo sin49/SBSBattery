@@ -30,7 +30,7 @@ public class Crane_Xmove : Crane
             {
                 origin.Translate((int)CraneMOveDirection * vector * CraneSpeed * Time.fixedDeltaTime);
                 if (origin.position.z >= Target.z)
-                    origin.position = new Vector3(Target.x,origin.position.y, Target.z);
+                    StopMove(origin, Target);
             }
 
         }
@@ -40,7 +40,7 @@ public class Crane_Xmove : Crane
             {
                 origin.Translate((int)CraneMOveDirection * vector * CraneSpeed * Time.fixedDeltaTime);
                 if (origin.position.z <= Target.z)
-                    origin.position = new Vector3(Target.x, origin.position.y, Target.z);
+                    StopMove(origin, Target);
             }
         }
     }
