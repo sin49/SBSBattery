@@ -7,16 +7,16 @@ public class SEPlayer : MonoBehaviour
    protected AudioSource audiosource;
     protected AudioType audiotype = AudioType.SE;
 
-    protected void AddAudioSource(GameObject obj,AudioSource source)
+    protected void AddAudioSource(GameObject obj)
     {
-        source = obj.AddComponent<AudioSource>();
-        source.minDistance = audiosource.maxDistance;
-        source.dopplerLevel = 0;
-        source.loop = false;
+        audiosource = obj.AddComponent<AudioSource>();
+        audiosource.minDistance = audiosource.maxDistance;
+        audiosource.dopplerLevel = 0;
+        audiosource.loop = false;
     }
     protected virtual void Awake()
     {
-        AddAudioSource(gameObject, audiosource);
+        AddAudioSource(gameObject);
         //audiosource = gameObject.AddComponent<AudioSource>();
         //audiosource.minDistance = audiosource.maxDistance;
         //audiosource.dopplerLevel = 0;
