@@ -44,4 +44,14 @@ public class RemoteLaser : PlayerAttack
             saveEffect.Play();
         }
     }
+
+    protected override void OnTriggerEnter(Collider other)
+    {
+        base.OnTriggerEnter(other);
+
+        if (other.CompareTag("Ground"))
+        {
+            DestroyLaser();
+        }
+    }
 }

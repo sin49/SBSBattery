@@ -84,6 +84,7 @@ public class Enemy: Character,DamagedByPAttack
 
     
     public bool callCheck;
+    public bool rotCheck;
     
     public bool onAttack; // 공격 활성화 여부 (공격 범위 내에 플레이어를 인식했을 때 true 변환)
     
