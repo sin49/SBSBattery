@@ -10,6 +10,8 @@ public class SMHChanger : volumeParameterChanger
 
     [Header("프리셋")]
     public ShadowsMidtonesHighlights PresetSetting;
+    [Header("로컬/월드 전환(On=월드,off=로컬)")]
+    public bool loadworldProcessing;
     public void SavePreset()
     {
         ShadowsMidtonesHighlights smh;
@@ -31,7 +33,7 @@ public class SMHChanger : volumeParameterChanger
     public override void LoadPreset()
     {
 
-     
+    
             ShadowsMidtonesHighlights smh;
             if (volume.profile.TryGet<ShadowsMidtonesHighlights>(out smh))
             {
@@ -53,16 +55,24 @@ public class SMHChanger : volumeParameterChanger
     {
         if (other.CompareTag("Player"))
         {
-            LoadPreset();
-            volume.enabled = true;
-            if(GlobalPostProcessingManager.instance!=null)
-            GlobalPostProcessingManager.instance.DisableGlobalPreset();
+            if(!loadworldProcessing)
+            {
+                LoadPreset();
+                volume.enabled = true;
+                if (GlobalPostProcessingManager.instance != null)
+                    GlobalPostProcessingManager.instance.DisableGlobalPreset(this);
+            }
+            else
+            {
+                if (GlobalPostProcessingManager.instance != null)
+                    GlobalPostProcessingManager.instance.EnableGlobalPreset();
+            }
         }
     }
-    private void OnTriggerExit(Collider other)
-    {
-        volume.enabled = false;
-        if (GlobalPostProcessingManager.instance != null)
-            GlobalPostProcessingManager.instance.EnableGlobalPreset();
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    volume.enabled = false;
+    //    if (GlobalPostProcessingManager.instance != null)
+    //        GlobalPostProcessingManager.instance.EnableGlobalPreset();
+    //}
 }
