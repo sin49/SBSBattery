@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3815399942807365625}
   - component: {fileID: 6166331710419217473}
   - component: {fileID: 2644396403284040183}
+  - component: {fileID: 521881354632759429}
   m_Layer: 7
   m_Name: Lamp
   m_TagString: Ground
@@ -97,13 +98,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1005062e5f7ec334b937d9e9c79b596f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundPlayer: {fileID: 0}
+  soundPlayer: {fileID: 521881354632759429}
   signalSenders: []
   active: 0
   OffMaterial: {fileID: 2100000, guid: f47805e5de0fb934a8e60dfa6e23b3d2, type: 2}
   OnMaterial: {fileID: 2100000, guid: e2cf2647489b3f547ad8668d0b9d964b, type: 2}
   LampLight: {fileID: 8009109864408515919}
   meshrenderer: {fileID: 6166331710419217473}
+--- !u!114 &521881354632759429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5418660647620812656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c358efc4e7446f147a9d6a4f71757744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list:
+  - clip: {fileID: 8300000, guid: 3b17e336ba231654a86639c2ea4775b7, type: 3}
+    volume: 0.5
 --- !u!1 &7508987418004989410
 GameObject:
   m_ObjectHideFlags: 0
