@@ -47,7 +47,8 @@ public class AttackColliderRange : MonoBehaviour
                 enemy.onAttack = true;
             }
 
-            enemy.attackRange = true;
+            if (!enemy.wallCheck)            
+                enemy.attackRange = true;
         }
     }
 

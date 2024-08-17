@@ -5,7 +5,7 @@ using UnityEngine;
 public class CctvEnemy : Enemy
 {
     public GameObject cctvHead;
-    public GameObject cctvNeck;
+    public CctvNeckRotate cctvNeck;    
     [Header("정찰 포인트")]
     public Transform[] patrolPoint;
     int pointElement;    
@@ -37,10 +37,12 @@ public class CctvEnemy : Enemy
             if (colliders[i].CompareTag("Enemy"))
             {
                 Debug.Log($"호출적군 감지{colliders[i].gameObject}");
-                Enemy enemy = colliders[i].GetComponent<Enemy>();                
+                Enemy enemy = colliders[i].GetComponent<Enemy>();
+                enemy.onPatrol = false;
                 enemy.callCheck = true;
                 enemy.tracking = true;
-                enemy.target = target;
+                enemy.target = target; 
+                enemy.searchPlayer = true;
             }                  
         }
     }
@@ -56,18 +58,23 @@ public class CctvEnemy : Enemy
         if (eStat.eState != EnemyState.dead || eStat.eState != EnemyState.hitted)
         {
 
-            if (tracking)
+            /*if (tracking)
             {
                 if (!activeAttack && !onAttack)
                 {
                     TrackingMove();
                 }
-            }
+            }*/
 
-            //Patrol();
+            
             if (!tracking)
                 CctvPatrol();
         }
+    }
+
+    public void TrackingPlayer()
+    {
+        cctvNeck.target = target;
     }
 
     void CctvPatrol()
@@ -79,6 +86,7 @@ public class CctvEnemy : Enemy
                 pointElement = 0;
             }
             target = patrolPoint[pointElement++];
+            cctvNeck.target = target;
             pointCheck = false;
             endWait = false;
         }
@@ -129,10 +137,10 @@ public class CctvEnemy : Enemy
 
             rot = lookRot;
 
-            cctvHead.transform.rotation = Quaternion.RotateTowards(cctvHead.transform.rotation, lookRot, eStat.rotationSpeed * Time.deltaTime);
+            //cctvHead.transform.rotation = Quaternion.RotateTowards(cctvHead.transform.rotation, lookRot, eStat.rotationSpeed * Time.deltaTime);
             cctvNeck.transform.rotation = Quaternion.RotateTowards(cctvNeck.transform.rotation, neckLook, eStat.rotationSpeed * Time.deltaTime);
 
-            headValue = Quaternion.Angle(cctvHead.transform.rotation, lookRot);
+            //headValue = Quaternion.Angle(cctvHead.transform.rotation, lookRot);
             neckValue = Quaternion.Angle(cctvNeck.transform.rotation, neckLook);
             /*if (Quaternion.Angle(cctvHead.transform.rotation, lookRot) < 0.2f)
             {
@@ -150,13 +158,15 @@ public class CctvEnemy : Enemy
 
     void CctvTrackingMove()
     {
-        testTarget = target.position - cctvHead.transform.position;
+
+
+        //testTarget = target.position - cctvHead.transform.position;
         //testTarget.y = 0;
         //cctvHead.transform.LookAt(testTarget);
-        Quaternion lookRot = Quaternion.LookRotation(testTarget);
+        //Quaternion lookRot = Quaternion.LookRotation(testTarget);
         //lookRot = Quaternion.Euler(lookRot.eulerAngles.x, cctvHead.transform.eulerAngles.y, lookRot.eulerAngles.z);        
         //cctvHead.transform.rotation = Quaternion.Lerp(cctvHead.transform.rotation, lookRot,rotationSpeed * Time.deltaTime);
-        cctvHead.transform.rotation = Quaternion.RotateTowards(cctvHead.transform.rotation, lookRot, eStat.rotationSpeed * Time.deltaTime);
+        //cctvHead.transform.rotation = Quaternion.RotateTowards(cctvHead.transform.rotation, lookRot, eStat.rotationSpeed * Time.deltaTime);
         //cctvHead.transform.rotation = Vector3.RotateTowards();
     }
 }

@@ -82,7 +82,7 @@ public class Enemy: Character,DamagedByPAttack
     [HideInInspector]
     public float attackDelay; // 공격 후 딜레이
 
-    [HideInInspector]
+    
     public bool callCheck;
     
     public bool onAttack; // 공격 활성화 여부 (공격 범위 내에 플레이어를 인식했을 때 true 변환)
@@ -112,6 +112,8 @@ public class Enemy: Character,DamagedByPAttack
     {
 
         base.Awake();
+        if (attackCollider != null)
+            attackCollider.SetActive(false);
         eStat = GetComponent<EnemyStat>();
         
 
@@ -162,10 +164,11 @@ public class Enemy: Character,DamagedByPAttack
 
         if (!onStun)
         {
-            Move();
+            if(!attackRange)
+                Move();
         }
 
-        if (tracking && !onAttack)
+        if (tracking && !onAttack && !attackRange)
         {
             isMove = true;
         }
@@ -467,12 +470,14 @@ public class Enemy: Character,DamagedByPAttack
         float f = testTarget.z - transform.position.z; // -> 절대값을 하여 z값이 n보다 크면 false로 빠져나가도록 
         f = Mathf.Abs(f);
         disToPlayer = a.magnitude;*/
-
-        if (disToPlayer > trackingDistance /*|| f > 6*/)
+        if (!callCheck)
         {
-            searchPlayer = false;
-            target = null;
-            onPatrol = true;
+            if (disToPlayer > trackingDistance /*|| f > 6*/)
+            {
+                searchPlayer = false;
+                target = null;
+                onPatrol = true;
+            }
         }
     }
 
@@ -649,6 +654,7 @@ public class Enemy: Character,DamagedByPAttack
             searchCollider.GetComponent<BoxCollider>().size = searchColliderRange;
             searchCollider.GetComponent<BoxCollider>().center = searchColliderPos;
         }
+
 
         if (rangeCollider != null)
         {
