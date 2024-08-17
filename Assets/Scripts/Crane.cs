@@ -68,6 +68,7 @@ Vector3 DeActiveTransform;
         {
             soundEffectListPlayer.PlayAudioNoCancel(2);
         }
+        
     }
 
 }

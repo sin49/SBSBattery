@@ -23,7 +23,7 @@ public class SoundEffectListPlayer : SEPlayer
         {
             if (list[n] != null)
             {
-                audiosource.loop = true;
+               
                 audiosource.clip = list[n].clip;
                 audiosource.volume = list[n].volume;
                 audiosource.Play();
