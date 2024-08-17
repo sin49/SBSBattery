@@ -15,11 +15,13 @@ public abstract class RemoteObject : MonoBehaviour
     }
     public virtual void Active()
     {
+        if (soundEffectListPlayer != null)
         soundEffectListPlayer.PlayAudio(0);
     }
 
     public virtual void Deactive()
     {
+        if (soundEffectListPlayer != null)
         soundEffectListPlayer.PlayAudio(1);
     }
 
