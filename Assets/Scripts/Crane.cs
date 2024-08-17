@@ -15,6 +15,10 @@ Vector3 DeActiveTransform;
     protected override void Awake()
     {
         DeActiveTransform = MoveObject.transform.position;
+       
+    }
+    private void Start()
+    {
         PlayerHandler.instance.registerPlayerFallEvent(Deactive);
     }
     bool CraneMove;
