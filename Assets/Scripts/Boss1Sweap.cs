@@ -190,7 +190,7 @@ public class Boss1Sweap : EnemyAction
         activehand = hand;
         Transform handtransform=hand.transform;
         Vector3 HandOnepositon= handtransform.position;
-        float randdistance = UnityEngine.Random.Range(0, 0);
+        float randdistance = UnityEngine.Random.Range(0, SweapDistanceRandomWeight);
         int randomValue = UnityEngine.Random.Range(0, 2) * 2 - 1;
         randdistance *= randomValue;
 

@@ -141,6 +141,10 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
 
     public void SwapDefaultCamera(CinemachineVirtualCamera camera)
     {
+        if (VirtualCameras.Length == 0)
+        {
+            VirtualCameras=new CinemachineVirtualCamera[1];
+        }
         VirtualCameras[0] = camera;
     }
 }
