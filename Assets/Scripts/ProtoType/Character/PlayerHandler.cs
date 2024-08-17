@@ -39,11 +39,13 @@ public class PlayerHandler : MonoBehaviour
     [Tooltip("이거 체크해야 위에 것 가능")]public bool alwaysFuncActive;
     public void GetInteratObject(InteractiveObject i)
     {
-        interactobject = i;
+        if(i.CanInteract)
+            interactobject = i;
     }
-    public void InitInteratObject()
+    public void InitInteratObject(InteractiveObject i)
     {
-        interactobject = null;
+        if(interactobject!=null&&i==interactobject)
+            interactobject = null;
     }
     public InteractiveObject ReturnInteractObject()
     {
@@ -394,7 +396,7 @@ public class PlayerHandler : MonoBehaviour
         if (Input.GetKey(KeyCode.C))
         {
           
-                Debug.Log("점프키 입력 중");
+              
             CurrentPlayer.GetJumpBuffer();
             
             
