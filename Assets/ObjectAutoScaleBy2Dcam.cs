@@ -24,7 +24,9 @@ public class ObjectAutoScaleBy2Dcam : MonoBehaviour
         }
         if (c != null)
         {
-            if (PlayerStat.instance.MoveState!=PlayerMoveState.Trans3D&&c.orthographic)
+            if ((
+                PlayerStat.instance.MoveState != PlayerMoveState.Trans3D ||
+                PlayerStat.instance.MoveState != PlayerMoveState.Trans3D2) && c.orthographic)
             {
                 distance = Mathf.Abs(c.transform.position.z - transform.position.z);
                 calculateScale = BasicScale - ((distance - basicdistance) * speed *Time.fixedDeltaTime * BasicScale);

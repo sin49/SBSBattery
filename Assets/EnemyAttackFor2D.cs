@@ -12,7 +12,9 @@ public class EnemyAttackFor2D : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D && collision.CompareTag("Player"))
+        if ((
+                PlayerStat.instance.MoveState != PlayerMoveState.Trans3D ||
+                PlayerStat.instance.MoveState != PlayerMoveState.Trans3D2) && collision.CompareTag("Player"))
         {
     
             Attack();
