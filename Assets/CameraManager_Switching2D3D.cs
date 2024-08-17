@@ -60,10 +60,11 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         GetCameraSettingByTrans3D();
         camera3D.GetComponent<CineMachineBasicCamera>().CameraIndex = 0;
         var confiner = camera3D.GetComponent<CinemachineConfiner>();
-
-        camera2D.GetComponent<CineMachineBasicCamera>().CameraIndex = 0;
-        confiner = camera2D.GetComponent<CinemachineConfiner>();
-
+        if (camera2D != null)
+        {
+            camera2D.GetComponent<CineMachineBasicCamera>().CameraIndex = 0;
+            confiner = camera2D.GetComponent<CinemachineConfiner>();
+        }
         int i = 0;
         for (int n = 0; n < a.Length; n++)
         {
@@ -87,6 +88,7 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     {
         base.Start();
         PlayerHandler.instance.registerCorutineRegisterEvent(RegiserCameraChangeHandler);
+        if(camera2D!=null)
         orthosize = camera2D.m_Lens.OrthographicSize;
         fovview = camera3D.m_Lens.FieldOfView;
     }
