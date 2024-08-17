@@ -80,8 +80,8 @@ public class CameraMoveRange : MonoBehaviour
             float ly = Range.y * 0.5f - height * 0.5f;
             clampY = Mathf.Clamp(CameraTransform.position.y, -ly + Center.y,
                 ly + Center.y);
-            if (clampY == ly + Center.y || clampY == -ly + Center.y)
-                Debug.Log("Y좌표가 한계에 걸림");
+           
+   
         }
         CameraTransform.position = new Vector3(clampX, clampY, CameraTransform.position.z);
     }

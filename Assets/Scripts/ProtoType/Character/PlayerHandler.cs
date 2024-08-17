@@ -86,6 +86,7 @@ public class PlayerHandler : MonoBehaviour
     [Header("플레이어 낙사 높이?")]
     public float characterFallLimit;
     float CalculateCharacterFallLimit;
+    public bool CharacterAutoFallEvent;
     event Action PlayerFallEvent;
     public void registerPlayerFallEvent(Action action)
     {
@@ -112,9 +113,9 @@ public class PlayerHandler : MonoBehaviour
         //    CurrentPower -= Time.deltaTime;
 
         //}
-        if(CurrentPlayer!=null&&CurrentPlayer.transform.position.y<-Mathf.Abs(characterFallLimit)+-5)
-        PlayerFallOut();
-        
+        if (CurrentPlayer != null&& CharacterAutoFallEvent && CurrentPlayer.transform.position.y < -Mathf.Abs(characterFallLimit) + -5)
+            PlayerFallOut();
+
         if (alwaysFuncActive)
         {
             if (AlwaysInvincible)
