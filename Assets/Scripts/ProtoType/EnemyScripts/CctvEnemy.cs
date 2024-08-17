@@ -13,8 +13,8 @@ public class CctvEnemy : Enemy
     public Light ccTvLight;
 
     [Header("호출 및 추적 중지 시간")]
-    public float callTime;
-    public float stopTime;
+    [Tooltip("호출 대기 시간")]public float callTime;
+    [Tooltip("추적 대기 시간")]public float stopTime;
 
     public Quaternion rot;
 
