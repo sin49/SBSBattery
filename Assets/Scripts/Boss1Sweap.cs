@@ -148,7 +148,8 @@ public class Boss1Sweap : EnemyAction
     }
     public Tuple<Vector3, float> calculateSweapvector(Vector3 goal, Vector3 startpos,float randomweight, float time)
     {
-        goal = new Vector3(goal.x, goal.y, target.transform.position.z + randomweight);
+        //goal = new Vector3(goal.x, goal.y, target.transform.position.z + randomweight);
+        goal = new Vector3(target.transform.position.x + randomweight, goal.y, target.transform.position.z + randomweight);
         Vector3 vec = goal - startpos;
     
         float distance = vec.magnitude;
@@ -189,7 +190,7 @@ public class Boss1Sweap : EnemyAction
         activehand = hand;
         Transform handtransform=hand.transform;
         Vector3 HandOnepositon= handtransform.position;
-        float randdistance = UnityEngine.Random.Range(0, SweapDistanceRandomWeight);
+        float randdistance = UnityEngine.Random.Range(0, 0);
         int randomValue = UnityEngine.Random.Range(0, 2) * 2 - 1;
         randdistance *= randomValue;
 
