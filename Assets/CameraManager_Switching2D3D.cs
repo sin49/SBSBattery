@@ -17,7 +17,7 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     public CinemachineVirtualCamera camera3D;
     public Vector3 Camera2Drotation;
     public Vector3 Camera3Drotation;
-    
+    public PlayerMoveState movestate;
     float orthosize;
     float fovview;
     //[Header("2D 카메라 orthographic 사이즈")]
@@ -33,7 +33,7 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
 
    public bool trans3D;
     public void settingBoss1ccamera(CinemachineVirtualCamera camera2D, CinemachineVirtualCamera camera3D,
-        Collider col)
+        Collider col, PlayerMoveState movestate)
     {
         this.camera2D= camera2D;
         this.camera3D = camera3D;
@@ -45,7 +45,8 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         orthosize = camera2D.m_Lens.OrthographicSize;
         fovview = camera3D.m_Lens.FieldOfView;
         trans3D = true;
-        PlayerStat.instance.MoveState = PlayerMoveState.Trans3D;
+        this. movestate = movestate;
+        PlayerStat.instance.MoveState = this.movestate;
         GetCameraSettingByTrans3D();
     }
     protected override void initializeCamera()
@@ -97,7 +98,7 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
 
         if (trans3D)
         {
-            PlayerStat.instance.MoveState =PlayerMoveState.Trans3D;
+            PlayerStat.instance.MoveState =movestate;
         }
         else
         {

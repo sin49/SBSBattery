@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 public enum CurrentAttack { ground, sky }
-public enum PlayerMoveState { SideX,SideZ,Trans3D}
+public enum PlayerMoveState { SideX,SideZ,Trans3D,Trans3D2}
 
 public class PlayerStat : CharacterStat
 {

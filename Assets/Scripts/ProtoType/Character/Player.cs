@@ -521,6 +521,10 @@ public class Player : Character
                 hori = Input.GetAxisRaw("Vertical");
                 Vert = -1 * Input.GetAxisRaw("Horizontal");
                 break;
+            case PlayerMoveState.Trans3D2:
+                Vert = Input.GetAxisRaw("Vertical");
+                hori =  Input.GetAxisRaw("Horizontal");
+                break;
         }
        
    
