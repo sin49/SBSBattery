@@ -41,6 +41,7 @@ public class Boss1Laser : EnemyAction
     Queue<Boss1LaserCollider> LaserPulling=new Queue<Boss1LaserCollider>();
 
     IEnumerator activecoroutine;
+  
 
     public override void Invoke(Action ActionENd, Transform target = null)
     {
@@ -53,6 +54,9 @@ public class Boss1Laser : EnemyAction
         warning.gameObject.SetActive(true);
         activecoroutine = laserPattern();
         StartCoroutine(activecoroutine);
+        var main = particle.main;
+        main.duration = laserlifetime;
+        main.startLifetime = TrailDuration;
         registerActionHandler(() => { /*StopAllCoroutines();*/ StopCoroutine(activecoroutine); });
         base.Invoke( ActionENd,target);
     }
