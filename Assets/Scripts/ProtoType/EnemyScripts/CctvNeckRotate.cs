@@ -46,6 +46,7 @@ public class CctvNeckRotate : MonoBehaviour
         if (target != null) {
          
             Vector3 vec = (target.position - transform.position);
+            vec.y = 0;
             var a = Quaternion.LookRotation(vec);
             
             //a.y += 90;
