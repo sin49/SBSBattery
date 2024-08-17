@@ -109,7 +109,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0.33333334}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1781363155755433660}
@@ -225,8 +225,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1644191854912631860}
   - {fileID: 1910355661248442837}
@@ -329,11 +329,11 @@ MonoBehaviour:
   HudTarget: {fileID: 8029672800632460947}
   Air: {fileID: 6799400411806955343}
   AirPower: 1
-  airDistanceTransform: {fileID: 5081120887140660048}
-  airDistance: 3
+  airDistanceTransform: {fileID: 261333707243433790}
+  airDistance: 1
   Particle: {fileID: 6675929252683290517}
   TrailParticle: {fileID: 602064562722677115}
-  TrailParticleWEight: 9
+  TrailParticleWEight: 15
 --- !u!114 &5828365822068219861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,7 +370,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1781363155755433660
 Transform:
   m_ObjectHideFlags: 0
@@ -532,7 +532,7 @@ PrefabInstance:
     - target: {fileID: 7320661712846382287, guid: af0d06ad2f476cc43be23ac0f464a510,
         type: 3}
       propertyPath: VelocityModule.z.scalar
-      value: 27
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7320661712846382287, guid: af0d06ad2f476cc43be23ac0f464a510,
         type: 3}
@@ -572,7 +572,7 @@ PrefabInstance:
     - target: {fileID: 7823327091382468809, guid: af0d06ad2f476cc43be23ac0f464a510,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
