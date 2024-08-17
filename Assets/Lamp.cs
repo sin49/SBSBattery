@@ -33,6 +33,7 @@ public class Lamp : signalReceiver
     {
         base.Awake();
         meshrenderer = GetComponent<MeshRenderer>();
+        register();
         
 
     }
