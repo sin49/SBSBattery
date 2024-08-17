@@ -48,7 +48,7 @@ public class BossCreater : MonoBehaviour
            
                 m.transitionDuration = transistionDuration;
 
-                m.settingBoss1ccamera(camera2D, camera3D, CameraRange);
+                m.settingBoss1ccamera(camera2D, camera3D, CameraRange, PlayerMoveState);
             }
             PlayerStat.instance.MoveState = PlayerMoveState;
             PlayerHandler.instance.CurrentPlayer.rotateBy3Dto2D();
