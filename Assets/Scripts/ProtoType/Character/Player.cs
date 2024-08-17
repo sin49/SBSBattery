@@ -640,13 +640,13 @@ public class Player : Character
         {
             if (PlayerStat.instance.MoveState!=PlayerMoveState.Trans3D && directionz != directionZ.none && hori == 0)
             {
-                playerRb.AddForce(transform.forward * 7, ForceMode.Impulse);
+                playerRb.AddForce(transform.GetChild(0).forward * 7, ForceMode.Impulse);
             }
             else if (PlayerStat.instance.MoveState == PlayerMoveState.Trans3D)
             {
                 if (direction != direction.none && Vert != 0 || directionz != directionZ.none && hori != 0)
                 {
-                    playerRb.AddForce(transform.forward * 7, ForceMode.Impulse);
+                    playerRb.AddForce(transform.GetChild(0).forward * 7, ForceMode.Impulse);
                 }                
             }
         }

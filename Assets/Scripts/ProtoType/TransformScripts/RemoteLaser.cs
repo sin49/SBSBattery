@@ -22,12 +22,15 @@ public class RemoteLaser : PlayerAttack
         if (laserTime > 0)
             laserTime -= Time.fixedDeltaTime;
         else
-            DestroyLaser();
+            DestroyLaser();        
     }
     void DestroyLaser()
     {
         if (PoolingManager.instance != null)
+        {
+            laserTime = 5;
             PoolingManager.instance.ReturnPoolObject(this.gameObject);
+        }
         else
             Destroy(gameObject);
     }
@@ -42,10 +45,10 @@ public class RemoteLaser : PlayerAttack
         }
     }
 
-   
+
     private void OnBecameInvisible()
     {
         DestroyLaser();
     }
-   
+
 }
