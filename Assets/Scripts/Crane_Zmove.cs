@@ -20,7 +20,7 @@ public class Crane_Zmove : Crane
         else
             return Vector3.zero;
     }
-    public override void MoveCrane(Vector3 vector, Vector3 Target, Transform origin)
+    public override bool MoveCrane(Vector3 vector, Vector3 Target, Transform origin)
     {
 
         if (vector.x > 0)
@@ -31,7 +31,9 @@ public class Crane_Zmove : Crane
    
                 origin.Translate((int)CraneMOveDirection * vector * CraneSpeed * Time.fixedDeltaTime);
                 if (origin.position.x >= Target.x)
-                    StopMove(origin, Target);
+                    return StopMove(origin, Target);
+                else
+                    return true;
             }
 
         }
@@ -42,8 +44,11 @@ public class Crane_Zmove : Crane
    
                 origin.Translate((int)CraneMOveDirection * vector * CraneSpeed * Time.fixedDeltaTime);
                 if (origin.position.x <= Target.x)
-                    StopMove(origin, Target);
+                    return StopMove(origin, Target);
+                else
+                    return true;
             }
         }
+        return false;
     }
 }

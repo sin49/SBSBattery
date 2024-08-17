@@ -5,6 +5,7 @@ using static UnityEngine.UI.Image;
 
 public abstract class Crane : RemoteObject
 {
+    [Header("2번 크레인이 움직이는 소리")]
     public GameObject MoveObject;
     public float CraneSpeed;
 
@@ -16,6 +17,7 @@ Vector3 DeActiveTransform;
         DeActiveTransform = MoveObject.transform.position;
         PlayerHandler.instance.registerPlayerFallEvent(Deactive);
     }
+    bool CraneMove;
     public override void Active()
     {
         Debug.Log("active()");
@@ -30,10 +32,11 @@ Vector3 DeActiveTransform;
             base.Active();
         }
     }
-    protected void StopMove(Transform origin,Vector3 Target)
+    protected bool StopMove(Transform origin,Vector3 Target)
     {
         origin.position = new Vector3(origin.position.x, Target.y, origin.position.z);
         soundEffectListPlayer.StopSound();
+        return false;
     }
     public override void Deactive()
     {
@@ -44,7 +47,7 @@ Vector3 DeActiveTransform;
         }
     }
     public abstract Vector3 GetMoveVector(Vector3 Target, Vector3 origin);
-    public abstract void MoveCrane(Vector3 vector, Vector3 Target, Transform origin);
+    public abstract bool MoveCrane(Vector3 vector, Vector3 Target, Transform origin);
 
 
         private void FixedUpdate()
@@ -53,13 +56,17 @@ Vector3 DeActiveTransform;
         {
     
             MoveVector = GetMoveVector(ActiveTransform.position, MoveObject.transform.position);
-            MoveCrane(MoveVector, ActiveTransform.position, MoveObject.transform);
+            CraneMove= MoveCrane(MoveVector, ActiveTransform.position, MoveObject.transform);
         }
         else
         {
 
             MoveVector = GetMoveVector(DeActiveTransform, MoveObject.transform.position);
-            MoveCrane(MoveVector, DeActiveTransform, MoveObject.transform);
+            CraneMove= MoveCrane(MoveVector, DeActiveTransform, MoveObject.transform);
+        }
+        if (CraneMove && soundEffectListPlayer != null)
+        {
+            soundEffectListPlayer.PlayAudioNoCancel(2);
         }
     }
 

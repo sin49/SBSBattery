@@ -19,10 +19,11 @@ public class SoundEffectListPlayer : SEPlayer
         {
 
         }
-        else
+        else if(!audiosource.isPlaying)
         {
             if (list[n] != null)
             {
+                audiosource.loop = true;
                 audiosource.clip = list[n].clip;
                 audiosource.volume = list[n].volume;
                 audiosource.Play();
