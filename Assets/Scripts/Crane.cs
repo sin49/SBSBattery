@@ -14,6 +14,7 @@ Vector3 DeActiveTransform;
     Vector3 MoveVector;
     protected override void Awake()
     {
+      base.Awake();
         DeActiveTransform = MoveObject.transform.position;
        
     }
@@ -36,10 +37,12 @@ Vector3 DeActiveTransform;
             base.Active();
         }
     }
-    protected bool StopMove(Transform origin,Vector3 Target)
+    protected virtual bool StopMove(Transform origin,Vector3 Target)
     {
-        origin.position = new Vector3(origin.position.x, Target.y, origin.position.z);
-        soundEffectListPlayer.StopSound();
+        if (soundEffectListPlayer != null)
+        {
+            soundEffectListPlayer.StopSound();
+        }
         return false;
     }
     public override void Deactive()

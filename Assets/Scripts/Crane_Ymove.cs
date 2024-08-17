@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Crane_Ymove : Crane
 {
-
+    protected override bool StopMove(Transform origin, Vector3 Target)
+    {
+        origin.position = new Vector3(origin.position.x,Target.y, origin.position.z);
+        return base.StopMove(origin, Target);
+    }
     public override Vector3 GetMoveVector(Vector3 Target,Vector3 origin)
     {
         float f = (Target - origin).y;
