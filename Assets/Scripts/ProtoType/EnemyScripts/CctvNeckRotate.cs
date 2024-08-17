@@ -54,8 +54,6 @@ public class CctvNeckRotate : MonoBehaviour
             //a.z -= 90;
             var b = Quaternion.RotateTowards(transform.rotation, a, rotateSpeed * Time.fixedDeltaTime);
 
-
-            Debug.Log("타겟이 플레이어가 아님");
             var c = Quaternion.Euler(0, b.eulerAngles.y, 90);
             //c.x -= 90;
             //c.y -= 90;
