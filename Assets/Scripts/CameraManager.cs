@@ -31,8 +31,10 @@ public class CameraManager : MonoBehaviour
     {
         if (PlayerHandler.instance != null)
             PlayerHandler.instance.CurrentCamera = GetComponent<Camera>();
-        transform.position = PlayerHandler.instance.CurrentPlayer.transform.position;
+        transform.position = PlayerSpawnManager.Instance.LoadCheckPoint().transform.position;
+
     }
+
     public virtual void ActiveCamera(CinemachineVirtualCamera camera)
     {
       
