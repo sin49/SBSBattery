@@ -27,8 +27,8 @@ public class CheckPoint : MonoBehaviour
             if (PlayerSpawnManager.Instance.CurrentCheckPoint != this)
             {
                 PlayerSpawnManager.Instance.ChangeCheckPoint(this);
-                if(soundplayer!=null)
-                soundplayer.PlayAudio(0);
+                if(soundplayer!=null) 
+                    soundplayer.PlayAudio(0);
                 Debug.Log($"체크포인트{index}에 닿음");
             }
         }
