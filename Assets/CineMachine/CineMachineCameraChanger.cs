@@ -16,17 +16,21 @@ public class CineMachineCameraChanger : MonoBehaviour
     [Header("전환 카메라(우선 순위 높음)")]
     public CinemachineVirtualCamera virtualCamera;
 
+    [Header("CameraMoveRange")]
+    public Collider CameraRange;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("COllider");
             CameraManager m;
             if(PlayerHandler.instance.CurrentCamera.gameObject.TryGetComponent<CameraManager>(out m))
             {
                 if (virtualCamera != null)
-                    m.ActiveCamera(virtualCamera);
+                    m.ActiveCamera(virtualCamera, CameraRange);
                 else
-                m.ActiveCamera(n);
+                m.ActiveCamera(n, CameraRange);
             }
             PlayerStat.instance.MoveState = PlayerMoveState;
         }

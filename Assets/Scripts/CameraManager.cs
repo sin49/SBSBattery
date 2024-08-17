@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+
 public class CameraManager : MonoBehaviour
 {
     public CinemachineVirtualCamera[] VirtualCameras;
@@ -35,19 +36,21 @@ public class CameraManager : MonoBehaviour
 
     }
 
-    public virtual void ActiveCamera(CinemachineVirtualCamera camera)
+    public virtual void ActiveCamera(CinemachineVirtualCamera camera,Collider Bounding)
     {
       
         activedcamera.gameObject.SetActive(false);
         camera.gameObject.SetActive(true);
+        camera.GetComponent<CinemachineConfiner>().m_BoundingVolume = Bounding;
         activedcamera = camera;
     }
-    public virtual void ActiveCamera(int n)
+    public virtual void ActiveCamera(int n, Collider Bounding=null)
     {
         if (n >= VirtualCameras.Length)
             return;
         activedcamera.gameObject.SetActive(false);
         VirtualCameras[n].gameObject.SetActive(true);
         activedcamera = VirtualCameras[n];
+        activedcamera.GetComponent<CinemachineConfiner>().m_BoundingVolume = Bounding;
     }
 }

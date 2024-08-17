@@ -48,7 +48,7 @@ public class PlayerSpawnManager : MonoBehaviour
     }
     public CheckPoint LoadCheckPoint()
     {
-       if(!DontSave)
+       if(!DontSave&& GameManager.instance.LoadCheckPointIndexKey()< ChkPointsDic.Count)
         CurrentCheckPoint = ChkPointsDic[GameManager.instance.LoadCheckPointIndexKey()];
         else
             CurrentCheckPoint= ChkPointsDic[0];
