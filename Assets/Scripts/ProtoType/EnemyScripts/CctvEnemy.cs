@@ -3,8 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class CctvEnemy : Enemy
-{
-    public GameObject cctvHead;
+{    
     public CctvNeckRotate cctvNeck;    
     [Header("Á¤Âû Æ÷ÀÎÆ®")]
     public Transform[] patrolPoint;
@@ -107,48 +106,7 @@ public class CctvEnemy : Enemy
                 StartCoroutine(CctvWaitTime());              
             }
         }*/
-    }
-
-    public void TestCctvPatrol()
-    {
-        if (pointCheck && endWait)
-        {
-            if (pointElement >= patrolPoint.Length)
-            {
-                pointElement = 0;
-            }
-            target = patrolPoint[pointElement++];
-            pointCheck = false;
-            endWait = false;
-        }
-
-        if (!pointCheck)
-        {
-            //testTarget = target.position - transform.position;
-            //Quaternion a=Quaternion.LookRotation(testTarget);
-            //Vector3 CCTVrotation = new Vector3(cctvNeck.transform.rotation.x, 0, cctvHead.transform.rotation.z);
-            //var b = Vector3.RotateTowards(CCTVrotation, testTarget, eStat.rotationSpeed * Time.deltaTime,0);
-            //cctvNeck.transform.rotation = Quaternion.Euler(Vector3.right * b.x);
-            //cctvHead.transform.rotation = Quaternion.Euler(Vector3.forward * b.z);
-            Vector3 neckTarget = target.position - cctvNeck.transform.position;
-
-            Quaternion lookRot = Quaternion.LookRotation(testTarget);
-            Quaternion neckLook = Quaternion.LookRotation(neckTarget);
-
-            rot = lookRot;
-
-            //cctvHead.transform.rotation = Quaternion.RotateTowards(cctvHead.transform.rotation, lookRot, eStat.rotationSpeed * Time.deltaTime);
-            cctvNeck.transform.rotation = Quaternion.RotateTowards(cctvNeck.transform.rotation, neckLook, eStat.rotationSpeed * Time.deltaTime);
-
-            //headValue = Quaternion.Angle(cctvHead.transform.rotation, lookRot);
-            neckValue = Quaternion.Angle(cctvNeck.transform.rotation, neckLook);
-            /*if (Quaternion.Angle(cctvHead.transform.rotation, lookRot) < 0.2f)
-            {
-                pointCheck = true;
-                StartCoroutine(CctvWaitTime());
-            }*/
-        }
-    }
+    }    
 
     IEnumerator CctvWaitTime()
     {
