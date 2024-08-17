@@ -36,6 +36,7 @@ public class CineMachineCameraChanger : MonoBehaviour
                 m.ActiveCamera(n, CameraRange);
             }
             PlayerStat.instance.MoveState = PlayerMoveState;
+            PlayerHandler.instance.CurrentPlayer.rotateBy3Dto2D();
         }
     }
 }

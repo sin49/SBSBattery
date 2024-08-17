@@ -17,14 +17,13 @@ public class FallingObject : MonoBehaviour
 
 
     public Action ObjectgroundedSoundEvent;
-    // Start is called before the first frame update
   
     
     void Start()
     {
-        
+
         rb = GetComponent<Rigidbody>();
-        circlePos = new(transform.position.x, fieldPos.y+ 0.1f, transform.position.z);
+        circlePos = new(transform.position.x, fieldPos.y + 0.1f, transform.position.z);
     }
 
     private void OnDestroy()
@@ -54,7 +53,8 @@ public class FallingObject : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerHandler.instance.CurrentPlayer.Damaged(damage);            
+            Debug.Log("보스 낙하물 피격");
+            PlayerHandler.instance.CurrentPlayer.Damaged(damage);
             Destroy(gameObject);
         }
 
@@ -63,6 +63,6 @@ public class FallingObject : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
-    
+
+
 }
