@@ -109,7 +109,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0.33333334}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1781363155755433660}
@@ -224,8 +224,8 @@ Transform:
   m_GameObject: {fileID: 6420688848260261945}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.4331325, y: 0, z: 1.9303334}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1644191854912631860}
@@ -267,6 +267,7 @@ GameObject:
   - component: {fileID: 1644191854912631860}
   - component: {fileID: 5248900216101397928}
   - component: {fileID: 6251836613733002110}
+  - component: {fileID: 5828365822068219861}
   m_Layer: 13
   m_Name: fanController
   m_TagString: GameController
@@ -322,16 +323,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82deb0eaf4ead564ebdb3bdfcb63efc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundEffectListPlayer: {fileID: 5828365822068219861}
   onActive: 0
   CanControl: 1
   HudTarget: {fileID: 8029672800632460947}
   Air: {fileID: 6799400411806955343}
-  AirPower: 0
-  airDistanceTransform: {fileID: 5081120887140660048}
-  airDistance: 3
+  AirPower: 1
+  airDistanceTransform: {fileID: 261333707243433790}
+  airDistance: 1
   Particle: {fileID: 6675929252683290517}
   TrailParticle: {fileID: 602064562722677115}
-  TrailParticleWEight: 9
+  TrailParticleWEight: 15
+--- !u!114 &5828365822068219861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8029672800632460947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c358efc4e7446f147a9d6a4f71757744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list:
+  - clip: {fileID: 8300000, guid: 6b24378222c958249aadc0229dfe3f07, type: 3}
+    volume: 1
+  - clip: {fileID: 8300000, guid: 6b24378222c958249aadc0229dfe3f07, type: 3}
+    volume: 1
+  - clip: {fileID: 8300000, guid: b9894850b0417f74e94526441277c06e, type: 3}
+    volume: 1
 --- !u!1 &8732777693769137360
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,7 +370,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1781363155755433660
 Transform:
   m_ObjectHideFlags: 0
@@ -398,7 +419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d076a5b2470011448e769b8b3ce95fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  conveyorSpeed: 0
+  conveyorSpeed: 1
   conveyorDirection: {x: 0, y: 0, z: 1}
 --- !u!1001 &7909096707955967412
 PrefabInstance:
@@ -511,7 +532,7 @@ PrefabInstance:
     - target: {fileID: 7320661712846382287, guid: af0d06ad2f476cc43be23ac0f464a510,
         type: 3}
       propertyPath: VelocityModule.z.scalar
-      value: 27
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7320661712846382287, guid: af0d06ad2f476cc43be23ac0f464a510,
         type: 3}
@@ -547,6 +568,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: windparticle
+      objectReference: {fileID: 0}
+    - target: {fileID: 7823327091382468809, guid: af0d06ad2f476cc43be23ac0f464a510,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

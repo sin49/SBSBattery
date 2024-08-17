@@ -70,7 +70,7 @@ public class PlayerInteract : MonoBehaviour
                 {
                     Debug.Log("RemoveObjectBycollision");
                     if (obj == PlayerHandler.instance.ReturnInteractObject())
-                        PlayerHandler.instance.InitInteratObject();
+                        PlayerHandler.instance.InitInteratObject(obj);
                 }
             }
         

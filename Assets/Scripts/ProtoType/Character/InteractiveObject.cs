@@ -4,7 +4,10 @@ using UnityEngine;
 
 public abstract class InteractiveObject : MonoBehaviour
 {
-    
+    [Header("한 번만 상호작용")]
+    public bool InteractOnce;
+    [Header("상호작용 가능 여부")]
+    public bool CanInteract = true;
     protected direction direct;
     //public InteractOption InteractOption;
     [Header("0번 활성화 소리")]
@@ -18,6 +21,8 @@ public abstract class InteractiveObject : MonoBehaviour
     {
         if(soundEffectListPlayer!=null)
         soundEffectListPlayer.PlayAudio(0);
+        if (InteractOnce)
+            CanInteract = false;
     }
 
     }
