@@ -36,12 +36,8 @@ public class AnimationEvent : MonoBehaviour
         {
             GetComponentInParent<EnemyInstantiateObject>().SpawnBoxEnemy();
         }
-        else
-        {
-            GetComponentInParent<BossStageBox>().SpawnBoxEnemy();
-        }
-        
-        transform.parent.gameObject.SetActive(false);        
+        Destroy(transform.parent.gameObject);
+          
     }
 
     public void EnemyHitted()

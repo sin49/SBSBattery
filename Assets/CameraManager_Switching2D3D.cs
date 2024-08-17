@@ -72,6 +72,7 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     IEnumerator SwitchCameraForTransDimensionCorutine()
     {
         trans3D = !trans3D;
+
         if (trans3D)
         {
             PlayerStat.instance.MoveState =PlayerMoveState.Trans3D;
@@ -80,6 +81,8 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         {
             PlayerStat.instance.MoveState = PlayerMoveState.SideX;
         }
+        PlayerHandler.instance.CurrentPlayer.rotateBy3Dto2D();
+        PlayerHandler.instance.CantHandle = true;
         if (trans3D)
         {
             yield return StartCoroutine(SwitchCameraCoroutine(camera3D));
@@ -88,6 +91,7 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         {
             yield return StartCoroutine(SwitchCameraCoroutine(camera2D));
         }
+        PlayerHandler.instance.CantHandle = false;
         GetCameraSettingByTrans3D();
     }
     void GetCameraSettingByTrans3D()

@@ -23,6 +23,8 @@ public class RemoteTransform : Player
 
 
  public   GameObject closestObject;
+   [ HideInInspector]
+    public bool IgnoreRemoteTrigger;
     GameObject activeEffectInstance;
     [Header("조종 오브젝트 감지 최소 범위")]
     public float minimumdistance;
@@ -55,7 +57,8 @@ public class RemoteTransform : Player
         BaseBufferTimer();
    
         //for문 사용했으니 최적화 필요함
-        UpdateClosestRemoteObjectEffect();
+        if(!IgnoreRemoteTrigger)
+            UpdateClosestRemoteObjectEffect();
         if(ClosestObjectScript!=null)
         RemoteObjectEvent?.Invoke(ClosestObjectScript.HudTarget);
         /*if (chargingBufferTimer > 0 && !Charging)
