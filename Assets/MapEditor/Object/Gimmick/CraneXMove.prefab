@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 2543409550259987857}
   - component: {fileID: 9120423936104465284}
   - component: {fileID: 3709097027133525579}
+  - component: {fileID: 7153029514276034128}
   m_Layer: 13
   m_Name: CraneScript
   m_TagString: GameController
@@ -180,14 +181,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ee977a50aea5324291e8da844af2e2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundEffectListPlayer: {fileID: 0}
   onActive: 0
   CanControl: 1
   HudTarget: {fileID: 4628963190896889224}
   MoveObject: {fileID: 5806069013825841643}
   CraneSpeed: 2
   ActiveTransform: {fileID: 226660344572577920}
-  DeActiveTransform: {fileID: 3784160472670153086}
   CraneMOveDirection: -1
+--- !u!114 &7153029514276034128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2132816428287966146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c358efc4e7446f147a9d6a4f71757744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list:
+  - clip: {fileID: 0}
+    volume: 0
+  - clip: {fileID: 0}
+    volume: 0
+  - clip: {fileID: 0}
+    volume: 0
 --- !u!1 &2493809478942938525
 GameObject:
   m_ObjectHideFlags: 0

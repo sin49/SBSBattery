@@ -14,6 +14,7 @@ Vector3 DeActiveTransform;
     Vector3 MoveVector;
     protected override void Awake()
     {
+      base.Awake();
         DeActiveTransform = MoveObject.transform.position;
        
     }
@@ -38,8 +39,10 @@ Vector3 DeActiveTransform;
     }
     protected virtual bool StopMove(Transform origin,Vector3 Target)
     {
-        
-        soundEffectListPlayer.StopSound();
+        if (soundEffectListPlayer != null)
+        {
+            soundEffectListPlayer.StopSound();
+        }
         return false;
     }
     public override void Deactive()
