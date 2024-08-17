@@ -5,7 +5,7 @@ using UnityEngine;
 public class CctvEnemy : Enemy
 {
     public GameObject cctvHead;
-    public GameObject cctvNeck;
+    public CctvNeckRotate cctvNeck;    
     [Header("Á¤Âû Æ÷ÀÎÆ®")]
     public Transform[] patrolPoint;
     int pointElement;    
@@ -56,18 +56,23 @@ public class CctvEnemy : Enemy
         if (eStat.eState != EnemyState.dead || eStat.eState != EnemyState.hitted)
         {
 
-            if (tracking)
+            /*if (tracking)
             {
                 if (!activeAttack && !onAttack)
                 {
                     TrackingMove();
                 }
-            }
+            }*/
 
             
             if (!tracking)
                 CctvPatrol();
         }
+    }
+
+    public void TrackingPlayer()
+    {
+        cctvNeck.target = target;
     }
 
     void CctvPatrol()
@@ -79,6 +84,7 @@ public class CctvEnemy : Enemy
                 pointElement = 0;
             }
             target = patrolPoint[pointElement++];
+            cctvNeck.target = target;
             pointCheck = false;
             endWait = false;
         }

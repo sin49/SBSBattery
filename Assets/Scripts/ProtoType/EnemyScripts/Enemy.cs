@@ -112,6 +112,8 @@ public class Enemy: Character,DamagedByPAttack
     {
 
         base.Awake();
+        if (attackCollider != null)
+            attackCollider.SetActive(false);
         eStat = GetComponent<EnemyStat>();
         
 
@@ -162,10 +164,11 @@ public class Enemy: Character,DamagedByPAttack
 
         if (!onStun)
         {
-            Move();
+            if(!attackRange)
+                Move();
         }
 
-        if (tracking && !onAttack)
+        if (tracking && !onAttack && !attackRange)
         {
             isMove = true;
         }
@@ -649,6 +652,7 @@ public class Enemy: Character,DamagedByPAttack
             searchCollider.GetComponent<BoxCollider>().size = searchColliderRange;
             searchCollider.GetComponent<BoxCollider>().center = searchColliderPos;
         }
+
 
         if (rangeCollider != null)
         {

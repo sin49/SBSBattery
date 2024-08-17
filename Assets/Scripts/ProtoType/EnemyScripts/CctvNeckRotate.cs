@@ -1,19 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CctvNeckRotate : MonoBehaviour
 {
     public Transform target;
     public float rotateSpeed;
-    Enemy enemy;
 
     public float angleValue;
 
-    // Start is called before the first frame update
-    void Start()
+    public CctvEnemy cctv;
+    public float waitTimer;
+    private void Awake()
     {
-        enemy = GetComponentInParent<Enemy>();
+        cctv = GetComponentInParent<CctvEnemy>();
+    }
+
+    private void Update()
+    {
+        if (!cctv.endWait && cctv.pointCheck)
+        {
+            if (waitTimer > 0)
+            {
+                waitTimer -= Time.deltaTime;
+            }
+            else
+            {
+                cctv.endWait = true;
+                waitTimer = cctv.waitTime;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -22,7 +40,7 @@ public class CctvNeckRotate : MonoBehaviour
   
         if (target != null) {
          
-            Vector3 vec = (target.position - transform.position).normalized;
+            Vector3 vec = (target.position - transform.position);
             var a = Quaternion.LookRotation(vec);
             //a.y += 90;
             //a.z -= 90;
@@ -37,7 +55,15 @@ public class CctvNeckRotate : MonoBehaviour
             transform.rotation = c;
 
 
-            angleValue = Quaternion.Angle(target.rotation, transform.rotation);
+            angleValue = Quaternion.Angle(transform.rotation, a);
+            if(PlayerHandler.instance != null && target.gameObject != PlayerHandler.instance.CurrentPlayer.gameObject)
+            {
+                if (angleValue > 89.5f && angleValue < 90.005f)
+                {
+                    cctv.pointCheck = true;
+                    target = null;
+                }
+            }
         }
     }
 }

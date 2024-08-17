@@ -19,7 +19,7 @@ public class CctvRange : MonoBehaviour
 
     private void Update()
     {
-        capsule.height = cctvLight.range * 0.9f;
+        capsule.height = cctvLight.range / 4;
         capsule.center = new(capsule.center.x, capsule.height / 2, capsule.center.z);
         capsule.radius = cctvLight.spotAngle * 0.02f;
     }
@@ -31,6 +31,7 @@ public class CctvRange : MonoBehaviour
         {
             cctvE.tracking = true;
             cctvE.target = other.transform;
+            cctvE.TrackingPlayer();
             if (ct != null)
             {
                 StopCoroutine(ct);

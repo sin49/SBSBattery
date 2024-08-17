@@ -44,11 +44,4 @@ public class RemoteLaser : PlayerAttack
             saveEffect.Play();
         }
     }
-
-
-    private void OnBecameInvisible()
-    {
-        DestroyLaser();
-    }
-
 }
