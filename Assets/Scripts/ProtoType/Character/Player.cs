@@ -627,7 +627,7 @@ public class Player : Character
                         attackGround = true;
                     }
 
-                    AttackEvents();
+                
                     StartCoroutine(TestMeleeAttack());
                 }
             }
@@ -893,7 +893,12 @@ public class Player : Character
             
         }
         if (AttackEffect != null)
+        {
+            AttackEffect.SetActive(false);
             AttackEffect.SetActive(true);
+        }
+
+        AttackEvents();
         yield return new WaitForSeconds(PlayerStat.instance.attackDelay);
 
 
