@@ -17,6 +17,7 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     public CinemachineVirtualCamera camera3D;
     public Vector3 Camera2Drotation;
     public Vector3 Camera3Drotation;
+    
     float orthosize;
     float fovview;
     //[Header("2D 카메라 orthographic 사이즈")]
@@ -30,7 +31,7 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     //public float nearClipPlane3D = 0.1f;
     //public float farClipPlane3D = 1000f;
 
-    bool trans3D;
+   public bool trans3D;
     public void settingBoss1ccamera(CinemachineVirtualCamera camera2D, CinemachineVirtualCamera camera3D,
         Collider col)
     {
