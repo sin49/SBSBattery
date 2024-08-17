@@ -80,7 +80,9 @@ public class BossTv : RemoteObject
         CancelAction();
         if (!LHand.active && !RHand.active)
         {
+           
             CanControl = true;
+            
         }
     }
    
@@ -112,6 +114,8 @@ public class BossTv : RemoteObject
         {
             if (PlayerHandler.instance.CurrentType == TransformType.remoteform && PlayerHandler.instance.CurrentPlayer.GetComponent<RemoteTransform>().closestObject != this.gameObject)
             {
+                Debug.Log("제압당함!");
+                PlayerHandler.instance.CurrentPlayer.GetComponent<RemoteTransform>().IgnoreRemoteTrigger = true;
                 PlayerHandler.instance.CurrentPlayer.GetComponent<RemoteTransform>().closestObject = this.gameObject;
             }
             return;

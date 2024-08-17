@@ -49,9 +49,9 @@ public abstract class EnemyAction : MonoBehaviour
 
     protected IEnumerator DisableAction(float lifetime)//행동이 끝남
     {
-        Debug.Log("실행됨" + lifetime);
+ 
         yield return new WaitForSeconds(lifetime);
-        Debug.Log("타이머 끝!" + lifetime);
+
         ActionEndHandler?.Invoke();
         ActionEndHandler = null;
     }

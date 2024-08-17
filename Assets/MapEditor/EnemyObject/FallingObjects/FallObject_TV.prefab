@@ -10,8 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2691870983353734209}
   - component: {fileID: 8539699419045037528}
-  - component: {fileID: 2773264086653394284}
-  - component: {fileID: 4603967711864201948}
+  - component: {fileID: 8303782345279568097}
   m_Layer: 0
   m_Name: Collider2D
   m_TagString: EnemyAttack
@@ -27,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3007863477312921487}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1899384417491321382}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!61 &8539699419045037528
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -63,7 +62,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.0023854822, y: 0.13069722}
@@ -79,34 +78,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3748833, y: 0.3103519}
   m_EdgeRadius: 0
---- !u!50 &2773264086653394284
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3007863477312921487}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &4603967711864201948
+--- !u!114 &8303782345279568097
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,7 +87,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3007863477312921487}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05743783bbd88b44bbfa57eb9df0ff13, type: 3}
+  m_Script: {fileID: 11500000, guid: 30b3895174da2454fab7fd9b16211c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4756603030403936131
@@ -222,7 +194,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -270,7 +242,6 @@ MonoBehaviour:
   damage: 0
   fallingwaitingtime: 0
   fallingSpeed: 0
-  audioplayer: {fileID: 0}
   fieldPos: {x: 0, y: 0, z: 0}
   warningObj: {fileID: 7795344646245055704}
   circlePos: {x: 0, y: 0, z: 0}
