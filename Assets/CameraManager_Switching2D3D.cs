@@ -17,6 +17,7 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     public CinemachineVirtualCamera camera3D;
     public Vector3 Camera2Drotation;
     public Vector3 Camera3Drotation;
+    
     float orthosize;
     float fovview;
     //[Header("2D 카메라 orthographic 사이즈")]
@@ -30,7 +31,21 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     //public float nearClipPlane3D = 0.1f;
     //public float farClipPlane3D = 1000f;
 
-    bool trans3D;
+   public bool trans3D;
+    public void settingBoss1ccamera(CinemachineVirtualCamera camera2D, CinemachineVirtualCamera camera3D,
+        Collider col)
+    {
+        this.camera2D= camera2D;
+        this.camera3D = camera3D;
+  
+        this.camera2D.GetComponent<CinemachineConfiner>().m_BoundingVolume = col;
+        this.camera3D.GetComponent<CinemachineConfiner>().m_BoundingVolume = col;
+        orthosize = camera2D.m_Lens.OrthographicSize;
+        fovview = camera3D.m_Lens.FieldOfView;
+        trans3D = true;
+        PlayerStat.instance.MoveState = PlayerMoveState.Trans3D;
+        GetCameraSettingByTrans3D();
+    }
     protected override void initializeCamera()
     {
         var a = VirtualCameraTransform.GetComponentsInChildren<CinemachineVirtualCamera>();
@@ -38,10 +53,10 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         GetCameraSettingByTrans3D();
         camera3D.GetComponent<CineMachineBasicCamera>().CameraIndex = 0;
         var confiner = camera3D.GetComponent<CinemachineConfiner>();
-        confiner.m_BoundingVolume = BasicCameraConfiner;
+
         camera2D.GetComponent<CineMachineBasicCamera>().CameraIndex = 0;
         confiner = camera2D.GetComponent<CinemachineConfiner>();
-        confiner.m_BoundingVolume = BasicCameraConfiner;
+
         int i = 0;
         for (int n = 0; n < a.Length; n++)
         {

@@ -21,6 +21,12 @@ public class CameraManagerSwitchingBlendingOption : CameraManager
         base.ActiveCamera(camera, col);
         SwitchToCamera(camera);
     }
+    public void settingccamera(CinemachineVirtualCamera camera2D, CinemachineVirtualCamera camera3D,
+        Collider col)
+    {
+        camera2D.GetComponent<CinemachineConfiner>().m_BoundingVolume = col;
+        camera3D.GetComponent<CinemachineConfiner>().m_BoundingVolume = col;
+    }
     public override void ActiveCamera(int n,Collider col)
     {
         if (n >= VirtualCameras.Length)
