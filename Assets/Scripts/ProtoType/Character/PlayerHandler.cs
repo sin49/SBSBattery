@@ -360,7 +360,7 @@ public class PlayerHandler : MonoBehaviour
             //이벤트 처리
 
         }
-        CurrentPlayer.rotateBy3Dto2D();
+       
         //이벤트 완
         Changing = false;
        

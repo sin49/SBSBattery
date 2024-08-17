@@ -56,8 +56,10 @@ public class CameraManagerSwitchingBlendingOption : CameraManager
           
             activedcamera = newCamera;
             Time.timeScale = 0;
+            Debug.Log("timescale" + Time.timeScale);
             yield return new WaitForSecondsRealtime(transitionDuration);
             Time.timeScale = 1;
+            Debug.Log("timescale" + Time.timeScale);
             //if (currentCamera != newCamera)
             //{
             //    currentCamera.gameObject.SetActive(false);

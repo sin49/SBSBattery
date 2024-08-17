@@ -10,7 +10,7 @@ public class Switch :  signalSender
     protected override void Awake()
     {
         base.Awake();
-        animator = GetComponent<Animator>();
+        animator =this.transform.parent.parent. GetComponent<Animator>();
     }
     // Update is called once per frame
     void Update()
