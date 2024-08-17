@@ -485,7 +485,7 @@ MonoBehaviour:
   lifeCountMax: 100
   TargetPlayer: 1
   randomPattern: 0
-  OnlyTestPattern: 1
+  OnlyTestPattern: 0
   HandHP: 1
   LHand: {fileID: 6602919900276604124}
   RHand: {fileID: 4055101929726195839}
@@ -507,8 +507,8 @@ MonoBehaviour:
   fallingObj2:
   - fallingobj: {fileID: 4006880101536269725, guid: c893fd765a9a01d4eb3c9f0487912a37,
       type: 3}
-    number: 0
-    possibility: 1
+    number: 1
+    possibility: 0
   - fallingobj: {fileID: 1975036747362771099, guid: dbc0de5fe612b08479e0596338c883cd,
       type: 3}
     number: 0
@@ -523,18 +523,20 @@ MonoBehaviour:
     possibility: 2
   soundmanager: {fileID: 0}
   fallingBoxCreateObj:
-  - Createobj: {fileID: 557678266298197566, guid: 06511a03621618a4f8bd0ad830ab2be7,
+  - Createobj: {fileID: 3294068082175523137, guid: 7a2304b68bcbcd2498a3ffb793facc23,
+      type: 3}
+    possibility: 1
+  - Createobj: {fileID: 1484204634486695996, guid: 757caba741c6ccc40886737a7e2215df,
       type: 3}
     possibility: 1
   damage: 1
-  createTime: 0.2
+  createTime: 0.4
   minSpeed: 1
   maxSpeed: 3
   createCountMax: 20
   fallingHeight: 10
   fallingRange: 1.15
   bossField: {fileID: 0}
-  enemy: {fileID: 0}
 --- !u!114 &1058498811892394508
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -37,9 +37,11 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     {
         this.camera2D= camera2D;
         this.camera3D = camera3D;
-  
-        this.camera2D.GetComponent<CinemachineConfiner>().m_BoundingVolume = col;
-        this.camera3D.GetComponent<CinemachineConfiner>().m_BoundingVolume = col;
+        if (col != null)
+        {
+            this.camera2D.GetComponent<CinemachineConfiner>().m_BoundingVolume = col;
+            this.camera3D.GetComponent<CinemachineConfiner>().m_BoundingVolume = col;
+        }
         orthosize = camera2D.m_Lens.OrthographicSize;
         fovview = camera3D.m_Lens.FieldOfView;
         trans3D = true;
@@ -89,6 +91,8 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     }
     IEnumerator SwitchCameraForTransDimensionCorutine()
     {
+        if (camera2D == null || camera3D == null)
+            yield break;
         trans3D = !trans3D;
 
         if (trans3D)

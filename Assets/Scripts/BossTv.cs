@@ -65,6 +65,7 @@ public class BossTv : RemoteObject
         RHand.HandDominateEvent += RhandDominateEvent;
         lifeCount = lifeCountMax;
         CanControl = false;
+        index = actions.Count - 1;
     }
     void LhandDominateEvent()
     {
@@ -145,9 +146,9 @@ public class BossTv : RemoteObject
                 {
                     TestAction = actions[index];
 
-                    index++;
-                    if (index >= actions.Count)
-                        index = 0;
+                    index--;
+                    if (index <0)
+                        index = actions.Count-1;
                 }
             }
             TestAction.Invoke(patternComplete,target);

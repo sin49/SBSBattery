@@ -10,6 +10,9 @@ public class BossCreater : MonoBehaviour
     [Header("보스 카메라 3D")]
     public CinemachineVirtualCamera camera3D;
 
+    [Header("보스 필드")]
+    public Transform bossfield;
+
     [Header("CameraMoveRange")]
     public Collider CameraRange;
 
@@ -29,7 +32,9 @@ public class BossCreater : MonoBehaviour
     public GameObject BossUI;
     void CreateBoss()
     {
-        Instantiate(BossObject, BossTransform.position, BossTransform.rotation);
+     var a=   Instantiate(BossObject, BossTransform.position, BossTransform.rotation);
+        a.GetComponent<BossFalling>().bossField = bossfield;
+        a.GetComponent<Boss1Sweap>().BossField = bossfield;
         if(BossUI != null) 
         BossUI.SetActive(true);
     }
@@ -48,6 +53,7 @@ public class BossCreater : MonoBehaviour
             PlayerStat.instance.MoveState = PlayerMoveState;
             PlayerHandler.instance.CurrentPlayer.rotateBy3Dto2D();
             CreateBoss();
+            Destroy(this.gameObject);
         }
     }
 }
