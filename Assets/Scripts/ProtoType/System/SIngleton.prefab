@@ -1700,6 +1700,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3778098788227362813}
+  - component: {fileID: 3466261174793131839}
   m_Layer: 0
   m_Name: GameSystemAudioPlayer
   m_TagString: Untagged
@@ -1722,6 +1723,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2038173147941107366}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3466261174793131839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7080738491416716452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbe88f1931521414199f26a90b9ff070, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharacterDieClip: {fileID: 0}
+  CharacterDieVolume: 0
+  ChangeDimensionClip: {fileID: 0}
+  ChangeDimensionVolume: 0
+  GetItemClip: {fileID: 0}
+  GetItemVolume: 0
+  RecoverHPClip: {fileID: 0}
+  RecoverHPVolume: 0
 --- !u!1 &7254863530872006313
 GameObject:
   m_ObjectHideFlags: 0
@@ -2171,6 +2192,7 @@ MonoBehaviour:
   pStat: {fileID: 0}
   lastDirection: 1
   characterFallLimit: 15
+  CantHandle: 0
   CurrentType: 0
   defromUpPosition: 0.6
   DeTransformtime: 2
@@ -2210,6 +2232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CheckpointChkCamera: {fileID: 0}
+  CheckPointTransform: {fileID: 0}
   Checkpoints:
   - {fileID: 0}
   DefaultForm: {fileID: 7664586703414084814, guid: adab39cdc59ea234aa9ec9dbf410dc93,

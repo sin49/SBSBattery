@@ -19,7 +19,7 @@ public class Boss1Sweap : EnemyAction
     Transform target;
     [Header("보스 스테이지 바닥")]
     public Transform BossField;
-
+    Boss1SOundManager boss1SOundManager;
     Vector3 fieldMin;
     Vector3 fieldMax;
     //[Header("휩쓸기 손 회전?")]
@@ -92,6 +92,7 @@ public class Boss1Sweap : EnemyAction
     }
     private void Awake()
     {
+        boss1SOundManager=GetComponent<Boss1SOundManager>();
         if (BossField != null)
         {
             Vector3 min = new Vector3(-0.5f, 0.5f, -0.5f);
@@ -172,6 +173,8 @@ public class Boss1Sweap : EnemyAction
         Vector3 vec = tuple.Item1;
         vec.y += handsize * 0.5f;
         float speed = tuple.Item2;
+        if (boss1SOundManager != null)
+            boss1SOundManager.HandSwerapStartClipPlay();
         while (sweapertimer <= SweaperStartMoveTime)
         {
             hand.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
@@ -185,6 +188,8 @@ public class Boss1Sweap : EnemyAction
         vec = tuple.Item1;
         vec.y = 0;
         speed = tuple.Item2;
+        if (boss1SOundManager != null)
+            boss1SOundManager.HandSwerapEndClipPlay();
         while (sweapertimer <= SweaperEndMoveTime)
         {
             hand.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
@@ -222,6 +227,8 @@ public class Boss1Sweap : EnemyAction
         vec.y += handsize * 0.5f;
         float speed = tuple.Item2;
         var rotationspeed = 90 / SweaperStartMoveTime;
+        if (boss1SOundManager != null)
+            boss1SOundManager.HandSwerapStartClipPlay();
         while (sweapertimer <= SweaperStartMoveTime)
         {
             hand.Translate(vec.normalized * speed * Time.fixedDeltaTime,Space.World);
@@ -236,7 +243,8 @@ public class Boss1Sweap : EnemyAction
         vec = tuple.Item1;
         vec.y = 0;
         speed = tuple.Item2;
-        
+        if (boss1SOundManager != null)
+            boss1SOundManager.HandSwerapEndClipPlay();
         while (sweapertimer <= SweaperEndMoveTime)
         {
             hand.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
@@ -251,6 +259,8 @@ public class Boss1Sweap : EnemyAction
         vec = tuple.Item1;
         vec.y = 0;
         speed = tuple.Item2;
+        if (boss1SOundManager != null)
+            boss1SOundManager.HandSwerapEndClipPlay();
         while (sweapertimer <= SweaperEndMoveTime)
         {
             hand.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
