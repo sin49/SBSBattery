@@ -47,10 +47,12 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         }
         orthosize = camera2D.m_Lens.OrthographicSize;
         fovview = camera3D.m_Lens.FieldOfView;
-
+      
         trans3D = true;
         this. movestate = movestate;
         PlayerStat.instance.MoveState = this.movestate;
+        VirtualCameras[0] = camera3D;
+        activedcamera = camera3D;
         //GetCameraSettingByTrans3D();
     }
     protected override void initializeCamera()
