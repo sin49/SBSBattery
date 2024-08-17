@@ -14,6 +14,7 @@ public class PlayerHandler : MonoBehaviour
   public  event Action PlayerDeathEvent;
     public void InvokePlayerDeathEvent()
     {
+
         PlayerDeathEvent?.Invoke();
         PlayerDeathEvent = null;
     }
@@ -86,6 +87,7 @@ public class PlayerHandler : MonoBehaviour
     [Header("플레이어 낙사 높이?")]
     public float characterFallLimit;
     float CalculateCharacterFallLimit;
+    public bool CharacterAutoFallEvent;
     event Action PlayerFallEvent;
     public void registerPlayerFallEvent(Action action)
     {
@@ -93,17 +95,28 @@ public class PlayerHandler : MonoBehaviour
     }
    public void PlayerFallOut()
     {
-       
-            Rigidbody rb=null;
-          if(CurrentPlayer.TryGetComponent<Rigidbody>(out rb))
+        if (PlayerStat.instance.hp != 1)
+        {
+            Rigidbody rb = null;
+            if (CurrentPlayer.TryGetComponent<Rigidbody>(out rb))
             {
                 rb.velocity = Vector3.zero;
             }
-            CurrentPlayer.transform.position = PlayerSpawnManager.Instance. CurrentCheckPoint.transform.position;
-        //if(!AlwaysInvincible)
-        CurrentPlayer.DamagedIgnoreInvincible(1);
-        PlayerFallEvent?.Invoke();
-      
+            CurrentPlayer.transform.position = PlayerSpawnManager.Instance.CurrentCheckPoint.transform.position;
+            //if(!AlwaysInvincible)
+            CurrentPlayer.DamagedIgnoreInvincible(1);
+            PlayerFallEvent?.Invoke();
+
+        }
+        else
+        {
+            CurrentPlayer.DamagedIgnoreInvincible(1);
+            CurrentPlayer = null;
+        }
+
+        
+  
+
     }
     private void FixedUpdate()
     {
@@ -112,8 +125,8 @@ public class PlayerHandler : MonoBehaviour
         //    CurrentPower -= Time.deltaTime;
 
         //}
-        if(CurrentPlayer!=null&&CurrentPlayer.transform.position.y<-Mathf.Abs(characterFallLimit)+-5)
-        PlayerFallOut();
+        if (CurrentPlayer != null&& CharacterAutoFallEvent && CurrentPlayer.transform.position.y < -Mathf.Abs(characterFallLimit) + -5)
+            PlayerFallOut();
 
         if (alwaysFuncActive)
         {
@@ -122,7 +135,7 @@ public class PlayerHandler : MonoBehaviour
             else
                 CurrentPlayer.onInvincible = false;
         }
-
+    
 
         #region 캐릭터 조작
         if ((CurrentPlayer != null && !formChange) || CantHandle)
@@ -468,7 +481,7 @@ public class PlayerHandler : MonoBehaviour
             firstDownInput = false;
             doubleDownInput = false;
         }
-        if (doubleUpInput && Input.GetKey(KeyCode.X)&&CurrentType!=TransformType.Default)
+        if (doubleUpInput && Input.GetKeyDown(KeyCode.X)&&CurrentType!=TransformType.Default)
         {
             CurrentPlayer.Skill1();
          

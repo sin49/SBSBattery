@@ -93,10 +93,10 @@ public class Player : Character
 
     private void OnBecameInvisible()
     {
-        if (PlayerHandler.instance.CurrentPlayer == this)
-        {
-            PlayerHandler.instance.PlayerFallOut();
-        }
+        //if (PlayerHandler.instance.CurrentPlayer == this)
+        //{
+        //    PlayerHandler.instance.PlayerFallOut();
+        //}
     }
 
     [Header("이동에 따른 값 변화 테스트")]
