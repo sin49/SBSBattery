@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1491536955307889208}
   - component: {fileID: 4239330892885033023}
   - component: {fileID: 9185252084100178079}
+  - component: {fileID: 8758273079751934451}
   m_Layer: 0
   m_Name: Portal 1-1
   m_TagString: InteractiveObject
@@ -69,10 +70,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7afc24a03c0e4874f897191ad20802de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InteractOption: 0
+  soundEffectListPlayer: {fileID: 0}
   Destination: {fileID: 0}
-  PlayerTeleportPosition: {fileID: 2981084344928432863}
-  isZpin: 1
+  HasLoadingEffect: 0
 --- !u!65 &9185252084100178079
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -94,6 +94,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &8758273079751934451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2840843189344088020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c358efc4e7446f147a9d6a4f71757744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list:
+  - clip: {fileID: 8300000, guid: 8d0dabc3e3761a94aa734b4e7cf5490a, type: 3}
+    volume: 0.2
 --- !u!1 &5595277090267142802
 GameObject:
   m_ObjectHideFlags: 0

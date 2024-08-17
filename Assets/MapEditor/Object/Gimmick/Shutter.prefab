@@ -1240,6 +1240,7 @@ GameObject:
   - component: {fileID: 6046281357063165056}
   - component: {fileID: 3739341517740473795}
   - component: {fileID: 8976353636728439828}
+  - component: {fileID: 6406917209517503746}
   m_Layer: 0
   m_Name: Shutter
   m_TagString: Untagged
@@ -1293,6 +1294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 062573a3169445c4ab6023eee1e3dfbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundPlayer: {fileID: 0}
   signalSenders:
   - {fileID: 0}
   active: 0
@@ -1317,6 +1319,23 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6406917209517503746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3779255637212025760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c358efc4e7446f147a9d6a4f71757744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list:
+  - clip: {fileID: 8300000, guid: 073283bf17fca034c9ee18c0cc23491f, type: 3}
+    volume: 0.8
+  - clip: {fileID: 8300000, guid: d4f0fe7a1a6a21f42b2b7009190e6077, type: 3}
+    volume: 0.8
 --- !u!1 &4016742112668627144
 GameObject:
   m_ObjectHideFlags: 0
