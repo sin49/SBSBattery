@@ -57,8 +57,9 @@ public class ItemListUI : MonoBehaviour
         }
         else
         {
-            index = MultiplyItemList.Count - 1;
             handleitemlist = MultiplyItemList;
+            index = MultiplyItemList.Count - 1;
+ 
         }
         UpdateSelectInfo();
     }
@@ -117,6 +118,7 @@ public class ItemListUI : MonoBehaviour
         {
             SelectedUI.SetActive(false);
             ItemDescriptionUI.gameObject.SetActive(false);
+            return;
         }
         if (index >= handleitemlist.Count)
         {
