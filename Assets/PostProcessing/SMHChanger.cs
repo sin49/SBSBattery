@@ -10,6 +10,23 @@ public class SMHChanger : volumeParameterChanger
 
     [Header("프리셋")]
     public ShadowsMidtonesHighlights PresetSetting;
+    public void SavePreset()
+    {
+        ShadowsMidtonesHighlights smh;
+        if (volume.profile.TryGet<ShadowsMidtonesHighlights>(out smh))
+        {
+            //smh = PresetSetting;
+            SetParameter(PresetSetting.highlights, smh.highlights);
+            SetParameter(PresetSetting.shadows, smh.shadows);
+            SetParameter(PresetSetting.midtones, smh.midtones);
+            SetParameter(PresetSetting.shadowsStart, smh.shadowsStart);
+            SetParameter(PresetSetting.shadowsEnd, smh.shadowsEnd);
+            SetParameter(PresetSetting.highlightsStart, smh.highlightsStart);
+            SetParameter(PresetSetting.highlightsEnd, smh.highlightsEnd);
+
+            Debug.Log("프리셋 로딩 완료");
+        }
+    }
    
     public override void LoadPreset()
     {

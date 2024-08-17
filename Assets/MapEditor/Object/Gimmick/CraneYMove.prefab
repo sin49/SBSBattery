@@ -599,9 +599,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
   m_LocalPosition: {x: 0, y: -0.5, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.1, z: 0.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.35, y: 0.07, z: 0.35}
+  m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 4397020064335183277}
   - {fileID: 6356209984019562424}
   m_Father: {fileID: 5235426193196239710}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -816,7 +817,6 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7225739929595540204}
-  - {fileID: 4397020064335183277}
   - {fileID: 5235426193196239710}
   - {fileID: 6777476962482516600}
   m_Father: {fileID: 0}
@@ -949,6 +949,7 @@ GameObject:
   - component: {fileID: 6356209984019562424}
   - component: {fileID: 2597029047883001501}
   - component: {fileID: 4728838636354790550}
+  - component: {fileID: 1130629163744797000}
   m_Layer: 13
   m_Name: Cranescript
   m_TagString: GameController
@@ -983,13 +984,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f28e29af7eedc8746a64077d872c5e06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundEffectListPlayer: {fileID: 1130629163744797000}
   onActive: 0
   CanControl: 1
   HudTarget: {fileID: 6651627021268840601}
   MoveObject: {fileID: 6651627021268840601}
   CraneSpeed: 2
   ActiveTransform: {fileID: 7225739929595540204}
-  DeActiveTransform: {fileID: 4397020064335183277}
 --- !u!65 &4728838636354790550
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1011,6 +1012,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 5, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1130629163744797000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7666151478575536088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c358efc4e7446f147a9d6a4f71757744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list:
+  - clip: {fileID: 8300000, guid: ccec4a41257c7054a8051282a3025c77, type: 3}
+    volume: 1
+  - clip: {fileID: 8300000, guid: 3b17e336ba231654a86639c2ea4775b7, type: 3}
+    volume: 1
 --- !u!1 &7704014565187611679
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,12 +1053,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7704014565187611679}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 10, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7831450945936006412}
+  m_Father: {fileID: 29525900225749041}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8592441631150600441
 GameObject:

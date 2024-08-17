@@ -8,15 +8,10 @@ public class PlayerXChangePortal : InteractiveObject
     public Transform Destination;
 
     public bool HasLoadingEffect;
-    //private void Awake()
-    //{
-    //    //if(Destination != null)
-    //    //ZchangeVaule=this.transform.position.z- Destination.transform.position.z;
-
-    //    InteractOption = InteractOption.collider;
-    //}
+  
     public void MovePosition(string s=null)
     {
+        if(Destination!=null)
         PlayerHandler.instance.CurrentPlayer.transform.position = Destination.position;
     }
    

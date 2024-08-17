@@ -107,12 +107,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1646488447996360318}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 10, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 668453975671611708}
+  m_Father: {fileID: 8785549023162633934}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2132816428287966146
 GameObject:
@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 2543409550259987857}
   - component: {fileID: 9120423936104465284}
   - component: {fileID: 3709097027133525579}
+  - component: {fileID: 6776662048848514050}
   m_Layer: 13
   m_Name: CraneScript
   m_TagString: GameController
@@ -180,14 +181,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ee977a50aea5324291e8da844af2e2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundEffectListPlayer: {fileID: 6776662048848514050}
   onActive: 0
   CanControl: 1
   HudTarget: {fileID: 4628963190896889224}
   MoveObject: {fileID: 5806069013825841643}
   CraneSpeed: 2
   ActiveTransform: {fileID: 226660344572577920}
-  DeActiveTransform: {fileID: 3784160472670153086}
   CraneMOveDirection: -1
+--- !u!114 &6776662048848514050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2132816428287966146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c358efc4e7446f147a9d6a4f71757744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list:
+  - clip: {fileID: 8300000, guid: ccec4a41257c7054a8051282a3025c77, type: 3}
+    volume: 1
+  - clip: {fileID: 8300000, guid: 3b17e336ba231654a86639c2ea4775b7, type: 3}
+    volume: 0.009
 --- !u!1 &2493809478942938525
 GameObject:
   m_ObjectHideFlags: 0
@@ -503,9 +521,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: -0.5, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.1, z: 0.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.35, y: 0.07, z: 0.35}
+  m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 3784160472670153086}
   - {fileID: 2543409550259987857}
   m_Father: {fileID: 189725110785416968}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -672,7 +691,6 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 226660344572577920}
-  - {fileID: 3784160472670153086}
   - {fileID: 189725110785416968}
   - {fileID: 437199421517761041}
   m_Father: {fileID: 0}

@@ -280,7 +280,6 @@ Transform:
   m_LocalScale: {x: 6, y: 6, z: 6}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 737737784827644580}
   - {fileID: 7201256143262738030}
   - {fileID: 1056890763432256583}
   - {fileID: 8598412309010896336}
@@ -449,6 +448,7 @@ GameObject:
   - component: {fileID: 2840944595506930134}
   - component: {fileID: 4942321471576925121}
   - component: {fileID: 2702601393668774448}
+  - component: {fileID: 3986425746856161029}
   m_Layer: 13
   m_Name: CraneScript
   m_TagString: GameController
@@ -483,13 +483,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04d87473755a6b94da798f505b805018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundEffectListPlayer: {fileID: 3986425746856161029}
   onActive: 0
   CanControl: 1
   HudTarget: {fileID: 6901565228541584242}
   MoveObject: {fileID: 2540895556744585960}
   CraneSpeed: 2
   ActiveTransform: {fileID: 7201256143262738030}
-  DeActiveTransform: {fileID: 737737784827644580}
   CraneMOveDirection: 1
 --- !u!65 &2702601393668774448
 BoxCollider:
@@ -512,6 +512,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 10.5, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3986425746856161029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2826951178980225204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c358efc4e7446f147a9d6a4f71757744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list:
+  - clip: {fileID: 8300000, guid: ccec4a41257c7054a8051282a3025c77, type: 3}
+    volume: 1
+  - clip: {fileID: 8300000, guid: 3b17e336ba231654a86639c2ea4775b7, type: 3}
+    volume: 1
 --- !u!1 &4081928934901432227
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,12 +719,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5183844901047854992}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0.012000091, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 8.571918, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2598458353147995447}
+  m_Father: {fileID: 1767189694256841315}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5649675017048441689
 GameObject:
@@ -913,6 +930,7 @@ Transform:
   m_LocalScale: {x: 0.49999994, y: 0.116660014, z: 0.49999994}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 737737784827644580}
   - {fileID: 2840944595506930134}
   m_Father: {fileID: 1056890763432256583}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

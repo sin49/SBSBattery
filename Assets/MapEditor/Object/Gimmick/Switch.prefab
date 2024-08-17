@@ -330,11 +330,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0e4caa4a647b53241a97b6ea81c55c92,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2352781184500106946}
+      addedObject: {fileID: 340079725380888399}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0e4caa4a647b53241a97b6ea81c55c92,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 340079725380888399}
+      addedObject: {fileID: 2352781184500106946}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0e4caa4a647b53241a97b6ea81c55c92,
         type: 3}
       insertIndex: -1
@@ -373,21 +373,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.33, y: 0.324, z: 0.14752951}
   m_Center: {x: 0.0013, y: -0.0007, z: 0.056633603}
---- !u!114 &2352781184500106946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8830520884070992443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 116fd42ee63c0e14d9b352e9d1323ec9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  active: 0
-  sound: {fileID: 0}
-  animator: {fileID: 5333425389512006651}
 --- !u!54 &340079725380888399
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -415,6 +400,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2352781184500106946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8830520884070992443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 116fd42ee63c0e14d9b352e9d1323ec9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 0
+  sound: {fileID: 7720375082374230559}
+  animator: {fileID: 5333425389512006651}
 --- !u!114 &7720375082374230559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -428,7 +428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   list:
-  - clip: {fileID: 0}
-    volume: 0
-  - clip: {fileID: 0}
-    volume: 0
+  - clip: {fileID: 8300000, guid: 8fb5e99fc9cb5d440a8e054d3d9a7f1f, type: 3}
+    volume: 0.7
+  - clip: {fileID: 8300000, guid: 8fb5e99fc9cb5d440a8e054d3d9a7f1f, type: 3}
+    volume: 0.7

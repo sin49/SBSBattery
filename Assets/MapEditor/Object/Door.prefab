@@ -116,6 +116,8 @@ GameObject:
   - component: {fileID: 3435361281236554960}
   - component: {fileID: 5609493167101483431}
   - component: {fileID: 4519435991353978092}
+  - component: {fileID: 3454141252883220572}
+  - component: {fileID: 5195703536421385379}
   m_Layer: 0
   m_Name: Door
   m_TagString: InteractiveObject
@@ -181,3 +183,30 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1.7, z: 1.7}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3454141252883220572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8754984155374068254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb3e9feb2a320b4bba6cd0d878a3d99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEffectListPlayer: {fileID: 5195703536421385379}
+  animator: {fileID: 5609493167101483431}
+--- !u!114 &5195703536421385379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8754984155374068254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c358efc4e7446f147a9d6a4f71757744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list: []

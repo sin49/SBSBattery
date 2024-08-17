@@ -25,11 +25,13 @@ public class CameraManager : MonoBehaviour
     protected virtual void Awake()
     {
         initializeCamera();
+        
     }
-    private void Update()
+    private void Start()
     {
         if (PlayerHandler.instance != null)
             PlayerHandler.instance.CurrentCamera = GetComponent<Camera>();
+        transform.position = PlayerHandler.instance.CurrentPlayer.transform.position;
     }
     public virtual void ActiveCamera(CinemachineVirtualCamera camera)
     {
