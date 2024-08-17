@@ -1054,6 +1054,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerRb: {fileID: 2721062536692114604}
   capsuleCollider: {fileID: 8686286565664874215}
+  SoundPlayer: {fileID: 0}
   direction: 1
   directionz: 0
   meleeCollider: {fileID: 7327762641764429713}
@@ -1072,6 +1073,7 @@ MonoBehaviour:
   jumpLimitInput: 0
   attackBufferTimeMax: 0.15
   attackBufferTimer: 0
+  attackInputValue: 0
   flyTimer: 0
   flyTime: 0
   isJump: 0
@@ -1112,7 +1114,6 @@ MonoBehaviour:
   AttackEffect: {fileID: 676002087169428122}
   LandingEffect: {fileID: 619247877868134136}
   JumpEffect: {fileID: 6963524531328094719}
-  SoundPlayer: {fileID: 0}
   Decelatate: 2
   hori: 0
   Vert: 0
@@ -1254,12 +1255,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab58d2e89b14edd4bb013c33c8f0cd8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveClip: {fileID: 0}
+  MoveClip: {fileID: 8300000, guid: 83315124d8bd65140b4035305992fb6b, type: 3}
   MoveVolume: 0
   AttackClip: {fileID: 8300000, guid: 3d4be4a67a7d64045bb002a4229864a6, type: 3}
-  AttackVolume: 0.6
+  AttackVolume: 0.7
   JumpClip: {fileID: 8300000, guid: 85ea7b8994df41b45ad65459747ef044, type: 3}
   JumpVolume: 0.6
+  LandClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
+  LandVolume: 0.4
+  SkillClip: {fileID: 8300000, guid: 9ecec375ab1cce948bf45e6e5422d763, type: 3}
+  SkillVolume: 0.7
 --- !u!1 &6286116493072327673
 GameObject:
   m_ObjectHideFlags: 0

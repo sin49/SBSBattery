@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class GameSystemSoundPlayer : SEPlayer
 {
-    
-   
+
+    [Header("플레이어 사망 사운드")]
+    public AudioClip CharacterDieClip;
+    [Header("플레이어 사망 사운드 볼륨"), Range(0, 1)]
+    public float CharacterDieVolume;
     [Header("차원 전환 사운드")]
     public AudioClip ChangeDimensionClip;
     [Header("차원 전환 볼륨"), Range(0, 1)]
@@ -18,13 +21,24 @@ public class GameSystemSoundPlayer : SEPlayer
     public AudioClip RecoverHPClip;
     [Header("체력 회복 볼륨"), Range(0, 1)]
     public float RecoverHPVolume;
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         PlayerHandler.instance.registerCameraChangeAction(PlayChangeDimensionSound);
+        PlayerHandler.instance.PlayerDeathEvent += PlayCharacterDieClip;
         PlayerInventory.instance.registerItemGetAction(PlayGetItemSound);
         PlayerStat.instance.registerRecoverAction(PlayRecoverHPSound);
     }
-
+    public void PlayCharacterDieClip()
+    {
+        if (CharacterDieClip != null)
+        {
+            audiosource.Stop();
+            audiosource.clip = CharacterDieClip;
+            audiosource.volume = CharacterDieVolume;
+            audiosource.Play();
+        }
+    }
     public void PlayChangeDimensionSound()
     {
         if (ChangeDimensionClip != null)

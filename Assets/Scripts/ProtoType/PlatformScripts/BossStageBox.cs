@@ -5,6 +5,9 @@ using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 using UnityEngine.TextCore;
 using UnityEngine.Rendering;
+using System;
+using Random = UnityEngine.Random;
+
 
 public class BossStageBox : MonoBehaviour
 {
@@ -27,6 +30,10 @@ public class BossStageBox : MonoBehaviour
 
     public Vector3 fieldMin;
     Vector3 targetVec;
+
+
+    public Action ObjectgroundedSoundEvent;
+
     bool fixVec;
     private void Start()
     {
@@ -34,7 +41,12 @@ public class BossStageBox : MonoBehaviour
         warningPos = new(transform.position.x, fieldPos.y+0.1f, transform.position.z);
         RandomDistanceValue();
     }
-
+  
+    private void OnDestroy()
+    {
+        ObjectgroundedSoundEvent?.Invoke();
+        ObjectgroundedSoundEvent = null;
+    }
     private void Update()
     {
         if (!onGround)

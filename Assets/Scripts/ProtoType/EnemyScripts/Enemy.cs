@@ -672,8 +672,7 @@ public class Enemy: Character,DamagedByPAttack
     {
         eStat.eState = EnemyState.dead;
         PlayerHandler.instance.CurrentPlayer.wallcheck = false;
-        if (soundplayer != null)
-            soundplayer.PlayCharacterDieClip();
+       
         Instantiate(deadEffect,transform.position, Quaternion.identity);
         gameObject.SetActive(false);
     }

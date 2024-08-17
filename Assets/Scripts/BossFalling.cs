@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -47,6 +48,7 @@ public class Boss1BoxFallCreateObj
 
 public class BossFalling : EnemyAction
 {
+
     //[Header("낙하물 오브젝트")]
     //public List< GameObject> fallingObj;
 
@@ -57,7 +59,7 @@ public class BossFalling : EnemyAction
 
     HashSet<GameObject> EssenetialFallObjectHashSet = new HashSet<GameObject>();
 
-   
+    public Boss1SOundManager soundmanager;
     
     [Header("낙하 상자 오브젝트 생성")]
     public List<Boss1BoxFallCreateObj> fallingBoxCreateObj;
@@ -89,6 +91,7 @@ public class BossFalling : EnemyAction
     // Start is called before the first frame update
     void Start()
     {
+        soundmanager=GetComponent<Boss1SOundManager>();
         if (bossField != null)
         {
             Vector3 min = new Vector3(-0.5f, 0.5f, -0.5f);
@@ -111,8 +114,7 @@ public class BossFalling : EnemyAction
         fallingobjects = new List<GameObject>();
         foreach (var a in fallingObj2)
         {
-            a.fallingobj.AddComponent<EnemyAttackFor2D>();
-            a.fallingobj.AddComponent<BoxCollider2D>();
+     
             if (a.number != 0)
             {
                 for (int n = 0; n < a.number; n++) {
@@ -157,8 +159,11 @@ public class BossFalling : EnemyAction
         }
         list = Shuffle<GameObject>(list);
         Queue<Tuple<GameObject,Vector3>> RQueue=new Queue<Tuple<GameObject,Vector3>>();
-        foreach(var a in list)
+        
+        foreach (var a in list)
         {
+         
+           
             RQueue.Enqueue(new Tuple<GameObject, Vector3>(a, RandomSpawn()));
         }
         return RQueue;
@@ -210,12 +215,16 @@ public class BossFalling : EnemyAction
         {
             var tuple = queue.Dequeue();
             GameObject obj = Instantiate(tuple.Item1, tuple.Item2, Quaternion.identity);
+           if(soundmanager!=null)
+            soundmanager.OBjectFallClipPlay() ;
             if (obj.GetComponent<FallingObject>() != null)
             {
                 var a = obj.GetComponent<FallingObject>();
                 a.fallingSpeed = UnityEngine.Random.Range(minSpeed, maxSpeed);
                 a.fieldPos = fieldMax;
                 a.damage = damage;
+                if (soundmanager != null)
+                    a.ObjectgroundedSoundEvent = soundmanager.OBjectlandingClipPlay;
             }
             else
             {
@@ -224,6 +233,8 @@ public class BossFalling : EnemyAction
                 a.enemyPrefab = BoxFallCreateObjects[rand2];
                 a.fallingSpeed = UnityEngine.Random.Range(minSpeed, maxSpeed);
                 a.fieldPos = fieldMax;
+                if (soundmanager != null)
+                    a.ObjectgroundedSoundEvent = soundmanager.OBjectlandingClipPlay;
             }
 
 

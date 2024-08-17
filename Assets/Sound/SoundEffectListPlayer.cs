@@ -15,11 +15,18 @@ public class SoundEffectListPlayer : SEPlayer
  public List<SoundEffectObj> list;
     public void PlayAudioNoCancel(int n)
     {
-        if (list[n] != null)
+        if (n >= list.Count)
         {
-            audiosource.clip = list[n].clip;
-            audiosource.volume = list[n].volume;
-            audiosource.Play();
+
+        }
+        else
+        {
+            if (list[n] != null)
+            {
+                audiosource.clip = list[n].clip;
+                audiosource.volume = list[n].volume;
+                audiosource.Play();
+            }
         }
     }
     public void PlayAudio(int n)
