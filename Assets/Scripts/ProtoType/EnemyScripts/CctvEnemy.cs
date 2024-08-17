@@ -37,10 +37,12 @@ public class CctvEnemy : Enemy
             if (colliders[i].CompareTag("Enemy"))
             {
                 Debug.Log($"호출적군 감지{colliders[i].gameObject}");
-                Enemy enemy = colliders[i].GetComponent<Enemy>();                
+                Enemy enemy = colliders[i].GetComponent<Enemy>();
+                enemy.onPatrol = false;
                 enemy.callCheck = true;
                 enemy.tracking = true;
-                enemy.target = target;
+                enemy.target = target; 
+                enemy.searchPlayer = true;
             }                  
         }
     }

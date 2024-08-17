@@ -70,5 +70,7 @@ public class CctvRange : MonoBehaviour
     {
         yield return new WaitForSeconds(cctvE.stopTime);
         cctvE.tracking = false;
+        cctvE.endWait = true;
+        cctvE.pointCheck = true;
     }
 }
