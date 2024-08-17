@@ -123,10 +123,11 @@ public class TvEnemy : Enemy
     {
         if (other.CompareTag("GameController"))
         {
-
-            if (other.GetComponentInParent<RemoteTV>() != null)
+            Debug.Log("TV 활성화 콜라이더 감지?");
+            GameObject obj = other.transform.parent.gameObject;
+            if (obj.GetComponentInChildren<RemoteTV>() != null)
             {
-                RemoteTV TV = other.GetComponentInParent<RemoteTV>();
+                RemoteTV TV = obj.GetComponentInChildren<RemoteTV>();
                 if (TV.onActive && TV.tvColor == tvColor)
                 {
                     target = other.transform;
@@ -136,22 +137,6 @@ public class TvEnemy : Enemy
                     rb.constraints = RigidbodyConstraints.FreezeRotation |
                         RigidbodyConstraints.FreezePositionY;
                 }
-                /*RemoteTV TV = null;
-                if (other.TryGetComponent<RemoteTV>(out TV))
-                {
-
-
-                    if (TV.onActive && TV.tvColor == tvColor)
-                    {
-                        target = other.transform;
-                        activeTv = true;
-                        tracking = true;
-
-                        rb.constraints = RigidbodyConstraints.FreezeRotation |
-                            RigidbodyConstraints.FreezePositionY;
-
-                    }
-                }*/
             }
         }
     }
