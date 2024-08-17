@@ -158,7 +158,7 @@ public class ShootingFIeld: signalSender
  
     public override void register(signalReceiver receiver, int index)
     {
-        Receiver = receiver;
+        Receiver.Add( receiver);
         signalnumber = index;
     }
 
