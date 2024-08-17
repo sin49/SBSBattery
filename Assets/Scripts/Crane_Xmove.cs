@@ -20,6 +20,11 @@ public class Crane_Xmove : Crane
         else
             return Vector3.zero;
     }
+    protected override bool StopMove(Transform origin, Vector3 Target)
+    {
+        origin.position = new Vector3(Target.x, origin.position.y, origin.position.z);
+        return base.StopMove(origin, Target);
+    }
     public override bool MoveCrane(Vector3 vector, Vector3 Target, Transform origin)
     {
         
