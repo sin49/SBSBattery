@@ -20,6 +20,7 @@ public class PlayerSpawnManager : MonoBehaviour
     public GameObject CurrentPlayer;// 행동 작업
     public bool DontSave;
     public bool dontloadTransformInfo = false;
+    public bool IgnoreSavedCheckPoint;
     public void ChangeCheckPoint(CheckPoint ChkPoint)
     {
         if (LastestCheckPointID >= ChkPoint.index)
@@ -46,9 +47,13 @@ public class PlayerSpawnManager : MonoBehaviour
         else
             return Checkpoints[0];
     }
-    public void LoadCheckPoint()
+    public CheckPoint LoadCheckPoint()
     {
+       if(!DontSave&& GameManager.instance.LoadCheckPointIndexKey()< ChkPointsDic.Count)
         CurrentCheckPoint = ChkPointsDic[GameManager.instance.LoadCheckPointIndexKey()];
+        else
+            CurrentCheckPoint= ChkPointsDic[0];
+        return CurrentCheckPoint;
     }
     //public void Respawn()
     //{
@@ -70,7 +75,7 @@ public class PlayerSpawnManager : MonoBehaviour
        
             if (TryGetComponent<PlayerFormList>(out p))
             {
-            if (!DontSave)
+            if (!dontloadTransformInfo)
             {
                 DefaultForm = p.playerformlist[GameManager.instance.LOadPlayerTransformtype()];
             }
@@ -87,7 +92,7 @@ public class PlayerSpawnManager : MonoBehaviour
     }
     public void FindCheckpoint(int n)
     {
-        if (DontSave)
+        if (IgnoreSavedCheckPoint)
         {
             CurrentCheckPoint = ChkPointsDic[0];
         }

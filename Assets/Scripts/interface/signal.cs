@@ -7,7 +7,7 @@ public abstract class signalSender : MonoBehaviour
     [Header("오디오 0번:활성화 오디오 1번:비활성화")]
     public bool active;
     public SoundEffectListPlayer sound;
-  protected  signalReceiver Receiver;
+  protected  List< signalReceiver> Receiver= new List<signalReceiver>();
 
   protected  int signalnumber;
     protected virtual void Awake()
@@ -24,8 +24,14 @@ public abstract class signalSender : MonoBehaviour
             else
                 sound.PlayAudio(1);
         }
-        if(Receiver!=null)
-        Receiver.Receive(signal, signalnumber);
+        if (Receiver .Count!=0)
+        {
+            foreach(var a in Receiver)
+            {
+                a.Receive(signal, signalnumber);
+            }
+        }
+        
     }
 
 }

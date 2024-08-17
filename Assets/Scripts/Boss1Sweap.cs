@@ -142,34 +142,38 @@ public class Boss1Sweap : EnemyAction
             bool randombool = UnityEngine.Random.Range(0, 2) == 0;
             if (randombool)
             {
-                yield return StartCoroutine(Sweaper(Lhand.transform, fieldMin, fieldMax));
+                
+                yield return StartCoroutine(Sweaper(Lhand, fieldMin, fieldMax));
+                
                 yield return new WaitForSeconds(SweaperPatternDealy);
-                yield return StartCoroutine(Sweaper(RHand.transform, fieldMax, fieldMin));
+                yield return StartCoroutine(Sweaper(RHand, fieldMax, fieldMin));
             }
             else
             {
-                yield return StartCoroutine(Sweaper(RHand.transform, fieldMax, fieldMin));
+                yield return StartCoroutine(Sweaper(RHand, fieldMax, fieldMin));
                 yield return new WaitForSeconds(SweaperPatternDealy);
-                yield return StartCoroutine(Sweaper(Lhand.transform, fieldMin, fieldMax));
+                yield return StartCoroutine(Sweaper(Lhand, fieldMin, fieldMax));
             }
         }else if(Lhand.active && !RHand.active)
         {
-            yield return StartCoroutine(Sweaper2(Lhand.transform, fieldMin, fieldMax));
+            yield return StartCoroutine(Sweaper2(Lhand, fieldMin, fieldMax));
         }else if(!Lhand.active && RHand.active)
         {
-            yield return StartCoroutine(Sweaper2(RHand.transform, fieldMax, fieldMin));
+            yield return StartCoroutine(Sweaper2(RHand, fieldMax, fieldMin));
         }
         yield return StartCoroutine(DisableAction(0.1f));
     }
-    public IEnumerator Sweaper(Transform hand,Vector3 StartPos,Vector3 EndPos)
+    public IEnumerator Sweaper(Boss1Hand hand,Vector3 StartPos,Vector3 EndPos)
     {
-        Vector3 HandOnepositon=hand.position;
+
+        Transform handtransform=hand.transform;
+        Vector3 HandOnepositon= handtransform.position;
         float randdistance = UnityEngine.Random.Range(0, SweapDistanceRandomWeight);
         int randomValue = UnityEngine.Random.Range(0, 2) * 2 - 1;
         randdistance *= randomValue;
 
         //시작지점으로 손이 감
-        var tuple = calculateSweapvector(StartPos, hand.position, randdistance, SweaperStartMoveTime);
+        var tuple = calculateSweapvector(StartPos, handtransform.position, randdistance, SweaperStartMoveTime);
         Vector3 vec = tuple.Item1;
         vec.y += handsize * 0.5f;
         float speed = tuple.Item2;
@@ -177,14 +181,15 @@ public class Boss1Sweap : EnemyAction
             boss1SOundManager.HandSwerapStartClipPlay();
         while (sweapertimer <= SweaperStartMoveTime)
         {
-            hand.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
+            handtransform.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
             sweapertimer += Time.fixedDeltaTime;
             yield return null;
         }
         sweapertimer = 0;
+        hand.AttackState = true;
         yield return new WaitForSeconds(sweaperwaitTime);
         //손이 휩쓸기 스타트
-        tuple = calculateSweapvector(EndPos, hand.position,-randdistance, SweaperEndMoveTime);
+        tuple = calculateSweapvector(EndPos, handtransform.position,-randdistance, SweaperEndMoveTime);
         vec = tuple.Item1;
         vec.y = 0;
         speed = tuple.Item2;
@@ -192,54 +197,58 @@ public class Boss1Sweap : EnemyAction
             boss1SOundManager.HandSwerapEndClipPlay();
         while (sweapertimer <= SweaperEndMoveTime)
         {
-            hand.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
+            handtransform.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
             sweapertimer += Time.fixedDeltaTime;
             yield return null;
         }
         //OnePostion=handposition
         sweapertimer = 0;
+        hand.AttackState = false;
         //손이 원위치로
-        tuple = calculateSweapvector(HandOnepositon, hand.position, sweaperReturnTime);
+        tuple = calculateSweapvector(HandOnepositon, handtransform.position, sweaperReturnTime);
         vec = tuple.Item1;
         speed = tuple.Item2;
         while (sweapertimer <= sweaperReturnTime)
         {
-            hand.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
+            handtransform.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
             sweapertimer += Time.fixedDeltaTime;
             yield return null;
         }
         sweapertimer = 0;
-        hand.position = HandOnepositon;
+        handtransform.position = HandOnepositon;
 
   
     }
-    public IEnumerator Sweaper2(Transform hand, Vector3 StartPos, Vector3 EndPos)
+    public IEnumerator Sweaper2(Boss1Hand hand, Vector3 StartPos, Vector3 EndPos)
     {
-        Vector3 HandOnepositon = hand.position;
+        Transform handtransform = hand.transform;
+        Vector3 HandOnepositon = handtransform.position;
         float randdistance = UnityEngine.Random.Range(0, SweapDistanceRandomWeight);
         int randomValue = UnityEngine.Random.Range(0, 2) * 2 - 1;
 
         randdistance *= randomValue;
 
         //시작지점으로 손이 감
-        var tuple = calculateSweapvector(StartPos, hand.position, randdistance, SweaperStartMoveTime);
+        var tuple = calculateSweapvector(StartPos, handtransform.position, randdistance, SweaperStartMoveTime);
         Vector3 vec = tuple.Item1;
         vec.y += handsize * 0.5f;
         float speed = tuple.Item2;
         var rotationspeed = 90 / SweaperStartMoveTime;
+        
         if (boss1SOundManager != null)
             boss1SOundManager.HandSwerapStartClipPlay();
         while (sweapertimer <= SweaperStartMoveTime)
         {
-            hand.Translate(vec.normalized * speed * Time.fixedDeltaTime,Space.World);
+            handtransform.Translate(vec.normalized * speed * Time.fixedDeltaTime,Space.World);
        
             sweapertimer += Time.fixedDeltaTime;
             yield return null;
         }
         sweapertimer = 0;
+        hand.AttackState = true;
         yield return new WaitForSeconds(sweaperwaitTime);
         //손이 휩쓸기 스타트
-        tuple = calculateSweapvector(EndPos, hand.position, -randdistance, SweaperEndMoveTime);
+        tuple = calculateSweapvector(EndPos, handtransform.position, -randdistance, SweaperEndMoveTime);
         vec = tuple.Item1;
         vec.y = 0;
         speed = tuple.Item2;
@@ -247,7 +256,7 @@ public class Boss1Sweap : EnemyAction
             boss1SOundManager.HandSwerapEndClipPlay();
         while (sweapertimer <= SweaperEndMoveTime)
         {
-            hand.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
+            handtransform.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
             sweapertimer += Time.fixedDeltaTime;
             yield return null;
         }
@@ -255,7 +264,7 @@ public class Boss1Sweap : EnemyAction
         sweapertimer = 0;
         yield return new WaitForSeconds(SweaperPatternDealy);
         //한번더
-        tuple = calculateSweapvector(StartPos, hand.position, randdistance, SweaperEndMoveTime);
+        tuple = calculateSweapvector(StartPos, handtransform.position, randdistance, SweaperEndMoveTime);
         vec = tuple.Item1;
         vec.y = 0;
         speed = tuple.Item2;
@@ -263,24 +272,24 @@ public class Boss1Sweap : EnemyAction
             boss1SOundManager.HandSwerapEndClipPlay();
         while (sweapertimer <= SweaperEndMoveTime)
         {
-            hand.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
+            handtransform.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
             sweapertimer += Time.fixedDeltaTime;
             yield return null;
         }
-
+        hand.AttackState = false;
         sweapertimer = 0;
         //손이 원위치로
-        tuple = calculateSweapvector(HandOnepositon, hand.position, sweaperReturnTime);
+        tuple = calculateSweapvector(HandOnepositon, handtransform.position, sweaperReturnTime);
         vec = tuple.Item1;
         speed = tuple.Item2;
         while (sweapertimer <= sweaperReturnTime)
         {
-            hand.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
+            handtransform.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
             sweapertimer += Time.fixedDeltaTime;
             yield return null;
         }
         sweapertimer = 0;
-        hand.position = HandOnepositon;
+        handtransform.position = HandOnepositon;
 
 
     }

@@ -11,8 +11,11 @@ public class PlayerXChangePortal : InteractiveObject
   
     public void MovePosition(string s=null)
     {
-        if(Destination!=null)
-        PlayerHandler.instance.CurrentPlayer.transform.position = Destination.position;
+
+            Debug.Log("ししししし");
+            PlayerHandler.instance.CurrentPlayer.transform.position = Destination.position;
+      
+
     }
    
     public override void Active(direction direct)

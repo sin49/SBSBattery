@@ -7,10 +7,15 @@ public class Switch :  signalSender
    public Animator animator;
 
 
-
+    protected override void Awake()
+    {
+        base.Awake();
+        animator = GetComponent<Animator>();
+    }
     // Update is called once per frame
     void Update()
     {
+        if(animator != null) 
         animator.SetBool("Active", active);
     }
     private void OnCollisionEnter(Collision collision)
@@ -29,7 +34,7 @@ public class Switch :  signalSender
     public override void register(signalReceiver receiver, int index)
     {
        
-        Receiver = receiver;
+        Receiver.Add(receiver);
         signalnumber = index;
     }
 }

@@ -422,7 +422,7 @@ public class Player : Character
             directionz = directionZ.none;
 
         //PlayerStat.instance.Trans3D
-
+        //PlayerStat.instance.direction = direction;
         if (hori == -1 && vert == 0) // Left
         {
             rotateVector = new Vector3(0, 180, 0);
@@ -465,7 +465,7 @@ public class Player : Character
         
         }
         rotateVector += new Vector3(0, 90, 0);
-
+   
         transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
     }
     public void rotateBy3Dto2D()
@@ -627,7 +627,7 @@ public class Player : Character
                         attackGround = true;
                     }
 
-                    AttackEvents();
+                
                     StartCoroutine(TestMeleeAttack());
                 }
             }
@@ -640,13 +640,13 @@ public class Player : Character
         {
             if (PlayerStat.instance.MoveState!=PlayerMoveState.Trans3D && directionz != directionZ.none && hori == 0)
             {
-                playerRb.AddForce(transform.forward * 7, ForceMode.Impulse);
+                playerRb.AddForce(transform.GetChild(0).forward * 7, ForceMode.Impulse);
             }
             else if (PlayerStat.instance.MoveState == PlayerMoveState.Trans3D)
             {
                 if (direction != direction.none && Vert != 0 || directionz != directionZ.none && hori != 0)
                 {
-                    playerRb.AddForce(transform.forward * 7, ForceMode.Impulse);
+                    playerRb.AddForce(transform.GetChild(0).forward * 7, ForceMode.Impulse);
                 }                
             }
         }
@@ -725,6 +725,7 @@ public class Player : Character
     }
     public override void Damaged(float damage)
     {
+   
         if (onInvincible)
             return;
         onInvincible = true;
@@ -893,7 +894,12 @@ public class Player : Character
             
         }
         if (AttackEffect != null)
+        {
+            AttackEffect.SetActive(false);
             AttackEffect.SetActive(true);
+        }
+
+        AttackEvents();
         yield return new WaitForSeconds(PlayerStat.instance.attackDelay);
 
 
