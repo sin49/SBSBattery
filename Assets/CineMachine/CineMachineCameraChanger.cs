@@ -21,7 +21,7 @@ public class CineMachineCameraChanger : MonoBehaviour
 
     [Header("카메라 전환 속도")]
     public float transistionDuration=1.0f;
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
