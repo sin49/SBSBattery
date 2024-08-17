@@ -559,9 +559,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4343172627482462887}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000029653306}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 569770698671288318}
@@ -570,7 +570,7 @@ Transform:
   - {fileID: 2367360622148357149}
   - {fileID: 1782642788928816721}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &7968174819147928640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -595,6 +595,9 @@ MonoBehaviour:
   isMove: 0
   searchCubeRange: {x: 0, y: 0, z: 0}
   searchCubePos: {x: 0, y: 0, z: 0}
+  rangeCollider: {fileID: 4521619283037172719}
+  rangeSize: {x: 0, y: 0, z: 0}
+  rangePos: {x: 0, y: 0, z: 0}
   searchCollider: {fileID: 0}
   searchColliderRange: {x: 0, y: 0, z: 0}
   searchColliderPos: {x: 0, y: 0, z: 0}
@@ -607,15 +610,17 @@ MonoBehaviour:
   leftPatrolRange: 0
   rightPatrolRange: 0
   patrolDistance: 0
-  trackingTime: 0
   onPatrol: 0
   yWidth: 0
   zWidth: 0
-  rangeCollider: {fileID: 4521619283037172719}
-  rangePos: {x: 0, y: 0, z: 0}
-  rangeSize: {x: 0, y: 0, z: 0}
+  wallRayHeight: 0
+  wallRayLength: 0
+  wallRayUpLength: 0
+  forwardWall: {fileID: 0}
+  upWall: {fileID: 0}
+  disToWall: 0
+  wallCheck: 0
   attackTimer: 0
-  attackInitCoolTime: 0
   attackDelay: 0
   callCheck: 0
   onAttack: 0
@@ -780,8 +785,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.01, y: 0.05, z: 0.6}
-  m_Center: {x: 0, y: 0.3, z: 0.5}
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4653241687335334127
 GameObject:
   m_ObjectHideFlags: 0
