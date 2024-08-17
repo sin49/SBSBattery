@@ -28,7 +28,16 @@ public class RemoteTV : RemoteObject
     void Start()
     {
         //Frontrenderer=FrontOBj.GetComponent<MeshRenderer>();         
-        Deactive();
+
+        //GetComponent<MeshRenderer>().materials[1] = DeactiveMaterial;
+        tvMaterials[1] = DeactiveMaterial;
+        transform.parent.GetComponent<MeshRenderer>().materials = tvMaterials;
+
+        //Frontrenderer.material = DeactiveMaterial;
+        onActive = false;
+        //base.Deactive();
+        activeCollider.enabled = onActive;
+        tvLight.enabled = onActive;
     }
 
     private void Update()

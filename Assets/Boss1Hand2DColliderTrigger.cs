@@ -9,8 +9,12 @@ public class Boss1Hand2DColliderTrigger : MonoBehaviour
     {
         if (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D && collision.CompareTag("PlayerAttack"))
         {
-            hand.Damaged(1);
-            collision.gameObject.SetActive(false);
+            if (hand.AttackState)
+            {
+                Debug.Log("2D¼Õ°ø°Ý");
+                hand.Damaged(1);
+            }
+     
         }
     }
 }

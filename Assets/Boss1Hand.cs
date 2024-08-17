@@ -7,6 +7,7 @@ public class Boss1Hand : MonoBehaviour,DamagedByPAttack
 {
     public float HP;
     public BossTv bosstv;
+    public bool AttackState;
    public bool active;
     public Boss1HandSoundPlayer soundplayer;
     public event Action HandDominateEvent;
@@ -39,7 +40,11 @@ public class Boss1Hand : MonoBehaviour,DamagedByPAttack
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<Player>().Damaged(1);
+            if (AttackState)
+            {
+                Debug.Log("¼Õ°ø°Ý");
+                other.GetComponent<Player>().Damaged(1);
+            }
         }
     }
 }
