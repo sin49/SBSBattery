@@ -19,6 +19,8 @@ public class CineMachineCameraChanger : MonoBehaviour
     [Header("CameraMoveRange")]
     public Collider CameraRange;
 
+    [Header("카메라 전환 속도")]
+    public float transistionDuration=1.0f;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -27,6 +29,7 @@ public class CineMachineCameraChanger : MonoBehaviour
             CameraManager m;
             if(PlayerHandler.instance.CurrentCamera.gameObject.TryGetComponent<CameraManager>(out m))
             {
+                m.transitionDuration = transistionDuration;
                 if (virtualCamera != null)
                     m.ActiveCamera(virtualCamera, CameraRange);
                 else

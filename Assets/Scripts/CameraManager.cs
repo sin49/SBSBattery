@@ -9,7 +9,8 @@ public class CameraManager : MonoBehaviour
     public CinemachineVirtualCamera activedcamera;
     public BoxCollider BasicCameraConfiner;
     public Transform VirtualCameraTransform;
- protected  virtual void initializeCamera()
+    public float transitionDuration = 1.0f; // 카메라 전환 시간
+    protected  virtual void initializeCamera()
     {
         VirtualCameras= VirtualCameraTransform.GetComponentsInChildren<CinemachineVirtualCamera>();
         for(int n=0;n<VirtualCameras.Length;n++)
