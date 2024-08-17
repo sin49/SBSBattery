@@ -24,6 +24,7 @@ public abstract class signalSender : MonoBehaviour
             else
                 sound.PlayAudio(1);
         }
+        if(Receiver!=null)
         Receiver.Receive(signal, signalnumber);
     }
 
@@ -50,7 +51,7 @@ public abstract class signalReceiver : MonoBehaviour
         }
 
         active = chk;
-        if (active != tmp)
+        if (active != tmp&&soundPlayer!=null)
         {
             if (active)
                 soundPlayer.PlayAudio(0);
