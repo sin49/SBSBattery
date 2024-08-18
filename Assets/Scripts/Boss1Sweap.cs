@@ -153,7 +153,7 @@ public class Boss1Sweap : EnemyAction
     public Tuple<Vector3, float> calculateSweapvector(Vector3 goal, Vector3 startpos,float randomweight, float time)
     {
         //goal = new Vector3(goal.x, goal.y, target.transform.position.z + randomweight);
-        goal = new Vector3(target.transform.position.x + randomweight, goal.y, target.transform.position.z + randomweight);
+        goal = new Vector3(target.transform.position.x + randomweight, target.transform.position.y, target.transform.position.z + randomweight);
         Vector3 vec = goal - startpos;
     
         float distance = vec.magnitude;

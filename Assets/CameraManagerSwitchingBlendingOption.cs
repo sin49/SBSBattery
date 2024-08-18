@@ -11,8 +11,9 @@ public class CameraManagerSwitchingBlendingOption : CameraManager
 
     private CinemachineBrain cinemachineBrain;
     private bool isTransitioning;
-    protected virtual void Start()
+    protected override void Start()
     {
+        base.Start();
         cinemachineBrain = this.GetComponent<CinemachineBrain>();
         cam = GetComponent<Camera>();
     }
