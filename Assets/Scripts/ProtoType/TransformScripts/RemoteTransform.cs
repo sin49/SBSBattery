@@ -46,6 +46,19 @@ public class RemoteTransform : Player
 
 
     RemoteObject ClosestObjectScript;
+    public void GetClosestObjectIgnoreTrigger(GameObject obj)
+    {
+        IgnoreRemoteTrigger = true;
+        closestObject = obj;
+        ClosestObjectScript = closestObject.GetComponent<RemoteObject>();
+    }
+    public void RemoveClosesObject()
+    {
+        closestObject = null;
+        ClosestObjectScript = null;
+        RemoteObjectEvent?.Invoke(null);
+
+    }
     protected override void Awake()
     {
         base.Awake();
@@ -60,7 +73,11 @@ public class RemoteTransform : Player
         if(!IgnoreRemoteTrigger)
             UpdateClosestRemoteObjectEffect();
         if(ClosestObjectScript!=null)
-        RemoteObjectEvent?.Invoke(ClosestObjectScript.HudTarget);
+            RemoteObjectEvent?.Invoke(ClosestObjectScript.HudTarget);
+        else
+        {
+            RemoteObjectEvent?.Invoke(null);
+        }
         /*if (chargingBufferTimer > 0 && !Charging)
         {
             chargingBufferTimer -= Time.deltaTime;
@@ -183,6 +200,8 @@ public class RemoteTransform : Player
     {
         if (closestObject != null)
             closestObject.GetComponent<RemoteObject>().Active();
-       
+        //closestObject = null;
+        ClosestObjectScript = null;
+
     }
 }

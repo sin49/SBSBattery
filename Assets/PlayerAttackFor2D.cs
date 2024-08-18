@@ -16,7 +16,9 @@ public class PlayerAttackFor2D : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy")&& (
+                PlayerStat.instance.MoveState != PlayerMoveState.Trans3D ||
+                PlayerStat.instance.MoveState != PlayerMoveState.Trans3D2))
         {
             Debug.Log("플레이어 2D 공격");
             DamageCollider(collision);

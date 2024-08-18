@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.XR;
+
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 using UnityEngine.TextCore;
@@ -53,7 +53,7 @@ public class BossStageBox : MonoBehaviour
         if (!onGround)
         {
             transform.Translate(Vector3.down.normalized * fallingSpeed * Time.deltaTime, Space.World);
-            warningObj.transform.position = warningPos;
+            //warningObj.transform.position = warningPos;
         }
         WarningValue();
     }
@@ -63,9 +63,9 @@ public class BossStageBox : MonoBehaviour
         Vector3 vec = warningPos - transform.position;
         disToField = vec.magnitude;
 
-        Color warningColor = warningObj.GetComponent<SpriteRenderer>().color;
-        warningColor.a += 0.45f * Time.deltaTime;
-        warningObj.GetComponent<SpriteRenderer>().color = warningColor;
+        //Color warningColor = warningObj.GetComponent<SpriteRenderer>().color;
+        //warningColor.a += 0.45f * Time.deltaTime;
+        //warningObj.GetComponent<SpriteRenderer>().color = warningColor;
     }
     
     private void OnCollisionEnter(Collision collision)
@@ -166,14 +166,16 @@ public class BossStageBox : MonoBehaviour
     public void ObjectJump(Vector3 distanceValue, GameObject obj)
     {
         Rigidbody rigid = obj.gameObject.GetComponent<Rigidbody>();
+        if (rigid != null)
+        {
+            float v_y = Mathf.Sqrt(2 * -Physics.gravity.y * distanceValue.y);
 
-        float v_y = Mathf.Sqrt(2 * -Physics.gravity.y * distanceValue.y);
+            float v_x = distanceValue.x * v_y / (2 * distanceValue.y);
 
-        float v_x = distanceValue.x * v_y / (2 * distanceValue.y);
+            float v_z = distanceValue.z * v_y / (2 * distanceValue.y);
 
-        float v_z = distanceValue.z * v_y / (2 * distanceValue.y);
-
-        Vector3 force = rigid.mass * (new Vector3(v_x, v_y, v_z) - rigid.velocity);
-        rigid.AddForce(force, ForceMode.Impulse);
+            Vector3 force = rigid.mass * (new Vector3(v_x, v_y, v_z) - rigid.velocity);
+            rigid.AddForce(force, ForceMode.Impulse);
+        }
     }
 }

@@ -14,7 +14,8 @@ public class PlayerXChangePortal : InteractiveObject
 
             Debug.Log("ししししし");
             PlayerHandler.instance.CurrentPlayer.transform.position = Destination.position;
-      
+        if (PlayerHandler.instance.CurrentCamera != null)
+            PlayerHandler.instance.CurrentCamera.transform.position = Destination.position;
 
     }
    

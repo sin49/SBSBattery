@@ -26,7 +26,7 @@ public class CctvRange : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("거림");
+        //Debug.Log("거림");
         if (other.CompareTag("Player"))
         {
             cctvE.tracking = true;

@@ -12,6 +12,7 @@ public abstract class Crane : RemoteObject
     public Transform ActiveTransform;
 Vector3 DeActiveTransform;
     Vector3 MoveVector;
+    
     protected override void Awake()
     {
       base.Awake();
@@ -20,9 +21,13 @@ Vector3 DeActiveTransform;
     }
     private void Start()
     {
-        PlayerHandler.instance.registerPlayerFallEvent(Deactive);
+        PlayerHandler.instance.registerPlayerFallEvent(Initalize);
     }
-    bool CraneMove;
+  public  bool CraneMove;
+    public void Initalize()
+    {
+        onActive = false;
+    }
     public override void Active()
     {
         Debug.Log("active()");

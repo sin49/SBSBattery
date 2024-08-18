@@ -63,7 +63,7 @@ public class CctvNeckRotate : MonoBehaviour
 
 
             angleValue = Quaternion.Angle(transform.rotation, a);
-            if(PlayerHandler.instance != null && target.gameObject != PlayerHandler.instance.CurrentPlayer.gameObject)
+            if(PlayerHandler.instance != null&& PlayerHandler.instance.CurrentPlayer!=null && target.gameObject != PlayerHandler.instance.CurrentPlayer.gameObject)
             {
                 if (angleValue > 89.5f && angleValue < 90.005f)
                 {
