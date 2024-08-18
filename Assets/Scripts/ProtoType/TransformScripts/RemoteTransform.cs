@@ -73,7 +73,11 @@ public class RemoteTransform : Player
         if(!IgnoreRemoteTrigger)
             UpdateClosestRemoteObjectEffect();
         if(ClosestObjectScript!=null)
-        RemoteObjectEvent?.Invoke(ClosestObjectScript.HudTarget);
+            RemoteObjectEvent?.Invoke(ClosestObjectScript.HudTarget);
+        else
+        {
+            RemoteObjectEvent?.Invoke(null);
+        }
         /*if (chargingBufferTimer > 0 && !Charging)
         {
             chargingBufferTimer -= Time.deltaTime;
@@ -196,6 +200,8 @@ public class RemoteTransform : Player
     {
         if (closestObject != null)
             closestObject.GetComponent<RemoteObject>().Active();
-       
+        //closestObject = null;
+        ClosestObjectScript = null;
+
     }
 }

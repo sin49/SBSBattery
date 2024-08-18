@@ -111,6 +111,19 @@ public class Boss1Sweap : EnemyAction
         registerActionHandler(ActionENd);
         StartCoroutine(SweaperPattern());
     }
+    public void SetHandPosition()
+    {
+        if (Lhand != null)
+        {
+            LHandPosition = Lhand.transform.position;
+            LhandOneRotation = Lhand.transform.rotation.eulerAngles;
+        }
+        if (RHand != null)
+        {
+            RHandPosition = RHand.transform.position;
+            RhandOneRotation = RHand.transform.rotation.eulerAngles;
+        }
+    }
     private void Awake()
     {
         boss1SOundManager=GetComponent<Boss1SOundManager>();
@@ -125,16 +138,7 @@ public class Boss1Sweap : EnemyAction
             SweapDistanceRandomWeight = Mathf.Abs(fieldMax.z - fieldMin.z);
         }
 
-        if (Lhand != null)
-        {
-            LHandPosition = Lhand.transform.position;
-            LhandOneRotation = Lhand.transform.rotation.eulerAngles;
-        }
-        if (RHand != null)
-        {
-            RHandPosition = RHand.transform.position;
-            RhandOneRotation = RHand.transform.rotation.eulerAngles;
-        }
+   
     }
     public Tuple<Vector3, float> calculateSweapvector(Vector3 goal, Vector3 startpos, float time)
     {

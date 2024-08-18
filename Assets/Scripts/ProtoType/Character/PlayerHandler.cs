@@ -27,9 +27,17 @@ public class PlayerHandler : MonoBehaviour
     public bool OnDeformField;
     public TransformType retoretype=TransformType.Default;
     public TransformPlace LastTransformPlace;
-
+    bool jumprestrict;
     public IngameUIManager ingameUIManger;
-
+    public void playerjumprestirct()
+    {
+        jumprestrict = true;
+        CurrentPlayer.jumpBufferTimer = 0;
+    }
+    public void playerjumpaccept()
+    {
+        jumprestrict = false;
+    }
     public Camera CurrentCamera;
     #endregion
     InteractiveObject interactobject;
@@ -93,11 +101,11 @@ public class PlayerHandler : MonoBehaviour
     event Action PlayerFallEvent;
     public void registerPlayerFallEvent(Action action)
     {
-        PlayerFallEvent =action;
+        PlayerFallEvent +=action;
     }
    public void PlayerFallOut()
     {
-        if (PlayerStat.instance.hp != 1)
+        if (PlayerStat.instance.hp > 1)
         {
             Rigidbody rb = null;
             if (CurrentPlayer.TryGetComponent<Rigidbody>(out rb))
@@ -394,7 +402,7 @@ public class PlayerHandler : MonoBehaviour
                 InteractTimer = PlayerStat.instance.InteractDelay;
             }
         }
-        if (Input.GetKey(KeyCode.C))
+        if (Input.GetKey(KeyCode.C) && !jumprestrict)
         {
           
               

@@ -29,7 +29,7 @@ public class CameraManager : MonoBehaviour
         initializeCamera();
         
     }
-    private void Start()
+    protected virtual void Start()
     {
         if (PlayerHandler.instance != null)
             PlayerHandler.instance.CurrentCamera = GetComponent<Camera>();
