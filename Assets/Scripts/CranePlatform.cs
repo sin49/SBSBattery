@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CranePlatform : MonoBehaviour
 {
+    public Crane crane;
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("Player"))
@@ -14,6 +15,17 @@ public class CranePlatform : MonoBehaviour
         }
     }
 
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            if (crane.CraneMove)
+                PlayerHandler.instance.playerjumprestirct();
+            else
+                PlayerHandler.instance.playerjumpaccept();
+
+        }
+    }
     private void OnCollisionExit(Collision collision)
     {
         if (collision.collider.CompareTag("Player"))

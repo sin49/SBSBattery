@@ -13,7 +13,7 @@ public class TitleScreen : MonoBehaviour
     public void StartNewGame()
     {
         GameManager.instance.DeleteSaveSetting();
-        GameManager.instance.LoadingSceneWithKariEffect("ldj_1-1");
+        GameManager.instance.LoadingSceneWithKariEffect("Level_LDJ");
    
     }
     public void ContinueGame()

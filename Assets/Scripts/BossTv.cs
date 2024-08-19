@@ -7,6 +7,23 @@ using UnityEngine;
 //패턴 테스트 편하게
 public class BossTv : RemoteObject
 {
+
+    bool BossEnable;
+    Animator animator;
+    public void BossActive()
+    {
+        BossEnable = true;
+        UI.gameObject.SetActive(true);
+        BossSweap.GetComponent<Boss1Sweap>().SetHandPosition();
+        animator.enabled = false;
+    }
+    public void BossDeActive()
+    {
+        BossEnable = false;
+        UI.gameObject.SetActive(false);
+
+    }
+    public Boss1UI UI;
     [Header("보스는 SoundEffectListPlayer와")]
     [Header("boss1SoundManager 둘다 넣으면 됨")]
 
@@ -52,9 +69,11 @@ public class BossTv : RemoteObject
         actions.Add(BossSweap);
         actions.Add(BossLaser);
         actions.Add(BossFall);
+        animator=GetComponent<Animator>();
     }
     private void Start()
     {
+        UI.gameObject.SetActive(false);
         Debug.Log("보스 활성화 연출이 들어간다");
         LHand.HP = HandHP;
         RHand.HP = HandHP;
@@ -90,6 +109,10 @@ public class BossTv : RemoteObject
    
     private void FixedUpdate()
     {
+        if (!BossEnable)
+        {
+            return;
+        }
         if (TargetPlayer && PlayerHandler.instance != null)
             target = PlayerHandler.instance.CurrentPlayer.transform;
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -114,9 +137,11 @@ public class BossTv : RemoteObject
         }
         if (CanControl)
         {
+            
             if (PlayerHandler.instance.CurrentType == TransformType.remoteform && PlayerHandler.instance.CurrentPlayer.GetComponent<RemoteTransform>().closestObject != this.gameObject)
             {
-             
+                animator.enabled = true;
+                animator.SetBool("canactive", CanControl);
                 PlayerHandler.instance.CurrentPlayer.GetComponent<RemoteTransform>().GetClosestObjectIgnoreTrigger(this.gameObject);
 
             }
@@ -168,6 +193,7 @@ public class BossTv : RemoteObject
     {
      base.Active();
         Debug.Log("모니터 공격 연출이 들어간다");
+        animator.Play("BossDefeat");
         if(bossaudioplayer!=null)
         bossaudioplayer.MonitiorHittedClipPlay();
         CanControl = false;

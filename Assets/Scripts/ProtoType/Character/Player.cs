@@ -1014,7 +1014,9 @@ public class Player : Character
             jumpRaycastCheck();
            
 
-            if (PlayerHandler.instance.doubleDownInput && !CullingPlatform)
+            if (Input.GetKeyDown(KeyCode.C)&&Input.GetKey(KeyCode.DownArrow)&&
+                (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D || PlayerStat.instance.MoveState != PlayerMoveState.Trans3D2)
+                && !CullingPlatform)
             {
                 PlayerHandler.instance.doubleDownInput = false;
                 CullingPlatform = true;

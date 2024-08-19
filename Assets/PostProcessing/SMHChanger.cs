@@ -12,6 +12,8 @@ public class SMHChanger : volumeParameterChanger
     public ShadowsMidtonesHighlights PresetSetting;
     [Header("로컬/월드 전환(On=월드,off=로컬)")]
     public bool loadworldProcessing;
+
+    bool active;
     public void SavePreset()
     {
         ShadowsMidtonesHighlights smh;
@@ -32,7 +34,8 @@ public class SMHChanger : volumeParameterChanger
    
     public override void LoadPreset()
     {
-
+        if (PresetSetting == null)
+            return;
     
             ShadowsMidtonesHighlights smh;
             if (volume.profile.TryGet<ShadowsMidtonesHighlights>(out smh))
@@ -46,13 +49,13 @@ public class SMHChanger : volumeParameterChanger
             SetParameter(smh.highlightsStart, PresetSetting.highlightsStart);
             SetParameter(smh.highlightsEnd, PresetSetting.highlightsEnd);
             
-            Debug.Log("프리셋 로딩 완료");
             }
         
     }
    
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
+       
         if (other.CompareTag("Player"))
         {
             if(!loadworldProcessing)
@@ -67,6 +70,7 @@ public class SMHChanger : volumeParameterChanger
                 if (GlobalPostProcessingManager.instance != null)
                     GlobalPostProcessingManager.instance.EnableGlobalPreset();
             }
+     
         }
     }
     //private void OnTriggerExit(Collider other)
