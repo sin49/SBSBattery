@@ -16420,6 +16420,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1661135809}
     m_Modifications:
+    - target: {fileID: 1134658782661104107, guid: 498faebe0b50512469dec30511b4f85f,
+        type: 3}
+      propertyPath: size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1857940331094226853, guid: 498faebe0b50512469dec30511b4f85f,
         type: 3}
       propertyPath: m_Enabled
@@ -26400,6 +26405,7 @@ MonoBehaviour:
   attackTimer: 0
   attackDelay: 0
   callCheck: 0
+  rotCheck: 0
   onAttack: 0
   activeAttack: 0
   checkPlayer: 0
@@ -34275,7 +34281,6 @@ MonoBehaviour:
   fallingHeight: 3
   fallingRange: 1
   bossField: {fileID: 2045543000}
-  enemy: {fileID: 4929648963815187467, guid: 07e75f2d0e6944646836a5069d99fe61, type: 3}
 --- !u!114 &1864306828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34292,6 +34297,7 @@ MonoBehaviour:
   onActive: 0
   CanControl: 1
   HudTarget: {fileID: 0}
+  UI: {fileID: 0}
   Monitor: {fileID: 449519999}
   BossSweap: {fileID: 0}
   BossLaser: {fileID: 0}
@@ -35176,6 +35182,7 @@ MonoBehaviour:
   attackTimer: 0
   attackDelay: 0
   callCheck: 0
+  rotCheck: 0
   onAttack: 0
   activeAttack: 0
   checkPlayer: 0
@@ -44262,6 +44269,7 @@ MonoBehaviour:
   handlerange: {fileID: 8907670869238638303}
   remoteObj: []
   closestObject: {fileID: 0}
+  IgnoreRemoteTrigger: 0
   minimumdistance: 6
   Charging: 0
   laserPrefab: {fileID: 8906621709063784198, guid: c95aa4697be2c7341959ffcec170d214,

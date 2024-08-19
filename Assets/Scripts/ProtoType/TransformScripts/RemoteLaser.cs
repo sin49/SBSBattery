@@ -38,6 +38,8 @@ public class RemoteLaser : PlayerAttack
     {
         base.DamageCollider(other);
 
+        DestroyLaser();
+
         if (saveEffect != null)
         {
             saveEffect.transform.position = new(other.transform.position.x, other.transform.position.y + .5f, other.transform.position.z);
