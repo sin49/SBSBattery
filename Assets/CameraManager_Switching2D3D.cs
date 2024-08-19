@@ -1,7 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Tilemaps;
+
 using UnityEngine;
 
 
@@ -17,7 +17,9 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     public CinemachineVirtualCamera camera3D;
     public Vector3 Camera2Drotation;
     public Vector3 Camera3Drotation;
-
+    public PlayerMoveState movestate;
+    float orthosize;
+    float fovview;
     //[Header("2D 카메라 orthographic 사이즈")]
     //public float orthographicSize2D = 5f;
     //[Header("2D 카메라 near/far clipping planes")]
@@ -29,7 +31,30 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     //public float nearClipPlane3D = 0.1f;
     //public float farClipPlane3D = 1000f;
 
-    bool trans3D;
+   public bool trans3D;
+    public void settingBoss1ccamera(CinemachineVirtualCamera camera2D, CinemachineVirtualCamera camera3D,
+        Collider col, PlayerMoveState movestate)
+    {
+        camera3D.gameObject.SetActive(false); 
+        this.camera2D= camera2D;
+        this.camera3D = camera3D;
+        camera2D.gameObject.SetActive(false);
+        camera3D.gameObject.SetActive(true);
+        if (col != null)
+        {
+            this.camera2D.GetComponent<CinemachineConfiner>().m_BoundingVolume = col;
+            this.camera3D.GetComponent<CinemachineConfiner>().m_BoundingVolume = col;
+        }
+        orthosize = camera2D.m_Lens.OrthographicSize;
+        fovview = camera3D.m_Lens.FieldOfView;
+      
+        trans3D = true;
+        this. movestate = movestate;
+        PlayerStat.instance.MoveState = this.movestate;
+        VirtualCameras[0] = camera3D;
+        activedcamera = camera3D;
+        //GetCameraSettingByTrans3D();
+    }
     protected override void initializeCamera()
     {
         var a = VirtualCameraTransform.GetComponentsInChildren<CinemachineVirtualCamera>();
@@ -37,10 +62,11 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         GetCameraSettingByTrans3D();
         camera3D.GetComponent<CineMachineBasicCamera>().CameraIndex = 0;
         var confiner = camera3D.GetComponent<CinemachineConfiner>();
-        confiner.m_BoundingVolume = BasicCameraConfiner;
-        camera2D.GetComponent<CineMachineBasicCamera>().CameraIndex = 0;
-        confiner = camera2D.GetComponent<CinemachineConfiner>();
-        confiner.m_BoundingVolume = BasicCameraConfiner;
+        if (camera2D != null)
+        {
+            camera2D.GetComponent<CineMachineBasicCamera>().CameraIndex = 0;
+            confiner = camera2D.GetComponent<CinemachineConfiner>();
+        }
         int i = 0;
         for (int n = 0; n < a.Length; n++)
         {
@@ -64,6 +90,9 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     {
         base.Start();
         PlayerHandler.instance.registerCorutineRegisterEvent(RegiserCameraChangeHandler);
+        if(camera2D!=null)
+        orthosize = camera2D.m_Lens.OrthographicSize;
+        fovview = camera3D.m_Lens.FieldOfView;
     }
     void RegiserCameraChangeHandler()
     {
@@ -71,11 +100,13 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     }
     IEnumerator SwitchCameraForTransDimensionCorutine()
     {
+        if (camera2D == null || camera3D == null)
+            yield break;
         trans3D = !trans3D;
 
         if (trans3D)
         {
-            PlayerStat.instance.MoveState =PlayerMoveState.Trans3D;
+            PlayerStat.instance.MoveState =movestate;
         }
         else
         {
@@ -85,10 +116,14 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         PlayerHandler.instance.CantHandle = true;
         if (trans3D)
         {
+            camera2D.m_Lens.Orthographic = false;
+            camera2D.m_Lens.FieldOfView = fovview;
             yield return StartCoroutine(SwitchCameraCoroutine(camera3D));
         }
         else
         {
+            camera2D.m_Lens.Orthographic = true;
+            camera2D.m_Lens.OrthographicSize = orthosize;
             yield return StartCoroutine(SwitchCameraCoroutine(camera2D));
         }
         PlayerHandler.instance.CantHandle = false;
@@ -99,17 +134,23 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         if (trans3D)
         {
             SwapDefaultCamera(camera3D);
+            if(camera2D!=null)
             camera2D.gameObject.SetActive(false);
         }
         else
         {
             SwapDefaultCamera(camera2D);
-            camera3D.gameObject.SetActive(false);
+            if (camera3D != null)
+                camera3D.gameObject.SetActive(false);
         }
     }
 
     public void SwapDefaultCamera(CinemachineVirtualCamera camera)
     {
+        if (VirtualCameras.Length == 0)
+        {
+            VirtualCameras=new CinemachineVirtualCamera[1];
+        }
         VirtualCameras[0] = camera;
     }
 }

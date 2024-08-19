@@ -7,6 +7,23 @@ using UnityEngine;
 //패턴 테스트 편하게
 public class BossTv : RemoteObject
 {
+
+    bool BossEnable;
+    Animator animator;
+    public void BossActive()
+    {
+        BossEnable = true;
+        UI.gameObject.SetActive(true);
+        BossSweap.GetComponent<Boss1Sweap>().SetHandPosition();
+        animator.enabled = false;
+    }
+    public void BossDeActive()
+    {
+        BossEnable = false;
+        UI.gameObject.SetActive(false);
+
+    }
+    public Boss1UI UI;
     [Header("보스는 SoundEffectListPlayer와")]
     [Header("boss1SoundManager 둘다 넣으면 됨")]
 
@@ -47,13 +64,16 @@ public class BossTv : RemoteObject
  
     protected override void Awake()
     {
+        base.Awake();
         bossaudioplayer = GetComponent<Boss1SOundManager>();
         actions.Add(BossSweap);
         actions.Add(BossLaser);
         actions.Add(BossFall);
+        animator=GetComponent<Animator>();
     }
     private void Start()
     {
+        UI.gameObject.SetActive(false);
         Debug.Log("보스 활성화 연출이 들어간다");
         LHand.HP = HandHP;
         RHand.HP = HandHP;
@@ -64,6 +84,7 @@ public class BossTv : RemoteObject
         RHand.HandDominateEvent += RhandDominateEvent;
         lifeCount = lifeCountMax;
         CanControl = false;
+        index = actions.Count - 1;
     }
     void LhandDominateEvent()
     {
@@ -88,6 +109,10 @@ public class BossTv : RemoteObject
    
     private void FixedUpdate()
     {
+        if (!BossEnable)
+        {
+            return;
+        }
         if (TargetPlayer && PlayerHandler.instance != null)
             target = PlayerHandler.instance.CurrentPlayer.transform;
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -112,11 +137,13 @@ public class BossTv : RemoteObject
         }
         if (CanControl)
         {
+            
             if (PlayerHandler.instance.CurrentType == TransformType.remoteform && PlayerHandler.instance.CurrentPlayer.GetComponent<RemoteTransform>().closestObject != this.gameObject)
             {
-                Debug.Log("제압당함!");
-                PlayerHandler.instance.CurrentPlayer.GetComponent<RemoteTransform>().IgnoreRemoteTrigger = true;
-                PlayerHandler.instance.CurrentPlayer.GetComponent<RemoteTransform>().closestObject = this.gameObject;
+                animator.enabled = true;
+                animator.SetBool("canactive", CanControl);
+                PlayerHandler.instance.CurrentPlayer.GetComponent<RemoteTransform>().GetClosestObjectIgnoreTrigger(this.gameObject);
+
             }
             return;
         }
@@ -144,9 +171,9 @@ public class BossTv : RemoteObject
                 {
                     TestAction = actions[index];
 
-                    index++;
-                    if (index >= actions.Count)
-                        index = 0;
+                    index--;
+                    if (index <0)
+                        index = actions.Count-1;
                 }
             }
             TestAction.Invoke(patternComplete,target);
@@ -166,9 +193,11 @@ public class BossTv : RemoteObject
     {
      base.Active();
         Debug.Log("모니터 공격 연출이 들어간다");
+        animator.Play("BossDefeat");
         if(bossaudioplayer!=null)
         bossaudioplayer.MonitiorHittedClipPlay();
         CanControl = false;
+        PlayerHandler.instance.CurrentPlayer.GetComponent<RemoteTransform>().RemoveClosesObject();
         lifeCount = 0;
         Debug.Log("보스를 클리어 한다");
     }

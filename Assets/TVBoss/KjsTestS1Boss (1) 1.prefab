@@ -431,6 +431,7 @@ GameObject:
   - component: {fileID: 1561318454975055217}
   - component: {fileID: 6581118630854958948}
   - component: {fileID: 3023562827182172201}
+  - component: {fileID: 3807007669676288973}
   m_Layer: 0
   m_Name: KjsTestS1Boss (1) 1
   m_TagString: Untagged
@@ -456,6 +457,8 @@ Transform:
   - {fileID: 5977368534207628317}
   - {fileID: 1616370361351078321}
   - {fileID: 16188951945914121}
+  - {fileID: 8208100128127074496}
+  - {fileID: 3079245634506789802}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2849135284605516961
@@ -474,17 +477,18 @@ MonoBehaviour:
   onActive: 0
   CanControl: 1
   HudTarget: {fileID: 8317646022107918091}
+  UI: {fileID: 3366133091168755281}
   Monitor: {fileID: 3970028692762344223}
   BossSweap: {fileID: 1058498811892394508}
   BossLaser: {fileID: 1561318454975055217}
   BossFall: {fileID: 3715751788046449860}
-  TestAction: {fileID: 1058498811892394508}
+  TestAction: {fileID: 3715751788046449860}
   lifeCount: 0
   lifeCountMax: 100
   TargetPlayer: 1
   randomPattern: 0
-  OnlyTestPattern: 1
-  HandHP: 100
+  OnlyTestPattern: 0
+  HandHP: 1
   LHand: {fileID: 6602919900276604124}
   RHand: {fileID: 4055101929726195839}
   target: {fileID: 0}
@@ -505,8 +509,8 @@ MonoBehaviour:
   fallingObj2:
   - fallingobj: {fileID: 4006880101536269725, guid: c893fd765a9a01d4eb3c9f0487912a37,
       type: 3}
-    number: 0
-    possibility: 1
+    number: 1
+    possibility: 0
   - fallingobj: {fileID: 1975036747362771099, guid: dbc0de5fe612b08479e0596338c883cd,
       type: 3}
     number: 0
@@ -521,18 +525,20 @@ MonoBehaviour:
     possibility: 2
   soundmanager: {fileID: 0}
   fallingBoxCreateObj:
-  - Createobj: {fileID: 557678266298197566, guid: 06511a03621618a4f8bd0ad830ab2be7,
+  - Createobj: {fileID: 3294068082175523137, guid: 7a2304b68bcbcd2498a3ffb793facc23,
+      type: 3}
+    possibility: 0
+  - Createobj: {fileID: 1484204634486695996, guid: 757caba741c6ccc40886737a7e2215df,
       type: 3}
     possibility: 1
   damage: 1
-  createTime: 0.2
+  createTime: 0.4
   minSpeed: 1
   maxSpeed: 3
   createCountMax: 20
   fallingHeight: 10
   fallingRange: 1.15
   bossField: {fileID: 0}
-  enemy: {fileID: 0}
 --- !u!114 &1058498811892394508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -548,6 +554,8 @@ MonoBehaviour:
   Possibility: 1
   ActionLifeTIme: 0
   Lhand: {fileID: 6602919900276604124}
+  LhandDefeatTransform: {fileID: 3079245634506789802}
+  RhandDefeatTransform: {fileID: 8208100128127074496}
   RHand: {fileID: 4055101929726195839}
   BossField: {fileID: 0}
   handsize: 1
@@ -623,6 +631,27 @@ MonoBehaviour:
   ObjectgroundedVolume: 0
   MonitiorHittedclip: {fileID: 0}
   MonitiorHittedVolume: 0
+--- !u!95 &3807007669676288973
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012597944601740804}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8cda1f94f3a9f8e48bd28cc21a70b9ea, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1077743016411524663
 GameObject:
   m_ObjectHideFlags: 0
@@ -1743,6 +1772,37 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &4060480575233447352
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3079245634506789802}
+  m_Layer: 0
+  m_Name: LhandDefeatPosition (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3079245634506789802
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4060480575233447352}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -9.5, y: 14.06, z: -6}
+  m_LocalScale: {x: 0.62111807, y: 0.62111807, z: 0.621118}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3420186837365374865}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4205034568594866889
 GameObject:
   m_ObjectHideFlags: 0
@@ -2036,7 +2096,7 @@ Transform:
   m_GameObject: {fileID: 5240444313098218687}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.2588191, w: 0.9659258}
-  m_LocalPosition: {x: -9.5, y: 0.65, z: -6}
+  m_LocalPosition: {x: -9.5, y: 4.07, z: 1.12}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2220,7 +2280,7 @@ Transform:
   m_GameObject: {fileID: 5580091231082257511}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.258819, w: 0.9659259}
-  m_LocalPosition: {x: 9.5, y: 0.65, z: -6}
+  m_LocalPosition: {x: 9.5, y: 4.07, z: 1.12}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2887,7 +2947,7 @@ Transform:
   m_GameObject: {fileID: 7929344568219175252}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.136, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7773,11 +7833,42 @@ Transform:
   m_GameObject: {fileID: 8317646022107918091}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.27, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -3, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5940699672598424508}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9109529950268536764
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8208100128127074496}
+  m_Layer: 0
+  m_Name: RhandDefeatPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8208100128127074496
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9109529950268536764}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.5, y: 14.06, z: -6}
+  m_LocalScale: {x: 0.62111807, y: 0.62111807, z: 0.621118}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3420186837365374865}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &8681619954088169684
 PrefabInstance:

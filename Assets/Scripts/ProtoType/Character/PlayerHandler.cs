@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Profiling.Memory.Experimental;
+
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 using UnityEngine.UIElements;
@@ -27,9 +27,17 @@ public class PlayerHandler : MonoBehaviour
     public bool OnDeformField;
     public TransformType retoretype=TransformType.Default;
     public TransformPlace LastTransformPlace;
-
+    bool jumprestrict;
     public IngameUIManager ingameUIManger;
-
+    public void playerjumprestirct()
+    {
+        jumprestrict = true;
+        CurrentPlayer.jumpBufferTimer = 0;
+    }
+    public void playerjumpaccept()
+    {
+        jumprestrict = false;
+    }
     public Camera CurrentCamera;
     #endregion
     InteractiveObject interactobject;
@@ -93,11 +101,11 @@ public class PlayerHandler : MonoBehaviour
     event Action PlayerFallEvent;
     public void registerPlayerFallEvent(Action action)
     {
-        PlayerFallEvent =action;
+        PlayerFallEvent +=action;
     }
    public void PlayerFallOut()
     {
-        if (PlayerStat.instance.hp != 1)
+        if (PlayerStat.instance.hp > 1)
         {
             Rigidbody rb = null;
             if (CurrentPlayer.TryGetComponent<Rigidbody>(out rb))
@@ -333,7 +341,7 @@ public class PlayerHandler : MonoBehaviour
         //3D로 갈 때는 카메라 먼저 이 후 이벤트
         //2D로 갈 때는 반대로 이벤트 이 후 카메라
 
-        if (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D)
+        if (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D||PlayerStat.instance.MoveState!= PlayerMoveState.Trans3D2)
         {//3D에서 2D로
             yield return StartCoroutine(InvokeDimensionEvent());
 
@@ -394,7 +402,7 @@ public class PlayerHandler : MonoBehaviour
                 InteractTimer = PlayerStat.instance.InteractDelay;
             }
         }
-        if (Input.GetKey(KeyCode.C))
+        if (Input.GetKey(KeyCode.C) && !jumprestrict)
         {
           
               

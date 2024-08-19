@@ -86,8 +86,6 @@ public class BossFalling : EnemyAction
 
     Vector3 fixMin;
     Vector3 fixMax;
-
-    public GameObject enemy;
     // Start is called before the first frame update
     void Start()
     {
