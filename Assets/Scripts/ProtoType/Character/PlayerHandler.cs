@@ -492,13 +492,12 @@ public class PlayerHandler : MonoBehaviour
             firstDownInput = false;
             doubleDownInput = false;
         }
-        if (doubleUpInput && Input.GetKeyDown(KeyCode.X)&&CurrentType!=TransformType.Default)
+        if (doubleUpInput && Input.GetKeyDown(KeyCode.S)&&CurrentType!=TransformType.Default)
         {
             CurrentPlayer.Skill1();
          
                 Skill1InputTimer = Skill1InputCheck;
         }    
-        else
         if (Input.GetKey(KeyCode.X)&& Skill1InputTimer<=0/* &&
                 PlayerInventory.instance.checkessesntialitem("item01")*/)
         {
