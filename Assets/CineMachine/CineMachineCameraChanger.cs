@@ -2,9 +2,23 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class CineMachineCameraChanger : MonoBehaviour
+public interface colliderDisplayer
 {
+    public void registerColliderDIsplay();
+    public void ActiveColliderDisplay();
+    public void DeactiveColliderDisplay();
+}
+
+public class CineMachineCameraChanger : MonoBehaviour, colliderDisplayer
+{
+    public GameObject ColliderDisplayy;
+    public GameObject CameraRangeDisplay;
+    private void Start()
+    {
+        registerColliderDIsplay();
+    }
+
+
     [Header("캐릭터 이동을 바꿈")]
     public PlayerMoveState PlayerMoveState;
     [Header("둘중 하나만 설정해도 됨")]
@@ -37,6 +51,26 @@ public class CineMachineCameraChanger : MonoBehaviour
             }
             PlayerStat.instance.MoveState = PlayerMoveState;
             PlayerHandler.instance.CurrentPlayer.rotateBy3Dto2D();
+        }
+    }
+
+    public void ActiveColliderDisplay()
+    {
+        ColliderDisplayy.SetActive(true);
+        CameraRangeDisplay.SetActive(true);
+    }
+
+    public void DeactiveColliderDisplay()
+    {
+        ColliderDisplayy.SetActive(false);
+        CameraRangeDisplay.SetActive(false);
+    }
+
+    public void registerColliderDIsplay()
+    {
+        if (ColliderDisplayManager.Instance != null)
+        {
+            ColliderDisplayManager.Instance.register(this);
         }
     }
 }

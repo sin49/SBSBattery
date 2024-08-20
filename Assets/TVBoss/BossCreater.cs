@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossCreater : MonoBehaviour
+public class BossCreater : MonoBehaviour,colliderDisplayer
 {
+
+    public GameObject ColliderDisplay;
     [Header("보스 카메라 2D")]
     public CinemachineVirtualCamera camera2D;
     [Header("보스 카메라 3D")]
@@ -30,6 +32,9 @@ public class BossCreater : MonoBehaviour
 
     [Header("보스가 나타났다 UI ")]
     public GameObject BossUI;
+
+  
+ 
     void CreateBoss()
     {
      var a=   Instantiate(BossObject, BossTransform.position, BossTransform.rotation);
@@ -55,5 +60,25 @@ public class BossCreater : MonoBehaviour
             CreateBoss();
             Destroy(this.gameObject);
         }
+    }
+    private void Start()
+    {
+        registerColliderDIsplay();
+    }
+
+    public void ActiveColliderDisplay()
+    {
+        ColliderDisplay.SetActive(true);
+    }
+    public void registerColliderDIsplay()
+    {
+        if (ColliderDisplayManager.Instance != null)
+        {
+            ColliderDisplayManager.Instance.register(this);
+        }
+    }
+    public void DeactiveColliderDisplay()
+    {
+      ColliderDisplay.SetActive(false);
     }
 }
