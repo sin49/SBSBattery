@@ -452,6 +452,7 @@ Transform:
   m_LocalScale: {x: 1.61, y: 1.61, z: 1.61}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 3094086273095506671}
   - {fileID: 5940699672598424508}
   - {fileID: 4101879628467827727}
   - {fileID: 5977368534207628317}
@@ -539,6 +540,7 @@ MonoBehaviour:
   fallingHeight: 10
   fallingRange: 1.15
   bossField: {fileID: 0}
+  GizmoColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1058498811892394508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -566,6 +568,7 @@ MonoBehaviour:
   SweaperEndWaitTime: 0
   sweaperReturnTime: 1.55
   SweapDistanceRandomWeight: 10
+  sweapColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1561318454975055217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1199,6 +1202,82 @@ MonoBehaviour:
   RhandHP: {fileID: 7569047362217450218}
   LhandHP: {fileID: 1006550826055401939}
   TV: {fileID: 2849135284605516961}
+--- !u!1 &2683152688034982521
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3094086273095506671}
+  - component: {fileID: 7775747558215482256}
+  m_Layer: 0
+  m_Name: Boss1Status
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3094086273095506671
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2683152688034982521}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3420186837365374865}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7775747558215482256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2683152688034982521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f026b5b9bd6f09e4783fac8add5cebdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeCountMax: 0
+  randomPattern: 0
+  OnlySweapPattern: 0
+  OnlylaserPattern: 0
+  OnlyfallPattern: 0
+  HandHP: 0
+  LhandDefeatTransform: {fileID: 0}
+  RhandDefeatTransform: {fileID: 0}
+  fallingObj2: []
+  fallingBoxCreateObj: []
+  damage: 0
+  createTime: 0
+  minSpeed: 0
+  maxSpeed: 0
+  createCountMax: 0
+  fallingHeight: 0
+  fallingRange: 0
+  GizmoColor: {r: 0, g: 0, b: 0, a: 0}
+  handsize: 1
+  SweaperPatternDealy: 0
+  SweaperStartMoveTime: 0
+  sweaperwaitTime: 0
+  SweaperEndMoveTime: 0
+  SweaperEndWaitTime: 0
+  sweaperReturnTime: 0
+  SweapColor: {r: 0, g: 0, b: 0, a: 0}
+  laserlifetime: 1.5
+  LaserSpeed: 0
+  laserActiveTimer: 1.5
+  TrailColScale: 1
+  TrailDuration: 0
+  ColliderSpawnTime: 0
 --- !u!1 &2737180749609164076
 GameObject:
   m_ObjectHideFlags: 0
@@ -3208,7 +3287,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 5
       minScalar: 1
       maxCurve:
         serializedVersion: 2

@@ -91,9 +91,10 @@ public class Boss1Sweap : EnemyAction
       
         StartCoroutine(DisableAction(0));
     }
+    public Color sweapColor;
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
+        Gizmos.color = sweapColor;
         if (BossField != null)
         {
             Vector3 min = new Vector3(-0.5f, 0.5f, -0.5f);
