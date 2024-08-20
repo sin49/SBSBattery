@@ -501,6 +501,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BulbEnemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5768329292479333752, guid: ada8eda3f7b2e5a47b560895f2ea72e1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6513247298425961137, guid: ada8eda3f7b2e5a47b560895f2ea72e1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -16537,7 +16542,7 @@ PrefabInstance:
         type: 3}
       propertyPath: CheckPointTransform
       value: 
-      objectReference: {fileID: 320771558}
+      objectReference: {fileID: 38857064}
     - target: {fileID: 3493046245006148624, guid: 498faebe0b50512469dec30511b4f85f,
         type: 3}
       propertyPath: Checkpoints.Array.size
@@ -24598,7 +24603,7 @@ PrefabInstance:
     - target: {fileID: 879045053675682833, guid: 182321a561f69434e8780d30419bdeb2,
         type: 3}
       propertyPath: wallCheck
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 879045053675682833, guid: 182321a561f69434e8780d30419bdeb2,
         type: 3}
@@ -24624,7 +24629,7 @@ PrefabInstance:
         type: 3}
       propertyPath: forwardWall
       value: 
-      objectReference: {fileID: 793489729}
+      objectReference: {fileID: 0}
     - target: {fileID: 879045053675682833, guid: 182321a561f69434e8780d30419bdeb2,
         type: 3}
       propertyPath: rangeSize.x
@@ -24642,6 +24647,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 879045053675682833, guid: 182321a561f69434e8780d30419bdeb2,
         type: 3}
+      propertyPath: testcolor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 879045053675682833, guid: 182321a561f69434e8780d30419bdeb2,
+        type: 3}
+      propertyPath: testcolor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 879045053675682833, guid: 182321a561f69434e8780d30419bdeb2,
+        type: 3}
+      propertyPath: testcolor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 879045053675682833, guid: 182321a561f69434e8780d30419bdeb2,
+        type: 3}
+      propertyPath: testcolor.r
+      value: 0.662745
+      objectReference: {fileID: 0}
+    - target: {fileID: 879045053675682833, guid: 182321a561f69434e8780d30419bdeb2,
+        type: 3}
       propertyPath: wallRayHeight
       value: 0.3
       objectReference: {fileID: 0}
@@ -24653,12 +24678,12 @@ PrefabInstance:
     - target: {fileID: 879045053675682833, guid: 182321a561f69434e8780d30419bdeb2,
         type: 3}
       propertyPath: targetPatrol.x
-      value: 7.3728724
+      value: 5.8588724
       objectReference: {fileID: 0}
     - target: {fileID: 879045053675682833, guid: 182321a561f69434e8780d30419bdeb2,
         type: 3}
       propertyPath: targetPatrol.y
-      value: 0.42333835
+      value: 4.065338
       objectReference: {fileID: 0}
     - target: {fileID: 879045053675682833, guid: 182321a561f69434e8780d30419bdeb2,
         type: 3}
@@ -24765,6 +24790,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5195238981495159512, guid: 182321a561f69434e8780d30419bdeb2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5972430000464431206, guid: 182321a561f69434e8780d30419bdeb2,
         type: 3}
       propertyPath: m_Name
@@ -24794,6 +24824,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Center.z
       value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330544071301415854, guid: 182321a561f69434e8780d30419bdeb2,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6632304941756833643, guid: 182321a561f69434e8780d30419bdeb2,
         type: 3}
@@ -26365,6 +26400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e5394ce4dc116e44acd03d3dcfacb30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testcolor: {r: 0, g: 0, b: 0, a: 0}
   eStat: {fileID: 0}
   patrolType: 0
   attackCollider: {fileID: 0}
@@ -35142,6 +35178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2c2539763bdf3c4e8351a33233d35ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testcolor: {r: 0, g: 0, b: 0, a: 0}
   eStat: {fileID: 0}
   patrolType: 0
   attackCollider: {fileID: 76203637}

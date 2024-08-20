@@ -28,6 +28,24 @@ public class AttackColliderRange : MonoBehaviour
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        if(CharColliderColor.instance != null)
+            Gizmos.color = CharColliderColor.instance.attackActiveRange;
+
+        Collider collider = GetComponent<Collider>();
+
+        if (collider is BoxCollider boxCollider)
+        {
+            Gizmos.DrawWireCube(boxCollider.bounds.center, boxCollider.bounds.size);
+        }
+        else if (collider is SphereCollider sphereCollider)
+        {
+            Gizmos.DrawWireSphere(sphereCollider.bounds.center, sphereCollider.radius);
+        }
+    }
+
+
     private void OnTriggerStay(Collider other)
     {
         //ebug.Log($"트리거 감지 중 {other.gameObject}");   

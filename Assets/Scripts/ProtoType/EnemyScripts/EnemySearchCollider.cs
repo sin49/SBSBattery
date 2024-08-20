@@ -22,6 +22,20 @@ public class EnemySearchCollider : MonoBehaviour
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        if (CharColliderColor.instance != null)
+        {
+            Gizmos.color = CharColliderColor.instance.searchRange;
+        }
+
+        Collider collider = GetComponent<Collider>();
+        if (collider is BoxCollider box)
+        {
+            Gizmos.DrawWireCube(box.bounds.center, box.bounds.size);
+        }
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))

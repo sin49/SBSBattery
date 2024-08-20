@@ -42,7 +42,7 @@ public class PoolingManager : MonoBehaviour
         {
             pool.poolQueue = new Queue<GameObject>();           
             
-            Debug.Log($"큐 사이즈: {pool.poolQueue.Count}");
+            //Debug.Log($"큐 사이즈: {pool.poolQueue.Count}");
         }
 
         /*for (int i = 0; i < poolObjects.Length; i++)

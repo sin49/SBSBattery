@@ -135,6 +135,54 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &333120508882338190
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 620603052947586165}
+  - component: {fileID: 4200796628640683184}
+  m_Layer: 0
+  m_Name: MonsterColliderColor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &620603052947586165
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333120508882338190}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2038173147941107366}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4200796628640683184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333120508882338190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c67c8debc19112b4589894e202b29c08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  searchRange: {r: 0, g: 0.6901841, b: 1, a: 1}
+  attackActiveRange: {r: 1, g: 0.30290192, b: 0, a: 1}
+  trackingRange: {r: 1, g: 0.92963254, b: 0, a: 1}
+  patrolRange: {r: 0, g: 1, b: 0.19612455, a: 1}
 --- !u!1 &846623632274772681
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,17 +321,6 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-    poolList:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
   - poolName: EnemyBullet
     poolPrefab: {fileID: 3806260107179428244, guid: 1ec0785a34f952545bd162c5b7dd9f4d,
       type: 3}
@@ -298,32 +335,10 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-    poolList:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
   - poolName: HitEffect
     poolPrefab: {fileID: 5024009746357069194, guid: ec3f674830402cc45bce805cf6493db7,
       type: 3}
     poolPrefabs:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    poolList:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
@@ -2125,6 +2140,7 @@ Transform:
   - {fileID: 3778098788227362813}
   - {fileID: 7277724430974782963}
   - {fileID: 7492913466387734297}
+  - {fileID: 620603052947586165}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6175487160633950384
