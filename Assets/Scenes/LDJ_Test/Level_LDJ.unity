@@ -2673,6 +2673,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SHMChanger (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 7753230415338470090, guid: ce2c306178ace7242a51a9d876bf2f2c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8014355795434310608, guid: ce2c306178ace7242a51a9d876bf2f2c,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -25521,7 +25526,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_BoundingVolume
       value: 
-      objectReference: {fileID: 1498864586}
+      objectReference: {fileID: 1035806960}
     - target: {fileID: 1455319865361741660, guid: 29afab8a3b514364693fe071ea11bb22,
         type: 3}
       propertyPath: m_Enabled
@@ -25561,7 +25566,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_BoundingVolume
       value: 
-      objectReference: {fileID: 1035806960}
+      objectReference: {fileID: 1843193757}
     - target: {fileID: 7442741260057056914, guid: 29afab8a3b514364693fe071ea11bb22,
         type: 3}
       propertyPath: m_IsActive
@@ -25586,7 +25591,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_BoundingVolume
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1367698674}
     - target: {fileID: 8224165039533450968, guid: 29afab8a3b514364693fe071ea11bb22,
         type: 3}
       propertyPath: field of view
@@ -27470,6 +27475,46 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4545535272630405155, guid: 1137b9fdf69945d4ea588bc2e5b828de,
         type: 3}
+    - target: {fileID: 3466261174793131839, guid: 498faebe0b50512469dec30511b4f85f,
+        type: 3}
+      propertyPath: GetItemClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c865631291ca1de4db4886c158a612b2, type: 3}
+    - target: {fileID: 3466261174793131839, guid: 498faebe0b50512469dec30511b4f85f,
+        type: 3}
+      propertyPath: GetItemVolume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466261174793131839, guid: 498faebe0b50512469dec30511b4f85f,
+        type: 3}
+      propertyPath: RecoverHPClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 87b96f3ea67ff7b439427d35318a036f, type: 3}
+    - target: {fileID: 3466261174793131839, guid: 498faebe0b50512469dec30511b4f85f,
+        type: 3}
+      propertyPath: RecoverHPVolume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466261174793131839, guid: 498faebe0b50512469dec30511b4f85f,
+        type: 3}
+      propertyPath: CharacterDieClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 9cf1e818361526e459204d5346ba9101, type: 3}
+    - target: {fileID: 3466261174793131839, guid: 498faebe0b50512469dec30511b4f85f,
+        type: 3}
+      propertyPath: CharacterDieVolume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466261174793131839, guid: 498faebe0b50512469dec30511b4f85f,
+        type: 3}
+      propertyPath: ChangeDimensionClip
+      value: 
+      objectReference: {fileID: 8300000, guid: a918a979f9949dd48a7e08a9447691fa, type: 3}
+    - target: {fileID: 3466261174793131839, guid: 498faebe0b50512469dec30511b4f85f,
+        type: 3}
+      propertyPath: ChangeDimensionVolume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3493046245006148624, guid: 498faebe0b50512469dec30511b4f85f,
         type: 3}
       propertyPath: DontSave
@@ -27608,8 +27653,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6143649437931658386, guid: 498faebe0b50512469dec30511b4f85f,
         type: 3}
-      propertyPath: jumpForce
+      propertyPath: downForce
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6143649437931658386, guid: 498faebe0b50512469dec30511b4f85f,
+        type: 3}
+      propertyPath: jumpForce
+      value: 6.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6143649437931658386, guid: 498faebe0b50512469dec30511b4f85f,
+        type: 3}
+      propertyPath: attackDelay
+      value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: 6143649437931658386, guid: 498faebe0b50512469dec30511b4f85f,
         type: 3}
@@ -27676,6 +27731,11 @@ PrefabInstance:
       propertyPath: CheckPointTransform
       value: 
       objectReference: {fileID: 295927487468451514}
+    - target: {fileID: 6631281733974755811, guid: 498faebe0b50512469dec30511b4f85f,
+        type: 3}
+      propertyPath: Checkpoints.Array.size
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 8262377263790243442, guid: 498faebe0b50512469dec30511b4f85f,
         type: 3}
       propertyPath: m_Name
@@ -27731,6 +27791,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Material
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9123679734919622433, guid: 498faebe0b50512469dec30511b4f85f,
+        type: 3}
+      propertyPath: inputTime
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 9142651139414028466, guid: 498faebe0b50512469dec30511b4f85f,
         type: 3}
@@ -38167,7 +38232,7 @@ PrefabInstance:
     - target: {fileID: 8522726870780546775, guid: 78c265cc31d95fc478af587729b89153,
         type: 3}
       propertyPath: volume
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 8522726870780546775, guid: 78c265cc31d95fc478af587729b89153,
         type: 3}
@@ -41970,6 +42035,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35393896611e78c45b692b96bdf90516, type: 3}
+--- !u!65 &1367698674 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 7569065500246108584, guid: 0ecd55aeedb5d0945b259c864f6e7bcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 656847227}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1368270181
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46887,12 +46958,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05686c3bcfd683649a909588a8a3845e, type: 3}
---- !u!65 &1498864586 stripped
-BoxCollider:
-  m_CorrespondingSourceObject: {fileID: 7569065500246108584, guid: 0ecd55aeedb5d0945b259c864f6e7bcb,
-    type: 3}
-  m_PrefabInstance: {fileID: 1032069969}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1499542271
 GameObject:
   m_ObjectHideFlags: 0
@@ -57591,6 +57656,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: c8b32c04ba9512e4bbfb8578d7b93d65,
     type: 3}
   m_PrefabInstance: {fileID: 361239527861997475}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1843193757 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 7569065500246108584, guid: 0ecd55aeedb5d0945b259c864f6e7bcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 845016390918459515}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1843552831
 PrefabInstance:
@@ -88653,6 +88724,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Flash_ellow_pink
+      objectReference: {fileID: 0}
+    - target: {fileID: 8919484260529707532, guid: c7a0db0061716124cb066b3addf4584c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8919484260586086511, guid: c7a0db0061716124cb066b3addf4584c,
         type: 3}
