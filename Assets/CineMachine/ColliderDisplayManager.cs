@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-
+[ExecuteAlways]
 public class ColliderDisplayManager : MonoBehaviour
 {
         public static ColliderDisplayManager Instance;

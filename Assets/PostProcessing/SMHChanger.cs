@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
-
+[ExecuteAlways]
 public class SMHChanger : volumeParameterChanger,colliderDisplayer
 {
     public GameObject ColliderDisplay;

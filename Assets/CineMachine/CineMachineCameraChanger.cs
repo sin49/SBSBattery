@@ -8,7 +8,7 @@ public interface colliderDisplayer
     public void ActiveColliderDisplay();
     public void DeactiveColliderDisplay();
 }
-
+[ExecuteAlways]
 public class CineMachineCameraChanger : MonoBehaviour, colliderDisplayer
 {
     public GameObject ColliderDisplayy;
