@@ -681,6 +681,12 @@ public class Enemy: Character,DamagedByPAttack
         {
             searchCollider.GetComponent<BoxCollider>().size = searchColliderRange;
             searchCollider.GetComponent<BoxCollider>().center = searchColliderPos;
+
+            if (searchCollider.transform.childCount != 0)
+            {
+                searchCollider.transform.GetChild(0).localScale = searchColliderRange;
+                searchCollider.transform.GetChild(0).localPosition = searchColliderPos;
+            }
         }
 
 
@@ -688,6 +694,13 @@ public class Enemy: Character,DamagedByPAttack
         {
             rangeCollider.GetComponent<BoxCollider>().size = rangeSize;
             rangeCollider.GetComponent<BoxCollider>().center = rangePos;
+
+            if (rangeCollider.transform.childCount != 0)
+            {
+                rangeCollider.transform.GetChild(0).localScale = rangeSize;
+                rangeCollider.transform.GetChild(0).localPosition = rangePos;
+            }
+                
         }
 
 

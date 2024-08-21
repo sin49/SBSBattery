@@ -6,9 +6,9 @@ using UnityEngine;
 public class CharColliderColor : MonoBehaviour
 {
     public static CharColliderColor instance;
-    [Header("인지 범위")]
+    [Header("인지 범위(메쉬)")]
     public Color searchRange;
-    [Header("공격 활성화 범위")]
+    [Header("공격 활성화 범위(메쉬)")]
     public Color attackActiveRange;
     [Header("추적 범위")]
     public Color trackingRange;
@@ -27,7 +27,7 @@ public class CharColliderColor : MonoBehaviour
     {
         if (instance == null)
         {
-            Debug.Log("싱글톤 비어있음");
+            Debug.Log("에디터 모드로 몬스터 범위 컬러 싱글톤 채워넣는 중");
             instance = this;
         }
     }
