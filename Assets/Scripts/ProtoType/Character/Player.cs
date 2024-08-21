@@ -1012,16 +1012,30 @@ public class Player : Character
         if (collision.gameObject.CompareTag("InteractivePlatform") && jumpkeyinputcheckvalue <= 0)
         {
             jumpRaycastCheck();
-           
 
-            if (Input.GetKeyDown(KeyCode.C)&&Input.GetKey(KeyCode.DownArrow)&&
-                (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D || PlayerStat.instance.MoveState != PlayerMoveState.Trans3D2)
-                && !CullingPlatform)
+            if (KeySettingManager.instance == null)
             {
-                PlayerHandler.instance.doubleDownInput = false;
-                CullingPlatform = true;
-                Physics.IgnoreLayerCollision(6, 11, true);
-             
+                if (Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.DownArrow) &&
+                    (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D || PlayerStat.instance.MoveState != PlayerMoveState.Trans3D2)
+                    && !CullingPlatform)
+                {
+                    PlayerHandler.instance.doubleDownInput = false;
+                    CullingPlatform = true;
+                    Physics.IgnoreLayerCollision(6, 11, true);
+
+                }
+            }
+            else
+            {
+                if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode)&& Input.GetKey(KeyCode.DownArrow) &&
+                   (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D || PlayerStat.instance.MoveState != PlayerMoveState.Trans3D2)
+                   && !CullingPlatform)
+                {
+                    PlayerHandler.instance.doubleDownInput = false;
+                    CullingPlatform = true;
+                    Physics.IgnoreLayerCollision(6, 11, true);
+
+                }
             }
         }
 

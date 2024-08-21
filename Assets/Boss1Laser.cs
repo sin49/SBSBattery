@@ -55,6 +55,7 @@ public class Boss1Laser : EnemyAction
         activecoroutine = laserPattern();
         StartCoroutine(activecoroutine);
         var main = particle.main;
+        main.startSize = TrailColScale * 3;
         main.duration = laserlifetime;
         main.startLifetime = TrailDuration;
         registerActionHandler(() => { /*StopAllCoroutines();*/ StopCoroutine(activecoroutine); });
