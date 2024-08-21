@@ -16859,11 +16859,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 694150460349058687, guid: 498faebe0b50512469dec30511b4f85f, type: 3}
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 2038173147941107366, guid: 498faebe0b50512469dec30511b4f85f,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1240702298}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 498faebe0b50512469dec30511b4f85f, type: 3}
 --- !u!4 &989525972 stripped
@@ -18283,7 +18279,7 @@ Material:
     - _ZWrite: 0
     m_Colors:
     - _BaseColor: {r: 0, g: 1, b: 0.1876173, a: 0.1764706}
-    - _Color: {r: 0, g: 1, b: 0.019632578, a: 0.1764706}
+    - _Color: {r: 0, g: 1, b: 0.18761727, a: 0.1764706}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
@@ -18807,54 +18803,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1240386621}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1240702297
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1240702298}
-  - component: {fileID: 1240702299}
-  m_Layer: 0
-  m_Name: MonsterColliderColor (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1240702298
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1240702297}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 989525972}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1240702299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1240702297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c67c8debc19112b4589894e202b29c08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  searchRange: {r: 0.3597269, g: 0, b: 1, a: 0.20784314}
-  attackActiveRange: {r: 0, g: 1, b: 0.1876173, a: 0.1764706}
-  trackingRange: {r: 0, g: 1, b: 0.98655486, a: 1}
-  patrolRange: {r: 1, g: 0.42265004, b: 0, a: 1}
 --- !u!1 &1244205799
 GameObject:
   m_ObjectHideFlags: 0
@@ -39381,6 +39329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2aa03d4ee064b4091e03c1f9744edd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Moveinput_: 0
   playerRb: {fileID: 8558052229382839073}
   capsuleCollider: {fileID: 8424774185401887236}
   SoundPlayer: {fileID: 0}
@@ -44742,6 +44691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9a731f3179db4489ca90d0dc00ce3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Moveinput_: 0
   playerRb: {fileID: 5809952538239970273}
   capsuleCollider: {fileID: 1002575817109655978}
   SoundPlayer: {fileID: 0}
