@@ -5,7 +5,7 @@ using UnityEngine;
 public interface colliderDisplayer
 {
     public void registerColliderDIsplay();
-    public void ActiveColliderDisplay();
+    public void ActiveColliderDisplay();//¿ÀºêÁ§Æ® ²°´Ù Ä×´Ù
     public void DeactiveColliderDisplay();
 }
 [ExecuteAlways]

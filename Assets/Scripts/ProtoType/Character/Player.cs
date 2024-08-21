@@ -10,10 +10,14 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using UnityEngine.Windows.Speech;
 
+public enum MoveInput { MoveRightin2D=1,MoveRightin3D}
+
 public enum direction { Left = -1, none = 0, Right = 1 }
 public enum directionZ {back=-1,none=0,forward=1 }
 public class Player : Character
 {
+    public MoveInput Moveinput_;
+
     IngameUIManager gameuimanager;
     #region º¯¼ö
     public Rigidbody playerRb;
@@ -1027,7 +1031,7 @@ public class Player : Character
             }
             else
             {
-                if (Input.GetKeyDown(KeySettingManager.instance.FallKeycode)  &&
+                if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode)&& Input.GetKey(KeyCode.DownArrow) &&
                    (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D || PlayerStat.instance.MoveState != PlayerMoveState.Trans3D2)
                    && !CullingPlatform)
                 {
