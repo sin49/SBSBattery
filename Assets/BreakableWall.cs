@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BreakableWall : MonoBehaviour,DamagedByPAttack
+public class BreakableWall : MonoBehaviour,DamagedByPAttack, InputEvent
 {
     public int hp;
     public ParticleSystem DestroyEffect;
