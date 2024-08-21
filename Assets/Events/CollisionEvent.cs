@@ -32,6 +32,7 @@ public class CollisionEvent : MonoBehaviour
             {
                 tf = false;
             }
+ 
         }
         else
         {
@@ -42,7 +43,7 @@ public class CollisionEvent : MonoBehaviour
             }
         }
     }
-
+   
 
     public bool input(object o = null)
     {
