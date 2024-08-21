@@ -6,10 +6,13 @@ using UnityEngine;
 public class CharColliderColor : MonoBehaviour
 {
     public static CharColliderColor instance;
-
+    [Header("인지 범위")]
     public Color searchRange;
+    [Header("공격 활성화 범위")]
     public Color attackActiveRange;
+    [Header("추적 범위")]
     public Color trackingRange;
+    [Header("정찰 범위")]
     public Color patrolRange;
 
     private void Awake()
