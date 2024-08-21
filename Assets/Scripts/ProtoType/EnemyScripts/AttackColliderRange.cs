@@ -94,11 +94,7 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
             points[6] = (center + new Vector3(halfSize.x, -halfSize.y, halfSize.z));
             points[7] = (center + new Vector3(halfSize.x, halfSize.y, halfSize.z));
 
-            for (int i = 0; i < points.Length; i++)
-            {
-                transform.TransformPoint(points[i]);
-            }
-
+ 
             Gizmos.DrawLine(points[0], points[1]);
             Gizmos.DrawLine(points[0], points[3]);
             Gizmos.DrawLine(points[0], points[4]);
