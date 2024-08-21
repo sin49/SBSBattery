@@ -1027,7 +1027,7 @@ public class Player : Character
             }
             else
             {
-                if (Input.GetKeyDown(KeySettingManager.instance.FallKeycode)  &&
+                if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode)&& Input.GetKey(KeyCode.DownArrow) &&
                    (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D || PlayerStat.instance.MoveState != PlayerMoveState.Trans3D2)
                    && !CullingPlatform)
                 {
