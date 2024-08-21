@@ -4,5 +4,5 @@ using UnityEngine;
 [SerializeField]
 public interface InputEvent 
 {
-    public bool input(object o);
+    public bool input(object o=null);
 }
