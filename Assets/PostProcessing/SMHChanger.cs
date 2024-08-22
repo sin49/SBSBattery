@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 [ExecuteAlways]
 public class SMHChanger : volumeParameterChanger,colliderDisplayer
 {
-    public GameObject ColliderDisplay;
+    public Renderer ColliderDisplay;
 
     public void registerColliderDIsplay()
     {
@@ -93,12 +93,12 @@ public class SMHChanger : volumeParameterChanger,colliderDisplayer
 
     public void ActiveColliderDisplay()
     {
-        ColliderDisplay.SetActive(true);
+        ColliderDisplay.enabled = true;
     }
 
     public void DeactiveColliderDisplay()
     {
-        ColliderDisplay.SetActive(false);
+        ColliderDisplay.enabled = false;
     }
     //private void OnTriggerExit(Collider other)
     //{

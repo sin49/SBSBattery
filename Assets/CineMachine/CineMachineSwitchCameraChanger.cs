@@ -24,31 +24,31 @@ public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
 
     [Header("이것도 비워놔도 됌")]
     [Header("2DCameraMoveRange")]
-    public Collider2D CameraRange2D;
+    public Collider CameraRange2D;
     [Header("3DCameraMoveRange")]
     public Collider CameraRange3D;
     [Header("카메라 전환 속도")]
     public float transistionDuration = 1.0f;
 
-    public GameObject ColliderDisplayy;
-    public GameObject CameraRangeDisplay2D;
-    public GameObject CameraRangeDisplay3D;
+    public Renderer ColliderDisplayy;
+    public Renderer CameraRangeDisplay2D;
+    public Renderer CameraRangeDisplay3D;
     private void Start()
     {
         registerColliderDIsplay();
     }
     public void ActiveColliderDisplay()
     {
-        ColliderDisplayy.SetActive(true);
-        CameraRangeDisplay2D.SetActive(true);
-        CameraRangeDisplay3D.SetActive(true);
+ 
+        CameraRangeDisplay2D.enabled=true;
+        CameraRangeDisplay3D.enabled = true;
     }
 
     public void DeactiveColliderDisplay()
     {
-        ColliderDisplayy.SetActive(false);
-        CameraRangeDisplay2D.SetActive(false);
-        CameraRangeDisplay3D.SetActive(false);
+
+        CameraRangeDisplay2D.enabled = false;
+        CameraRangeDisplay3D.enabled = false;
     }
 
     public void registerColliderDIsplay()

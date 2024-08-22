@@ -32,9 +32,9 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     //public float farClipPlane3D = 1000f;
 
    public bool trans3D;
-    public void Set2DCamerabinding(Collider2D col)
+    public void Set2DCamerabinding(Collider col)
     {
-        this.camera2D.GetComponent<CinemachineConfiner>().m_BoundingShape2D = col;
+        this.camera2D.GetComponent<CinemachineConfiner>().m_BoundingVolume = col;
       
     }
     public void Set3DCamerabinding(Collider col)
