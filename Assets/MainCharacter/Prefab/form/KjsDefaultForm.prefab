@@ -1690,6 +1690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2aa03d4ee064b4091e03c1f9744edd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Moveinput_: 0
   playerRb: {fileID: 1855926169923719911}
   capsuleCollider: {fileID: 2012848794722345922}
   SoundPlayer: {fileID: 0}
@@ -1704,8 +1705,8 @@ MonoBehaviour:
   ChrRenderer: {fileID: 1979360752492490871}
   chrmat: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
-  jumpholdLevel: 0.85
-  jumpBufferTimeMax: 0.2
+  jumpholdLevel: 0.7
+  jumpBufferTimeMax: 0.28
   jumpBufferTimer: 0
   canjumpInput: 0
   jumpLimitInput: 0
@@ -1713,7 +1714,7 @@ MonoBehaviour:
   attackBufferTimer: 0
   attackInputValue: 0
   flyTimer: 0
-  flyTime: 0.5
+  flyTime: 2
   isJump: 0
   jumpAnim: 0
   isRun: 0
@@ -1979,9 +1980,9 @@ MonoBehaviour:
   AttackClip: {fileID: 8300000, guid: 25c5897575b078c4ba66ca5ffa7908c5, type: 3}
   AttackVolume: 1
   JumpClip: {fileID: 8300000, guid: 85ea7b8994df41b45ad65459747ef044, type: 3}
-  JumpVolume: 0.807
+  JumpVolume: 1
   LandClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
-  LandVolume: 0.821
+  LandVolume: 0.887246
   SkillClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
   SkillVolume: 1
 --- !u!1 &7687757393293647033
@@ -2781,7 +2782,7 @@ PrefabInstance:
     - target: {fileID: 8196178405622179907, guid: 69b92891381de2d4785a25572f46c697,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8418679488021058250, guid: 69b92891381de2d4785a25572f46c697,
         type: 3}
@@ -2802,6 +2803,11 @@ PrefabInstance:
         type: 3}
       propertyPath: autoRandomSeed
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8418679488021058250, guid: 69b92891381de2d4785a25572f46c697,
+        type: 3}
+      propertyPath: simulationSpeed
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 8418679488021058250, guid: 69b92891381de2d4785a25572f46c697,
         type: 3}
@@ -2837,6 +2843,11 @@ PrefabInstance:
         type: 3}
       propertyPath: ShapeModule.radiusThickness
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8418679488021058250, guid: 69b92891381de2d4785a25572f46c697,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8418679488021058250, guid: 69b92891381de2d4785a25572f46c697,
         type: 3}
