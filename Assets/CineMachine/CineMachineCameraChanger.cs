@@ -11,8 +11,8 @@ public interface colliderDisplayer
 [ExecuteAlways]
 public class CineMachineCameraChanger : MonoBehaviour, colliderDisplayer
 {
-    public GameObject ColliderDisplayy;
-    public GameObject CameraRangeDisplay;
+    public Renderer ColliderDisplay;
+    public  Renderer CameraRangeDisplay;
     private void Start()
     {
         registerColliderDIsplay();
@@ -56,14 +56,14 @@ public class CineMachineCameraChanger : MonoBehaviour, colliderDisplayer
 
     public void ActiveColliderDisplay()
     {
-        ColliderDisplayy.SetActive(true);
-        CameraRangeDisplay.SetActive(true);
+        ColliderDisplay.enabled=true;
+        CameraRangeDisplay.enabled = true;
     }
 
     public void DeactiveColliderDisplay()
     {
-        ColliderDisplayy.SetActive(false);
-        CameraRangeDisplay.SetActive(false);
+        ColliderDisplay.enabled = false;
+        CameraRangeDisplay.enabled = false;
     }
 
     public void registerColliderDIsplay()

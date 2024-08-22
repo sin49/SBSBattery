@@ -54,6 +54,7 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
             this.camera2D.GetComponent<CinemachineConfiner>().m_BoundingVolume = col;
             this.camera3D.GetComponent<CinemachineConfiner>().m_BoundingVolume = col;
         }
+        camera2D.m_Lens.Orthographic = true;
         orthosize = camera2D.m_Lens.OrthographicSize;
         fovview = camera3D.m_Lens.FieldOfView;
       
@@ -99,9 +100,12 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     {
         base.Start();
         PlayerHandler.instance.registerCorutineRegisterEvent(RegiserCameraChangeHandler);
-        if(camera2D!=null)
+        camera2D.m_Lens.Orthographic = true;
+        if (camera2D!=null)
         orthosize = camera2D.m_Lens.OrthographicSize;
         fovview = camera3D.m_Lens.FieldOfView;
+   
+       
     }
     void RegiserCameraChangeHandler()
     {
@@ -123,18 +127,21 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         }
         PlayerHandler.instance.CurrentPlayer.rotateBy3Dto2D();
         PlayerHandler.instance.CantHandle = true;
+        camera2D.m_Lens.Orthographic = false;
+        camera2D.m_Lens.FieldOfView = fovview;
         if (trans3D)
         {
-            camera2D.m_Lens.Orthographic = false;
-            camera2D.m_Lens.FieldOfView = fovview;
+           
             yield return StartCoroutine(SwitchCameraCoroutine(camera3D));
+          
         }
         else
         {
-            camera2D.m_Lens.Orthographic = true;
-            camera2D.m_Lens.OrthographicSize = orthosize;
+
             yield return StartCoroutine(SwitchCameraCoroutine(camera2D));
         }
+        camera2D.m_Lens.Orthographic = true;
+        camera2D.m_Lens.OrthographicSize = orthosize;
         PlayerHandler.instance.CantHandle = false;
         GetCameraSettingByTrans3D();
     }
