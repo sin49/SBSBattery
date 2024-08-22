@@ -14,6 +14,9 @@ public class fan : RemoteObject
     public Transform Particle;
     public ParticleSystem TrailParticle;
     public float TrailParticleWEight;
+
+    public Animator animator;
+
     void initairdistance()
     {
         airDistanceTransform.localScale =
@@ -32,6 +35,7 @@ public class fan : RemoteObject
     {
         Air.conveyorDirection = this.transform.forward;
         Air.conveyorSpeed = AirPower;
+
         if (onActive)
         {
             Air.gameObject.SetActive(true);
@@ -47,6 +51,7 @@ public class fan : RemoteObject
     private void Update()
     {
         Air.conveyorSpeed = AirPower;
+        animator.SetBool("Active", onActive);
         initairdistance();
         if(onActive&& soundEffectListPlayer!=null)
             soundEffectListPlayer.PlayAudioNoCancel(2);

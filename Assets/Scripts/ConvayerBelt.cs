@@ -17,9 +17,19 @@ public class ConvayerBelt : MonoBehaviour
             Player player = other.GetComponent<Player>(); // Rigidbody로 수정
             if (player != null)
             {
-         
+
                 Vector3 force = conveyorDirection * conveyorSpeed;
                 player.AddEnviromentPower(force); // AddForce와 ForceMode를 사용
+            }
+        }
+        else if (other.gameObject.layer==14)
+        {
+            Debug.Log("prob감지");
+            physicsprob prob = other.GetComponent<physicsprob>();
+            if (prob != null)
+            {
+                Vector3 force = conveyorDirection * conveyorSpeed;
+                prob.getenvironmentforce(force);
             }
         }
     }

@@ -17,7 +17,7 @@ public class CharColliderColor : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("에디터에서도 작동 저장한 후에는\n스크립트 비활성화 작업 한번 해줘야됨");
+       
 
         if (instance == null)
             instance = this;
@@ -27,7 +27,7 @@ public class CharColliderColor : MonoBehaviour
     {
         if (instance == null)
         {
-            Debug.Log("에디터 모드로 몬스터 범위 컬러 싱글톤 채워넣는 중");
+           
             instance = this;
         }
     }

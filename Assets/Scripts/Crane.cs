@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEngine.UI.Image;
 
 public abstract class Crane : RemoteObject
@@ -12,16 +14,24 @@ public abstract class Crane : RemoteObject
     public Transform ActiveTransform;
 Vector3 DeActiveTransform;
     Vector3 MoveVector;
-    
+    [Header("조종 없이 자동으로 움직임")]
+    public bool autoactive;
+    [Header("자동으로 움직일 때 이동 후 대기")]
+    public float activewait = 1;
+
     protected override void Awake()
     {
       base.Awake();
         DeActiveTransform = MoveObject.transform.position;
-       
+        if (autoactive)
+        {
+            CanControl = false;
+        }
     }
     private void Start()
     {
         PlayerHandler.instance.registerPlayerFallEvent(Initalize);
+        StartCoroutine(autoactivecorutine());
     }
   public  bool CraneMove;
     public void Initalize()
@@ -30,7 +40,7 @@ Vector3 DeActiveTransform;
     }
     public override void Active()
     {
-        Debug.Log("active()");
+  
         if (onActive)
         {
             Deactive();
@@ -58,10 +68,28 @@ Vector3 DeActiveTransform;
             base.Deactive();
         }
     }
+    private void OnBecameVisible()
+    {
+        StartCoroutine(autoactivecorutine());
+    }
     public abstract Vector3 GetMoveVector(Vector3 Target, Vector3 origin);
     public abstract bool MoveCrane(Vector3 vector, Vector3 Target, Transform origin);
+   
+    IEnumerator autoactivecorutine()
+    {
+   
+        while (true)
+        {
+            if (!CraneMove)
+            {
+                yield return new WaitForSeconds(activewait);
+                onActive = !onActive;
+            }
 
 
+            yield return null;
+        }
+    }
         private void FixedUpdate()
     {
         if (onActive)

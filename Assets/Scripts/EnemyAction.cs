@@ -10,8 +10,7 @@ public abstract class EnemyAction : MonoBehaviour
     protected event Action ActionStartHandler;
     protected event Action ActionEndHandler;//행동이 끝났을 때 이벤트
  
-    [Header("액션 실행 확률")]
-    public int Possibility = 1;
+
     public float ActionLifeTIme;
     public void registerActionStartHandler(Action a)
     {
