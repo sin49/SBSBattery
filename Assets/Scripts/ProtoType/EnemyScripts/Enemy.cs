@@ -372,7 +372,7 @@ public class Enemy: Character,DamagedByPAttack
     #region 피격함수
     public override void Damaged(float damage)
     {
-
+        base.Damaged(damage);
         eStat.hp -= damage;
         if (eStat.hp <= 0)
         {
