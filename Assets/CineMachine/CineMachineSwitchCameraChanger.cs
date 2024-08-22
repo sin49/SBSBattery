@@ -24,7 +24,7 @@ public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
 
     [Header("이것도 비워놔도 됌")]
     [Header("2DCameraMoveRange")]
-    public Collider CameraRange2D;
+    public Collider2D CameraRange2D;
     [Header("3DCameraMoveRange")]
     public Collider CameraRange3D;
     [Header("카메라 전환 속도")]
@@ -77,7 +77,7 @@ public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
                 if (CameraRange2D != null)
                     m.Set2DCamerabinding(CameraRange2D);
                 if (CameraRange3D != null)
-                    m.Set2DCamerabinding(CameraRange3D);
+                    m.Set3DCamerabinding(CameraRange3D);
 
                 switch (switchingstate)
                 {
