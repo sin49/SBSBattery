@@ -37,6 +37,8 @@ public class Boss1Sweap : EnemyAction
     public float sweaperwaitTime;
     [Header("시작지점에서 목표지점까지 가는 시간")]
     public float SweaperEndMoveTime;
+    [Header("목표지점에서 대기하는 시간")]
+    public float SweaperEndWaitTime;
     [Header("목표지점까지 이동 후 다시 원위치하는 시간")]
     public float sweaperReturnTime;
     
@@ -89,9 +91,10 @@ public class Boss1Sweap : EnemyAction
       
         StartCoroutine(DisableAction(0));
     }
+    public Color sweapColor;
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
+        Gizmos.color = sweapColor;
         if (BossField != null)
         {
             Vector3 min = new Vector3(-0.5f, 0.5f, -0.5f);
@@ -153,7 +156,7 @@ public class Boss1Sweap : EnemyAction
     public Tuple<Vector3, float> calculateSweapvector(Vector3 goal, Vector3 startpos,float randomweight, float time)
     {
         //goal = new Vector3(goal.x, goal.y, target.transform.position.z + randomweight);
-        goal = new Vector3(target.transform.position.x + randomweight, goal.y, target.transform.position.z + randomweight);
+        goal = new Vector3(target.transform.position.x + randomweight, target.transform.position.y, target.transform.position.z + randomweight);
         Vector3 vec = goal - startpos;
     
         float distance = vec.magnitude;
@@ -230,6 +233,7 @@ public class Boss1Sweap : EnemyAction
         //OnePostion=handposition
         sweapertimer = 0;
         hand.AttackState = false;
+        yield return new WaitForSeconds(SweaperEndWaitTime);
         //손이 원위치로
         tuple = calculateSweapvector(HandOnepositon, handtransform.position, sweaperReturnTime);
         vec = tuple.Item1;
@@ -306,6 +310,7 @@ public class Boss1Sweap : EnemyAction
         }
         hand.AttackState = false;
         sweapertimer = 0;
+        yield return new WaitForSeconds(SweaperEndWaitTime);
         //손이 원위치로
         tuple = calculateSweapvector(HandOnepositon, handtransform.position, sweaperReturnTime);
         vec = tuple.Item1;

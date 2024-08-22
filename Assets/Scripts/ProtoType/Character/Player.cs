@@ -10,10 +10,14 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using UnityEngine.Windows.Speech;
 
+public enum MoveInput { MoveRightin2D=1,MoveRightin3D}
+
 public enum direction { Left = -1, none = 0, Right = 1 }
 public enum directionZ {back=-1,none=0,forward=1 }
 public class Player : Character
 {
+    public MoveInput Moveinput_;
+
     IngameUIManager gameuimanager;
     #region º¯¼ö
     public Rigidbody playerRb;
@@ -1012,14 +1016,30 @@ public class Player : Character
         if (collision.gameObject.CompareTag("InteractivePlatform") && jumpkeyinputcheckvalue <= 0)
         {
             jumpRaycastCheck();
-           
 
-            if (PlayerHandler.instance.doubleDownInput && !CullingPlatform)
+            if (KeySettingManager.instance == null)
             {
-                PlayerHandler.instance.doubleDownInput = false;
-                CullingPlatform = true;
-                Physics.IgnoreLayerCollision(6, 11, true);
-             
+                if (Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.DownArrow) &&
+                    (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D || PlayerStat.instance.MoveState != PlayerMoveState.Trans3D2)
+                    && !CullingPlatform)
+                {
+                    PlayerHandler.instance.doubleDownInput = false;
+                    CullingPlatform = true;
+                    Physics.IgnoreLayerCollision(6, 11, true);
+
+                }
+            }
+            else
+            {
+                if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode)&& Input.GetKey(KeyCode.DownArrow) &&
+                   (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D || PlayerStat.instance.MoveState != PlayerMoveState.Trans3D2)
+                   && !CullingPlatform)
+                {
+                    PlayerHandler.instance.doubleDownInput = false;
+                    CullingPlatform = true;
+                    Physics.IgnoreLayerCollision(6, 11, true);
+
+                }
             }
         }
 

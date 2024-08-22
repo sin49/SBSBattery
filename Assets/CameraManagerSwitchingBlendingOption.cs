@@ -11,8 +11,9 @@ public class CameraManagerSwitchingBlendingOption : CameraManager
 
     private CinemachineBrain cinemachineBrain;
     private bool isTransitioning;
-    protected virtual void Start()
+    protected override void Start()
     {
+        base.Start();
         cinemachineBrain = this.GetComponent<CinemachineBrain>();
         cam = GetComponent<Camera>();
     }
@@ -57,11 +58,9 @@ public class CameraManagerSwitchingBlendingOption : CameraManager
             newCamera.gameObject.SetActive(true);
         
              activedcamera = newCamera;
-            Time.timeScale = 0;
-            Debug.Log("timescale" + Time.timeScale);
+     
             yield return new WaitForSecondsRealtime(transitionDuration);
-            Time.timeScale = 1;
-            Debug.Log("timescale" + Time.timeScale);
+  
             //if (currentCamera != newCamera)
             //{
             //    currentCamera.gameObject.SetActive(false);

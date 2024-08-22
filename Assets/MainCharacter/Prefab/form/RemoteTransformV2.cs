@@ -208,6 +208,8 @@ public class RemoteTransformV2 : Player
     {
         if (closestObject != null)
             closestObject.GetComponent<RemoteObject>().Active();
+        closestObject = null;
+        
         //for (int i = 0; i < remoteObj.Count; i++)
         //{
         //    remoteObj[i].GetComponent<RemoteObject>().Active();
