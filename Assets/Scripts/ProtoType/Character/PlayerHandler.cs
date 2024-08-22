@@ -413,7 +413,7 @@ public class PlayerHandler : MonoBehaviour
         if (CurrentPlayer.onInterarctive && (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D && PlayerStat.instance.MoveState != PlayerMoveState.Trans3D2))
         {
             Debug.Log("aaaaaaa");
-                if (Input.GetKey(KeySettingManager.instance.jumpKeycode) && !Input.GetKey(KeyCode.DownArrow)
+                if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode) && !Input.GetKey(KeyCode.DownArrow)
                       && !jumprestrict)
                 {
 
@@ -432,7 +432,7 @@ public class PlayerHandler : MonoBehaviour
         }
         else
         {
-            if (Input.GetKey(KeySettingManager.instance.jumpKeycode)
+            if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode)
                   && !jumprestrict)
             {
 
