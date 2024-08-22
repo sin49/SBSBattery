@@ -18,8 +18,7 @@ public class KeySettingManager : MonoBehaviour
     public KeyCode SkillKeycode = KeyCode.S;
     [Header("내려찍기")]
     public KeyCode DownAttackKeycode = KeyCode.A;
-    [Header("내려가기")]
-    public KeyCode FallKeycode = KeyCode.C;
+
     [Header("상호작용")]
     public KeyCode InteractKeycode = KeyCode.F;
     [Header("변신 풀기")]

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,9 +6,17 @@ using UnityEngine;
 public abstract class Character: MonoBehaviour
 {
     protected CharacterSoundPlayer soundplayer;
+    event Action hittedevent;
 
+    public void registerhittedevent(Action a)
+    {
+        hittedevent += a;
+    }
     public abstract void Attack();
-    public abstract void Damaged(float damage);
+    public virtual void Damaged(float damage)
+    {
+        hittedevent?.Invoke();
+    }
     public abstract void Move();
     public abstract void Dead();
 

@@ -410,19 +410,43 @@ public class PlayerHandler : MonoBehaviour
                 InteractTimer = PlayerStat.instance.InteractDelay;
             }
         }
-        if (Input.GetKey(KeySettingManager.instance.jumpKeycode) && !jumprestrict)
+        if (CurrentPlayer.onInterarctive && (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D || PlayerStat.instance.MoveState != PlayerMoveState.Trans3D2))
         {
+            Debug.Log("aaaaaaa");
+                if (Input.GetKey(KeySettingManager.instance.jumpKeycode) && !Input.GetKey(KeyCode.DownArrow)
+                      && !jumprestrict)
+                {
 
 
-            CurrentPlayer.GetJumpBuffer();
+                    CurrentPlayer.GetJumpBuffer();
 
 
+                }
+                else
+                {
+                    CurrentPlayer.jumpLimitInput = false;
+                    /*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
+                        CurrentPlayer.jumpLimitInput = false;*/
+                }
+           
         }
         else
         {
-            CurrentPlayer.jumpLimitInput = false;
-            /*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
-                CurrentPlayer.jumpLimitInput = false;*/
+            if (Input.GetKey(KeySettingManager.instance.jumpKeycode)
+                  && !jumprestrict)
+            {
+
+
+                CurrentPlayer.GetJumpBuffer();
+
+
+            }
+            else
+            {
+                CurrentPlayer.jumpLimitInput = false;
+                /*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
+                    CurrentPlayer.jumpLimitInput = false;*/
+            }
         }
         if (!Input.GetKey(KeySettingManager.instance.jumpKeycode))
         {
@@ -452,7 +476,7 @@ public class PlayerHandler : MonoBehaviour
        
     
 
-            if (Input.GetKey(KeySettingManager.instance.DownAttackKeycode) && !CurrentPlayer.onGround && doubleDownInput/*&&
+            if (Input.GetKey(KeySettingManager.instance.DownAttackKeycode) && !CurrentPlayer.onGround/*&&
                 PlayerInventory.instance.checkessesntialitem("item01")*/)
             {
                 CurrentPlayer.DownAttack();

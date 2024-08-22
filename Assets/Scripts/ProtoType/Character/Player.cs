@@ -310,7 +310,13 @@ public class Player : Character
 
         InteractivePlatformrayCheck();
         InteractivePlatformrayCheck2();
-
+        if (oninteractivetimer > 0 && onInterarctive)
+        {
+            oninteractivetimer -= Time.deltaTime;
+            if (oninteractivetimer < 0)
+                onInterarctive = false;
+        }
+        
         if (jumpkeyinputcheckvalue > 0)
             jumpkeyinputcheckvalue -= Time.fixedDeltaTime;
 
@@ -709,9 +715,15 @@ public class Player : Character
     #endregion
 
     #region 특수공격
+    public event Action skillhandler;
+
+    public void registerskilleventhandler(Action a)
+    {
+        skillhandler += a;
+    }
     public virtual void Skill1()
     {
-        attackBufferTimer = attackBufferTimeMax;
+        skillhandler?.Invoke();
     }
     public virtual void Skill2()
     {
@@ -748,6 +760,7 @@ public class Player : Character
    
         if (onInvincible)
             return;
+        base.Damaged(damage);
         onInvincible = true;
 
         PlayerStat.instance.pState = PlayerState.hitted;
@@ -981,18 +994,23 @@ public class Player : Character
             PlayerHandler.instance.CurrentPlayer.direction = direction;
     }
     #endregion
-
+    float oninteractivetimer = 0f;
     #region 콜라이더 트리거
     private void OnCollisionExit(Collision collision)
     {
         #region 바닥 상호작용
         if (collision.gameObject.CompareTag("Ground") ||
-            collision.gameObject.CompareTag("InteractivePlatform") ||
+            
             collision.gameObject.CompareTag("Enemy") ||
             collision.gameObject.CompareTag("GameController"))
         {
             onGround = false;
-     
+
+        }else if (collision.gameObject.CompareTag("InteractivePlatform"))
+        {
+            onGround = false;
+            oninteractivetimer = 0.1f;
+           
         }
         #endregion
     }
@@ -1003,7 +1021,7 @@ public class Player : Character
             jumpRaycastCheck();
         }
     }
-
+    public bool onInterarctive;
     private void OnCollisionStay(Collision collision)
     {
         //#region 바닥 상호작용
@@ -1016,7 +1034,7 @@ public class Player : Character
         if (collision.gameObject.CompareTag("InteractivePlatform") && jumpkeyinputcheckvalue <= 0)
         {
             jumpRaycastCheck();
-
+            onInterarctive = true;
             if (KeySettingManager.instance == null)
             {
                 if (Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.DownArrow) &&
