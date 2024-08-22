@@ -310,11 +310,10 @@ public class Player : Character
 
         InteractivePlatformrayCheck();
         InteractivePlatformrayCheck2();
-        if (oninteractivetimer > 0 && onInterarctive)
+        if (oninteractivetimer > 0 && !onInterarctive)
         {
             oninteractivetimer -= Time.deltaTime;
-            if (oninteractivetimer < 0)
-                onInterarctive = false;
+           
         }
         
         if (jumpkeyinputcheckvalue > 0)
@@ -994,7 +993,7 @@ public class Player : Character
             PlayerHandler.instance.CurrentPlayer.direction = direction;
     }
     #endregion
-    float oninteractivetimer = 0f;
+   public float oninteractivetimer = 0f;
     #region 콜라이더 트리거
     private void OnCollisionExit(Collision collision)
     {
@@ -1006,10 +1005,11 @@ public class Player : Character
         {
             onGround = false;
 
-        }else if (collision.gameObject.CompareTag("InteractivePlatform"))
+        }
+        if (collision.gameObject.CompareTag("InteractivePlatform"))
         {
             onGround = false;
-            oninteractivetimer = 0.1f;
+            onInterarctive = false;
            
         }
         #endregion
@@ -1035,10 +1035,11 @@ public class Player : Character
         {
             jumpRaycastCheck();
             onInterarctive = true;
+            oninteractivetimer = 0.1f;
             if (KeySettingManager.instance == null)
             {
                 if (Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.DownArrow) &&
-                    (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D || PlayerStat.instance.MoveState != PlayerMoveState.Trans3D2)
+                    (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D && PlayerStat.instance.MoveState != PlayerMoveState.Trans3D2)
                     && !CullingPlatform)
                 {
                     PlayerHandler.instance.doubleDownInput = false;
@@ -1050,7 +1051,7 @@ public class Player : Character
             else
             {
                 if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode)&& Input.GetKey(KeyCode.DownArrow) &&
-                   (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D || PlayerStat.instance.MoveState != PlayerMoveState.Trans3D2)
+                   (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D && PlayerStat.instance.MoveState != PlayerMoveState.Trans3D2)
                    && !CullingPlatform)
                 {
                     PlayerHandler.instance.doubleDownInput = false;
