@@ -13,7 +13,7 @@ public interface DamagedByPAttack
 
 public class Enemy: Character,DamagedByPAttack
 {
-   
+    public Color testcolor;
 
     public EnemyStat eStat;
     public PatrolType patrolType;
@@ -386,7 +386,23 @@ public class Enemy: Character,DamagedByPAttack
             attackCollider.SetActive(false);
             if (target != null)
             {
-                if (target.position.x > transform.position.x)
+                if (target.gameObject != target.gameObject == PlayerHandler.instance.CurrentPlayer.gameObject)
+                {
+                    target = PlayerHandler.instance.CurrentPlayer.transform;
+                    if (target.GetChild(0).position.x > transform.position.x)
+                    {
+                        transform.rotation = Quaternion.Euler(0, 90, 0);
+                    }
+                    else
+                    {
+                        transform.rotation = Quaternion.Euler(0, -90, 0);
+                    }
+                }
+            }
+            else
+            {
+                target = PlayerHandler.instance.CurrentPlayer.transform;
+                if (target.GetChild(0).position.x > transform.position.x)
                 {
                     transform.rotation = Quaternion.Euler(0, 90, 0);
                 }
@@ -624,8 +640,10 @@ public class Enemy: Character,DamagedByPAttack
                 center = (patrolGroup[0] + patrolGroup[1]) / 2; //s
                 float xPoint = patrolGroup[1].x - patrolGroup[0].x;
                 Vector3 size = new(xPoint, yWidth, zWidth);
-                Gizmos.color = Color.red;
-
+                if (CharColliderColor.instance != null)
+                    Gizmos.color = CharColliderColor.instance.patrolRange;
+                else
+                    Gizmos.color = Color.red;
                 Gizmos.DrawWireCube(center, size);
             }
             else
@@ -637,7 +655,11 @@ public class Enemy: Character,DamagedByPAttack
                 center = (p1 + p2) / 2;
                 float xPoint = p2.x - p1.x;
                 Vector3 size = new(xPoint, yWidth, zWidth);
-                Gizmos.color = Color.red;
+
+                if (CharColliderColor.instance != null)
+                    Gizmos.color = CharColliderColor.instance.patrolRange;
+                else
+                    Gizmos.color = Color.red;
                 Gizmos.DrawWireCube(center, size);
                 targetPatrol = p2;
 
@@ -645,15 +667,26 @@ public class Enemy: Character,DamagedByPAttack
                 UpWallRayCheck();               
                 WallCheckResult();
             }
-            Gizmos.color = Color.yellow;
+            if (CharColliderColor.instance != null)
+                Gizmos.color = CharColliderColor.instance.trackingRange;
+            else
+                Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, trackingDistance);
+            //Gizmos.color = Color.yellow;
 
-            Gizmos.DrawWireSphere(transform.position, trackingDistance); 
+            //Gizmos.DrawWireSphere(transform.position, trackingDistance); 
         }
 
         if (searchCollider != null)
         {
             searchCollider.GetComponent<BoxCollider>().size = searchColliderRange;
             searchCollider.GetComponent<BoxCollider>().center = searchColliderPos;
+
+            if (searchCollider.transform.childCount != 0)
+            {
+                searchCollider.transform.GetChild(0).localScale = searchColliderRange;
+                searchCollider.transform.GetChild(0).localPosition = searchColliderPos;
+            }
         }
 
 
@@ -661,6 +694,13 @@ public class Enemy: Character,DamagedByPAttack
         {
             rangeCollider.GetComponent<BoxCollider>().size = rangeSize;
             rangeCollider.GetComponent<BoxCollider>().center = rangePos;
+
+            if (rangeCollider.transform.childCount != 0)
+            {
+                rangeCollider.transform.GetChild(0).localScale = rangeSize;
+                rangeCollider.transform.GetChild(0).localPosition = rangePos;
+            }
+                
         }
 
 

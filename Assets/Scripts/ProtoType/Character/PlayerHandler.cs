@@ -145,11 +145,19 @@ public class PlayerHandler : MonoBehaviour
             else
                 CurrentPlayer.onInvincible = false;
         }
-    
+
 
         #region 캐릭터 조작
-        if ((CurrentPlayer != null && !formChange) || CantHandle)
-        charactermove();
+        if (KeySettingManager.instance == null)
+        {
+            if ((CurrentPlayer != null && !formChange) || CantHandle)
+                charactermove();
+        }
+        else
+        {
+            if ((CurrentPlayer != null && !formChange) || CantHandle)
+                KeysettingCharactermove();
+        }
         #endregion
     }
     public bool CantHandle;
@@ -374,6 +382,97 @@ public class PlayerHandler : MonoBehaviour
        
         
     }
+    void KeysettingCharactermove()
+    {
+        if (!CurrentPlayer.downAttack)
+        {
+            CurrentPlayer.Move();
+        }
+        if (Input.GetKeyDown(KeySettingManager.instance.DimensionChangeKeycode) && CurrentPlayer.onGround && !Changing && !DImensionChangeDisturb)
+        {
+
+            StartCoroutine(ChangeDimension());
+            //Dimensionchangeevent?.Invoke();
+
+        }
+
+        if (InteractTimer > 0)
+            InteractTimer -= Time.deltaTime;
+
+
+        if (interactobject != null)
+        {
+            if (Input.GetKeyDown(KeySettingManager.instance.InteractKeycode) && InteractTimer <= 0)
+            {
+                interactobject.Active(PlayerStat.instance.direction);
+                interactobject = null;
+
+                InteractTimer = PlayerStat.instance.InteractDelay;
+            }
+        }
+        if (Input.GetKey(KeySettingManager.instance.jumpKeycode) && !jumprestrict)
+        {
+
+
+            CurrentPlayer.GetJumpBuffer();
+
+
+        }
+        else
+        {
+            CurrentPlayer.jumpLimitInput = false;
+            /*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
+                CurrentPlayer.jumpLimitInput = false;*/
+        }
+        if (!Input.GetKey(KeySettingManager.instance.jumpKeycode))
+        {
+            CurrentPlayer.jumphold();
+        }
+
+
+     
+
+            if (Input.GetKey(KeySettingManager.instance.DeformKeycode))
+            {
+                switch (CurrentType)
+                {
+                    case TransformType.remoteform:
+                        DeTransformtimer += Time.deltaTime;
+                        if (DeTransformtimer > DeTransformtime)
+                        {
+                            DeTransformtimer = 0;
+                            //Deform();
+                        }
+                        break;
+                    default:
+                        break;
+
+                }
+            }
+       
+    
+
+            if (Input.GetKey(KeySettingManager.instance.DownAttackKeycode) && !CurrentPlayer.onGround && doubleDownInput/*&&
+                PlayerInventory.instance.checkessesntialitem("item01")*/)
+            {
+                CurrentPlayer.DownAttack();
+            }
+      
+        if (doubleUpInput && Input.GetKeyDown(KeySettingManager.instance.SkillKeycode) && CurrentType != TransformType.Default)
+        {
+            CurrentPlayer.Skill1();
+
+            Skill1InputTimer = Skill1InputCheck;
+        }
+        if (Input.GetKey(KeySettingManager.instance.AttackKeycode) && Skill1InputTimer <= 0/* &&
+                PlayerInventory.instance.checkessesntialitem("item01")*/)
+        {
+           
+            CurrentPlayer.attackBufferTimer = CurrentPlayer.attackBufferTimeMax;
+        }
+        if (Skill1InputTimer > 0)
+            Skill1InputTimer -= Time.fixedDeltaTime;
+    }
     void charactermove()
     {
         if (!CurrentPlayer.downAttack)
@@ -421,10 +520,7 @@ public class PlayerHandler : MonoBehaviour
             CurrentPlayer.jumphold();
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            CurrentPlayer. SwapAttackType();
-        }
+    
         if (Input.GetKey(KeyCode.UpArrow))
         {
             if (!firstUpInput && !doubleUpInput && inputTimer<=0)
@@ -492,13 +588,12 @@ public class PlayerHandler : MonoBehaviour
             firstDownInput = false;
             doubleDownInput = false;
         }
-        if (doubleUpInput && Input.GetKeyDown(KeyCode.X)&&CurrentType!=TransformType.Default)
+        if (doubleUpInput && Input.GetKeyDown(KeyCode.S)&&CurrentType!=TransformType.Default)
         {
             CurrentPlayer.Skill1();
          
                 Skill1InputTimer = Skill1InputCheck;
         }    
-        else
         if (Input.GetKey(KeyCode.X)&& Skill1InputTimer<=0/* &&
                 PlayerInventory.instance.checkessesntialitem("item01")*/)
         {

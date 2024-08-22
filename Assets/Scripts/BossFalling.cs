@@ -259,10 +259,18 @@ public class BossFalling : EnemyAction
 
         return fallingPoint;
     }
-
+    public Color GizmoColor;
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.green;
+        Gizmos.color = GizmoColor;
+        if (bossField != null)
+        {
+            Vector3 min = new Vector3(-0.5f, 0.5f, -0.5f);
+            Vector3 max = new Vector3(0.5f, 0.5f, 0.5f);
+
+            fieldMin = bossField.TransformPoint(min);
+            fieldMax = bossField.TransformPoint(max);
+        }
         Vector3 center = (fieldMin + fieldMax)/2;
         Vector3 size = new(Mathf.Abs(fieldMax.x - fieldMin.x) / fallingRange, fieldMin.y, Mathf.Abs(fieldMax.z - fieldMin.z) / fallingRange);
         Gizmos.DrawWireCube(center, size);
