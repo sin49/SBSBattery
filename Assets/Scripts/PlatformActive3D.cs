@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlatformActive3D : MonoBehaviour
 {
-    BoxCollider Bcollider;
+    Collider Bcollider;
     public float Zmove = 1;
     public bool BcolliderActive3D=true;
     private void Awake()
