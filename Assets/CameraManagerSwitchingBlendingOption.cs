@@ -22,7 +22,11 @@ public class CameraManagerSwitchingBlendingOption : CameraManager
         base.ActiveCamera(camera, col);
         SwitchToCamera(camera);
     }
-    
+    public override void ActiveCamera(CinemachineVirtualCamera camera)
+    {
+        base.ActiveCamera(camera);
+        SwitchToCamera(camera);
+    }
     public override void ActiveCamera(int n,Collider col)
     {
         if (n >= VirtualCameras.Length)

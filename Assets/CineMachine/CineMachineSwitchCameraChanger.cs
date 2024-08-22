@@ -82,10 +82,10 @@ public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
                 switch (switchingstate)
                 {
                     case camerachangerswitchingstate.change2D:
-                        m.ActiveCamera(m.camera2D,CameraRange2D);
+                        m.ActiveCamera(m.camera2D);
                         break;
                     case camerachangerswitchingstate.change3D:
-                        m.ActiveCamera(m.camera3D, CameraRange3D);
+                        m.ActiveCamera(m.camera3D);
                         break;
                 }
             }
