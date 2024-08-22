@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class objectcollisionevent : MonoBehaviour
+[Serializable]
+public class objectcollisionevent : InputEvent
 {
     public GameObject targetobject;
     public Collision targetcollision;
@@ -42,8 +43,13 @@ public class objectcollisionevent : MonoBehaviour
     }
 
 
-    public bool input(object o = null)
+    public override bool input(object o = null)
     {
         return tf;
+    }
+
+    public override void initialize()
+    {
+        tf = false;
     }
 }

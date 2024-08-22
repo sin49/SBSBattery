@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
-public class CollisionisTriggerEvent : MonoBehaviour,InputEvent
+[Serializable]
+public class CollisionisTriggerEvent : InputEvent
 {
     public int index;//인덱스말고 enum이 나을듯?
     public Collider targetcollider;
@@ -11,21 +12,20 @@ public class CollisionisTriggerEvent : MonoBehaviour,InputEvent
     bool tf;
     private void Awake()
     {
-     
-            isTriggerEventHandler b=null;
-            if (targetcollider.GetComponent<isTriggerEventHandler>())
-            {
-               b= targetcollider.GetComponent<isTriggerEventHandler>();
-               
-            }
-            else
-            {
-                b = targetcollider.AddComponent<isTriggerEventHandler>();
-            }
-     
-            b.registerEvent(TriggerEnterEvent, TriggerExitEvent);
+        isTriggerEventHandler b = null;
+        if (targetcollider.GetComponent<isTriggerEventHandler>())
+        {
+            b = targetcollider.GetComponent<isTriggerEventHandler>();
 
+        }
+        else
+        {
+            b = targetcollider.AddComponent<isTriggerEventHandler>();
+        }
+
+        b.registerEvent(TriggerEnterEvent, TriggerExitEvent);
     }
+   
     void TriggerEnterEvent(Collider other)
     {
         if (index == 1)
@@ -63,8 +63,13 @@ public class CollisionisTriggerEvent : MonoBehaviour,InputEvent
         }
     }
    
-    public bool input(object o=null)
+    public override bool input(object o=null)
     {
         return tf;
+    }
+
+    public override void initialize()
+    {
+        tf = false;
     }
 }

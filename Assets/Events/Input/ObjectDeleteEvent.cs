@@ -1,12 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class ObjectDeleteEvent : MonoBehaviour,InputEvent
+[Serializable]
+public class ObjectDeleteEvent :  InputEvent
 {
     public List<GameObject> gameobjects = new List<GameObject>();
 
-    public bool input(object o = null)
+    public override void initialize()
+    {
+        return;
+    }
+
+    public override bool input(object o = null)
     {
       for(int n = 0; n < gameobjects.Count; n++)
         {

@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
-public class ObjectTriggerInputEvent : MonoBehaviour,InputEvent
+[Serializable]
+public class ObjectTriggerInputEvent : InputEvent
 {
     public GameObject targetObject;
     public Collider targetcollider;
@@ -42,8 +43,13 @@ public class ObjectTriggerInputEvent : MonoBehaviour,InputEvent
         }
     }
 
-    public bool input(object o = null)
+    public override bool input(object o = null)
     {
         return tf;
+    }
+
+    public override void initialize()
+    {
+        tf = false;
     }
 }
