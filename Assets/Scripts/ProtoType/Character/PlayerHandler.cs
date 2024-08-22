@@ -410,7 +410,7 @@ public class PlayerHandler : MonoBehaviour
                 InteractTimer = PlayerStat.instance.InteractDelay;
             }
         }
-        if (CurrentPlayer.oninteractivetimer>0 && (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D && PlayerStat.instance.MoveState != PlayerMoveState.Trans3D2))
+        if (CurrentPlayer.onInterarctive && (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D && PlayerStat.instance.MoveState != PlayerMoveState.Trans3D2))
         {
             Debug.Log("aaaaaaa");
                 if (Input.GetKey(KeySettingManager.instance.jumpKeycode) && !Input.GetKey(KeyCode.DownArrow)

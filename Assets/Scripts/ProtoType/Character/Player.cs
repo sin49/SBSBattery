@@ -310,10 +310,11 @@ public class Player : Character
 
         InteractivePlatformrayCheck();
         InteractivePlatformrayCheck2();
-        if (oninteractivetimer > 0 && !onInterarctive)
+        if (oninteractivetimer > 0 && onInterarctive)
         {
             oninteractivetimer -= Time.deltaTime;
-           
+            if (oninteractivetimer <= 0)
+                onInterarctive = false;
         }
         
         if (jumpkeyinputcheckvalue > 0)
@@ -1009,7 +1010,7 @@ public class Player : Character
         if (collision.gameObject.CompareTag("InteractivePlatform"))
         {
             onGround = false;
-            onInterarctive = false;
+            oninteractivetimer = 0.1f;
            
         }
         #endregion
@@ -1035,13 +1036,14 @@ public class Player : Character
         {
             jumpRaycastCheck();
             onInterarctive = true;
-            oninteractivetimer = 0.1f;
+
             if (KeySettingManager.instance == null)
             {
                 if (Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.DownArrow) &&
                     (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D && PlayerStat.instance.MoveState != PlayerMoveState.Trans3D2)
                     && !CullingPlatform)
                 {
+                    onInterarctive = false;
                     PlayerHandler.instance.doubleDownInput = false;
                     CullingPlatform = true;
                     Physics.IgnoreLayerCollision(6, 11, true);
