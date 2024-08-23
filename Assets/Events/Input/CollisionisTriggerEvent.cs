@@ -1,13 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CollisionisTriggerEvent : MonoBehaviour,InputEvent
 {
     public int index;//인덱스말고 enum이 나을듯?
-    //public List<Co>
-    bool tf;
+    public Collider targetcollider;
 
+    bool tf;
+    private void Awake()
+    {
+     
+            isTriggerEventHandler b=null;
+            if (targetcollider.GetComponent<isTriggerEventHandler>())
+            {
+               b= targetcollider.GetComponent<isTriggerEventHandler>();
+               
+            }
+            else
+            {
+                b = targetcollider.AddComponent<isTriggerEventHandler>();
+            }
+     
+            b.registerEvent(TriggerEnterEvent, TriggerExitEvent);
+
+    }
     void TriggerEnterEvent(Collider other)
     {
         if (index == 1)

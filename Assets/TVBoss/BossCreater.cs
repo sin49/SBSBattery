@@ -6,7 +6,7 @@ using UnityEngine;
 public class BossCreater : MonoBehaviour,colliderDisplayer
 {
 
-    public GameObject ColliderDisplay;
+    public Renderer ColliderDisplay;
     [Header("보스 카메라 2D")]
     public CinemachineVirtualCamera camera2D;
     [Header("보스 카메라 3D")]
@@ -68,7 +68,7 @@ public class BossCreater : MonoBehaviour,colliderDisplayer
 
     public void ActiveColliderDisplay()
     {
-        ColliderDisplay.SetActive(true);
+        ColliderDisplay.enabled = true;
     }
     public void registerColliderDIsplay()
     {
@@ -79,6 +79,6 @@ public class BossCreater : MonoBehaviour,colliderDisplayer
     }
     public void DeactiveColliderDisplay()
     {
-      ColliderDisplay.SetActive(false);
+      ColliderDisplay.enabled = false;
     }
 }

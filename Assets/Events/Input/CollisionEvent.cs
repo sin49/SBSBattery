@@ -4,9 +4,24 @@ using UnityEngine;
 
 public class CollisionEvent : MonoBehaviour
 {
-    public int index;//인덱스말고 enum이 나을듯?
+    public int index;
+    public Collision targetcollision;
     bool tf;
-    private void OnCollisionEnter(Collision other)
+
+    private void Awake()
+    {
+        isCollisionEventTrigger tmp;
+        if (targetcollision.gameObject.GetComponent<isCollisionEventTrigger>())
+        {
+            tmp = targetcollision.gameObject.GetComponent<isCollisionEventTrigger>();
+        }
+        else
+        {
+            tmp = targetcollision.gameObject.AddComponent<isCollisionEventTrigger>();
+        }
+        tmp.registerEvent(OnCollisionEnterEvent, OnCollisionExitEvent);
+    }
+    void OnCollisionEnterEvent(Collision other)
     {
         if (index == 1)
         {
@@ -24,7 +39,7 @@ public class CollisionEvent : MonoBehaviour
             }
         }
     }
-    private void OnCollisionExit(Collision other)
+     void OnCollisionExitEvent(Collision other)
     {
         if (index == 1)
         {
