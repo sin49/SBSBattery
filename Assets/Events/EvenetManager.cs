@@ -18,7 +18,7 @@ public class EvenetManager : MonoBehaviour
     {
 
         var b = Instantiate(Etrigger.gameObject, triggertransform);
-        var trigger = b.AddComponent<EventTrigger>();
+        var trigger = b.GetComponent<EventTrigger>();
         eventTriggers.Add(trigger);
         trigger.name = "EventTrigger"+eventTriggers.Count;
        
@@ -26,9 +26,12 @@ public class EvenetManager : MonoBehaviour
 
     public void addeventhandler()
     {
-      var a=  Instantiate(gameObject, handlertransform);
+      var a=  Instantiate(new GameObject(), handlertransform);
        var handler= a.AddComponent<EventHandler>();
+        if(handlername!=null)
         handler.name = handlername;
+        else
+            handler.name ="eventhandler"+ eventhadles.Count;
         eventhadles.Add(handler);
     }
     public void deleteeventhandler(int index)
