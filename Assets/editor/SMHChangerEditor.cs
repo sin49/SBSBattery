@@ -17,16 +17,16 @@ public class SMHChangerEditor : Editor
     public override void OnInspectorGUI()
     {
 
-        if (GUILayout.Button("현재 SHM 설정을 저장한다"))
-        {
-            if (shmmanager.volume != null)
-            {
+        //if (GUILayout.Button("현재 SHM 설정을 저장한다"))
+        //{
+        //    if (shmmanager.volume != null)
+        //    {
               
-                    shmmanager.SavePreset();
+        //            shmmanager.SavePreset();
    
 
-            }
-        }
+        //    }
+        //}
         base.OnInspectorGUI();
 
     }

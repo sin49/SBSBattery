@@ -4,10 +4,36 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class AttackColliderRange : MonoBehaviour
+public class AttackColliderRange : MonoBehaviour, colliderDisplayer
 {
     public Enemy enemy;
     BoxCollider rangeCollider;
+    public MeshRenderer childMat;
+
+    public void registerColliderDIsplay()
+    {
+        if (ColliderDisplayManager.Instance != null && childMat != null)
+        {
+            ColliderDisplayManager.Instance.register(this);
+        }
+        else
+        {
+            Debug.Log("콜라이더 디스플레이 받지 못한 오브젝트 있음");
+        }
+    }
+
+    public void ActiveColliderDisplay()
+    {
+        if (childMat != null)
+            childMat.enabled = true;
+    }
+
+    public void DeactiveColliderDisplay()
+    {
+        if (childMat != null)
+            childMat.enabled = false;
+    }
+
     private void Awake()
     {
         enemy = transform.parent.GetComponent<Enemy>();
@@ -17,6 +43,16 @@ public class AttackColliderRange : MonoBehaviour
             enemy.rangePos = rangeCollider.center;
             enemy.rangeSize = rangeCollider.size;
         }
+
+        if (childMat == null && transform.childCount != 0)
+        {
+            childMat = GetComponentInChildren<MeshRenderer>();
+        }
+    }
+
+    private void Start()
+    {
+        registerColliderDIsplay();
     }
 
     private void Update()
@@ -25,8 +61,99 @@ public class AttackColliderRange : MonoBehaviour
         {
             rangeCollider.center = enemy.rangePos;
             rangeCollider.size = enemy.rangeSize;
+
+            if (childMat != null)
+            {
+                childMat.transform.localPosition = rangeCollider.center;
+                childMat.transform.localScale = rangeCollider.size;
+            }
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        if (CharColliderColor.instance != null && childMat != null)
+        {
+            childMat.sharedMaterials[0].color = CharColliderColor.instance.attackActiveRange;
+        }
+            
+
+        //Collider collider = GetComponent<Collider>();
+
+        /*if (collider is BoxCollider box)
+        {
+            Vector3 center = box.bounds.center;
+            Vector3 halfSize = box.bounds.size / 2;
+            Vector3[] points = new Vector3[8];
+            points[0] = (center + new Vector3(-halfSize.x, -halfSize.y, -halfSize.z));
+            points[1] = (center + new Vector3(-halfSize.x, halfSize.y, -halfSize.z));
+            points[2] = (center + new Vector3(-halfSize.x, halfSize.y, halfSize.z));
+            points[3] = (center + new Vector3(-halfSize.x, -halfSize.y, halfSize.z));
+            points[4] = (center + new Vector3(halfSize.x, -halfSize.y, -halfSize.z));
+            points[5] = (center + new Vector3(halfSize.x, halfSize.y, -halfSize.z));
+            points[6] = (center + new Vector3(halfSize.x, -halfSize.y, halfSize.z));
+            points[7] = (center + new Vector3(halfSize.x, halfSize.y, halfSize.z));
+
+ 
+            Gizmos.DrawLine(points[0], points[1]);
+            Gizmos.DrawLine(points[0], points[3]);
+            Gizmos.DrawLine(points[0], points[4]);
+
+            Gizmos.DrawLine(points[1], points[2]);
+            Gizmos.DrawLine(points[1], points[5]);
+
+
+            Gizmos.DrawLine(points[2], points[3]);
+            Gizmos.DrawLine(points[2], points[7]);
+
+            Gizmos.DrawLine(points[3], points[6]);
+
+            Gizmos.DrawLine(points[4], points[5]);
+            Gizmos.DrawLine(points[4], points[6]);
+
+            Gizmos.DrawLine(points[5], points[7]);
+
+            Gizmos.DrawLine(points[6], points[7]);
+
+
+            Vector3[] points = new Vector3[4]
+            {
+                center+new Vector3(-halfSize.x, -halfSize.y, -halfSize.z),
+                center+new Vector3(halfSize.x, -halfSize.y, -halfSize.z),
+                center+new Vector3(-halfSize.x, halfSize.y, -halfSize.z),
+                center+new Vector3(-halfSize.x, -halfSize.y, halfSize.z)
+            };
+            Vector3[] secondPoints = new Vector3[4]
+            {
+                transform.TransformPoint(center+new Vector3(-halfSize.x, halfSize.y, halfSize.z)),
+                transform.TransformPoint(center+new Vector3(-halfSize.x, -halfSize.y, halfSize.z)),
+                transform.TransformPoint(center+new Vector3(halfSize.x, halfSize.y, halfSize.z)),
+                transform.TransformPoint(center + new Vector3(-halfSize.x, halfSize.y, -halfSize.z))
+            };
+            Vector3[] thirdPoints = new Vector3[4]
+            {
+                transform.TransformPoint(center+new Vector3(halfSize.x, halfSize.y, -halfSize.z)),
+                transform.TransformPoint(center+new Vector3(-halfSize.x, halfSize.y, -halfSize.z)),
+                transform.TransformPoint(center+new Vector3(halfSize.x, halfSize.y, halfSize.z)),
+                transform.TransformPoint(center+new Vector3(halfSize.x, -halfSize.y, -halfSize.z))
+            };
+            Vector3[] fourthPoints = new Vector3[4]
+            {
+                transform.TransformPoint(center+new Vector3(halfSize.x, -halfSize.y, halfSize.z)),
+                transform.TransformPoint(center+new Vector3(-halfSize.x, -halfSize.y,halfSize.z)),
+                transform.TransformPoint(center+new Vector3(halfSize.x, halfSize.y, halfSize.z)),
+                transform.TransformPoint(center+new Vector3(halfSize.x, -halfSize.y, -halfSize.z))
+            };
+            for (int j = 1; j < points.Length; j++)
+            {
+                Gizmos.DrawLine(points[0], points[j]);
+                Gizmos.DrawLine(secondPoints[0], secondPoints[j]);
+                Gizmos.DrawLine(thirdPoints[0], thirdPoints[j]);
+                Gizmos.DrawLine(fourthPoints[0], fourthPoints[j]);
+            }
+        }*/
+    }
+
 
     private void OnTriggerStay(Collider other)
     {

@@ -36,7 +36,14 @@ public class CameraManager : MonoBehaviour
         transform.position = PlayerSpawnManager.Instance.LoadCheckPoint().transform.position;
 
     }
+    public virtual void ActiveCamera(CinemachineVirtualCamera camera)
+    {
 
+        activedcamera.gameObject.SetActive(false);
+        camera.gameObject.SetActive(true);
+    
+        activedcamera = camera;
+    }
     public virtual void ActiveCamera(CinemachineVirtualCamera camera,Collider Bounding)
     {
       

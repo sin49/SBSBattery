@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4295124377997621221}
   - component: {fileID: 8636749081364432857}
   - component: {fileID: 5860446082698935673}
+  - component: {fileID: 3044784461950374955}
   m_Layer: 0
   m_Name: lamp_3d (2)
   m_TagString: Untagged
@@ -85,6 +86,25 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3044784461950374955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85239855511334973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54e4d5f7b17191e42b163f34c9292aeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blink: 0
+  blinktime: 1
+  lightofftime: 1
+  lightontime: 1
+  BulbLight: {fileID: 8607428799198963352}
+  Light: {fileID: 6177412557024980706}
+  initlightintensity: 0
 --- !u!1 &2361652230146546622
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,7 +250,7 @@ Transform:
   m_GameObject: {fileID: 2455165874711985894}
   serializedVersion: 2
   m_LocalRotation: {x: 5.7982754e-17, y: -0.32143953, z: 0.94693017, w: -1.9682495e-17}
-  m_LocalPosition: {x: 0.016, y: -0.054, z: 0.07}
+  m_LocalPosition: {x: 0, y: -0.054, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

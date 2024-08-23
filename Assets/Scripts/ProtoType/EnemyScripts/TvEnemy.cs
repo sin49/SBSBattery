@@ -98,6 +98,7 @@ public class TvEnemy : Enemy
 
     public override void Damaged(float damage)
     {
+        base.Damaged(damage);
         return;
     }
 

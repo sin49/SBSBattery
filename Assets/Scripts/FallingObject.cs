@@ -17,6 +17,7 @@ public class FallingObject : MonoBehaviour
 
 
     public Action ObjectgroundedSoundEvent;
+    public GameObject hitEffect;
   
     
     void Start()
@@ -55,11 +56,15 @@ public class FallingObject : MonoBehaviour
         {
             Debug.Log("보스 낙하물 피격");
             PlayerHandler.instance.CurrentPlayer.Damaged(damage);
+            if(hitEffect != null)
+            Destroy(Instantiate(hitEffect, transform.position, Quaternion.identity), 2f);
             Destroy(gameObject);
         }
 
         if (other.CompareTag("Ground"))
         {
+            if(hitEffect != null)
+            Destroy(Instantiate(hitEffect, transform.position, Quaternion.identity), 2f);
             Destroy(gameObject);
         }
     }

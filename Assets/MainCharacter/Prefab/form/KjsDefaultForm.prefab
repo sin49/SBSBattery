@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35f932d9c0159db42bddfe8a9717e4a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  damage: 1
   hitEffect: {fileID: 5024009746357069194, guid: ec3f674830402cc45bce805cf6493db7,
     type: 3}
   saveEffect: {fileID: 0}
@@ -562,7 +562,7 @@ Transform:
   m_GameObject: {fileID: 2360938726155333477}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.33, y: 0.0692, z: 0.15980005}
+  m_LocalPosition: {x: -0.33, y: 0.0692, z: 0.15}
   m_LocalScale: {x: 0.1, y: 0.21703637, z: 0.08169366}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -637,8 +637,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1.2445703, z: 0.8295455}
+  m_Center: {x: 4.2965757e-16, y: -0.08201544, z: -0.09617753}
 --- !u!114 &7952796276940404651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1690,6 +1690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2aa03d4ee064b4091e03c1f9744edd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Moveinput_: 0
   playerRb: {fileID: 1855926169923719911}
   capsuleCollider: {fileID: 2012848794722345922}
   SoundPlayer: {fileID: 0}
@@ -1704,8 +1705,8 @@ MonoBehaviour:
   ChrRenderer: {fileID: 1979360752492490871}
   chrmat: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
-  jumpholdLevel: 1
-  jumpBufferTimeMax: 0.2
+  jumpholdLevel: 0.7
+  jumpBufferTimeMax: 0.28
   jumpBufferTimer: 0
   canjumpInput: 0
   jumpLimitInput: 0
@@ -1713,7 +1714,7 @@ MonoBehaviour:
   attackBufferTimer: 0
   attackInputValue: 0
   flyTimer: 0
-  flyTime: 0.5
+  flyTime: 2
   isJump: 0
   jumpAnim: 0
   isRun: 0
@@ -1757,6 +1758,8 @@ MonoBehaviour:
   Decelatate: 2
   hori: 0
   Vert: 0
+  oninteractivetimer: 0
+  onInterarctive: 0
   DownAttackForce: 0
   CullingPlatform: 0
 --- !u!136 &2012848794722345922
@@ -1977,13 +1980,13 @@ MonoBehaviour:
   MoveClip: {fileID: 8300000, guid: 83315124d8bd65140b4035305992fb6b, type: 3}
   MoveVolume: 0
   AttackClip: {fileID: 8300000, guid: 25c5897575b078c4ba66ca5ffa7908c5, type: 3}
-  AttackVolume: 0.7
+  AttackVolume: 1
   JumpClip: {fileID: 8300000, guid: 85ea7b8994df41b45ad65459747ef044, type: 3}
-  JumpVolume: 0.4
+  JumpVolume: 1
   LandClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
-  LandVolume: 0.2
+  LandVolume: 0.1
   SkillClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
-  SkillVolume: 0
+  SkillVolume: 1
 --- !u!1 &7687757393293647033
 GameObject:
   m_ObjectHideFlags: 0
@@ -2781,7 +2784,7 @@ PrefabInstance:
     - target: {fileID: 8196178405622179907, guid: 69b92891381de2d4785a25572f46c697,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8418679488021058250, guid: 69b92891381de2d4785a25572f46c697,
         type: 3}
@@ -2802,6 +2805,11 @@ PrefabInstance:
         type: 3}
       propertyPath: autoRandomSeed
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8418679488021058250, guid: 69b92891381de2d4785a25572f46c697,
+        type: 3}
+      propertyPath: simulationSpeed
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 8418679488021058250, guid: 69b92891381de2d4785a25572f46c697,
         type: 3}
@@ -2837,6 +2845,11 @@ PrefabInstance:
         type: 3}
       propertyPath: ShapeModule.radiusThickness
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8418679488021058250, guid: 69b92891381de2d4785a25572f46c697,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8418679488021058250, guid: 69b92891381de2d4785a25572f46c697,
         type: 3}
@@ -3429,7 +3442,7 @@ PrefabInstance:
     - target: {fileID: 7491786365424154927, guid: 3d5aa115a6f7ba34eb5ad5a10fe16a21,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7491786365424154927, guid: 3d5aa115a6f7ba34eb5ad5a10fe16a21,
         type: 3}
@@ -3439,7 +3452,7 @@ PrefabInstance:
     - target: {fileID: 7491786365424154927, guid: 3d5aa115a6f7ba34eb5ad5a10fe16a21,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7491786365424154927, guid: 3d5aa115a6f7ba34eb5ad5a10fe16a21,
         type: 3}
@@ -3454,7 +3467,7 @@ PrefabInstance:
     - target: {fileID: 7491786365424154927, guid: 3d5aa115a6f7ba34eb5ad5a10fe16a21,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7491786365424154927, guid: 3d5aa115a6f7ba34eb5ad5a10fe16a21,
         type: 3}

@@ -126,18 +126,16 @@ public class RemoteTransform : Player
     }
     public override void Skill1()
     {
-       
-            //Charging = true;
-            if (closestObject != null)
+     
+        //Charging = true;
+        if (closestObject != null)
             {
-                Humonoidanimator.Play("Charge");
+            base.Skill1();
+            Humonoidanimator.Play("Charge");
             SoundPlayer.PlaySkillSound();
                 ActiveRemoteObject();
         }
-        else
-        {
-            base.Skill1();
-        }
+       
     
 
         //if (!Input.GetKey(KeyCode.UpArrow) && Charging
