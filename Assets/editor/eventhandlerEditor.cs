@@ -9,12 +9,12 @@ public class eventhandlerEditor : Editor
     private void Awake()
     {
 
-         
+        if (eventHandler == null)
+            eventHandler = (EventHandler)target;
     }
     public override void OnInspectorGUI()
     {
-        if (eventHandler == null)
-            eventHandler = (EventHandler)target;
+     
 
         if(eventHandler.evenactive)
             EditorGUILayout.LabelField("이벤트 작동 중", EditorStyles.boldLabel);
@@ -143,12 +143,13 @@ public class eventhandlerEditor : Editor
                 EditorGUILayout.EndHorizontal();
             }
         }
-
+        
 
         // 변경사항을 저장하고 업데이트
         if (GUI.changed)
         {
             EditorUtility.SetDirty(eventHandler);
         }
+        serializedObject.ApplyModifiedProperties();
     }
 }

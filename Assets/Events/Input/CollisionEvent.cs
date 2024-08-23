@@ -6,7 +6,7 @@ using UnityEngine;
 public class CollisionEvent :  InputEvent
 {
     public int index;
-    public Collision targetcollision;
+    public Collider targetcollision;
     bool tf;
 
     private void Awake()

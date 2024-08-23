@@ -21,8 +21,8 @@ public class EventHandler : MonoBehaviour
 
     public float EventDisabletimer;
 
- 
 
+    public bool eventcomplete;
 
     [SerializeField, HideInInspector]
     string inputeventname;
@@ -143,10 +143,12 @@ public class EventHandler : MonoBehaviour
         {
             a.output();
         }
+        eventcomplete = true;
         evenactive = false;
         if (loop)
         {
             yield return new WaitForSeconds(EventDisabletimer);
+            eventcomplete = false;
             foreach (var a in inputevents)
             {
                 a.initialize();
@@ -173,10 +175,12 @@ public class EventHandler : MonoBehaviour
         {
             a.output();
         }
+        eventcomplete = true;
         evenactive = false;
         if (loop)
         {
             yield return new WaitForSeconds(EventDisabletimer);
+            eventcomplete = false;
             foreach (var a in inputevents)
             {
                 a.initialize();
@@ -187,6 +191,7 @@ public class EventHandler : MonoBehaviour
     public void stopevent()
     {
         StopAllCoroutines();
+        evenactive = false;
     }
     public void startevent()
     {
