@@ -8,33 +8,42 @@ public class AudioManager : MonoBehaviour
     public AudioMixer defaultMIxergroup;
  public  AudioMixerGroup SE;
     public AudioMixerGroup BG;
-    [Header("백그라운드 오디오 볼륨"),Range(0,1)]
+
+    public static AudioManager instance;
+    //AudioSource BackGrouundAudioSource;
+    HashSet<SEPlayer> SEAudioSources = new HashSet<SEPlayer>();
+ public   void setAudiogroupSettingBG(AudioSource a)
+    {
+        a.outputAudioMixerGroup = BG;
+    }
+   public void setAudiogroupSettingSE(AudioSource a)
+    {
+        a.outputAudioMixerGroup = SE;
+    }
+    private void Awake()
+    {
+        instance = this;
+    }
+    [Header("백그라운드 오디오 볼륨"), Range(0, 1)]
     public float BGVolume;
     [Header("효과음 오디오 볼륨"), Range(0, 1)]
     public float SEVolume;
     [Header("마스터 오디오 볼륨"), Range(0, 1)]
     public float MasterVolume;
-    public static AudioManager instance;
-    //AudioSource BackGrouundAudioSource;
-    HashSet<SEPlayer> SEAudioSources = new HashSet<SEPlayer>();
-    private void Awake()
-    {
-        instance = this;
-    }
     void UpdateMixerSetting()
     {
         if(MasterVolume>0)
         defaultMIxergroup.SetFloat("MasterVolume",Mathf.Log10( MasterVolume)*20);
         else
-            defaultMIxergroup.SetFloat("MasterVolume", 0);
+            defaultMIxergroup.SetFloat("MasterVolume", -80);
         if(BGVolume>0)
         defaultMIxergroup.SetFloat("BGVolume", Mathf.Log10(BGVolume) * 20);
         else
-            defaultMIxergroup.SetFloat("BGVolume", 0);
+            defaultMIxergroup.SetFloat("BGVolume", -80);
         if(SEVolume>0)
         defaultMIxergroup.SetFloat("SEVolume", Mathf.Log10(SEVolume) * 20);
         else
-            defaultMIxergroup.SetFloat("SEVolume",0);
+            defaultMIxergroup.SetFloat("SEVolume",-80);
     }
     public void GetAudioSetting(AudioType type,AudioSource source)
     {

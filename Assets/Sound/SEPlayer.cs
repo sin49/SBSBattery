@@ -17,6 +17,7 @@ public class SEPlayer : MonoBehaviour
     protected virtual void Awake()
     {
         AddAudioSource(gameObject);
+
         //audiosource = gameObject.AddComponent<AudioSource>();
         //audiosource.minDistance = audiosource.maxDistance;
         //audiosource.dopplerLevel = 0;
@@ -29,6 +30,7 @@ public class SEPlayer : MonoBehaviour
         if (AudioManager.instance != null)
         {
             AudioManager.instance.GetAudioSetting(audiotype, audiosource);
+            AudioManager.instance.setAudiogroupSettingSE(audiosource);
         }
     }
     protected virtual void OnDestroy()
