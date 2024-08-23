@@ -48,6 +48,7 @@ public class RollingEnemy : Enemy
 
     public override void Damaged(float damage)
     {
+        base.Damaged(damage);
         eStat.hp -= damage;
         if (eStat.hp <= 0)
         {
