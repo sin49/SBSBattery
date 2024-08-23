@@ -851,7 +851,7 @@ public class Player : Character
         {
             if (!downAttack)
             {
-                if (!isJump)
+                if (!isJump&&onGround)
                 {
                     Jump();
                 }
@@ -1044,7 +1044,8 @@ public class Player : Character
                     && !CullingPlatform)
                 {
                     onInterarctive = false;
-                    PlayerHandler.instance.doubleDownInput = false;
+
+                    isJump = true;
                     CullingPlatform = true;
                     Physics.IgnoreLayerCollision(6, 11, true);
 

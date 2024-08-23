@@ -1,11 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class CollisionEvent : MonoBehaviour
+[Serializable]
+public class CollisionEvent :  InputEvent
 {
     public int index;
-    public Collision targetcollision;
+    public Collider targetcollision;
     bool tf;
 
     private void Awake()
@@ -60,8 +61,13 @@ public class CollisionEvent : MonoBehaviour
     }
    
 
-    public bool input(object o = null)
+    public override bool input(object o = null)
     {
         return tf;
+    }
+
+    public override void initialize()
+    {
+        tf = false;
     }
 }
