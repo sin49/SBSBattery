@@ -1,3 +1,4 @@
+using Codice.Client.BaseCommands;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -15,10 +16,12 @@ public class eventmanagerEditor : Editor
    
     public override void OnInspectorGUI()
     {
-        
- 
+
+
 
         // 씬에 정보를 표시할지 여부를 제어하는 토글 추가
+        EditorGUILayout.LabelField($"노랑:실행 완료 빨강:실행 안됨 녹색:실행 중", EditorStyles.boldLabel);
+
         eventManager.showHandlersInScene = EditorGUILayout.Toggle("씬 뷰에다가 표시", eventManager.showHandlersInScene);
         EditorGUILayout.PropertyField(serializedObject.FindProperty("Etrigger"),
           new GUIContent("트리거 프리팹"));
@@ -130,8 +133,22 @@ public class eventmanagerEditor : Editor
                 EditorGUILayout.LabelField($"{trigger.name}을 통해 활성화 되는 이벤트", EditorStyles.boldLabel);
                 for (int n = 0; n < trigger.starthandlers.Count; n++)
                 {
+                    var handler = trigger.starthandlers[n];
+                    GUIStyle style = new GUIStyle();
+                    if (handler.eventcomplete)
+                    {
+                        style.normal.textColor = Color.yellow;
+                    }
+                    else if (handler.evenactive)
+                    {
+                        style.normal.textColor = Color.green; // 활성화된 이벤트 핸들러는 녹색 글씨
+                    }
+                    else
+                    {
+                        style.normal.textColor = Color.red; // 비활성화된 이벤트 핸들러는 빨간 글씨
+                    }
                     EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.LabelField($"{n}번 {trigger.starthandlers[n].name}", EditorStyles.boldLabel);
+                    EditorGUILayout.LabelField($"{n}번 {trigger.starthandlers[n].name}", style);
                     if (GUILayout.Button("Select"))
                     {
                         Selection.activeGameObject = trigger.starthandlers[n].gameObject;
@@ -141,8 +158,22 @@ public class eventmanagerEditor : Editor
                 EditorGUILayout.LabelField($"{trigger.name}을 통해 비활성화 되는 이벤트", EditorStyles.boldLabel);
                 for (int n = 0; n < trigger.stophandlers.Count; n++)
                 {
+                    var handler = trigger.starthandlers[n];
+                    GUIStyle style = new GUIStyle();
+                    if (handler.eventcomplete)
+                    {
+                        style.normal.textColor = Color.yellow;
+                    }
+                    else if (handler.evenactive)
+                    {
+                        style.normal.textColor = Color.green; // 활성화된 이벤트 핸들러는 녹색 글씨
+                    }
+                    else
+                    {
+                        style.normal.textColor = Color.red; // 비활성화된 이벤트 핸들러는 빨간 글씨
+                    }
                     EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.LabelField($"{n}번 {trigger.stophandlers[n].name}", EditorStyles.boldLabel);
+                    EditorGUILayout.LabelField($"{n}번 {trigger.stophandlers[n].name}", style);
                     if (GUILayout.Button("Select"))
                     {
                         Selection.activeGameObject = trigger.stophandlers[n].gameObject;
