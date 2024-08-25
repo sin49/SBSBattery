@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TransformChangeOuputEvent : MonoBehaviour, OutputEvent
+public class TransformChangeOuputEvent : OutputEvent
 {
-    public void output()
+    public override void output()
     {
         throw new System.NotImplementedException();
     }

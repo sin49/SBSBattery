@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoribundInputEvent : MonoBehaviour, InputEvent
+public class MoribundInputEvent : InputEvent
 {
-    public bool input(object o)
+    public override void initialize()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override bool input(object o)
     {
         throw new System.NotImplementedException();
     }

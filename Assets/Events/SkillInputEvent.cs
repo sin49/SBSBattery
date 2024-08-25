@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillInputEvent : MonoBehaviour, InputEvent
+public class SkillInputEvent : InputEvent
 {
-    public bool input(object o)
+    public override void initialize()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override bool input(object o)
     {
         throw new System.NotImplementedException();
     }

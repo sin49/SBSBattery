@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerKillOutputEvent : MonoBehaviour, OutputEvent
+public class PlayerKillOutputEvent : OutputEvent
 {
-    public void output()
+    public override void output()
     {
         throw new System.NotImplementedException();
     }
