@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[ExecuteAlways]
 public class DisturbDimensionChangeField : MonoBehaviour, colliderDisplayer
 {
     [Header("전환 금지 옵션")]
