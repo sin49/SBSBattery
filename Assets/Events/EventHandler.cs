@@ -59,6 +59,12 @@ public class EventHandler : MonoBehaviour
             case OutputeventEnum.enemySpawn:
                 oevent = gameObject.AddComponent<EnemySpawnOutputEvent>();
                 break;
+            case OutputeventEnum.enemyRemove:
+                oevent = gameObject.AddComponent<EnemyRemoveOutputEvent>();
+                break;
+            case OutputeventEnum.enemyTeleport:
+                oevent = gameObject.AddComponent<EnemyTeleportOutputEvent>();
+                break;
             default:
                 oevent = null;
                 break;

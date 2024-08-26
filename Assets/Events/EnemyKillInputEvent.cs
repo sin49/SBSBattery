@@ -14,6 +14,7 @@ public class EnemyKillInputEvent : InputEvent
 
     public override bool input(object o)
     {
+        EnemyKill();
         return eKill;
     }
 
@@ -21,10 +22,11 @@ public class EnemyKillInputEvent : InputEvent
     {
         if (eKill)
         {
-            foreach (GameObject obj in this.obj.transform)
+            foreach (Transform transform in this.obj.transform)
             {
-                obj.GetComponent<Enemy>().Dead();
+                transform.GetComponent<Enemy>().Dead();
             }
+            eKill = false;
         }
     }
 }
