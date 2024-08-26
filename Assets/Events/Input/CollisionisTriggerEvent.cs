@@ -28,6 +28,7 @@ public class CollisionisTriggerEvent : InputEvent
    
     void TriggerEnterEvent(Collider other)
     {
+        Debug.Log("check");
         if (index == 1)
         {
             if (other.CompareTag("Player"))
