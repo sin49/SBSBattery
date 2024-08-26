@@ -6,18 +6,11 @@ public class EnemyKillOutputEvent : OutputEvent
 {
     public override void output()
     {
-        throw new System.NotImplementedException();
+        base.output();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void EnemyKillOnArea()
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

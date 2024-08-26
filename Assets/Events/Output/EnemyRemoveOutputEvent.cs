@@ -10,7 +10,8 @@ public class EnemyRemoveOutputEvent : OutputEvent
     public GameObject selectEnemy;
     public override void output()
     {
-        throw new System.NotImplementedException();
+        EnemySelectAndDelete();
+        base.output();
     }
 
     public void EnemySelectAndDelete()
