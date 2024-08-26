@@ -107,6 +107,9 @@ public class EventHandler : MonoBehaviour
             case inputeventenum.TImerEnd:
                 Ievent=gameObject.AddComponent<TimerEndInputEvent>();
                 break;
+            case inputeventenum.enemySpawn:
+                Ievent = gameObject.AddComponent<EnemySpawnInputEvent>();
+                break;
             default:
                 Ievent = null;
                 break;

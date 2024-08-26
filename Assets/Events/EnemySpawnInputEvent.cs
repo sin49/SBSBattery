@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class EnemySpawnInputEvent : InputEvent
 {
+    public GameObject enemyPrefab;
+    public Transform spawnPoint;
+
+    public bool eSpawn;
     public override void initialize()
     {
-        throw new System.NotImplementedException();
+        eSpawn = false;
     }
 
     public override bool input(object o)
     {
-        throw new System.NotImplementedException();
+        return eSpawn;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void EnemySpawn()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (eSpawn)
+        {
+            Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
+        }
     }
 }

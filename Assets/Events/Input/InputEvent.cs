@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum inputeventenum {none,characterhit,characterskillinput,
 collision,Trigger,ObjectCollision,objectTrigger,objectdelete,
-TImerEnd,TImerPlaying}
+TImerEnd,TImerPlaying, enemySpawn}
 [SerializeField]
 public abstract class InputEvent :MonoBehaviour
 {

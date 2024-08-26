@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CheckPointSaveOutputEvent : OutputEvent
 {
+    public Transform saveCheckpoint;
     public override void output()
     {
         throw new System.NotImplementedException();

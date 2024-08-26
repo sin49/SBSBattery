@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TeleportOutputEvent : OutputEvent
 {
+    public Transform teleportPoint;
     public override void output()
     {
         throw new System.NotImplementedException();

@@ -4,25 +4,20 @@ using UnityEngine;
 
 public class DieInputEvent : InputEvent
 {
+    public GameObject character;
+    public bool cDie;
     public override void initialize()
     {
-        throw new System.NotImplementedException();
+        cDie = false;
     }
 
     public override bool input(object o)
     {
-        throw new System.NotImplementedException();
+        return cDie;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void CharacterDie()
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

@@ -4,25 +4,27 @@ using UnityEngine;
 
 public class EnemyKillInputEvent : InputEvent
 {
+    public GameObject obj;
+    public bool eKill;
+
     public override void initialize()
     {
-        throw new System.NotImplementedException();
+        eKill = false;
     }
 
     public override bool input(object o)
     {
-        throw new System.NotImplementedException();
+        return eKill;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void EnemyKill()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (eKill)
+        {
+            foreach (GameObject obj in this.obj.transform)
+            {
+                obj.GetComponent<Enemy>().Dead();
+            }
+        }
     }
 }
