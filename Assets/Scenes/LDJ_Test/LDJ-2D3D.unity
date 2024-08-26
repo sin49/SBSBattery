@@ -2253,12 +2253,12 @@ PrefabInstance:
     - target: {fileID: 7197713803006118426, guid: f2582253a4cc0d34e946da594e0b4f12,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.5
+      value: -8.5
       objectReference: {fileID: 0}
     - target: {fileID: 7197713803006118426, guid: f2582253a4cc0d34e946da594e0b4f12,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.25
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 7197713803006118426, guid: f2582253a4cc0d34e946da594e0b4f12,
         type: 3}
@@ -6520,6 +6520,11 @@ PrefabInstance:
       propertyPath: virtualcamera
       value: 
       objectReference: {fileID: 774284407}
+    - target: {fileID: 7379252218117151703, guid: 8b1971f631f33ef41942ddbd832ebfcb,
+        type: 3}
+      propertyPath: CameraLookPlayer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7846533899846827818, guid: 8b1971f631f33ef41942ddbd832ebfcb,
         type: 3}
       propertyPath: m_Use2DDistance
@@ -17556,7 +17561,7 @@ MonoBehaviour:
   m_Lens:
     FieldOfView: 40
     OrthographicSize: 3.5
-    NearClipPlane: 1
+    NearClipPlane: 0.02
     FarClipPlane: 1000
     Dutch: 0
     ModeOverride: 2
@@ -17642,6 +17647,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   virtualcamera: {fileID: 497608569}
   SettingName: 3Dcam-2
+  CameraFollowPlayer: 1
+  CameraLookPlayer: 0
   CameraIndex: 0
   setting: {fileID: 11400000, guid: 1805b11fe44a70040905d07314383612, type: 2}
 --- !u!4 &497843621 stripped
@@ -23136,12 +23143,12 @@ PrefabInstance:
     - target: {fileID: 2545905713560603523, guid: 9703119aa7ce83f499add0639d75aca8,
         type: 3}
       propertyPath: PlayerMoveState2D
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2545905713560603523, guid: 9703119aa7ce83f499add0639d75aca8,
         type: 3}
       propertyPath: PlayerMoveState3D
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2545905713560603523, guid: 9703119aa7ce83f499add0639d75aca8,
         type: 3}
@@ -24485,6 +24492,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   virtualcamera: {fileID: 713943369}
   SettingName: 2Dcam-1
+  CameraFollowPlayer: 1
+  CameraLookPlayer: 0
   CameraIndex: 0
   setting: {fileID: 11400000, guid: 0926e6a3d8849c44195ad552bc853d53, type: 2}
 --- !u!114 &713943369
@@ -27721,12 +27730,12 @@ PrefabInstance:
     - target: {fileID: 7197713803006118426, guid: f2582253a4cc0d34e946da594e0b4f12,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.5
+      value: -10.5
       objectReference: {fileID: 0}
     - target: {fileID: 7197713803006118426, guid: f2582253a4cc0d34e946da594e0b4f12,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.25
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 7197713803006118426, guid: f2582253a4cc0d34e946da594e0b4f12,
         type: 3}
@@ -63089,7 +63098,7 @@ PrefabInstance:
     - target: {fileID: 2545905713560603523, guid: 9703119aa7ce83f499add0639d75aca8,
         type: 3}
       propertyPath: PlayerMoveState3D
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2545905713560603523, guid: 9703119aa7ce83f499add0639d75aca8,
         type: 3}
@@ -67063,6 +67072,74 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1708050300}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2020499871
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 572275267278102162, guid: c4b05d39722f055479702d55f6a3b8e5,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -62.81024
+      objectReference: {fileID: 0}
+    - target: {fileID: 572275267278102162, guid: c4b05d39722f055479702d55f6a3b8e5,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 78.26789
+      objectReference: {fileID: 0}
+    - target: {fileID: 572275267278102162, guid: c4b05d39722f055479702d55f6a3b8e5,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 572275267278102162, guid: c4b05d39722f055479702d55f6a3b8e5,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 572275267278102162, guid: c4b05d39722f055479702d55f6a3b8e5,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 572275267278102162, guid: c4b05d39722f055479702d55f6a3b8e5,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 572275267278102162, guid: c4b05d39722f055479702d55f6a3b8e5,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 572275267278102162, guid: c4b05d39722f055479702d55f6a3b8e5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 572275267278102162, guid: c4b05d39722f055479702d55f6a3b8e5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 572275267278102162, guid: c4b05d39722f055479702d55f6a3b8e5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7292987138366853636, guid: c4b05d39722f055479702d55f6a3b8e5,
+        type: 3}
+      propertyPath: m_Name
+      value: Pos-Fix
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c4b05d39722f055479702d55f6a3b8e5, type: 3}
 --- !u!1001 &2021647605
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -70941,3 +71018,4 @@ SceneRoots:
   - {fileID: 974647079}
   - {fileID: 1427623907}
   - {fileID: 1682226734}
+  - {fileID: 2020499871}
