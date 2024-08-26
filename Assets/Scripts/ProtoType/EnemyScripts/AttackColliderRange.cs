@@ -76,12 +76,13 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
         {
             childMat.sharedMaterials[0].color = CharColliderColor.instance.attackActiveRange;
         }
-            
 
-        //Collider collider = GetComponent<Collider>();
 
-        /*if (collider is BoxCollider box)
+        /*Collider collider = GetComponent<Collider>();
+        if (collider is BoxCollider box)
         {
+            Gizmos.color = Color.magenta;
+            Transform boxTransform = transform;
             Vector3 center = box.bounds.center;
             Vector3 halfSize = box.bounds.size / 2;
             Vector3[] points = new Vector3[8];
@@ -94,7 +95,6 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
             points[6] = (center + new Vector3(halfSize.x, -halfSize.y, halfSize.z));
             points[7] = (center + new Vector3(halfSize.x, halfSize.y, halfSize.z));
 
- 
             Gizmos.DrawLine(points[0], points[1]);
             Gizmos.DrawLine(points[0], points[3]);
             Gizmos.DrawLine(points[0], points[4]);
@@ -114,43 +114,6 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
             Gizmos.DrawLine(points[5], points[7]);
 
             Gizmos.DrawLine(points[6], points[7]);
-
-
-            Vector3[] points = new Vector3[4]
-            {
-                center+new Vector3(-halfSize.x, -halfSize.y, -halfSize.z),
-                center+new Vector3(halfSize.x, -halfSize.y, -halfSize.z),
-                center+new Vector3(-halfSize.x, halfSize.y, -halfSize.z),
-                center+new Vector3(-halfSize.x, -halfSize.y, halfSize.z)
-            };
-            Vector3[] secondPoints = new Vector3[4]
-            {
-                transform.TransformPoint(center+new Vector3(-halfSize.x, halfSize.y, halfSize.z)),
-                transform.TransformPoint(center+new Vector3(-halfSize.x, -halfSize.y, halfSize.z)),
-                transform.TransformPoint(center+new Vector3(halfSize.x, halfSize.y, halfSize.z)),
-                transform.TransformPoint(center + new Vector3(-halfSize.x, halfSize.y, -halfSize.z))
-            };
-            Vector3[] thirdPoints = new Vector3[4]
-            {
-                transform.TransformPoint(center+new Vector3(halfSize.x, halfSize.y, -halfSize.z)),
-                transform.TransformPoint(center+new Vector3(-halfSize.x, halfSize.y, -halfSize.z)),
-                transform.TransformPoint(center+new Vector3(halfSize.x, halfSize.y, halfSize.z)),
-                transform.TransformPoint(center+new Vector3(halfSize.x, -halfSize.y, -halfSize.z))
-            };
-            Vector3[] fourthPoints = new Vector3[4]
-            {
-                transform.TransformPoint(center+new Vector3(halfSize.x, -halfSize.y, halfSize.z)),
-                transform.TransformPoint(center+new Vector3(-halfSize.x, -halfSize.y,halfSize.z)),
-                transform.TransformPoint(center+new Vector3(halfSize.x, halfSize.y, halfSize.z)),
-                transform.TransformPoint(center+new Vector3(halfSize.x, -halfSize.y, -halfSize.z))
-            };
-            for (int j = 1; j < points.Length; j++)
-            {
-                Gizmos.DrawLine(points[0], points[j]);
-                Gizmos.DrawLine(secondPoints[0], secondPoints[j]);
-                Gizmos.DrawLine(thirdPoints[0], thirdPoints[j]);
-                Gizmos.DrawLine(fourthPoints[0], fourthPoints[j]);
-            }
         }*/
     }
 

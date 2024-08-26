@@ -17,7 +17,8 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     public CinemachineVirtualCamera camera3D;
     public Vector3 Camera2Drotation;
     public Vector3 Camera3Drotation;
-    public PlayerMoveState movestate;
+    public PlayerMoveState movestate2D;
+    public PlayerMoveState movestate3D;
     float orthosize;
     float fovview;
     //[Header("2D 카메라 orthographic 사이즈")]
@@ -59,8 +60,8 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         fovview = camera3D.m_Lens.FieldOfView;
       
         trans3D = true;
-        this. movestate = movestate;
-        PlayerStat.instance.MoveState = this.movestate;
+        //this. movestate = movestate;
+        //PlayerStat.instance.MoveState = this.movestate;
         VirtualCameras[0] = camera3D;
         activedcamera = camera3D;
         //GetCameraSettingByTrans3D();
@@ -111,20 +112,24 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     {
         PlayerHandler.instance.RegisterCameraRotateCorutine(SwitchCameraForTransDimensionCorutine());
     }
+    public void UpdatePlayerMovestate()
+    {
+        if (trans3D)
+        {
+            PlayerStat.instance.MoveState = movestate3D;
+        }
+        else
+        {
+            PlayerStat.instance.MoveState = movestate2D;
+        }
+    }
     IEnumerator SwitchCameraForTransDimensionCorutine()
     {
         if (camera2D == null || camera3D == null)
             yield break;
         trans3D = !trans3D;
 
-        if (trans3D)
-        {
-            PlayerStat.instance.MoveState =movestate;
-        }
-        else
-        {
-            PlayerStat.instance.MoveState = PlayerMoveState.SideX;
-        }
+        UpdatePlayerMovestate();
         PlayerHandler.instance.CurrentPlayer.rotateBy3Dto2D();
         PlayerHandler.instance.CantHandle = true;
         camera2D.m_Lens.Orthographic = false;

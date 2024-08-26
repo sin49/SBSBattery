@@ -16,7 +16,7 @@ public class eventmanagerEditor : Editor
    
     public override void OnInspectorGUI()
     {
-
+     
 
 
         // 씬에 정보를 표시할지 여부를 제어하는 토글 추가
