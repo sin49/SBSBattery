@@ -72,8 +72,7 @@ public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
             if (PlayerHandler.instance.CurrentCamera.gameObject.TryGetComponent<CameraManager_Switching2D3D>(out m))
             {
                 m.transitionDuration = transistionDuration;
-                if (Camera3DFollowPlayer)
-                    virtualCamera3D.Follow = PlayerHandler.instance.CurrentPlayer.transform;
+               
                     if (virtualCamera2D != null)
                     m.camera2D = virtualCamera2D;
                 if (virtualCamera2D != null)
