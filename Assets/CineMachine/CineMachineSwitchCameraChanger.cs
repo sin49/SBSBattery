@@ -10,8 +10,7 @@ public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
     public PlayerMoveState PlayerMoveState2D;
    
     public PlayerMoveState PlayerMoveState3D;
-    [Header("3D카메라 플레이어 팔로우")]
-    public bool Camera3DFollowPlayer;
+
 
 
     [Header("카메라는 설정하면 닿으면 camera2D,camera3D를 바꿈")]
@@ -73,8 +72,7 @@ public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
             if (PlayerHandler.instance.CurrentCamera.gameObject.TryGetComponent<CameraManager_Switching2D3D>(out m))
             {
                 m.transitionDuration = transistionDuration;
-                if (Camera3DFollowPlayer)
-                    virtualCamera3D.Follow = PlayerHandler.instance.CurrentPlayer.transform;
+               
                     if (virtualCamera2D != null)
                     m.camera2D = virtualCamera2D;
                 if (virtualCamera2D != null)

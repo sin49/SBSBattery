@@ -37,7 +37,7 @@ public class PlatformActive3D : MonoBehaviour
             {
                 PlatformChange3D();
             }
-            else if (Bcollider.enabled && (int)PlayerStat.instance.MoveState >= 4)
+            else if (Bcollider.enabled && (int)PlayerStat.instance.MoveState < 4)
             {
                 PlatformChange2D();
             }
@@ -48,7 +48,7 @@ public class PlatformActive3D : MonoBehaviour
             {
                 PlatformChange3D();
             }
-            else if (!Bcollider.enabled && (int)PlayerStat.instance.MoveState >= 4)
+            else if (!Bcollider.enabled && (int)PlayerStat.instance.MoveState< 4)
             {
                 PlatformChange2D();
             }
