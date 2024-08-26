@@ -10,6 +10,10 @@ public class CineMachineBasicCamera : MonoBehaviour
 
     public string SettingName;
 
+    [Header("카메라 플레이어 팔로우")]
+    public bool CameraFollowPlayer = true;
+    [Header("카메라 플레이어 룩")]
+    public bool CameraLookPlayer;
     [HideInInspector]
     public int CameraIndex;
 
@@ -132,7 +136,11 @@ public class CineMachineBasicCamera : MonoBehaviour
         if (PlayerHandler.instance!=null&&PlayerHandler.instance.CurrentPlayer != null)
         {
             target = PlayerHandler.instance.CurrentPlayer.transform;
-            virtualcamera.Follow = target;
+
+            if(CameraFollowPlayer)
+                virtualcamera.Follow = target;
+            if (CameraLookPlayer)
+                virtualcamera.LookAt = target;
         }
 
 
