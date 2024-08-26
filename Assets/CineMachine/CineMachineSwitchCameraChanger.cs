@@ -74,7 +74,7 @@ public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
                 if (virtualCamera2D != null)
                     m.camera2D = virtualCamera2D;
                 if (virtualCamera2D != null)
-                    m.camera2D = virtualCamera3D;
+                    m.camera3D = virtualCamera3D;
 
                 if (CameraRange2D != null)
                     m.Set2DCamerabinding(CameraRange2D);
