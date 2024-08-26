@@ -20,6 +20,10 @@ public class PlayerHandler : MonoBehaviour
     }
     float Skill1InputTimer;
     float Skill1InputCheck = 0.12f;
+
+    public GameObject Fog;
+
+
     public bool formChange;
     #region 플레이어 변신관련 스탯
     public float CurrentPower;
@@ -82,6 +86,7 @@ public class PlayerHandler : MonoBehaviour
         {
            instance= this;
         }
+        Fog.SetActive(false);
         #endregion
         PlayerFormList p;
         if (TryGetComponent<PlayerFormList>(out p)){
@@ -138,6 +143,11 @@ public class PlayerHandler : MonoBehaviour
         if (CurrentPlayer != null&& CharacterAutoFallEvent && CurrentPlayer.transform.position.y < -Mathf.Abs(characterFallLimit) + -5)
             PlayerFallOut();
 
+        if (CurrentPlayer != null)
+        {
+            Fog.SetActive(true);
+            Fog.transform.SetParent(CurrentPlayer.gameObject.transform.GetChild(0));
+        }
         if (alwaysFuncActive)
         {
             if (AlwaysInvincible)
