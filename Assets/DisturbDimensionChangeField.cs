@@ -32,10 +32,9 @@ public class DisturbDimensionChangeField : MonoBehaviour, colliderDisplayer
 
         if (other.CompareTag("Player"))
         {
-            if(RestirctDimension)
-            PlayerHandler.instance.DImensionChangeDisturb = true;
-            else
-                PlayerHandler.instance.DImensionChangeDisturb = false;
+
+            PlayerHandler.instance.DImensionChangeDisturb = RestirctDimension;
+
         }
     }
    
