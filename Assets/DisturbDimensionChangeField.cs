@@ -23,10 +23,13 @@ public class DisturbDimensionChangeField : MonoBehaviour, colliderDisplayer
     {
         ColliderDisplayManager.Instance.register(this);
     }
-    private void Awake()
+    private void Start()
     {
         registerColliderDIsplay();
     }
+
+       
+
     private void OnTriggerEnter(Collider other)
     {
 
