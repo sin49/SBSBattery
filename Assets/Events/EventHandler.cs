@@ -56,6 +56,15 @@ public class EventHandler : MonoBehaviour
             case OutputeventEnum.objectremove:
                 oevent = gameObject.AddComponent<ObjectRemoveEvent>();
                 break;
+            case OutputeventEnum.enemySpawn:
+                oevent = gameObject.AddComponent<EnemySpawnOutputEvent>();
+                break;
+            case OutputeventEnum.enemyRemove:
+                oevent = gameObject.AddComponent<EnemyRemoveOutputEvent>();
+                break;
+            case OutputeventEnum.enemyTeleport:
+                oevent = gameObject.AddComponent<EnemyTeleportOutputEvent>();
+                break;
             default:
                 oevent = null;
                 break;
@@ -106,6 +115,12 @@ public class EventHandler : MonoBehaviour
                 break;
             case inputeventenum.TImerEnd:
                 Ievent=gameObject.AddComponent<TimerEndInputEvent>();
+                break;
+            case inputeventenum.enemySpawn:
+                Ievent = gameObject.AddComponent<EnemySpawnInputEvent>();
+                break;
+            case inputeventenum.enemyKill:
+                Ievent = gameObject.AddComponent<EnemyKillInputEvent>();
                 break;
             default:
                 Ievent = null;

@@ -4,7 +4,7 @@ using System.Diagnostics.Tracing;
 using UnityEngine;
 
 public enum OutputeventEnum
-{none,outputcreate,objectremove}
+{none,outputcreate,objectremove, enemySpawn, enemyRemove, enemyTeleport}
 
 public abstract class OutputEvent:MonoBehaviour
 {

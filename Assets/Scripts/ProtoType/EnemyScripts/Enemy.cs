@@ -633,6 +633,11 @@ public class Enemy: Character,DamagedByPAttack
 
     private void OnDrawGizmos()
     {
+        if (!eStat)
+        {
+            eStat = GetComponent<EnemyStat>();
+        }
+
         if (patrolType == PatrolType.movePatrol)
         {
             if (patrolGroup.Length >= 2)
@@ -718,8 +723,10 @@ public class Enemy: Character,DamagedByPAttack
     public override void Dead()
     {
         eStat.eState = EnemyState.dead;
-        PlayerHandler.instance.CurrentPlayer.wallcheck = false;
-       
+        if (PlayerHandler.instance != null)
+            PlayerHandler.instance.CurrentPlayer.wallcheck = false;
+
+
         Instantiate(deadEffect,transform.position, Quaternion.identity);
         gameObject.SetActive(false);
     }
