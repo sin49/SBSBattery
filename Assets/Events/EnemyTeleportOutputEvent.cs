@@ -4,20 +4,18 @@ using UnityEngine;
 
 public class EnemyTeleportOutputEvent : OutputEvent
 {
+    public GameObject selectEnemy;
+    public Transform teleportPoint;
     public override void output()
     {
         throw new System.NotImplementedException();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void EnemyTeleport()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (selectEnemy != null && teleportPoint != null)
+        {
+            selectEnemy.transform.position = teleportPoint.position;
+        }
     }
 }

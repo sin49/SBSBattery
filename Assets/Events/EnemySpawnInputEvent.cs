@@ -22,7 +22,8 @@ public class EnemySpawnInputEvent : InputEvent
     {
         if (eSpawn)
         {
-            Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
+            var obj = Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
+            obj.transform.SetParent(spawnPoint);
         }
     }
 }

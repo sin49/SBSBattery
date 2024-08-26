@@ -1,23 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class EnemyRemoveOutputEvent : OutputEvent
 {
+    public GameObject selectEnemy;
     public override void output()
     {
         throw new System.NotImplementedException();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void EnemySelectAndDelete()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Destroy(selectEnemy);
+        selectEnemy = null;
     }
 }

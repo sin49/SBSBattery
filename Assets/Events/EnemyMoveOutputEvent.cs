@@ -4,20 +4,15 @@ using UnityEngine;
 
 public class EnemyMoveOutputEvent : OutputEvent
 {
+    public Transform movePoint;
+
     public override void output()
     {
         throw new System.NotImplementedException();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void SelectEnemyMove()
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

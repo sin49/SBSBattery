@@ -4,20 +4,11 @@ using UnityEngine;
 
 public class EnemySpawnOutputEvent : OutputEvent
 {
+    public int index;
+    public Transform spawnPoint;
     public override void output()
     {
-        throw new System.NotImplementedException();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Debug.Log("플레이어에 의한 인덱스 몬스터");
+        base.output();
     }
 }
