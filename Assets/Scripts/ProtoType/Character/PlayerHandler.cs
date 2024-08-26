@@ -86,7 +86,7 @@ public class PlayerHandler : MonoBehaviour
         {
            instance= this;
         }
-        Fog.SetActive(false);
+
         #endregion
         PlayerFormList p;
         if (TryGetComponent<PlayerFormList>(out p)){
@@ -143,11 +143,7 @@ public class PlayerHandler : MonoBehaviour
         if (CurrentPlayer != null&& CharacterAutoFallEvent && CurrentPlayer.transform.position.y < -Mathf.Abs(characterFallLimit) + -5)
             PlayerFallOut();
 
-        if (CurrentPlayer != null)
-        {
-            Fog.SetActive(true);
-            Fog.transform.SetParent(CurrentPlayer.gameObject.transform.GetChild(0));
-        }
+      
         if (alwaysFuncActive)
         {
             if (AlwaysInvincible)
@@ -326,7 +322,7 @@ public class PlayerHandler : MonoBehaviour
     [Header("일반 or 스킬 체크")]
     public bool onAttack;
 
-    [HideInInspector]
+    //[HideInInspector]
     public bool DImensionChangeDisturb;
     event Action Dimensionchangeevent;
     event Action CAmeraChangeevent;
