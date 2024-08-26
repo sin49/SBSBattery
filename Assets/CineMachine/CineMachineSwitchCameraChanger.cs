@@ -6,10 +6,10 @@ public enum camerachangerswitchingstate { none,change2D,change3D}
 [ExecuteAlways]
 public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
 {
-
- 
     [Header("캐릭터 이동을 바꿈")]
-    public PlayerMoveState PlayerMoveState;
+    public PlayerMoveState PlayerMoveState2D;
+   
+    public PlayerMoveState PlayerMoveState3D;
 
 
     [Header("카메라는 설정하면 닿으면 camera2D,camera3D를 바꿈")]
@@ -74,7 +74,7 @@ public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
                 if (virtualCamera2D != null)
                     m.camera2D = virtualCamera2D;
                 if (virtualCamera2D != null)
-                    m.camera2D = virtualCamera3D;
+                    m.camera3D = virtualCamera3D;
 
                 if (CameraRange2D != null)
                     m.Set2DCamerabinding(CameraRange2D);
@@ -85,14 +85,18 @@ public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
                 {
                     case camerachangerswitchingstate.change2D:
                         m.ActiveCamera(m.camera2D);
+                        m.trans3D = false;
                         break;
                     case camerachangerswitchingstate.change3D:
                         m.ActiveCamera(m.camera3D);
+                        m.trans3D = true;
                         break;
                 }
             }
-            if(PlayerMoveState!=PlayerMoveState.none)
-            PlayerStat.instance.MoveState = PlayerMoveState;
+
+            m.movestate2D = PlayerMoveState2D;
+            m.movestate3D = PlayerMoveState3D;
+            m.UpdatePlayerMovestate();
             PlayerHandler.instance.CurrentPlayer.rotateBy3Dto2D();
         }
     }

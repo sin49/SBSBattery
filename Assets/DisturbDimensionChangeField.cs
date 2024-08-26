@@ -2,20 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DisturbDimensionChangeField : MonoBehaviour
+public class DisturbDimensionChangeField : MonoBehaviour, colliderDisplayer
 {
+    [Header("전환 금지 옵션")]
+    public bool RestirctDimension;
+
+
+    public Renderer renderer_;
+    public void ActiveColliderDisplay()
+    {
+        renderer_.enabled = true;
+    }
+
+    public void DeactiveColliderDisplay()
+    {
+        renderer_.enabled = false;
+    }
+
+    public void registerColliderDIsplay()
+    {
+        ColliderDisplayManager.Instance.register(this);
+    }
+    private void Awake()
+    {
+        registerColliderDIsplay();
+    }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")&&!PlayerHandler.instance.DImensionChangeDisturb)
+
+        if (other.CompareTag("Player"))
         {
+            if(RestirctDimension)
             PlayerHandler.instance.DImensionChangeDisturb = true;
+            else
+                PlayerHandler.instance.DImensionChangeDisturb = false;
         }
     }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player") && !PlayerHandler.instance.DImensionChangeDisturb)
-        {
-            PlayerHandler.instance.DImensionChangeDisturb = false;
-        }
-    }
+   
 }
