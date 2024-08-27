@@ -11,7 +11,7 @@ public class SkillInputEvent : InputEvent
 
     public override bool input(object o)
     {
-        throw new System.NotImplementedException();
+        return true;
     }
 
     // Start is called before the first frame update
