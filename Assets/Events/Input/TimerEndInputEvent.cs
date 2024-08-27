@@ -10,6 +10,7 @@ public interface timerComponent
 [Serializable]
 public class TimerEndInputEvent :InputEvent, timerComponent
 {
+    public
     bool timerstart;
     public bool StartTimerAwake;
     public float timer;
