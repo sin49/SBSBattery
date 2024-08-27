@@ -1,28 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MoribundInputEvent : InputEvent
-{
+{    
+    public bool moribund;
+
     public override void initialize()
     {
-        throw new System.NotImplementedException();
+        moribund = false;
     }
 
     public override bool input(object o)
     {
-        return true;
+        return moribund;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Update()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (PlayerHandler.instance != null && PlayerHandler.instance.CurrentPlayer != null)
+        {
+            if (PlayerStat.instance.hp <= 1)
+            {
+                moribund = true;
+            }
+            else
+            {
+                moribund = false;
+            }
+        }
     }
 }

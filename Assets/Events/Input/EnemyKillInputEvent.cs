@@ -4,43 +4,39 @@ using UnityEngine;
 
 public class EnemyKillInputEvent : InputEvent
 {
+    public GameObject enemy;
+
     public GameObject obj;
     public List<GameObject> objGroup = new List<GameObject>();
     public bool eKill;
     public bool reduceNum, increaseNum;
 
     int pointNum;
+
     public override void initialize()
     {
         eKill = false;
     }
 
     public override bool input(object o)
-    {
-        EnemyKill();
+    {        
         return eKill;
     }
 
     private void Update()
     {
         ChangePoint();
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (!Application.isPlaying)
-            ChangePoint();
+        EnemyKill();
     }
 
     public void EnemyKill()
     {
-        if (eKill)
+        if (enemy != null)
         {
-            foreach (Transform transform in this.obj.transform)
+            if (enemy.GetComponent<Enemy>().eStat.eState == EnemyState.dead)
             {
-                transform.GetComponent<Enemy>().Dead();
+                eKill = true;
             }
-            eKill = false;
         }
     }
 

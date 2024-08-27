@@ -18,6 +18,12 @@ public class DieInputEvent : InputEvent
 
     public void CharacterDie()
     {
-
+        if (PlayerHandler.instance != null && PlayerHandler.instance.CurrentPlayer != null)
+        {
+            if (PlayerStat.instance.hp <= 0)
+            {
+                cDie = true;
+            }
+        }
     }
 }

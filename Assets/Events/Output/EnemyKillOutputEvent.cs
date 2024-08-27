@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class EnemyKillOutputEvent : OutputEvent
 {
+    [Header("몬스터들을 하위로 가지고있는 오브젝트")]
     public GameObject obj;
-    public List<GameObject> objGroup = new List<GameObject>();
 
+    [Header("오브젝트 그룹")]
+    public List<GameObject> objGroup = new List<GameObject>();
     public bool reduceNum, increaseNum;
     int pointNum;
 

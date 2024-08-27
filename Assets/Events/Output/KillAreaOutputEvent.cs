@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class KillAreaOutputEvent : OutputEvent
 {
-    public Collider killCollider;
+    public KillAreaCollider killCollider;
     public override void output()
     {
         EnemyKillOnArea();
@@ -15,11 +15,7 @@ public class KillAreaOutputEvent : OutputEvent
     {
         if (killCollider != null)
         {
-            if (killCollider.gameObject.CompareTag("Enemy"))
-            {
-                Enemy enemy = killCollider.gameObject.GetComponent<Enemy>();
-                enemy.Dead();
-            }
+            killCollider.EnemyAllDie();
         }
     }
 }
