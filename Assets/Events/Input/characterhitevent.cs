@@ -1,14 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class characterhitevent : MonoBehaviour,InputEvent
+[Serializable]
+public class characterhitevent : InputEvent
 {
     public bool hit;
     public Character character;
     [Header("¾ÆÁ÷ ÀÎµ¦½º Áö¿ø ¾È µÊ")]
     public int index;
-    public bool input(object o = null)
+    public override bool input(object o = null)
     {
         return hit;
     }
@@ -19,5 +20,10 @@ public class characterhitevent : MonoBehaviour,InputEvent
     void hiteventinvoke()
     {
         hit = true;
+    }
+
+    public override void initialize()
+    {
+        hit = false;
     }
 }

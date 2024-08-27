@@ -1,15 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class TimerPlayingInputEvent : MonoBehaviour, InputEvent, timerComponent
+[Serializable]
+public class TimerPlayingInputEvent :  InputEvent, timerComponent
 {
     bool timerstart;
-
+    public bool StartTimerAwake;
     public float timer;
-    public bool input(object o = null)
+    [HideInInspector]
+    public float timer_;
+    public override bool input(object o = null)
     {
-        if (timer > 0&& timerstart)
+        if (timer_ > 0&& timerstart)
         {
             return true;
         }
@@ -33,9 +36,16 @@ public class TimerPlayingInputEvent : MonoBehaviour, InputEvent, timerComponent
 
     private void FixedUpdate()
     {
-        if (timer > 0 && timerstart)
+        if (timer_ > 0 && timerstart)
         {
-            timer -= Time.fixedDeltaTime;
+            timer_ -= Time.fixedDeltaTime;
         }
+    }
+
+    public override void initialize()
+    {
+        timer_ = timer;
+        if (StartTimerAwake)
+            StartTimer();
     }
 }

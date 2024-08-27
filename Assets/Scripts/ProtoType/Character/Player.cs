@@ -482,7 +482,7 @@ public class Player : Character
     public void rotateBy3Dto2D()
     {
         Vector3 rotateVector = Vector3.zero;
-        if (PlayerStat.instance.MoveState==PlayerMoveState.SideX)
+        if ((int)PlayerStat.instance.MoveState <= 1)
         {
            
             if (direction == direction.Right||direction==direction.none)
@@ -494,7 +494,7 @@ public class Player : Character
                 rotateVector = new Vector3(0, -90, 0);
             }
             transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
-        }else if(PlayerStat.instance.MoveState == PlayerMoveState.SideZ)
+        }else if((int)PlayerStat.instance.MoveState > 1 && (int)PlayerStat.instance.MoveState < 4)
         {
             if (directionz == directionZ.forward || directionz == directionZ.none)
             {
@@ -520,20 +520,35 @@ public class Player : Character
         Vert=0;
         switch (PlayerStat.instance.MoveState)
         {
-            case PlayerMoveState.SideX:
+            case PlayerMoveState.Xmove:
                 hori = Input.GetAxisRaw("Horizontal");
                 break;
-            case PlayerMoveState.SideZ:
+            case PlayerMoveState.XmoveReverse:
+                hori =-1* Input.GetAxisRaw("Horizontal");
+                break;
+
+            case PlayerMoveState.Zmove:
        
                 Vert =  Input.GetAxisRaw("Horizontal");
                 break;
-            case PlayerMoveState.Trans3D:
+            case PlayerMoveState.ZmoveReverse:
+                Vert = -1* Input.GetAxisRaw("Horizontal");
+                break;
+            case PlayerMoveState.XZMove3D:
                 hori = Input.GetAxisRaw("Vertical");
                 Vert = -1 * Input.GetAxisRaw("Horizontal");
                 break;
-            case PlayerMoveState.Trans3D2:
+            case PlayerMoveState.XZMove3DReverse:
+                hori = -1* Input.GetAxisRaw("Vertical");
+                Vert =  Input.GetAxisRaw("Horizontal");
+                break;
+            case PlayerMoveState.ZXMove3D:
                 Vert = Input.GetAxisRaw("Vertical");
                 hori =  Input.GetAxisRaw("Horizontal");
+                break;
+            case PlayerMoveState.ZXMove3DReverse:
+                Vert =-1* Input.GetAxisRaw("Vertical");
+                hori = -1 * Input.GetAxisRaw("Horizontal");
                 break;
         }
        
@@ -664,11 +679,11 @@ public class Player : Character
     {
         if (!wallcheck)
         {
-            if (PlayerStat.instance.MoveState!=PlayerMoveState.Trans3D && directionz != directionZ.none && hori == 0)
+            if ((int)PlayerStat.instance.MoveState < 4 && directionz != directionZ.none && hori == 0)
             {
                 playerRb.AddForce(transform.GetChild(0).forward * 7, ForceMode.Impulse);
             }
-            else if (PlayerStat.instance.MoveState == PlayerMoveState.Trans3D)
+            else if ((int)PlayerStat.instance.MoveState >= 4)
             {
                 if (direction != direction.none && Vert != 0 || directionz != directionZ.none && hori != 0)
                 {
@@ -851,7 +866,7 @@ public class Player : Character
         {
             if (!downAttack)
             {
-                if (!isJump)
+                if (!isJump&&onGround)
                 {
                     Jump();
                 }
@@ -1040,11 +1055,12 @@ public class Player : Character
             if (KeySettingManager.instance == null)
             {
                 if (Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.DownArrow) &&
-                    (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D && PlayerStat.instance.MoveState != PlayerMoveState.Trans3D2)
+                   (int)PlayerStat.instance.MoveState < 4
                     && !CullingPlatform)
                 {
                     onInterarctive = false;
-                    PlayerHandler.instance.doubleDownInput = false;
+
+                    isJump = true;
                     CullingPlatform = true;
                     Physics.IgnoreLayerCollision(6, 11, true);
 
@@ -1053,7 +1069,7 @@ public class Player : Character
             else
             {
                 if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode)&& Input.GetKey(KeyCode.DownArrow) &&
-                   (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D && PlayerStat.instance.MoveState != PlayerMoveState.Trans3D2)
+                   (int)PlayerStat.instance.MoveState < 4
                    && !CullingPlatform)
                 {
                     PlayerHandler.instance.doubleDownInput = false;

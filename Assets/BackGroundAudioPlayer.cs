@@ -22,6 +22,11 @@ public class BackGroundAudioPlayer : MonoBehaviour
             audiosource.dopplerLevel = 0;
             audiosource.loop = true;
 
+
+    }
+    private void Start()
+    {
+        AudioManager.instance.setAudiogroupSettingBG(audiosource);
     }
     private void Update()
     {
@@ -34,6 +39,7 @@ public class BackGroundAudioPlayer : MonoBehaviour
         {
             AudioManager.instance.GetAudioSetting(audiotype, audiosource);
         }
+      
         audiosource.Play();
     }
     private void OnDisable()
