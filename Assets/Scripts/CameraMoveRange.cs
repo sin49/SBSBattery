@@ -42,8 +42,8 @@ public class CameraMoveRange : MonoBehaviour
         if (!c.orthographic )
         {
             float distance=0;
-            if (PlayerStat.instance.MoveState == PlayerMoveState.Trans3D)
-            distance = Mathf.Abs(c.transform.position.z - Center.z);
+            if ((int)PlayerStat.instance.MoveState >= 4)
+                distance = Mathf.Abs(c.transform.position.z - Center.z);
             else if(PlayerHandler.instance.CurrentPlayer)
                 distance = Mathf.Abs(c.transform.position.z -
                     PlayerHandler.instance.CurrentPlayer.transform.position.z);
@@ -55,7 +55,7 @@ public class CameraMoveRange : MonoBehaviour
             height = 2 * c.orthographicSize;
         }
         width = height * Screen.width / Screen.height;
-        if (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D)
+        if ((int)PlayerStat.instance.MoveState >= 4)
         {
             ApplyCameraBinding(Center, Range,c.transform, width, height);
         }

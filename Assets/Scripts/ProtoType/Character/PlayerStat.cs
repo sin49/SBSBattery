@@ -4,7 +4,10 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 public enum CurrentAttack { ground, sky }
-public enum PlayerMoveState { SideX,SideZ,Trans3D,Trans3D2,none}
+public enum PlayerMoveState {
+     Xmove, XmoveReverse, Zmove, ZmoveReverse, XZMove3D,ZXMove3D
+, XZMove3DReverse, ZXMove3DReverse
+}
 
 public class PlayerStat : CharacterStat
 {
@@ -65,7 +68,7 @@ public class PlayerStat : CharacterStat
         {
             instance = this;
         }
-        MoveState = PlayerMoveState.SideX;
+        MoveState = PlayerMoveState.Xmove;
     }
     
   

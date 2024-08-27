@@ -12,6 +12,7 @@ public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
     public PlayerMoveState PlayerMoveState3D;
 
 
+
     [Header("카메라는 설정하면 닿으면 camera2D,camera3D를 바꿈")]
     [Header("카메라 비워놔도 됌")]
     [Header("2D전환 카메라")]
@@ -71,7 +72,8 @@ public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
             if (PlayerHandler.instance.CurrentCamera.gameObject.TryGetComponent<CameraManager_Switching2D3D>(out m))
             {
                 m.transitionDuration = transistionDuration;
-                if (virtualCamera2D != null)
+               
+                    if (virtualCamera2D != null)
                     m.camera2D = virtualCamera2D;
                 if (virtualCamera2D != null)
                     m.camera3D = virtualCamera3D;
@@ -93,7 +95,7 @@ public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
                         break;
                 }
             }
-
+            
             m.movestate2D = PlayerMoveState2D;
             m.movestate3D = PlayerMoveState3D;
             m.UpdatePlayerMovestate();

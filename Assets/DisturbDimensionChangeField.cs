@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[ExecuteAlways]
 public class DisturbDimensionChangeField : MonoBehaviour, colliderDisplayer
 {
     [Header("전환 금지 옵션")]
@@ -23,19 +23,21 @@ public class DisturbDimensionChangeField : MonoBehaviour, colliderDisplayer
     {
         ColliderDisplayManager.Instance.register(this);
     }
-    private void Awake()
+    private void Start()
     {
         registerColliderDIsplay();
     }
+
+       
+
     private void OnTriggerEnter(Collider other)
     {
 
         if (other.CompareTag("Player"))
         {
-            if(RestirctDimension)
-            PlayerHandler.instance.DImensionChangeDisturb = true;
-            else
-                PlayerHandler.instance.DImensionChangeDisturb = false;
+
+            PlayerHandler.instance.DImensionChangeDisturb = RestirctDimension;
+
         }
     }
    

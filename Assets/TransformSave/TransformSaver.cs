@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-
+using UnityEditor;
 using UnityEngine;
 
 public class TransformSaver : MonoBehaviour
 {
     public List<Transform> transformlist=new List<Transform>();
-    List<TransformData> transformDatas = new List<TransformData>();
+    //List<TransformData> transformDatas = new List<TransformData>();
     private const string folderPath = "Assets/TransformSave/";
 
 #if UNITY_EDITOR
@@ -27,10 +27,10 @@ public class TransformSaver : MonoBehaviour
             t.scale = transformlist[n].localScale;
  
             UnityEditor.AssetDatabase.CreateAsset(t, folderPath + $"transformsave{n}.asset");
-            if (transformDatas.Count <= n)
-                transformDatas.Add(t);
-            else
-                transformDatas[n] = t;
+            //if (transformDatas.Count <= n)
+            //    transformDatas.Add(t);
+            //else
+            //    transformDatas[n] = t;
         }
 
 
@@ -38,8 +38,9 @@ public class TransformSaver : MonoBehaviour
     }
     public void DeleteTransformdata()
     {
-        for(int n = transformDatas.Count; n >= 0; n--)
+        for(int n = transformlist.Count-1; n >= 0; n--)
         {
+            
             UnityEditor.AssetDatabase.DeleteAsset(folderPath + $"transformsave{n}.asset");
         }
         UnityEditor.AssetDatabase.SaveAssets();
@@ -47,14 +48,17 @@ public class TransformSaver : MonoBehaviour
     public void LoadTransform()
     {
      
-        for (int n = 0; n < transformDatas.Count; n++)
+        for (int n = 0; n < transformlist.Count; n++)
         {
-            TransformData t = transformDatas[n];
-            if (transformlist.Count <= n)
-                break;
-            transformlist[n].position = t.position;
-            transformlist[n].rotation = t.rotation;
-            transformlist[n].localScale = t.scale;
+          var data=  UnityEditor.AssetDatabase.LoadAssetAtPath(folderPath + $"transformsave{n}.asset", typeof(TransformData))as TransformData;
+           
+            if (data != null)
+            {
+
+                transformlist[n].position = data.position;
+                transformlist[n].rotation = data.rotation;
+                transformlist[n].localScale = data.scale;
+            }
         }
         DeleteTransformdata();
     }

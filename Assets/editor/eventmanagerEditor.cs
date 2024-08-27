@@ -133,6 +133,11 @@ public class eventmanagerEditor : Editor
                 EditorGUILayout.LabelField($"{trigger.name}을 통해 활성화 되는 이벤트", EditorStyles.boldLabel);
                 for (int n = 0; n < trigger.starthandlers.Count; n++)
                 {
+                    if (trigger.starthandlers[n] == null)
+                    {
+                        trigger.starthandlers.RemoveAt(n);
+                        n--;
+                    }
                     var handler = trigger.starthandlers[n];
                     GUIStyle style = new GUIStyle();
                     if (handler.eventcomplete)
@@ -158,6 +163,11 @@ public class eventmanagerEditor : Editor
                 EditorGUILayout.LabelField($"{trigger.name}을 통해 비활성화 되는 이벤트", EditorStyles.boldLabel);
                 for (int n = 0; n < trigger.stophandlers.Count; n++)
                 {
+                    if (trigger.stophandlers[n] == null)
+                    {
+                        trigger.stophandlers.RemoveAt(n);
+                        n--;
+                    }
                     var handler = trigger.starthandlers[n];
                     GUIStyle style = new GUIStyle();
                     if (handler.eventcomplete)
@@ -214,6 +224,7 @@ public class eventmanagerEditor : Editor
         // SceneView에서 이벤트 핸들러 위치 및 정보 표시
         for (int i = 0; i < eventManager.eventhadles.Count; i++)
         {
+
             var handler = eventManager.eventhadles[i];
             if (handler == null) continue;
             GUIStyle style = new GUIStyle();
