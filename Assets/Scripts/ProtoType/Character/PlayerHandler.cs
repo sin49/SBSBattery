@@ -501,7 +501,7 @@ public class PlayerHandler : MonoBehaviour
         if (Input.GetKey(KeySettingManager.instance.AttackKeycode) && Skill1InputTimer <= 0/* &&
                 PlayerInventory.instance.checkessesntialitem("item01")*/)
         {
-           
+           if(CurrentPlayer.attackInputValue < 1 && !CurrentPlayer.attackLimitInput)
             CurrentPlayer.attackBufferTimer = CurrentPlayer.attackBufferTimeMax;
         }
         if (Skill1InputTimer > 0)

@@ -7,6 +7,6 @@ public class KillAreaOutputEvent : OutputEvent
     public Collider killCollider;
     public override void output()
     {
-        throw new System.NotImplementedException();
+        base.output();
     }
 }

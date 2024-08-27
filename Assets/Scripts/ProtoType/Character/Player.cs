@@ -56,6 +56,8 @@ public class Player : Character
     public float attackBufferTimeMax;
     public float attackBufferTimer;
     public int attackInputValue;
+    public bool canAttackInput;
+    public bool attackLimitInput;
     [Header("ÂøÁö ÀÌÆåÆ® È°¼ºÈ­ °ü·Ã")]
     public float flyTimer;
     public float flyTime;
@@ -321,7 +323,8 @@ public class Player : Character
             jumpkeyinputcheckvalue -= Time.fixedDeltaTime;
 
         JumpKeyInput();
-        if(!downAttack)
+        AttackNotHold();
+        if (!downAttack)
         Attack();
 
         if (onGround == true&& isJump == true)
@@ -635,15 +638,14 @@ public class Player : Character
     }
     public override void Attack()
     {
-        if (PlayerHandler.instance.onAttack)
+        if (PlayerHandler.instance.onAttack && attackInputValue < 1)
         {
             if (attackBufferTimer > 0 && canAttack)
             {
-             
                 if (PlayerStat.instance.attackType == AttackType.melee && canAttack && !downAttack)
                 {
                     attackBufferTimer = 0;
-                
+                    attackInputValue = 1;
                     if (!onGround)
                     {
                         attackSky = true;
@@ -658,6 +660,17 @@ public class Player : Character
                 }
             }
         }
+    }
+
+    public void AttackNotHold()
+    {
+        if (!Input.GetKey(KeyCode.X))
+        {
+            attackInputValue = 0;
+            attackLimitInput = false;
+        }
+        else
+            attackLimitInput = true;
     }
 
     void AttackMove()
