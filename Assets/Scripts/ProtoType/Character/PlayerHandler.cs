@@ -20,6 +20,10 @@ public class PlayerHandler : MonoBehaviour
     }
     float Skill1InputTimer;
     float Skill1InputCheck = 0.12f;
+
+    public GameObject Fog;
+
+
     public bool formChange;
     #region 플레이어 변신관련 스탯
     public float CurrentPower;
@@ -82,6 +86,7 @@ public class PlayerHandler : MonoBehaviour
         {
            instance= this;
         }
+
         #endregion
         PlayerFormList p;
         if (TryGetComponent<PlayerFormList>(out p)){
@@ -138,6 +143,7 @@ public class PlayerHandler : MonoBehaviour
         if (CurrentPlayer != null&& CharacterAutoFallEvent && CurrentPlayer.transform.position.y < -Mathf.Abs(characterFallLimit) + -5)
             PlayerFallOut();
 
+      
         if (alwaysFuncActive)
         {
             if (AlwaysInvincible)
@@ -316,7 +322,7 @@ public class PlayerHandler : MonoBehaviour
     [Header("일반 or 스킬 체크")]
     public bool onAttack;
 
-    [HideInInspector]
+    //[HideInInspector]
     public bool DImensionChangeDisturb;
     event Action Dimensionchangeevent;
     event Action CAmeraChangeevent;
@@ -349,7 +355,7 @@ public class PlayerHandler : MonoBehaviour
         //3D로 갈 때는 카메라 먼저 이 후 이벤트
         //2D로 갈 때는 반대로 이벤트 이 후 카메라
 
-        if (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D||PlayerStat.instance.MoveState!= PlayerMoveState.Trans3D2)
+        if ((int)PlayerStat.instance.MoveState >= 4)
         {//3D에서 2D로
             yield return StartCoroutine(InvokeDimensionEvent());
 
@@ -410,7 +416,7 @@ public class PlayerHandler : MonoBehaviour
                 InteractTimer = PlayerStat.instance.InteractDelay;
             }
         }
-        if (CurrentPlayer.onInterarctive && (PlayerStat.instance.MoveState != PlayerMoveState.Trans3D && PlayerStat.instance.MoveState != PlayerMoveState.Trans3D2))
+        if (CurrentPlayer.onInterarctive && (int)PlayerStat.instance.MoveState >= 4)
         {
    
                 if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode) && !Input.GetKey(KeyCode.DownArrow)

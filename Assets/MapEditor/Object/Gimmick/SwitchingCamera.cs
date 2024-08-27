@@ -51,7 +51,7 @@ public class SwitchingCamera : BasicCamera
         Apply3DSettings();
         Camera3D.transform.rotation=Camera2D.transform.rotation;
         SwapCurrentCamera();
-        PlayerStat.instance.MoveState = PlayerMoveState.SideX;
+        PlayerStat.instance.MoveState = PlayerMoveState.Xmove;
         PlayerHandler.instance.registerCorutineRegisterEvent(StartChangeCameraCorutine);
 
     }
@@ -154,9 +154,9 @@ public class SwitchingCamera : BasicCamera
             CurrentCamera = Camera3D;
         }
         if(is2D)
-        PlayerStat.instance.MoveState = PlayerMoveState.SideX;
+        PlayerStat.instance.MoveState = PlayerMoveState.Xmove;
         else
-            PlayerStat.instance.MoveState = PlayerMoveState.Trans3D;
+            PlayerStat.instance.MoveState = PlayerMoveState.XZMove3D;
     }
 
     IEnumerator TransitionCamera(Vector3 newPos, Vector3 newRot, bool isOrtho)
