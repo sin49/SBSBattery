@@ -5,20 +5,17 @@ using UnityEngine;
 public class TeleportOutputEvent : OutputEvent
 {
     public Transform teleportPoint;
-    public Transform point;
     public List<Transform> pointGroup = new List<Transform>();
 
-    [Header("pointGroup")]
-    public bool previousPointNum;
-    public bool nextPointNum;
     [Header("이전/다음 텔포 트랜스폼")]
     public bool previousTelpoNum;
     public bool nextTelpoNum;
 
-    int pointNum, telpoNum;
+    int telpoNum;
 
     public override void output()
     {
+        PlayerTeleport();
         base.output();
     }
 
@@ -34,6 +31,7 @@ public class TeleportOutputEvent : OutputEvent
     }
     public void PlayerTeleport()
     {
+        Debug.Log("입력 이벤트에 의해 호출됨");
         if (teleportPoint != null)
         {
             if (PlayerHandler.instance != null && PlayerHandler.instance.CurrentPlayer != null)
@@ -45,20 +43,6 @@ public class TeleportOutputEvent : OutputEvent
 
     public void ChangePoint()
     {
-        if (previousPointNum)
-        {
-            previousPointNum = false;
-            pointNum--;
-            InitPoint();
-        }
-
-        if (nextPointNum)
-        {
-            nextPointNum = false;
-            pointNum++;
-            InitPoint();
-        }
-
         if (previousTelpoNum)
         {
             previousTelpoNum = false;
@@ -71,21 +55,9 @@ public class TeleportOutputEvent : OutputEvent
             nextTelpoNum = false;
             telpoNum++;
             InitTeleport();
-        }        
-    }
-
-    public void InitPoint()
-    {
-        if (pointGroup.Count > 0)
-        {
-            if (pointNum >= pointGroup.Count)
-                pointNum = 0;
-            else if (pointNum < 0)
-                pointNum = pointGroup.Count - 1;
-
-            point = pointGroup[pointNum];
         }
     }
+
     public void InitTeleport()
     {
         if (pointGroup.Count > 0)
