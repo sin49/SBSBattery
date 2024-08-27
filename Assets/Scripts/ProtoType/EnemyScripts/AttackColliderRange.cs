@@ -25,13 +25,13 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
     public void ActiveColliderDisplay()
     {
         if (childMat != null)
-            childMat.gameObject.SetActive(true);
+            childMat.enabled = true;
     }
 
     public void DeactiveColliderDisplay()
     {
         if (childMat != null)
-            childMat.gameObject.SetActive(false);
+            childMat.enabled = false;
     }
 
     private void Awake()

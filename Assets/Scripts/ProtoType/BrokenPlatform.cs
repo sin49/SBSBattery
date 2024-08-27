@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BrokenPlatform : MonoBehaviour
 {
-   public GameObject Mesh;
  public   ParticleSystem ParticleSystem_;
     private void Awake()
     {

@@ -7,9 +7,10 @@ public class isTriggerEventHandler : MonoBehaviour
 {
     public event Action<Collider> TriggerEvent;
     public event Action<Collider> TriggerExitEvent;
-
     public void registerEvent(Action<Collider> enter, Action<Collider> exit)
     {
+        TriggerEvent = null;
+        TriggerExitEvent = null;
         TriggerEvent += enter;
         TriggerExitEvent += exit;
     }
@@ -20,10 +21,10 @@ public class isTriggerEventHandler : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        TriggerEvent(other);
+        TriggerEvent?.Invoke(other);
     }
     private void OnTriggerExit(Collider other)
     {
-        TriggerExitEvent(other);
+        TriggerExitEvent?.Invoke(other);
     }
 }

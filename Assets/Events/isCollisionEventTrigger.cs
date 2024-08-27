@@ -20,11 +20,11 @@ public class isCollisionEventTrigger : MonoBehaviour
     }
     private void OnCollisionEnter(Collision other)
     {
-        TriggerEvent(other);
+        TriggerEvent?.Invoke(other);
     }
     private void OnCollisionExit(Collision other)
     {
-        TriggerExitEvent(other);
+        TriggerExitEvent?.Invoke(other);
     }
    
 }

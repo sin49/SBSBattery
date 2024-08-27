@@ -12,13 +12,13 @@ public class EnemySearchCollider : MonoBehaviour, colliderDisplayer
     public void ActiveColliderDisplay()
     {
         if(childMat != null)
-        childMat.gameObject.SetActive(true);
+        childMat.enabled = true;
     }
 
     public void DeactiveColliderDisplay()
     {
         if(childMat != null)
-        childMat.gameObject.SetActive(false);
+        childMat.enabled = false;
     }
 
     public void registerColliderDIsplay()

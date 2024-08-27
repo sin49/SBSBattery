@@ -142,8 +142,10 @@ public class BossStageEnemy : Character, DamagedByPAttack
 
     public override void Damaged(float damage)
     {
+
         if (!completeSpawn)
             completeSpawn = true;
+        base.Damaged(damage);
         hp -= damage;
         if (hp <= 0)
         {
