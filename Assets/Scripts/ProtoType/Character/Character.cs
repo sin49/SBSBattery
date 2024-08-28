@@ -7,11 +7,12 @@ public abstract class Character: MonoBehaviour
 {
     protected CharacterSoundPlayer soundplayer;
     event Action hittedevent;
-
+    event Action attackevent;
     public void registerhittedevent(Action a)
     {
         hittedevent += a;
     }
+   
     public abstract void Attack();
     public virtual void Damaged(float damage)
     {

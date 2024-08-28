@@ -81,8 +81,8 @@ public class Enemy: Character,DamagedByPAttack
     //public float attackInitCoolTime; // 공격 대기시간 초기화 변수
     [HideInInspector]
     public float attackDelay; // 공격 후 딜레이
+    EnemyAttackHandler actionhandler;
 
-    
     public bool callCheck;
     public bool rotCheck;
     
@@ -124,6 +124,9 @@ public class Enemy: Character,DamagedByPAttack
             if(onPatrol)
                 StartCoroutine(InitPatrolTarget());
         }
+        actionhandler = GetComponent<EnemyAttackHandler>();
+        if (actionhandler != null)
+            actionhandler.e = this;
     }
 
     public void InitPatrolPoint()
@@ -633,6 +636,11 @@ public class Enemy: Character,DamagedByPAttack
 
     private void OnDrawGizmos()
     {
+        if (!eStat)
+        {
+            eStat = GetComponent<EnemyStat>();
+        }
+
         if (patrolType == PatrolType.movePatrol)
         {
             if (patrolGroup.Length >= 2)
@@ -718,8 +726,10 @@ public class Enemy: Character,DamagedByPAttack
     public override void Dead()
     {
         eStat.eState = EnemyState.dead;
-        PlayerHandler.instance.CurrentPlayer.wallcheck = false;
-       
+        if (PlayerHandler.instance != null)
+            PlayerHandler.instance.CurrentPlayer.wallcheck = false;
+
+
         Instantiate(deadEffect,transform.position, Quaternion.identity);
         gameObject.SetActive(false);
     }
@@ -732,6 +742,8 @@ public class Enemy: Character,DamagedByPAttack
             animaor.Play("EnemyAttack");
         if (soundplayer != null)
             soundplayer.PlayAttackAudio();
+        if(actionhandler!=null)
+        actionhandler.invokemainaction();
     }
 
     // 공격 준비시간
