@@ -394,7 +394,7 @@ public class PlayerHandler : MonoBehaviour
         {
             CurrentPlayer.Move();
         }
-        if (Input.GetKeyDown(KeySettingManager.instance.DimensionChangeKeycode) && CurrentPlayer.onGround && !Changing && !DImensionChangeDisturb)
+        if (Input.GetKeyDown(KeySettingManager.instance.DimensionChangeKeycode) && !Changing && !DImensionChangeDisturb)
         {
 
             StartCoroutine(ChangeDimension());
