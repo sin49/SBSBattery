@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class EnemyTeleportOutputEvent : OutputEvent
 {
+    [Header("지정할 몬스터 오브젝트**필수**")]
     public GameObject selectEnemy;
-    [Header("지정할 텔레포트")]
+    [Header("지정할 텔레포트**필수**")]
     public Transform teleportPoint;
     [Header("선택된 좌표")]
     public Transform ePoint;
