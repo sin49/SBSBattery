@@ -6,18 +6,15 @@ public class PlayerKillOutputEvent : OutputEvent
 {
     public override void output()
     {
-        throw new System.NotImplementedException();
+        PlayerKill();
+        base.output();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void PlayerKill()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (PlayerHandler.instance != null && PlayerHandler.instance.CurrentPlayer != null)
+        {
+            PlayerHandler.instance.CurrentPlayer.Dead();
+        }
     }
 }

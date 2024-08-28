@@ -4,8 +4,7 @@ using UnityEngine;
 [ExecuteAlways]
 public class DisturbDimensionChangeField : MonoBehaviour, colliderDisplayer
 {
-    [Header("전환 금지 옵션")]
-    public bool RestirctDimension;
+   
 
 
     public Renderer renderer_;
@@ -28,15 +27,23 @@ public class DisturbDimensionChangeField : MonoBehaviour, colliderDisplayer
         registerColliderDIsplay();
     }
 
-       
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+
+            PlayerHandler.instance.DImensionChangeDisturb = false;
+
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
 
         if (other.CompareTag("Player"))
         {
 
-            PlayerHandler.instance.DImensionChangeDisturb = RestirctDimension;
+            PlayerHandler.instance.DImensionChangeDisturb = true;
 
         }
     }

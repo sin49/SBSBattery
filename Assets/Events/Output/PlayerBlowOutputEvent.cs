@@ -6,18 +6,15 @@ public class PlayerBlowOutputEvent : OutputEvent
 {
     public override void output()
     {
-        throw new System.NotImplementedException();
+        PlayerBlow();
+        base.output();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void PlayerBlow()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (PlayerHandler.instance != null && PlayerHandler.instance.CurrentPlayer != null)
+        {
+            PlayerHandler.instance.CurrentPlayer.Damaged(1);
+        }
     }
 }
