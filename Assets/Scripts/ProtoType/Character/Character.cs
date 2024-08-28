@@ -14,17 +14,35 @@ public abstract class Character: MonoBehaviour
     {
         hittedevent += a;
     }
-   public void registerdeadevent(Action a)
+    public void registerattackevent(Action a)
+    {
+        attackevent += a;
+    }
+    public void registermoveevent(Action a)
+    {
+        moveevent += a;
+    }
+ 
+    public void registerdeadevent(Action a)
     {
         deadevent += a;
     }
-    public abstract void Attack();
+    public virtual void Attack()
+    {
+        attackevent?.Invoke();
+    }
     public virtual void Damaged(float damage)
     {
         hittedevent?.Invoke();
     }
-    public abstract void Move();
-    public abstract void Dead();
+    public virtual void Move()
+    {
+        moveevent?.Invoke();
+    }
+    public virtual void Dead()
+    {
+        deadevent?.Invoke();//사망 이벤트 실행
+    }
 
     protected Rigidbody rb;
     protected virtual void Awake()
