@@ -81,7 +81,7 @@ public class Enemy: Character,DamagedByPAttack
     //public float attackInitCoolTime; // 공격 대기시간 초기화 변수
     [HideInInspector]
     public float attackDelay; // 공격 후 딜레이
-    EnemyAttackHandler actionhandler;
+   public EnemyAttackHandler actionhandler;
 
     public bool callCheck;
     public bool rotCheck;
@@ -725,6 +725,7 @@ public class Enemy: Character,DamagedByPAttack
     #region 사망함수
     public override void Dead()
     {
+        base.Dead();
         eStat.eState = EnemyState.dead;
         if (PlayerHandler.instance != null)
             PlayerHandler.instance.CurrentPlayer.wallcheck = false;
