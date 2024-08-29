@@ -63,20 +63,6 @@ public class PlayerHandler : MonoBehaviour
     {
         return interactobject;
     }
-
-    public event Action transformevent;
-    public event Action interactevent;
-    //변신
-    public void registertransformevent(Action a)
-    {
-        transformevent += a;
-    }
-    //상호작용
-    public void registerinteractevent(Action a)
-    {
-        interactevent += a;
-    }
-
     #region 플레이어 현재 위치,상태
 
     GameObject Playerprefab;
@@ -204,7 +190,6 @@ public class PlayerHandler : MonoBehaviour
 {
      
         interactobject = null;
-        transformevent?.Invoke();
         #region Type 변경
         if (CurrentType == type)
         return;
@@ -361,7 +346,7 @@ public class PlayerHandler : MonoBehaviour
         Dimensionchangeevent?.Invoke();
         yield return null;
     }
-    
+
     bool Changing;
     IEnumerator ChangeDimension()
     {
@@ -409,7 +394,7 @@ public class PlayerHandler : MonoBehaviour
         {
             CurrentPlayer.Move();
         }
-        if (Input.GetKeyDown(KeySettingManager.instance.DimensionChangeKeycode) && !Changing && !DImensionChangeDisturb)
+        if (Input.GetKeyDown(KeySettingManager.instance.DimensionChangeKeycode) && CurrentPlayer.onGround && !Changing && !DImensionChangeDisturb)
         {
 
             StartCoroutine(ChangeDimension());
@@ -425,7 +410,6 @@ public class PlayerHandler : MonoBehaviour
         {
             if (Input.GetKeyDown(KeySettingManager.instance.InteractKeycode) && InteractTimer <= 0)
             {
-                interactevent?.Invoke();
                 interactobject.Active(PlayerStat.instance.direction);
                 interactobject = null;
 
