@@ -58,6 +58,9 @@ public class Player : Character
     public int attackInputValue;
     public bool canAttackInput;
     public bool attackLimitInput;
+    [Header("지상에서 공격 시 이동 불가능")]
+    public bool dontMove;
+    public float dontMoveTimer;
     [Header("착지 이펙트 활성화 관련")]
     public float flyTimer;
     public float flyTime;
@@ -167,6 +170,10 @@ public class Player : Character
             }
         }
 
+        if (dontMoveTimer > 0)
+            dontMoveTimer -= Time.deltaTime;
+        else
+            dontMove = false;
     }
 
     public void BaseBufferTimer()
@@ -525,14 +532,15 @@ public class Player : Character
         {
             case PlayerMoveState.Xmove:
                 hori = Input.GetAxisRaw("Horizontal");
+                if (PlayerHandler.instance.ladderInteract)
+                    Vert = Input.GetAxisRaw("Vertical");
                 break;
             case PlayerMoveState.XmoveReverse:
                 hori =-1* Input.GetAxisRaw("Horizontal");
                 break;
 
             case PlayerMoveState.Zmove:
-       
-                Vert =  Input.GetAxisRaw("Horizontal");
+                    Vert =  Input.GetAxisRaw("Horizontal");                
                 break;
             case PlayerMoveState.ZmoveReverse:
                 Vert = -1* Input.GetAxisRaw("Horizontal");
@@ -563,12 +571,14 @@ public class Player : Character
         }
 
         Vector3 moveInput = new Vector3(hori, 0, Vert);
+        Vector3 ladderInput = new Vector3(0, Vert, 0);
+
         if (hori != 0 || Vert != 0)
         {
-            if(canAttack)
-            rotate(moveInput.x, moveInput.z);
+            if (canAttack && !PlayerHandler.instance.ladderInteract)
+                rotate(moveInput.x, moveInput.z);
             SoundPlayer.PlayMoveSound();
-            
+
         }
         //Vert 회전 추가
         //translateFix = new(hori, 0, 0);
@@ -579,10 +589,13 @@ public class Player : Character
 
         Vector3 Movevelocity = Vector3.zero;
         Vector3 desiredVector = moveInput.normalized * PlayerStat.instance.moveSpeed + EnvironmentPower;
-        Movevelocity = desiredVector - playerRb.velocity.x * Vector3.right - playerRb.velocity.z * Vector3.forward;
-
+        Vector3 ladderVector = ladderInput.normalized * PlayerStat.instance.moveSpeed + EnvironmentPower;
+        if (!PlayerHandler.instance.ladderInteract)
+            Movevelocity = desiredVector - playerRb.velocity.x * Vector3.right - playerRb.velocity.z * Vector3.forward;
+        else
+            Movevelocity = ladderVector - playerRb.velocity.y * Vector3.up;
       
-        if (!wallcheck) 
+        if (!wallcheck)
             playerRb.AddForce(Movevelocity, ForceMode.VelocityChange);
         else
             playerRb.AddForce(EnvironmentPower, ForceMode.VelocityChange);
@@ -607,7 +620,7 @@ public class Player : Character
 
         #endregion
 
-        if (!isJump)
+        if (!isJump && !PlayerHandler.instance.ladderInteract)
         {
             if (MoveCheck(hori, Vert))
             {
@@ -668,6 +681,9 @@ public class Player : Character
                     }
                     else
                     {
+                        playerRb.velocity = Vector3.zero;
+                        dontMove = true;
+                        dontMoveTimer = PlayerStat.instance.initattackCoolTime;
                         attackGround = true;
                     }
 
@@ -695,13 +711,13 @@ public class Player : Character
         {
             if ((int)PlayerStat.instance.MoveState < 4 && directionz != directionZ.none && hori == 0)
             {
-                playerRb.AddForce(transform.GetChild(0).forward * 7, ForceMode.Impulse);
+                playerRb.AddForce(transform.GetChild(0).forward * 5, ForceMode.Impulse);
             }
             else if ((int)PlayerStat.instance.MoveState >= 4)
             {
                 if (direction != direction.none && Vert != 0 || directionz != directionZ.none && hori != 0)
                 {
-                    playerRb.AddForce(transform.GetChild(0).forward * 7, ForceMode.Impulse);
+                    playerRb.AddForce(transform.GetChild(0).forward * 5, ForceMode.Impulse);
                 }                
             }
         }
@@ -978,6 +994,8 @@ public class Player : Character
             attackGround = false;            
         }
         canAttack = true;
+
+        
     }
 
     // 원거리 공격 함수
