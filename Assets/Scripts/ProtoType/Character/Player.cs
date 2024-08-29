@@ -653,6 +653,7 @@ public class Player : Character
     }
     public override void Attack()
     {
+        base.Attack();
         if (PlayerHandler.instance.onAttack && attackInputValue < 1)
         {
             if (attackBufferTimer > 0 && canAttack)

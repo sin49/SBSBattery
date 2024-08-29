@@ -10,6 +10,7 @@ public abstract class Character: MonoBehaviour
     event Action attackevent;
     event Action moveevent;
     event Action deadevent;
+    event Action jumpevent;
     public void registerhittedevent(Action a)
     {
         hittedevent += a;
@@ -27,6 +28,12 @@ public abstract class Character: MonoBehaviour
     {
         deadevent += a;
     }
+
+    public void registerjumpevent(Action a)
+    {
+        jumpevent += a;
+    }
+
     public virtual void Attack()
     {
         attackevent?.Invoke();

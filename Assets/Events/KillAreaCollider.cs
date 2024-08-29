@@ -31,9 +31,12 @@ public class KillAreaCollider : MonoBehaviour
 
     public void EnemyAllDie()
     {
-        foreach (GameObject enemy in enemyGroup)
+        if (enemyGroup.Count > 0)
         {
-            enemy.GetComponent<Enemy>().Dead();
+            foreach (GameObject enemy in enemyGroup)
+            {
+                enemy.GetComponent<Enemy>().Dead();
+            }
         }
     }
 }

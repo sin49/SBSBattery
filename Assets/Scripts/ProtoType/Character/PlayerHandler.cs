@@ -23,7 +23,7 @@ public class PlayerHandler : MonoBehaviour
 
     public GameObject Fog;
 
-
+    public bool ladderInteract;
     public bool formChange;
     #region 플레이어 변신관련 스탯
     public float CurrentPower;
