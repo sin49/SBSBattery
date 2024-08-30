@@ -562,8 +562,8 @@ Transform:
   m_GameObject: {fileID: 2360938726155333477}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.33, y: 0.0692, z: 0.15}
-  m_LocalScale: {x: 0.1, y: 0.21703637, z: 0.08169366}
+  m_LocalPosition: {x: -0.33, y: 0.0649, z: 0.1314}
+  m_LocalScale: {x: 0.1, y: 0.23392105, z: 0.06094463}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8583836501702148103}
@@ -637,8 +637,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.1325887, z: 0.7369887}
-  m_Center: {x: 4.2828315e-17, y: -0.026023975, z: -0.14245592}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7952796276940404651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1363,9 +1363,9 @@ Transform:
   m_GameObject: {fileID: 6048188335793587283}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.33040655, y: 0.23474067, z: 0.3808721}
-  m_LocalScale: {x: 0.5000001, y: 0.5, z: 0.5000001}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -0.33, y: 0.1, z: 0.275}
+  m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6992268208248588294}
   m_Father: {fileID: 8583836501702148103}
@@ -1705,16 +1705,18 @@ MonoBehaviour:
   ChrRenderer: {fileID: 1979360752492490871}
   chrmat: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
-  jumpholdLevel: 0.4
-  jumpBufferTimeMax: 1
+  jumpholdLevel: 0.45
+  jumpBufferTimeMax: 0.55
   jumpBufferTimer: 0
   canjumpInput: 0
   jumpLimitInput: 0
   attackBufferTimeMax: 0.15
   attackBufferTimer: 0
   attackInputValue: 0
+  canAttackInput: 0
+  attackLimitInput: 0
   flyTimer: 0
-  flyTime: 1.3
+  flyTime: 1.4
   isJump: 0
   jumpAnim: 0
   isRun: 0

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8861709478645672027
+--- !u!1 &3530754614515395777
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7197713803006118426}
-  - component: {fileID: 3867634121368752035}
-  - component: {fileID: 2094743903408657433}
-  - component: {fileID: 229269709558771719}
-  - component: {fileID: 120768305945244754}
+  - component: {fileID: 9189957674125805404}
+  - component: {fileID: 2702453961445199642}
+  - component: {fileID: 8987997635766447830}
+  - component: {fileID: 2024462691899206545}
+  - component: {fileID: 4661115860045164104}
   m_Layer: 0
-  m_Name: DImensionChnageCollider
+  m_Name: KillAreaCollider
   m_TagString: Untagged
-  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7197713803006118426
+--- !u!4 &9189957674125805404
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8861709478645672027}
+  m_GameObject: {fileID: 3530754614515395777}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.1558446, y: -1.0370256, z: 0.2242258}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 11.535533, y: 1.4347445, z: -23.857927}
+  m_LocalScale: {x: 4.868475, y: 2.3081, z: 5.050354}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &3867634121368752035
+--- !u!33 &2702453961445199642
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8861709478645672027}
+  m_GameObject: {fileID: 3530754614515395777}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &2094743903408657433
+--- !u!23 &8987997635766447830
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8861709478645672027}
+  m_GameObject: {fileID: 3530754614515395777}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4d6981b2e1bb2dc4c830f9d6d6abae0f, type: 2}
+  - {fileID: 2100000, guid: d6145585ee38c6c4badeb5cd62298cad, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -85,13 +85,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &229269709558771719
+--- !u!65 &2024462691899206545
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8861709478645672027}
+  m_GameObject: {fileID: 3530754614515395777}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -100,22 +100,21 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &120768305945244754
+--- !u!114 &4661115860045164104
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8861709478645672027}
+  m_GameObject: {fileID: 3530754614515395777}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b42e6b47e42af54199e017e196e7445, type: 3}
+  m_Script: {fileID: 11500000, guid: 11294be0d3d36254cadef51adbe5a06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer_: {fileID: 2094743903408657433}
