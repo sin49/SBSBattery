@@ -24,6 +24,7 @@ public class PlayerHandler : MonoBehaviour
     public GameObject Fog;
 
     public bool ladderInteract;
+    public bool ladderCheck;
     public bool formChange;
     #region 플레이어 변신관련 스탯
     public float CurrentPower;
@@ -321,10 +322,20 @@ public class PlayerHandler : MonoBehaviour
             onAttack = true;
 
         if (interactobject != null)
+        {
+            if (ladderCheck)
+            {
+                if (interactobject.GetComponent<Ladder>().resultPoint != null)
+                {
+                    ingameUIManger.UpdateInteractUI(interactobject.GetComponent<Ladder>().resultPoint.gameObject);
+                }
+            }
+            else
             ingameUIManger.UpdateInteractUI(interactobject.gameObject);
+        }
         else
         {
-            ingameUIManger. InteractTargetUI.SetActive(false);
+            ingameUIManger.InteractTargetUI.SetActive(false);
         }
     }
     [Header("키 두번 입력에 대한 처리")]
@@ -410,6 +421,50 @@ public class PlayerHandler : MonoBehaviour
             if(!CurrentPlayer.dontMove)
             CurrentPlayer.Move();
         }
+
+        if (CurrentPlayer.onInterarctive && (int)PlayerStat.instance.MoveState >= 4)
+        {
+
+            if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode) && !Input.GetKey(KeyCode.DownArrow)
+                  && !jumprestrict)
+            {
+
+
+                CurrentPlayer.GetJumpBuffer();
+
+
+            }
+            else
+            {
+                CurrentPlayer.jumpLimitInput = false;
+                /*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
+                    CurrentPlayer.jumpLimitInput = false;*/
+            }
+
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode)
+                  && !jumprestrict)
+            {
+
+
+                CurrentPlayer.GetJumpBuffer();
+
+
+            }
+            else
+            {
+                CurrentPlayer.jumpLimitInput = false;
+                /*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
+                    CurrentPlayer.jumpLimitInput = false;*/
+            }
+        }
+        if (!Input.GetKey(KeySettingManager.instance.jumpKeycode))
+        {
+            CurrentPlayer.jumphold();
+        }
+
         if (!ladderInteract)
         {
             if (Input.GetKeyDown(KeySettingManager.instance.DimensionChangeKeycode) && !Changing && !DImensionChangeDisturb)
@@ -435,7 +490,7 @@ public class PlayerHandler : MonoBehaviour
                     InteractTimer = PlayerStat.instance.InteractDelay;
                 }
             }
-            if (CurrentPlayer.onInterarctive && (int)PlayerStat.instance.MoveState >= 4)
+            /*if (CurrentPlayer.onInterarctive && (int)PlayerStat.instance.MoveState >= 4)
             {
 
                 if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode) && !Input.GetKey(KeyCode.DownArrow)
@@ -450,8 +505,8 @@ public class PlayerHandler : MonoBehaviour
                 else
                 {
                     CurrentPlayer.jumpLimitInput = false;
-                    /*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
-                        CurrentPlayer.jumpLimitInput = false;*/
+                    *//*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
+                        CurrentPlayer.jumpLimitInput = false;*//*
                 }
 
             }
@@ -469,14 +524,14 @@ public class PlayerHandler : MonoBehaviour
                 else
                 {
                     CurrentPlayer.jumpLimitInput = false;
-                    /*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
-                        CurrentPlayer.jumpLimitInput = false;*/
+                    *//*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
+                        CurrentPlayer.jumpLimitInput = false;*//*
                 }
             }
             if (!Input.GetKey(KeySettingManager.instance.jumpKeycode))
             {
                 CurrentPlayer.jumphold();
-            }
+            }*/
 
 
 

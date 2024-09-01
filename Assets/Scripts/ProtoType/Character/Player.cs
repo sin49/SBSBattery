@@ -593,12 +593,21 @@ public class Player : Character
         if (!PlayerHandler.instance.ladderInteract)
             Movevelocity = desiredVector - playerRb.velocity.x * Vector3.right - playerRb.velocity.z * Vector3.forward;
         else
+        {
+            playerRb.velocity = new(0, playerRb.velocity.y, 0);
             Movevelocity = ladderVector - playerRb.velocity.y * Vector3.up;
+        }
       
         if (!wallcheck)
             playerRb.AddForce(Movevelocity, ForceMode.VelocityChange);
         else
-            playerRb.AddForce(EnvironmentPower, ForceMode.VelocityChange);
+        {
+            if (!PlayerHandler.instance.ladderInteract)
+                playerRb.AddForce(EnvironmentPower, ForceMode.VelocityChange);
+            else
+                playerRb.AddForce(Movevelocity, ForceMode.VelocityChange);
+        }
+        
 
 
         if (Movevelocity == Vector3.zero)
@@ -711,14 +720,14 @@ public class Player : Character
         {
             if ((int)PlayerStat.instance.MoveState < 4 && directionz != directionZ.none && hori == 0)
             {
-                playerRb.AddForce(transform.GetChild(0).forward * 5, ForceMode.Impulse);
+                playerRb.AddForce(transform.GetChild(0).forward * 7, ForceMode.Impulse);
             }
             else if ((int)PlayerStat.instance.MoveState >= 4)
             {
                 if (direction != direction.none && Vert != 0 || directionz != directionZ.none && hori != 0)
                 {
-                    playerRb.AddForce(transform.GetChild(0).forward * 5, ForceMode.Impulse);
-                }                
+                    playerRb.AddForce(transform.GetChild(0).forward * 7, ForceMode.Impulse);
+                }
             }
         }
     }
@@ -870,7 +879,13 @@ public class Player : Character
         jumpBufferTimer = 0;
         canjumpInput = false;
         jumpLimitInput = true;
-       
+
+        if (PlayerHandler.instance.ladderInteract)
+        {
+            PlayerHandler.instance.ladderInteract = false;
+            playerRb.useGravity = true;
+        }
+
         if (Humonoidanimator != null)
         {
             Humonoidanimator.SetTrigger("jump");

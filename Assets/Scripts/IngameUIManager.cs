@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -42,10 +43,19 @@ public class IngameUIManager : MonoBehaviour
     {
         if (PlayerHandler.instance.CurrentCamera != null)
         {
-            InteractTargetUI.SetActive(true);
+            /*InteractTargetUI.SetActive(true);
+            InteractTargetUI.transform.position = PlayerHandler.instance.CurrentCamera.WorldToScreenPoint(
+                    target.transform.GetChild(0).position
+                );*/
+            if (!PlayerHandler.instance.ladderCheck)
             InteractTargetUI.transform.position = PlayerHandler.instance.CurrentCamera.WorldToScreenPoint(
                     target.transform.GetChild(0).position
                 );
+            else
+            {
+                InteractTargetUI.transform.position = PlayerHandler.instance.CurrentCamera.WorldToScreenPoint(target.transform.position);
+            }
+            InteractTargetUI.SetActive(true);
             //InteractTargetUI.transform.localScale = target.transform.localScale;
         }
      
