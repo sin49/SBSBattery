@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
-
+[ExecuteAlways]
 public class AttackColliderRange : MonoBehaviour, colliderDisplayer
 {
     public Enemy enemy;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[ExecuteAlways]
 public class EnemySearchCollider : MonoBehaviour, colliderDisplayer
 {
     Enemy enemy;
