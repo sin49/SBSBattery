@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.RenderGraphModule;
 using UnityEngine.PlayerLoop;
@@ -59,8 +60,8 @@ public class Player : Character
     public bool canAttackInput;
     public bool attackLimitInput;
     [Header("지상에서 공격 시 이동 불가능")]
-    public bool dontMove;
-    public float dontMoveTimer;
+    public bool dontAttack;   
+    public float dontAttackTimer, dontMoveTimer;
     [Header("착지 이펙트 활성화 관련")]
     public float flyTimer;
     public float flyTime;
@@ -170,10 +171,17 @@ public class Player : Character
             }
         }
 
+        if (dontAttackTimer > 0)
+            dontAttackTimer -= Time.deltaTime;
+        else
+        {
+            dontAttack = false;
+        }
+
         if (dontMoveTimer > 0)
             dontMoveTimer -= Time.deltaTime;
         else
-            dontMove = false;
+            canAttack = true;
     }
 
     public void BaseBufferTimer()
@@ -187,6 +195,18 @@ public class Player : Character
         {
             attackBufferTimer -= Time.deltaTime;
         }
+
+        if (dontAttackTimer > 0)
+            dontAttackTimer -= Time.deltaTime;
+        else
+        {
+            dontAttack = false;
+        }
+
+        if (dontMoveTimer > 0)
+            dontMoveTimer -= Time.deltaTime;
+        else
+            canAttack = true;
     }
 
     #region 변신 후 무적
@@ -679,7 +699,7 @@ public class Player : Character
     {
         canAttack = false;
         if (Humonoidanimator != null)
-            Humonoidanimator.Play("Attack");
+            Humonoidanimator.Play("Attack", 0, 0f);
         if (SoundPlayer != null)
             SoundPlayer.PlayAttackAudio();
     }
@@ -688,9 +708,9 @@ public class Player : Character
         base.Attack();
         if (PlayerHandler.instance.onAttack && attackInputValue < 1)
         {
-            if (attackBufferTimer > 0 && canAttack)
+            if (attackBufferTimer > 0 /*&& canAttack*/ && !dontAttack)
             {
-                if (PlayerStat.instance.attackType == AttackType.melee && canAttack && !downAttack)
+                if (PlayerStat.instance.attackType == AttackType.melee /*&& canAttack*/ && !downAttack)
                 {
                     attackBufferTimer = 0;
                     attackInputValue = 1;
@@ -701,11 +721,12 @@ public class Player : Character
                     else
                     {
                         playerRb.velocity = Vector3.zero;
-                        dontMove = true;
-                        dontMoveTimer = PlayerStat.instance.initattackCoolTime;
+                        dontAttack = true;
+                        dontMoveTimer = PlayerStat.instance.attackDelay;
+                        dontAttackTimer = PlayerStat.instance.initattackCoolTime;
                         attackGround = true;
                     }
-
+                    
                 
                     StartCoroutine(TestMeleeAttack());
                 }
@@ -990,8 +1011,7 @@ public class Player : Character
             meleeCollider.GetComponent<SphereCollider>().enabled = true;
         }
         else if (attackGround)
-        {
-
+        {            
             meleeCollider.SetActive(true);
             meleeCollider.GetComponent<SphereCollider>().enabled = true;
             
@@ -1018,7 +1038,7 @@ public class Player : Character
             meleeCollider.GetComponent<SphereCollider>().enabled = false;
             attackGround = false;            
         }
-        canAttack = true;
+        /*canAttack = true;*/
 
         
     }
