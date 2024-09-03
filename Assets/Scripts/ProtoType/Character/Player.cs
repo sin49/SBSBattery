@@ -372,7 +372,14 @@ public class Player : Character
             ModelAnimator.SetBool("Rolling", downAttack);
             Humonoidanimator.SetBool("DownAttack", downAttack);
         }
-
+        //if (Time.timeScale == 0)
+        //{
+        //    Humonoidanimator.speed = 0;
+        //}
+        //else
+        //{
+        //    Humonoidanimator.speed = 1;
+        //}
         /*if (RunEffect != null)
         {            
 

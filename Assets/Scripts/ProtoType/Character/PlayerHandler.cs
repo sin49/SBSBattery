@@ -175,15 +175,18 @@ public class PlayerHandler : MonoBehaviour
 
 
         #region 캐릭터 조작
-        if (KeySettingManager.instance == null)
+        if ((CurrentPlayer != null && !formChange) && !CantHandle)
         {
-            if ((CurrentPlayer != null && !formChange) || CantHandle)
+            if (KeySettingManager.instance == null)
+            {
+
                 charactermove();
-        }
-        else
-        {
-            if ((CurrentPlayer != null && !formChange) || CantHandle)
-                KeysettingCharactermove();
+            }
+            else
+            {
+               
+                    KeysettingCharactermove();
+            }
         }
         #endregion
     }
@@ -421,6 +424,7 @@ public class PlayerHandler : MonoBehaviour
        
         
     }
+
     void KeysettingCharactermove()
     {
         if (outputCantHandle)
