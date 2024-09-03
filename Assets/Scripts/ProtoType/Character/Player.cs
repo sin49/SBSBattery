@@ -333,7 +333,10 @@ public class Player : Character
         AttackNotHold();
         if (!downAttack)
         Attack();
-
+        if(CullingPlatform)
+            Physics.IgnoreLayerCollision(6, 11, true);
+        else
+            Physics.IgnoreLayerCollision(6, 11, false);
         if (onGround == true&& isJump == true)
             isJump = false;
 
@@ -406,7 +409,7 @@ public class Player : Character
                 {
                     platformDisableTimer = 0;
                     CullingPlatform = false;
-                    Physics.IgnoreLayerCollision(6, 11, false);
+                
                 }
             }
         }
@@ -1073,7 +1076,8 @@ public class Player : Character
         {
             onGround = false;
             oninteractivetimer = 0.1f;
-           
+            PlayerHandler.instance.playerjumpaccept();
+
         }
         #endregion
     }
@@ -1109,20 +1113,29 @@ public class Player : Character
 
                     isJump = true;
                     CullingPlatform = true;
-                    Physics.IgnoreLayerCollision(6, 11, true);
+                   
 
                 }
             }
             else
             {
-                if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode)&& Input.GetKey(KeyCode.DownArrow) &&
+                if (Input.GetKey(KeyCode.DownArrow) &&
                    (int)PlayerStat.instance.MoveState < 4
                    && !CullingPlatform)
                 {
-                    PlayerHandler.instance.doubleDownInput = false;
-                    CullingPlatform = true;
-                    Physics.IgnoreLayerCollision(6, 11, true);
+                    PlayerHandler.instance.playerjumprestirct();
+                    if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode))
+                    {
+                        PlayerHandler.instance.playerjumpaccept();
+                 
+                        PlayerHandler.instance.doubleDownInput = false;
+                        CullingPlatform = true;
+                       
+                    }
 
+                }else if (!Input.GetKey(KeyCode.DownArrow))
+                {
+                    PlayerHandler.instance.playerjumpaccept();
                 }
             }
         }
@@ -1193,7 +1206,7 @@ public class Player : Character
                 {
 
                     CullingPlatform = true;
-                    Physics.IgnoreLayerCollision(6, 11, true);
+                   
                 
 
                 }
@@ -1214,7 +1227,7 @@ public class Player : Character
 
     //      Debug.Log("Velocity"+playerRb.velocity);
     //  }
-    protected float InteractiveUprayDistance=0.4f;
+    protected float InteractiveUprayDistance=0.38f;
     public void InteractivePlatformrayCheck()
     {
 
@@ -1233,7 +1246,7 @@ public class Player : Character
                 {
 
                     CullingPlatform = false;
-                    Physics.IgnoreLayerCollision(6, 11, false);
+                
                     platformDisableTimer = 0;
                
                 }
