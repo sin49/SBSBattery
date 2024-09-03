@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class EnemyRemoveOutputEvent : OutputEvent
 {
+    [Header("지정할 몬스터 오브젝트**필수**")]
     public GameObject selectEnemy;
     public Transform ePoint;
     public List<Transform> ePointGroup = new List<Transform>();

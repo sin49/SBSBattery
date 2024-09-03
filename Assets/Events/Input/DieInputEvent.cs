@@ -24,6 +24,5 @@ public class DieInputEvent : InputEvent
     {
         cDie = true;
     }
-   
-    }
-
+      
+}

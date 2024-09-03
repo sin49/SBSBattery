@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum enemyactiontype { none,swing}
+public enum enemyactiontype { none,swing,throwing}
 public class EnemyAttackHandler : MonoBehaviour
 {
 
@@ -19,6 +19,9 @@ public class EnemyAttackHandler : MonoBehaviour
             case enemyactiontype.swing:
                 mainaction = createtransform.gameObject.AddComponent<EnemyAction_Swing>();
                 break;
+            case enemyactiontype.throwing:
+                mainaction = createtransform.gameObject.AddComponent<EnemyAction_Throwing>();
+                    break;
         }
     }
     public void invokemainaction()
