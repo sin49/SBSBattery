@@ -1,28 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InteractionInputEvent : InputEvent
 {
+    public bool interact;
     public override void initialize()
     {
-        throw new System.NotImplementedException();
+        interact = false;
+    }
+
+    private void Awake()
+    {
+        initialize();
+    }
+
+    private void Start()
+    {
+        PlayerHandler.instance.registerinteractevent(Interact);
     }
 
     public override bool input(object o)
     {
-        return true;
+        return interact;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    void Interact()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        interact = true;
     }
 }

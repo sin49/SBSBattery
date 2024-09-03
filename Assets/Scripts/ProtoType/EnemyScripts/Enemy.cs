@@ -445,7 +445,7 @@ public class Enemy: Character,DamagedByPAttack
     #region 이동함수
     public override void Move()
     {
-
+        base.Move();
         if (eStat.eState != EnemyState.dead || eStat.eState != EnemyState.hitted)
         {
 
@@ -739,6 +739,7 @@ public class Enemy: Character,DamagedByPAttack
     #region 공격함수
     public override void Attack()
     {
+        base.Attack();
         if(animaor != null)
             animaor.Play("EnemyAttack");
         if (soundplayer != null)

@@ -23,7 +23,8 @@ public class PlayerHandler : MonoBehaviour
 
     public GameObject Fog;
 
-
+    public bool ladderInteract;
+    public bool ladderCheck;
     public bool formChange;
     #region 플레이어 변신관련 스탯
     public float CurrentPower;
@@ -63,6 +64,26 @@ public class PlayerHandler : MonoBehaviour
     {
         return interactobject;
     }
+
+    public event Action transformevent;
+    public event Action interactevent;
+    public event Action keyinputevent;
+    //변신
+    public void registertransformevent(Action a)
+    {
+        transformevent += a;
+    }
+    //상호작용
+    public void registerinteractevent(Action a)
+    {
+        interactevent += a;
+    }
+
+    public void registerkeyinputevent(Action a)
+    {
+        keyinputevent += a;
+    }
+
     #region 플레이어 현재 위치,상태
 
     GameObject Playerprefab;
@@ -154,18 +175,22 @@ public class PlayerHandler : MonoBehaviour
 
 
         #region 캐릭터 조작
-        if (KeySettingManager.instance == null)
+        if ((CurrentPlayer != null && !formChange) && !CantHandle)
         {
-            if ((CurrentPlayer != null && !formChange) || CantHandle)
+            if (KeySettingManager.instance == null)
+            {
+
                 charactermove();
-        }
-        else
-        {
-            if ((CurrentPlayer != null && !formChange) || CantHandle)
-                KeysettingCharactermove();
+            }
+            else
+            {
+               
+                    KeysettingCharactermove();
+            }
         }
         #endregion
     }
+    public bool outputCantHandle;
     public bool CantHandle;
     //public float CantHandleTimer;
     #region 변신 시스템
@@ -190,6 +215,7 @@ public class PlayerHandler : MonoBehaviour
 {
      
         interactobject = null;
+        transformevent?.Invoke();
         #region Type 변경
         if (CurrentType == type)
         return;
@@ -306,10 +332,20 @@ public class PlayerHandler : MonoBehaviour
             onAttack = true;
 
         if (interactobject != null)
+        {
+            if (ladderCheck)
+            {
+                if (interactobject.GetComponent<Ladder>().resultPoint != null)
+                {
+                    ingameUIManger.UpdateInteractUI(interactobject.GetComponent<Ladder>().resultPoint.gameObject);
+                }
+            }
+            else
             ingameUIManger.UpdateInteractUI(interactobject.gameObject);
+        }
         else
         {
-            ingameUIManger. InteractTargetUI.SetActive(false);
+            ingameUIManger.InteractTargetUI.SetActive(false);
         }
     }
     [Header("키 두번 입력에 대한 처리")]
@@ -346,7 +382,7 @@ public class PlayerHandler : MonoBehaviour
         Dimensionchangeevent?.Invoke();
         yield return null;
     }
-
+    
     bool Changing;
     IEnumerator ChangeDimension()
     {
@@ -388,37 +424,31 @@ public class PlayerHandler : MonoBehaviour
        
         
     }
+
     void KeysettingCharactermove()
     {
-        if (!CurrentPlayer.downAttack)
+        if (outputCantHandle)
         {
-            CurrentPlayer.Move();
-        }
-        if (Input.GetKeyDown(KeySettingManager.instance.DimensionChangeKeycode) && !Changing && !DImensionChangeDisturb)
-        {
-
-            StartCoroutine(ChangeDimension());
-            //Dimensionchangeevent?.Invoke();
-
-        }
-
-        if (InteractTimer > 0)
-            InteractTimer -= Time.deltaTime;
-
-
-        if (interactobject != null)
-        {
-            if (Input.GetKeyDown(KeySettingManager.instance.InteractKeycode) && InteractTimer <= 0)
+            if (CurrentPlayer.hori != 0 || CurrentPlayer.Vert != 0)
             {
-                interactobject.Active(PlayerStat.instance.direction);
-                interactobject = null;
-
-                InteractTimer = PlayerStat.instance.InteractDelay;
+                CurrentPlayer.playerRb.velocity = Vector3.zero;
+                CurrentPlayer.hori = 0;
+                CurrentPlayer.Vert = 0;
+                CurrentPlayer.isRun = false;
+                CurrentPlayer.Humonoidanimator.SetBool("run", CurrentPlayer.isRun);
             }
+            return;
         }
-        if (CurrentPlayer.onInterarctive && (int)PlayerStat.instance.MoveState >= 4)
+        else
         {
-   
+            if (!CurrentPlayer.downAttack)
+            {
+                CurrentPlayer.Move();
+            }
+
+            if (CurrentPlayer.onInterarctive && (int)PlayerStat.instance.MoveState >= 4)
+            {
+
                 if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode) && !Input.GetKey(KeyCode.DownArrow)
                       && !jumprestrict)
                 {
@@ -434,215 +464,294 @@ public class PlayerHandler : MonoBehaviour
                     /*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
                         CurrentPlayer.jumpLimitInput = false;*/
                 }
-           
-        }
-        else
-        {
-            if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode)
-                  && !jumprestrict)
-            {
-
-
-                CurrentPlayer.GetJumpBuffer();
-
 
             }
             else
             {
-                CurrentPlayer.jumpLimitInput = false;
-                /*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
-                    CurrentPlayer.jumpLimitInput = false;*/
-            }
-        }
-        if (!Input.GetKey(KeySettingManager.instance.jumpKeycode))
-        {
-            CurrentPlayer.jumphold();
-        }
-
-
-     
-
-            if (Input.GetKey(KeySettingManager.instance.DeformKeycode))
-            {
-                switch (CurrentType)
+                if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode)
+                      && !jumprestrict)
                 {
-                    case TransformType.remoteform:
-                        DeTransformtimer += Time.deltaTime;
-                        if (DeTransformtimer > DeTransformtime)
-                        {
-                            DeTransformtimer = 0;
-                            //Deform();
-                        }
-                        break;
-                    default:
-                        break;
+
+
+                    CurrentPlayer.GetJumpBuffer();
+
 
                 }
+                else
+                {
+                    CurrentPlayer.jumpLimitInput = false;
+                    /*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
+                        CurrentPlayer.jumpLimitInput = false;*/
+                }
             }
-       
-    
-
-            if (Input.GetKey(KeySettingManager.instance.DownAttackKeycode) && !CurrentPlayer.onGround/*&&
-                PlayerInventory.instance.checkessesntialitem("item01")*/)
+            if (!Input.GetKey(KeySettingManager.instance.jumpKeycode))
             {
-                CurrentPlayer.DownAttack();
+                CurrentPlayer.jumphold();
             }
-      
-        if (doubleUpInput && Input.GetKeyDown(KeySettingManager.instance.SkillKeycode) && CurrentType != TransformType.Default)
-        {
-            CurrentPlayer.Skill1();
 
-            Skill1InputTimer = Skill1InputCheck;
-        }
-        if (Input.GetKey(KeySettingManager.instance.AttackKeycode) && Skill1InputTimer <= 0/* &&
+            if (!ladderInteract)
+            {
+                if (Input.GetKeyDown(KeySettingManager.instance.DimensionChangeKeycode) && !Changing && !DImensionChangeDisturb)
+                {
+
+                    StartCoroutine(ChangeDimension());
+                    //Dimensionchangeevent?.Invoke();
+
+                }
+
+                if (InteractTimer > 0)
+                    InteractTimer -= Time.deltaTime;
+
+
+                if (interactobject != null)
+                {
+                    if (Input.GetKeyDown(KeySettingManager.instance.InteractKeycode) && InteractTimer <= 0)
+                    {
+                        interactevent?.Invoke();
+                        interactobject.Active(PlayerStat.instance.direction);
+                        interactobject = null;
+
+                        InteractTimer = PlayerStat.instance.InteractDelay;
+                    }
+                }
+                /*if (CurrentPlayer.onInterarctive && (int)PlayerStat.instance.MoveState >= 4)
+                {
+
+                    if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode) && !Input.GetKey(KeyCode.DownArrow)
+                          && !jumprestrict)
+                    {
+
+
+                        CurrentPlayer.GetJumpBuffer();
+
+
+                    }
+                    else
+                    {
+                        CurrentPlayer.jumpLimitInput = false;
+                        *//*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
+                            CurrentPlayer.jumpLimitInput = false;*//*
+                    }
+
+                }
+                else
+                {
+                    if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode)
+                          && !jumprestrict)
+                    {
+
+
+                        CurrentPlayer.GetJumpBuffer();
+
+
+                    }
+                    else
+                    {
+                        CurrentPlayer.jumpLimitInput = false;
+                        *//*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
+                            CurrentPlayer.jumpLimitInput = false;*//*
+                    }
+                }
+                if (!Input.GetKey(KeySettingManager.instance.jumpKeycode))
+                {
+                    CurrentPlayer.jumphold();
+                }*/
+
+
+
+
+                if (Input.GetKey(KeySettingManager.instance.DeformKeycode))
+                {
+                    switch (CurrentType)
+                    {
+                        case TransformType.remoteform:
+                            DeTransformtimer += Time.deltaTime;
+                            if (DeTransformtimer > DeTransformtime)
+                            {
+                                DeTransformtimer = 0;
+                                //Deform();
+                            }
+                            break;
+                        default:
+                            break;
+
+                    }
+                }
+
+
+
+                if (Input.GetKey(KeySettingManager.instance.DownAttackKeycode) && !CurrentPlayer.onGround/*&&
                 PlayerInventory.instance.checkessesntialitem("item01")*/)
-        {
-           if(CurrentPlayer.attackInputValue < 1 && !CurrentPlayer.attackLimitInput)
-            CurrentPlayer.attackBufferTimer = CurrentPlayer.attackBufferTimeMax;
+                {
+                    CurrentPlayer.DownAttack();
+                }
+
+                if (doubleUpInput && Input.GetKeyDown(KeySettingManager.instance.SkillKeycode) && CurrentType != TransformType.Default)
+                {
+                    CurrentPlayer.Skill1();
+
+                    Skill1InputTimer = Skill1InputCheck;
+                }
+                if (Input.GetKey(KeySettingManager.instance.AttackKeycode) && Skill1InputTimer <= 0/* &&
+                PlayerInventory.instance.checkessesntialitem("item01")*/)
+                {
+                    if (CurrentPlayer.attackInputValue < 1 && !CurrentPlayer.attackLimitInput)
+                        CurrentPlayer.attackBufferTimer = CurrentPlayer.attackBufferTimeMax;
+                }
+                if (Skill1InputTimer > 0)
+                    Skill1InputTimer -= Time.fixedDeltaTime;
+            }
         }
-        if (Skill1InputTimer > 0)
-            Skill1InputTimer -= Time.fixedDeltaTime;
     }
     void charactermove()
     {
-        if (!CurrentPlayer.downAttack)
-        {
-            CurrentPlayer.Move();
-        }
-        if (Input.GetKeyDown(KeyCode.Space)&&CurrentPlayer.onGround&& !Changing&& !DImensionChangeDisturb)
-        {
-  
-            StartCoroutine(ChangeDimension());
-            //Dimensionchangeevent?.Invoke();
-           
-        }
-
-        if (InteractTimer > 0)
-            InteractTimer -= Time.deltaTime;
-
-
-        if (interactobject != null)
-        {
-            if (Input.GetKeyDown(KeyCode.F) && InteractTimer <= 0)
-            {
-                interactobject.Active(PlayerStat.instance.direction);
-                interactobject = null;
-
-                InteractTimer = PlayerStat.instance.InteractDelay;
-            }
-        }
-        if (Input.GetKey(KeyCode.C) && !jumprestrict)
-        {
-          
-              
-            CurrentPlayer.GetJumpBuffer();
-            
-            
-        }
+        if (outputCantHandle)
+            return;
         else
         {
-            CurrentPlayer.jumpLimitInput = false;
-            /*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
-                CurrentPlayer.jumpLimitInput = false;*/
-        }
-        if (!Input.GetKey(KeyCode.C))
-        {
-            CurrentPlayer.jumphold();
-        }
-
-    
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            if (!firstUpInput && !doubleUpInput && inputTimer<=0)
+            if (!CurrentPlayer.downAttack)
             {
-                firstUpInput = true;
-                inputTimer = inputTime;                
+                CurrentPlayer.Move();
             }
 
-            if (!doubleUpInput)
+            if (!ladderInteract)
             {
-                if (!firstUpInput && inputTimer > 0)
+                if (Input.GetKeyDown(KeyCode.Space) && CurrentPlayer.onGround && !Changing && !DImensionChangeDisturb)
                 {
-                    doubleUpInput = true;
+
+                    StartCoroutine(ChangeDimension());
+                    //Dimensionchangeevent?.Invoke();
+
                 }
-            }
 
-            if (doubleUpInput)
-            {
-                switch (CurrentType)
+                if (InteractTimer > 0)
+                    InteractTimer -= Time.deltaTime;
+
+
+                if (interactobject != null)
                 {
-                    case TransformType.remoteform:
-                        DeTransformtimer += Time.deltaTime;
-                        if (DeTransformtimer > DeTransformtime)
+                    if (Input.GetKeyDown(KeyCode.F) && InteractTimer <= 0)
+                    {
+                        interactobject.Active(PlayerStat.instance.direction);
+                        interactobject = null;
+
+                        InteractTimer = PlayerStat.instance.InteractDelay;
+                    }
+                }
+                if (Input.GetKey(KeyCode.C) && !jumprestrict)
+                {
+
+
+                    CurrentPlayer.GetJumpBuffer();
+
+
+                }
+                else
+                {
+                    CurrentPlayer.jumpLimitInput = false;
+                    /*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
+                        CurrentPlayer.jumpLimitInput = false;*/
+                }
+                if (!Input.GetKey(KeyCode.C))
+                {
+                    CurrentPlayer.jumphold();
+                }
+
+
+                if (Input.GetKey(KeyCode.UpArrow))
+                {
+                    if (!firstUpInput && !doubleUpInput && inputTimer <= 0)
+                    {
+                        firstUpInput = true;
+                        inputTimer = inputTime;
+                    }
+
+                    if (!doubleUpInput)
+                    {
+                        if (!firstUpInput && inputTimer > 0)
                         {
-                            DeTransformtimer = 0;
-                            //Deform();
+                            doubleUpInput = true;
                         }
-                        break;
-                    default:
-                        break;
+                    }
 
+                    if (doubleUpInput)
+                    {
+                        switch (CurrentType)
+                        {
+                            case TransformType.remoteform:
+                                DeTransformtimer += Time.deltaTime;
+                                if (DeTransformtimer > DeTransformtime)
+                                {
+                                    DeTransformtimer = 0;
+                                    //Deform();
+                                }
+                                break;
+                            default:
+                                break;
+
+                        }
+                    }
                 }
-            }
-        }
-        else
-        {
-            firstUpInput = false;
-            doubleUpInput = false;
-            DeTransformtimer = 0;
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            if (!firstDownInput && !doubleDownInput && inputTimer <= 0)
-            {
-                firstDownInput = true;
-                inputTimer = inputTime;
-            }
-
-            if (!doubleDownInput)
-            {
-                if (!firstDownInput && inputTimer > 0)
+                else
                 {
-                    doubleDownInput = true;
+                    firstUpInput = false;
+                    doubleUpInput = false;
+                    DeTransformtimer = 0;
                 }
+                if (Input.GetKey(KeyCode.DownArrow))
+                {
+                    if (!firstDownInput && !doubleDownInput && inputTimer <= 0)
+                    {
+                        firstDownInput = true;
+                        inputTimer = inputTime;
+                    }
+
+                    if (!doubleDownInput)
+                    {
+                        if (!firstDownInput && inputTimer > 0)
+                        {
+                            doubleDownInput = true;
+                        }
+                    }
+
+                    if (Input.GetKey(KeyCode.X) && !CurrentPlayer.onGround && doubleDownInput/*&&
+                PlayerInventory.instance.checkessesntialitem("item01")*/)
+                    {
+                        CurrentPlayer.DownAttack();
+                    }
+                }
+                else
+                {
+                    firstDownInput = false;
+                    doubleDownInput = false;
+                }
+                if (doubleUpInput && Input.GetKeyDown(KeyCode.S) && CurrentType != TransformType.Default)
+                {
+                    CurrentPlayer.Skill1();
+
+                    Skill1InputTimer = Skill1InputCheck;
+                }
+                if (Input.GetKey(KeyCode.X) && Skill1InputTimer <= 0/* &&
+                PlayerInventory.instance.checkessesntialitem("item01")*/)
+                {
+                    //CurrentPlayer.Attack();
+                    CurrentPlayer.attackBufferTimer = CurrentPlayer.attackBufferTimeMax;
+                }
+                if (Skill1InputTimer > 0)
+                    Skill1InputTimer -= Time.fixedDeltaTime;
+                //if (Input.GetKeyDown(KeyCode.Space))
+                //{
+                //    if (CurrentType == TransformType.Default)
+                //        userestoredtype();
+                //    else
+                //    
+                //}
+
+
+                //CurrentPlayer.Skill2();
+
             }
-
-            if (Input.GetKey(KeyCode.X) && !CurrentPlayer.onGround  && doubleDownInput/*&&
-                PlayerInventory.instance.checkessesntialitem("item01")*/)
-            {                         
-                CurrentPlayer.DownAttack();
-            }            
         }
-        else
-        {
-            firstDownInput = false;
-            doubleDownInput = false;
-        }
-        if (doubleUpInput && Input.GetKeyDown(KeyCode.S)&&CurrentType!=TransformType.Default)
-        {
-            CurrentPlayer.Skill1();
-         
-                Skill1InputTimer = Skill1InputCheck;
-        }    
-        if (Input.GetKey(KeyCode.X)&& Skill1InputTimer<=0/* &&
-                PlayerInventory.instance.checkessesntialitem("item01")*/)
-        {
-            //CurrentPlayer.Attack();
-            CurrentPlayer.attackBufferTimer = CurrentPlayer.attackBufferTimeMax;
-        }
-        if (Skill1InputTimer > 0)
-            Skill1InputTimer -= Time.fixedDeltaTime;
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    if (CurrentType == TransformType.Default)
-        //        userestoredtype();
-        //    else
-        //    
-        //}
-
-
-        //CurrentPlayer.Skill2();
-
     }
     #endregion
 
