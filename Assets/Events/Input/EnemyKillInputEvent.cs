@@ -4,70 +4,38 @@ using UnityEngine;
 
 public class EnemyKillInputEvent : InputEvent
 {
-    public GameObject enemy;
-
+   
     public GameObject obj;
-    public List<GameObject> objGroup = new List<GameObject>();
-    public bool eKill;
+    public Character[] objGroup=new Character[0];
+
     public bool reduceNum, increaseNum;
 
-    int pointNum;
+    int arraySize;
 
     public override void initialize()
     {
-        eKill = false;
+        arraySize = objGroup.Length;
     }
-
-    public override bool input(object o)
-    {        
-        return eKill;
-    }
-
-    private void Update()
+    private void Awake()
     {
-        ChangePoint();
-        EnemyKill();
+
+        objGroup = obj.GetComponentsInChildren<Character>();
+        foreach(Character c in objGroup) 
+        {
+            c.registerdeadevent(EnemyKill);
+        }
+        initialize();
+    }
+    public override bool input(object o)
+    {
+        if (arraySize <= 0)
+            return true;
+        else
+            return false;
     }
 
     public void EnemyKill()
     {
-        if (enemy != null)
-        {
-            if (enemy.GetComponent<Enemy>().eStat.eState == EnemyState.dead)
-            {
-                eKill = true;
-            }
-        }
+        arraySize--;
     }
-
-    public void ChangePoint()
-    {
-        if (reduceNum)
-        {
-            reduceNum = false;
-            pointNum--;
-            InitPoint();
-        }
-
-        if (increaseNum)
-        {
-            increaseNum = false;
-            pointNum++;
-            InitPoint();
-        }
-    }
-
-    public void InitPoint()
-    {
-        if (objGroup.Count > 0)
-        {
-            if (pointNum >= objGroup.Count)
-                pointNum = 0;
-            else if (pointNum < 0)
-                pointNum = objGroup.Count - 1;
-
-            obj = objGroup[pointNum];
-        }
-    }
-
 }
