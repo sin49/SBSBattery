@@ -8,6 +8,10 @@ public class DisturbDimensionChangeField : MonoBehaviour, colliderDisplayer
 
 
     public Renderer renderer_;
+    private void Awake()
+    {
+        renderer_=GetComponent<Renderer>();
+    }
     public void ActiveColliderDisplay()
     {
         renderer_.enabled = true;
