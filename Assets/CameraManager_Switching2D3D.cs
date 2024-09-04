@@ -127,9 +127,9 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     {
         if (camera2D == null || camera3D == null)
             yield break;
-        trans3D = !trans3D;
+        //trans3D = !trans3D;
 
-        UpdatePlayerMovestate();
+        //UpdatePlayerMovestate();
         PlayerHandler.instance.CurrentPlayer.rotateBy3Dto2D();
         PlayerHandler.instance.CantHandle = true;
         camera2D.m_Lens.Orthographic = false;
