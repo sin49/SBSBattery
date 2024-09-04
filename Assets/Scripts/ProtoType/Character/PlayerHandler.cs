@@ -383,13 +383,15 @@ public class PlayerHandler : MonoBehaviour
         //else
         //{
 
-            if (CameraRotateCorutine != null)
+        //카메라처리
+        yield return StartCoroutine(InvokeDimensionEvent());
+
+        if (CameraRotateCorutine != null)
             {
                 CAmeraChangeevent?.Invoke();
                 yield return StartCoroutine(CameraRotateCorutine);
             }
-            //카메라처리
-            yield return StartCoroutine(InvokeDimensionEvent());
+          
 
             //이벤트 처리
 
@@ -406,7 +408,7 @@ public class PlayerHandler : MonoBehaviour
         {
             CurrentPlayer.Move();
         }
-        if (Input.GetKeyDown(KeySettingManager.instance.DimensionChangeKeycode) && CurrentPlayer.onGround && !Changing && !DImensionChangeDisturb)
+        if (Input.GetKeyDown(KeySettingManager.instance.DimensionChangeKeycode) && !Changing && !DImensionChangeDisturb)
         {
 
             StartCoroutine(ChangeDimension());
