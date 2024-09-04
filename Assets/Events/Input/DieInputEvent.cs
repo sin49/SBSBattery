@@ -4,25 +4,20 @@ using UnityEngine;
 
 public class DieInputEvent : InputEvent
 {
-    public Character character;
+    public GameObject character;
     public bool cDie;
     public override void initialize()
     {
         cDie = false;
     }
-    private void Awake()
-    {
-        initialize();
-        if (character != null)
-            character.registerdeadevent(deadevent);
-    }
+
     public override bool input(object o)
     {
         return cDie;
     }
-    void deadevent()
+
+    public void CharacterDie()
     {
-        cDie = true;
+
     }
-      
 }

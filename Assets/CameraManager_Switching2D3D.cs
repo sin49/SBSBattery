@@ -134,7 +134,6 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         PlayerHandler.instance.CantHandle = true;
         camera2D.m_Lens.Orthographic = false;
         camera2D.m_Lens.FieldOfView = fovview;
-        Time.timeScale = 0;
         if (trans3D)
         {
            
@@ -146,7 +145,6 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
 
             yield return StartCoroutine(SwitchCameraCoroutine(camera2D));
         }
-        Time.timeScale = 1;
         camera2D.m_Lens.Orthographic = true;
         camera2D.m_Lens.OrthographicSize = orthosize;
         PlayerHandler.instance.CantHandle = false;

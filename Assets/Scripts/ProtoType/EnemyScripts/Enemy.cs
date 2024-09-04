@@ -81,7 +81,7 @@ public class Enemy: Character,DamagedByPAttack
     //public float attackInitCoolTime; // 공격 대기시간 초기화 변수
     [HideInInspector]
     public float attackDelay; // 공격 후 딜레이
-   public EnemyAttackHandler actionhandler;
+    EnemyAttackHandler actionhandler;
 
     public bool callCheck;
     public bool rotCheck;
@@ -445,7 +445,7 @@ public class Enemy: Character,DamagedByPAttack
     #region 이동함수
     public override void Move()
     {
-        base.Move();
+
         if (eStat.eState != EnemyState.dead || eStat.eState != EnemyState.hitted)
         {
 
@@ -725,7 +725,6 @@ public class Enemy: Character,DamagedByPAttack
     #region 사망함수
     public override void Dead()
     {
-        base.Dead();
         eStat.eState = EnemyState.dead;
         if (PlayerHandler.instance != null)
             PlayerHandler.instance.CurrentPlayer.wallcheck = false;
@@ -739,7 +738,6 @@ public class Enemy: Character,DamagedByPAttack
     #region 공격함수
     public override void Attack()
     {
-        base.Attack();
         if(animaor != null)
             animaor.Play("EnemyAttack");
         if (soundplayer != null)

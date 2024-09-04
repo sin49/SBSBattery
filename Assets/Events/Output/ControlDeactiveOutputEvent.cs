@@ -6,7 +6,18 @@ public class ControlDeactiveOutputEvent : OutputEvent
 {
     public override void output()
     {
-        PlayerHandler.instance.outputCantHandle = true;
-        base.output();   
-    } 
+        throw new System.NotImplementedException();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 }

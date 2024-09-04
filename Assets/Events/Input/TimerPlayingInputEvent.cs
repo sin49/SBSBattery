@@ -5,7 +5,6 @@ using UnityEngine;
 [Serializable]
 public class TimerPlayingInputEvent :  InputEvent, timerComponent
 {
-    public
     bool timerstart;
     public bool StartTimerAwake;
     public float timer;
