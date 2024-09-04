@@ -13,6 +13,10 @@ public class PlatformActive3D : MonoBehaviour
         Bcollider = GetComponent<BoxCollider>();
         renderer_=GetComponent<MeshRenderer>();
     }
+    private void Start()
+    {
+        PlayerHandler.instance.registerCameraChangeAction(PlatformChange);
+    }
     void PlatformChange3D()
     {
         if (BcolliderActive3D)
@@ -41,9 +45,7 @@ public class PlatformActive3D : MonoBehaviour
         }
         transform.Translate(Vector3.forward * Zmove);
     }
-
-   
-    void Update()
+    public void PlatformChange()
     {
         if (BcolliderActive3D)
         {
@@ -62,10 +64,12 @@ public class PlatformActive3D : MonoBehaviour
             {
                 PlatformChange3D();
             }
-            else if (!Bcollider.enabled && (int)PlayerStat.instance.MoveState< 4)
+            else if (!Bcollider.enabled && (int)PlayerStat.instance.MoveState < 4)
             {
                 PlatformChange2D();
             }
         }
     }
+   
+   
 }
