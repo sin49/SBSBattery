@@ -384,16 +384,17 @@ public class PlayerHandler : MonoBehaviour
         //{
 
         //카메라처리
-        yield return StartCoroutine(InvokeDimensionEvent());
+     
 
         if (CameraRotateCorutine != null)
             {
-                CAmeraChangeevent?.Invoke();
-                yield return StartCoroutine(CameraRotateCorutine);
+            yield return StartCoroutine(CameraRotateCorutine);
+            CAmeraChangeevent?.Invoke();
+            
             }
-          
+        yield return StartCoroutine(InvokeDimensionEvent());
 
-            //이벤트 처리
+        //이벤트 처리
 
         //}
         PlayerHandler.instance.CurrentPlayer.SetWallcheck(false);
