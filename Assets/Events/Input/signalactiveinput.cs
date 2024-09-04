@@ -12,7 +12,7 @@ public class signalactiveinput : InputEvent
 
     public override bool input(object o = null)
     {
-        if (sender.active)
+        if (sender!=null&&sender.active)
             return true;
         else
             return false;
