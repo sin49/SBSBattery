@@ -11,21 +11,25 @@ public class DisturbDimensionChangeField : MonoBehaviour, colliderDisplayer
     public Renderer renderer_;
     public void ActiveColliderDisplay()
     {
+        if(renderer_!=null) 
         renderer_.enabled = true;
     }
 
     public void DeactiveColliderDisplay()
     {
-        renderer_.enabled = false;
+        if (renderer_ != null)
+            renderer_.enabled = false;
     }
 
     public void registerColliderDIsplay()
     {
-        ColliderDisplayManager.Instance.register(this);
+        if (renderer_ != null)
+            ColliderDisplayManager.Instance.register(this);
     }
     private void Start()
     {
-        registerColliderDIsplay();
+        if (renderer_ != null)
+            registerColliderDIsplay();
     }
 
        
