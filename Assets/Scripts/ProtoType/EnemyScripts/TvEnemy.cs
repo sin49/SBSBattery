@@ -135,8 +135,8 @@ public class TvEnemy : Enemy
                     activeTv = true;
                     tracking = true;
 
-                    rb.constraints = RigidbodyConstraints.FreezeRotation |
-                        RigidbodyConstraints.FreezePositionY;
+                    /*rb.constraints = RigidbodyConstraints.FreezeRotation |
+                        RigidbodyConstraints.FreezePositionY;*/
                 }
             }
         }
