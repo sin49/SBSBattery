@@ -370,6 +370,9 @@ public class PlayerHandler : MonoBehaviour
         if (CurrentCamera.GetComponent<CameraManager_Switching2D3D>()
             .trans3D)
         {//3D에서 2D로
+            CurrentCamera.GetComponent<CameraManager_Switching2D3D>()
+            .trans3D = !CurrentCamera.GetComponent<CameraManager_Switching2D3D>()
+            .trans3D;
             yield return StartCoroutine(InvokeDimensionEvent());
 
             //이벤트 처리
@@ -383,11 +386,13 @@ public class PlayerHandler : MonoBehaviour
         }
         else
         {
+            CurrentCamera.GetComponent<CameraManager_Switching2D3D>()
+         .trans3D = !CurrentCamera.GetComponent<CameraManager_Switching2D3D>()
+         .trans3D;
 
-          
 
 
-        if (CameraRotateCorutine != null)
+            if (CameraRotateCorutine != null)
             {
             yield return StartCoroutine(CameraRotateCorutine);
             CAmeraChangeevent?.Invoke();
