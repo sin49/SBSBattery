@@ -394,7 +394,7 @@ public class PlayerHandler : MonoBehaviour
             //이벤트 처리
 
         }
-       
+        PlayerHandler.instance.CurrentPlayer.SetWallcheck(false);
         //이벤트 완
         Changing = false;
        
