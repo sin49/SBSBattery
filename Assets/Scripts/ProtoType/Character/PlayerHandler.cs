@@ -11,6 +11,8 @@ using UnityEngine.UIElements;
 
 public class PlayerHandler : MonoBehaviour
 {
+    public bool ladderCheck;
+    public bool ladderInteract;
   public  event Action PlayerDeathEvent;
     public void InvokePlayerDeathEvent()
     {
@@ -306,10 +308,20 @@ public class PlayerHandler : MonoBehaviour
             onAttack = true;
 
         if (interactobject != null)
-            ingameUIManger.UpdateInteractUI(interactobject.gameObject);
+        {
+            if (ladderCheck)
+            {
+                if (interactobject.GetComponent<Ladder>().resultPoint != null)
+                {
+                    ingameUIManger.UpdateInteractUI(interactobject.GetComponent<Ladder>().resultPoint.gameObject);
+                }
+            }
+            else
+                ingameUIManger.UpdateInteractUI(interactobject.gameObject);
+        }
         else
         {
-            ingameUIManger. InteractTargetUI.SetActive(false);
+            ingameUIManger.InteractTargetUI.SetActive(false);
         }
     }
     [Header("키 두번 입력에 대한 처리")]
@@ -460,7 +472,8 @@ public class PlayerHandler : MonoBehaviour
         }
 
 
-     
+        if (!ladderInteract)
+        {
 
             if (Input.GetKey(KeySettingManager.instance.DeformKeycode))
             {
@@ -479,29 +492,30 @@ public class PlayerHandler : MonoBehaviour
 
                 }
             }
-       
-    
+
+
 
             if (Input.GetKey(KeySettingManager.instance.DownAttackKeycode) && !CurrentPlayer.onGround/*&&
                 PlayerInventory.instance.checkessesntialitem("item01")*/)
             {
                 CurrentPlayer.DownAttack();
             }
-      
-        if (doubleUpInput && Input.GetKeyDown(KeySettingManager.instance.SkillKeycode) && CurrentType != TransformType.Default)
-        {
-            CurrentPlayer.Skill1();
 
-            Skill1InputTimer = Skill1InputCheck;
-        }
-        if (Input.GetKey(KeySettingManager.instance.AttackKeycode) && Skill1InputTimer <= 0/* &&
+            if (doubleUpInput && Input.GetKeyDown(KeySettingManager.instance.SkillKeycode) && CurrentType != TransformType.Default)
+            {
+                CurrentPlayer.Skill1();
+
+                Skill1InputTimer = Skill1InputCheck;
+            }
+            if (Input.GetKey(KeySettingManager.instance.AttackKeycode) && Skill1InputTimer <= 0/* &&
                 PlayerInventory.instance.checkessesntialitem("item01")*/)
-        {
-           
-            CurrentPlayer.attackBufferTimer = CurrentPlayer.attackBufferTimeMax;
+            {
+
+                CurrentPlayer.attackBufferTimer = CurrentPlayer.attackBufferTimeMax;
+            }
+            if (Skill1InputTimer > 0)
+                Skill1InputTimer -= Time.fixedDeltaTime;
         }
-        if (Skill1InputTimer > 0)
-            Skill1InputTimer -= Time.fixedDeltaTime;
     }
     void charactermove()
     {
