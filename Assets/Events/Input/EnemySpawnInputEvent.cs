@@ -13,40 +13,37 @@ public class EnemySpawnInputEvent : InputEvent
 
     public bool eSpawn;
     int pointNum;
-
     public override void initialize()
     {
         eSpawn = false;
     }
 
     public override bool input(object o)
-    {        
-        return eSpawn;
-    }
-
-    private void Start()
     {
         EnemySpawn();
+        return eSpawn;
     }
-
     private void Update()
     {
         ChangePoint();
     }
 
+    private void OnDrawGizmos()
+    {
+        if (!Application.isPlaying)
+        {
+            ChangePoint();
+        }
+    }
+
     public void EnemySpawn()
     {
-        if (enemyPrefab != null && spawnPoint != null)
+        if (eSpawn)
         {
             var obj = Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
             obj.transform.SetParent(spawnPoint);
-            eSpawn = true;
+            eSpawn = false;
         }
-        else
-        {
-            Debug.Log("몬스터 스폰 입력 이벤트에 몬스터 혹은 좌표가 없습니다");
-        }
-
     }
 
     public void ChangePoint()

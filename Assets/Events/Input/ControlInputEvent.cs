@@ -4,24 +4,25 @@ using UnityEngine;
 
 public class ControlInputEvent : InputEvent
 {
-    public bool keyInput;
     public override void initialize()
     {
-        keyInput = false;
-    }
-
-    private void Start()
-    {
-        PlayerHandler.instance.registerkeyinputevent(KeyInput);
+        throw new System.NotImplementedException();
     }
 
     public override bool input(object o)
     {
-        return keyInput;
+        return true;
     }
 
-    public void KeyInput()
+    // Start is called before the first frame update
+    void Start()
     {
-        keyInput = true;
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }

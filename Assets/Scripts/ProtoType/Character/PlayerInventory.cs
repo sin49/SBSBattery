@@ -44,24 +44,7 @@ public class PlayerInventory : MonoBehaviour
 {
     public static PlayerInventory instance;
    Dictionary<string, Essentialitem> EssentialItems = new Dictionary<string, Essentialitem>();
-    public Dictionary<string, instantitem> instants = new Dictionary<string, instantitem>();
- public void addinstantitem(instantitem i)
-    {
-        instants.Add(i.ItemCode, i);
-    }
-    public bool checkinstantitem(instantitem i)
-    {
-        if (instants.ContainsKey(i.ItemCode))
-        {
-            instants.Remove(i.ItemCode);
-            return true;
-        }
-        else
-            return false;
-    }
-    
-    
-    event Action itemGetAction;
+   event Action itemGetAction;
     public void registerItemGetAction(Action a)
     {
         itemGetAction += a;

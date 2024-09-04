@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class TransformChangeOuputEvent : OutputEvent
 {
-    public TransformType formType;
-    public int index;
-
     public override void output()
     {
-        OutputTransform();
-        base.output();
+        throw new System.NotImplementedException();
     }
 
-    public void OutputTransform()
+    // Start is called before the first frame update
+    void Start()
     {
-        formType = (TransformType)index;
-        Player player = PlayerHandler.instance.CurrentPlayer;
-        Destroy(Instantiate(player.changeEffect, transform.position, Quaternion.identity), 2f);
-        PlayerHandler.instance.transformed(formType);
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }
