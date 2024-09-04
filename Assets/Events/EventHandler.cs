@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -197,6 +198,9 @@ public class EventHandler : MonoBehaviour
                 break;
             case inputeventenum.interaction:
                 Ievent = gameObject.AddComponent<InteractionInputEvent>();
+                break;
+            case inputeventenum.signalsenderinput:
+                Ievent = gameObject.AddComponent<signalactiveinput>();
                 break;
             default:
                 Ievent = null;
