@@ -15,6 +15,7 @@ public class PlatformActive3D : MonoBehaviour
     }
     private void Start()
     {
+        PlatformChange3D();
         PlayerHandler.instance.registerCameraChangeAction(PlatformChange);
     }
     void PlatformChange3D()

@@ -14,6 +14,11 @@ public class PlayerHandler : MonoBehaviour
     public bool ladderCheck;
     public bool ladderInteract;
   public  event Action PlayerDeathEvent;
+    public event Action changedimentiosnsfxEvent;
+    public void registerchangedimentiosnsfxEvent(Action a)
+    {
+        changedimentiosnsfxEvent += a;
+    }
     public void InvokePlayerDeathEvent()
     {
 
@@ -344,6 +349,10 @@ public class PlayerHandler : MonoBehaviour
     {
         CAmeraChangeevent += a;
     }
+    public void invokeccamerachangeaction()
+    {
+        CAmeraChangeevent.Invoke();
+    }
   public void registerCorutineRegisterEvent(Action CorutineRegister)
     {
         this.CorutineRegisterEvent += CorutineRegister;
@@ -363,6 +372,7 @@ public class PlayerHandler : MonoBehaviour
     IEnumerator ChangeDimension()
     {
         Changing = true;
+        changedimentiosnsfxEvent.Invoke();
         CorutineRegisterEvent?.Invoke();
         //3D로 갈 때는 카메라 먼저 이 후 이벤트
         //2D로 갈 때는 반대로 이벤트 이 후 카메라
