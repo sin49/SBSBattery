@@ -9,11 +9,11 @@ public class TitleScreen : MonoBehaviour
     public int index;
     public TextMeshProUGUI ResetText;
     public ButtonSoundEffectPlayer ButtionSoundEffectPlayer_;
-
+    
     public void StartNewGame()
     {
         GameManager.instance.DeleteSaveSetting();
-        GameManager.instance.LoadingSceneWithKariEffect("Level_LDJ");
+        GameManager.instance.LoadingSceneWithKariEffect("Alpha_1-1-A");
    
     }
     public void ContinueGame()
@@ -101,6 +101,11 @@ public class TitleScreen : MonoBehaviour
     private void Awake()
     {
         ButtionSoundEffectPlayer_ = gameObject.GetComponent<ButtonSoundEffectPlayer>();
+        //var a = GameManager.instance.loadingscenename;
+        //if (a[0] != 'A')
+        //{
+        //    GameManager.instance.DeleteSaveSetting();
+        //}
     }
     private void Start()
     {
