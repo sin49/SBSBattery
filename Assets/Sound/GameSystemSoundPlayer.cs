@@ -24,7 +24,7 @@ public class GameSystemSoundPlayer : SEPlayer
     protected override void Start()
     {
         base.Start();
-        PlayerHandler.instance.registerCameraChangeAction(PlayChangeDimensionSound);
+        PlayerHandler.instance.registerchangedimentiosnsfxEvent(PlayChangeDimensionSound);
         PlayerHandler.instance.PlayerDeathEvent += PlayCharacterDieClip;
         PlayerInventory.instance.registerItemGetAction(PlayGetItemSound);
         PlayerStat.instance.registerRecoverAction(PlayRecoverHPSound);
