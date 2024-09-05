@@ -192,19 +192,25 @@ public class Player : Character
     }
     #endregion
     protected float JumprayDistance=0.28f;
+    protected float playersizeX=0.1f;
     #region 레이 체크
     void jumpRaycastCheck()
     {
 
 
-        Debug.DrawRay(this.transform.position,  Vector3.down * JumprayDistance, Color.blue);
+      
         //+Vector3.down * sizeY * 0.15f
         if (!onGround&&playerRb.velocity.y<=0)
         {
             RaycastHit hit;
 
-      
-            if (Physics.Raycast(this.transform.position , Vector3.down, out hit, JumprayDistance))
+            Debug.DrawRay(this.transform.position + Vector3.right * playersizeX - Vector3.forward * playersizeX
+                 , Vector3.down * JumprayDistance, Color.red);
+            Debug.DrawRay(this.transform.position - Vector3.right * playersizeX - Vector3.forward * playersizeX, Vector3.down * JumprayDistance, Color.red);
+            Debug.DrawRay(this.transform.position + Vector3.right * playersizeX + Vector3.forward * playersizeX
+                , Vector3.down * JumprayDistance, Color.red);
+            Debug.DrawRay(this.transform.position - Vector3.right * playersizeX + Vector3.forward * playersizeX, Vector3.down * JumprayDistance, Color.red);
+            if (Physics.Raycast(this.transform.position + Vector3.right * playersizeX - Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance))
             {
 
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController"))
@@ -223,7 +229,63 @@ public class Player : Character
 
 
             }
+            if (Physics.Raycast(this.transform.position - Vector3.right * playersizeX - Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance))
+            {
 
+                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController"))
+                {
+
+                    onGround = true;
+                    isJump = false;
+                    downAttack = false;
+                    PlayerStat.instance.doubleJump = true;
+                    SoundPlayer.PlayLandingSound();
+                    if (LandingEffect != null && flyTimer < 0)
+                        LandingEffect.SetActive(true);
+
+                    flyTimer = flyTime;
+                }
+
+
+            }
+            if (Physics.Raycast(this.transform.position + Vector3.right * playersizeX + Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance))
+            {
+
+                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController"))
+                {
+
+                    onGround = true;
+                    isJump = false;
+                    downAttack = false;
+                    PlayerStat.instance.doubleJump = true;
+                    SoundPlayer.PlayLandingSound();
+                    if (LandingEffect != null && flyTimer < 0)
+                        LandingEffect.SetActive(true);
+
+                    flyTimer = flyTime;
+                }
+
+
+            }
+            if (Physics.Raycast(this.transform.position - Vector3.right * playersizeX + Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance))
+            {
+
+                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController"))
+                {
+
+                    onGround = true;
+                    isJump = false;
+                    downAttack = false;
+                    PlayerStat.instance.doubleJump = true;
+                    SoundPlayer.PlayLandingSound();
+                    if (LandingEffect != null && flyTimer < 0)
+                        LandingEffect.SetActive(true);
+
+                    flyTimer = flyTime;
+                }
+
+
+            }
 
 
         }
@@ -307,7 +369,7 @@ public class Player : Character
 
     private void FixedUpdate()
     {
-
+       
         InteractivePlatformrayCheck();
         InteractivePlatformrayCheck2();
         if (oninteractivetimer > 0 && onInterarctive)
