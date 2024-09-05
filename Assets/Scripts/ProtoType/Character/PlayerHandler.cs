@@ -344,6 +344,10 @@ public class PlayerHandler : MonoBehaviour
     {
         CAmeraChangeevent += a;
     }
+    public void invokeccamerachangeaction()
+    {
+        CAmeraChangeevent.Invoke();
+    }
   public void registerCorutineRegisterEvent(Action CorutineRegister)
     {
         this.CorutineRegisterEvent += CorutineRegister;

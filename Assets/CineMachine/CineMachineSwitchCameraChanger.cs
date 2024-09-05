@@ -100,6 +100,7 @@ public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
             m.movestate3D = PlayerMoveState3D;
             m.UpdatePlayerMovestate();
             PlayerHandler.instance.CurrentPlayer.rotateBy3Dto2D();
+            PlayerHandler.instance.invokeccamerachangeaction();
         }
     }
 
