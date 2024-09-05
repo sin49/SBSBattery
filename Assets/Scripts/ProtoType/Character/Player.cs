@@ -2,7 +2,6 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using Unity.Burst.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.RenderGraphModule;
 using UnityEngine.PlayerLoop;
@@ -57,11 +56,6 @@ public class Player : Character
     public float attackBufferTimeMax;
     public float attackBufferTimer;
     public int attackInputValue;
-    public bool canAttackInput;
-    public bool attackLimitInput;
-    [Header("지상에서 공격 시 이동 불가능")]
-    public bool dontAttack;   
-    public float dontAttackTimer, dontMoveTimer;
     [Header("착지 이펙트 활성화 관련")]
     public float flyTimer;
     public float flyTime;
@@ -171,17 +165,6 @@ public class Player : Character
             }
         }
 
-        if (dontAttackTimer > 0)
-            dontAttackTimer -= Time.deltaTime;
-        else
-        {
-            dontAttack = false;
-        }
-
-        if (dontMoveTimer > 0)
-            dontMoveTimer -= Time.deltaTime;
-        else
-            canAttack = true;
     }
 
     public void BaseBufferTimer()
@@ -195,18 +178,6 @@ public class Player : Character
         {
             attackBufferTimer -= Time.deltaTime;
         }
-
-        if (dontAttackTimer > 0)
-            dontAttackTimer -= Time.deltaTime;
-        else
-        {
-            dontAttack = false;
-        }
-
-        if (dontMoveTimer > 0)
-            dontMoveTimer -= Time.deltaTime;
-        else
-            canAttack = true;
     }
 
     #region 변신 후 무적
@@ -350,13 +321,9 @@ public class Player : Character
             jumpkeyinputcheckvalue -= Time.fixedDeltaTime;
 
         JumpKeyInput();
-        AttackNotHold();
-        if (!downAttack)
+        if(!downAttack)
         Attack();
-        if(CullingPlatform)
-            Physics.IgnoreLayerCollision(6, 11, true);
-        else
-            Physics.IgnoreLayerCollision(6, 11, false);
+
         if (onGround == true&& isJump == true)
             isJump = false;
 
@@ -372,14 +339,7 @@ public class Player : Character
             ModelAnimator.SetBool("Rolling", downAttack);
             Humonoidanimator.SetBool("DownAttack", downAttack);
         }
-        //if (Time.timeScale == 0)
-        //{
-        //    Humonoidanimator.speed = 0;
-        //}
-        //else
-        //{
-        //    Humonoidanimator.speed = 1;
-        //}
+
         /*if (RunEffect != null)
         {            
 
@@ -436,7 +396,7 @@ public class Player : Character
                 {
                     platformDisableTimer = 0;
                     CullingPlatform = false;
-                
+                    Physics.IgnoreLayerCollision(6, 11, false);
                 }
             }
         }
@@ -562,15 +522,14 @@ public class Player : Character
         {
             case PlayerMoveState.Xmove:
                 hori = Input.GetAxisRaw("Horizontal");
-                if (PlayerHandler.instance.ladderInteract)
-                    Vert = Input.GetAxisRaw("Vertical");
                 break;
             case PlayerMoveState.XmoveReverse:
                 hori =-1* Input.GetAxisRaw("Horizontal");
                 break;
 
             case PlayerMoveState.Zmove:
-                    Vert =  Input.GetAxisRaw("Horizontal");                
+       
+                Vert =  Input.GetAxisRaw("Horizontal");
                 break;
             case PlayerMoveState.ZmoveReverse:
                 Vert = -1* Input.GetAxisRaw("Horizontal");
@@ -601,14 +560,12 @@ public class Player : Character
         }
 
         Vector3 moveInput = new Vector3(hori, 0, Vert);
-        Vector3 ladderInput = new Vector3(0, Vert, 0);
-
         if (hori != 0 || Vert != 0)
         {
-            if (canAttack && !PlayerHandler.instance.ladderInteract)
-                rotate(moveInput.x, moveInput.z);
+            if(canAttack)
+            rotate(moveInput.x, moveInput.z);
             SoundPlayer.PlayMoveSound();
-
+            
         }
         //Vert 회전 추가
         //translateFix = new(hori, 0, 0);
@@ -619,25 +576,13 @@ public class Player : Character
 
         Vector3 Movevelocity = Vector3.zero;
         Vector3 desiredVector = moveInput.normalized * PlayerStat.instance.moveSpeed + EnvironmentPower;
-        Vector3 ladderVector = ladderInput.normalized * PlayerStat.instance.moveSpeed + EnvironmentPower;
-        if (!PlayerHandler.instance.ladderInteract)
-            Movevelocity = desiredVector - playerRb.velocity.x * Vector3.right - playerRb.velocity.z * Vector3.forward;
-        else
-        {
-            playerRb.velocity = new(0, playerRb.velocity.y, 0);
-            Movevelocity = ladderVector - playerRb.velocity.y * Vector3.up;
-        }
+        Movevelocity = desiredVector - playerRb.velocity.x * Vector3.right - playerRb.velocity.z * Vector3.forward;
+
       
-        if (!wallcheck)
+        if (!wallcheck) 
             playerRb.AddForce(Movevelocity, ForceMode.VelocityChange);
         else
-        {
-            if (!PlayerHandler.instance.ladderInteract)
-                playerRb.AddForce(EnvironmentPower, ForceMode.VelocityChange);
-            else
-                playerRb.AddForce(Movevelocity, ForceMode.VelocityChange);
-        }
-        
+            playerRb.AddForce(EnvironmentPower, ForceMode.VelocityChange);
 
 
         if (Movevelocity == Vector3.zero)
@@ -659,7 +604,7 @@ public class Player : Character
 
         #endregion
 
-        if (!isJump && !PlayerHandler.instance.ladderInteract)
+        if (!isJump)
         {
             if (MoveCheck(hori, Vert))
             {
@@ -699,50 +644,35 @@ public class Player : Character
     {
         canAttack = false;
         if (Humonoidanimator != null)
-            Humonoidanimator.Play("Attack", 0, 0f);
+            Humonoidanimator.Play("Attack");
         if (SoundPlayer != null)
             SoundPlayer.PlayAttackAudio();
     }
     public override void Attack()
     {
-        base.Attack();
-        if (PlayerHandler.instance.onAttack && attackInputValue < 1)
+        if (PlayerHandler.instance.onAttack)
         {
-            if (attackBufferTimer > 0 /*&& canAttack*/ && !dontAttack)
+            if (attackBufferTimer > 0 && canAttack)
             {
-                if (PlayerStat.instance.attackType == AttackType.melee /*&& canAttack*/ && !downAttack)
+             
+                if (PlayerStat.instance.attackType == AttackType.melee && canAttack && !downAttack)
                 {
                     attackBufferTimer = 0;
-                    attackInputValue = 1;
+                
                     if (!onGround)
                     {
                         attackSky = true;
                     }
                     else
                     {
-                        playerRb.velocity = Vector3.zero;
-                        dontAttack = true;
-                        dontMoveTimer = PlayerStat.instance.attackDelay;
-                        dontAttackTimer = PlayerStat.instance.initattackCoolTime;
                         attackGround = true;
                     }
-                    
+
                 
                     StartCoroutine(TestMeleeAttack());
                 }
             }
         }
-    }
-
-    public void AttackNotHold()
-    {
-        if (!Input.GetKey(KeyCode.X))
-        {
-            attackInputValue = 0;
-            attackLimitInput = false;
-        }
-        else
-            attackLimitInput = true;
     }
 
     void AttackMove()
@@ -758,7 +688,7 @@ public class Player : Character
                 if (direction != direction.none && Vert != 0 || directionz != directionZ.none && hori != 0)
                 {
                     playerRb.AddForce(transform.GetChild(0).forward * 7, ForceMode.Impulse);
-                }
+                }                
             }
         }
     }
@@ -910,13 +840,7 @@ public class Player : Character
         jumpBufferTimer = 0;
         canjumpInput = false;
         jumpLimitInput = true;
-
-        if (PlayerHandler.instance.ladderInteract)
-        {
-            PlayerHandler.instance.ladderInteract = false;
-            playerRb.useGravity = true;
-        }
-
+       
         if (Humonoidanimator != null)
         {
             Humonoidanimator.SetTrigger("jump");
@@ -1011,7 +935,8 @@ public class Player : Character
             meleeCollider.GetComponent<SphereCollider>().enabled = true;
         }
         else if (attackGround)
-        {            
+        {
+
             meleeCollider.SetActive(true);
             meleeCollider.GetComponent<SphereCollider>().enabled = true;
             
@@ -1038,9 +963,7 @@ public class Player : Character
             meleeCollider.GetComponent<SphereCollider>().enabled = false;
             attackGround = false;            
         }
-        /*canAttack = true;*/
-
-        
+        canAttack = true;
     }
 
     // 원거리 공격 함수
@@ -1103,8 +1026,7 @@ public class Player : Character
         {
             onGround = false;
             oninteractivetimer = 0.1f;
-            PlayerHandler.instance.playerjumpaccept();
-
+           
         }
         #endregion
     }
@@ -1140,29 +1062,20 @@ public class Player : Character
 
                     isJump = true;
                     CullingPlatform = true;
-                   
+                    Physics.IgnoreLayerCollision(6, 11, true);
 
                 }
             }
             else
             {
-                if (Input.GetKey(KeyCode.DownArrow) &&
+                if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode)&& Input.GetKey(KeyCode.DownArrow) &&
                    (int)PlayerStat.instance.MoveState < 4
                    && !CullingPlatform)
                 {
-                    PlayerHandler.instance.playerjumprestirct();
-                    if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode))
-                    {
-                        PlayerHandler.instance.playerjumpaccept();
-                 
-                        PlayerHandler.instance.doubleDownInput = false;
-                        CullingPlatform = true;
-                       
-                    }
+                    PlayerHandler.instance.doubleDownInput = false;
+                    CullingPlatform = true;
+                    Physics.IgnoreLayerCollision(6, 11, true);
 
-                }else if (!Input.GetKey(KeyCode.DownArrow))
-                {
-                    PlayerHandler.instance.playerjumpaccept();
                 }
             }
         }
@@ -1233,7 +1146,7 @@ public class Player : Character
                 {
 
                     CullingPlatform = true;
-                   
+                    Physics.IgnoreLayerCollision(6, 11, true);
                 
 
                 }
@@ -1254,7 +1167,7 @@ public class Player : Character
 
     //      Debug.Log("Velocity"+playerRb.velocity);
     //  }
-    protected float InteractiveUprayDistance=0.38f;
+    protected float InteractiveUprayDistance=0.4f;
     public void InteractivePlatformrayCheck()
     {
 
@@ -1273,7 +1186,7 @@ public class Player : Character
                 {
 
                     CullingPlatform = false;
-                
+                    Physics.IgnoreLayerCollision(6, 11, false);
                     platformDisableTimer = 0;
                
                 }

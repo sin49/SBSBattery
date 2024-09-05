@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 public class ColliderDisplayManager : MonoBehaviour
 {
         public static ColliderDisplayManager Instance;
-   public HashSet<colliderDisplayer> displayers= new HashSet<colliderDisplayer>();
+    HashSet<colliderDisplayer> displayers= new HashSet<colliderDisplayer>();
     private void Awake()
     {
         Instance = this;

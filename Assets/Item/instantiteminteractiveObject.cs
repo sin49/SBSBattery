@@ -10,7 +10,7 @@ public class instantiteminteractiveObject : InteractiveObject
 
     public override void Active(direction direct)
     {
-        if (PlayerInventory.instance.checkinstantitem(Instantitem))
+        if (PlayerInventory.instance.checkinstantitem(Instantitem.ItemCode))
         {
             actived = true;
             base.Active(direct);

@@ -7,7 +7,7 @@ public class dontmovecollider2D : MonoBehaviour
 {
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Ground"))
+        if (collision.CompareTag("Ground")&&(int)PlayerStat.instance.MoveState<4)
         {
             
             if (PlayerHandler.instance.CurrentPlayer != null)
@@ -16,7 +16,7 @@ public class dontmovecollider2D : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Ground"))
+        if (collision.CompareTag("Ground") && (int)PlayerStat.instance.MoveState <4)
         {
             var vel = PlayerHandler.instance.CurrentPlayer.playerRb.velocity;
             PlayerHandler.instance.CurrentPlayer.playerRb.velocity = new Vector3(0, vel.y, 0);
@@ -26,7 +26,7 @@ public class dontmovecollider2D : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Ground"))
+        if (collision.CompareTag("Ground") && (int)PlayerStat.instance.MoveState < 4)
         {
             //var vel = PlayerHandler.instance.CurrentPlayer.playerRb.velocity;
             //PlayerHandler.instance.CurrentPlayer.playerRb.velocity = new Vector3(0, vel.y, 0);

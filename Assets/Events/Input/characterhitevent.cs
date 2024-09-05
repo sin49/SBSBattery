@@ -24,6 +24,6 @@ public class characterhitevent : InputEvent
 
     public override void initialize()
     {
-        hit = false;   
+        hit = false;
     }
 }

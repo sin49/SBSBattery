@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 [Serializable]
@@ -44,24 +45,20 @@ public class PlayerInventory : MonoBehaviour
 {
     public static PlayerInventory instance;
    Dictionary<string, Essentialitem> EssentialItems = new Dictionary<string, Essentialitem>();
-    public Dictionary<string, instantitem> instants = new Dictionary<string, instantitem>();
- public void addinstantitem(instantitem i)
+  public Dictionary<string,instantitem> instants= new Dictionary<string,instantitem>();
+    event Action itemGetAction;
+    public bool checkinstantitem(string s)
     {
-        instants.Add(i.ItemCode, i);
-    }
-    public bool checkinstantitem(instantitem i)
-    {
-        if (instants.ContainsKey(i.ItemCode))
+        if (instants.ContainsKey(s))
         {
-            instants.Remove(i.ItemCode);
+            instants.Remove(s);
             return true;
         }
         else
+        {
             return false;
+        }
     }
-    
-    
-    event Action itemGetAction;
     public void registerItemGetAction(Action a)
     {
         itemGetAction += a;

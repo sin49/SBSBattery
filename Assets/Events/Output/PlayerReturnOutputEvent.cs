@@ -6,12 +6,18 @@ public class PlayerReturnOutputEvent : OutputEvent
 {
     public override void output()
     {
-        ReturnCheckPoint();
-        base.output();
+        throw new System.NotImplementedException();
     }
 
-    public void ReturnCheckPoint()
+    // Start is called before the first frame update
+    void Start()
     {
-        PlayerSpawnManager.Instance.Spawn();
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }

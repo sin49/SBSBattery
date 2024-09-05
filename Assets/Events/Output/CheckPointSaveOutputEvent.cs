@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class CheckPointSaveOutputEvent : OutputEvent
 {
-    public CheckPoint saveCheckpoint;
+    public Transform saveCheckpoint;
     public override void output()
     {
-        CheckpointSave();
-        base.output();
+        throw new System.NotImplementedException();
     }
 
-    public void CheckpointSave()
+    // Start is called before the first frame update
+    void Start()
     {
-        PlayerSpawnManager.Instance.ChangeCheckPoint(saveCheckpoint);
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }
