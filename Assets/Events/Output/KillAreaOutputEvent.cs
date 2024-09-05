@@ -4,18 +4,9 @@ using UnityEngine;
 
 public class KillAreaOutputEvent : OutputEvent
 {
-    public KillAreaCollider killCollider;
+    public Collider killCollider;
     public override void output()
     {
-        EnemyKillOnArea();
-        base.output();
-    }
-
-    public void EnemyKillOnArea()
-    {
-        if (killCollider != null)
-        {
-            killCollider.EnemyAllDie();
-        }
+        throw new System.NotImplementedException();
     }
 }

@@ -5,49 +5,47 @@ using UnityEngine;
 public class PlatformActive3D : MonoBehaviour
 {
     Collider Bcollider;
-    Renderer renderer_;
+    MeshRenderer renderer_;
+    public float Zmove = 1;
     public bool BcolliderActive3D=true;
     private void Awake()
     {
         Bcollider = GetComponent<BoxCollider>();
-        renderer_=GetComponent<Renderer>();
+        renderer_=GetComponent<MeshRenderer>();
+    }
+    private void Start()
+    {
+        PlayerHandler.instance.registerCameraChangeAction(PlatformChange);
     }
     void PlatformChange3D()
     {
         if (BcolliderActive3D)
         {
             Bcollider.enabled = true;
-            if(renderer_ != null)
-                renderer_.enabled = true;
+            renderer_.enabled = true;
         }
         else
         {
             Bcollider.enabled = false;
-            if (renderer_ != null)
-                renderer_.enabled = false;
+        renderer_.enabled = false;
         }
-      
-
+        transform.Translate(Vector3.back * Zmove);
     }
     void PlatformChange2D()
     {
         if (BcolliderActive3D)
         {
             Bcollider.enabled = false;
-            if (renderer_ != null)
-                renderer_.enabled = false;
+            renderer_.enabled = false;
         }
         else
         {
             Bcollider.enabled = true;
-            if (renderer_ != null)
-                renderer_.enabled = true;
+            renderer_.enabled = true;
         }
-
+        transform.Translate(Vector3.forward * Zmove);
     }
-
-   
-    void Update()
+    public void PlatformChange()
     {
         if (BcolliderActive3D)
         {
@@ -66,10 +64,12 @@ public class PlatformActive3D : MonoBehaviour
             {
                 PlatformChange3D();
             }
-            else if (!Bcollider.enabled && (int)PlayerStat.instance.MoveState< 4)
+            else if (!Bcollider.enabled && (int)PlayerStat.instance.MoveState < 4)
             {
                 PlatformChange2D();
             }
         }
     }
+   
+   
 }

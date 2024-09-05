@@ -7,7 +7,7 @@ public class EnemyAction_Swing : EnemyAction
 {
     public EnemyMeleeAttack meleeattack;
     public float damage;
-    IEnumerator MeleeAttack(float timer)
+    IEnumerator MeleeAttack(Enemy enemy, float timer)
     {
         meleeattack.SetDamage(damage);
         meleeattack.gameObject.SetActive(true);
@@ -18,6 +18,6 @@ public class EnemyAction_Swing : EnemyAction
     public override void Invoke(Action ActionENd, Transform target = null)
     {
         base.Invoke(ActionENd, target);
-        StartCoroutine(MeleeAttack( ActionLifeTIme));
+
     }
 }

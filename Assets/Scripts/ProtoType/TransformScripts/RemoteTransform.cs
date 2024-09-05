@@ -160,37 +160,14 @@ public class RemoteTransform : Player
 
     public override void Attack()
     {
-        /*if (attackBufferTimer > 0 && canAttack)
+        if (attackBufferTimer > 0 && canAttack)
         {
    
             AttackEvents();
             StartCoroutine(LaserAttack());
-        }*/
-        if (PlayerHandler.instance.onAttack && attackInputValue < 1)
-        {
-            if (attackBufferTimer > 0 && !dontAttack)
-            {
-                if (PlayerStat.instance.attackType == AttackType.melee && !downAttack)
-                {
-                    attackBufferTimer = 0;
-                    attackInputValue = 1;
-
-                    dontAttack = true;
-                    dontMoveTimer = PlayerStat.instance.attackDelay;
-                    dontAttackTimer = PlayerStat.instance.initattackCoolTime;
-                    AttackEvents();
-                    Laser();
-                }
-            }
         }
     }
-    public void Laser()
-    {
-        if (PoolingManager.instance != null)
-            PoolingManager.instance.GetPoolObject("Laser", firePoint);
-        else
-            Instantiate(laserPrefab, HitPoint.transform.position, HitPoint.transform.rotation);
-    }
+
     IEnumerator LaserAttack()
     {
 
