@@ -943,6 +943,7 @@ public class Player : Character
                 else if ( canjumpInput && PlayerStat.instance.doubleJump)
                 {
                     PlayerStat.instance.doubleJump = false;
+                    ModelAnimator.SetTrigger("rolling2");
                     Jump();
                     /*if (
                 PlayerInventory.instance.checkessesntialitem("item02"))
