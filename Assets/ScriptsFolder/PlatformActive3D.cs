@@ -7,11 +7,11 @@ public class PlatformActive3D : MonoBehaviour
     Collider Bcollider;
     MeshRenderer renderer_;
     public float Zmove = 1;
-    public bool BcolliderActive3D=true;
+    public bool BcolliderActive3D = true;
     private void Awake()
     {
         Bcollider = GetComponent<BoxCollider>();
-        renderer_=GetComponent<MeshRenderer>();
+        renderer_ = GetComponent<MeshRenderer>();
     }
     private void Start()
     {
@@ -28,7 +28,7 @@ public class PlatformActive3D : MonoBehaviour
         else
         {
             Bcollider.enabled = false;
-        renderer_.enabled = false;
+            renderer_.enabled = false;
         }
         transform.Translate(Vector3.back * Zmove);
     }
@@ -71,6 +71,6 @@ public class PlatformActive3D : MonoBehaviour
             }
         }
     }
-   
-   
+
+
 }

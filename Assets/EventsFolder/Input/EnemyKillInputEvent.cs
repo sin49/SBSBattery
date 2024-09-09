@@ -4,30 +4,39 @@ using UnityEngine;
 
 public class EnemyKillInputEvent : InputEvent
 {
+   
     public GameObject obj;
-    public bool eKill;
+    public Character[] objGroup=new Character[0];
+
+    public bool reduceNum, increaseNum;
+
+    int arraySize;
 
     public override void initialize()
     {
-        eKill = false;
+        arraySize = objGroup.Length;
     }
+    private void Awake()
+    {
 
+        objGroup = obj.GetComponentsInChildren<Character>();
+        foreach(Character c in objGroup) 
+        {
+            c.registerdeadevent(EnemyKill);
+        }
+        initialize();
+    }
     public override bool input(object o)
     {
-        EnemyKill();
-        return eKill;
+        if (arraySize <= 0)
+            return true;
+        else
+            return false;
     }
 
     public void EnemyKill()
     {
-        if (eKill)
-        {
-            foreach (Transform transform in this.obj.transform)
-            {
-                transform.GetComponent<Enemy>().Dead();
-            }
-            eKill = false;
-        }
+        arraySize--;
     }
 
     public void AddEnemyDeadEvent(GameObject obj)

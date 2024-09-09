@@ -10,10 +10,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using UnityEngine.Windows.Speech;
 
-public enum MoveInput { MoveRightin2D=1,MoveRightin3D}
+public enum MoveInput { MoveRightin2D = 1, MoveRightin3D }
 
 public enum direction { Left = -1, none = 0, Right = 1 }
-public enum directionZ {back=-1,none=0,forward=1 }
+public enum directionZ { back = -1, none = 0, forward = 1 }
 public class Player : Character
 {
     public MoveInput Moveinput_;
@@ -44,7 +44,7 @@ public class Player : Character
     public Color color;
 
     //public float moveValue; // 움직임 유무를 결정하기 위한 변수
-   
+
 
     [Header("#점프 홀딩 조절")]
     public float jumpholdLevel = 0.85f;
@@ -59,7 +59,9 @@ public class Player : Character
     [Header("착지 이펙트 활성화 관련")]
     public float flyTimer;
     public float flyTime;
-
+    [Header("지상에서 공격 시 이동 불가능")]
+    public bool dontAttack;
+    public float dontAttackTimer, dontMoveTimer;
     [Header("애니메이션 관련 변수")]
     public bool isJump, jumpAnim;
     public bool isRun;
@@ -91,7 +93,7 @@ public class Player : Character
     public bool wallcheck;
     #endregion
 
-  public  float jumpkeyinputCheck = 0.23f;
+    public float jumpkeyinputCheck = 0.23f;
     float jumpkeyinputcheckvalue;
     public bool inputCheck;
 
@@ -153,9 +155,9 @@ public class Player : Character
         }
 
         if (attackBufferTimer > 0)
-        {            
+        {
             attackBufferTimer -= Time.deltaTime;
-        }        
+        }
 
         if (!onGround)
         {
@@ -164,7 +166,17 @@ public class Player : Character
                 flyTimer -= Time.deltaTime;
             }
         }
+        if (dontAttackTimer > 0)
+            dontAttackTimer -= Time.deltaTime;
+        else
+        {
+            dontAttack = false;
+        }
 
+        if (dontMoveTimer > 0)
+            dontMoveTimer -= Time.deltaTime;
+        else
+            canAttack = true;
     }
 
     public void BaseBufferTimer()
@@ -178,6 +190,17 @@ public class Player : Character
         {
             attackBufferTimer -= Time.deltaTime;
         }
+        if (dontAttackTimer > 0)
+            dontAttackTimer -= Time.deltaTime;
+        else
+        {
+            dontAttack = false;
+        }
+
+        if (dontMoveTimer > 0)
+            dontMoveTimer -= Time.deltaTime;
+        else
+            canAttack = true;
     }
 
     #region 변신 후 무적
@@ -191,16 +214,16 @@ public class Player : Character
         onInvincible = false;
     }
     #endregion
-    protected float JumprayDistance=0.28f;
-    protected float playersizeX=0.1f;
+    protected float JumprayDistance = 0.28f;
+    protected float playersizeX = 0.1f;
     #region 레이 체크
     void jumpRaycastCheck()
     {
 
 
-      
+
         //+Vector3.down * sizeY * 0.15f
-        if (!onGround&&playerRb.velocity.y<=0)
+        if (!onGround && playerRb.velocity.y <= 0)
         {
             RaycastHit hit;
 
@@ -215,7 +238,7 @@ public class Player : Character
 
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController"))
                 {
-     
+
                     onGround = true;
                     isJump = false;
                     downAttack = false;
@@ -313,7 +336,7 @@ public class Player : Character
             {
                 wallcheck = true;
                 Debug.Log("벽 체크됨");
-            
+
             }
         }
         else
@@ -369,7 +392,7 @@ public class Player : Character
 
     private void FixedUpdate()
     {
-       
+
         InteractivePlatformrayCheck();
         InteractivePlatformrayCheck2();
         if (oninteractivetimer > 0 && onInterarctive)
@@ -390,10 +413,10 @@ public class Player : Character
         }
 
         JumpKeyInput();
-        if(!downAttack)
-        Attack();
+        if (!downAttack)
+            Attack();
 
-        if (onGround == true&& isJump == true)
+        if (onGround == true && isJump == true)
             isJump = false;
 
         /* chrmat.SetColor("_Emissive_Color", color);*///emission 건들기
@@ -432,7 +455,7 @@ public class Player : Character
                 RunEffect.Stop();
         }*/
 
-        if (RunEffect!=null)
+        if (RunEffect != null)
         {
             var a = RunEffect.main;
 
@@ -440,23 +463,23 @@ public class Player : Character
             if (PlatformDisableTime <= platformDisableTimer)*/
 
 
-                if (isRun && onGround)
-                {
-                    a.maxParticles = 100;
-                    if (!RunEffect.isPlaying)
-                        RunEffect.Play();
+            if (isRun && onGround)
+            {
+                a.maxParticles = 100;
+                if (!RunEffect.isPlaying)
+                    RunEffect.Play();
 
 
-                }
-                else
-                {
+            }
+            else
+            {
 
 
-                    a.maxParticles = 0;
-                    if ((RunEffect.isPlaying && RunEffect.particleCount == 0))
-                        RunEffect.Stop();
+                a.maxParticles = 0;
+                if ((RunEffect.isPlaying && RunEffect.particleCount == 0))
+                    RunEffect.Stop();
 
-                }
+            }
 
             if (CullingPlatform)
             {
@@ -483,7 +506,7 @@ public class Player : Character
     #region 추상화 오버라이드 함수
 
     #region 이동
-    public void rotate(float hori,float vert)
+    public void rotate(float hori, float vert)
     {
         Vector3 rotateVector = Vector3.zero;
 
@@ -507,7 +530,7 @@ public class Player : Character
         {
             rotateVector = new Vector3(0, 180, 0);
 
-            
+
         }
         else if (hori == 1 && vert == 0) // Right
         {
@@ -527,25 +550,25 @@ public class Player : Character
         else if (hori == -1 && vert == 1) // UpLeft
         {
             rotateVector = new Vector3(0, -135, 0);
-    
+
         }
         else if (hori == 1 && vert == 1) // UpRight
         {
             rotateVector = new Vector3(0, -45, 0);
-       
+
         }
         else if (hori == -1 && vert == -1) // DownLeft
         {
             rotateVector = new Vector3(0, 135, 0);
-      
+
         }
         else if (hori == 1 && vert == -1) // DownRight
         {
             rotateVector = new Vector3(0, 45, 0);
-        
+
         }
         rotateVector += new Vector3(0, 90, 0);
-   
+
         transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
     }
     public void rotateBy3Dto2D()
@@ -553,8 +576,8 @@ public class Player : Character
         Vector3 rotateVector = Vector3.zero;
         if ((int)PlayerStat.instance.MoveState <= 1)
         {
-           
-            if (direction == direction.Right||direction==direction.none)
+
+            if (direction == direction.Right || direction == direction.none)
             {
                 rotateVector = new Vector3(0, 90, 0);
             }
@@ -563,7 +586,8 @@ public class Player : Character
                 rotateVector = new Vector3(0, -90, 0);
             }
             transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
-        }else if((int)PlayerStat.instance.MoveState > 1 && (int)PlayerStat.instance.MoveState < 4)
+        }
+        else if ((int)PlayerStat.instance.MoveState > 1 && (int)PlayerStat.instance.MoveState < 4)
         {
             if (directionz == directionZ.forward || directionz == directionZ.none)
             {
@@ -575,7 +599,7 @@ public class Player : Character
             }
             transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
         }
-       
+
     }
 
     public float Decelatate = 2;
@@ -586,42 +610,42 @@ public class Player : Character
     public override void Move()
     {
         hori = 0;
-        Vert=0;
+        Vert = 0;
         switch (PlayerStat.instance.MoveState)
         {
             case PlayerMoveState.Xmove:
                 hori = Input.GetAxisRaw("Horizontal");
                 break;
             case PlayerMoveState.XmoveReverse:
-                hori =-1* Input.GetAxisRaw("Horizontal");
+                hori = -1 * Input.GetAxisRaw("Horizontal");
                 break;
 
             case PlayerMoveState.Zmove:
-       
-                Vert =  Input.GetAxisRaw("Horizontal");
+
+                Vert = Input.GetAxisRaw("Horizontal");
                 break;
             case PlayerMoveState.ZmoveReverse:
-                Vert = -1* Input.GetAxisRaw("Horizontal");
+                Vert = -1 * Input.GetAxisRaw("Horizontal");
                 break;
             case PlayerMoveState.XZMove3D:
                 hori = Input.GetAxisRaw("Vertical");
                 Vert = -1 * Input.GetAxisRaw("Horizontal");
                 break;
             case PlayerMoveState.XZMove3DReverse:
-                hori = -1* Input.GetAxisRaw("Vertical");
-                Vert =  Input.GetAxisRaw("Horizontal");
+                hori = -1 * Input.GetAxisRaw("Vertical");
+                Vert = Input.GetAxisRaw("Horizontal");
                 break;
             case PlayerMoveState.ZXMove3D:
                 Vert = Input.GetAxisRaw("Vertical");
-                hori =  Input.GetAxisRaw("Horizontal");
+                hori = Input.GetAxisRaw("Horizontal");
                 break;
             case PlayerMoveState.ZXMove3DReverse:
-                Vert =-1* Input.GetAxisRaw("Vertical");
+                Vert = -1 * Input.GetAxisRaw("Vertical");
                 hori = -1 * Input.GetAxisRaw("Horizontal");
                 break;
         }
-       
-   
+
+
         if (!canAttack && onGround)
         {
             hori = 0;
@@ -631,10 +655,10 @@ public class Player : Character
         Vector3 moveInput = new Vector3(hori, 0, Vert);
         if (hori != 0 || Vert != 0)
         {
-            if(canAttack)
-            rotate(moveInput.x, moveInput.z);
+            if (canAttack)
+                rotate(moveInput.x, moveInput.z);
             SoundPlayer.PlayMoveSound();
-            
+
         }
         //Vert 회전 추가
         //translateFix = new(hori, 0, 0);
@@ -647,8 +671,8 @@ public class Player : Character
         Vector3 desiredVector = moveInput.normalized * PlayerStat.instance.moveSpeed + EnvironmentPower;
         Movevelocity = desiredVector - playerRb.velocity.x * Vector3.right - playerRb.velocity.z * Vector3.forward;
 
-      
-        if (!wallcheck) 
+
+        if (!wallcheck)
             playerRb.AddForce(Movevelocity, ForceMode.VelocityChange);
         else
             playerRb.AddForce(EnvironmentPower, ForceMode.VelocityChange);
@@ -713,31 +737,35 @@ public class Player : Character
     {
         canAttack = false;
         if (Humonoidanimator != null)
-            Humonoidanimator.Play("Attack");
+            Humonoidanimator.Play("Attack", 0, 0f);
         if (SoundPlayer != null)
             SoundPlayer.PlayAttackAudio();
     }
     public override void Attack()
     {
-        if (PlayerHandler.instance.onAttack)
+        if (PlayerHandler.instance.onAttack && attackInputValue < 1)
         {
-            if (attackBufferTimer > 0 && canAttack)
+            if (attackBufferTimer > 0 /*&& canAttack*/ && !dontAttack)
             {
-             
-                if (PlayerStat.instance.attackType == AttackType.melee && canAttack && !downAttack)
+                if (PlayerStat.instance.attackType == AttackType.melee /*&& canAttack*/ && !downAttack)
                 {
                     attackBufferTimer = 0;
-                
+                    attackInputValue = 1;
+
                     if (!onGround)
                     {
                         attackSky = true;
                     }
                     else
                     {
+                        playerRb.velocity = Vector3.zero;
+                        dontAttack = true;
+                        dontMoveTimer = PlayerStat.instance.attackDelay;
+                        dontAttackTimer = PlayerStat.instance.initattackCoolTime;
                         attackGround = true;
                     }
 
-                
+
                     StartCoroutine(TestMeleeAttack());
                 }
             }
@@ -757,7 +785,7 @@ public class Player : Character
                 if (direction != direction.none && Vert != 0 || directionz != directionZ.none && hori != 0)
                 {
                     playerRb.AddForce(transform.GetChild(0).forward * 7, ForceMode.Impulse);
-                }                
+                }
             }
         }
     }
@@ -841,7 +869,7 @@ public class Player : Character
     }
     public override void Damaged(float damage)
     {
-   
+
         if (onInvincible)
             return;
         base.Damaged(damage);
@@ -894,8 +922,8 @@ public class Player : Character
     {
         PlayerStat.instance.pState = PlayerState.dead;
         PlayerHandler.instance.InvokePlayerDeathEvent();
-        if(!PlayerSpawnManager.Instance.DontSave)
-        GameManager.instance.LoadingSceneWithKariEffect(GameManager.instance.LoadLastestStage());
+        if (!PlayerSpawnManager.Instance.DontSave)
+            GameManager.instance.LoadingSceneWithKariEffect(GameManager.instance.LoadLastestStage());
         else
             GameManager.instance.LoadingSceneWithKariEffect(SceneManager.GetActiveScene().name);
     }
@@ -926,7 +954,7 @@ public class Player : Character
         playerRb.velocity = Vector3.zero;
         playerRb.AddForce(Vector3.up * PlayerStat.instance.jumpForce, ForceMode.Impulse);
         onGround = false;
-      
+
 
     }
 
@@ -937,11 +965,11 @@ public class Player : Character
         {
             if (!downAttack)
             {
-                if (!isJump&&onGround&&canjumpInput)
+                if (!isJump && onGround && canjumpInput)
                 {
                     Jump();
                 }
-                else if ( canjumpInput && PlayerStat.instance.doubleJump)
+                else if (canjumpInput && PlayerStat.instance.doubleJump)
                 {
                     PlayerStat.instance.doubleJump = false;
                     ModelAnimator.SetTrigger("rolling2");
@@ -953,7 +981,7 @@ public class Player : Character
                         Jump();
                     }*/
                 }
-   
+
             }
         }
     }
@@ -961,13 +989,13 @@ public class Player : Character
     {
         if (jumpkeyinputcheckvalue > 0)/*&&onGround)*/
             return;
-     
+
         if (!jumpLimitInput)
             jumpBufferTimer = jumpBufferTimeMax;
     }
     public void jumphold()
     {
-  
+
 
         if (playerRb.velocity.y > 0)
         {
@@ -1010,7 +1038,7 @@ public class Player : Character
 
             meleeCollider.SetActive(true);
             meleeCollider.GetComponent<SphereCollider>().enabled = true;
-            
+
         }
         if (AttackEffect != null)
         {
@@ -1032,7 +1060,7 @@ public class Player : Character
         {
             meleeCollider.SetActive(false);
             meleeCollider.GetComponent<SphereCollider>().enabled = false;
-            attackGround = false;            
+            attackGround = false;
         }
         canAttack = true;
     }
@@ -1075,18 +1103,18 @@ public class Player : Character
 
         PlayerHandler.instance.CurrentPower = PlayerHandler.instance.MaxPower;
         Instantiate(changeEffect, transform.position, Quaternion.identity);
-        PlayerHandler.instance.transformed(type, event_);        
+        PlayerHandler.instance.transformed(type, event_);
         if (PlayerHandler.instance.CurrentPlayer != null)
             PlayerHandler.instance.CurrentPlayer.direction = direction;
     }
     #endregion
-   public float oninteractivetimer = 0f;
+    public float oninteractivetimer = 0f;
     #region 콜라이더 트리거
     private void OnCollisionExit(Collision collision)
     {
         #region 바닥 상호작용
         if (collision.gameObject.CompareTag("Ground") ||
-            
+
             collision.gameObject.CompareTag("Enemy") ||
             collision.gameObject.CompareTag("GameController"))
         {
@@ -1097,13 +1125,13 @@ public class Player : Character
         {
             onGround = false;
             oninteractivetimer = 0.1f;
-           
+
         }
         #endregion
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Ground")&& jumpkeyinputcheckvalue <= 0 )
+        if (other.CompareTag("Ground") && jumpkeyinputcheckvalue <= 0)
         {
             jumpRaycastCheck();
         }
@@ -1139,7 +1167,7 @@ public class Player : Character
             }
             else
             {
-                if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode)&& Input.GetKey(KeyCode.DownArrow) &&
+                if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode) && Input.GetKey(KeyCode.DownArrow) &&
                    (int)PlayerStat.instance.MoveState < 4
                    && !CullingPlatform)
                 {
@@ -1208,9 +1236,9 @@ public class Player : Character
         //Debug.DrawRay(transform.position, Vector3.up * 0.2f*sizeY, Color.green);
         if (!CullingPlatform && playerRb.velocity.y > 0)
         {
-         
 
-            if (Physics.Raycast(this.transform.position , Vector3.up, out hit, InteractiveUprayDistance))
+
+            if (Physics.Raycast(this.transform.position, Vector3.up, out hit, InteractiveUprayDistance))
             {
 
                 if (hit.collider.CompareTag("InteractivePlatform"))
@@ -1218,7 +1246,7 @@ public class Player : Character
 
                     CullingPlatform = true;
                     Physics.IgnoreLayerCollision(6, 11, true);
-                
+
 
                 }
 
@@ -1238,7 +1266,7 @@ public class Player : Character
 
     //      Debug.Log("Velocity"+playerRb.velocity);
     //  }
-    protected float InteractiveUprayDistance=0.4f;
+    protected float InteractiveUprayDistance = 0.4f;
     public void InteractivePlatformrayCheck()
     {
 
@@ -1259,7 +1287,7 @@ public class Player : Character
                     CullingPlatform = false;
                     Physics.IgnoreLayerCollision(6, 11, false);
                     platformDisableTimer = 0;
-               
+
                 }
 
             }

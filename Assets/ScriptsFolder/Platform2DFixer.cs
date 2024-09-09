@@ -12,7 +12,7 @@ public class Platform2DFixer : MonoBehaviour
     public void FixPlatform()
     {
         if (!(
-              (int)PlayerStat.instance.MoveState >= 4) )
+              (int)PlayerStat.instance.MoveState >= 4))
         {
 
             Transform player = PlayerHandler.instance.CurrentPlayer.transform;
@@ -28,7 +28,7 @@ public class Platform2DFixer : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-         
+
             if (ChangeComplete)
             {
 

@@ -13,7 +13,7 @@ public class PlayerHandler : MonoBehaviour
 {
     public bool ladderCheck;
     public bool ladderInteract;
-  public  event Action PlayerDeathEvent;
+    public event Action PlayerDeathEvent;
     public event Action changedimentiosnsfxEvent;
     public void registerchangedimentiosnsfxEvent(Action a)
     {
@@ -34,9 +34,9 @@ public class PlayerHandler : MonoBehaviour
     public bool formChange;
     #region 플레이어 변신관련 스탯
     public float CurrentPower;
-    public float MaxPower=60;
+    public float MaxPower = 60;
     public bool OnDeformField;
-    public TransformType retoretype=TransformType.Default;
+    public TransformType retoretype = TransformType.Default;
     public TransformPlace LastTransformPlace;
     bool jumprestrict;
     public IngameUIManager ingameUIManger;
@@ -54,16 +54,16 @@ public class PlayerHandler : MonoBehaviour
     InteractiveObject interactobject;
     float InteractTimer;
     [Header("항시 무적")]
-    [Tooltip("무적 on/off기능")]public bool AlwaysInvincible;
-    [Tooltip("이거 체크해야 위에 것 가능")]public bool alwaysFuncActive;
+    [Tooltip("무적 on/off기능")] public bool AlwaysInvincible;
+    [Tooltip("이거 체크해야 위에 것 가능")] public bool alwaysFuncActive;
     public void GetInteratObject(InteractiveObject i)
     {
-        if(i.CanInteract)
+        if (i.CanInteract)
             interactobject = i;
     }
     public void InitInteratObject(InteractiveObject i)
     {
-        if(interactobject!=null&&i==interactobject)
+        if (interactobject != null && i == interactobject)
             interactobject = null;
     }
     public InteractiveObject ReturnInteractObject()
@@ -83,6 +83,24 @@ public class PlayerHandler : MonoBehaviour
     public PlayerStat pStat; //스탯 분배 (스페셜어택)
     public direction lastDirection = direction.Right;
     #endregion
+    public event Action transformevent;
+    public event Action interactevent;
+    public event Action keyinputevent;
+    //변신
+    public void registertransformevent(Action a)
+    {
+        transformevent += a;
+    }
+    //상호작용
+    public void registerinteractevent(Action a)
+    {
+        interactevent += a;
+    }
+
+    public void registerkeyinputevent(Action a)
+    {
+        keyinputevent += a;
+    }
     #region 싱글톤
     public static PlayerHandler instance;
     #endregion
@@ -91,20 +109,21 @@ public class PlayerHandler : MonoBehaviour
         #region 싱글톤
         if (instance == null)
         {
-           instance= this;
+            instance = this;
         }
 
         #endregion
         PlayerFormList p;
-        if (TryGetComponent<PlayerFormList>(out p)){
+        if (TryGetComponent<PlayerFormList>(out p))
+        {
             PlayerTransformList = p.playerformlist.Select((Value, index) => (Value, index))
                 .ToDictionary(item => (TransformType)item.index, item => item.Value);
         }
         #region 캐릭터 초기화
-   
+
         //CreateModelByCurrentType();
         #endregion
-   
+
     }
     [Header("플레이어 낙사 높이?")]
     public float characterFallLimit;
@@ -113,9 +132,9 @@ public class PlayerHandler : MonoBehaviour
     event Action PlayerFallEvent;
     public void registerPlayerFallEvent(Action action)
     {
-        PlayerFallEvent +=action;
+        PlayerFallEvent += action;
     }
-   public void PlayerFallOut()
+    public void PlayerFallOut()
     {
         if (PlayerStat.instance.hp > 1)
         {
@@ -136,8 +155,8 @@ public class PlayerHandler : MonoBehaviour
             CurrentPlayer = null;
         }
 
-        
-  
+
+
 
     }
     private void FixedUpdate()
@@ -147,10 +166,10 @@ public class PlayerHandler : MonoBehaviour
         //    CurrentPower -= Time.deltaTime;
 
         //}
-        if (CurrentPlayer != null&& CharacterAutoFallEvent && CurrentPlayer.transform.position.y < -Mathf.Abs(characterFallLimit) + -5)
+        if (CurrentPlayer != null && CharacterAutoFallEvent && CurrentPlayer.transform.position.y < -Mathf.Abs(characterFallLimit) + -5)
             PlayerFallOut();
 
-      
+
         if (alwaysFuncActive)
         {
             if (AlwaysInvincible)
@@ -177,7 +196,7 @@ public class PlayerHandler : MonoBehaviour
     //public float CantHandleTimer;
     #region 변신 시스템
     #region 변수
-    public TransformType CurrentType =0;
+    public TransformType CurrentType = 0;
     Dictionary<TransformType, GameObject> PlayerTransformList = new Dictionary<TransformType, GameObject>();
 
     Dictionary<TransformType, GameObject> CreatedTransformlist = new Dictionary<TransformType, GameObject>();
@@ -193,17 +212,18 @@ public class PlayerHandler : MonoBehaviour
             Debug.Log("이벤트 추가");
         }
     }
-    public void transformed(TransformType type,Action eventhandler=null)
-{
-     
+    public void transformed(TransformType type, Action eventhandler = null)
+    {
+
         interactobject = null;
+        transformevent?.Invoke();
         #region Type 변경
         if (CurrentType == type)
-        return;
-    CurrentType = type;
+            return;
+        CurrentType = type;
         #endregion
         CreateModelByCurrentType(eventhandler);
-}
+    }
     void userestoredtype()
     {
         if (CurrentPower > 0)
@@ -212,10 +232,10 @@ public class PlayerHandler : MonoBehaviour
         }
     }
     public float defromUpPosition;
- public   void Deform()
+    public void Deform()
     {
-        if(CurrentPlayer !=null)
-            lastDirection = PlayerStat.instance.direction;        
+        if (CurrentPlayer != null)
+            lastDirection = PlayerStat.instance.direction;
         transformed(TransformType.Default);
         if (LastTransformPlace != null)
         {
@@ -226,29 +246,29 @@ public class PlayerHandler : MonoBehaviour
         }
         PlayerStat.instance.direction = lastDirection;
 
-           
+
     }
-    void CreateModelByCurrentType(Action eventhandler =null)
-{
-     
-        if ((int)CurrentType < PlayerTransformList.Count)
+    void CreateModelByCurrentType(Action eventhandler = null)
     {
+
+        if ((int)CurrentType < PlayerTransformList.Count)
+        {
             #region 플레이어 프리팹 교체
-            Transform tf=null;
+            Transform tf = null;
             if (Playerprefab != null)
             {
-              
+
                 tf = Playerprefab.transform;
                 CurrentPlayer = null;
             }
-           
-            if(Playerprefab != null) 
-            Playerprefab.SetActive(false);
+
+            if (Playerprefab != null)
+                Playerprefab.SetActive(false);
             GameObject p;
             if (CreatedTransformlist.TryGetValue(CurrentType, out p))
             {
                 p.gameObject.SetActive(true);
-              
+
             }
             else
             {
@@ -259,7 +279,7 @@ public class PlayerHandler : MonoBehaviour
                     registerRemoteUI(p);
                 }
             }
-            
+
             Playerprefab = p;
             #endregion
             #region 위치 동기화
@@ -279,22 +299,22 @@ public class PlayerHandler : MonoBehaviour
             }
             if (p.TryGetComponent<EventHandle>(out Ehandler))
             {
-               
+
                 Ehandler.GetEvent(eventhandler);
             }
-        
+
             #endregion
-            if(formChange)
+            if (formChange)
                 CurrentPlayer.Humonoidanimator.Play("TransformEnd");
         }
         else
-        Debug.Log("ListOutofRangeError");
-}
+            Debug.Log("ListOutofRangeError");
+    }
     #endregion
     #region 플레이어 기본 조작
     public float DeTransformtime = 2;
     float DeTransformtimer = 0;
-   
+
     public void RegisterChange3DEvent(Action a)
     {
         Dimensionchangeevent += a;
@@ -351,9 +371,9 @@ public class PlayerHandler : MonoBehaviour
     }
     public void invokeccamerachangeaction()
     {
-        CAmeraChangeevent.Invoke();
+        CAmeraChangeevent?.Invoke();
     }
-  public void registerCorutineRegisterEvent(Action CorutineRegister)
+    public void registerCorutineRegisterEvent(Action CorutineRegister)
     {
         this.CorutineRegisterEvent += CorutineRegister;
     }
@@ -384,7 +404,7 @@ public class PlayerHandler : MonoBehaviour
         if (CurrentCamera.GetComponent<CameraManager_Switching2D3D>()
             .trans3D)
         {//3D에서 2D로
-           
+
             yield return StartCoroutine(InvokeDimensionEvent());
 
             //이벤트 처리
@@ -398,25 +418,25 @@ public class PlayerHandler : MonoBehaviour
         }
         else
         {
-            
+
 
 
             if (CameraRotateCorutine != null)
             {
-            yield return StartCoroutine(CameraRotateCorutine);
-            CAmeraChangeevent?.Invoke();
-            
-            }
-        yield return StartCoroutine(InvokeDimensionEvent());
+                yield return StartCoroutine(CameraRotateCorutine);
+                CAmeraChangeevent?.Invoke();
 
-         
+            }
+            yield return StartCoroutine(InvokeDimensionEvent());
+
+
 
         }
         PlayerHandler.instance.CurrentPlayer.SetWallcheck(false);
         //이벤트 완
         Changing = false;
-       
-        
+
+
     }
     void KeysettingCharactermove()
     {
@@ -440,6 +460,7 @@ public class PlayerHandler : MonoBehaviour
         {
             if (Input.GetKeyDown(KeySettingManager.instance.InteractKeycode) && InteractTimer <= 0)
             {
+                interactevent?.Invoke();
                 interactobject.Active(PlayerStat.instance.direction);
                 interactobject = null;
 
@@ -448,23 +469,23 @@ public class PlayerHandler : MonoBehaviour
         }
         if (CurrentPlayer.onInterarctive && (int)PlayerStat.instance.MoveState >= 4)
         {
-   
-                if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode) && !Input.GetKey(KeyCode.DownArrow)
-                      && !jumprestrict)
-                {
+
+            if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode) && !Input.GetKey(KeyCode.DownArrow)
+                  && !jumprestrict)
+            {
 
 
-                    CurrentPlayer.GetJumpBuffer();
+                CurrentPlayer.GetJumpBuffer();
 
 
-                }
-                else
-                {
-                    CurrentPlayer.jumpLimitInput = false;
-                    /*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
-                        CurrentPlayer.jumpLimitInput = false;*/
-                }
-           
+            }
+            else
+            {
+                CurrentPlayer.jumpLimitInput = false;
+                /*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
+                    CurrentPlayer.jumpLimitInput = false;*/
+            }
+
         }
         else
         {
@@ -541,12 +562,12 @@ public class PlayerHandler : MonoBehaviour
         {
             CurrentPlayer.Move();
         }
-        if (Input.GetKeyDown(KeyCode.Space)&&!Changing&& !DImensionChangeDisturb)
+        if (Input.GetKeyDown(KeyCode.Space) && !Changing && !DImensionChangeDisturb)
         {
-  
+
             StartCoroutine(ChangeDimension());
             //Dimensionchangeevent?.Invoke();
-           
+
         }
 
         if (InteractTimer > 0)
@@ -565,11 +586,11 @@ public class PlayerHandler : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.C) && !jumprestrict)
         {
-          
-              
+
+
             CurrentPlayer.GetJumpBuffer();
-            
-            
+
+
         }
         else
         {
@@ -582,13 +603,13 @@ public class PlayerHandler : MonoBehaviour
             CurrentPlayer.jumphold();
         }
 
-    
+
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            if (!firstUpInput && !doubleUpInput && inputTimer<=0)
+            if (!firstUpInput && !doubleUpInput && inputTimer <= 0)
             {
                 firstUpInput = true;
-                inputTimer = inputTime;                
+                inputTimer = inputTime;
             }
 
             if (!doubleUpInput)
@@ -639,24 +660,24 @@ public class PlayerHandler : MonoBehaviour
                 }
             }
 
-            if (Input.GetKey(KeyCode.X) && !CurrentPlayer.onGround  && doubleDownInput/*&&
+            if (Input.GetKey(KeyCode.X) && !CurrentPlayer.onGround && doubleDownInput/*&&
                 PlayerInventory.instance.checkessesntialitem("item01")*/)
-            {                         
+            {
                 CurrentPlayer.DownAttack();
-            }            
+            }
         }
         else
         {
             firstDownInput = false;
             doubleDownInput = false;
         }
-        if (doubleUpInput && Input.GetKeyDown(KeyCode.S)&&CurrentType!=TransformType.Default)
+        if (doubleUpInput && Input.GetKeyDown(KeyCode.S) && CurrentType != TransformType.Default)
         {
             CurrentPlayer.Skill1();
-         
-                Skill1InputTimer = Skill1InputCheck;
-        }    
-        if (Input.GetKey(KeyCode.X)&& Skill1InputTimer<=0/* &&
+
+            Skill1InputTimer = Skill1InputCheck;
+        }
+        if (Input.GetKey(KeyCode.X) && Skill1InputTimer <= 0/* &&
                 PlayerInventory.instance.checkessesntialitem("item01")*/)
         {
             //CurrentPlayer.Attack();
@@ -682,5 +703,5 @@ public class PlayerHandler : MonoBehaviour
 }
 
 
-public enum TransformType { Default, remoteform,mouseform,transform1,testtransform}
+public enum TransformType { Default, remoteform, mouseform, transform1, testtransform }
 

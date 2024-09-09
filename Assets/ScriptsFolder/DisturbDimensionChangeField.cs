@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum DisturbDimensionMoveDirection { left,right,up,down ,forward,back}
+public enum DisturbDimensionMoveDirection { left, right, up, down, forward, back }
 //[ExecuteAlways]
 public class DisturbDimensionChangeField : MonoBehaviour, colliderDisplayer
 {
@@ -16,8 +16,8 @@ public class DisturbDimensionChangeField : MonoBehaviour, colliderDisplayer
     Collider col;
     public void ActiveColliderDisplay()
     {
-        if(renderer_!=null) 
-        renderer_.enabled = true;
+        if (renderer_ != null)
+            renderer_.enabled = true;
     }
 
     public void DeactiveColliderDisplay()
@@ -51,8 +51,8 @@ public class DisturbDimensionChangeField : MonoBehaviour, colliderDisplayer
 
         if (other.CompareTag("Player"))
         {
-            if(restrictBool)
-            PlayerHandler.instance.DImensionChangeDisturb = RestirctDimension;
+            if (restrictBool)
+                PlayerHandler.instance.DImensionChangeDisturb = RestirctDimension;
             else
                   if (!restrictBool && (int)PlayerStat.instance.MoveState >= 4)
             {
@@ -69,7 +69,7 @@ public class DisturbDimensionChangeField : MonoBehaviour, colliderDisplayer
                     case DisturbDimensionMoveDirection.forward: dir = Vector3.forward; break;
                     case DisturbDimensionMoveDirection.back: dir = Vector3.back; break;
                 }
-                float distance = powerVec3(dir,(col.bounds.size + other.bounds.size) / 2).magnitude;
+                float distance = powerVec3(dir, (col.bounds.size + other.bounds.size) / 2).magnitude;
 
                 t.transform.Translate(dir * distance);
             }
@@ -79,12 +79,12 @@ public class DisturbDimensionChangeField : MonoBehaviour, colliderDisplayer
     //{
     //    if (other.CompareTag("Player"))
     //    {
-          
+
 
 
     //    }
     //}
-    Vector3 powerVec3(Vector3 v1,Vector3 v2)
+    Vector3 powerVec3(Vector3 v1, Vector3 v2)
     {
         return new Vector3(v1.x * v2.x, v1.y * v2.y, v1.z * v2.z);
     }
