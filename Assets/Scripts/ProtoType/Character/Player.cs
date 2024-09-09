@@ -878,11 +878,12 @@ public class Player : Character
         {
             Humonoidanimator.SetTrigger("Damaged");
         }
-
+        playerRb.velocity = Vector3.zero;
+        PlayerHandler.instance.CantHandle = true;
         playerRb.AddForce(-transform.forward * 1.2f, ForceMode.Impulse);
 
         yield return new WaitForSeconds(1f);
-
+        PlayerHandler.instance.CantHandle = false;
         PlayerStat.instance.pState = PlayerState.idle;
     }
 

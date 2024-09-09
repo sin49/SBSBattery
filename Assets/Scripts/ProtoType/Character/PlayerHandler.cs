@@ -163,12 +163,12 @@ public class PlayerHandler : MonoBehaviour
         #region 캐릭터 조작
         if (KeySettingManager.instance == null)
         {
-            if ((CurrentPlayer != null && !formChange) || CantHandle)
+            if ((CurrentPlayer != null && !formChange) && !CantHandle)
                 charactermove();
         }
         else
         {
-            if ((CurrentPlayer != null && !formChange) || CantHandle)
+            if ((CurrentPlayer != null && !formChange) && !CantHandle)
                 KeysettingCharactermove();
         }
         #endregion
