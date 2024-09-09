@@ -38,4 +38,11 @@ public class EnemyKillInputEvent : InputEvent
     {
         arraySize--;
     }
+
+    public void AddEnemyDeadEvent(GameObject obj)
+    {
+        Character c = obj.GetComponent<Character>();
+        c.registerdeadevent(EnemyKill);
+        arraySize++;
+    }
 }

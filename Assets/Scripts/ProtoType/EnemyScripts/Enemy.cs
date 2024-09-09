@@ -730,7 +730,7 @@ public class Enemy: Character,DamagedByPAttack
         if (PlayerHandler.instance != null)
             PlayerHandler.instance.CurrentPlayer.wallcheck = false;
 
-
+        if (deadEffect != null)
         Instantiate(deadEffect,transform.position, Quaternion.identity);
         gameObject.SetActive(false);
     }

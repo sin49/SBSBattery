@@ -40,6 +40,7 @@ public class TvEnemy : Enemy
             if (hits[i].collider.CompareTag("GameController"))
             {
                 RemoteTV TV;
+                SignalTv sTV;
                 if (hits[i].collider != null &&
                     hits[i].collider.TryGetComponent<RemoteTV>(out TV))
                 {                    
@@ -48,6 +49,14 @@ public class TvEnemy : Enemy
                         checkTv = true;
                         rb.constraints = RigidbodyConstraints.FreezePosition |
                     RigidbodyConstraints.FreezeRotation;
+                        tracking = false;
+                    }
+                }
+                else if(hits[i].collider != null && hits[i].collider.TryGetComponent<SignalTv>(out sTV))
+                {
+                    if (sTV.done)
+                    {
+                        checkTv = true;
                         tracking = false;
                     }
                 }
@@ -91,10 +100,10 @@ public class TvEnemy : Enemy
         return;
     }
 
-    public override void Dead()
+    /*public override void Dead()
     {
         return;
-    }
+    }*/
 
     public override void Damaged(float damage)
     {
@@ -139,6 +148,18 @@ public class TvEnemy : Enemy
                         RigidbodyConstraints.FreezePositionY;*/
                 }
             }
+            else if (obj.GetComponentInChildren<SignalTv>() != null)
+            {
+                SignalTv sTV = obj.GetComponentInChildren<SignalTv>();
+                if (sTV.done && sTV.tvColor == tvColor)
+                {
+                    target = sTV.gameObject.transform;
+                    activeTv = true;
+                    tracking = true;
+                }
+                Debug.Log($"인지한 오브젝트:{sTV.gameObject}");
+            }
+
         }
     }
 
@@ -148,8 +169,7 @@ public class TvEnemy : Enemy
         {
             if (!activeTv)
             {
-                rb.constraints = RigidbodyConstraints.FreezePosition |
-                    RigidbodyConstraints.FreezeRotation;
+                rb.constraints = RigidbodyConstraints.FreezeRotation;
             }
         }
     }
