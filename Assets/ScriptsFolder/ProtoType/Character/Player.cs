@@ -56,6 +56,7 @@ public class Player : Character
     public float attackBufferTimeMax;
     public float attackBufferTimer;
     public int attackInputValue;
+    public bool attackLimitInput;
     [Header("착지 이펙트 활성화 관련")]
     public float flyTimer;
     public float flyTime;
@@ -413,6 +414,7 @@ public class Player : Character
         }
 
         JumpKeyInput();
+        AttackNotHold();
         if (!downAttack)
             Attack();
 
@@ -733,6 +735,16 @@ public class Player : Character
     #endregion
 
     #region 공격
+    public void AttackNotHold()
+    {
+        if (!Input.GetKey(KeyCode.X))
+        {
+            attackInputValue = 0;
+            attackLimitInput = false;
+        }
+        else
+            attackLimitInput = true;
+    }
     protected void AttackEvents()
     {
         canAttack = false;
@@ -1171,6 +1183,8 @@ public class Player : Character
                    (int)PlayerStat.instance.MoveState < 4
                    && !CullingPlatform)
                 {
+                    if (jumpkeyinputcheckvalue <= 0)
+                        jumpkeyinputcheckvalue = jumpkeyinputCheck;
                     PlayerHandler.instance.doubleDownInput = false;
                     CullingPlatform = true;
                     Physics.IgnoreLayerCollision(6, 11, true);

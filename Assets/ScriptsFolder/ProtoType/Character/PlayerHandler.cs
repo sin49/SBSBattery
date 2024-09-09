@@ -467,11 +467,12 @@ public class PlayerHandler : MonoBehaviour
                 InteractTimer = PlayerStat.instance.InteractDelay;
             }
         }
+        if(!jumprestrict)
         if (CurrentPlayer.onInterarctive && (int)PlayerStat.instance.MoveState >= 4)
         {
 
             if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode) && !Input.GetKey(KeyCode.DownArrow)
-                  && !jumprestrict)
+                 )
             {
 
 
@@ -490,7 +491,7 @@ public class PlayerHandler : MonoBehaviour
         else
         {
             if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode)
-                  && !jumprestrict)
+                  )
             {
 
 
@@ -547,10 +548,10 @@ public class PlayerHandler : MonoBehaviour
                 Skill1InputTimer = Skill1InputCheck;
             }
             if (Input.GetKey(KeySettingManager.instance.AttackKeycode) && Skill1InputTimer <= 0/* &&
-                PlayerInventory.instance.checkessesntialitem("item01")*/)
+PlayerInventory.instance.checkessesntialitem("item01")*/)
             {
-
-                CurrentPlayer.attackBufferTimer = CurrentPlayer.attackBufferTimeMax;
+                if (CurrentPlayer.attackInputValue < 1 && !CurrentPlayer.attackLimitInput)
+                    CurrentPlayer.attackBufferTimer = CurrentPlayer.attackBufferTimeMax;
             }
             if (Skill1InputTimer > 0)
                 Skill1InputTimer -= Time.fixedDeltaTime;
