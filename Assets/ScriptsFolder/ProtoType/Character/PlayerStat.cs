@@ -37,7 +37,8 @@ public class PlayerStat : CharacterStat
     public bool formInvincible; // 변신 무적
     [Header("상호작용 딜레이")]
     public float InteractDelay;
-
+    [Header("피격 후 경직")]
+    public float HittedStopTime = 0.2f;
     //public float rotationValue; // 방향키 입력 시 받을 방향 변수
     //public float dashForce; // 대쉬 가중치
     //public float dashTimer;// 쿨타임 
