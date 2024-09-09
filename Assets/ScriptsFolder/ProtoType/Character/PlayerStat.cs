@@ -5,7 +5,7 @@ using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 public enum CurrentAttack { ground, sky }
 public enum PlayerMoveState {
-     Xmove, XmoveReverse, Zmove, ZmoveReverse, XZMove3D,ZXMove3D
+     Xmove, XmoveReverse, Zmove, ZmoveReverse, ZXMove3D,XZMove3D
 , XZMove3DReverse, ZXMove3DReverse
 }
 
