@@ -468,7 +468,7 @@ public class PlayerHandler : MonoBehaviour
             }
         }
         if(!jumprestrict)
-        if (CurrentPlayer.onInterarctive && (int)PlayerStat.instance.MoveState >= 4)
+        if (CurrentPlayer.onInterarctive && (int)PlayerStat.instance.MoveState < 4)
         {
 
             if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode) && !Input.GetKey(KeyCode.DownArrow)
