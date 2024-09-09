@@ -911,8 +911,7 @@ public class Player : Character
 
         onInvincible = false;
     }
-    [Header("피격 후 경직")]
-    public float HittedStopTime=0.2f;
+
     IEnumerator WaitEndDamaged()
     {
         if (Humonoidanimator != null)
@@ -923,7 +922,7 @@ public class Player : Character
         PlayerHandler.instance.CantHandle = true;
         playerRb.AddForce(-transform.forward * 1.2f, ForceMode.Impulse);
 
-        yield return new WaitForSeconds(HittedStopTime);
+        yield return new WaitForSeconds(PlayerStat.instance.HittedStopTime);
         PlayerHandler.instance.CantHandle = false;
         PlayerStat.instance.pState = PlayerState.idle;
     }
