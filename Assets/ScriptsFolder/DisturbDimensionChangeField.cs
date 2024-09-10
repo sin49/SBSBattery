@@ -54,7 +54,7 @@ public class DisturbDimensionChangeField : MonoBehaviour, colliderDisplayer
             if (restrictBool)
                 PlayerHandler.instance.DImensionChangeDisturb = RestirctDimension;
             else
-                  if (!restrictBool && (int)PlayerStat.instance.MoveState >= 4)
+                  if (!restrictBool && (int)PlayerStat.instance.MoveState >= 4&&PlayerHandler.instance.Changing)
             {
                 Transform t = PlayerHandler.instance.CurrentPlayer.transform;
 
