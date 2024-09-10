@@ -5,13 +5,14 @@ using UnityEngine;
 public class Platform2DFixer : MonoBehaviour
 {
     bool ChangeComplete;
+    bool oncollide;
     private void Start()
     {
         PlayerHandler.instance.registerCameraChangeAction(FixPlatform);
     }
     public void FixPlatform()
     {
-        if (!(
+        if (!ChangeComplete&&oncollide&& !(
               (int)PlayerStat.instance.MoveState >= 4))
         {
 
@@ -24,16 +25,21 @@ public class Platform2DFixer : MonoBehaviour
             ChangeComplete = false;
         }
     }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        ChangeComplete = false;
+        oncollide = false;
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
 
-            if (ChangeComplete)
-            {
 
+            oncollide = true;
                 FixPlatform();
-            }
+        
         }
     }
 }
