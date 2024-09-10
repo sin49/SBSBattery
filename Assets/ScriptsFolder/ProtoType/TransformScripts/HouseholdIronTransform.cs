@@ -11,17 +11,18 @@ public class HouseholdIronTransform : Player
     public float rushSpeed;
     float saveSpeed;
     [Header("돌진 지속시간")]
-    public float rushTimeMax, rushAtkColliderTimeMax;
-    [HideInInspector] public bool canRushAttack;
+    public float rushTimeMax;
+    float rushTimer;
+    [HideInInspector] public bool canRushAttack; // 돌진 공격을 받는 주기?를 위한 변수
     bool onRush, startRush, endRush;
-    float rushTimer, rushAtkColliderTimer;
     [Header("돌진 재사용 대기시간")]
     public float rushCoolTime;
-    float coolTimer;
+    float rushCoolTimer;
     [Header("돌진 공격 피해량")]
     public float rushDamage;
     [Header("돌진 공격 주기")]
-    public float rushAtkCycle;
+    public float rushAtkCycle, rushAtkColliderTimeMax;
+    float cycleTimer, rushAtkColliderTimer;
     [Header("방향 전환 딜레이 시간")]
     public float rotateTime;
     float rotateTimer;
@@ -36,27 +37,56 @@ public class HouseholdIronTransform : Player
         saveSpeed = PlayerStat.instance.moveSpeed;
     }
 
+    public void InitTimer()
+    {
+        rushCoolTimer = rushCoolTime;
+        rotateTimer = rotateTime;
+        cycleTimer = rushAtkCycle;
+        rushAtkColliderTimer = rushAtkColliderTimeMax;
+    }
+
     private void Update()
     {
         BaseBufferTimer();
+        CheckRushTime();
+    }
+    
+    public void CheckRushTime()
+    {
+        if (onRush)
+        {
+            //돌진 지속 시간
+            if (rushTimer > 0)
+            {
+                rushTimer -= Time.deltaTime;
+            }
+            else
+            {
+                RushEnd();
+                rushTimer = rushTimeMax;
+            }
 
-        if (rushTimer > 0)
-        {
-            rushTimer += Time.deltaTime;
-        }
-        else
-        {
-            canRushAttack = true;
-            rushTimer = rushTimeMax;
+            //돌진 공격 주기?
+            if (canRushAttack && rushAtkColliderTimer > 0)
+            {
+                rushAtkColliderTimer -= Time.deltaTime;
+            }
+            else
+            {
+                canRushAttack = false;
+                rushAtkColliderTimer = rushAtkColliderTimeMax;
+            }
         }
 
-        if (canRushAttack && rushAtkColliderTimer > 0)
+        if (!readyRush)
         {
-            rushAtkColliderTimer -= Time.deltaTime;
-        }
-        else
-        {
-            canRushAttack = false;
+            if (rushTimer > 0)
+                rushTimer -= Time.deltaTime;
+            else
+            {
+                readyRush = true;
+                rushTimer = rushTimeMax;
+            }
         }
     }
 
@@ -93,5 +123,8 @@ public class HouseholdIronTransform : Player
     {
         Humonoidanimator.SetTrigger("RushEnd");
         onRush = false;
+        readyRush = false;
+
+        PlayerHandler.instance.CantHandle = true;
     }
 }

@@ -30,6 +30,11 @@ public class AnimationEvent : MonoBehaviour
         Time.timeScale = 1f;
     }
 
+    public void RushEndCanHandle()
+    {
+        PlayerHandler.instance.CantHandle = false;
+    }
+
     public void BoxOpend()
     {
         if (GetComponentInParent<EnemyInstantiateObject>() != null)
