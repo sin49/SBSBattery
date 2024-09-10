@@ -617,32 +617,33 @@ public class Player : Character
         {
             case PlayerMoveState.Xmove:
                 hori = Input.GetAxisRaw("Horizontal");
+                if (PlayerHandler.instance.ladderInteract)
+                    Vert = Input.GetAxisRaw("Vertical");
                 break;
             case PlayerMoveState.XmoveReverse:
-                hori = -1 * Input.GetAxisRaw("Horizontal");
+                hori =-1* Input.GetAxisRaw("Horizontal");
                 break;
 
             case PlayerMoveState.Zmove:
-
-                Vert = Input.GetAxisRaw("Horizontal");
+                    Vert =  Input.GetAxisRaw("Horizontal");                
                 break;
             case PlayerMoveState.ZmoveReverse:
-                Vert = -1 * Input.GetAxisRaw("Horizontal");
+                Vert = -1* Input.GetAxisRaw("Horizontal");
                 break;
             case PlayerMoveState.XZMove3D:
                 hori = Input.GetAxisRaw("Vertical");
                 Vert = -1 * Input.GetAxisRaw("Horizontal");
                 break;
             case PlayerMoveState.XZMove3DReverse:
-                hori = -1 * Input.GetAxisRaw("Vertical");
-                Vert = Input.GetAxisRaw("Horizontal");
+                hori = -1* Input.GetAxisRaw("Vertical");
+                Vert =  Input.GetAxisRaw("Horizontal");
                 break;
             case PlayerMoveState.ZXMove3D:
                 Vert = Input.GetAxisRaw("Vertical");
-                hori = Input.GetAxisRaw("Horizontal");
+                hori =  Input.GetAxisRaw("Horizontal");
                 break;
             case PlayerMoveState.ZXMove3DReverse:
-                Vert = -1 * Input.GetAxisRaw("Vertical");
+                Vert =-1* Input.GetAxisRaw("Vertical");
                 hori = -1 * Input.GetAxisRaw("Horizontal");
                 break;
         }
@@ -655,9 +656,11 @@ public class Player : Character
         }
 
         Vector3 moveInput = new Vector3(hori, 0, Vert);
+        Vector3 ladderInput = new Vector3(0, Vert, 0);
+
         if (hori != 0 || Vert != 0)
         {
-            if (canAttack)
+            if (canAttack && !PlayerHandler.instance.ladderInteract)
                 rotate(moveInput.x, moveInput.z);
             SoundPlayer.PlayMoveSound();
 
@@ -671,13 +674,24 @@ public class Player : Character
 
         Vector3 Movevelocity = Vector3.zero;
         Vector3 desiredVector = moveInput.normalized * PlayerStat.instance.moveSpeed + EnvironmentPower;
-        Movevelocity = desiredVector - playerRb.velocity.x * Vector3.right - playerRb.velocity.z * Vector3.forward;
-
-
+        Vector3 ladderVector = ladderInput.normalized * PlayerStat.instance.moveSpeed + EnvironmentPower;
+        if (!PlayerHandler.instance.ladderInteract)
+            Movevelocity = desiredVector - playerRb.velocity.x * Vector3.right - playerRb.velocity.z * Vector3.forward;
+        else
+        {
+            playerRb.velocity = new(0, playerRb.velocity.y, 0);
+            Movevelocity = ladderVector - playerRb.velocity.y * Vector3.up;
+        }
+      
         if (!wallcheck)
             playerRb.AddForce(Movevelocity, ForceMode.VelocityChange);
         else
-            playerRb.AddForce(EnvironmentPower, ForceMode.VelocityChange);
+        {
+            if (!PlayerHandler.instance.ladderInteract)
+                playerRb.AddForce(EnvironmentPower, ForceMode.VelocityChange);
+            else
+                playerRb.AddForce(Movevelocity, ForceMode.VelocityChange);
+        }
 
 
         if (Movevelocity == Vector3.zero)
