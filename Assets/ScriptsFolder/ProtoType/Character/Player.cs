@@ -936,7 +936,7 @@ public class Player : Character
         PlayerHandler.instance.CantHandle = true;
         playerRb.AddForce(-transform.forward * 1.2f, ForceMode.Impulse);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(PlayerStat.instance.HittedStopTime);
         PlayerHandler.instance.CantHandle = false;
         PlayerStat.instance.pState = PlayerState.idle;
     }

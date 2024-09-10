@@ -388,7 +388,7 @@ public class PlayerHandler : MonoBehaviour
         yield return null;
     }
 
-    bool Changing;
+  public  bool Changing;
     IEnumerator ChangeDimension()
     {
         Changing = true;
