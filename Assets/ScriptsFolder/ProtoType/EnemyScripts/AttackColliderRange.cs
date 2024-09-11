@@ -125,14 +125,17 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
         {
             if (!enemy.wallCheck)
             {
-                if (enemy.transform.position.x < enemy.target.position.x)
+                Vector3 point = other.transform.position - enemy.transform.position;
+                point.y = 0;
+                enemy.transform.rotation = Quaternion.LookRotation(point);
+                /*if (enemy.transform.position.x < enemy.target.position.x)
                 {
                     enemy.transform.rotation = Quaternion.Euler(0, 90, 0);
                 }
                 else
                 {
                     enemy.transform.rotation = Quaternion.Euler(0, -90, 0);
-                }
+                }*/
 
                 enemy.onAttack = true;
             }
