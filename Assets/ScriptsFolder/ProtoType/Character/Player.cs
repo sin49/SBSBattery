@@ -631,20 +631,22 @@ public class Player : Character
                 Vert = -1 * Input.GetAxisRaw("Horizontal");
                 break;
             case PlayerMoveState.XZMove3D:
-                hori = Input.GetAxisRaw("Vertical");
-                Vert = -1 * Input.GetAxisRaw("Horizontal");
+                Vert = Input.GetAxisRaw("Vertical");
+                hori =Input.GetAxisRaw("Horizontal");
+         
                 break;
             case PlayerMoveState.XZMove3DReverse:
-                hori = -1 * Input.GetAxisRaw("Vertical");
-                Vert = Input.GetAxisRaw("Horizontal");
-                break;
-            case PlayerMoveState.ZXMove3D:
-                Vert = Input.GetAxisRaw("Vertical");
-                hori = Input.GetAxisRaw("Horizontal");
-                break;
-            case PlayerMoveState.ZXMove3DReverse:
                 Vert = -1 * Input.GetAxisRaw("Vertical");
                 hori = -1 * Input.GetAxisRaw("Horizontal");
+        
+                break;
+            case PlayerMoveState.ZXMove3D:
+                hori =Input.GetAxisRaw("Vertical");
+                Vert = -1* Input.GetAxisRaw("Horizontal");
+                break;
+            case PlayerMoveState.ZXMove3DReverse:
+                hori = -1 * Input.GetAxisRaw("Vertical");
+                Vert =  Input.GetAxisRaw("Horizontal");
                 break;
         }
 
