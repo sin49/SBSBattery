@@ -127,7 +127,7 @@ public class PlayerSpawnManager : MonoBehaviour
          }
         for(int n = 0; n < Checkpoints.Length; n++)
         {
-            if (ChkPointsDic[n] == null)
+            if (Checkpoints[n] == null)
                 continue;
             ChkPointsDic.Add(n, Checkpoints[n]);
             Checkpoints[n].index = n;
