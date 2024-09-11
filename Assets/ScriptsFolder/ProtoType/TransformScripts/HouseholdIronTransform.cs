@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
 public class HouseholdIronTransform : Player
 {
-    [Header("(B.J.H)돌진 준비시간")]
+    [Header("돌진 준비시간")]
     public float rushReady;
     [Header("돌진 이동속도")]
     public float rushSpeed;
@@ -29,7 +30,14 @@ public class HouseholdIronTransform : Player
 
     public float rushRay;
 
-    bool readyRush;
+    bool readyRush, downEnd;
+
+    [Header("특수 능력 관련 변수")]
+    public float downAtkSpeed;
+    public float ironFlyTime;
+    public float downAtkEndTime;
+    float downAtkEndTimer;
+    public float ironDownDamage;
 
     protected override void Awake()
     {
@@ -43,14 +51,48 @@ public class HouseholdIronTransform : Player
         rotateTimer = rotateTime;
         cycleTimer = rushAtkCycle;
         rushAtkColliderTimer = rushAtkColliderTimeMax;
+        downAtkEndTimer = downAtkEndTime;
     }
 
     private void Update()
     {
         BaseBufferTimer();
         CheckRushTime();
+        if (downEnd)
+        {
+            if (downAtkEndTimer > 0)
+                downAtkEndTimer -= Time.deltaTime;
+            else
+            {
+                downEnd = false;
+                downAtkEndTimer = downAtkEndTime;
+                PlayerHandler.instance.CantHandle = false;
+            }
+        }        
     }
-    
+
+    public override void DownAttack()
+    {        
+        if (!downAttack)
+        {
+            downAttack = true;
+            StartCoroutine(IronDownAttack());
+        }
+    }
+    IEnumerator IronDownAttack()
+    {
+        playerRb.useGravity = false;
+        playerRb.velocity = Vector3.zero;
+        playerRb.AddForce(transform.up * 2.5f, ForceMode.Impulse);
+
+        yield return new WaitForSeconds(ironFlyTime);
+
+        playerRb.velocity = Vector3.zero;
+        playerRb.AddForce(-transform.up * downAtkSpeed, ForceMode.Impulse);
+        downAttackCollider.SetActive(true);
+        playerRb.useGravity = true;
+    }
+
     public void CheckRushTime()
     {
         if (onRush)
@@ -115,16 +157,25 @@ public class HouseholdIronTransform : Player
 
     public void RushStart()
     {
+        PlayerHandler.instance.CantHandle = true;
         Humonoidanimator.SetTrigger("RushStart");
         onRush = true;
+        readyRush = true;
     }
 
     public void RushEnd()
     {
+        PlayerHandler.instance.CantHandle = true;
         Humonoidanimator.SetTrigger("RushEnd");
         onRush = false;
         readyRush = false;
+    }
 
-        PlayerHandler.instance.CantHandle = true;
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Ground") && downEnd)
+        {
+            PlayerHandler.instance.CantHandle = true;
+        }
     }
 }

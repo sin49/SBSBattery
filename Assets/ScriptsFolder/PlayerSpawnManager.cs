@@ -26,8 +26,11 @@ public class PlayerSpawnManager : MonoBehaviour
     {
         if (LastestCheckPointID >= ChkPoint.index)
             return;
+
         LastestCheckPointID = ChkPoint.index;
+        CurrentCheckPoint.DeactiveCheckpoint();
         CurrentCheckPoint = ChkPoint;
+        CurrentCheckPoint.activecheckpoint();
         Debug.Log("세이브" +ChkPoint.index);
         if (!DontSave)
         {
@@ -110,6 +113,7 @@ public class PlayerSpawnManager : MonoBehaviour
         {
             Debug.Log("체크포인트 Null 에러");
         }
+        CurrentCheckPoint.activecheckpoint();
     }
 
     public void spawnCheckPoint(int n)
