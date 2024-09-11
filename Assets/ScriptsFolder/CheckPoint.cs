@@ -21,6 +21,7 @@ public class CheckPoint : MonoBehaviour
     public void DeactiveCheckpoint()
     {
         _renderer.materials[1] = defaultmaterial;
+        _renderer.material = defaultmaterial;
         lightObj.SetActive(false);
         active = false;
     }
@@ -28,6 +29,7 @@ public class CheckPoint : MonoBehaviour
     {
         active = true;
         _renderer.materials[1] = emissionmaterial;
+             _renderer.material = emissionmaterial;
         lightObj.SetActive(true);
         return this;
     }
