@@ -10,6 +10,7 @@ public class PlayerSpawnManager : MonoBehaviour
 
     public Camera CheckpointChkCamera;
     TransformType DefaultSpawntype;
+    [Header("비울 시 작동 안함")]
     public Transform CheckPointTransform;
     public CheckPoint[] Checkpoints = new CheckPoint[0];
     Dictionary<int, CheckPoint> ChkPointsDic = new Dictionary<int, CheckPoint>();
@@ -121,11 +122,13 @@ public class PlayerSpawnManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        if(CheckPointTransform!=null)
+        if (CheckPointTransform != null) { 
         Checkpoints = CheckPointTransform.GetComponentsInChildren<CheckPoint>();
-       
+         }
         for(int n = 0; n < Checkpoints.Length; n++)
         {
+            if (Checkpoints[n] == null)
+                continue;
             ChkPointsDic.Add(n, Checkpoints[n]);
             Checkpoints[n].index = n;
         }
