@@ -23,7 +23,9 @@ public class standlamp : MonoBehaviour
     
     IEnumerator LightBlink()
     {
-        while (true)
+        if (Light == null)
+            yield break;
+            while (true)
         {
             if (lightblinkstate)
             {
@@ -55,11 +57,13 @@ public class standlamp : MonoBehaviour
     
     private void Awake()
     {
+        if(Light!=null)
         initlightintensity = Light.intensity;
     }
     private void Update()
     {
-        blinkspeed = initlightintensity / blinktime;
+        if (Light != null)
+            blinkspeed = initlightintensity / blinktime;
     }
     private void OnBecameInvisible()
     {
