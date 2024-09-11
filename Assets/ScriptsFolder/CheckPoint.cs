@@ -16,7 +16,6 @@ public class CheckPoint : MonoBehaviour
     {
         ChkPointParticle.gameObject.SetActive(false);
         soundplayer =GetComponent<SoundEffectListPlayer>();
-        _renderer = GetComponent<Renderer>();
     }
     public int index;
     public void DeactiveCheckpoint()
