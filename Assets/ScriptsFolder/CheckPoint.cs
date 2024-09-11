@@ -26,12 +26,11 @@ public class CheckPoint : MonoBehaviour
         lightObj.SetActive(false);
         active = false;
     }
-    public CheckPoint activecheckpoint()
+    public void activecheckpoint()
     {
         active = true;
         _renderer.materials[1] = emissionmaterial;
         lightObj.SetActive(true);
-        return this;
     }
     public GameObject spawn(GameObject obj)
     {
