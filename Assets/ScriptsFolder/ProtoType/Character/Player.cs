@@ -823,7 +823,7 @@ public class Player : Character
 
     //public float DownAttackForce;
 
-    public void DownAttack()
+    public virtual void DownAttack()
     {
         if (!downAttack)
         {
