@@ -389,30 +389,36 @@ public class Enemy: Character,DamagedByPAttack
             attackCollider.SetActive(false);
             if (target != null)
             {
-                if (target.gameObject != target.gameObject == PlayerHandler.instance.CurrentPlayer.gameObject)
+                if (PlayerHandler.instance.CurrentPlayer != null && target.gameObject == PlayerHandler.instance.CurrentPlayer.gameObject)
                 {
                     target = PlayerHandler.instance.CurrentPlayer.transform;
-                    if (target.GetChild(0).position.x > transform.position.x)
+                    /*if (target.GetChild(0).position.x > transform.position.x)
                     {
                         transform.rotation = Quaternion.Euler(0, 90, 0);
                     }
                     else
                     {
                         transform.rotation = Quaternion.Euler(0, -90, 0);
-                    }
+                    }*/
+                    Vector3 pos = target.position - transform.position;
+                    pos.y = 0;
+                    transform.rotation = Quaternion.LookRotation(pos);
                 }
             }
             else
             {
                 target = PlayerHandler.instance.CurrentPlayer.transform;
-                if (target.GetChild(0).position.x > transform.position.x)
+                /*if (target.GetChild(0).position.x > transform.position.x)
                 {
                     transform.rotation = Quaternion.Euler(0, 90, 0);
                 }
                 else
                 {
                     transform.rotation = Quaternion.Euler(0, -90, 0);
-                }
+                }*/
+                Vector3 pos = target.position - transform.position;
+                pos.y = 0;
+                transform.rotation = Quaternion.LookRotation(pos);
             }
             rb.AddForce(-transform.forward * 3f, ForceMode.Impulse);
             if (animaor != null)
@@ -445,7 +451,6 @@ public class Enemy: Character,DamagedByPAttack
     #region 이동함수
     public override void Move()
     {
-        base.Move();
         if (eStat.eState != EnemyState.dead || eStat.eState != EnemyState.hitted)
         {
 
@@ -481,7 +486,7 @@ public class Enemy: Character,DamagedByPAttack
         eulerAnglesY = transform.eulerAngles.y;*/
 
         if (SetRotation())
-        {            
+        {
             rb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
             if (soundplayer != null)
                 soundplayer.PlayMoveSound();
@@ -514,7 +519,6 @@ public class Enemy: Character,DamagedByPAttack
             if (soundplayer != null)
                 soundplayer.PlayMoveSound();
         }
-
         if (testTarget.magnitude < patrolDistance)
         {
             tracking = false;
@@ -563,7 +567,7 @@ public class Enemy: Character,DamagedByPAttack
         }
         else
         {
-            targetPatrol = patrolGroup[randomTarget]; ;
+            targetPatrol = patrolGroup[randomTarget];
             setPatrol = false;
         }
         return setPatrol;
@@ -580,23 +584,42 @@ public class Enemy: Character,DamagedByPAttack
     }*/
     [Header("#로테이션레벨(기본적으로 85)")]
     public float rotLevel;
-
+    public float testAngle;
     public bool SetRotation()
     {
         bool completeRot = false;
-
-        if (/*transform.eulerAngles.y >= -10 && transform.eulerAngles.y <= 10*/transform.eulerAngles.y >= rotLevel && transform.eulerAngles.y <= 10 + rotLevel)
+        if (target != null && !onPatrol)
+        {
+            Vector3 targetTothis = target.position - transform.position;
+            targetTothis.y = 0;
+            Quaternion q = Quaternion.LookRotation(targetTothis);
+            testAngle = Quaternion.Angle(transform.rotation, q);
+            if (testAngle < 45f)
+                completeRot = true;
+        }
+        else if (onPatrol)
+        {
+            Vector3 patrolTothis = targetPatrol - transform.position;
+            patrolTothis.y = 0;
+            Quaternion q = Quaternion.LookRotation(patrolTothis);
+            testAngle = Quaternion.Angle(transform.rotation, q);
+            if (testAngle < 1.5f)
+                completeRot = true;
+        }
+        /*eulerAnglesY = transform.eulerAngles.y;
+        if (transform.eulerAngles.y >= rotLevel && transform.eulerAngles.y <= 10 + rotLevel)
         {
             completeRot = true;
         }
         else if (transform.eulerAngles.y >= 175 -rotLevel && transform.eulerAngles.y <= 190 -rotLevel ||
             transform.eulerAngles.y >= 350 - rotLevel && transform.eulerAngles.y <= 360 - rotLevel)
-        {
+        { 
             completeRot = true;
-        }
+        }*/
         //Debug.Log($"체크가 되는 거냐? {complete = completeRot}\n로테이션앵글:{transform.eulerAngles.y}");
         //Debug.Log(completeRot);
         return completeRot;
+
     }
     #endregion
 
