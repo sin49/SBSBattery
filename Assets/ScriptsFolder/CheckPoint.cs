@@ -17,19 +17,19 @@ public class CheckPoint : MonoBehaviour
         ChkPointParticle.gameObject.SetActive(false);
         soundplayer =GetComponent<SoundEffectListPlayer>();
         lightObj.SetActive(false);
-        _renderer.materials[1] = defaultmaterial;
+        _renderer.material = defaultmaterial;
     }
     public int index;
     public void DeactiveCheckpoint()
     {
-        _renderer.materials[1] = defaultmaterial;
+        _renderer.material = defaultmaterial;
         lightObj.SetActive(false);
         active = false;
     }
     public void activecheckpoint()
     {
         active = true;
-        _renderer.materials[1] = emissionmaterial;
+        _renderer.material = emissionmaterial;
         lightObj.SetActive(true);
     }
     public GameObject spawn(GameObject obj)
