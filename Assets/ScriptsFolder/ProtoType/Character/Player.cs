@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System;
 using System.Collections;
+using System.Security.Cryptography;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.RenderGraphModule;
@@ -613,50 +614,39 @@ public class Player : Character
     {
         hori = 0;
         Vert = 0;
-        if (PlayerHandler.instance.ladderInteract) {
-
-                  Vert = Input.GetAxisRaw("Vertical");
-          
-        
-        }
-        else
+        switch (PlayerStat.instance.MoveState)
         {
-            switch (PlayerStat.instance.MoveState)
-            {
-                case PlayerMoveState.Xmove:
-                    hori = Input.GetAxisRaw("Horizontal");
-
-                    break;
-                case PlayerMoveState.XmoveReverse:
-                    hori = -1 * Input.GetAxisRaw("Horizontal");
-                    break;
-
-                case PlayerMoveState.Zmove:
-                    Vert = Input.GetAxisRaw("Horizontal");
-                    break;
-                case PlayerMoveState.ZmoveReverse:
-                    Vert = -1 * Input.GetAxisRaw("Horizontal");
-                    break;
-                case PlayerMoveState.XZMove3D:
+            case PlayerMoveState.Xmove:
+                hori = Input.GetAxisRaw("Horizontal");
+                if (PlayerHandler.instance.ladderInteract)
                     Vert = Input.GetAxisRaw("Vertical");
-                    hori = Input.GetAxisRaw("Horizontal");
+                break;
+            case PlayerMoveState.XmoveReverse:
+                hori =-1* Input.GetAxisRaw("Horizontal");
+                break;
 
-                    break;
-                case PlayerMoveState.XZMove3DReverse:
-                    Vert = -1 * Input.GetAxisRaw("Vertical");
-                    hori = -1 * Input.GetAxisRaw("Horizontal");
-
-                    break;
-                case PlayerMoveState.ZXMove3D:
-                    hori = Input.GetAxisRaw("Vertical");
-                    Vert = -1 * Input.GetAxisRaw("Horizontal");
-                    break;
-                case PlayerMoveState.ZXMove3DReverse:
-                    hori = -1 * Input.GetAxisRaw("Vertical");
-                    Vert = Input.GetAxisRaw("Horizontal");
-                    break;
-            }
-
+            case PlayerMoveState.Zmove:
+                    Vert =  Input.GetAxisRaw("Horizontal");                
+                break;
+            case PlayerMoveState.ZmoveReverse:
+                Vert = -1* Input.GetAxisRaw("Horizontal");
+                break;
+            case PlayerMoveState.XZMove3D:
+                hori = Input.GetAxisRaw("Vertical");
+                Vert = -1 * Input.GetAxisRaw("Horizontal");
+                break;
+            case PlayerMoveState.XZMove3DReverse:
+                hori = -1* Input.GetAxisRaw("Vertical");
+                Vert =  Input.GetAxisRaw("Horizontal");
+                break;
+            case PlayerMoveState.ZXMove3D:
+                Vert = Input.GetAxisRaw("Vertical");
+                hori =  Input.GetAxisRaw("Horizontal");
+                break;
+            case PlayerMoveState.ZXMove3DReverse:
+                Vert =-1* Input.GetAxisRaw("Vertical");
+                hori = -1 * Input.GetAxisRaw("Horizontal");
+                break;
         }
 
 
@@ -842,6 +832,12 @@ public class Player : Character
             downAttack = true;
             StartCoroutine(GoDownAttack());
         }
+    }
+
+    public void BounceByBroeknPlatform()
+    {
+        playerRb.velocity = Vector3.zero;
+        playerRb.AddForce(transform.up * 2f, ForceMode.VelocityChange);
     }
 
     IEnumerator GoDownAttack()
