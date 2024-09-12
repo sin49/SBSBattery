@@ -16,11 +16,7 @@ public class Ladder : InteractiveObject
     public Transform upStartPoint, downStartPoint;
     float posY;
 
-    [Header("사다리 상호작용 콜라이더 조절")]
-    public BoxCollider upBox;
-    public Vector3 upSize, upPos;
-    public BoxCollider downBox;
-    public Vector3 downSize, downPos;
+
 
     public void LadderActive()
     {
@@ -72,15 +68,5 @@ public class Ladder : InteractiveObject
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        if (upBox != null && downBox != null)
-        {
-            upBox.size = upSize;
-            upBox.center = upPos;
-
-            downBox.size = downSize;
-            downBox.center = downPos;
-        }
-    }
+    
 }
