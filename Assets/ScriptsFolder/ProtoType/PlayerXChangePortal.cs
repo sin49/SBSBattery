@@ -26,9 +26,30 @@ public class PlayerXChangePortal : InteractiveObject
     public float waitingopendoortime = 1f;
     [Header("도착한 플레이어 이동까지의 대기시간")]
     public float playermovewaitingtime = 0.6f;
-    private void Awake()
+
+    public Material greenlight;
+    public Material redlight;
+    public Renderer lightrenderer;
+    public Light lightobj;
+   public bool closed;
+    protected override void Awake()
     {
+        base.Awake();
         _animation.speed = Shutter_animationspeed;
+    }
+    private void Update()
+    {
+        _animation.SetBool("closed", closed);
+        if (closed)
+        {
+            lightrenderer.material = greenlight;
+            lightobj.color = Color.green;
+        }
+        else
+        {
+            lightrenderer.material = redlight;
+            lightobj.color = Color.red;
+        }
     }
     public void MovePosition(string s=null)
     {
@@ -45,7 +66,7 @@ public class PlayerXChangePortal : InteractiveObject
         PlayerHandler.instance.CantHandle = true;
         _animation.SetTrigger("Open");
         yield return new WaitForSeconds(waitingopendoortime);//도착한 텔레포터 닫힌 문 보여주는 시간
-        _animation.SetBool("closed", false);
+        closed= false;
   
         yield return new WaitForSeconds(playermovewaitingtime);//텔레포터 열기 까지 대기시간
     
@@ -59,22 +80,24 @@ public class PlayerXChangePortal : InteractiveObject
     }
    IEnumerator MoveAnimation()
     {
-        _animation.SetBool("closed", false);
+        closed = false;
+
         PlayerHandler.instance.CantHandle = true;
         if(StartZtoX)
             yield return StartCoroutine(PlayerHandler.instance.CurrentPlayer.moveportalanimationZX(teleportertransform));
         else
         yield return StartCoroutine(PlayerHandler.instance.CurrentPlayer.moveportalanimation(teleportertransform));
         _animation.SetTrigger("Close");
-      _animation.SetBool("closed", true);
-        Destination._animation.SetBool("closed", true);
+        closed = true;
+        Destination.closed = true;
+     
         yield return new WaitForSeconds(WaitingLoadingTIme);//s어두워지기 전 딜레이
         if (!HasLoadingEffect)
             MovePosition();
         else
             GameManager.instance.LoadingEffectToAction(MovePosition);
         yield return new WaitForSeconds(initializeanimatortime);//초기화 되기까지 시간
-        _animation.SetBool("closed", false);
+        closed = false;
     }
     public override void Active(direction direct)
     {

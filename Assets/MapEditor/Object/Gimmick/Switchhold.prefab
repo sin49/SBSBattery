@@ -131,9 +131,10 @@ GameObject:
   - component: {fileID: 3609245126805123930}
   - component: {fileID: 4509129607976401008}
   - component: {fileID: 8600695513215889170}
-  m_Layer: 0
+  - component: {fileID: 3931930550179417939}
+  m_Layer: 12
   m_Name: Object001
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -233,7 +234,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 787357a4b6b4de2419c354fbefee306b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -256,6 +257,27 @@ MonoBehaviour:
   active: 0
   sound: {fileID: 3609245126805123930}
   animator: {fileID: 4509129607976401008}
+--- !u!65 &3931930550179417939
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3202495382252994215}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.5784923, y: 1.5784972, z: 0.40677267}
+  m_Center: {x: -0.0000009238722, y: 0.00000014901163, z: -0.13657048}
 --- !u!1 &6941119742394769936
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,7 +288,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6121284825954298810}
   - component: {fileID: 9056249168807795620}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: slope
   m_TagString: Ground
   m_Icon: {fileID: 0}
