@@ -273,7 +273,7 @@ MonoBehaviour:
   attackType: 0
   characterState: 0
   initMaxHP: 4
-  initMoveSpeed: 3.7
+  initMoveSpeed: 3.3
   HPBonus: 0
   MoveSpeedBonus: 0
   hp: 4
@@ -290,13 +290,14 @@ MonoBehaviour:
   currentAttack: 0
   doubleJump: 1
   ableJump: 1
-  invincibleCoolTime: 1.5
+  invincibleCoolTime: 2
   attackForce: 0
-  jumpForce: 7
-  downForce: 280
-  downAttackFlyTime: 0.4
+  jumpForce: 8
+  downForce: 300
+  downAttackFlyTime: 0.3
   formInvincible: 0
-  InteractDelay: 0.4
+  InteractDelay: 0.3
+  HittedStopTime: 0.4
   MoveState: 0
 --- !u!1 &1409595132487138533
 GameObject:
@@ -372,6 +373,7 @@ MonoBehaviour:
   doubleDownInput: 0
   onAttack: 0
   DImensionChangeDisturb: 0
+  Changing: 0
 --- !u!114 &3318950728334998779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -747,7 +749,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventname: Enemy-Kill
   obj: {fileID: 0}
-  eKill: 0
+  objGroup: []
+  reduceNum: 0
+  increaseNum: 0
 --- !u!114 &8916451419124600231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -916,6 +920,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventname: inputevent0
+  timerstart: 0
   StartTimerAwake: 0
   timer: 3
   timer_: 0
@@ -932,6 +937,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventname: inputevent1
+  timerstart: 1
   StartTimerAwake: 0
   timer: 3
   timer_: 0
@@ -1095,11 +1101,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   DefaultForm: {fileID: 7664586703414084814, guid: adab39cdc59ea234aa9ec9dbf410dc93,
     type: 3}
   LastestCheckPointID: 0
@@ -1202,6 +1203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventname: inputevent1
+  timerstart: 0
   StartTimerAwake: 0
   timer: 3
   timer_: 0
