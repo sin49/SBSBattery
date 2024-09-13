@@ -64,7 +64,7 @@ public class PlayerXChangePortal : InteractiveObject
     public IEnumerator EndMoveanimation()
     {
         PlayerHandler.instance.CantHandle = true;
-        _animation.SetTrigger("Open");
+    
         yield return new WaitForSeconds(waitingopendoortime);//도착한 텔레포터 닫힌 문 보여주는 시간
         closed= false;
   
@@ -88,6 +88,7 @@ public class PlayerXChangePortal : InteractiveObject
         else
         yield return StartCoroutine(PlayerHandler.instance.CurrentPlayer.moveportalanimation(teleportertransform));
         _animation.SetTrigger("Close");
+        Destination. _animation.SetTrigger("Open");
         closed = true;
         Destination.closed = true;
      
