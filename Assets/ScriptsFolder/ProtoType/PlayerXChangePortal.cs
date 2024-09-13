@@ -45,7 +45,8 @@ public class PlayerXChangePortal : InteractiveObject
         PlayerHandler.instance.CantHandle = true;
         _animation.SetTrigger("Open");
         yield return new WaitForSeconds(waitingopendoortime);//도착한 텔레포터 닫힌 문 보여주는 시간
-        Destination._animation.SetBool("closed", true);
+        _animation.SetBool("closed", false);
+  
         yield return new WaitForSeconds(playermovewaitingtime);//텔레포터 열기 까지 대기시간
     
 
