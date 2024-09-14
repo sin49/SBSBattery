@@ -32,6 +32,7 @@ public class AnimationEvent : MonoBehaviour
 
     public void RushEndCanHandle()
     {
+        Debug.Log("돌진 준비/끝 동작 호출되었습니다");
         PlayerHandler.instance.CantHandle = false;
     }
 

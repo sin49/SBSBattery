@@ -16,10 +16,10 @@ public class DownAttackCollider : MeleeCollider
     protected override void OnTriggerEnter(Collider other)
     {        
         
-        if (other.CompareTag("Enemy"))
+        /*if (other.CompareTag("Enemy"))
         {
             DamageCollider(other);
-        }
+        }*/
         
         
         if (other.CompareTag("Ground"))
@@ -33,12 +33,17 @@ public class DownAttackCollider : MeleeCollider
             }
             else
             {
-
+                BrokenPlatform brokenPlatform;
+                if (other.TryGetComponent<BrokenPlatform>(out brokenPlatform))
+                {
+                    Debug.Log("ºÎ¼­Áö´Â ÇÃ·§Æû");
+                    PlayerHandler.instance.CurrentPlayer.BounceByBroeknPlatform();
+                }
+                else
                 gameObject.SetActive(false);
             }
         }        
     }
-
     #region Æ¨±è ¹æÇâ
     public float DecideDirection()
     {

@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class MouseTransform : Player
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject cursor;
+
+    protected override void Awake()
     {
-        
+        base.Awake();
+        InitMouseForm();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void InitMouseForm()
     {
-        
+        if(cursor !=null)
+            cursor.SetActive(false);
     }
+
 }

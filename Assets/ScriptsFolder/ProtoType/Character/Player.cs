@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System;
 using System.Collections;
+using System.Security.Cryptography;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.RenderGraphModule;
@@ -833,6 +834,12 @@ public class Player : Character
         }
     }
 
+    public void BounceByBroeknPlatform()
+    {
+        playerRb.velocity = Vector3.zero;
+        playerRb.AddForce(transform.up * 2f, ForceMode.VelocityChange);
+    }
+
     IEnumerator GoDownAttack()
     {
         playerRb.useGravity = false;
@@ -958,6 +965,14 @@ public class Player : Character
     #endregion
 
     #region 점프동작
+    public virtual void PlayerJumpEvent()
+    {
+        if (Humonoidanimator != null)
+        {
+            Humonoidanimator.SetTrigger("jump");
+        }
+    }
+
     public void Jump()
     {
         isJump = true;
@@ -966,10 +981,7 @@ public class Player : Character
         jumpLimitInput = true;
         if (jumpkeyinputcheckvalue <= 0)
             jumpkeyinputcheckvalue = jumpkeyinputCheck;
-        if (Humonoidanimator != null)
-        {
-            Humonoidanimator.SetTrigger("jump");
-        }
+        PlayerJumpEvent();
 
         if (JumpEffect != null)
             JumpEffect.SetActive(true);
