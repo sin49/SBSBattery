@@ -574,6 +574,152 @@ public class Player : Character
 
         transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
     }
+    public IEnumerator moveportalanimation(Transform t)
+    {
+
+
+
+        isRun = true;
+        Vector3 distance = t.position - transform.position;
+        bool checker = false;
+
+
+
+        while (!checker)
+        {
+            if (distance.x > 0)
+            {
+                transform.GetChild(0).rotation = Quaternion.Euler(new Vector3(0, 90, 0));
+                transform.Translate(Vector3.right * PlayerStat.instance.moveSpeed * Time.fixedDeltaTime);
+                if (transform.position.x > t.position.x)
+                {
+                    transform.position = new Vector3(t.position.x, transform.position.y, transform.position.z);
+                    checker = true;
+                }
+            }
+            else if (distance.x < 0)
+            {
+                transform.GetChild(0).rotation = Quaternion.Euler(new Vector3(0, -90, 0));
+                transform.Translate(Vector3.left * PlayerStat.instance.moveSpeed * Time.fixedDeltaTime);
+                if (transform.position.x < t.position.x)
+                {
+                    transform.position = new Vector3(t.position.x, transform.position.y, transform.position.z);
+                    checker = true;
+                }
+            }
+            else
+            {
+                checker = true;
+            }
+
+            yield return null;
+        }
+        checker = false;
+        Debug.Log("Xmove Complete");
+        while (!checker)
+        {
+            if (distance.z > 0)
+            {
+                transform.GetChild(0).rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                transform.Translate(Vector3.forward * PlayerStat.instance.moveSpeed * Time.fixedDeltaTime);
+                if (transform.position.z > t.position.z)
+                {
+                    transform.position = new Vector3(transform.position.x, transform.position.y, t.position.z);
+                    checker = true;
+                }
+            }
+            else if (distance.z < 0)
+            {
+                transform.GetChild(0).rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+                transform.Translate(Vector3.back * PlayerStat.instance.moveSpeed * Time.fixedDeltaTime);
+                if (transform.position.z < t.position.z)
+                {
+                    transform.position = new Vector3(transform.position.x, transform.position.y, t.position.z);
+                    checker = true;
+                }
+            }
+            else
+            {
+                checker = true;
+            }
+            yield return null;
+        }
+        isRun = false;
+        Debug.Log("Zmove Complete");
+    }
+    public IEnumerator moveportalanimationZX(Transform t)
+    {
+        
+
+       
+            isRun = true;
+            Vector3 distance = t.position - transform.position;
+            bool checker=false;
+
+        while (!checker)
+        {
+            if (distance.z > 0)
+            {
+                transform.GetChild(0).rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                transform.Translate(Vector3.forward * PlayerStat.instance.moveSpeed * Time.fixedDeltaTime);
+                if (transform.position.z > t.position.z)
+                {
+                    transform.position = new Vector3(transform.position.x, transform.position.y, t.position.z);
+                    checker = true;
+                }
+            }
+            else if (distance.z < 0)
+            {
+                transform.GetChild(0).rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+                transform.Translate(Vector3.back * PlayerStat.instance.moveSpeed * Time.fixedDeltaTime);
+                if (transform.position.z < t.position.z)
+                {
+                    transform.position = new Vector3(transform.position.x, transform.position.y, t.position.z);
+                    checker = true;
+                }
+            }
+            else
+            {
+                checker = true;
+            }
+            yield return null;
+        }
+        checker = false;
+        while (!checker)
+            {
+                if (distance.x > 0)
+                {
+                    transform.GetChild(0).rotation = Quaternion.Euler(new Vector3(0, 90, 0));
+                    transform.Translate(Vector3.right*PlayerStat.instance.moveSpeed * Time.fixedDeltaTime);
+               if(transform.position.x>t.position.x)
+                    {
+                        transform.position = new Vector3(t.position.x, transform.position.y, transform.position.z);
+                    checker= true;
+                    }
+                }
+                else if(distance.x<0)
+                {
+                    transform.GetChild(0).rotation = Quaternion.Euler(new Vector3(0, -90, 0));
+                    transform.Translate(Vector3.left * PlayerStat.instance.moveSpeed * Time.fixedDeltaTime);
+                    if (transform.position.x < t.position.x)
+                    {
+                        transform.position = new Vector3(t.position.x, transform.position.y, transform.position.z);
+                        checker = true;
+                    }
+                }
+                else
+                {
+                    checker = true;
+                }
+          
+                yield return null;
+            }
+   
+
+          
+        isRun = false;
+
+    }
     public void rotateBy3Dto2D()
     {
         Vector3 rotateVector = Vector3.zero;
@@ -614,39 +760,50 @@ public class Player : Character
     {
         hori = 0;
         Vert = 0;
-        switch (PlayerStat.instance.MoveState)
-        {
-            case PlayerMoveState.Xmove:
-                hori = Input.GetAxisRaw("Horizontal");
-                if (PlayerHandler.instance.ladderInteract)
-                    Vert = Input.GetAxisRaw("Vertical");
-                break;
-            case PlayerMoveState.XmoveReverse:
-                hori =-1* Input.GetAxisRaw("Horizontal");
-                break;
+        if (PlayerHandler.instance.ladderInteract) {
 
-            case PlayerMoveState.Zmove:
-                    Vert =  Input.GetAxisRaw("Horizontal");                
-                break;
-            case PlayerMoveState.ZmoveReverse:
-                Vert = -1* Input.GetAxisRaw("Horizontal");
-                break;
-            case PlayerMoveState.XZMove3D:
-                hori = Input.GetAxisRaw("Vertical");
-                Vert = -1 * Input.GetAxisRaw("Horizontal");
-                break;
-            case PlayerMoveState.XZMove3DReverse:
-                hori = -1* Input.GetAxisRaw("Vertical");
-                Vert =  Input.GetAxisRaw("Horizontal");
-                break;
-            case PlayerMoveState.ZXMove3D:
-                Vert = Input.GetAxisRaw("Vertical");
-                hori =  Input.GetAxisRaw("Horizontal");
-                break;
-            case PlayerMoveState.ZXMove3DReverse:
-                Vert =-1* Input.GetAxisRaw("Vertical");
-                hori = -1 * Input.GetAxisRaw("Horizontal");
-                break;
+                  Vert = Input.GetAxisRaw("Vertical");
+          
+        
+        }
+        else
+        {
+            switch (PlayerStat.instance.MoveState)
+            {
+                case PlayerMoveState.Xmove:
+                    hori = Input.GetAxisRaw("Horizontal");
+
+                    break;
+                case PlayerMoveState.XmoveReverse:
+                    hori = -1 * Input.GetAxisRaw("Horizontal");
+                    break;
+
+                case PlayerMoveState.Zmove:
+                    Vert = Input.GetAxisRaw("Horizontal");
+                    break;
+                case PlayerMoveState.ZmoveReverse:
+                    Vert = -1 * Input.GetAxisRaw("Horizontal");
+                    break;
+                case PlayerMoveState.XZMove3D:
+                    Vert = Input.GetAxisRaw("Vertical");
+                    hori = Input.GetAxisRaw("Horizontal");
+
+                    break;
+                case PlayerMoveState.XZMove3DReverse:
+                    Vert = -1 * Input.GetAxisRaw("Vertical");
+                    hori = -1 * Input.GetAxisRaw("Horizontal");
+
+                    break;
+                case PlayerMoveState.ZXMove3D:
+                    hori = Input.GetAxisRaw("Vertical");
+                    Vert = -1 * Input.GetAxisRaw("Horizontal");
+                    break;
+                case PlayerMoveState.ZXMove3DReverse:
+                    hori = -1 * Input.GetAxisRaw("Vertical");
+                    Vert = Input.GetAxisRaw("Horizontal");
+                    break;
+            }
+
         }
 
 

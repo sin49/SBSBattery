@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: PlayerBehimd
+  m_Name: PlayerBehind
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
-    passTag: PlayerBehimd
+    passTag: PlayerBehind
     Event: 300
     filterSettings:
       RenderQueueType: 0
@@ -139,7 +139,8 @@ MonoBehaviour:
   - {fileID: -1878332245247344467}
   - {fileID: -3637249093198338781}
   - {fileID: -973699732580572279}
-  m_RendererFeatureMap: adc0de57c6d2eee523254d8038e585cd8963a48940b97cf2
+  - {fileID: 9109080046633917733}
+  m_RendererFeatureMap: adc0de57c6d2eee523254d8038e585cd8963a48940b97cf2259d365a0af4697e
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -182,3 +183,45 @@ MonoBehaviour:
   m_CopyDepthMode: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
+--- !u!114 &9109080046633917733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
+  m_Name: PlayerPixeling
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    passTag: PlayerPixeling
+    Event: 300
+    filterSettings:
+      RenderQueueType: 0
+      LayerMask:
+        serializedVersion: 2
+        m_Bits: 65536
+      PassNames: []
+    overrideMaterial: {fileID: 2100000, guid: f6cbbac2b0548fe45b6f045bce42ee88, type: 2}
+    overrideMaterialPassIndex: 0
+    overrideShader: {fileID: 0}
+    overrideShaderPassIndex: 0
+    overrideMode: 1
+    overrideDepthState: 1
+    depthCompareFunction: 5
+    enableWrite: 0
+    stencilSettings:
+      overrideStencilState: 1
+      stencilReference: 2
+      stencilCompareFunction: 3
+      passOperation: 0
+      failOperation: 0
+      zFailOperation: 0
+    cameraSettings:
+      overrideCamera: 0
+      restoreCamera: 1
+      offset: {x: 0, y: 0, z: 0, w: 0}
+      cameraFieldOfView: 48

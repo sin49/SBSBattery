@@ -40,7 +40,7 @@ public class DisturbDimensionChangeField : MonoBehaviour, colliderDisplayer
 
     private void Update()
     {
-        if ((int)PlayerStat.instance.MoveState >= 4)
+        if ((int)PlayerStat.instance.MoveState < 4)
             col.enabled = true;
         else
             col.enabled = false;
@@ -54,7 +54,7 @@ public class DisturbDimensionChangeField : MonoBehaviour, colliderDisplayer
             if (restrictBool)
                 PlayerHandler.instance.DImensionChangeDisturb = RestirctDimension;
             else
-                  if (!restrictBool && (int)PlayerStat.instance.MoveState >= 4&&PlayerHandler.instance.Changing)
+                  if (!restrictBool && (int)PlayerStat.instance.MoveState < 4&&PlayerHandler.instance.Changing)
             {
                 Transform t = PlayerHandler.instance.CurrentPlayer.transform;
 

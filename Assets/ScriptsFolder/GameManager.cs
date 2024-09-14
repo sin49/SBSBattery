@@ -136,12 +136,12 @@ public class GameManager : MonoBehaviour
     {
         LoadingEffect.EffectEnd += act;
         LoadingEffect.gameObject.SetActive(true);
-        PlayerHandler.instance.CantHandle = true;
+        //PlayerHandler.instance.CantHandle = true;
         yield return new WaitForSeconds(LoadingEffect.EffectTime + LoadingEffect.IntesityTime);
         yield return new WaitForSeconds(timer);
         LoadingEffect.LoadingComplete = true;
         yield return new WaitForSeconds(LoadingEffect.EffectTime );
-        PlayerHandler.instance.CantHandle = false;
+        //PlayerHandler.instance.CantHandle = false;
 
     }
     public void LoadingEffectDeActive()

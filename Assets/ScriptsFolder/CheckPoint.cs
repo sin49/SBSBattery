@@ -7,12 +7,31 @@ public class CheckPoint : MonoBehaviour
     [Header("0번 세이브 시작 사운드")]
     public ParticleSystem ChkPointParticle;
     public SoundEffectListPlayer soundplayer;
+    public Material defaultmaterial;
+    public Material emissionmaterial;
+    public GameObject lightObj;
+ public   Renderer _renderer;
+    public bool active;
     private void Awake()
     {
         ChkPointParticle.gameObject.SetActive(false);
         soundplayer =GetComponent<SoundEffectListPlayer>();
+        lightObj.SetActive(false);
+        _renderer.material = defaultmaterial;
     }
     public int index;
+    public void DeactiveCheckpoint()
+    {
+        _renderer.material = defaultmaterial;
+        lightObj.SetActive(false);
+        active = false;
+    }
+    public void activecheckpoint()
+    {
+        active = true;
+        _renderer.material = emissionmaterial;
+        lightObj.SetActive(true);
+    }
     public GameObject spawn(GameObject obj)
     {
         var player= Instantiate(obj, ChkPointParticle.transform.position, Quaternion.identity);
