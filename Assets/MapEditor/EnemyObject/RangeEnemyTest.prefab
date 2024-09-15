@@ -250,8 +250,8 @@ Transform:
   m_GameObject: {fileID: 1840961726563666726}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3, z: 1.2}
-  m_LocalScale: {x: 0.1, y: 0.5, z: 2.5}
+  m_LocalPosition: {x: 0, y: 0.3, z: 1.54}
+  m_LocalScale: {x: 0.65, y: 0.7, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3121131663611280635}
@@ -408,7 +408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c8e1a25490c2d40a4b57a08ff80e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
+  enemy: {fileID: 879045053675682833}
   childMat: {fileID: 3373148776003040750}
 --- !u!65 &6330544071301415854
 BoxCollider:
@@ -429,8 +429,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.1, y: 0.5, z: 2.5}
-  m_Center: {x: 0, y: 0.3, z: 1.2}
+  m_Size: {x: 0.65, y: 0.7, z: 3}
+  m_Center: {x: 0, y: 0.3, z: 1.54}
 --- !u!1 &2306202720200260681
 GameObject:
   m_ObjectHideFlags: 0
@@ -1206,7 +1206,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.97, y: 2, z: 2.4}
+  m_Size: {x: 2, y: 2, z: 2.8}
   m_Center: {x: 0, y: 1, z: 1.5}
 --- !u!114 &6413879201968333993
 MonoBehaviour:
@@ -1249,8 +1249,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5972430000464431206}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.04, y: -4, z: -2.21}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1261,7 +1261,7 @@ Transform:
   - {fileID: 186578048033501869}
   - {fileID: 8560900777148706441}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!135 &6632304941756833643
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1323,7 +1323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testcolor: {r: 0, g: 0, b: 0, a: 0}
-  eStat: {fileID: 0}
+  eStat: {fileID: 1876247488755515892}
   patrolType: 1
   attackCollider: {fileID: 7760997083194175977}
   deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
@@ -1337,16 +1337,16 @@ MonoBehaviour:
   searchCubeRange: {x: 3.5, y: 0.63, z: 0.7}
   searchCubePos: {x: 0, y: 0.61, z: 0}
   rangeCollider: {fileID: 2202126381614901408}
-  rangeSize: {x: 0.1, y: 0.5, z: 2.5}
-  rangePos: {x: 0, y: 0.3, z: 1.2}
+  rangeSize: {x: 0.65, y: 0.7, z: 3}
+  rangePos: {x: 0, y: 0.3, z: 1.54}
   searchCollider: {fileID: 5917569411468154374}
-  searchColliderRange: {x: 1.97, y: 2, z: 2.4}
+  searchColliderRange: {x: 2, y: 2, z: 2.8}
   searchColliderPos: {x: 0, y: 1, z: 1.5}
   searchPlayer: 0
-  trackingDistance: 5
+  trackingDistance: 4
   disToPlayer: 0
   patrolGroup: []
-  targetPatrol: {x: 16.24, y: -4, z: -2.21}
+  targetPatrol: {x: 1.2, y: 0.5, z: 0}
   patrolWaitTime: 1
   leftPatrolRange: 0.6
   rightPatrolRange: 0.6
@@ -1395,11 +1395,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackType: 0
   characterState: 0
-  initMaxHP: 5
+  initMaxHP: 3
   initMoveSpeed: 1
   HPBonus: 0
   MoveSpeedBonus: 0
-  hp: 2
+  hp: 3
   atk: 1
   rotationSpeed: 3
   attackSpeed: 0
@@ -1541,7 +1541,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 1.5}
-  m_LocalScale: {x: 1.97, y: 2, z: 2.4}
+  m_LocalScale: {x: 2, y: 2, z: 2.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8560900777148706441}
