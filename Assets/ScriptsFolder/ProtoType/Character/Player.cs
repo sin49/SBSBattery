@@ -1036,6 +1036,10 @@ public class Player : Character
     #endregion
 
     #region ÇÇ°Ý
+    public virtual void TransformDamagedEvent()
+    {
+
+    }
     public void DamagedIgnoreInvincible(float damage)
     {
         onInvincible = true;
@@ -1043,7 +1047,7 @@ public class Player : Character
         PlayerStat.instance.pState = PlayerState.hitted;
         HittedEffect.gameObject.SetActive(true);
         PlayerStat.instance.hp -= damage;
-
+        TransformDamagedEvent();
 
         if (PlayerStat.instance.hp <= 0)
         {

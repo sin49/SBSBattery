@@ -7,8 +7,8 @@ using UnityEngine;
 
 public class HouseholdIronTransform : Player
 {
-    [Header("돌진 준비시간")]
-    public float rushReady;
+    [Header("다리미 2형태")]
+    public GameObject ironSecondForm;
     [Header("돌진 이동속도")]
     public float rushSpeed, speedValue;
     float saveSpeed;
@@ -16,20 +16,25 @@ public class HouseholdIronTransform : Player
     public float rushTimeMax;
     float rushTimer;
     [HideInInspector] public bool canRushAttack; // 돌진 공격을 받는 주기?를 위한 변수
-    bool onRush, startRush, endRush;
+    bool onRush;
     [Header("돌진 재사용 대기시간")]
     public float rushCoolTimeMax;
     float rushCoolTimer;
     [Header("돌진 공격 피해량")]
     public float rushDamage;
     [Header("돌진 공격 주기")]
-    public float rushCycleMax, rushAtkTimeMax;
-    float rushCycleTimer, rushAtkTimer;
+    public float rushCycleMax;
+    public float rushAtkTimeMax;
+    public float rushAtkWaitTime;
+    float rushCycleTimer, rushAtkTimer, rushAtkWaitTiemer;
     [Header("방향 전환 딜레이 시간")]
     public float rotateTimeMax;
     float rotateTimer;
 
+    [Header("돌진 캔슬을 위한 레이")]
     public float rushRay;
+    public float rayHeightValue;
+    public float rayUpValue, rayMiddleValue, rayDownValue;
 
     bool readyRush, downEnd, rushEnd;
     bool ironAttack = true;
@@ -68,16 +73,66 @@ public class HouseholdIronTransform : Player
         rushTimer = rushTimeMax;
     }
 
+    public void RushRayCheck()
+    {
+        if (!Application.isPlaying || Application.isPlaying)
+        {
+            Debug.DrawRay(transform.GetChild(0).position + transform.GetChild(0).up * rayHeightValue, transform.GetChild(0).forward * rayUpValue, Color.red, 0.2f);
+            Debug.DrawRay(transform.GetChild(0).position, transform.GetChild(0).forward * rayMiddleValue, Color.red, 0.2f);
+            Debug.DrawRay(transform.GetChild(0).position - transform.GetChild(0).up * rayHeightValue, transform.GetChild(0).forward * rayDownValue, Color.red, 0.2f);
+        }
+        RaycastHit upRay;
+        RaycastHit middleRay;
+        RaycastHit downRay;
+        if (onRush)
+        {
+
+
+            if (Physics.Raycast(transform.GetChild(0).position, transform.GetChild(0).forward, out middleRay, rayMiddleValue, LayerMask.GetMask("Platform")))
+            {
+                Debug.Log("중간 레이 충돌");
+                RushCancel();
+            }
+            else if (Physics.Raycast(transform.GetChild(0).position + transform.GetChild(0).up * rayHeightValue, transform.GetChild(0).forward, out upRay, rayUpValue, LayerMask.GetMask("Platform")))
+            {
+                Debug.Log($"위쪽 레이 충돌, 충돌한 오브젝트:{upRay.collider}");
+                RushCancel();
+            }
+            else if (Physics.Raycast(transform.GetChild(0).position - transform.GetChild(0).up * rayHeightValue, transform.GetChild(0).forward, out downRay, rayDownValue, LayerMask.GetMask("Platform")))
+            {
+                Debug.Log("아래쪽 레이 충돌");
+                RushCancel();
+            }
+        }
+    }
+
+    public void RushCancel()
+    {
+        Humonoidanimator.SetTrigger("RushCancel");
+        SecondFormDeactive();
+        onRush = false;
+        rushEnd = true;
+        rushTimer = rushTimeMax;
+        rushAtkTimer = rushAtkTimeMax;
+        rushCoolTimer = rushCoolTimeMax;
+        readyRush = false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        RushRayCheck();
+    }
     private void Update()
     {
         BaseBufferTimer();
         CheckRushTime();
+        RushRayCheck();
         IronDownAttackTimeCheck();
     }
 
     public override void DownAttack()
     {
-        if (onDownCoolTime)
+        if (onDownCoolTime || onRush)
             return;
         else
         {
@@ -90,6 +145,8 @@ public class HouseholdIronTransform : Player
     }
     IEnumerator IronDownAttack()
     {
+        SecondFormActive();
+
         playerRb.useGravity = false;
         playerRb.velocity = Vector3.zero;
         playerRb.AddForce(transform.up * 2.5f);
@@ -113,6 +170,7 @@ public class HouseholdIronTransform : Player
             else
             {
                 downEnd = false;
+                SecondFormDeactive();
                 downAtkEndTimer = downAtkEndTimeMax;
                 PlayerHandler.instance.CantHandle = false;
                 onDownCoolTime = true;
@@ -143,8 +201,7 @@ public class HouseholdIronTransform : Player
             {
                 case PlayerMoveState.Xmove:
                     hori = Input.GetAxisRaw("Horizontal");
-                    if (PlayerHandler.instance.ladderInteract)
-                        Vert = Input.GetAxisRaw("Vertical");
+
                     break;
                 case PlayerMoveState.XmoveReverse:
                     hori = -1 * Input.GetAxisRaw("Horizontal");
@@ -157,20 +214,22 @@ public class HouseholdIronTransform : Player
                     Vert = -1 * Input.GetAxisRaw("Horizontal");
                     break;
                 case PlayerMoveState.XZMove3D:
+                    Vert = Input.GetAxisRaw("Vertical");
+                    hori = Input.GetAxisRaw("Horizontal");
+
+                    break;
+                case PlayerMoveState.XZMove3DReverse:
+                    Vert = -1 * Input.GetAxisRaw("Vertical");
+                    hori = -1 * Input.GetAxisRaw("Horizontal");
+
+                    break;
+                case PlayerMoveState.ZXMove3D:
                     hori = Input.GetAxisRaw("Vertical");
                     Vert = -1 * Input.GetAxisRaw("Horizontal");
                     break;
-                case PlayerMoveState.XZMove3DReverse:
+                case PlayerMoveState.ZXMove3DReverse:
                     hori = -1 * Input.GetAxisRaw("Vertical");
                     Vert = Input.GetAxisRaw("Horizontal");
-                    break;
-                case PlayerMoveState.ZXMove3D:
-                    Vert = Input.GetAxisRaw("Vertical");
-                    hori = Input.GetAxisRaw("Horizontal");
-                    break;
-                case PlayerMoveState.ZXMove3DReverse:
-                    Vert = -1 * Input.GetAxisRaw("Vertical");
-                    hori = -1 * Input.GetAxisRaw("Horizontal");
                     break;
             }
 
@@ -187,7 +246,7 @@ public class HouseholdIronTransform : Player
             if (!wallcheck)
                 playerRb.AddForce(moveVelocity, ForceMode.VelocityChange);
             else
-                playerRb.AddForce(new Vector3(0, playerRb.velocity.y, 0), ForceMode.VelocityChange);
+                playerRb.AddForce(Vector3.zero, ForceMode.VelocityChange);
 
             if (moveVelocity == Vector3.zero)
             {
@@ -242,17 +301,16 @@ public class HouseholdIronTransform : Player
             else
             {
                 RushEnd();
-                rushTimer = rushTimeMax;
             }
 
             //돌진 공격 주기?
-            if (canRushAttack && rushAtkTimer > 0)
+            if (rushAtkTimer > 0)
             {
                 rushAtkTimer -= Time.deltaTime;
             }
             else
             {
-                canRushAttack = false;
+                meleeCollider.SetActive(true);
                 rushAtkTimer = rushAtkTimeMax;
             }
         }
@@ -278,7 +336,10 @@ public class HouseholdIronTransform : Player
             InitRush();
         }
     }
-
+    public override void TransformDamagedEvent()
+    {
+        InitRush();
+    }
     void InitRush()
     {
         Humonoidanimator.ResetTrigger("RushStart");
@@ -297,21 +358,26 @@ public class HouseholdIronTransform : Player
     //돌진 공격
     public override void Attack()
     {
-        if (ironAttack && attackInputValue < 1)
+        if (downAttack || PlayerStat.instance.pState == PlayerState.hitted)
+            return;
+        else
         {
-            if (attackBufferTimer > 0 && readyRush)
+            if (ironAttack && attackInputValue < 1)
             {
-                Debug.Log("공격함수 실행중");
-                attackBufferTimer = 0;
-                attackInputValue = 1;
-                ironAttack = false;
-                if (!onRush)
+                if (attackBufferTimer > 0 && readyRush)
                 {
-                    RushStart();
-                }
-                else
-                {
-                    RushEnd();
+                    Debug.Log("공격함수 실행중");
+                    attackBufferTimer = 0;
+                    attackInputValue = 1;
+                    ironAttack = false;
+                    if (!onRush)
+                    {
+                        RushStart();
+                    }
+                    else
+                    {
+                        RushEnd();
+                    }
                 }
             }
         }
@@ -320,18 +386,39 @@ public class HouseholdIronTransform : Player
     public void RushStart()
     {
         PlayerHandler.instance.CantHandle = true;
-        onRush = true;
-        rushEnd = false;
+        onInvincible = true;        
         readyRush = true;
         Humonoidanimator.SetTrigger("RushStart");
+        StartCoroutine(RushStartCheck());
+    }
+
+    IEnumerator RushStartCheck()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        if (Humonoidanimator.GetCurrentAnimatorStateInfo(0).IsName("RushStart"))
+        {
+            while (Humonoidanimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+            {
+                yield return null;
+            }
+            SecondFormActive();
+            onRush = true;
+            rushEnd = false;
+            ironAttack = true;
+            readyRush = true;
+        }
     }
 
     public void RushEnd()
     {
         PlayerHandler.instance.CantHandle = true;
         //onRush = false;
+        meleeCollider.SetActive(false);
         rushEnd = true;
         readyRush = false;
+        rushTimer = rushTimeMax;
+        SecondFormDeactive();
         Humonoidanimator.Play("RushEnd");
         StartCoroutine(RushEndCheck());
     }    
@@ -351,8 +438,9 @@ public class HouseholdIronTransform : Player
                 yield return null;
             }
             PlayerHandler.instance.CantHandle = false;
+            onInvincible = false;
             ironAttack = true;
-            onRush = false;
+            onRush = false;            
         }
     }
 
@@ -364,4 +452,26 @@ public class HouseholdIronTransform : Player
             downEnd = true;
         }
     }
+
+    #region 변신 2형태에 대한 처리
+    public void SecondFormActive()
+    {
+        Destroy(Instantiate(changeEffect, transform.position, Quaternion.identity), 2f);
+        for (int i = 0; i < Humonoidanimator.transform.childCount; i++)
+        {
+            Humonoidanimator.transform.GetChild(i).gameObject.SetActive(false);
+        }
+        ironSecondForm.SetActive(true);
+    }
+
+    public void SecondFormDeactive()
+    {
+        Destroy(Instantiate(changeEffect, transform.position, Quaternion.identity), 2f);
+        for (int i = 0; i < Humonoidanimator.transform.childCount; i++)
+        {
+            Humonoidanimator.transform.GetChild(i).gameObject.SetActive(true);
+        }
+        ironSecondForm.SetActive(false);
+    }
+    #endregion
 }

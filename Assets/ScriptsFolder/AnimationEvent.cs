@@ -33,6 +33,8 @@ public class AnimationEvent : MonoBehaviour
     public void RushEndCanHandle()
     {
         Debug.Log("돌진 준비/끝 동작 호출되었습니다");
+        Player player = PlayerHandler.instance.CurrentPlayer;
+        Destroy(Instantiate(player.changeEffect, player.transform.position, Quaternion.identity), 1.5f);
         PlayerHandler.instance.CantHandle = false;
     }
 

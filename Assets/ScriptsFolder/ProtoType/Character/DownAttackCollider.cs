@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class DownAttackCollider : MeleeCollider
@@ -34,13 +35,18 @@ public class DownAttackCollider : MeleeCollider
             else
             {
                 BrokenPlatform brokenPlatform;
+                ObjectScale ironInteract;
                 if (other.TryGetComponent<BrokenPlatform>(out brokenPlatform))
                 {
                     Debug.Log("ºÎ¼­Áö´Â ÇÃ·§Æû");
                     PlayerHandler.instance.CurrentPlayer.BounceByBroeknPlatform();
                 }
+                else if(TryGetComponent<ObjectScale>(out ironInteract))
+                {
+                    return;
+                }
                 else
-                gameObject.SetActive(false);
+                    gameObject.SetActive(false);
             }
         }        
     }

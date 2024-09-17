@@ -704,5 +704,5 @@ PlayerInventory.instance.checkessesntialitem("item01")*/)
 }
 
 
-public enum TransformType { Default, remoteform, mouseform, transform1, testtransform }
+public enum TransformType { Default, mouseform, remoteform, transform1, testtransform }
 
