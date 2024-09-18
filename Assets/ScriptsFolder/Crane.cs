@@ -31,6 +31,7 @@ Vector3 DeActiveTransform;
     private void Start()
     {
         PlayerHandler.instance.registerPlayerFallEvent(Initalize);
+        if(autoactive)
         StartCoroutine(autoactivecorutine());
     }
   public  bool CraneMove;
