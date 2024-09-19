@@ -7,16 +7,32 @@ using UnityEngine;
 //컷신용 말풍선(조작 불가와 스킵 기능 제거,자동 넘어가기 추가해서 그냥 말풍선도 반들것)
 public class TextBubble : MonoBehaviour
 {
-    public Transform target;
+    [Header("임시로 숫자 0번키로 확인/스킵 가능")]
+    [Header("지금은 한번에 말풍선 하나 밖에 안됨(수정하고 싶으면 말할 것)")]
+    [Header("이 말풍선같은 경우 시작하면 조작 불가 상태가 된다")]
+    [Header(" 추가 예정)대사 다 되면 확인 표시 뜨기,조작 불가 없이 자동으로 넘어가는 말풍선" +
+        ",텍스트 쪽에 표시해서 줄바꾸기")]
+
+
+
+    [Header("파라미터")]
+    [Header("말풍선 속도")]
     public float textplayspeed = 1;
-
+    [Header("말풍선 넓이 증가 폭")]
     public float bubblewidthadd = 35;
-
+    [Header("말풍선 줄바꾸는 단위")]
     public float textslashnumber = 10;
-
+    [Header("말풍선 높이 증가 폭")]
     public float bubbleheightadd = 60;
+
+    [Header("여기서 출력 예정인 대사를 확인 가능")]
+    public List<string> textlist = new List<string>();
+
+    [Header("이 밑으로 건들지 말 것")]
     public TextMeshProUGUI textfield;
     public RectTransform textbubbletransform;
+
+public    Transform target;
 
     public TextAsset textasset;
     string playingtext;
@@ -32,7 +48,7 @@ public class TextBubble : MonoBehaviour
         ////
         StartCoroutine(playtextbubble(textlist));
     }
-    public List<string> textlist = new List<string>();
+ 
     public void readtextasset(TextAsset asset)
     {
         string s = textasset.text;
@@ -87,6 +103,7 @@ public class TextBubble : MonoBehaviour
                         }
                     }
                     textfield.text = fullText;
+                    skipped = false;
                 }
                 else
                 {
