@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System;
 using System.Collections;
+using System.Security.Cryptography;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.RenderGraphModule;
@@ -215,7 +216,7 @@ public class Player : Character
         onInvincible = false;
     }
     #endregion
-    protected float JumprayDistance = 0.28f;
+    [SerializeField]protected float JumprayDistance = 0.28f;
     protected float playersizeX = 0.1f;
     #region 레이 체크
     void jumpRaycastCheck()
@@ -990,6 +991,12 @@ public class Player : Character
         }
     }
 
+    public void BounceByBroeknPlatform()
+    {
+        playerRb.velocity = Vector3.zero;
+        playerRb.AddForce(transform.up * 2f, ForceMode.VelocityChange);
+    }
+
     IEnumerator GoDownAttack()
     {
         playerRb.useGravity = false;
@@ -1029,6 +1036,10 @@ public class Player : Character
     #endregion
 
     #region 피격
+    public virtual void TransformDamagedEvent()
+    {
+
+    }
     public void DamagedIgnoreInvincible(float damage)
     {
         onInvincible = true;
@@ -1036,7 +1047,7 @@ public class Player : Character
         PlayerStat.instance.pState = PlayerState.hitted;
         HittedEffect.gameObject.SetActive(true);
         PlayerStat.instance.hp -= damage;
-
+        TransformDamagedEvent();
 
         if (PlayerStat.instance.hp <= 0)
         {
@@ -1115,6 +1126,14 @@ public class Player : Character
     #endregion
 
     #region 점프동작
+    public virtual void PlayerJumpEvent()
+    {
+        if (Humonoidanimator != null)
+        {
+            Humonoidanimator.SetTrigger("jump");
+        }
+    }
+
     public void Jump()
     {
         isJump = true;
@@ -1123,10 +1142,7 @@ public class Player : Character
         jumpLimitInput = true;
         if (jumpkeyinputcheckvalue <= 0)
             jumpkeyinputcheckvalue = jumpkeyinputCheck;
-        if (Humonoidanimator != null)
-        {
-            Humonoidanimator.SetTrigger("jump");
-        }
+        PlayerJumpEvent();
 
         if (JumpEffect != null)
             JumpEffect.SetActive(true);

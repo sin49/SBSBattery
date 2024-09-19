@@ -77,6 +77,9 @@ public class PlayerSapwnEditor : Editor
             case TransformType.remoteform:
                 s = "리모컨";
                 break;
+            case TransformType.ironform:
+                s = "다리미";
+                break;
             default:
                 break;
         }
@@ -96,7 +99,7 @@ public class PlayerSapwnEditor : Editor
         }
         if (GUILayout.Button("변신 폼 앞으로"))
         {
-            if (transformtype != TransformType.remoteform)
+            if (transformtype != TransformType.ironform)
             {
                 transformtype++;
             }

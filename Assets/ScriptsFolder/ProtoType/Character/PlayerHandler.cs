@@ -253,6 +253,7 @@ public class PlayerHandler : MonoBehaviour
 
         if ((int)CurrentType < PlayerTransformList.Count)
         {
+            Debug.Log("타입 크기 만족함");
             #region 플레이어 프리팹 교체
             Transform tf = null;
             if (Playerprefab != null)
@@ -704,5 +705,5 @@ PlayerInventory.instance.checkessesntialitem("item01")*/)
 }
 
 
-public enum TransformType { Default, remoteform, mouseform, transform1, testtransform }
+public enum TransformType { Default, remoteform, ironform, mouseform,transform1, testtransform }
 
