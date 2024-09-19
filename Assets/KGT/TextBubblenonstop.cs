@@ -26,7 +26,7 @@ public class TextBubblenonstop : TextBubble
    
     IEnumerator playtextbubblenonstop(string[] textlist)
     {
-        PlayerHandler.instance.CantHandle = true;
+        
         for (int n = 0; n < textlist.Length; n++)
         {
             textfield.text = "";
@@ -45,7 +45,7 @@ public class TextBubblenonstop : TextBubble
             yield return new WaitForSeconds(textbubbleautotime);
         }
         this.gameObject.SetActive(false);
-        PlayerHandler.instance.CantHandle = false;
+   
 
     }
 
