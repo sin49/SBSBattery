@@ -5,6 +5,7 @@ using UnityEngine;
 public class MouseTransform : Player
 {    
     public MouseFormCursor cursor;
+    public GameObject secondForm;
     bool activeCursor;
 
 
@@ -32,12 +33,26 @@ public class MouseTransform : Player
         }
     }
 
+    public override void PlayerJumpEvent()
+    {
+        if(!activeCursor)
+        base.PlayerJumpEvent();
+    }
+
     public void CursorActive()
     {
         if (cursor != null)
         {
             cursor.gameObject.SetActive(true);
         }
+
+        if (secondForm != null)
+        {
+            activeCursor = true;
+            SecondFormActive();
+        }
+
+        
     }
 
     public void CursorDeactive()
@@ -46,6 +61,31 @@ public class MouseTransform : Player
         {
             cursor.gameObject.SetActive(false);
         }
+
+        if (secondForm != null)
+        {
+            SecondFormDeactive();
+        }
+    }
+
+    public void SecondFormActive()
+    {
+        Destroy(Instantiate(changeEffect, transform.position, Quaternion.identity), 2f);
+        for (int i = 0; i < Humonoidanimator.transform.childCount; i++)
+        {
+            Humonoidanimator.transform.GetChild(i).gameObject.SetActive(false);
+        }
+        secondForm.SetActive(true);
+    }
+
+    public void SecondFormDeactive()
+    {
+        Destroy(Instantiate(changeEffect, transform.position, Quaternion.identity), 2f);
+        for (int i = 0; i < Humonoidanimator.transform.childCount; i++)
+        {
+            Humonoidanimator.transform.GetChild(i).gameObject.SetActive(true);
+        }
+        secondForm.SetActive(false);
     }
 
     public override void Skill1()
