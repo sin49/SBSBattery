@@ -71,7 +71,7 @@ public class TextBubbleCutScene : TextBubble
             CheckKeyinputtimer -= Time.deltaTime;
         else
         {
-            if (Input.GetKeyDown(KeyCode.Alpha0))//키를 눌려서 말풍선에 text가 출력되는 에니메이션 스킵
+            if (Input.GetKeyDown(KeySettingManager.instance.AttackKeycode))//키를 눌려서 말풍선에 text가 출력되는 에니메이션 스킵
             {
                 CheckKeyinputtimer = CheckKeyinputdelay;
                 if (playing)
