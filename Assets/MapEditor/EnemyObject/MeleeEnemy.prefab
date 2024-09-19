@@ -201,7 +201,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.35, y: 1.35, z: 1.35}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3234895078922946737}
@@ -273,7 +273,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testcolor: {r: 0, g: 0, b: 0, a: 0}
-  eStat: {fileID: 0}
+  eStat: {fileID: 8243888719237057114}
   patrolType: 1
   attackCollider: {fileID: 3003010046744970119}
   deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
@@ -313,6 +313,7 @@ MonoBehaviour:
   wallCheck: 0
   attackTimer: 0
   attackDelay: 0.1
+  actionhandler: {fileID: 0}
   callCheck: 0
   rotCheck: 0
   onAttack: 0
@@ -326,6 +327,7 @@ MonoBehaviour:
   reachCheck: 0
   attackRange: 0
   rotLevel: 85
+  testAngle: 0
 --- !u!114 &8243888719237057114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1059,7 +1061,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3003010046744970119}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2252,7 +2254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c8e1a25490c2d40a4b57a08ff80e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
+  enemy: {fileID: 6341584571874404752}
   childMat: {fileID: 273355257341297039}
 --- !u!65 &620270723039584668
 BoxCollider:

@@ -216,7 +216,7 @@ public class Player : Character
         onInvincible = false;
     }
     #endregion
-    protected float JumprayDistance = 0.28f;
+    [SerializeField] protected float JumprayDistance = 0.28f;
     protected float playersizeX = 0.1f;
     #region 레이 체크
     void jumpRaycastCheck()
