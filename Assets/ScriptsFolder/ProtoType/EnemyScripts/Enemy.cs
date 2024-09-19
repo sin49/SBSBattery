@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using Unity.VisualScripting;
 using UnityEngine;
-
+public enum EnemyMovePattern { stop,patrol}
 public interface DamagedByPAttack
 {
     public void Damaged(float f);
@@ -14,7 +14,7 @@ public interface DamagedByPAttack
 public class Enemy: Character,DamagedByPAttack
 {
     public Color testcolor;
-
+    public EnemyMovePattern movepattern;
     public EnemyStat eStat;
     public PatrolType patrolType;
     //public Rigidbody enemyRb; // 적 리지드바디
@@ -458,9 +458,11 @@ public class Enemy: Character,DamagedByPAttack
             {
                 if (!activeAttack && !onAttack)
                 {
-                    if (patrolType == PatrolType.movePatrol && onPatrol)
-                        PatrolTracking();
-                    
+                    if (movepattern == EnemyMovePattern. patrol)
+                    {
+                        if (patrolType == PatrolType.movePatrol && onPatrol)
+                            PatrolTracking();
+                    }
                     if(searchPlayer)
                         TrackingMove();
                 }

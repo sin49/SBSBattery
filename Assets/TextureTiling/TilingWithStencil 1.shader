@@ -1,4 +1,4 @@
-Shader "Shader Graphs/WorldPositionToUVStencilMakeSillouettest"
+Shader "Shader Graphs/WorldPositionToUVStencilMakePixel"
 {
     Properties
     {
