@@ -50,6 +50,8 @@ public class HouseholdIronTransform : Player
     float downCoolTimer;
     bool onDownCoolTime;
 
+    float rushHori, rushVert;
+
     protected override void Awake()
     {
         base.Awake();
@@ -139,6 +141,7 @@ public class HouseholdIronTransform : Player
             if (!downAttack)
             {
                 downAttack = true;
+                PlayerHandler.instance.CantHandle = true;
                 StartCoroutine(IronDownAttack());
             }
         }
@@ -201,48 +204,80 @@ public class HouseholdIronTransform : Player
             {
                 case PlayerMoveState.Xmove:
                     hori = Input.GetAxisRaw("Horizontal");
-
+                    rushVert = 0;
+                    if (Input.GetKey(KeyCode.RightArrow))
+                        rushHori = 1;
+                    else if (Input.GetKey(KeyCode.LeftArrow))
+                        rushHori = -1;
                     break;
                 case PlayerMoveState.XmoveReverse:
                     hori = -1 * Input.GetAxisRaw("Horizontal");
+
+                    rushVert = 0;
+                    if (Input.GetKey(KeyCode.RightArrow))
+                        rushHori = -1;
+                    else if (Input.GetKey(KeyCode.LeftArrow))
+                        rushHori = 1;
                     break;
 
                 case PlayerMoveState.Zmove:
                     Vert = Input.GetAxisRaw("Horizontal");
+                    ZmoveRushVert();
                     break;
                 case PlayerMoveState.ZmoveReverse:
                     Vert = -1 * Input.GetAxisRaw("Horizontal");
+
+                    rushHori = 0;
+                    ZmoveRushVert();
+                    rushVert = -rushVert;
                     break;
                 case PlayerMoveState.XZMove3D:
                     Vert = Input.GetAxisRaw("Vertical");
                     hori = Input.GetAxisRaw("Horizontal");
-
+                    XZmoveRushHorizontal();
+                    XZmoveRushVertical();
                     break;
                 case PlayerMoveState.XZMove3DReverse:
                     Vert = -1 * Input.GetAxisRaw("Vertical");
                     hori = -1 * Input.GetAxisRaw("Horizontal");
 
+                    XZmoveRushHorizontal();
+                    rushHori = -rushHori;
+                    XZmoveRushVertical();
+                    rushVert = -rushVert;
                     break;
                 case PlayerMoveState.ZXMove3D:
                     hori = Input.GetAxisRaw("Vertical");
                     Vert = -1 * Input.GetAxisRaw("Horizontal");
+                    
+                    ZXmoveRushHorizontal();
+                    ZXmoveRushVertical() ;
                     break;
                 case PlayerMoveState.ZXMove3DReverse:
                     hori = -1 * Input.GetAxisRaw("Vertical");
                     Vert = Input.GetAxisRaw("Horizontal");
+
+                    ZXmoveRushHorizontal();
+                    ZXmoveRushVertical();
+
+                    rushHori = -rushHori;
+                    rushVert = -rushVert;
                     break;
             }
 
             Vector3 moveInput = new Vector3(hori, 0, Vert);
-            if (hori != 0 || Vert != 0)
+            Vector3 regularMove = new Vector3(rushHori, 0, rushVert);
+            if (rushHori != 0 || rushVert != 0)
             {
-                rotate(moveInput.x, moveInput.z);
+                rotate(regularMove.x, regularMove.z);
                 //SoundPlayer.PlayMoveSound();
             }
 
+
             Vector3 moveVelocity = Vector3.zero;
-            Vector3 vector = moveInput.normalized * rushSpeed;
-            moveVelocity = vector - playerRb.velocity.x * Vector3.right - playerRb.velocity.z * Vector3.forward;
+            Vector3 vector = regularMove.normalized * rushSpeed;
+            Vector3 forwardForce = transform.GetChild(0).forward * rushSpeed;
+            moveVelocity = forwardForce - playerRb.velocity.x * Vector3.right - playerRb.velocity.z * Vector3.forward;            
             if (!wallcheck)
                 playerRb.AddForce(moveVelocity, ForceMode.VelocityChange);
             else
@@ -370,6 +405,10 @@ public class HouseholdIronTransform : Player
                     attackBufferTimer = 0;
                     attackInputValue = 1;
                     ironAttack = false;
+
+                    rushHori = 0;
+                    rushVert = 0;
+
                     if (!onRush)
                     {
                         RushStart();
@@ -475,6 +514,151 @@ public class HouseholdIronTransform : Player
             Humonoidanimator.transform.GetChild(i).gameObject.SetActive(true);
         }
         ironSecondForm.SetActive(false);
+    }
+    #endregion
+
+    #region 돌진 방향    
+
+    // XZ move 관련
+    float XZmoveRushHorizontal()
+    {
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            rushHori = 1;
+        }
+
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            rushHori = -1;
+        }
+
+        if (!Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
+        {
+            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow))
+            {
+                rushHori = 0;
+            }
+        }
+
+        return rushHori;
+    }
+
+    float XZmoveRushVertical()
+    {
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            rushVert = 1;
+        }
+
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            rushVert = -1;
+        }
+
+        if (!Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow))
+        {
+            if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow))
+            {
+                rushVert = 0;
+            }
+        }
+
+        return rushVert;
+    }
+
+    // ZX move 관련
+    public void ZXmoveRushHorizontal()
+    {
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            rushHori = 1;
+        }
+
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            rushHori = -1;
+        }
+
+        if (!Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow))
+        {
+            if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow))
+            {
+                rushHori = 0;
+            }
+        }
+    }
+
+    public void ZXmoveRushVertical()
+    {
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            rushVert = 1;
+        }
+
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            rushVert = -1;
+        }
+
+        if (!Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
+        {
+            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow))
+            {
+                rushVert = 0;
+            }
+        }
+    }
+
+    public void XmoveRushHori()
+    {
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            rushHori = 1;
+        }
+
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            rushHori = -1;
+        }
+    }
+
+    public void ZmoveRushHori()
+    {
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            rushHori = 1;
+        }
+
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            rushHori = -1;
+        }
+    }
+
+    public void XmoveRushVert()
+    {
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            rushVert = 1;
+        }
+
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            rushVert = -1;
+        }
+    }
+
+    public void ZmoveRushVert()
+    {
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            rushVert = 1;
+        }
+
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            rushVert = -1;
+        }
     }
     #endregion
 }
