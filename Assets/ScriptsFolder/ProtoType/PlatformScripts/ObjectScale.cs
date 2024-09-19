@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ObjectScale : MonoBehaviour
 {
+    public GameObject parent;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("PlayerAttack"))
@@ -14,7 +16,8 @@ public class ObjectScale : MonoBehaviour
             }
             else
             {
-                this.transform.localScale = new Vector3(1, 0.1f, 1);
+                if(parent != null)
+                    parent.transform.localScale = new Vector3(1, 0.1f, 1);
                 other.gameObject.SetActive(false);
             }
         }

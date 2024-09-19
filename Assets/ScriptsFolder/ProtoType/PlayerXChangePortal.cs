@@ -35,11 +35,14 @@ public class PlayerXChangePortal : InteractiveObject
     protected override void Awake()
     {
         base.Awake();
+        if(_animation !=null)
         _animation.speed = Shutter_animationspeed;
     }
     private void Update()
     {
+        if(_animation != null)
         _animation.SetBool("closed", closed);
+        if(lightrenderer !=null && lightobj !=null)
         if (closed)
         {
             lightrenderer.material = greenlight;

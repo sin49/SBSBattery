@@ -10,7 +10,10 @@ public class MouseFormCursor : MonoBehaviour
     {
         if (other.CompareTag("Enemy") || other.CompareTag("InteractivePlatform"))
         {
-            onCatch = true;
+            if (!onCatch)
+            {
+                onCatch = true;
+            }
         }
     }
 }

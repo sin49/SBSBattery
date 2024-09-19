@@ -8,21 +8,29 @@ public class DownAttackCollider : MeleeCollider
 
     private void Start()
     {
-
         saveEffect = Instantiate(hitEffect).GetComponent<ParticleSystem>();
         damage = PlayerStat.instance.atk;
         gameObject.SetActive(false);
     }
 
     protected override void OnTriggerEnter(Collider other)
-    {        
-        
-        /*if (other.CompareTag("Enemy"))
+    {
+
+        if (other.CompareTag("Enemy"))
         {
-            DamageCollider(other);
-        }*/
-        
-        
+            Debug.Log("몬스터 확인");
+            //DamageCollider(other);
+            DamagedByPAttack script;
+            if (other.TryGetComponent<DamagedByPAttack>(out script))
+            {
+                script.Damaged(damage);
+                Debug.Log("몬스터 Damage받음");
+            }
+            saveEffect.transform.position = new(other.transform.position.x, other.transform.position.y + .5f, other.transform.position.z);
+            saveEffect.Play();
+        }
+
+
         if (other.CompareTag("Ground"))
         {
             TransformPlace transformPlace;

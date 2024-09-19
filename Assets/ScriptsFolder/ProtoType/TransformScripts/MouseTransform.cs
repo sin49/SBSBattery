@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MouseTransform : Player
 {    
-    public GameObject cursor;
+    public MouseFormCursor cursor;
     bool activeCursor;
 
 
@@ -16,15 +16,16 @@ public class MouseTransform : Player
 
     public void InitMouseForm()
     {
-        if(cursor !=null)
-            cursor.SetActive(false);
+        cursor = GetComponentInChildren<MouseFormCursor>();
     }
 
     public override void Attack()
     {
-        if (attackInputValue < 1)
-        {
-            if (!cursor)
+        if (attackInputValue < 1 && attackBufferTimer > 0)
+        {            
+            attackInputValue = 1;
+            attackBufferTimer = 0;
+            if (!activeCursor)
                 CursorActive();
             else
                 CursorDeactive();
@@ -35,7 +36,7 @@ public class MouseTransform : Player
     {
         if (cursor != null)
         {
-            cursor.SetActive(true);
+            cursor.gameObject.SetActive(true);
         }
     }
 
@@ -43,7 +44,12 @@ public class MouseTransform : Player
     {
         if (cursor != null)
         {
-            cursor.SetActive(false);
+            cursor.gameObject.SetActive(false);
         }
+    }
+
+    public override void Skill1()
+    {
+        Debug.Log("마우스 스킬 구현해야됨");
     }
 }

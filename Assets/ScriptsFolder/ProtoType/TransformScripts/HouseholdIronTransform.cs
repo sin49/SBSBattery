@@ -446,10 +446,13 @@ public class HouseholdIronTransform : Player
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ground") && downAttack)
+        if (other.CompareTag("Ground"))
         {
-            PlayerHandler.instance.CantHandle = true;
-            downEnd = true;
+            if (downAttack)
+            {
+                PlayerHandler.instance.CantHandle = true;
+                downEnd = true;
+            }
         }
     }
 
