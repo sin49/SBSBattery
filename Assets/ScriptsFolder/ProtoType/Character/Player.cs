@@ -1164,7 +1164,7 @@ public class Player : Character
         {
             if (!downAttack)
             {
-                if (!isJump && onGround && canjumpInput)
+                if (!isJump /*&& onGround*/ && canjumpInput)
                 {
                     Jump();
                 }
