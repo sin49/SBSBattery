@@ -5,15 +5,15 @@ using UnityEngine;
 public class jumpenemy : Enemy
 {
     bool onground;
-    public override void enemymovepattern()
-    {
-        rb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Platform"))
-        {
-            if(rb.velocity.y<=0&&!onground)
-        }
-    }
+    //public override void enemymovepattern()
+    //{
+    //    rb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
+    //}
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Platform"))
+    //    {
+
+    //    }
+    //}
 }
