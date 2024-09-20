@@ -59,9 +59,9 @@ public class CameraManagerSwitchingBlendingOption : CameraManager
             cam.orthographic = false;
             // 현재 카메라와 새 카메라 간의 전환 시작
             Vector3 newcameraposition = newCamera.transform.position;
-            newCamera.gameObject.SetActive(true);
+            newCamera.enabled = (true);
             newCamera.transform.position= newcameraposition;
-            activedcamera.gameObject.SetActive(false);
+            activedcamera.enabled = (false);
   
         
              activedcamera = newCamera;
