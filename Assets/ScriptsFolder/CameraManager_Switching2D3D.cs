@@ -45,11 +45,11 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     public void settingBoss1ccamera(CinemachineVirtualCamera camera2D, CinemachineVirtualCamera camera3D,
         Collider col, PlayerMoveState movestate)
     {
-        camera3D.gameObject.SetActive(false); 
+        camera3D.enabled = (false); 
         this.camera2D= camera2D;
         this.camera3D = camera3D;
-        camera2D.gameObject.SetActive(false);
-        camera3D.gameObject.SetActive(true);
+        camera2D.enabled = (false);
+        camera3D.enabled = (true);
         if (col != null)
         {
             this.camera2D.GetComponent<CinemachineConfiner>().m_BoundingVolume = col;
@@ -68,8 +68,8 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     }
     protected override void initializeCamera()
     {
-        var a = VirtualCameraTransform.GetComponentsInChildren<CinemachineVirtualCamera>();
-        VirtualCameras = new CinemachineVirtualCamera[a.Length - 1];
+      
+    
         GetCameraSettingByTrans3D();
         camera3D.GetComponent<CineMachineBasicCamera>().CameraIndex = 0;
         var confiner = camera3D.GetComponent<CinemachineConfiner>();
@@ -79,23 +79,22 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
             confiner = camera2D.GetComponent<CinemachineConfiner>();
         }
         int i = 0;
-        for (int n = 0; n < a.Length; n++)
-        {
-            if (n == 0)
-                continue;
-            if (a[n] == camera2D || a[n] == camera3D)
-            {
-                i--;
-                continue;
-            }
-
-            a[n+i].gameObject.SetActive(false);
-            
-            a[n+i].GetComponent<CineMachineBasicCamera>().CameraIndex = n+i;
-            VirtualCameras[n+i] = a[n+i];
-        }
-        VirtualCameras[0].gameObject.SetActive(true);
+       
+        VirtualCameras[0].enabled = (true);
         activedcamera = VirtualCameras[0];
+    }
+    public void updatecamera()
+    {
+ 
+       
+        if ((int)PlayerStat.instance.MoveState < 4)
+        {
+            camera3D.enabled = (false);
+        }
+        else
+        {
+            camera2D.enabled = (false);
+        }
     }
     protected override void Start()
     {
@@ -105,7 +104,7 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         if (camera2D!=null)
         orthosize = camera2D.m_Lens.OrthographicSize;
         fovview = camera3D.m_Lens.FieldOfView;
-   
+        updatecamera();
        
     }
     void RegiserCameraChangeHandler()
@@ -158,13 +157,13 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         {
             SwapDefaultCamera(camera3D);
             if(camera2D!=null)
-            camera2D.gameObject.SetActive(false);
+            camera2D.enabled = (false);
         }
         else
         {
             SwapDefaultCamera(camera2D);
             if (camera3D != null)
-                camera3D.gameObject.SetActive(false);
+                camera3D.enabled = (false);
         }
     }
 
