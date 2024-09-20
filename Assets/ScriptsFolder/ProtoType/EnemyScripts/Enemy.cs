@@ -171,16 +171,28 @@ public class Enemy: Character,DamagedByPAttack
             if(!attackRange)
                 Move();
         }
-
-        if (tracking && !onAttack && !attackRange)
+        if (movepattern == EnemyMovePattern.stop )
         {
-            isMove = true;
+            if (tracking && !onAttack && !attackRange && searchPlayer)
+            {
+                isMove = true;
+            }
+            else
+            {
+                isMove = false;
+            }
         }
         else
         {
-            isMove = false;
+            if (tracking && !onAttack && !attackRange)
+            {
+                isMove = true;
+            }
+            else
+            {
+                isMove = false;
+            }
         }
-
         if (animaor != null)
         {
             animaor.SetBool("isMove", isMove);
@@ -489,7 +501,7 @@ public class Enemy: Character,DamagedByPAttack
 
         if (SetRotation())
         {
-            rb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
+            enemymovepattern();
             if (soundplayer != null)
                 soundplayer.PlayMoveSound();
         }
@@ -507,7 +519,10 @@ public class Enemy: Character,DamagedByPAttack
             }
         }
     }
-
+    public virtual void enemymovepattern()
+    {
+        rb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
+    }
     public void PatrolTracking()
     {
         testTarget = targetPatrol - transform.position;
@@ -517,7 +532,7 @@ public class Enemy: Character,DamagedByPAttack
 
         if (SetRotation())
         {
-            rb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
+            enemymovepattern();
             if (soundplayer != null)
                 soundplayer.PlayMoveSound();
         }
