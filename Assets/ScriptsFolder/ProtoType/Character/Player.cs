@@ -95,7 +95,7 @@ public class Player : Character
     public bool wallcheck;
     #endregion
 
-    public float jumpkeyinputCheck = 0.23f;
+    public float jumpkeyinputCheck = 0.05f;
     float jumpkeyinputcheckvalue;
     public bool inputCheck;
 
@@ -243,11 +243,15 @@ public class Player : Character
 
                     onGround = true;
                     isJump = false;
-                    downAttack = false;
+                    if (downAttack)
+                    {
+                        downAttack = false;
+                        if (LandingEffect != null)
+                            LandingEffect.SetActive(true);
+                    }
                     PlayerStat.instance.doubleJump = true;
                     SoundPlayer.PlayLandingSound();
-                    if (LandingEffect != null && flyTimer < 0)
-                        LandingEffect.SetActive(true);
+             
 
                     flyTimer = flyTime;
                 }
@@ -262,11 +266,15 @@ public class Player : Character
 
                     onGround = true;
                     isJump = false;
-                    downAttack = false;
+                    if (downAttack)
+                    {
+                        downAttack = false;
+                        if (LandingEffect != null)
+                            LandingEffect.SetActive(true);
+                    }
                     PlayerStat.instance.doubleJump = true;
                     SoundPlayer.PlayLandingSound();
-                    if (LandingEffect != null && flyTimer < 0)
-                        LandingEffect.SetActive(true);
+             
 
                     flyTimer = flyTime;
                 }
@@ -281,11 +289,15 @@ public class Player : Character
 
                     onGround = true;
                     isJump = false;
-                    downAttack = false;
+                    if (downAttack)
+                    {
+                        downAttack = false;
+                        if (LandingEffect != null )
+                            LandingEffect.SetActive(true);
+                    }
                     PlayerStat.instance.doubleJump = true;
                     SoundPlayer.PlayLandingSound();
-                    if (LandingEffect != null && flyTimer < 0)
-                        LandingEffect.SetActive(true);
+                  
 
                     flyTimer = flyTime;
                 }
@@ -300,11 +312,15 @@ public class Player : Character
 
                     onGround = true;
                     isJump = false;
-                    downAttack = false;
+                    if (downAttack)
+                    {
+                        downAttack = false;
+                        if (LandingEffect != null)
+                            LandingEffect.SetActive(true);
+                    }
                     PlayerStat.instance.doubleJump = true;
                     SoundPlayer.PlayLandingSound();
-                    if (LandingEffect != null && flyTimer < 0)
-                        LandingEffect.SetActive(true);
+             
 
                     flyTimer = flyTime;
                 }
@@ -1126,11 +1142,33 @@ public class Player : Character
     #endregion
 
     #region 점프동작
+    public GameObject doublejumpeffect;
     public virtual void PlayerJumpEvent()
     {
         if (Humonoidanimator != null)
         {
             Humonoidanimator.SetTrigger("jump");
+            if (PlayerStat.instance.doubleJump)
+            {
+                if (JumpEffect != null)
+                {
+                    JumpEffect.gameObject.SetActive(false);
+                    JumpEffect.SetActive(true);
+                }
+            }
+            else
+            {
+                if (doublejumpeffect == null)
+                {
+                    doublejumpeffect = Instantiate(JumpEffect, JumpEffect.transform.parent);
+                    doublejumpeffect.transform.position = JumpEffect.transform.position;
+                    doublejumpeffect.gameObject.SetActive(true);
+                }
+                else
+                {
+                    doublejumpeffect.gameObject.SetActive(true);
+                }
+            }
         }
     }
 
@@ -1144,9 +1182,7 @@ public class Player : Character
             jumpkeyinputcheckvalue = jumpkeyinputCheck;
         PlayerJumpEvent();
 
-        if (JumpEffect != null)
-            JumpEffect.SetActive(true);
-
+       
         isRun = false;
         if (SoundPlayer != null)
             SoundPlayer.PlayJumpAudio();
