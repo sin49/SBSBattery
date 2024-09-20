@@ -58,8 +58,11 @@ public class CameraManagerSwitchingBlendingOption : CameraManager
             cinemachineBrain.m_DefaultBlend = blend;
             cam.orthographic = false;
             // 현재 카메라와 새 카메라 간의 전환 시작
-            activedcamera.enabled=(false);
-            newCamera.enabled=(true);
+            Vector3 newcameraposition = newCamera.transform.position;
+            newCamera.gameObject.SetActive(true);
+            newCamera.transform.position= newcameraposition;
+            activedcamera.gameObject.SetActive(false);
+  
         
              activedcamera = newCamera;
      

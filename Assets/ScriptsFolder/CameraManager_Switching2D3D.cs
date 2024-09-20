@@ -45,11 +45,11 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     public void settingBoss1ccamera(CinemachineVirtualCamera camera2D, CinemachineVirtualCamera camera3D,
         Collider col, PlayerMoveState movestate)
     {
-        camera3D.enabled = (false); 
+        camera3D.gameObject.SetActive(false); 
         this.camera2D= camera2D;
         this.camera3D = camera3D;
-        camera2D.enabled = (false);
-        camera3D.enabled = (true);
+        camera2D.gameObject.SetActive(false);
+        camera3D.gameObject.SetActive(true);
         if (col != null)
         {
             this.camera2D.GetComponent<CinemachineConfiner>().m_BoundingVolume = col;
@@ -80,20 +80,23 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         }
         int i = 0;
        
-        VirtualCameras[0].enabled = (true);
+        VirtualCameras[0].gameObject.SetActive  (true);
         activedcamera = VirtualCameras[0];
+   
     }
     public void updatecamera()
     {
- 
-       
+
+        camera2D.gameObject.SetActive(true);
+        camera3D.gameObject.SetActive(true);
+
         if ((int)PlayerStat.instance.MoveState < 4)
         {
-            camera3D.enabled = (false);
+            camera3D.gameObject.SetActive(false);
         }
         else
         {
-            camera2D.enabled = (false);
+            camera2D.gameObject.SetActive(false);
         }
     }
     protected override void Start()
@@ -104,6 +107,7 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         if (camera2D!=null)
         orthosize = camera2D.m_Lens.OrthographicSize;
         fovview = camera3D.m_Lens.FieldOfView;
+
         updatecamera();
        
     }
@@ -157,13 +161,13 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         {
             SwapDefaultCamera(camera3D);
             if(camera2D!=null)
-            camera2D.enabled = (false);
+            camera2D.gameObject.SetActive(false);
         }
         else
         {
             SwapDefaultCamera(camera2D);
             if (camera3D != null)
-                camera3D.enabled = (false);
+                camera3D.gameObject.SetActive(false);
         }
     }
 
