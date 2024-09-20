@@ -137,13 +137,13 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         Time.timeScale = 0;
         if (trans3D)
         {
-           
+            camera3D.transform.position = camera2D.transform.position;
             yield return StartCoroutine(SwitchCameraCoroutine(camera3D));
           
         }
         else
         {
-
+            camera2D.transform.position = camera3D.transform.position;
             yield return StartCoroutine(SwitchCameraCoroutine(camera2D));
         }
         Time.timeScale = 1;
