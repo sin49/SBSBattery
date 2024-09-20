@@ -172,7 +172,7 @@ public class Enemy: Character,DamagedByPAttack
                 Move();
         }
 
-        if (tracking && !onAttack && !attackRange)
+        if (tracking && !onAttack && !attackRange&&movepattern!=EnemyMovePattern.stop)
         {
             isMove = true;
         }
