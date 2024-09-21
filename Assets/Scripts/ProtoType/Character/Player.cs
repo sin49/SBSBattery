@@ -91,7 +91,7 @@ public class Player : Character
     public bool wallcheck;
     #endregion
 
-  public  float jumpkeyinputCheck = 0.15f;
+  public  float jumpkeyinputCheck = 0.23f;
     float jumpkeyinputcheckvalue;
     public bool inputCheck;
 
@@ -378,9 +378,16 @@ public class Player : Character
             if (oninteractivetimer <= 0)
                 onInterarctive = false;
         }
-        
+
         if (jumpkeyinputcheckvalue > 0)
+        {
+            canjumpInput = false;
             jumpkeyinputcheckvalue -= Time.fixedDeltaTime;
+        }
+        else
+        {
+            canjumpInput = true;
+        }
 
         JumpKeyInput();
         if(!downAttack)
@@ -900,9 +907,10 @@ public class Player : Character
     {
         isJump = true;
         jumpBufferTimer = 0;
-        canjumpInput = false;
+        //canjumpInput = false;
         jumpLimitInput = true;
-       
+        if (jumpkeyinputcheckvalue <= 0)
+            jumpkeyinputcheckvalue = jumpkeyinputCheck;
         if (Humonoidanimator != null)
         {
             Humonoidanimator.SetTrigger("jump");
@@ -928,13 +936,14 @@ public class Player : Character
         {
             if (!downAttack)
             {
-                if (!isJump&&onGround)
+                if (!isJump&&onGround&&canjumpInput)
                 {
                     Jump();
                 }
-                else if (jumpInputValue > 0 && canjumpInput && PlayerStat.instance.doubleJump)
+                else if ( canjumpInput && PlayerStat.instance.doubleJump)
                 {
                     PlayerStat.instance.doubleJump = false;
+                    ModelAnimator.SetTrigger("rolling2");
                     Jump();
                     /*if (
                 PlayerInventory.instance.checkessesntialitem("item02"))
@@ -949,17 +958,16 @@ public class Player : Character
     }
     public void GetJumpBuffer()
     {
-        if(jumpkeyinputcheckvalue <= 0&&onGround)
-            jumpkeyinputcheckvalue = jumpkeyinputCheck;
-        jumpInputValue = 1;
+        if (jumpkeyinputcheckvalue > 0)/*&&onGround)*/
+            return;
+     
         if (!jumpLimitInput)
             jumpBufferTimer = jumpBufferTimeMax;
     }
     public void jumphold()
     {
-        //jumpLimitInput = false;
-        jumpInputValue = 0;
-        canjumpInput = true;
+  
+
         if (playerRb.velocity.y > 0)
         {
             playerRb.velocity = new Vector3(playerRb.velocity.x, playerRb.velocity.y * jumpholdLevel, playerRb.velocity.z);
