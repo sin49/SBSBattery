@@ -160,7 +160,7 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         {
             SwapDefaultCamera(camera3D);
             if(camera2D!=null)
-            camera2D            (false);
+            camera2D .enabled =          (false);
         }
         else
         {
