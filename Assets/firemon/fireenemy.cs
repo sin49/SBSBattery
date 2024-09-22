@@ -16,6 +16,8 @@ public class fireenemy : Enemy
     [Header("브레스 범위가 사라지는 시간")]
     public float breathendtime;
 
+    public ParticleSystem[] fireeffects;
+    public Light fireLight;
 
     [Header("바로 앞의 사각형말고 커지는 사각형이 있음 그거 건드는거")]
     [Header("브레스 최대 범위")]
@@ -39,11 +41,13 @@ public class fireenemy : Enemy
     public override void Attack()
     {
          
-        if (oncorutine)
-            return;
+        
         base.Attack();
         StopAllCoroutines();
         initializebreath();
+        if (oncorutine)
+            return;
+        else
         StartCoroutine(breathattack());
     }
     IEnumerator waitingdelay()
@@ -55,13 +59,29 @@ public class fireenemy : Enemy
     {
         oncorutine = false;
         breathcollider.gameObject.SetActive(false);
+        fireLight.gameObject.SetActive(false);
+        foreach (var a in fireeffects)
+        {
+            a.Pause();
+        }
+
         breathsmallcollider.gameObject.SetActive(false);
     }
     IEnumerator breathattack()
     {
         oncorutine = true;
+        foreach (var a in fireeffects)
+        {
+            var main = a.main;
+            main.duration = breathtime + breathendtime;
+        }
+      
         yield return new WaitForSeconds(breathinittime);
-       
+        foreach (var a in fireeffects)
+        {
+            a.Play();
+        }
+        fireLight.gameObject.SetActive(true);
         breath.SetActive(true);
         breathsmallcollider.gameObject.SetActive(true);
         breathcollider.gameObject.SetActive(true);
@@ -98,6 +118,7 @@ public class fireenemy : Enemy
 
         }
         breathcollider.gameObject.SetActive(false);
+        fireLight.gameObject.SetActive(false);
         yield return new WaitForSeconds(breathdelay);
         oncorutine = false;
         InitAttackCoolTime();
