@@ -72,6 +72,7 @@ public class MouseFormCursor : MonoBehaviour
         Enemy enemy;
         if (interactObj.TryGetComponent<Enemy>(out enemy))
         {
+            enemy.GetComponent<Collider>().isTrigger = false;
             enemy.GetComponent<Rigidbody>().useGravity = true;
             enemy.GetComponent<Rigidbody>().isKinematic = false;
             enemy.GetComponent<Rigidbody>().AddForce(transform.forward * forwardThrowForce + transform.up * upThrowForce, ForceMode.VelocityChange);
