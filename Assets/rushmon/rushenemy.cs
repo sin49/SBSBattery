@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class rushenemy : Enemy
 {
+    [Header("돌진 사전 딜레이")]
     public float rushinitdelay;
+    [Header("돌진 범위")]
     public float rushdistance;
+    [Header("돌진 속도")]
     public float rushspeed;
+    [Header("돌진 후딜레이")]
     public float rushcooltime;
     bool onrush;
     IEnumerator rush()
@@ -28,6 +32,7 @@ public class rushenemy : Enemy
         rb.velocity = Vector3.zero;
         yield return new WaitForSeconds(rushcooltime);
         onrush = false;
+        InitAttackCoolTime();
     }
     public override void Attack()
     {

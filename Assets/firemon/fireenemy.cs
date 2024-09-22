@@ -5,16 +5,30 @@ using UnityEngine;
 
 public class fireenemy : Enemy
 {
+    [Header("브레스 전 대기 시간")]
     public float breathinittime;
+    [Header("브레스 지속 시간")]
     public float breathtime;
+    [Header("브레스 범위가 최대가 되는 시간")]
+    public float breathspreadmaxtime;
+    [Header("브레스 후 딜레이")]
     public float breathdelay;
+    [Header("브레스 범위가 사라지는 시간")]
     public float breathendtime;
+
+
+    [Header("바로 앞의 사각형말고 커지는 사각형이 있음 그거 건드는거")]
+    [Header("브레스 최대 범위")]
+    public Vector3 breathsize;
+    [Header("브레스 초기 범위")]
+    public Vector3 breathinitsize;
+
+    [Header("이 밑으로는 그냥 건들지 마샘")]
     public GameObject breath;
 
     public Transform breathsmallcollider;
     public Transform breathcollider;
-    public Vector3 breathsize;
-    public Vector3 breathinitsize;
+  
     bool oncorutine;
     public override void Attack()
     {
@@ -31,18 +45,20 @@ public class fireenemy : Enemy
         breathsmallcollider.gameObject.SetActive(true);
         breathcollider.gameObject.SetActive(true);
         float timer = 0;
-
+        float breathtimer = 0;
         breathcollider.transform.localPosition = Vector3.forward * -0.5f;
         breathcollider.localScale = breathinitsize;
-        Vector3 calculatevector = (breathsize - breathinitsize) / breathtime;
+        Vector3 calculatevector = (breathsize - breathinitsize) / breathspreadmaxtime;
 
-        while (timer < breathtime)
+        while (breathtimer < breathspreadmaxtime)
         {
             breathcollider.localScale += calculatevector * Time.deltaTime;
             breathcollider.Translate(Vector3.back * calculatevector.z * Time.deltaTime * 0.5f);
             timer += Time.deltaTime;
+            breathtimer += Time.deltaTime;
             yield return null;
         }
+        yield return new WaitForSeconds(breathtime - timer);
         breathsmallcollider.gameObject.SetActive(false);
 
         timer = 0;
@@ -59,5 +75,6 @@ public class fireenemy : Enemy
         breathcollider.gameObject.SetActive(false);
         yield return new WaitForSeconds(breathdelay);
         oncorutine = false;
+        InitAttackCoolTime();
     }
 }

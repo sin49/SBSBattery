@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class jumpenemy : Enemy
 {
+
     bool onground;
     //public bool PlayernotChase;
+    [Header("점프 높이(앞으로 가는 힘은 estat.movespeed로 결정)")]
     public float jumpforce;
+    [Header("점프 후 딜레이")]
     public float jumpdelay=1;
     bool oncorutine;
     public override void enemymovepattern()
