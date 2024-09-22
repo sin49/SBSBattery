@@ -7,8 +7,6 @@ public class CursorInteractObject : MonoBehaviour
 {
     public bool caught, thrown;
 
-    public Collider cursorTargetCollider;
-    SphereCollider sphere;
 
     /*private void Awake()
     {
