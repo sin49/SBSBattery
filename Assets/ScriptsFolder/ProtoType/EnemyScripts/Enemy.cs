@@ -398,6 +398,7 @@ public class Enemy: Character,DamagedByPAttack
         else
         {
             rb.velocity = Vector3.zero;
+            if(attackCollider!=null)
             attackCollider.SetActive(false);
             if (target != null)
             {
