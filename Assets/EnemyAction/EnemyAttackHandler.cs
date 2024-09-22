@@ -10,6 +10,7 @@ public class EnemyAttackHandler : MonoBehaviour
     public Transform createtransform;
     public EnemyAction mainaction;
     public Enemy e;
+   
     public void createaction()
     {
         if(createtransform==null)
@@ -24,7 +25,7 @@ public class EnemyAttackHandler : MonoBehaviour
     public void invokemainaction()
     {
         Debug.Log($"적{gameObject.name} 액션 호출");
-        mainaction.Invoke(e.InitAttackCoolTime);
+        mainaction.Invoke(e.InitAttackCoolTime,e.target);
     }
    
 
