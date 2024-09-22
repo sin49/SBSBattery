@@ -36,6 +36,7 @@ public class MouseFormCursor : MonoBehaviour
                     interactObj.GetComponent<Rigidbody>().isKinematic = true;
                     interactObj.GetComponent<Collider>().isTrigger = true;
                     other.transform.position = cursorParent.transform.position;
+                    other.transform.rotation = Quaternion.identity;
 
                     if (cursorInteract.CompareTag("InteractivePlatform"))
                     {
