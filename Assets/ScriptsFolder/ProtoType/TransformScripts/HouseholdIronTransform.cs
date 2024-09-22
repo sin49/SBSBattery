@@ -437,7 +437,7 @@ public class HouseholdIronTransform : Player
 
     public void RushRotate(float hori, float vert)
     {
-        if (onRushRot||(playerRb.velocity.x<0.2f&& playerRb.velocity.x > -0.2f))
+        if (onRushRot /*|| @*/)
             return;
         Vector3 rotateVector = Vector3.zero;
         
@@ -576,6 +576,7 @@ public class HouseholdIronTransform : Player
         }
         transform.GetChild(0).rotation = Quaternion.Euler(lastVector);
         onRushRot = false;
+
     }
 
     public void CheckRushTime()

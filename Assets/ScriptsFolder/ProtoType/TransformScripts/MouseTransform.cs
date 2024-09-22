@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MouseTransform : Player
-{    
-    public MouseFormCursor cursor;
-    public GameObject secondForm;
-    bool activeCursor;
+{
+    [Header("마우스 커서 부모")] public GameObject cursorParent;
+    [Header("마우스 커서")] public MouseFormCursor cursor;
+    [Header("마우스 2형태")]public GameObject secondForm;
+    bool activeCursor, readyCursor;
 
+    public float cursorCoolTime;
+    float cursorCoolTimer;
 
     protected override void Awake()
     {
@@ -17,19 +20,26 @@ public class MouseTransform : Player
 
     public void InitMouseForm()
     {
-        cursor = GetComponentInChildren<MouseFormCursor>();
+        cursor = GetComponentInChildren<MouseFormCursor>(true);
     }
 
     public override void Attack()
     {
-        if (attackInputValue < 1 && attackBufferTimer > 0)
-        {            
-            attackInputValue = 1;
-            attackBufferTimer = 0;
-            if (!activeCursor)
-                CursorActive();
-            else
-                CursorDeactive();
+        if (attackInputValue < 1 && !downAttack)
+        {
+            if (attackBufferTimer > 0)
+            {                
+                attackBufferTimer = 0;
+                attackInputValue = 1;
+                if (!activeCursor)
+                {
+                    CursorFormActive();
+                }
+                else
+                {
+                    CursorInteraction();
+                }
+            }
         }
     }
 
@@ -39,11 +49,13 @@ public class MouseTransform : Player
         base.PlayerJumpEvent();
     }
 
-    public void CursorActive()
+    public void CursorFormActive()
     {
-        if (cursor != null)
+        readyCursor = true;
+
+        if (cursorParent != null)
         {
-            cursor.gameObject.SetActive(true);
+            cursorParent.gameObject.SetActive(true);
         }
 
         if (secondForm != null)
@@ -55,11 +67,37 @@ public class MouseTransform : Player
         
     }
 
+    public void CursorInteraction()
+    {
+        if (!readyCursor)
+        {
+            CursorActive();
+        }
+        else
+        {
+            CursorDeactive();
+        }
+    }
+
+    public void CursorActive()
+    {
+        cursorParent.gameObject.SetActive(true);
+        readyCursor = true;
+    }
+
     public void CursorDeactive()
     {
-        if (cursor != null)
+        if (cursor.onCatch)
+            cursor.InteractTypeCheck();
+        cursorParent.gameObject.SetActive(false);
+        readyCursor = false;
+    }
+
+    public void CursorFormDeactive()
+    {
+        if (cursorParent != null)
         {
-            cursor.gameObject.SetActive(false);
+            cursorParent.gameObject.SetActive(false);
         }
 
         if (secondForm != null)
@@ -80,6 +118,7 @@ public class MouseTransform : Player
 
     public void SecondFormDeactive()
     {
+        activeCursor = false;
         Destroy(Instantiate(changeEffect, transform.position, Quaternion.identity), 2f);
         for (int i = 0; i < Humonoidanimator.transform.childCount; i++)
         {
