@@ -30,17 +30,38 @@ public class fireenemy : Enemy
     public Transform breathcollider;
   
     bool oncorutine;
+    public override void Damaged(float damage)
+    {
+        base.Damaged(damage);
+
+        StartCoroutine(waitingdelay());
+    }
     public override void Attack()
     {
+         
         if (oncorutine)
             return;
         base.Attack();
+        StopAllCoroutines();
+        initializebreath();
         StartCoroutine(breathattack());
+    }
+    IEnumerator waitingdelay()
+    {
+        yield return new WaitForSeconds(breathdelay);
+        activeAttack = false;
+    }
+    void initializebreath()
+    {
+        oncorutine = false;
+        breathcollider.gameObject.SetActive(false);
+        breathsmallcollider.gameObject.SetActive(false);
     }
     IEnumerator breathattack()
     {
         oncorutine = true;
         yield return new WaitForSeconds(breathinittime);
+       
         breath.SetActive(true);
         breathsmallcollider.gameObject.SetActive(true);
         breathcollider.gameObject.SetActive(true);
@@ -52,13 +73,16 @@ public class fireenemy : Enemy
 
         while (breathtimer < breathspreadmaxtime)
         {
+           
             breathcollider.localScale += calculatevector * Time.deltaTime;
             breathcollider.Translate(Vector3.back * calculatevector.z * Time.deltaTime * 0.5f);
             timer += Time.deltaTime;
             breathtimer += Time.deltaTime;
             yield return null;
         }
+      
         yield return new WaitForSeconds(breathtime - timer);
+      
         breathsmallcollider.gameObject.SetActive(false);
 
         timer = 0;
@@ -66,6 +90,7 @@ public class fireenemy : Enemy
         calculatevector = Vector3.forward * (breathsize.z / breathendtime);
         while (timer < breathendtime)
         {
+           
             breathcollider.localScale -= calculatevector * Time.deltaTime;
             breathcollider.Translate(Vector3.back * calculatevector.z * Time.deltaTime * 0.5f);
             timer += Time.deltaTime;

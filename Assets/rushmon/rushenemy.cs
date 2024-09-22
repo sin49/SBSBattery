@@ -12,6 +12,10 @@ public class rushenemy : Enemy
     public float rushspeed;
     [Header("돌진 후딜레이")]
     public float rushcooltime;
+    [Header("플레이어 밀려나는 정도")]
+    public float PlayerForce = 3;
+    [Header("플레이어 밀려날 때 잠깐 조작 못하게 해야 함 그 시간임")]
+    public float Playerstuntime = 0.25f;
     bool onrush;
     IEnumerator rush()
     {
@@ -33,7 +37,21 @@ public class rushenemy : Enemy
         rb.velocity = Vector3.zero;
         yield return new WaitForSeconds(rushcooltime);
         onrush = false;
+        activeAttack = false;
         InitAttackCoolTime();
+    }
+   public void stoprush()
+    {
+        StopAllCoroutines();
+        InitAttackCoolTime();
+        StartCoroutine(stoprushcorutine());
+    }
+    IEnumerator stoprushcorutine()
+    {
+        onrush = true;
+        yield return new WaitForSeconds(rushcooltime);
+        onrush = false;
+        activeAttack = false;
     }
     public override void Attack()
     {
