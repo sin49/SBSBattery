@@ -177,7 +177,7 @@ Transform:
   m_GameObject: {fileID: 3140308014256626685}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.292, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -217,8 +217,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5, y: 5, z: 5}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.5, y: 2.5, z: 4}
+  m_Center: {x: 0, y: 0.5, z: 0.75}
 --- !u!1 &3336978199051425999
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,7 +246,7 @@ Transform:
   m_GameObject: {fileID: 3336978199051425999}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.292, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -272,8 +272,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 8, y: 8, z: 8}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 6, y: 3, z: 6}
+  m_Center: {x: 0, y: 0.75, z: 0.75}
 --- !u!114 &2394768542255590077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,8 +531,8 @@ Transform:
   m_GameObject: {fileID: 6198355208888350071}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 8, y: 8, z: 8}
+  m_LocalPosition: {x: 0, y: 0.75, z: 0.75}
+  m_LocalScale: {x: 6, y: 3, z: 6}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4932577059295063402}
@@ -636,8 +636,8 @@ Transform:
   m_GameObject: {fileID: 6965306380029839516}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0.75}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6866060035026694462}
@@ -741,10 +741,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7475420661886871759}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.292, y: 0, z: 0.869}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4932577059295063402}
   - {fileID: 8774930855983835106}
@@ -752,7 +752,7 @@ Transform:
   - {fileID: 6866060035026694462}
   - {fileID: 8180390385508957218}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!135 &2395448726762878100
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -802,16 +802,16 @@ MonoBehaviour:
   searchCubeRange: {x: 0, y: 0, z: 0}
   searchCubePos: {x: 0, y: 0, z: 0}
   rangeCollider: {fileID: 3140308014256626685}
-  rangeSize: {x: 5, y: 5, z: 5}
-  rangePos: {x: 0, y: 0, z: 0}
+  rangeSize: {x: 2.5, y: 2.5, z: 4}
+  rangePos: {x: 0, y: 0.5, z: 0.75}
   searchCollider: {fileID: 3336978199051425999}
-  searchColliderRange: {x: 8, y: 8, z: 8}
-  searchColliderPos: {x: 0, y: 0, z: 0}
+  searchColliderRange: {x: 6, y: 3, z: 6}
+  searchColliderPos: {x: 0, y: 0.75, z: 0.75}
   searchPlayer: 0
-  trackingDistance: 2.07
+  trackingDistance: 8
   disToPlayer: 0
   patrolGroup: []
-  targetPatrol: {x: -73.27, y: 12.478499, z: -11.442}
+  targetPatrol: {x: 2.4, y: 0, z: 0}
   patrolWaitTime: 1
   leftPatrolRange: 0.5
   rightPatrolRange: 1.2
@@ -845,13 +845,14 @@ MonoBehaviour:
   testAngle: 0
   breathinittime: 1
   breathtime: 1
+  breathspreadmaxtime: 0
   breathdelay: 1
   breathendtime: 0.2
+  breathsize: {x: 1.5, y: 1.5, z: 3}
+  breathinitsize: {x: 1, y: 1, z: 0.2}
   breath: {fileID: 8567673017010477842}
   breathsmallcollider: {fileID: 2993105669727741216}
   breathcollider: {fileID: 9043523988352243348}
-  breathsize: {x: 1.5, y: 1.5, z: 3}
-  breathinitsize: {x: 1, y: 1, z: 0.2}
 --- !u!54 &4325721189205129153
 Rigidbody:
   m_ObjectHideFlags: 0
