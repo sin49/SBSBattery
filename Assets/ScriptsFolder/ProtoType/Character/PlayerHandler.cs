@@ -542,7 +542,7 @@ public class PlayerHandler : MonoBehaviour
                 CurrentPlayer.DownAttack();
             }
 
-            if (Input.GetKeyDown(KeySettingManager.instance.SkillKeycode) && CurrentType != TransformType.Default)
+            if (/*doubleUpInput &&*/ Input.GetKeyDown(KeySettingManager.instance.SkillKeycode) && CurrentType != TransformType.Default)
             {
                 CurrentPlayer.Skill1();
 

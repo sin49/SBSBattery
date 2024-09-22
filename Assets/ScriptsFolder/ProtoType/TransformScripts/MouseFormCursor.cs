@@ -9,7 +9,7 @@ public class MouseFormCursor : MonoBehaviour
 {
     public bool onCatch;
     public GameObject cursorParent;
-    public GameObject interactObj;
+    public CursorInteractObject interactObj;
     public float forwardThrowForce;
     public float upThrowForce;
 
@@ -17,7 +17,7 @@ public class MouseFormCursor : MonoBehaviour
     {
         if (interactObj != null)
         {
-            interactObj.transform.position = cursorParent.transform.position;
+            interactObj.transform.position = cursorParent.transform.position + transform.forward * interactObj.ColliderEndPoint();
         }
     }
 
@@ -31,10 +31,17 @@ public class MouseFormCursor : MonoBehaviour
                 if(other.TryGetComponent<CursorInteractObject>(out cursorInteract))
                 {
                     onCatch = true;
-                    interactObj = other.gameObject;
+                    interactObj = cursorInteract;
                     interactObj.GetComponent<Rigidbody>().useGravity = false;
                     interactObj.GetComponent<Rigidbody>().isKinematic = true;
+                    interactObj.GetComponent<Collider>().isTrigger = true;
                     other.transform.position = cursorParent.transform.position;
+                    other.transform.rotation = Quaternion.identity;
+
+                    if (cursorInteract.CompareTag("InteractivePlatform"))
+                    {
+                        cursorInteract.gameObject.layer = LayerMask.NameToLayer("DontMoveIgnore");
+                    }
                 }
             }
         }
@@ -75,6 +82,8 @@ public class MouseFormCursor : MonoBehaviour
 
     public void DropPlatformObject()
     {
+        interactObj.gameObject.layer = LayerMask.NameToLayer("Default");
+        interactObj.GetComponent<Collider>().isTrigger = false;
         interactObj.GetComponent<Rigidbody>().useGravity = true;
         interactObj.GetComponent<Rigidbody>().isKinematic = false;
         interactObj = null;

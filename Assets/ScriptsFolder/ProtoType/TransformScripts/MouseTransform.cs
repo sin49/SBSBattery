@@ -44,6 +44,11 @@ public class MouseTransform : Player
         }
     }
 
+    public override void Move()
+    {
+        base.Move();
+    }
+
     public override void PlayerJumpEvent()
     {
         if(!activeCursor)
