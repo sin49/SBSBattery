@@ -40,7 +40,7 @@ public class CursorInteractObject : MonoBehaviour
         else if (cursorTargetCollider is BoxCollider)
         {
             fPoint = transform.right * (box.size.x / 2);
-            size = box.size.x / 2;
+            size = box.bounds.size.x / 2;
         }
         Debug.Log(fPoint);
         return size;
