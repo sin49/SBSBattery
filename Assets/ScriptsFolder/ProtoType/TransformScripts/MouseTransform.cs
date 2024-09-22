@@ -37,7 +37,8 @@ public class MouseTransform : Player
                 }
                 else
                 {
-                    CursorInteraction();
+                    //CursorInteraction();
+                    CursorFormDeactive();
                 }
             }
         }
@@ -118,6 +119,9 @@ public class MouseTransform : Player
 
     public void SecondFormDeactive()
     {
+        if (cursor.onCatch)
+            cursor.InteractTypeCheck();
+
         activeCursor = false;
         Destroy(Instantiate(changeEffect, transform.position, Quaternion.identity), 2f);
         for (int i = 0; i < Humonoidanimator.transform.childCount; i++)
