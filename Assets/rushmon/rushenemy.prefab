@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 8, y: 8, z: 8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7338983320533711652}
@@ -158,7 +158,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0, y: 0, z: 0}
+  m_Size: {x: 8, y: 8, z: 8}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &948908282389110036
 MonoBehaviour:
@@ -293,7 +293,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0, y: 0, z: 0}
+  m_Size: {x: 5, y: 5, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3537435300202253410
 GameObject:
@@ -343,12 +343,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.6352615, y: 1.3493652, z: 1.4063864}
-  m_Center: {x: -0.8138008, y: 0.024388313, z: 0.20319319}
+  m_Size: {x: 0.8710327, y: 1.0869951, z: 2.2368212}
+  m_Center: {x: 0.018348694, y: -0.10679674, z: -0.9682679}
 --- !u!114 &5319734245918787993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,8 +420,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.6352615, y: 1.3493652, z: 1.4063864}
-  m_Center: {x: -0.8138008, y: 0.024388313, z: 0.20319319}
+  m_Size: {x: 0.8710327, y: 1.0869951, z: 2.2368212}
+  m_Center: {x: 0.018348694, y: -0.10679674, z: -0.9682679}
 --- !u!54 &7457196569069699624
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -462,7 +462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testcolor: {r: 0, g: 0, b: 0, a: 0}
-  movepattern: 0
+  movepattern: 1
   eStat: {fileID: 1024772792019391105}
   patrolType: 1
   attackCollider: {fileID: 1519776438131439452}
@@ -477,10 +477,10 @@ MonoBehaviour:
   searchCubeRange: {x: 0, y: 0, z: 0}
   searchCubePos: {x: 0, y: 0, z: 0}
   rangeCollider: {fileID: 3017015271939610226}
-  rangeSize: {x: 0, y: 0, z: 0}
+  rangeSize: {x: 5, y: 5, z: 5}
   rangePos: {x: 0, y: 0, z: 0}
   searchCollider: {fileID: 957656819024854305}
-  searchColliderRange: {x: 0, y: 0, z: 0}
+  searchColliderRange: {x: 8, y: 8, z: 8}
   searchColliderPos: {x: 0, y: 0, z: 0}
   searchPlayer: 0
   trackingDistance: 2.07
@@ -584,7 +584,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7402221439014641583}
@@ -691,7 +691,7 @@ PrefabInstance:
     - target: {fileID: 9155390853976239874, guid: 12e6e7f409a4e1b44bfbfa89cf630e69,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 9155390853976239874, guid: 12e6e7f409a4e1b44bfbfa89cf630e69,
         type: 3}
@@ -701,7 +701,7 @@ PrefabInstance:
     - target: {fileID: 9155390853976239874, guid: 12e6e7f409a4e1b44bfbfa89cf630e69,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 9155390853976239874, guid: 12e6e7f409a4e1b44bfbfa89cf630e69,
         type: 3}
@@ -716,7 +716,7 @@ PrefabInstance:
     - target: {fileID: 9155390853976239874, guid: 12e6e7f409a4e1b44bfbfa89cf630e69,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 9155390853976239874, guid: 12e6e7f409a4e1b44bfbfa89cf630e69,
         type: 3}

@@ -17,8 +17,8 @@ public class rushenemy : Enemy
     {
         Debug.Log("µ¹Áø!");
         onrush = true;
-        this.transform.LookAt(new Vector3( target.position.x,this.transform.position.y,target.position.z));
-    
+        //this.transform.LookAt(new Vector3( target.position.x,this.transform.position.y,target.position.z));
+
         Vector3 initposition = transform.position;
         yield return new WaitForSeconds(rushinitdelay);
         while ((transform.position -
