@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using System.Net.Http.Headers;
 using Unity.VisualScripting;
+using UnityEditor.Rendering;
 using UnityEngine;
 public enum EnemyMovePattern { stop,patrol}
 public interface DamagedByPAttack
@@ -471,11 +472,14 @@ public class Enemy: Character,DamagedByPAttack
     //납작하게 되는 함수
     public virtual void FlatByIronDwonAttack()
     {
-        StartCoroutine(RollBackFromFlatState());
+        if(flatObject !=null)
+            StartCoroutine(RollBackFromFlatState());            
     }
 
     IEnumerator RollBackFromFlatState()
     {
+        onStun = true;
+
         flatObject.transform.localScale = flatScale;
 
         yield return new WaitForSeconds(flatTime);

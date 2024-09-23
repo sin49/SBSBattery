@@ -24,8 +24,7 @@ public class DownAttackCollider : MeleeCollider
             if (other.TryGetComponent<DamagedByPAttack>(out script))
             {
                 if (GetComponentInParent<HouseholdIronTransform>())
-                {
-                    other.GetComponent<Enemy>().onStun = true;
+                {                    
                     other.GetComponent<Enemy>().FlatByIronDwonAttack();
                 }
                 script.Damaged(damage);
