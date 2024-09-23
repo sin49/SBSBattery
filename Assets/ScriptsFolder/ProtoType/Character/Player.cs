@@ -225,7 +225,7 @@ public class Player : Character
 
 
         //+Vector3.down * sizeY * 0.15f
-        if (!onGround && playerRb.velocity.y <= 0)
+        if (!onGround && !isJump)
         {
             RaycastHit hit;
 
@@ -242,7 +242,7 @@ public class Player : Character
                 {
 
                     onGround = true;
-                    isJump = false;
+                  
                     if (downAttack)
                     {
                         downAttack = false;
@@ -265,7 +265,7 @@ public class Player : Character
                 {
 
                     onGround = true;
-                    isJump = false;
+                   
                     if (downAttack)
                     {
                         downAttack = false;
@@ -288,7 +288,7 @@ public class Player : Character
                 {
 
                     onGround = true;
-                    isJump = false;
+                
                     if (downAttack)
                     {
                         downAttack = false;
@@ -407,7 +407,24 @@ public class Player : Character
             HittedEffect.gameObject.SetActive(true);
 
     }
+    bool groundraychecker()
+    {
+        return Physics.Raycast(transform.position, Vector3.down, 1.1f);
+    }
+    void groundraycheck()
+    {
+        if (onGround)
+        {
+            if (groundraychecker())
+            {
+                Debug.Log("중력 가중치");
+                playerRb.AddForce(Vector3.down * 50);
+            }
 
+
+
+        }
+    }
     private void FixedUpdate()
     {
 
@@ -429,14 +446,17 @@ public class Player : Character
         {
             canjumpInput = true;
         }
-
+        if (isJump && !(playerRb.velocity.y > 0))
+        {
+            isJump = false;
+        }
+        groundraycheck();
         JumpKeyInput();
         AttackNotHold();
         if (!downAttack)
             Attack();
-
-        if (onGround == true && isJump == true)
-            isJump = false;
+        
+       
 
         /* chrmat.SetColor("_Emissive_Color", color);*///emission 건들기
         if (Input.GetKeyDown(KeyCode.Tab)) { HittedTest(); }
@@ -904,7 +924,7 @@ public class Player : Character
 
         #endregion
 
-        if (!isJump)
+        if (onGround)
         {
             if (MoveCheck(hori, Vert))
             {
@@ -1079,7 +1099,7 @@ public class Player : Character
 
         PlayerStat.instance.pState = PlayerState.hitted;
         HittedEffect.gameObject.SetActive(true);
-        PlayerStat.instance.hp -= damage;
+        PlayerStat.instance.LoseHP(damage);
         TransformDamagedEvent();
 
         if (PlayerStat.instance.hp <= 0)
@@ -1410,7 +1430,7 @@ public class Player : Character
                     && !CullingPlatform)
                 {
                     onInterarctive = false;
-
+                    onGround = false;
                     isJump = true;
                     CullingPlatform = true;
                     Physics.IgnoreLayerCollision(6, 11, true);
