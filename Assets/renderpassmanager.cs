@@ -9,10 +9,11 @@ public class renderpassmanager : MonoBehaviour
     public UniversalRendererData rendererdata;
     public Material pixelmaterial;
     public float maxPixelate;
-    public float minpixelate;
+    public float MiniMumPixelate;
+    public float pixelate2D;
     public float time;
     float speed;
-    bool trans3D;
+
     ScriptableRendererFeature fullscreenrenderfeauture;
     void Start()
     {
@@ -28,50 +29,86 @@ public class renderpassmanager : MonoBehaviour
         fullscreenrenderfeauture.SetActive(false);
 
     }
-    public void changepixel()
+    public void changepixel(bool trans3D)
     {
         fullscreenrenderfeauture.SetActive(true);
 
-        //time = PlayerHandler.instance.CurrentCamera.GetComponent<CameraManager_Switching2D3D>().transitionDuration;
-        speed = (maxPixelate - minpixelate)/time;
+       
         if (trans3D)
         {
          
-            pixelmaterial.SetFloat("_pixelRate", minpixelate);
-            StartCoroutine(changepixelCorutine(speed, minpixelate, maxPixelate));
+            pixelmaterial.SetFloat("_pixelRate", pixelate2D);
+            StartCoroutine(changepixelCorutine3D());
         }
         else
         {
-            
+         
             pixelmaterial.SetFloat("_pixelRate", maxPixelate);
-            StartCoroutine(changepixelCorutine(-speed, maxPixelate, minpixelate));
+            StartCoroutine(changepixelCorutine2D());
         }
     }
-    IEnumerator changepixelCorutine(float speed,float initpixel,float destinationpixel)
+    IEnumerator changepixelCorutine2D()
     {
+        time = PlayerHandler.instance.CurrentCamera.GetComponent<CameraManager_Switching2D3D>().transitionDuration;
+        time /= 5;
+        speed = (maxPixelate - MiniMumPixelate) / time;
+    
         float timer = 0;
-        float tmp=initpixel;
+        float tmp = maxPixelate;
+        while (timer < time)
+        {
+            tmp += Time.unscaledDeltaTime * speed*-1;
+            pixelmaterial.SetFloat("_pixelRate", tmp);
+            timer += Time.unscaledDeltaTime;
+
+            yield return new WaitForSecondsRealtime(0);
+        }
+        pixelmaterial.SetFloat("_pixelRate", MiniMumPixelate);
+        yield return new WaitForSecondsRealtime(time * 4
+            );
+        speed = (pixelate2D - MiniMumPixelate) / time;
+
+        while (timer < time)
+        {
+            tmp += Time.unscaledDeltaTime * speed;
+            pixelmaterial.SetFloat("_pixelRate", tmp);
+            timer += Time.unscaledDeltaTime;
+
+            yield return new WaitForSecondsRealtime(0);
+        }
+        pixelmaterial.SetFloat("_pixelRate", pixelate2D);
+
+
+
+    }
+    IEnumerator changepixelCorutine3D()
+    {
+        time = PlayerHandler.instance.CurrentCamera.GetComponent<CameraManager_Switching2D3D>().transitionDuration;
+
+        speed = (maxPixelate - pixelate2D) / time;
+        float timer = 0;
+        float tmp= pixelate2D;
         while (timer < time)
         {
             tmp += Time.unscaledDeltaTime*speed;
             pixelmaterial.SetFloat("_pixelRate", tmp);
             timer += Time.unscaledDeltaTime;
-    
-            yield return null;
-        }
-        pixelmaterial.SetFloat("_pixelRate", destinationpixel);
 
-        if (trans3D)
+            yield return new WaitForSecondsRealtime(0);
+        }
+        pixelmaterial.SetFloat("_pixelRate", maxPixelate);
+
+        
             fullscreenrenderfeauture.SetActive(false);
-        trans3D = !trans3D;
+ 
         
     }
         // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            changepixel();
-        }
-    }
+    //void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Alpha4))
+    //    {
+    //        changepixel();
+    //    }
+    //}
 }
