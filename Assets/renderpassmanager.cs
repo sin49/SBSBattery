@@ -31,6 +31,8 @@ public class renderpassmanager : MonoBehaviour
     }
     public void changepixel(bool trans3D)
     {
+        if (fullscreenrenderfeauture == null)
+            return;
         fullscreenrenderfeauture.SetActive(true);
 
        
