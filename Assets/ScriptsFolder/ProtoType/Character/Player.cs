@@ -523,7 +523,21 @@ public class Player : Character
 
 
     #region 추상화 오버라이드 함수
+    public void rotatebymovestate()
+    {
+        Vector3 rotateVector = Vector3.zero;
+        if ((int)PlayerStat.instance.MoveState < 2)
+        {
+            rotateVector = new Vector3(0, 0, 0);
+        }else if((int)PlayerStat.instance.MoveState < 4&& (int)PlayerStat.instance.MoveState >= 2)
+        {
+            rotateVector = new Vector3(0, 90, 0);
 
+        }
+
+
+        transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
+    }
     #region 이동
     public void rotate(float hori, float vert)
     {
