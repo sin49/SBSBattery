@@ -45,4 +45,27 @@ public class CursorInteractObject : MonoBehaviour
         Debug.Log(fPoint);
         return size;
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (caught)
+        {
+            Enemy enemy;
+            if (TryGetComponent<Enemy>(out enemy))
+            {
+                DamagedByPAttack script;
+                if (collision.gameObject.CompareTag("Enemy") && collision.gameObject.TryGetComponent<DamagedByPAttack>(out script))
+                {
+                    script.Damaged(1);
+                    enemy.Dead();
+                }
+                else if (collision.gameObject.CompareTag("InteractivePlatform"))
+                {
+                    gameObject.layer = LayerMask.NameToLayer("Character");
+                    caught = false;
+                    enemy.onStun = false;
+                }
+            }
+        }
+    }
 }

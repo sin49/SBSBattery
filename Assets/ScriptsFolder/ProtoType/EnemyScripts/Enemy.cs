@@ -143,10 +143,10 @@ public class Enemy: Character,DamagedByPAttack
     {                
         attackTimer = eStat.initattackCoolTime;
         
-        if (onStun)
+        /*if (onStun)
         {         
             StartCoroutine(WaitStunTime());
-        }
+        }*/
     }
 
     private void Update()

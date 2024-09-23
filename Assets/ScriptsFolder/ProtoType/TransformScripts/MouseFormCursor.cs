@@ -37,6 +37,7 @@ public class MouseFormCursor : MonoBehaviour
                     interactObj.GetComponent<Collider>().isTrigger = true;
                     other.transform.position = cursorParent.transform.position;
                     other.transform.rotation = Quaternion.identity;
+                    cursorInteract.caught = true;
 
                     if (cursorInteract.CompareTag("InteractivePlatform"))
                     {
@@ -72,6 +73,7 @@ public class MouseFormCursor : MonoBehaviour
         Enemy enemy;
         if (interactObj.TryGetComponent<Enemy>(out enemy))
         {
+            enemy.gameObject.layer = LayerMask.NameToLayer("Default");
             enemy.GetComponent<Collider>().isTrigger = false;
             enemy.GetComponent<Rigidbody>().useGravity = true;
             enemy.GetComponent<Rigidbody>().isKinematic = false;
