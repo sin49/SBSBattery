@@ -470,21 +470,33 @@ public class Enemy: Character,DamagedByPAttack
     Vector3 originScale;
     Vector3 flatScale;
     //납작하게 되는 함수
-    public virtual void FlatByIronDwonAttack()
+    public virtual void FlatByIronDwonAttack(float downAtkEndTime)
     {
         if(flatObject !=null)
-            StartCoroutine(RollBackFromFlatState());            
+            StartCoroutine(RollBackFromFlatState(downAtkEndTime));            
     }
 
-    IEnumerator RollBackFromFlatState()
+    IEnumerator RollBackFromFlatState(float downAtkEndTime)
     {
         onStun = true;
-
         flatObject.transform.localScale = flatScale;
+        if (skinRenderer != null)
+        {
+            Material[] materials = skinRenderer.materials;
+            materials[1] = hittedMat;
+            skinRenderer.materials = materials;
+        }
 
-        yield return new WaitForSeconds(flatTime);
+        yield return new WaitForSeconds(downAtkEndTime + 1.5f);
 
         flatObject.transform.localScale = originScale;
+        if (skinRenderer != null)
+        {
+            Material[] materials = skinRenderer.materials;
+            materials[1] = idleMat;
+            skinRenderer.materials = materials;
+        }
+        onStun = false;
     }
 
     IEnumerator HiiitedState()

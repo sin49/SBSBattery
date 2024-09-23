@@ -59,6 +59,7 @@ public class fireenemy : Enemy
     {
         oncorutine = false;
         breathcollider.gameObject.SetActive(false);
+        if (fireLight != null)
         fireLight.gameObject.SetActive(false);
         foreach (var a in fireeffects)
         {
