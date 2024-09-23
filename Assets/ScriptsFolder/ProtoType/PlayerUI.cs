@@ -9,7 +9,10 @@ public class PlayerUI: MonoBehaviour
 {
     public TextMeshProUGUI PlayerFormText;
     public Image Hpbar;
-    public RectTransform HpbarTransform;
+    public Sprite Empty;
+    public Sprite Fill;
+    public Transform HPbartransform;
+    List<Image> HPbarList=new List<Image>();
 
    void FormUIUpdate()
     {
@@ -32,23 +35,32 @@ public class PlayerUI: MonoBehaviour
 
     void HPUIUpdate()
     {
-        Hpbar.pixelsPerUnitMultiplier = 0.45f * PlayerStat.instance.hpMax;
-        HpbarTransform.sizeDelta = new Vector2(240-(
-            (240/PlayerStat.instance.hpMax)*(PlayerStat.instance.hpMax-PlayerStat.instance.hp)
-            ), 75f);
-        switch (PlayerStat.instance.hp)
+        float hp = PlayerStat.instance.hp;
+        float maxhp = PlayerStat.instance.hpMax;
+       
+       
+     for(int n = 0; n < maxhp; n++)
         {
-            case 1:
-                Hpbar.color = Color.red;
-                break;
-            case 2:
-                Hpbar.color = Color.yellow;
-                break;
-            default:
-      Hpbar.color = Color.green;
-                break;
-
+            
+                if (HPbarList.Count <= n)
+            {
+            
+             
+               var a=     Instantiate(Hpbar.gameObject, HPbartransform).GetComponent<Image>();
+                HPbarList.Add(a);
+            }
+            if (n <= hp)
+                HPbarList[n].sprite = Fill;
+            else
+                HPbarList[n].sprite = Empty;
         }
+    }
+    private void Start()
+    {
+        PlayerStat.instance.registerRecoverAction(HPUIUpdate);
+        PlayerStat.instance.registerHPLoseAction(HPUIUpdate);
+        PlayerInventory.instance.registerItemGetAction(HPUIUpdate);
+        HPUIUpdate();
     }
     // Update is called once per frame
     void Update()
