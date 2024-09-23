@@ -19,7 +19,7 @@ public class PlayerXChangePortal : InteractiveObject
 
     [Header("들어갈 때 Z 부터 시작")]
     public bool StartZtoX;
-    [Header("나올 때 Z부터 시작")]
+    [Header("나올 때 X부터 시작")]
     public bool EndZtoX;
     [Header("에니메이션 속도(프리팹 열어서 수정)")]
     public float Shutter_animationspeed=1f;
