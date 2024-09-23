@@ -25,7 +25,7 @@ public class renderpassmanager : MonoBehaviour
                 fullscreenrenderfeauture = a;
             }
         }
-
+        if(fullscreenrenderfeauture!=null)
         fullscreenrenderfeauture.SetActive(false);
 
     }
