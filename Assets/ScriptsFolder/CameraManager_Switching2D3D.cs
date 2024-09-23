@@ -125,7 +125,8 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
             PlayerStat.instance.MoveState = movestate2D;
         }
     }
-    IEnumerator SwitchCameraForTransDimensionCorutine()
+    
+ public   IEnumerator SwitchCameraForTransDimensionCorutine()
     {
         if (camera2D == null || camera3D == null)
             yield break;
@@ -159,14 +160,16 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         if (trans3D)
         {
             SwapDefaultCamera(camera3D);
-            if(camera2D!=null)
-            camera2D.enabled = (false);
+            if (camera2D != null) 
+                camera2D.enabled = (false);
+            camera3D.enabled = true;
         }
         else
         {
             SwapDefaultCamera(camera2D);
             if (camera3D != null)
                 camera3D.enabled = (false);
+            camera2D.enabled = true;
         }
     }
 

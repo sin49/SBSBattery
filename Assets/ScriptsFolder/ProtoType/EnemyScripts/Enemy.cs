@@ -398,6 +398,7 @@ public class Enemy: Character,DamagedByPAttack
         else
         {
             rb.velocity = Vector3.zero;
+            if(attackCollider!=null)
             attackCollider.SetActive(false);
             if (target != null)
             {
@@ -463,9 +464,10 @@ public class Enemy: Character,DamagedByPAttack
     #region 이동함수
     public override void Move()
     {
+  
         if (eStat.eState != EnemyState.dead || eStat.eState != EnemyState.hitted)
         {
-
+           
             if (tracking)
             {
                 if (!activeAttack && !onAttack)
@@ -473,7 +475,10 @@ public class Enemy: Character,DamagedByPAttack
                     if (movepattern == EnemyMovePattern. patrol)
                     {
                         if (patrolType == PatrolType.movePatrol && onPatrol)
+                        {
+                        
                             PatrolTracking();
+                        }
                     }
                     if(searchPlayer)
                         TrackingMove();
@@ -532,6 +537,7 @@ public class Enemy: Character,DamagedByPAttack
 
         if (SetRotation())
         {
+          
             enemymovepattern();
             if (soundplayer != null)
                 soundplayer.PlayMoveSound();
