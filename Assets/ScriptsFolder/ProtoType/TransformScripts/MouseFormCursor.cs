@@ -74,6 +74,7 @@ public class MouseFormCursor : MonoBehaviour
         if (interactObj.TryGetComponent<Enemy>(out enemy))
         {
             enemy.gameObject.layer = LayerMask.NameToLayer("Default");
+
             enemy.GetComponent<Collider>().isTrigger = false;
             enemy.GetComponent<Rigidbody>().useGravity = true;
             enemy.GetComponent<Rigidbody>().isKinematic = false;
