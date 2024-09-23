@@ -652,17 +652,17 @@ public class Player : Character
             {
                 transform.GetChild(0).rotation = Quaternion.Euler(new Vector3(0, 0, 0));
                 transform.Translate(Vector3.forward * PlayerStat.instance.moveSpeed * Time.fixedDeltaTime);
-                if (transform.position.z > t.position.z)
+                if (transform.position.z- t.position.z > -0.5)
                 {
                     transform.position = new Vector3(transform.position.x, transform.position.y, t.position.z);
                     checker = true;
                 }
             }
-            else if (distance.z < 0)
+            else if (distance.z <0)
             {
                 transform.GetChild(0).rotation = Quaternion.Euler(new Vector3(0, 180, 0));
                 transform.Translate(Vector3.back * PlayerStat.instance.moveSpeed * Time.fixedDeltaTime);
-                if (transform.position.z < t.position.z)
+                if (transform.position.z- t.position.z <0.5 )
                 {
                     transform.position = new Vector3(transform.position.x, transform.position.y, t.position.z);
                     checker = true;
@@ -675,6 +675,7 @@ public class Player : Character
             yield return null;
         }
         isRun = false;
+        rotatebymovestate();
         Debug.Log("Zmove Complete");
     }
     public IEnumerator moveportalanimationZX(Transform t)
@@ -744,9 +745,9 @@ public class Player : Character
           
                 yield return null;
             }
-   
 
-          
+
+        rotatebymovestate();
         isRun = false;
 
     }
