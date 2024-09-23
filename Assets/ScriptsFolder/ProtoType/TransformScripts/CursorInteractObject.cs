@@ -33,6 +33,7 @@ public class CursorInteractObject : MonoBehaviour
         if (TryGetComponent<Enemy>(out enemy))
         {
             enemy.onStun = true;
+            if(enemy.animaor !=null)
             enemy.animaor.SetTrigger("Caught");
             if (enemy.skinRenderer != null)
             {
