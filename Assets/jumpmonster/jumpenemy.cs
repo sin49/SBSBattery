@@ -50,23 +50,23 @@ public class jumpenemy : Enemy
     }
     IEnumerator jumpmove()
     {
-        if (activeAttack)
-        {
-            activeAttack = false;
-            oncorutine = false;
-            yield return new WaitForSeconds(jumpdelay);
-            yield break;
-        }
+        //    if (activeAttack)
+        //    {
+        //        activeAttack = false;
+        //        oncorutine = false;
+        //        yield return new WaitForSeconds(jumpdelay);
+        //        yield break;
+        //    }
         oncorutine = true;
         animaor.SetTrigger("jump");
         yield return new WaitForSeconds(0.07f);
-        if (activeAttack)
-        {
-            activeAttack = false;
-            oncorutine = false;
-            yield return new WaitForSeconds(jumpdelay);
-            yield break;
-        }
+        //if (activeAttack)
+        //{
+        //    activeAttack = false;
+        //    oncorutine = false;
+        //    yield return new WaitForSeconds(jumpdelay);
+        //    yield break;
+        //}
         rb.AddForce(Vector3.up * jumpforce + eStat.moveSpeed * transform.forward, ForceMode.Impulse);
         yield return new WaitForSeconds(1.08f);
 

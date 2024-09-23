@@ -39,16 +39,16 @@ public class CameraManager : MonoBehaviour
     public virtual void ActiveCamera(CinemachineVirtualCamera camera)
     {
 
-        activedcamera.gameObject.SetActive(false);
-        camera.gameObject.SetActive(true);
+        activedcamera.enabled=(false);
+        camera.enabled=(true);
     
         activedcamera = camera;
     }
     public virtual void ActiveCamera(CinemachineVirtualCamera camera,Collider Bounding)
     {
       
-        activedcamera.gameObject.SetActive(false);
-        camera.gameObject.SetActive(true);
+         activedcamera.enabled=(false);
+        camera.enabled=(true);
         camera.GetComponent<CinemachineConfiner>().m_BoundingVolume = Bounding;
         activedcamera = camera;
     }

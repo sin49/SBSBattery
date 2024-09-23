@@ -62,7 +62,7 @@ public class fireenemy : Enemy
         fireLight.gameObject.SetActive(false);
         foreach (var a in fireeffects)
         {
-            a.Pause();
+            a.Stop();
         }
 
         breathsmallcollider.gameObject.SetActive(false);
@@ -119,6 +119,10 @@ public class fireenemy : Enemy
         }
         breathcollider.gameObject.SetActive(false);
         fireLight.gameObject.SetActive(false);
+        foreach (var a in fireeffects)
+        {
+            a.Stop();
+        }
         yield return new WaitForSeconds(breathdelay);
         oncorutine = false;
         InitAttackCoolTime();
