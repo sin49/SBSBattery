@@ -77,7 +77,7 @@ public class PlayerXChangePortal : InteractiveObject
         if (EndZtoX)
             yield return StartCoroutine(PlayerHandler.instance.CurrentPlayer.moveportalanimationZX(teleporterdestination));
         else
-            yield return StartCoroutine(PlayerHandler.instance.CurrentPlayer.moveportalanimationZX(teleporterdestination));
+            yield return StartCoroutine(PlayerHandler.instance.CurrentPlayer.moveportalanimation(teleporterdestination));
         PlayerHandler.instance.CantHandle = false;
 
     }
