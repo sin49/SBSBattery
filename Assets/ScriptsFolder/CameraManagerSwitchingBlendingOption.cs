@@ -43,6 +43,9 @@ public class CameraManagerSwitchingBlendingOption : CameraManager
     Camera cam;
     public IEnumerator SwitchCameraCoroutine(CinemachineVirtualCamera newCamera)
     {
+        if (activedcamera == newCamera)
+            yield break;
+
         isTransitioning = true;
 
    

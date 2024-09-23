@@ -10,8 +10,13 @@ public class PlayerXChangePortal : InteractiveObject
     public bool HasLoadingEffect;
     public Animator _animation;
 
+
+
     public Transform teleportertransform;
     public Transform teleporterdestination;
+
+    public Collider portalcollider;
+
     [Header("들어갈 때 Z 부터 시작")]
     public bool StartZtoX;
     [Header("나올 때 Z부터 시작")]
@@ -56,7 +61,8 @@ public class PlayerXChangePortal : InteractiveObject
     }
     public void MovePosition(string s=null)
     {
-
+        portalcollider.enabled = true;
+        Destination.portalcollider.enabled = false;
             Debug.Log("ㅇㅇㅇㅇㅇ");
             PlayerHandler.instance.CurrentPlayer.transform.position = Destination.teleportertransform.position;
         if (PlayerHandler.instance.CurrentCamera != null)
@@ -80,7 +86,7 @@ public class PlayerXChangePortal : InteractiveObject
             yield return StartCoroutine(PlayerHandler.instance.CurrentPlayer.moveportalanimation(teleporterdestination));
         PlayerHandler.instance.CantHandle = false;
         PlayerHandler.instance.CurrentPlayer.OnMoveAnimationCorutine = false;
-
+        portalcollider.enabled = true;
     }
    IEnumerator MoveAnimation()
     {
@@ -109,6 +115,7 @@ public class PlayerXChangePortal : InteractiveObject
     public override void Active(direction direct)
     {
         base.Active(direct);
+        portalcollider.enabled = false;
         StartCoroutine(MoveAnimation());
        
         //PlayerCam.instance.PlayerZVaule += ZchangeVaule;
