@@ -125,8 +125,10 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
             PlayerStat.instance.MoveState = movestate2D;
         }
     }
-    
- public   IEnumerator SwitchCameraForTransDimensionCorutine()
+
+    public renderpassmanager renderpassmanager_;
+  public  IEnumerator SwitchCameraForTransDimensionCorutine()
+
     {
         if (camera2D == null || camera3D == null)
             yield break;
@@ -138,6 +140,7 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         camera2D.m_Lens.Orthographic = false;
         camera2D.m_Lens.FieldOfView = fovview;
         Time.timeScale = 0;
+        renderpassmanager_.changepixel(trans3D);
         if (trans3D)
         {
             camera3D.transform.position = camera2D.transform.position;
