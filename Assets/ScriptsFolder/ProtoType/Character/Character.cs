@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class Character: MonoBehaviour
 {
     protected CharacterSoundPlayer soundplayer;
-    event Action hittedevent;
+   protected event Action hittedevent;
     event Action attackevent;
     event Action moveevent;
     event Action deadevent;
@@ -37,6 +37,10 @@ public abstract class Character: MonoBehaviour
     public virtual void Attack()
     {
         attackevent?.Invoke();
+    }
+    protected void InvokeHittedEvent()
+    {
+        hittedevent?.Invoke();
     }
     public virtual void Damaged(float damage)
     {
