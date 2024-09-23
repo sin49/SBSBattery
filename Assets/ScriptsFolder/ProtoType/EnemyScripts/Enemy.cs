@@ -127,6 +127,12 @@ public class Enemy: Character,DamagedByPAttack
         actionhandler = GetComponent<EnemyAttackHandler>();
         if (actionhandler != null)
             actionhandler.e = this;
+
+        if (flatObject != null)
+        {
+            originScale = flatObject.transform.localScale;
+            flatScale = new(flatObject.transform.localScale.x, 0.3f, flatObject.transform.localScale.z);
+        }
     }
 
     public void InitPatrolPoint()
@@ -151,12 +157,16 @@ public class Enemy: Character,DamagedByPAttack
 
     private void Update()
     {
-        ReadyAttackTime();
-
-        if (rangeCollider != null)
+        if (!onStun)
         {
-            rangeCollider.GetComponent<BoxCollider>().center = rangePos;
-            rangeCollider.GetComponent<BoxCollider>().size = rangeSize;
+
+            ReadyAttackTime();
+
+            if (rangeCollider != null)
+            {
+                rangeCollider.GetComponent<BoxCollider>().center = rangePos;
+                rangeCollider.GetComponent<BoxCollider>().size = rangeSize;
+            }
         }
 
     }
@@ -168,34 +178,35 @@ public class Enemy: Character,DamagedByPAttack
 
         if (!onStun)
         {
-            if(!attackRange)
+            if (!attackRange)
                 Move();
-        }
-        if (movepattern == EnemyMovePattern.stop )
-        {
-            if (tracking && !onAttack && !attackRange && searchPlayer)
+
+            if (movepattern == EnemyMovePattern.stop)
             {
-                isMove = true;
+                if (tracking && !onAttack && !attackRange && searchPlayer)
+                {
+                    isMove = true;
+                }
+                else
+                {
+                    isMove = false;
+                }
             }
             else
             {
-                isMove = false;
+                if (tracking && !onAttack && !attackRange)
+                {
+                    isMove = true;
+                }
+                else
+                {
+                    isMove = false;
+                }
             }
-        }
-        else
-        {
-            if (tracking && !onAttack && !attackRange)
+            if (animaor != null)
             {
-                isMove = true;
+                animaor.SetBool("isMove", isMove);
             }
-            else
-            {
-                isMove = false;
-            }
-        }
-        if (animaor != null)
-        {
-            animaor.SetBool("isMove", isMove);
         }
         ForwardWallRayCheck();
         UpWallRayCheck();
@@ -397,12 +408,30 @@ public class Enemy: Character,DamagedByPAttack
         }
         else
         {
-            rb.velocity = Vector3.zero;
-            if(attackCollider!=null)
-            attackCollider.SetActive(false);
-            if (target != null)
+            if (!onStun)
             {
-                if (PlayerHandler.instance.CurrentPlayer != null && target.gameObject == PlayerHandler.instance.CurrentPlayer.gameObject)
+                rb.velocity = Vector3.zero;
+                if (attackCollider != null)
+                    attackCollider.SetActive(false);
+                if (target != null)
+                {
+                    if (PlayerHandler.instance.CurrentPlayer != null && target.gameObject == PlayerHandler.instance.CurrentPlayer.gameObject)
+                    {
+                        target = PlayerHandler.instance.CurrentPlayer.transform;
+                        /*if (target.GetChild(0).position.x > transform.position.x)
+                        {
+                            transform.rotation = Quaternion.Euler(0, 90, 0);
+                        }
+                        else
+                        {
+                            transform.rotation = Quaternion.Euler(0, -90, 0);
+                        }*/
+                        Vector3 pos = target.position - transform.position;
+                        pos.y = 0;
+                        transform.rotation = Quaternion.LookRotation(pos);
+                    }
+                }
+                else
                 {
                     target = PlayerHandler.instance.CurrentPlayer.transform;
                     /*if (target.GetChild(0).position.x > transform.position.x)
@@ -417,37 +446,41 @@ public class Enemy: Character,DamagedByPAttack
                     pos.y = 0;
                     transform.rotation = Quaternion.LookRotation(pos);
                 }
-            }
-            else
-            {
-                target = PlayerHandler.instance.CurrentPlayer.transform;
-                /*if (target.GetChild(0).position.x > transform.position.x)
+                rb.AddForce(-transform.forward * 3f, ForceMode.Impulse);
+                if (animaor != null)
                 {
-                    transform.rotation = Quaternion.Euler(0, 90, 0);
+                    animaor.SetTrigger("isHitted");
+                    activeAttack = true;
+                    attackTimer = eStat.initattackCoolTime;
+                    if (skinRenderer != null)
+                    {
+                        Material[] materials = skinRenderer.materials;
+                        materials[1] = hittedMat;
+                        skinRenderer.materials = materials;
+                    }
                 }
-                else
-                {
-                    transform.rotation = Quaternion.Euler(0, -90, 0);
-                }*/
-                Vector3 pos = target.position - transform.position;
-                pos.y = 0;
-                transform.rotation = Quaternion.LookRotation(pos);
+                //InitAttackCoolTime();
             }
-            rb.AddForce(-transform.forward * 3f, ForceMode.Impulse);
-            if (animaor != null)
-            {
-                animaor.SetTrigger("isHitted");
-                activeAttack = true;
-                attackTimer = eStat.initattackCoolTime;           
-                if (skinRenderer != null)
-                {
-                    Material[] materials = skinRenderer.materials;
-                    materials[1] = hittedMat;
-                    skinRenderer.materials = materials;
-                }
-            }
-            //InitAttackCoolTime();
         }
+    }
+    [Header("납작해지도록 적용될 스케일 오브젝트")]
+    public GameObject flatObject;
+    public float flatTime;
+    Vector3 originScale;
+    Vector3 flatScale;
+    //납작하게 되는 함수
+    public virtual void FlatByIronDwonAttack()
+    {
+        StartCoroutine(RollBackFromFlatState());
+    }
+
+    IEnumerator RollBackFromFlatState()
+    {
+        flatObject.transform.localScale = flatScale;
+
+        yield return new WaitForSeconds(flatTime);
+
+        flatObject.transform.localScale = originScale;
     }
 
     IEnumerator HiiitedState()

@@ -8,7 +8,7 @@ public class DownAttackCollider : MeleeCollider
 
     private void Start()
     {
-        //saveEffect = Instantiate(hitEffect).GetComponent<ParticleSystem>();
+        saveEffect = Instantiate(hitEffect).GetComponent<ParticleSystem>();
         damage = PlayerStat.instance.atk;
         gameObject.SetActive(false);
     }
@@ -23,13 +23,17 @@ public class DownAttackCollider : MeleeCollider
             DamagedByPAttack script;
             if (other.TryGetComponent<DamagedByPAttack>(out script))
             {
+                if (GetComponentInParent<HouseholdIronTransform>())
+                {
+                    other.GetComponent<Enemy>().onStun = true;
+                    other.GetComponent<Enemy>().FlatByIronDwonAttack();
+                }
                 script.Damaged(damage);
                 Debug.Log("몬스터 Damage받음");
             }
-            Vector3 effectPos = new(other.transform.position.x, other.transform.position.y + .5f, other.transform.position.z);
 
-            //saveEffect.transform.position = new(other.transform.position.x, other.transform.position.y + .5f, other.transform.position.z);
-            //saveEffect.Play();
+            saveEffect.transform.position = new(other.transform.position.x, other.transform.position.y + .5f, other.transform.position.z);
+            saveEffect.Play();
         }
 
 
