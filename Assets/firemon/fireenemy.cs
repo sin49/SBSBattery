@@ -34,9 +34,19 @@ public class fireenemy : Enemy
     bool oncorutine;
     public override void Damaged(float damage)
     {
+        if(!oncorutine)
         base.Damaged(damage);
+        else
+        {
+            InvokeHittedEvent();
+            eStat.hp -= damage;
+            if (eStat.hp <= 0)
+            {
+                eStat.hp = 0;
 
-        StartCoroutine(waitingdelay());
+                Dead();
+            }
+        }
     }
     public override void Attack()
     {
@@ -63,7 +73,7 @@ public class fireenemy : Enemy
         fireLight.gameObject.SetActive(false);
         foreach (var a in fireeffects)
         {
-            a.Pause();
+            a.Stop();
         }
 
         breathsmallcollider.gameObject.SetActive(false);
@@ -120,8 +130,21 @@ public class fireenemy : Enemy
         }
         breathcollider.gameObject.SetActive(false);
         fireLight.gameObject.SetActive(false);
+        foreach (var a in fireeffects)
+        {
+            a.Stop();
+        }
         yield return new WaitForSeconds(breathdelay);
         oncorutine = false;
         InitAttackCoolTime();
     }
+
+    public override void HittedRotate()
+    {
+        if(!oncorutine)
+            base.HittedRotate();
+     
+
+    }
+  
 }

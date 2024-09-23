@@ -397,6 +397,29 @@ public class Enemy: Character,DamagedByPAttack
     }
 
     #region 피격함수
+    public virtual void HittedRotate()
+    {
+        if (target != null)
+        {
+            if (PlayerHandler.instance.CurrentPlayer != null && target.gameObject == PlayerHandler.instance.CurrentPlayer.gameObject)
+            {
+                target = PlayerHandler.instance.CurrentPlayer.transform;
+
+                Vector3 pos = target.position - transform.position;
+                pos.y = 0;
+                transform.rotation = Quaternion.LookRotation(pos);
+            }
+        }
+        else
+        {
+            target = PlayerHandler.instance.CurrentPlayer.transform;
+
+            Vector3 pos = target.position - transform.position;
+            pos.y = 0;
+            transform.rotation = Quaternion.LookRotation(pos);
+        }
+        rb.AddForce(-transform.forward * 3f, ForceMode.Impulse);
+    }
     public override void Damaged(float damage)
     {
         base.Damaged(damage);
@@ -409,45 +432,14 @@ public class Enemy: Character,DamagedByPAttack
         }
         else
         {
+            HittedRotate();
             if (!onStun)
             {
                 rb.velocity = Vector3.zero;
                 if (attackCollider != null)
                     attackCollider.SetActive(false);
-                if (target != null)
-                {
-                    if (PlayerHandler.instance.CurrentPlayer != null && target.gameObject == PlayerHandler.instance.CurrentPlayer.gameObject)
-                    {
-                        target = PlayerHandler.instance.CurrentPlayer.transform;
-                        /*if (target.GetChild(0).position.x > transform.position.x)
-                        {
-                            transform.rotation = Quaternion.Euler(0, 90, 0);
-                        }
-                        else
-                        {
-                            transform.rotation = Quaternion.Euler(0, -90, 0);
-                        }*/
-                        Vector3 pos = target.position - transform.position;
-                        pos.y = 0;
-                        transform.rotation = Quaternion.LookRotation(pos);
-                    }
-                }
-                else
-                {
-                    target = PlayerHandler.instance.CurrentPlayer.transform;
-                    /*if (target.GetChild(0).position.x > transform.position.x)
-                    {
-                        transform.rotation = Quaternion.Euler(0, 90, 0);
-                    }
-                    else
-                    {
-                        transform.rotation = Quaternion.Euler(0, -90, 0);
-                    }*/
-                    Vector3 pos = target.position - transform.position;
-                    pos.y = 0;
-                    transform.rotation = Quaternion.LookRotation(pos);
-                }
-                rb.AddForce(-transform.forward * 3f, ForceMode.Impulse);
+                
+               
                 if (animaor != null)
                 {
                     animaor.SetTrigger("isHitted");
