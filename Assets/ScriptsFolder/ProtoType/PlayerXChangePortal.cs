@@ -72,17 +72,19 @@ public class PlayerXChangePortal : InteractiveObject
         closed= false;
   
         yield return new WaitForSeconds(playermovewaitingtime);//텔레포터 열기 까지 대기시간
-    
+
 
         if (EndZtoX)
             yield return StartCoroutine(PlayerHandler.instance.CurrentPlayer.moveportalanimationZX(teleporterdestination));
         else
             yield return StartCoroutine(PlayerHandler.instance.CurrentPlayer.moveportalanimationZX(teleporterdestination));
         PlayerHandler.instance.CantHandle = false;
+        PlayerHandler.instance.CurrentPlayer.OnMoveAnimationCorutine = false;
 
     }
    IEnumerator MoveAnimation()
     {
+        PlayerHandler.instance.CurrentPlayer.OnMoveAnimationCorutine = true;
         closed = false;
 
         PlayerHandler.instance.CantHandle = true;
@@ -102,6 +104,7 @@ public class PlayerXChangePortal : InteractiveObject
             GameManager.instance.LoadingEffectToAction(MovePosition);
         yield return new WaitForSeconds(initializeanimatortime);//초기화 되기까지 시간
         closed = false;
+
     }
     public override void Active(direction direct)
     {

@@ -590,6 +590,7 @@ public class Player : Character
 
         transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
     }
+    public bool OnMoveAnimationCorutine;
     public IEnumerator moveportalanimation(Transform t)
     {
 
@@ -658,6 +659,7 @@ public class Player : Character
             {
                 checker = true;
             }
+            Debug.Log(transform.position.z + "|" + t.position.z);
             yield return null;
         }
         isRun = false;
