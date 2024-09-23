@@ -675,6 +675,7 @@ public class Player : Character
             yield return null;
         }
         isRun = false;
+        rotatebymovestate();
         Debug.Log("Zmove Complete");
     }
     public IEnumerator moveportalanimationZX(Transform t)
@@ -744,9 +745,9 @@ public class Player : Character
           
                 yield return null;
             }
-   
 
-          
+        rotatebymovestate();
+
         isRun = false;
 
     }
