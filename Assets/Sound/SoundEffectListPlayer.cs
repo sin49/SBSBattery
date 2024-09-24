@@ -19,7 +19,7 @@ public class SoundEffectListPlayer : SEPlayer
         {
 
         }
-        else if(!audiosource.isPlaying)
+        else if(audiosource!=null&&!audiosource.isPlaying)
         {
             if (list[n] != null)
             {
