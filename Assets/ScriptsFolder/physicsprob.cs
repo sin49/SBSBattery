@@ -32,5 +32,6 @@ public class physicsprob : MonoBehaviour
 
         rb.AddForce(EnvironmentForce,ForceMode.VelocityChange);
         EnvironmentForce = Vector3.zero;
+        rb.velocity = Vector3.zero;
     }
 }

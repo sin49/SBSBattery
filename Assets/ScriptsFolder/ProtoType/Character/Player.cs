@@ -11,11 +11,17 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using UnityEngine.Windows.Speech;
 
+
+public interface environmentObject
+{
+    public void AddEnviromentPower(Vector3 power);
+}
+
 public enum MoveInput { MoveRightin2D = 1, MoveRightin3D }
 
 public enum direction { Left = -1, none = 0, Right = 1 }
 public enum directionZ { back = -1, none = 0, forward = 1 }
-public class Player : Character
+public class Player : Character,environmentObject
 {
     public MoveInput Moveinput_;
 
