@@ -32,7 +32,8 @@ public class HouseholdIronTransform : Player
     [Header("방향 전환 딜레이 시간")]
     public float rotateTimeMax;
     float rotateTimer;
-
+    [Header("돌진 이펙트")]
+    public ParticleSystem ironDashEffect;
     [Header("돌진 캔슬을 위한 레이")]
     public float rushRay;
     public float rayHeightValue;
@@ -792,6 +793,11 @@ public class HouseholdIronTransform : Player
                 yield return null;
             }
             SecondFormActive();
+            if (!ironDashEffect.gameObject.activeSelf)
+            {
+                ironDashEffect.gameObject.SetActive(true);
+            }
+            ironDashEffect.Play();
             onRush = true;
             rushEnd = false;
             ironAttack = true;
@@ -807,6 +813,7 @@ public class HouseholdIronTransform : Player
         rushEnd = true;
         readyRush = false;
         rushTimer = rushTimeMax;
+        ironDashEffect.Stop();
         SecondFormDeactive();
         Humonoidanimator.Play("RushEnd");
         StartCoroutine(RushEndCheck());
@@ -859,6 +866,7 @@ public class HouseholdIronTransform : Player
 
     public void SecondFormDeactive()
     {
+
         Destroy(Instantiate(changeEffect, transform.position, Quaternion.identity), 2f);
         for (int i = 0; i < Humonoidanimator.transform.childCount; i++)
         {
