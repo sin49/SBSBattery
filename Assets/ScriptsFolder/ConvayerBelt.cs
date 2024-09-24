@@ -14,7 +14,7 @@ public class ConvayerBelt : MonoBehaviour
     {
         if (other.CompareTag("Player")|| other.CompareTag("Enemy"))
         {
-            Player player = other.GetComponent<Player>(); // Rigidbody로 수정
+            environmentObject player = other.GetComponent<environmentObject>(); // Rigidbody로 수정
             if (player != null)
             {
 

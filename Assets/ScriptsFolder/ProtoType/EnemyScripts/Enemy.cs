@@ -1,4 +1,5 @@
 
+
 using System.Collections;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -12,7 +13,7 @@ public interface DamagedByPAttack
 }
 
 
-public class Enemy: Character,DamagedByPAttack
+public class Enemy: Character,DamagedByPAttack,environmentObject
 {
     public Color testcolor;
     public EnemyMovePattern movepattern;
@@ -28,6 +29,7 @@ public class Enemy: Character,DamagedByPAttack
     public Material hittedMat;
     public Renderer skinRenderer;
     public ParticleSystem moveEffect;
+    public Vector3 environmentforce;
     [HideInInspector]
     public bool isMove;
     [Header("#플레이어 탐색 큐브 조정#\n(현재 CCTV 몬스터에서만)")]
@@ -212,6 +214,13 @@ public class Enemy: Character,DamagedByPAttack
         ForwardWallRayCheck();
         UpWallRayCheck();
         WallCheckResult();
+        if(environmentforce
+            !=Vector3.zero)
+        {
+            rb.AddForce(environmentforce, ForceMode.VelocityChange);
+            environmentforce = Vector3.zero;
+            rb.velocity = Vector3.zero;
+        }
     }
 
     void DistanceToPlayer()
@@ -489,7 +498,7 @@ public class Enemy: Character,DamagedByPAttack
             eStat.eState = EnemyState.attack;
     }
     #endregion
-
+  protected  bool onmove;
     #region 이동함수
     public override void Move()
     {
@@ -555,10 +564,11 @@ public class Enemy: Character,DamagedByPAttack
     }
     public virtual void enemymovepattern()
     {
-        rb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
+        rb.MovePosition(environmentforce+transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
     }
     public void PatrolTracking()
     {
+    
         testTarget = targetPatrol - transform.position;
         testTarget.y = 0;
 
@@ -862,6 +872,11 @@ public class Enemy: Character,DamagedByPAttack
         onAttack = false;
         activeAttack = false;
         attackTimer = eStat.initattackCoolTime;
+    }
+
+    public void AddEnviromentPower(Vector3 power)
+    {
+        environmentforce = power;
     }
     #endregion
 
