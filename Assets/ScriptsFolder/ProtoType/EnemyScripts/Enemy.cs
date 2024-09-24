@@ -52,6 +52,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     [Tooltip("설정 X")] public float disToPlayer;
 
     [Header("#정찰 이동관련(정찰 그룹, 정찰목표값, 정찰 대기시간)#")]
+    public Transform[] PatrolTransform;
     [Tooltip("설정 X")]public Vector3[] patrolGroup; // 0번째: 왼쪽, 1번째: 오른쪽
     [Tooltip("설정 X")]public Vector3 targetPatrol; // 정찰 목표지점-> patrolGroup에서 지정
     [Tooltip("정찰 대기시간")]public float patrolWaitTime; // 정찰 대기시간
@@ -61,7 +62,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     [Tooltip("오른쪽 정찰 범위")]public float rightPatrolRange; // 우측 정찰 범위
     [Tooltip("정찰 거리(설정 안해도됨)")]public float patrolDistance; // 정찰 거리
     
-    Vector3 leftPatrol, rightPatrol;
+   protected Vector3 leftPatrol, rightPatrol;
     
     public bool onPatrol;
     [Header("#그려질 정찰 큐브 사이즈 결정#")]
@@ -141,11 +142,24 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public void InitPatrolPoint()
     {
         onPatrol = true;
-        patrolGroup = new Vector3[2];
-        patrolGroup[0] = new(transform.position.x - leftPatrolRange, transform.position.y, transform.position.z);
-        patrolGroup[1] = new(transform.position.x + rightPatrolRange, transform.position.y, transform.position.z);
-        leftPatrol = patrolGroup[0];
-        rightPatrol = patrolGroup[1];
+        if (PatrolTransform.Length==0)
+        {
+            patrolGroup = new Vector3[2];
+            patrolGroup[0] = new(transform.position.x - leftPatrolRange, transform.position.y, transform.position.z);
+            patrolGroup[1] = new(transform.position.x + rightPatrolRange, transform.position.y, transform.position.z);
+            leftPatrol = patrolGroup[0];
+            rightPatrol = patrolGroup[1];
+        }
+        else
+        {
+            patrolGroup = new Vector3[PatrolTransform.Length];
+          for(int n=0; n < PatrolTransform.Length; n++)
+            {
+                patrolGroup[n] = PatrolTransform[n].position;
+            }
+            leftPatrol = patrolGroup[0];
+            rightPatrol = patrolGroup[1];
+        }
     }    
 
     private void Start()
@@ -530,7 +544,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     }
 
     #region 추격
-    public void TrackingMove()
+    public virtual void TrackingMove()
     {
         testTarget = target.position - transform.position;
         //var vector = testTarget;
@@ -566,7 +580,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     {
         rb.MovePosition(environmentforce+transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
     }
-    public void PatrolTracking()
+    public virtual void PatrolTracking()
     {
     
         testTarget = targetPatrol - transform.position;
@@ -591,7 +605,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
     bool setPatrol;
 
-    IEnumerator InitPatrolTarget()
+  protected  IEnumerator InitPatrolTarget()
     {
         yield return new WaitForSeconds(patrolWaitTime);        
         PatrolChange();
@@ -608,7 +622,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         tracking = true;
     }    
        
-    public void PatrolChange()
+    public virtual void PatrolChange()
     {
         patrolGroup[0].x = leftPatrol.x - leftPatrolRange;
         patrolGroup[0].y = transform.position.y;
@@ -647,7 +661,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     [Header("#로테이션레벨(기본적으로 85)")]
     public float rotLevel;
     public float testAngle;
-    public bool SetRotation()
+    public virtual bool SetRotation()
     {
         bool completeRot = false;
         if (target != null && !onPatrol)
