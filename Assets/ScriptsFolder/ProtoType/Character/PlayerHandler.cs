@@ -452,7 +452,8 @@ public class PlayerHandler : MonoBehaviour
             //Dimensionchangeevent?.Invoke();
 
         }
-
+        if (!jumprestrict)
+            
         if (InteractTimer > 0)
             InteractTimer -= Time.deltaTime;
 
@@ -468,7 +469,7 @@ public class PlayerHandler : MonoBehaviour
                 InteractTimer = PlayerStat.instance.InteractDelay;
             }
         }
-        if(!jumprestrict)
+       
         if (CurrentPlayer.onInterarctive && (int)PlayerStat.instance.MoveState < 4)
         {
 
@@ -518,20 +519,10 @@ public class PlayerHandler : MonoBehaviour
 
             if (Input.GetKey(KeySettingManager.instance.DeformKeycode))
             {
-                switch (CurrentType)
-                {
-                    case TransformType.remoteform:
-                        DeTransformtimer += Time.deltaTime;
-                        if (DeTransformtimer > DeTransformtime)
-                        {
-                            DeTransformtimer = 0;
-                            //Deform();
-                        }
-                        break;
-                    default:
-                        break;
+              if(CurrentType!=TransformType.Default)
+                    Deform();
 
-                }
+
             }
 
 
@@ -627,12 +618,7 @@ PlayerInventory.instance.checkessesntialitem("item01")*/)
                 switch (CurrentType)
                 {
                     case TransformType.remoteform:
-                        DeTransformtimer += Time.deltaTime;
-                        if (DeTransformtimer > DeTransformtime)
-                        {
-                            DeTransformtimer = 0;
-                            //Deform();
-                        }
+                       
                         break;
                     default:
                         break;
