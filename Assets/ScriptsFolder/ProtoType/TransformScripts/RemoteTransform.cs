@@ -18,11 +18,11 @@ public class RemoteTransform : Player
 
     public event Action<GameObject> RemoteObjectEvent;
 
-    public List<GameObject> remoteObj; // 탐지 범위에 저장될 상호작용 오브젝트 정보
+    public List<RemoteObject> remoteObj; // 탐지 범위에 저장될 상호작용 오브젝트 정보
 
 
 
- public   GameObject closestObject;
+ public RemoteObject closestObject;
    [ HideInInspector]
     public bool IgnoreRemoteTrigger;
     GameObject activeEffectInstance;
@@ -46,7 +46,7 @@ public class RemoteTransform : Player
 
 
     RemoteObject ClosestObjectScript;
-    public void GetClosestObjectIgnoreTrigger(GameObject obj)
+    public void GetClosestObjectIgnoreTrigger(RemoteObject obj)
     {
         IgnoreRemoteTrigger = true;
         closestObject = obj;
@@ -92,8 +92,9 @@ public class RemoteTransform : Player
     void UpdateClosestRemoteObjectEffect()
     {
         float closestdistance = float.MaxValue;
-        GameObject newclosestobject = null;
-       
+        RemoteObject newclosestobject = null;
+        if (closestObject != null && !remoteObj.Contains(closestObject))
+            closestObject = null;
         for(int n = 0; n < remoteObj.Count; n++)
         {
             if (remoteObj[n] == null)
@@ -102,6 +103,10 @@ public class RemoteTransform : Player
                 n--;
                 continue;
             }
+            if (!remoteObj[n].CanControl)
+                continue;
+            //if (!remoteObj[n].GetComponent<RemoteObject>().CanControl)
+            //    continue;
             float distance = Vector3.Distance(transform.position, remoteObj[n].transform.position);
             if (distance < closestdistance)
             {
@@ -219,10 +224,19 @@ public class RemoteTransform : Player
     }
     public void ActiveRemoteObject()
     {
+
         if (closestObject != null)
-            closestObject.GetComponent<RemoteObject>().Active();
-        //closestObject = null;
-        ClosestObjectScript = null;
+        {
+            RemoteObject o = closestObject.GetComponent<RemoteObject>();
+            o.Active();
+
+            //closestObject = null;
+            if (!o.CanControl)
+            {
+                closestObject = null;
+                ClosestObjectScript = null;
+            }
+        }
 
     }
 }

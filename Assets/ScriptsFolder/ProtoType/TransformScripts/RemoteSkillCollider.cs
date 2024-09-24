@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class RemoteSkillCollider : MonoBehaviour
@@ -17,7 +18,7 @@ public class RemoteSkillCollider : MonoBehaviour
             if(other.TryGetComponent<RemoteObject>(out r))
             {
                 if(r.CanControl)
-                    remocon.remoteObj.Add(other.gameObject);
+                    remocon.remoteObj.Add(r);
             }
       
         }
@@ -27,9 +28,13 @@ public class RemoteSkillCollider : MonoBehaviour
     {
         if (other.CompareTag("GameController"))
         {
-       
-            if(remocon.remoteObj.Contains(other.gameObject))
-                remocon.remoteObj.Remove(other.gameObject);
+            RemoteObject r;
+            if (other.TryGetComponent<RemoteObject>(out r))
+            {
+                if (remocon.remoteObj.Contains(r))
+                    remocon.remoteObj.Remove(r);
+            }
+           
         }
     }
 }
