@@ -34,6 +34,8 @@ public class stair : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             p = PlayerHandler.instance.CurrentPlayer;
+            p.onstairforce = upgradeMoveforce;
+            p.stairdownforce = upgradeDownForce;
            p.onstair = true;
       
         
