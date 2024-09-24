@@ -19,7 +19,10 @@ public class PlayerStat : CharacterStat
     [HideInInspector]
     public CurrentAttack currentAttack;
 
-    [Header("#이단점프, 무적시간 등의 변수"),    HideInInspector]
+    [Header("#이단점프, 무적시간 등의 변수"), HideInInspector]
+
+    public bool jump;
+    
     public bool doubleJump; // 이단 점프 체크
     [HideInInspector]
     public bool ableJump;
@@ -56,13 +59,28 @@ public class PlayerStat : CharacterStat
     public void RecoverHP(float hppoint)
     {
         this.hp += hppoint;
-        recoverevent?.Invoke();
         if (this.hp > hpMax)
         {
             this.hp = hpMax;
         }
+        recoverevent?.Invoke();
+       
     }
-
+    event Action HPLoseEvent;
+    public void registerHPLoseAction(Action a)
+    {
+        HPLoseEvent += a;
+    }
+    public void LoseHP(float hppoint)
+    {
+        this.hp -= hppoint;
+        if (this.hp < 0)
+        {
+            this.hp = 0;
+        }
+        HPLoseEvent?.Invoke();
+       
+    }
     private void Awake()
     {
         if (instance == null)

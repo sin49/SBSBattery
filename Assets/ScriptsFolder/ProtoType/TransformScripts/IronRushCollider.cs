@@ -10,7 +10,7 @@ public class IronRushCollider : PlayerAttack
     private void Start()
     {
         householdIron = GetComponentInParent<HouseholdIronTransform>();
-        saveEffect = Instantiate(hitEffect, transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
+        //saveEffect = Instantiate(hitEffect, transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
         damage = householdIron.rushDamage;
         gameObject.SetActive(false);
     }
@@ -18,7 +18,9 @@ public class IronRushCollider : PlayerAttack
     public override void DamageCollider(Collider other)
     {
         base.DamageCollider(other);
-        saveEffect.transform.position = new(other.transform.position.x, other.transform.position.y + .5f, other.transform.position.z);
-        saveEffect.Play();
+        Vector3 effectPos = new(other.transform.position.x, other.transform.position.y + .5f, other.transform.position.z);
+        Instantiate(hitEffect, effectPos, Quaternion.identity);
+        /*saveEffect.transform.position = new(other.transform.position.x, other.transform.position.y + .5f, other.transform.position.z);
+        saveEffect.Play();*/
     }
 }
