@@ -12,7 +12,7 @@ public class ConvayerBelt : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player")|| other.CompareTag("Enemy"))
         {
             Player player = other.GetComponent<Player>(); // Rigidbody·Î ¼öÁ¤
             if (player != null)
