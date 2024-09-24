@@ -56,13 +56,28 @@ public class PlayerStat : CharacterStat
     public void RecoverHP(float hppoint)
     {
         this.hp += hppoint;
-        recoverevent?.Invoke();
         if (this.hp > hpMax)
         {
             this.hp = hpMax;
         }
+        recoverevent?.Invoke();
+       
     }
-
+    event Action HPLoseEvent;
+    public void registerHPLoseAction(Action a)
+    {
+        HPLoseEvent += a;
+    }
+    public void LoseHP(float hppoint)
+    {
+        this.hp -= hppoint;
+        if (this.hp < 0)
+        {
+            this.hp = 0;
+        }
+        HPLoseEvent?.Invoke();
+       
+    }
     private void Awake()
     {
         if (instance == null)

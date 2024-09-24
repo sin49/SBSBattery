@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ItemListUI : MonoBehaviour
@@ -10,7 +11,8 @@ public class ItemListUI : MonoBehaviour
     public Transform EssentialItemListTransform;
     public SettingUI settingUi;
 
-    public MultiplyItemIconUI multipleitemicon;
+    public MultiplyItemIconUI EnergyMultiple;
+    public MultiplyItemIconUI SpeedMultiple;
     List<ItemIconUI> MultiplyItemList = new List<ItemIconUI>();
     public Transform MultiplyItemListTransform;
 
@@ -40,9 +42,9 @@ public class ItemListUI : MonoBehaviour
         a.SetItem(i);
         list.Add(a);
     }
-    void AddItem(MUltiPlyitem i,int number, List<ItemIconUI> list, Transform t)
+    void AddItem(MultiplyItemIconUI ui,MUltiPlyitem i,int number, List<ItemIconUI> list, Transform t)
     {
-        var a = Instantiate(multipleitemicon.gameObject, t).GetComponent<MultiplyItemIconUI>();
+        var a = Instantiate(ui.gameObject, t).GetComponent<MultiplyItemIconUI>();
         a.SetItem(i, number);
         list.Add(a);
     }
@@ -91,8 +93,21 @@ public class ItemListUI : MonoBehaviour
         {
             if (MultiplyItemList.Count  <= n)
             {
-                AddItem(PlayerInventory.instance.MultiplyItems[n], Mlist[
+               
+               
+         
+                switch (
+                    PlayerInventory.instance.MultiplyItems[n].upgradeStatus)
+                {
+                    case UpgradeStatus.Energy:
+                        AddItem(EnergyMultiple,PlayerInventory.instance.MultiplyItems[n], Mlist[
                     PlayerInventory.instance.MultiplyItems[n].upgradeStatus], MultiplyItemList, MultiplyItemListTransform);
+                        break;
+                    case UpgradeStatus.MoveSpeed:
+                        AddItem(SpeedMultiple,PlayerInventory.instance.MultiplyItems[n], Mlist[
+                   PlayerInventory.instance.MultiplyItems[n].upgradeStatus], MultiplyItemList, MultiplyItemListTransform);
+                        break;
+                }
             }
             else
             {
