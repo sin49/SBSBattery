@@ -249,6 +249,7 @@ public class Player : Character
                         if (LandingEffect != null)
                             LandingEffect.SetActive(true);
                     }
+                    PlayerStat.instance.jump = true;
                     PlayerStat.instance.doubleJump = true;
                     SoundPlayer.PlayLandingSound();
              
@@ -272,6 +273,7 @@ public class Player : Character
                         if (LandingEffect != null)
                             LandingEffect.SetActive(true);
                     }
+                    PlayerStat.instance.jump = true;
                     PlayerStat.instance.doubleJump = true;
                     SoundPlayer.PlayLandingSound();
              
@@ -295,6 +297,7 @@ public class Player : Character
                         if (LandingEffect != null )
                             LandingEffect.SetActive(true);
                     }
+                    PlayerStat.instance.jump = true;
                     PlayerStat.instance.doubleJump = true;
                     SoundPlayer.PlayLandingSound();
                   
@@ -318,6 +321,7 @@ public class Player : Character
                         if (LandingEffect != null)
                             LandingEffect.SetActive(true);
                     }
+                    PlayerStat.instance.jump = true;
                     PlayerStat.instance.doubleJump = true;
                     SoundPlayer.PlayLandingSound();
              
@@ -1237,8 +1241,9 @@ public class Player : Character
         {
             if (!downAttack)
             {
-                if (!isJump /*&& onGround*/ && canjumpInput)
+                if ( /*&& onGround*/ PlayerStat.instance.jump && canjumpInput)
                 {
+                    PlayerStat.instance.jump = false;
                     Jump();
                 }
                 else if (canjumpInput && PlayerStat.instance.doubleJump)
