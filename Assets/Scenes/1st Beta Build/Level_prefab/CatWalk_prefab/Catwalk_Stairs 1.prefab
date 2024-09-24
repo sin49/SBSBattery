@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 6550990636260320205}
   - component: {fileID: 3598812262809110746}
   - component: {fileID: 2209527054688150453}
+  - component: {fileID: 7870625368186695900}
   m_Layer: 0
   m_Name: Box Collider
   m_TagString: Ground
@@ -181,3 +182,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.16666596, y: 1.9002465, z: 5.27421}
   m_Center: {x: -0.9166672, y: 0.45024928, z: -0.3374494}
+--- !u!114 &7870625368186695900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9179439151446365467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68686e9191695c94bab1956343e83761, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradeDownForce: 60
+  upgradeMoveforce: 4
+  StairColliders:
+  - {fileID: 6550990636260320205}
+  - {fileID: 3598812262809110746}
+  - {fileID: 2209527054688150453}
+  p: {fileID: 0}
+  m: {fileID: 13400000, guid: dc54993511550d44d8f3e4051cc8606d, type: 2}

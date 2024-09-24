@@ -110,6 +110,9 @@ public class Player : Character
     [Header("이동에 따른 값 변화 테스트")]
     public Vector3 velocityMove; // 벨로시티 이동 테스트
     public Vector3 rigidbodyPos; // 리지드바디 포지션 확인용
+ public   float onstairforce = 4;
+    public float stairdownforce = 60;
+    public bool onstair;
 
     public float sizeX;
     public float sizeY;
@@ -225,7 +228,7 @@ public class Player : Character
 
 
         //+Vector3.down * sizeY * 0.15f
-        if (!onGround && playerRb.velocity.y<=0/*!isJump*/)
+        if (!onGround && !isJump)
         {
             RaycastHit hit;
 
@@ -249,6 +252,7 @@ public class Player : Character
                         if (LandingEffect != null)
                             LandingEffect.SetActive(true);
                     }
+                    PlayerStat.instance.jump = true;
                     PlayerStat.instance.doubleJump = true;
                     SoundPlayer.PlayLandingSound();
              
@@ -272,6 +276,7 @@ public class Player : Character
                         if (LandingEffect != null)
                             LandingEffect.SetActive(true);
                     }
+                    PlayerStat.instance.jump = true;
                     PlayerStat.instance.doubleJump = true;
                     SoundPlayer.PlayLandingSound();
              
@@ -295,6 +300,7 @@ public class Player : Character
                         if (LandingEffect != null )
                             LandingEffect.SetActive(true);
                     }
+                    PlayerStat.instance.jump = true;
                     PlayerStat.instance.doubleJump = true;
                     SoundPlayer.PlayLandingSound();
                   
@@ -318,6 +324,7 @@ public class Player : Character
                         if (LandingEffect != null)
                             LandingEffect.SetActive(true);
                     }
+                    PlayerStat.instance.jump = true;
                     PlayerStat.instance.doubleJump = true;
                     SoundPlayer.PlayLandingSound();
              
@@ -413,18 +420,19 @@ public class Player : Character
     }
     void groundraycheck()
     {
-        if (onGround)
+        if (onGround&&onstair)
         {
             if (groundraychecker())
             {
                 Debug.Log("중력 가중치");
-                playerRb.AddForce(Vector3.down * 50);
+                playerRb.AddForce(Vector3.down * stairdownforce);
             }
 
 
 
         }
     }
+    public float jumpanimtimer;
     private void FixedUpdate()
     {
 
@@ -446,10 +454,15 @@ public class Player : Character
         {
             canjumpInput = true;
         }
-        /*if (isJump && !(playerRb.velocity.y > 0))
+        if (isJump && (!(playerRb.velocity.y > 0)|| jumpanimtimer>0.18f))
         {
+            jumpanimtimer = 0;
             isJump = false;
-        }*/
+        }
+        else
+        {
+            jumpanimtimer += Time.fixedDeltaTime;
+        }
         groundraycheck();
         JumpKeyInput();
         AttackNotHold();
@@ -884,7 +897,10 @@ public class Player : Character
 
 
         Vector3 Movevelocity = Vector3.zero;
+     
         Vector3 desiredVector = moveInput.normalized * PlayerStat.instance.moveSpeed + EnvironmentPower;
+        if(onstair&&onGround)
+        desiredVector += moveInput.normalized * onstairforce;
         Vector3 ladderVector = ladderInput.normalized * PlayerStat.instance.moveSpeed + EnvironmentPower;
         if (!PlayerHandler.instance.ladderInteract)
             Movevelocity = desiredVector - playerRb.velocity.x * Vector3.right - playerRb.velocity.z * Vector3.forward;
@@ -1237,8 +1253,9 @@ public class Player : Character
         {
             if (!downAttack)
             {
-                if (!isJump /*&& onGround*/ && canjumpInput)
+                if ( /*&& onGround*/ PlayerStat.instance.jump && canjumpInput)
                 {
+                    PlayerStat.instance.jump = false;
                     Jump();
                 }
                 else if (canjumpInput && PlayerStat.instance.doubleJump)

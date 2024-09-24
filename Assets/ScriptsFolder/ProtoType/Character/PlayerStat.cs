@@ -19,7 +19,10 @@ public class PlayerStat : CharacterStat
     [HideInInspector]
     public CurrentAttack currentAttack;
 
-    [Header("#이단점프, 무적시간 등의 변수"),    HideInInspector]
+    [Header("#이단점프, 무적시간 등의 변수"), HideInInspector]
+
+    public bool jump;
+    
     public bool doubleJump; // 이단 점프 체크
     [HideInInspector]
     public bool ableJump;
