@@ -225,7 +225,7 @@ public class Player : Character
 
 
         //+Vector3.down * sizeY * 0.15f
-        if (!onGround && !isJump)
+        if (!onGround && playerRb.velocity.y<=0/*!isJump*/)
         {
             RaycastHit hit;
 
@@ -446,10 +446,10 @@ public class Player : Character
         {
             canjumpInput = true;
         }
-        if (isJump && !(playerRb.velocity.y > 0))
+        /*if (isJump && !(playerRb.velocity.y > 0))
         {
             isJump = false;
-        }
+        }*/
         groundraycheck();
         JumpKeyInput();
         AttackNotHold();
