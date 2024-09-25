@@ -718,7 +718,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5492486304239598776}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: CursorParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1186,7 +1186,7 @@ GameObject:
   - component: {fileID: 3719211472415139438}
   - component: {fileID: 5560638779207194791}
   - component: {fileID: 5761684025433308510}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: CursorObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1371,7 +1371,7 @@ GameObject:
   - component: {fileID: 656192825159916501}
   - component: {fileID: 1955825041768973157}
   - component: {fileID: 766570460978858743}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2276,7 +2276,7 @@ GameObject:
   - component: {fileID: 8211498554429514334}
   - component: {fileID: 2409806719121851857}
   - component: {fileID: 2295043175363463264}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: CursorCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2384,8 +2384,8 @@ MonoBehaviour:
   onCatch: 0
   cursorParent: {fileID: 1896036848503535016}
   interactObj: {fileID: 0}
-  forwardThrowForce: 0
-  upThrowForce: 0
+  forwardThrowForce: 7.5
+  upThrowForce: 3
 --- !u!1 &6929880189956093402
 GameObject:
   m_ObjectHideFlags: 0
@@ -2772,7 +2772,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 33.182133, y: 252.89, z: 1.536}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6057963510634305969}
@@ -2854,13 +2854,14 @@ MonoBehaviour:
   jumpInputValue: 0
   boxRaySize: {x: 0, y: 0, z: 0}
   distanceRay: 1
-  JumprayDistance: 0.28
+  JumprayDistance: 0.4
   RunEffect: {fileID: 5994843600993267495}
   HittedEffect: {fileID: 6455099831139738100, guid: 6cae3c6bcfef1234aa8098b1226d219f,
     type: 3}
   AttackEffect: {fileID: 7723504885753882491}
   LandingEffect: {fileID: 2710332867633344777}
   JumpEffect: {fileID: 1007151964409965270}
+  OnMoveAnimationCorutine: 0
   Decelatate: 2
   hori: 0
   Vert: 0

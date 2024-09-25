@@ -23,9 +23,14 @@ public class DownAttackCollider : MeleeCollider
             DamagedByPAttack script;
             if (other.TryGetComponent<DamagedByPAttack>(out script))
             {
+                if (GetComponentInParent<HouseholdIronTransform>())
+                {                    
+                    other.GetComponent<Enemy>().FlatByIronDwonAttack();
+                }
                 script.Damaged(damage);
                 Debug.Log("몬스터 Damage받음");
             }
+
             saveEffect.transform.position = new(other.transform.position.x, other.transform.position.y + .5f, other.transform.position.z);
             saveEffect.Play();
         }

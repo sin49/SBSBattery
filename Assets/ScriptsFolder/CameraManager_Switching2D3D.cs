@@ -13,6 +13,8 @@ using UnityEngine;
 //3.카메라 전환 방식 Blend/NotBlend 로 선택할수있게
 public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
 {
+
+
    public CinemachineVirtualCamera camera2D;
     public CinemachineVirtualCamera camera3D;
     public Vector3 Camera2Drotation;
@@ -31,6 +33,17 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     //[Header("3D 카메라 near/far clipping planes")]
     //public float nearClipPlane3D = 0.1f;
     //public float farClipPlane3D = 1000f;
+
+
+    public void switch2Dcamera(CinemachineVirtualCamera c)
+    {
+        activedcamera.enabled = false;
+        c.enabled = true;
+        activedcamera = c;
+        if(trans3D)
+
+        trans3D = false;
+    }
 
    public bool trans3D;
     public void Set2DCamerabinding(Collider col)
@@ -125,8 +138,10 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
             PlayerStat.instance.MoveState = movestate2D;
         }
     }
-    
- public   IEnumerator SwitchCameraForTransDimensionCorutine()
+
+    public renderpassmanager renderpassmanager_;
+  public  IEnumerator SwitchCameraForTransDimensionCorutine()
+
     {
         if (camera2D == null || camera3D == null)
             yield break;
@@ -138,6 +153,7 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         camera2D.m_Lens.Orthographic = false;
         camera2D.m_Lens.FieldOfView = fovview;
         Time.timeScale = 0;
+        renderpassmanager_.changepixel(trans3D);
         if (trans3D)
         {
             camera3D.transform.position = camera2D.transform.position;

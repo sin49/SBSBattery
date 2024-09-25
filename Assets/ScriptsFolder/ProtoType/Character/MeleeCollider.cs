@@ -10,14 +10,16 @@ public class MeleeCollider : PlayerAttack
 
     private void Start()
     {
-        saveEffect = Instantiate(hitEffect).GetComponent<ParticleSystem>();
+        //saveEffect = Instantiate(hitEffect).GetComponent<ParticleSystem>();
         damage = PlayerStat.instance.atk;
         gameObject.SetActive(false);
     }
     public override void DamageCollider(Collider other)
     {
         base.DamageCollider(other);
-        saveEffect.transform.position = new(other.transform.position.x, other.transform.position.y + .5f, other.transform.position.z);
-        saveEffect.Play();
+        Vector3 hitPos = new(other.transform.position.x, other.transform.position.y + .5f, other.transform.position.z);
+        Instantiate(hitEffect, hitPos, Quaternion.identity);
+        //saveEffect.transform.position = new(other.transform.position.x, other.transform.position.y + .5f, other.transform.position.z);
+        //saveEffect.Play();
     }
 }

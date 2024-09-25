@@ -34,9 +34,19 @@ public class fireenemy : Enemy
     bool oncorutine;
     public override void Damaged(float damage)
     {
+        if(!oncorutine)
         base.Damaged(damage);
+        else
+        {
+            InvokeHittedEvent();
+            eStat.hp -= damage;
+            if (eStat.hp <= 0)
+            {
+                eStat.hp = 0;
 
-        StartCoroutine(waitingdelay());
+                Dead();
+            }
+        }
     }
     public override void Attack()
     {
@@ -127,4 +137,13 @@ public class fireenemy : Enemy
         oncorutine = false;
         InitAttackCoolTime();
     }
+
+    public override void HittedRotate()
+    {
+        if(!oncorutine)
+            base.HittedRotate();
+     
+
+    }
+  
 }

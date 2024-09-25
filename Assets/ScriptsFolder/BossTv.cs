@@ -142,7 +142,7 @@ public class BossTv : RemoteObject
             {
                 animator.enabled = true;
                 animator.SetBool("canactive", CanControl);
-                PlayerHandler.instance.CurrentPlayer.GetComponent<RemoteTransform>().GetClosestObjectIgnoreTrigger(this.gameObject);
+                PlayerHandler.instance.CurrentPlayer.GetComponent<RemoteTransform>().GetClosestObjectIgnoreTrigger(this);
 
             }
             return;
