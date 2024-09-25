@@ -50,6 +50,7 @@ public class HouseholdIronTransform : Player
     float downAtkEndTimer;
     [Header("다림질 공격력")]public float ironDownDamage;
     [Header("다림질 재사용 대기 시간")]public float ironDownCoolTimeMax;
+    [Header("다림질 이펙트")] public ParticleSystem ironDownAtkEffect;
     float downCoolTimer;
     bool onDownCoolTime;
 
@@ -115,6 +116,7 @@ public class HouseholdIronTransform : Player
     public void RushCancel()
     {
         Humonoidanimator.SetTrigger("RushCancel");
+        ironDashEffect.Stop();
         SecondFormDeactive();
         onRush = false;
         rushEnd = true;
@@ -849,6 +851,11 @@ public class HouseholdIronTransform : Player
             {
                 PlayerHandler.instance.CantHandle = true;
                 downEnd = true;
+                if (!ironDownAtkEffect.gameObject.activeSelf)
+                {
+                    ironDownAtkEffect.gameObject.SetActive(true);
+                    ironDownAtkEffect.Play();
+                }
             }
         }
     }

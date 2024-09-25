@@ -75,6 +75,7 @@ public class Player : Character,environmentObject
     public bool isRun;
     public bool isIdle;
     public bool isAttack;
+    bool ladderClimb;
 
     [Header("변신 애니메이션 테스트용 변수")]
     public float animationSpeed; // 애니메이터 모션의 속도 조절
@@ -484,10 +485,17 @@ public class Player : Character,environmentObject
         //    jumpRaycastCheck();
         if (Humonoidanimator != null)
         {
-            Humonoidanimator.SetBool("run", isRun);
-            Humonoidanimator.SetBool("Onground", onGround);
-            ModelAnimator.SetBool("Rolling", downAttack);
-            Humonoidanimator.SetBool("DownAttack", downAttack);
+            if (PlayerHandler.instance.ladderInteract)
+            {
+                Humonoidanimator.SetBool("climb", ladderClimb);
+            }
+            else
+            {
+                Humonoidanimator.SetBool("run", isRun);
+                Humonoidanimator.SetBool("Onground", onGround);
+                ModelAnimator.SetBool("Rolling", downAttack);
+                Humonoidanimator.SetBool("DownAttack", downAttack);
+            }
         }
 
         /*if (RunEffect != null)
@@ -958,6 +966,18 @@ public class Player : Character,environmentObject
             }
             //Humonoidanimator.RunAnimation(isRun);
         }
+        else if(PlayerHandler.instance.ladderInteract)
+        {
+            if (MoveCheck(hori, Vert))
+            {
+                ladderClimb = true;
+            }
+            else
+            {
+                ladderClimb = false;
+            }
+
+        }
 
         velocityMove = playerRb.velocity;
         rigidbodyPos = playerRb.position;
@@ -966,7 +986,19 @@ public class Player : Character,environmentObject
 
     }
 
+    public void StartLadderClimb()
+    {
+        Humonoidanimator.ResetTrigger("ladderExit");
+        Humonoidanimator.SetTrigger("ladder");
+        playerRb.useGravity = false;
+    }
 
+    public void StopLadderClimb()
+    {
+        PlayerHandler.instance.ladderInteract = false;
+        Humonoidanimator.SetTrigger("ladderExit");
+        playerRb.useGravity = true;
+    }
 
     bool MoveCheck(float hori, float vert)
     {
@@ -1233,6 +1265,11 @@ public class Player : Character,environmentObject
 
     public void Jump()
     {
+        if (PlayerHandler.instance.ladderInteract)
+        {
+            PlayerHandler.instance.ladderInteract = false;
+            StopLadderClimb();
+        }
         isJump = true;
         jumpBufferTimer = 0;
         //canjumpInput = false;
@@ -1240,7 +1277,6 @@ public class Player : Character,environmentObject
         if (jumpkeyinputcheckvalue <= 0)
             jumpkeyinputcheckvalue = jumpkeyinputCheck;
         PlayerJumpEvent();
-
        
         isRun = false;
         if (SoundPlayer != null)
