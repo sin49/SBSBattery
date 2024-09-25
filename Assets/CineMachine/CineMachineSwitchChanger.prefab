@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 7307794844851338819}
   - component: {fileID: 4424320698578783059}
   m_Layer: 0
-  m_Name: Camera2DRangeDIsplay
+  m_Name: 2DCamera
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -28,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 1880069310836097710}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5.1027775, y: 5.1027775, z: 5.1027775}
+  m_LocalPosition: {x: 0.00000002980233, y: 0, z: -3.4999998}
+  m_LocalScale: {x: 6, y: 6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9147267163482139598}
@@ -117,7 +117,7 @@ GameObject:
   m_Layer: 0
   m_Name: CineMachineSwitchChanger
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -130,7 +130,7 @@ Transform:
   m_GameObject: {fileID: 4070742963261887550}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.91, y: -1.9099998, z: 0.7699999}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -152,9 +152,9 @@ GameObject:
   - component: {fileID: 8698189796918986381}
   - component: {fileID: 728715834513216228}
   m_Layer: 0
-  m_Name: Camera3DRangeDIsplay
+  m_Name: 3DCamera
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -168,7 +168,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.4537, y: 1.4537, z: 1.4537}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9147267163482139598}
@@ -258,9 +258,9 @@ GameObject:
   - component: {fileID: 548979214169063816}
   - component: {fileID: 2545905713560603523}
   m_Layer: 0
-  m_Name: CineMachineSwitchChanger
+  m_Name: CameraChanger
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -274,7 +274,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9147267163482139598}
@@ -362,13 +362,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76fdecdeb38f19d42a06875308aca6b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerMoveState: 0
+  PlayerMoveState2D: 0
+  PlayerMoveState3D: 0
   virtualCamera2D: {fileID: 0}
   virtualCamera3D: {fileID: 0}
   switchingstate: 0
   CameraRange2D: {fileID: 4424320698578783059}
   CameraRange3D: {fileID: 728715834513216228}
-  transistionDuration: 1
+  transistionDuration: 0.4
   ColliderDisplay: {fileID: 4349016390717087197}
   CameraRangeDisplay2D: {fileID: 7307794844851338819}
   CameraRangeDisplay3D: {fileID: 8698189796918986381}

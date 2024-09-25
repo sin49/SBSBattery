@@ -75,7 +75,7 @@ public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
                
                     if (virtualCamera2D != null)
                     m.camera2D = virtualCamera2D;
-                if (virtualCamera2D != null)
+                if (virtualCamera3D != null)
                     m.camera3D = virtualCamera3D;
 
                 if (CameraRange2D != null)
@@ -86,20 +86,24 @@ public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
                 switch (switchingstate)
                 {
                     case camerachangerswitchingstate.change2D:
-                        m.ActiveCamera(m.camera2D);
+             
                         m.trans3D = false;
+                        StartCoroutine(m.SwitchCameraForTransDimensionCorutine());
                         break;
                     case camerachangerswitchingstate.change3D:
-                        m.ActiveCamera(m.camera3D);
+
                         m.trans3D = true;
+                        StartCoroutine(m.SwitchCameraForTransDimensionCorutine());
                         break;
                 }
             }
             
             m.movestate2D = PlayerMoveState2D;
             m.movestate3D = PlayerMoveState3D;
+            m.updatecamera();
             m.UpdatePlayerMovestate();
             PlayerHandler.instance.CurrentPlayer.rotateBy3Dto2D();
+            PlayerHandler.instance.invokeccamerachangeaction();
         }
     }
 

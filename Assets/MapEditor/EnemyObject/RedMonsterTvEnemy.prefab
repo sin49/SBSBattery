@@ -544,7 +544,7 @@ GameObject:
   - component: {fileID: 5013201028790532887}
   - component: {fileID: 529063940662160423}
   - component: {fileID: 60971711035078781}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: RedMonsterTvEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -583,6 +583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2c2539763bdf3c4e8351a33233d35ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testcolor: {r: 0, g: 0, b: 0, a: 0}
   eStat: {fileID: 0}
   patrolType: 0
   attackCollider: {fileID: 6115285198335051350}
@@ -622,7 +623,9 @@ MonoBehaviour:
   wallCheck: 0
   attackTimer: 0
   attackDelay: 0
+  actionhandler: {fileID: 0}
   callCheck: 0
+  rotCheck: 0
   onAttack: 0
   activeAttack: 0
   checkPlayer: 0
@@ -766,6 +769,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 0}
+  childMat: {fileID: 0}
 --- !u!65 &3416745294999507716
 BoxCollider:
   m_ObjectHideFlags: 0
