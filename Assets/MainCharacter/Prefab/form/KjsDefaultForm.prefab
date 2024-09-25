@@ -1622,10 +1622,13 @@ MonoBehaviour:
   isMove: 0
   canAttack: 0
   wallcheck: 0
-  jumpkeyinputCheck: 0.1
+  jumpkeyinputCheck: 0.05
   inputCheck: 0
   velocityMove: {x: 0, y: 0, z: 0}
   rigidbodyPos: {x: 0, y: 0, z: 0}
+  onstairforce: 4
+  stairdownforce: 60
+  onstair: 0
   sizeX: 2
   sizeY: 2
   sizeFir: 1
@@ -1636,6 +1639,7 @@ MonoBehaviour:
   boxRaySize: {x: 0.15, y: 0.15, z: 0.15}
   distanceRay: 0.1
   JumprayDistance: 0.4
+  jumpanimtimer: 0
   RunEffect: {fileID: 7756572666751904677}
   HittedEffect: {fileID: 6455099831139738100, guid: 6cae3c6bcfef1234aa8098b1226d219f,
     type: 3}
@@ -3601,12 +3605,12 @@ PrefabInstance:
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.1876397
+      value: 0.16433492
       objectReference: {fileID: 0}
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.07674941
+      value: 0.0727546
       objectReference: {fileID: 0}
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
@@ -3616,12 +3620,12 @@ PrefabInstance:
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.08805
+      value: 0.0997
       objectReference: {fileID: 0}
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.14276
+      value: 0.14076
       objectReference: {fileID: 0}
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
