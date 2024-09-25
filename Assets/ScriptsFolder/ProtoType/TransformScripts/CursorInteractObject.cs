@@ -1,8 +1,3 @@
-using Autodesk.Fbx;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Burst;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CursorInteractObject : MonoBehaviour
