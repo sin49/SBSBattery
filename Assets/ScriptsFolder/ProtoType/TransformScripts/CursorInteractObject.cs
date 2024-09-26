@@ -1,4 +1,3 @@
-using Autodesk.Fbx;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst;
