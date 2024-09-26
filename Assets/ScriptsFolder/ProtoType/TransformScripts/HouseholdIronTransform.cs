@@ -1,4 +1,4 @@
-using JetBrains.Annotations;
+ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -958,12 +958,12 @@ public class HouseholdIronTransform : Player
     {
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            rushVert = 1;
+            rushVert = -1;
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            rushVert = -1;
+            rushVert = 1;
         }
 
         if (!Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
