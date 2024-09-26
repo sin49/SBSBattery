@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using System.Net.Http.Headers;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEditor.Rendering;
 using UnityEngine;
 public enum EnemyMovePattern { stop,patrol}
@@ -14,6 +15,9 @@ public interface DamagedByPAttack
 
 public class Enemy: Character,DamagedByPAttack
 {
+
+    public GameObject EnemyHitCol2D;
+
     public Color testcolor;
     public EnemyMovePattern movepattern;
     public EnemyStat eStat;
