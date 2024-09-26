@@ -101,7 +101,7 @@ public class Player : Character,environmentObject
     public bool canAttack; // 공격 가능
     public bool wallcheck;
     #endregion
-
+    public bool cantmove;
     public float jumpkeyinputCheck = 0.05f;
     float jumpkeyinputcheckvalue;
     public bool inputCheck;
@@ -838,6 +838,7 @@ public class Player : Character,environmentObject
 
     public override void Move()
     {
+        if (cantmove) return;
         hori = 0;
         Vert = 0;
         if (PlayerHandler.instance.ladderInteract) {
@@ -1034,6 +1035,7 @@ public class Player : Character,environmentObject
     }
     public override void Attack()
     {
+        if (cantmove) return;
         if (PlayerHandler.instance.onAttack && attackInputValue < 1)
         {
             if (attackBufferTimer > 0 /*&& canAttack*/ && !dontAttack)
@@ -1265,6 +1267,8 @@ public class Player : Character,environmentObject
 
     public void Jump()
     {
+        if (cantmove) return;
+
         if (PlayerHandler.instance.ladderInteract)
         {
             PlayerHandler.instance.ladderInteract = false;

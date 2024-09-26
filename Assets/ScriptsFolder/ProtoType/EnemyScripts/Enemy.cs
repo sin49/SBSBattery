@@ -107,7 +107,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public float rotationSpeed; // 자연스러운 회전을 찾기 위한 테스트 
 
     [Header("기절상태")]
-    [HideInInspector]
+    /*[HideInInspector]*/
     public bool onStun;
     public bool reachCheck;
     bool complete;
@@ -135,7 +135,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         if (flatObject != null)
         {
             originScale = flatObject.transform.localScale;
-            flatScale = new(flatObject.transform.localScale.x, 0.3f, flatObject.transform.localScale.z);
+            flatScale = new(flatObject.transform.localScale.x, flatScaleY, flatObject.transform.localScale.z);
         }
     }
 
@@ -481,7 +481,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     }
     [Header("납작해지도록 적용될 스케일 오브젝트")]
     public GameObject flatObject;
-    public float flatTime;
+    public float flatScaleY;
     Vector3 originScale;
     Vector3 flatScale;
     //납작하게 되는 함수
@@ -493,6 +493,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
     IEnumerator RollBackFromFlatState(float downAtkEndTime)
     {
+        Debug.Log("납작 코루틴 실행됨");
         onStun = true;
         flatObject.transform.localScale = flatScale;
         if (skinRenderer != null)
@@ -505,6 +506,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         yield return new WaitForSeconds(downAtkEndTime + 1.5f);
 
         flatObject.transform.localScale = originScale;
+        Debug.Log("원래 스케일로 돌아와!");
         if (skinRenderer != null)
         {
             Material[] materials = skinRenderer.materials;

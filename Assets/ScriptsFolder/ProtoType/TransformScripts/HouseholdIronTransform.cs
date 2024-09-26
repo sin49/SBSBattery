@@ -53,7 +53,7 @@ public class HouseholdIronTransform : Player
     [Header("다림질 이펙트")] public ParticleSystem ironDownAtkEffect;
     float downCoolTimer;
     bool onDownCoolTime;
-
+    [Header("다림질 내려찍기에 몬스터가 납작해지는 시간")] public float flatTime;
     float rushHori, rushVert;
     public direction saveDirection = direction.none;
     public directionZ saveDirectionZ = directionZ.none;
