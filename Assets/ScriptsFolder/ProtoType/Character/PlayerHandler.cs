@@ -307,8 +307,11 @@ public class PlayerHandler : MonoBehaviour
 
             #endregion
             if (formChange)
+            {
                 CurrentPlayer.Humonoidanimator.Play("TransformEnd");
-        }
+                CurrentPlayer.downAttack = false;
+            }
+            }
         else
             Debug.Log("ListOutofRangeError");
     }
