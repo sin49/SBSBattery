@@ -61,6 +61,7 @@ public class PlayerXChangePortal : InteractiveObject
     }
     public void MovePosition(string s=null)
     {
+        
         portalcollider.enabled = true;
         Destination.portalcollider.enabled = false;
             Debug.Log("ししししし");
@@ -85,12 +86,15 @@ public class PlayerXChangePortal : InteractiveObject
         else
             yield return StartCoroutine(PlayerHandler.instance.CurrentPlayer.moveportalanimation(teleporterdestination));
         PlayerHandler.instance.CantHandle = false;
-        PlayerHandler.instance.CurrentPlayer.OnMoveAnimationCorutine = false;
+        PlayerHandler.instance.CurrentPlayer.cantmove = false;
+       
         portalcollider.enabled = true;
     }
+    
    IEnumerator MoveAnimation()
     {
-        PlayerHandler.instance.CurrentPlayer.OnMoveAnimationCorutine = true;
+        PlayerHandler.instance.CurrentPlayer.cantmove = true;
+
         closed = false;
 
         PlayerHandler.instance.CantHandle = true;
