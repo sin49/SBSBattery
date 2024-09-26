@@ -138,6 +138,7 @@ public class PlayerHandler : MonoBehaviour
     {
         if (PlayerStat.instance.hp > 1)
         {
+            playerjumpaccept();
             Rigidbody rb = null;
             if (CurrentPlayer.TryGetComponent<Rigidbody>(out rb))
             {

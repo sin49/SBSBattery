@@ -544,6 +544,7 @@ GameObject:
   - component: {fileID: 5013201028790532887}
   - component: {fileID: 529063940662160423}
   - component: {fileID: 60971711035078781}
+  - component: {fileID: 5214577134879722079}
   m_Layer: 9
   m_Name: RedMonsterTvEnemy
   m_TagString: Enemy
@@ -594,6 +595,7 @@ MonoBehaviour:
   hittedMat: {fileID: 0}
   skinRenderer: {fileID: 0}
   moveEffect: {fileID: 0}
+  environmentforce: {x: 0, y: 0, z: 0}
   isMove: 0
   searchCubeRange: {x: 0, y: 0, z: 0}
   searchCubePos: {x: 0, y: 0, z: 0}
@@ -606,6 +608,7 @@ MonoBehaviour:
   searchPlayer: 0
   trackingDistance: 0
   disToPlayer: 0
+  PatrolTransform: []
   patrolGroup: []
   targetPatrol: {x: 0, y: 0, z: 0}
   patrolWaitTime: 0
@@ -727,6 +730,21 @@ MonoBehaviour:
     partValue: 0
   onInvincible: 0
   invincibleTimer: 0
+--- !u!114 &5214577134879722079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4343172627482462887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6468d904bc89c6a41b68e57303ecc421, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  caught: 0
+  thrown: 0
+  cursorTargetCollider: {fileID: 0}
 --- !u!1 &4521619283037172719
 GameObject:
   m_ObjectHideFlags: 0
