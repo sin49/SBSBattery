@@ -1622,10 +1622,13 @@ MonoBehaviour:
   isMove: 0
   canAttack: 0
   wallcheck: 0
-  jumpkeyinputCheck: 0.1
+  jumpkeyinputCheck: 0.05
   inputCheck: 0
   velocityMove: {x: 0, y: 0, z: 0}
   rigidbodyPos: {x: 0, y: 0, z: 0}
+  onstairforce: 4
+  stairdownforce: 60
+  onstair: 0
   sizeX: 2
   sizeY: 2
   sizeFir: 1
@@ -1636,6 +1639,7 @@ MonoBehaviour:
   boxRaySize: {x: 0.15, y: 0.15, z: 0.15}
   distanceRay: 0.1
   JumprayDistance: 0.4
+  jumpanimtimer: 0
   RunEffect: {fileID: 7756572666751904677}
   HittedEffect: {fileID: 6455099831139738100, guid: 6cae3c6bcfef1234aa8098b1226d219f,
     type: 3}
