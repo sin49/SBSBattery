@@ -94,7 +94,7 @@ public class Player : Character
     public bool canAttack; // 공격 가능
     public bool wallcheck;
     #endregion
-
+    public bool cantmove;
     public float jumpkeyinputCheck = 0.05f;
     float jumpkeyinputcheckvalue;
     public bool inputCheck;
@@ -637,7 +637,7 @@ public class Player : Character
 
         transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
     }
-    public bool OnMoveAnimationCorutine;
+   
     public IEnumerator moveportalanimation(Transform t)
     {
 
@@ -655,7 +655,7 @@ public class Player : Character
             {
                 transform.GetChild(0).rotation = Quaternion.Euler(new Vector3(0, 90, 0));
                 transform.Translate(Vector3.right * PlayerStat.instance.moveSpeed * Time.fixedDeltaTime);
-                if (transform.position.x > t.position.x)
+                if (transform.position.x - t.position.x > -0.5)
                 {
                     transform.position = new Vector3(t.position.x, transform.position.y, transform.position.z);
                     checker = true;
@@ -665,7 +665,7 @@ public class Player : Character
             {
                 transform.GetChild(0).rotation = Quaternion.Euler(new Vector3(0, -90, 0));
                 transform.Translate(Vector3.left * PlayerStat.instance.moveSpeed * Time.fixedDeltaTime);
-                if (transform.position.x < t.position.x)
+                if (transform.position.x - t.position.x < 0.5)
                 {
                     transform.position = new Vector3(t.position.x, transform.position.y, transform.position.z);
                     checker = true;
@@ -728,7 +728,7 @@ public class Player : Character
             {
                 transform.GetChild(0).rotation = Quaternion.Euler(new Vector3(0, 0, 0));
                 transform.Translate(Vector3.forward * PlayerStat.instance.moveSpeed * Time.fixedDeltaTime);
-                if (transform.position.z > t.position.z)
+                if (transform.position.z - t.position.z > -0.5)
                 {
                     transform.position = new Vector3(transform.position.x, transform.position.y, t.position.z);
                     checker = true;
@@ -738,7 +738,7 @@ public class Player : Character
             {
                 transform.GetChild(0).rotation = Quaternion.Euler(new Vector3(0, 180, 0));
                 transform.Translate(Vector3.back * PlayerStat.instance.moveSpeed * Time.fixedDeltaTime);
-                if (transform.position.z < t.position.z)
+                if (transform.position.z - t.position.z < 0.5)
                 {
                     transform.position = new Vector3(transform.position.x, transform.position.y, t.position.z);
                     checker = true;
@@ -757,8 +757,8 @@ public class Player : Character
                 {
                     transform.GetChild(0).rotation = Quaternion.Euler(new Vector3(0, 90, 0));
                     transform.Translate(Vector3.right*PlayerStat.instance.moveSpeed * Time.fixedDeltaTime);
-               if(transform.position.x>t.position.x)
-                    {
+                if (transform.position.x - t.position.x >- 0.5)
+                {
                         transform.position = new Vector3(t.position.x, transform.position.y, transform.position.z);
                     checker= true;
                     }
@@ -767,8 +767,8 @@ public class Player : Character
                 {
                     transform.GetChild(0).rotation = Quaternion.Euler(new Vector3(0, -90, 0));
                     transform.Translate(Vector3.left * PlayerStat.instance.moveSpeed * Time.fixedDeltaTime);
-                    if (transform.position.x < t.position.x)
-                    {
+                if (transform.position.x - t.position.x <0.5)
+                {
                         transform.position = new Vector3(t.position.x, transform.position.y, transform.position.z);
                         checker = true;
                     }
@@ -824,6 +824,7 @@ public class Player : Character
 
     public override void Move()
     {
+        if (cantmove) return;
         hori = 0;
         Vert = 0;
         if (PlayerHandler.instance.ladderInteract) {
@@ -996,6 +997,7 @@ public class Player : Character
     }
     public override void Attack()
     {
+        if (cantmove) return;
         if (PlayerHandler.instance.onAttack && attackInputValue < 1)
         {
             if (attackBufferTimer > 0 /*&& canAttack*/ && !dontAttack)
@@ -1227,6 +1229,7 @@ public class Player : Character
 
     public void Jump()
     {
+        if (cantmove) return;
         isJump = true;
         jumpBufferTimer = 0;
         //canjumpInput = false;

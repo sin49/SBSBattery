@@ -25,8 +25,10 @@ public class renderpassmanager : MonoBehaviour
                 fullscreenrenderfeauture = a;
             }
         }
-        if(fullscreenrenderfeauture!=null)
+        if(fullscreenrenderfeauture!=null&&(int)PlayerStat.instance.MoveState>3)
         fullscreenrenderfeauture.SetActive(false);
+        else
+            fullscreenrenderfeauture.SetActive(true);
 
     }
     public void changepixel(bool trans3D)
