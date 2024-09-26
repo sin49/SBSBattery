@@ -293,7 +293,7 @@ public class HouseholdIronTransform : Player
             Vector3 regularMove = new Vector3(rushHori, 0, rushVert);
             if (rushHori != 0 || rushVert != 0)
             {
-                RushRotate(regularMove.x, regularMove.z);
+                rotate(regularMove.x, regularMove.z);
                 //SoundPlayer.PlayMoveSound();
             }
 
@@ -356,6 +356,82 @@ public class HouseholdIronTransform : Player
     Vector3 currentRotateVector;
     // 돌진 회전
     public void RushRotate(float hori, float vert)
+    {
+        Vector3 rotateVector = Vector3.zero;
+        Vector3 saveRotateVector = Vector3.zero;
+        // Check horizontal and vertical inputs and determine the direction
+        if (hori == 1)
+        {
+            saveDirection = direction;
+            direction = direction.Right;
+        }
+        else if (hori == -1)
+        {
+            saveDirection = direction;
+            direction = direction.Left;
+        }
+        else
+            direction = direction.none;
+        if (vert == 1)
+        {
+            saveDirectionZ = directionz;
+            directionz = directionZ.back;
+        }
+        else if (vert == -1)
+        {
+            saveDirectionZ = directionz;
+            directionz = directionZ.forward;
+        }
+        else
+            directionz = directionZ.none;
+
+        //PlayerStat.instance.Trans3D
+        //PlayerStat.instance.direction = direction;
+        if (hori == -1 && vert == 0) // Left
+        {
+            rotateVector = new Vector3(0, 180, 0);
+            
+        }
+        else if (hori == 1 && vert == 0) // Right
+        {
+            rotateVector = new Vector3(0, 0, 0);
+            
+        }
+        else if (hori == 0 && vert == 1) // Up
+        {
+            rotateVector = new Vector3(0, -90, 0);
+            
+        }
+        else if (hori == 0 && vert == -1) // Down
+        {
+            rotateVector = new Vector3(0, 90, 0);
+            
+        }
+        else if (hori == -1 && vert == 1) // UpLeft
+        {
+            rotateVector = new Vector3(0, -135, 0);
+            
+
+        }
+        else if (hori == 1 && vert == 1) // UpRight
+        {
+            rotateVector = new Vector3(0, -45, 0);
+            
+        }
+        else if (hori == -1 && vert == -1) // DownLeft
+        {
+            rotateVector = new Vector3(0, 135, 0);
+            
+        }
+        else if (hori == 1 && vert == -1) // DownRight
+        {
+            rotateVector = new Vector3(0, 45, 0);            
+        }
+        rotateVector += new Vector3(0, 90, 0);
+
+        transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
+    }
+    /*public void RushRotate(float hori, float vert)
     {
         Vector3 rotateVector = Vector3.zero;
         Vector3 saveRotateVector = Vector3.zero;
@@ -455,7 +531,7 @@ public class HouseholdIronTransform : Player
         rotateVector += new Vector3(0, 90, 0);
 
         transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
-    }
+    }*/
     bool inputHori, inputVert;
     float saveHori, saveVert;
     /*public void RushRotate(float hori, float vert)
