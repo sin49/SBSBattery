@@ -1,4 +1,5 @@
- using JetBrains.Annotations;
+using Cinemachine;
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -842,13 +843,14 @@ public class HouseholdIronTransform : Player
         }
     }
     #endregion
-
+    public CinemachineImpulseSource source;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ground"))
         {
             if (downAttack)
             {
+                source.GenerateImpulse();
                 PlayerHandler.instance.CantHandle = true;
                 downEnd = true;
                 if (!ironDownAtkEffect.gameObject.activeSelf)
