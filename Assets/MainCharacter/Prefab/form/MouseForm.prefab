@@ -2861,6 +2861,9 @@ MonoBehaviour:
   inputCheck: 0
   velocityMove: {x: 0, y: 0, z: 0}
   rigidbodyPos: {x: 0, y: 0, z: 0}
+  onstairforce: 4
+  stairdownforce: 60
+  onstair: 0
   sizeX: 2
   sizeY: 2
   sizeFir: 1
@@ -2871,6 +2874,7 @@ MonoBehaviour:
   boxRaySize: {x: 0, y: 0, z: 0}
   distanceRay: 1
   JumprayDistance: 0.28
+  jumpanimtimer: 0
   RunEffect: {fileID: 5994843600993267495}
   HittedEffect: {fileID: 6455099831139738100, guid: 6cae3c6bcfef1234aa8098b1226d219f,
     type: 3}
@@ -3772,6 +3776,11 @@ PrefabInstance:
         type: 3}
       propertyPath: playOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2847214877333766161, guid: 54455ecc44ae98d429a08a8af9e3838d,
+        type: 3}
+      propertyPath: moveWithTransform
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3330371270448281986, guid: 54455ecc44ae98d429a08a8af9e3838d,
         type: 3}

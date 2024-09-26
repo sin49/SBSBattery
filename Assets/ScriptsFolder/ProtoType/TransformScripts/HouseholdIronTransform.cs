@@ -55,8 +55,8 @@ public class HouseholdIronTransform : Player
     bool onDownCoolTime;
     [Header("다림질 내려찍기에 몬스터가 납작해지는 시간")] public float flatTime;
     float rushHori, rushVert;
-    public direction saveDirection = direction.none;
-    public directionZ saveDirectionZ = directionZ.none;
+    direction saveDirection = direction.none;
+    directionZ saveDirectionZ = directionZ.none;
     protected override void Awake()
     {
         base.Awake();
