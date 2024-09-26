@@ -39,7 +39,7 @@ public class Ladder : InteractiveObject
         base.Active(direct);
         LadderActive();
         PlayerHandler.instance.ladderInteract = true;
-        PlayerHandler.instance.CurrentPlayer.GetComponent<Rigidbody>().useGravity = false;
+        PlayerHandler.instance.CurrentPlayer.StartLadderClimb();
     }
 
     private void OnTriggerEnter(Collider other)
