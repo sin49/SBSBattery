@@ -185,7 +185,17 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 rangeCollider.GetComponent<BoxCollider>().size = rangeSize;
             }
         }
-
+        else
+        {
+            if (timer < flatTime)
+            {
+                timer += Time.deltaTime;
+            }
+            else
+            {
+                RollBackFormFlatState();
+            }
+        }
     }
     
     private void FixedUpdate()
@@ -482,18 +492,45 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     [Header("납작해지도록 적용될 스케일 오브젝트")]
     public GameObject flatObject;
     public float flatScaleY;
-    public float flatTime = 4;
+    public float flatTime=0;
+    public float timer;
     Vector3 originScale;
     Vector3 flatScale;
     //납작하게 되는 함수
-    public virtual void FlatByIronDwonAttack(float downAtkEndTime)
+    public virtual void FlatByIronDwonAttack(float flat)
     {
-        Debug.Log(downAtkEndTime);
-        if(flatObject !=null)
-            StartCoroutine(RollBackFromFlatState(downAtkEndTime));            
+        if (flatObject == null)
+            return;
+
+        onStun = true;
+        flatObject.transform.localScale = flatScale;
+        flatTime = flat;
+        attackRange = false;
+        Debug.Log(flat);
+
+        if (skinRenderer != null)
+        {
+            Material[] materials = skinRenderer.materials;
+            materials[1] = hittedMat;
+            skinRenderer.materials = materials;
+        }
     }
 
-    IEnumerator RollBackFromFlatState(float downAtkEndTime)
+    public void RollBackFormFlatState()
+    {
+        onStun = false;
+        timer = 0;
+        if (skinRenderer != null)
+        {
+            Material[] materials = skinRenderer.materials;
+            materials[1] = idleMat;
+            skinRenderer.materials = materials;
+        }
+
+        flatObject.transform.localScale = originScale;
+    }
+
+    /*IEnumerator RollBackFromFlatState(float flat)
     {
         float timer = 0;
         Debug.Log("납작 코루틴 실행됨");
@@ -510,7 +547,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         while (timer < flatTime)
         {
             timer += Time.deltaTime;
-            Debug.Log($"{timer}, {downAtkEndTime}");
+            Debug.Log($"{timer}, {flat}");
             yield return null;
         }
         
@@ -523,7 +560,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             skinRenderer.materials = materials;
         }
         onStun = false;
-    }
+    }*/
 
     IEnumerator HiiitedState()
     {
@@ -601,6 +638,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     }
     public virtual void enemymovepattern()
     {
+        if(rb != null)
         rb.MovePosition(environmentforce+transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
     }
     public virtual void PatrolTracking()
@@ -859,6 +897,10 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 if (enemy.isRagdoll)
                 {
                     enemy.RagdolDeadEffect(deadEffect);
+                }
+                else
+                {
+                    Instantiate(deadEffect, transform.position, Quaternion.identity);
                 }
             }
             else

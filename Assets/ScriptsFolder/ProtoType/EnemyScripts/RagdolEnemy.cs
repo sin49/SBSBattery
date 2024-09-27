@@ -30,12 +30,12 @@ public class RagdolEnemy : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Y))
+        /*if (Input.GetKeyDown(KeyCode.Y))
         {
             RagdollOn();
             if(isRagdoll)
             rb.AddForce((Vector3.forward + Vector3.up) * force, ForceMode.Impulse);
-        }
+        }*/
 
         if (isRagdoll)
         {

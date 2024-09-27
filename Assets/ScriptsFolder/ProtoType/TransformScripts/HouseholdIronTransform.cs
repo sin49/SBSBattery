@@ -805,6 +805,7 @@ public class HouseholdIronTransform : Player
     void InitRush()
     {
         Humonoidanimator.ResetTrigger("RushStart");
+        ironDashEffect.Stop();
         onRush = false;
         rushTimer = rushTimeMax;
         canRushAttack = false;

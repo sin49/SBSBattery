@@ -58,7 +58,13 @@ public class fireenemy : Enemy
         if (oncorutine)
             return;
         else
-        StartCoroutine(breathattack());
+        {
+            if (TryGetComponent<RagdolEnemy>(out RagdolEnemy re))
+            {
+                if(!re.isRagdoll)
+                    StartCoroutine(breathattack());
+            }
+        }
     }
     IEnumerator waitingdelay()
     {
