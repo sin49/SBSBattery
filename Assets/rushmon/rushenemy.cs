@@ -60,4 +60,10 @@ public class rushenemy : Enemy
         base.Attack();
         StartCoroutine(rush());
     }
+
+    public override void FlatByIronDwonAttack(float downAtkEndTime)
+    {
+        base.FlatByIronDwonAttack(downAtkEndTime);
+        stoprush();
+    }
 }

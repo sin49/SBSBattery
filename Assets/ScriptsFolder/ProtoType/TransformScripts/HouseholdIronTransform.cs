@@ -12,13 +12,14 @@ public class HouseholdIronTransform : Player
     [Header("다리미 2형태")]
     public GameObject ironSecondForm;
     [Header("돌진 이동속도")]
-    public float rushSpeed, speedValue;
+    public float speedValue;
+    float rushSpeed;
     float saveSpeed;
     [Header("돌진 지속시간")]
     public float rushTimeMax;
     float rushTimer;
     [HideInInspector] public bool canRushAttack; // 돌진 공격을 받는 주기?를 위한 변수
-    bool onRush;
+    [HideInInspector] public bool onRush;
     [Header("돌진 재사용 대기시간")]
     public float rushCoolTimeMax;
     float rushCoolTimer;

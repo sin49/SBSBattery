@@ -482,19 +482,23 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     [Header("납작해지도록 적용될 스케일 오브젝트")]
     public GameObject flatObject;
     public float flatScaleY;
+    public float flatTime = 4;
     Vector3 originScale;
     Vector3 flatScale;
     //납작하게 되는 함수
     public virtual void FlatByIronDwonAttack(float downAtkEndTime)
     {
+        Debug.Log(downAtkEndTime);
         if(flatObject !=null)
             StartCoroutine(RollBackFromFlatState(downAtkEndTime));            
     }
 
     IEnumerator RollBackFromFlatState(float downAtkEndTime)
     {
+        float timer = 0;
         Debug.Log("납작 코루틴 실행됨");
         onStun = true;
+        attackRange = false;
         flatObject.transform.localScale = flatScale;
         if (skinRenderer != null)
         {
@@ -503,8 +507,13 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             skinRenderer.materials = materials;
         }
 
-        yield return new WaitForSeconds(downAtkEndTime + 1.5f);
-
+        while (timer < flatTime)
+        {
+            timer += Time.deltaTime;
+            Debug.Log($"{timer}, {downAtkEndTime}");
+            yield return null;
+        }
+        
         flatObject.transform.localScale = originScale;
         Debug.Log("원래 스케일로 돌아와!");
         if (skinRenderer != null)

@@ -54,7 +54,7 @@ public class CursorInteractObject : MonoBehaviour
             fPoint = transform.right * (box.size.x / 2);
             size = box.bounds.size.x / 2;
         }
-        Debug.Log(fPoint);
+        //Debug.Log(fPoint);
         return size;
     }
 
