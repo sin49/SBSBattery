@@ -853,7 +853,17 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             PlayerHandler.instance.CurrentPlayer.wallcheck = false;
 
         if (deadEffect != null)
-        Instantiate(deadEffect,transform.position, Quaternion.identity);
+        {
+            if (TryGetComponent<RagdolEnemy>(out RagdolEnemy enemy))
+            {
+                if (enemy.isRagdoll)
+                {
+                    enemy.RagdolDeadEffect(deadEffect);
+                }
+            }
+            else
+            Instantiate(deadEffect, transform.position, Quaternion.identity);
+        }
         gameObject.SetActive(false);
     }
     #endregion

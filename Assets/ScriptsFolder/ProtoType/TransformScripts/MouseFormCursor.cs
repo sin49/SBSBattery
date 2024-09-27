@@ -90,6 +90,12 @@ public class MouseFormCursor : MonoBehaviour
             enemy.GetComponent<Rigidbody>().useGravity = true;
             enemy.GetComponent<Rigidbody>().isKinematic = false;
             enemy.GetComponent<Rigidbody>().AddForce(transform.forward * forwardThrowForce + transform.up * upThrowForce, ForceMode.VelocityChange);
+            
+            RagdolEnemy re;
+            if (interactObj.TryGetComponent<RagdolEnemy>(out re))
+            {
+                re.ThrowRagdoll();
+            }
             interactObj = null;
             onCatch = false;
         }
