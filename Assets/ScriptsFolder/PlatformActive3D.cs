@@ -24,12 +24,15 @@ public class PlatformActive3D : MonoBehaviour
         {
             Bcollider.enabled = true;
             renderer_.enabled = true;
+            this.gameObject.SetActive(true);
         }
         else
         {
             Bcollider.enabled = false;
             renderer_.enabled = false;
+            this.gameObject.SetActive(false);
         }
+       
         transform.Translate(Vector3.back * Zmove);
     }
     void PlatformChange2D()
@@ -38,11 +41,13 @@ public class PlatformActive3D : MonoBehaviour
         {
             Bcollider.enabled = false;
             renderer_.enabled = false;
+            this.gameObject.SetActive(false);
         }
         else
         {
             Bcollider.enabled = true;
             renderer_.enabled = true;
+            this.gameObject.SetActive(true);
         }
         transform.Translate(Vector3.forward * Zmove);
     }
