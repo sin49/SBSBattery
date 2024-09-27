@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System;
 using System.Collections;
+using System.Security.Cryptography;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.RenderGraphModule;
@@ -10,11 +11,17 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using UnityEngine.Windows.Speech;
 
+
+public interface environmentObject
+{
+    public void AddEnviromentPower(Vector3 power);
+}
+
 public enum MoveInput { MoveRightin2D = 1, MoveRightin3D }
 
 public enum direction { Left = -1, none = 0, Right = 1 }
 public enum directionZ { back = -1, none = 0, forward = 1 }
-public class Player : Character
+public class Player : Character,environmentObject
 {
     public MoveInput Moveinput_;
 
@@ -68,6 +75,7 @@ public class Player : Character
     public bool isRun;
     public bool isIdle;
     public bool isAttack;
+    bool ladderClimb;
 
     [Header("변신 애니메이션 테스트용 변수")]
     public float animationSpeed; // 애니메이터 모션의 속도 조절
@@ -94,7 +102,7 @@ public class Player : Character
     public bool wallcheck;
     #endregion
 
-    public float jumpkeyinputCheck = 0.23f;
+    public float jumpkeyinputCheck = 0.05f;
     float jumpkeyinputcheckvalue;
     public bool inputCheck;
 
@@ -109,6 +117,9 @@ public class Player : Character
     [Header("이동에 따른 값 변화 테스트")]
     public Vector3 velocityMove; // 벨로시티 이동 테스트
     public Vector3 rigidbodyPos; // 리지드바디 포지션 확인용
+ public   float onstairforce = 4;
+    public float stairdownforce = 60;
+    public bool onstair;
 
     public float sizeX;
     public float sizeY;
@@ -215,7 +226,7 @@ public class Player : Character
         onInvincible = false;
     }
     #endregion
-    protected float JumprayDistance = 0.28f;
+    [SerializeField]protected float JumprayDistance = 0.28f;
     protected float playersizeX = 0.1f;
     #region 레이 체크
     void jumpRaycastCheck()
@@ -224,7 +235,7 @@ public class Player : Character
 
 
         //+Vector3.down * sizeY * 0.15f
-        if (!onGround && playerRb.velocity.y <= 0)
+        if (!onGround && !isJump)
         {
             RaycastHit hit;
 
@@ -241,12 +252,17 @@ public class Player : Character
                 {
 
                     onGround = true;
-                    isJump = false;
-                    downAttack = false;
+                  
+                    if (downAttack)
+                    {
+                        downAttack = false;
+                        if (LandingEffect != null)
+                            LandingEffect.SetActive(true);
+                    }
+                    PlayerStat.instance.jump = true;
                     PlayerStat.instance.doubleJump = true;
                     SoundPlayer.PlayLandingSound();
-                    if (LandingEffect != null && flyTimer < 0)
-                        LandingEffect.SetActive(true);
+             
 
                     flyTimer = flyTime;
                 }
@@ -260,12 +276,17 @@ public class Player : Character
                 {
 
                     onGround = true;
-                    isJump = false;
-                    downAttack = false;
+                   
+                    if (downAttack)
+                    {
+                        downAttack = false;
+                        if (LandingEffect != null)
+                            LandingEffect.SetActive(true);
+                    }
+                    PlayerStat.instance.jump = true;
                     PlayerStat.instance.doubleJump = true;
                     SoundPlayer.PlayLandingSound();
-                    if (LandingEffect != null && flyTimer < 0)
-                        LandingEffect.SetActive(true);
+             
 
                     flyTimer = flyTime;
                 }
@@ -279,12 +300,17 @@ public class Player : Character
                 {
 
                     onGround = true;
-                    isJump = false;
-                    downAttack = false;
+                
+                    if (downAttack)
+                    {
+                        downAttack = false;
+                        if (LandingEffect != null )
+                            LandingEffect.SetActive(true);
+                    }
+                    PlayerStat.instance.jump = true;
                     PlayerStat.instance.doubleJump = true;
                     SoundPlayer.PlayLandingSound();
-                    if (LandingEffect != null && flyTimer < 0)
-                        LandingEffect.SetActive(true);
+                  
 
                     flyTimer = flyTime;
                 }
@@ -299,11 +325,16 @@ public class Player : Character
 
                     onGround = true;
                     isJump = false;
-                    downAttack = false;
+                    if (downAttack)
+                    {
+                        downAttack = false;
+                        if (LandingEffect != null)
+                            LandingEffect.SetActive(true);
+                    }
+                    PlayerStat.instance.jump = true;
                     PlayerStat.instance.doubleJump = true;
                     SoundPlayer.PlayLandingSound();
-                    if (LandingEffect != null && flyTimer < 0)
-                        LandingEffect.SetActive(true);
+             
 
                     flyTimer = flyTime;
                 }
@@ -390,7 +421,25 @@ public class Player : Character
             HittedEffect.gameObject.SetActive(true);
 
     }
+    bool groundraychecker()
+    {
+        return Physics.Raycast(transform.position, Vector3.down, 1.1f);
+    }
+    void groundraycheck()
+    {
+        if (onGround&&onstair)
+        {
+            if (groundraychecker())
+            {
+                Debug.Log("중력 가중치");
+                playerRb.AddForce(Vector3.down * stairdownforce);
+            }
 
+
+
+        }
+    }
+    public float jumpanimtimer;
     private void FixedUpdate()
     {
 
@@ -412,14 +461,22 @@ public class Player : Character
         {
             canjumpInput = true;
         }
-
+        if (isJump && (!(playerRb.velocity.y > 0)|| jumpanimtimer>0.18f))
+        {
+            jumpanimtimer = 0;
+            isJump = false;
+        }
+        else
+        {
+            jumpanimtimer += Time.fixedDeltaTime;
+        }
+        groundraycheck();
         JumpKeyInput();
         AttackNotHold();
         if (!downAttack)
             Attack();
-
-        if (onGround == true && isJump == true)
-            isJump = false;
+        
+       
 
         /* chrmat.SetColor("_Emissive_Color", color);*///emission 건들기
         if (Input.GetKeyDown(KeyCode.Tab)) { HittedTest(); }
@@ -428,10 +485,17 @@ public class Player : Character
         //    jumpRaycastCheck();
         if (Humonoidanimator != null)
         {
-            Humonoidanimator.SetBool("run", isRun);
-            Humonoidanimator.SetBool("Onground", onGround);
-            ModelAnimator.SetBool("Rolling", downAttack);
-            Humonoidanimator.SetBool("DownAttack", downAttack);
+            if (PlayerHandler.instance.ladderInteract)
+            {
+                Humonoidanimator.SetBool("climb", ladderClimb);
+            }
+            else
+            {
+                Humonoidanimator.SetBool("run", isRun);
+                Humonoidanimator.SetBool("Onground", onGround);
+                ModelAnimator.SetBool("Rolling", downAttack);
+                Humonoidanimator.SetBool("DownAttack", downAttack);
+            }
         }
 
         /*if (RunEffect != null)
@@ -506,7 +570,21 @@ public class Player : Character
 
 
     #region 추상화 오버라이드 함수
+    public void rotatebymovestate()
+    {
+        Vector3 rotateVector = Vector3.zero;
+        if ((int)PlayerStat.instance.MoveState < 2)
+        {
+            rotateVector = new Vector3(0, 0, 0);
+        }else if((int)PlayerStat.instance.MoveState < 4&& (int)PlayerStat.instance.MoveState >= 2)
+        {
+            rotateVector = new Vector3(0, 90, 0);
 
+        }
+
+
+        transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
+    }
     #region 이동
     public void rotate(float hori, float vert)
     {
@@ -573,6 +651,7 @@ public class Player : Character
 
         transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
     }
+    public bool OnMoveAnimationCorutine;
     public IEnumerator moveportalanimation(Transform t)
     {
 
@@ -621,17 +700,17 @@ public class Player : Character
             {
                 transform.GetChild(0).rotation = Quaternion.Euler(new Vector3(0, 0, 0));
                 transform.Translate(Vector3.forward * PlayerStat.instance.moveSpeed * Time.fixedDeltaTime);
-                if (transform.position.z > t.position.z)
+                if (transform.position.z- t.position.z > -0.5)
                 {
                     transform.position = new Vector3(transform.position.x, transform.position.y, t.position.z);
                     checker = true;
                 }
             }
-            else if (distance.z < 0)
+            else if (distance.z <0)
             {
                 transform.GetChild(0).rotation = Quaternion.Euler(new Vector3(0, 180, 0));
                 transform.Translate(Vector3.back * PlayerStat.instance.moveSpeed * Time.fixedDeltaTime);
-                if (transform.position.z < t.position.z)
+                if (transform.position.z- t.position.z <0.5 )
                 {
                     transform.position = new Vector3(transform.position.x, transform.position.y, t.position.z);
                     checker = true;
@@ -641,9 +720,11 @@ public class Player : Character
             {
                 checker = true;
             }
+            Debug.Log(transform.position.z + "|" + t.position.z);
             yield return null;
         }
         isRun = false;
+        rotatebymovestate();
         Debug.Log("Zmove Complete");
     }
     public IEnumerator moveportalanimationZX(Transform t)
@@ -713,9 +794,9 @@ public class Player : Character
           
                 yield return null;
             }
-   
 
-          
+
+        rotatebymovestate();
         isRun = false;
 
     }
@@ -830,7 +911,10 @@ public class Player : Character
 
 
         Vector3 Movevelocity = Vector3.zero;
+     
         Vector3 desiredVector = moveInput.normalized * PlayerStat.instance.moveSpeed + EnvironmentPower;
+        if(onstair&&onGround)
+        desiredVector += moveInput.normalized * onstairforce;
         Vector3 ladderVector = ladderInput.normalized * PlayerStat.instance.moveSpeed + EnvironmentPower;
         if (!PlayerHandler.instance.ladderInteract)
             Movevelocity = desiredVector - playerRb.velocity.x * Vector3.right - playerRb.velocity.z * Vector3.forward;
@@ -870,7 +954,7 @@ public class Player : Character
 
         #endregion
 
-        if (!isJump)
+        if (onGround)
         {
             if (MoveCheck(hori, Vert))
             {
@@ -882,6 +966,18 @@ public class Player : Character
             }
             //Humonoidanimator.RunAnimation(isRun);
         }
+        else if(PlayerHandler.instance.ladderInteract)
+        {
+            if (MoveCheck(hori, Vert))
+            {
+                ladderClimb = true;
+            }
+            else
+            {
+                ladderClimb = false;
+            }
+
+        }
 
         velocityMove = playerRb.velocity;
         rigidbodyPos = playerRb.position;
@@ -890,7 +986,19 @@ public class Player : Character
 
     }
 
+    public void StartLadderClimb()
+    {
+        Humonoidanimator.ResetTrigger("ladderExit");
+        Humonoidanimator.SetTrigger("ladder");
+        playerRb.useGravity = false;
+    }
 
+    public void StopLadderClimb()
+    {
+        PlayerHandler.instance.ladderInteract = false;
+        Humonoidanimator.SetTrigger("ladderExit");
+        playerRb.useGravity = true;
+    }
 
     bool MoveCheck(float hori, float vert)
     {
@@ -990,6 +1098,12 @@ public class Player : Character
         }
     }
 
+    public void BounceByBroeknPlatform()
+    {
+        playerRb.velocity = Vector3.zero;
+        playerRb.AddForce(transform.up * 2f, ForceMode.VelocityChange);
+    }
+
     IEnumerator GoDownAttack()
     {
         playerRb.useGravity = false;
@@ -1029,14 +1143,18 @@ public class Player : Character
     #endregion
 
     #region 피격
+    public virtual void TransformDamagedEvent()
+    {
+
+    }
     public void DamagedIgnoreInvincible(float damage)
     {
         onInvincible = true;
 
         PlayerStat.instance.pState = PlayerState.hitted;
         HittedEffect.gameObject.SetActive(true);
-        PlayerStat.instance.hp -= damage;
-
+        PlayerStat.instance.LoseHP(damage);
+        TransformDamagedEvent();
 
         if (PlayerStat.instance.hp <= 0)
         {
@@ -1115,22 +1233,51 @@ public class Player : Character
     #endregion
 
     #region 점프동작
+    public GameObject doublejumpeffect;
+    public virtual void PlayerJumpEvent()
+    {
+        if (Humonoidanimator != null)
+        {
+            Humonoidanimator.SetTrigger("jump");
+            if (PlayerStat.instance.doubleJump)
+            {
+                if (JumpEffect != null)
+                {
+                    JumpEffect.gameObject.SetActive(false);
+                    JumpEffect.SetActive(true);
+                }
+            }
+            else
+            {
+                if (doublejumpeffect == null)
+                {
+                    doublejumpeffect = Instantiate(JumpEffect, JumpEffect.transform.parent);
+                    doublejumpeffect.transform.position = JumpEffect.transform.position;
+                    doublejumpeffect.gameObject.SetActive(true);
+                }
+                else
+                {
+                    doublejumpeffect.gameObject.SetActive(true);
+                }
+            }
+        }
+    }
+
     public void Jump()
     {
+        if (PlayerHandler.instance.ladderInteract)
+        {
+            PlayerHandler.instance.ladderInteract = false;
+            StopLadderClimb();
+        }
         isJump = true;
         jumpBufferTimer = 0;
         //canjumpInput = false;
         jumpLimitInput = true;
         if (jumpkeyinputcheckvalue <= 0)
             jumpkeyinputcheckvalue = jumpkeyinputCheck;
-        if (Humonoidanimator != null)
-        {
-            Humonoidanimator.SetTrigger("jump");
-        }
-
-        if (JumpEffect != null)
-            JumpEffect.SetActive(true);
-
+        PlayerJumpEvent();
+       
         isRun = false;
         if (SoundPlayer != null)
             SoundPlayer.PlayJumpAudio();
@@ -1148,8 +1295,9 @@ public class Player : Character
         {
             if (!downAttack)
             {
-                if (!isJump && onGround && canjumpInput)
+                if ( /*&& onGround*/ PlayerStat.instance.jump && canjumpInput)
                 {
+                    PlayerStat.instance.jump = false;
                     Jump();
                 }
                 else if (canjumpInput && PlayerStat.instance.doubleJump)
@@ -1341,7 +1489,7 @@ public class Player : Character
                     && !CullingPlatform)
                 {
                     onInterarctive = false;
-
+                    onGround = false;
                     isJump = true;
                     CullingPlatform = true;
                     Physics.IgnoreLayerCollision(6, 11, true);

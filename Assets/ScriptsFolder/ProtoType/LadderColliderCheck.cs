@@ -20,9 +20,9 @@ public class LadderColliderCheck : MonoBehaviour
             if (PlayerHandler.instance.ladderInteract)
             {
                 other.transform.position = endPoint.position;
-
-                PlayerHandler.instance.ladderInteract = false;
-                PlayerHandler.instance.CurrentPlayer.GetComponent<Rigidbody>().useGravity = true;
+                
+                PlayerHandler.instance.CurrentPlayer.StopLadderClimb();
+                //PlayerHandler.instance.CurrentPlayer.GetComponent<Rigidbody>().useGravity = true;
             }
         }
 

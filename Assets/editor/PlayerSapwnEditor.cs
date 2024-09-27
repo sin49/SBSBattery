@@ -5,6 +5,8 @@ using UnityEditor;
 using System;
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
+
 [CustomEditor(typeof(PlayerSpawnManager))]
 public class PlayerSapwnEditor : Editor
 {
@@ -77,6 +79,12 @@ public class PlayerSapwnEditor : Editor
             case TransformType.remoteform:
                 s = "리모컨";
                 break;
+            case TransformType.ironform:
+                s = "다리미";
+                break;
+            case TransformType.mouseform:
+                s = "마우스";
+                break;
             default:
                 break;
         }
@@ -96,7 +104,7 @@ public class PlayerSapwnEditor : Editor
         }
         if (GUILayout.Button("변신 폼 앞으로"))
         {
-            if (transformtype != TransformType.remoteform)
+            if (transformtype != TransformType.mouseform)
             {
                 transformtype++;
             }

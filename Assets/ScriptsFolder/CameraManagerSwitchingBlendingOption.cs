@@ -43,6 +43,9 @@ public class CameraManagerSwitchingBlendingOption : CameraManager
     Camera cam;
     public IEnumerator SwitchCameraCoroutine(CinemachineVirtualCamera newCamera)
     {
+        if (activedcamera == newCamera)
+            yield break;
+
         isTransitioning = true;
 
    
@@ -58,10 +61,14 @@ public class CameraManagerSwitchingBlendingOption : CameraManager
             cinemachineBrain.m_DefaultBlend = blend;
             cam.orthographic = false;
             // 현재 카메라와 새 카메라 간의 전환 시작
-            activedcamera.gameObject.SetActive(false);
-            newCamera.gameObject.SetActive(true);
-        
-             activedcamera = newCamera;
+            Vector3 newcameraposition = newCamera.transform.position;
+
+            activedcamera.enabled = (false);
+            Debug.Log(activedcamera.name + "activedcamera");
+            newCamera.enabled = (true);
+            newCamera.transform.position = newcameraposition;
+            Debug.Log(newCamera.name + "activedcamera");
+            activedcamera = newCamera;
      
             yield return new WaitForSecondsRealtime(transitionDuration);
   

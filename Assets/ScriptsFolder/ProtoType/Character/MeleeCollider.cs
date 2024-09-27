@@ -17,6 +17,7 @@ public class MeleeCollider : PlayerAttack
     public override void DamageCollider(Collider other)
     {
         base.DamageCollider(other);
+
         saveEffect.transform.position = new(other.transform.position.x, other.transform.position.y + .5f, other.transform.position.z);
         saveEffect.Play();
     }

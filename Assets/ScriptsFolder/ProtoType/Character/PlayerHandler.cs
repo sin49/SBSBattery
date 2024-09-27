@@ -138,6 +138,7 @@ public class PlayerHandler : MonoBehaviour
     {
         if (PlayerStat.instance.hp > 1)
         {
+            playerjumpaccept();
             Rigidbody rb = null;
             if (CurrentPlayer.TryGetComponent<Rigidbody>(out rb))
             {
@@ -253,6 +254,7 @@ public class PlayerHandler : MonoBehaviour
 
         if ((int)CurrentType < PlayerTransformList.Count)
         {
+            Debug.Log("타입 크기 만족함");
             #region 플레이어 프리팹 교체
             Transform tf = null;
             if (Playerprefab != null)
@@ -305,8 +307,11 @@ public class PlayerHandler : MonoBehaviour
 
             #endregion
             if (formChange)
+            {
                 CurrentPlayer.Humonoidanimator.Play("TransformEnd");
-        }
+                CurrentPlayer.downAttack = false;
+            }
+            }
         else
             Debug.Log("ListOutofRangeError");
     }
@@ -517,18 +522,9 @@ public class PlayerHandler : MonoBehaviour
 
             if (Input.GetKey(KeySettingManager.instance.DeformKeycode))
             {
-                switch (CurrentType)
-                {
-                    case TransformType.remoteform:
-                        DeTransformtimer += Time.deltaTime;
-                        if (DeTransformtimer > DeTransformtime)
-                        {
-                            DeTransformtimer = 0;
-                            //Deform();
-                        }
-                        break;
-                    default:
-                        break;
+                if (CurrentType != TransformType.Default) { 
+                            Deform();
+                    
 
                 }
             }
@@ -541,7 +537,7 @@ public class PlayerHandler : MonoBehaviour
                 CurrentPlayer.DownAttack();
             }
 
-            if (doubleUpInput && Input.GetKeyDown(KeySettingManager.instance.SkillKeycode) && CurrentType != TransformType.Default)
+            if (/*doubleUpInput &&*/ Input.GetKeyDown(KeySettingManager.instance.SkillKeycode) && CurrentType != TransformType.Default)
             {
                 CurrentPlayer.Skill1();
 
@@ -704,5 +700,5 @@ PlayerInventory.instance.checkessesntialitem("item01")*/)
 }
 
 
-public enum TransformType { Default, remoteform, mouseform, transform1, testtransform }
+public enum TransformType { Default, remoteform, ironform, mouseform,transform1, testtransform }
 
