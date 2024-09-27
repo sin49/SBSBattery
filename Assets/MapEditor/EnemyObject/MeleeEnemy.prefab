@@ -184,6 +184,7 @@ GameObject:
   - component: {fileID: 7523190881104252772}
   - component: {fileID: 6341584571874404752}
   - component: {fileID: 8243888719237057114}
+  - component: {fileID: 1830545421260590273}
   m_Layer: 9
   m_Name: MeleeEnemy
   m_TagString: Enemy
@@ -201,7 +202,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3234895078922946737}
@@ -286,27 +287,27 @@ MonoBehaviour:
   moveEffect: {fileID: 0}
   environmentforce: {x: 0, y: 0, z: 0}
   isMove: 0
-  searchCubeRange: {x: 2, y: 0.5, z: 0.5}
-  searchCubePos: {x: 0, y: 0.5, z: 0}
+  searchCubeRange: {x: 0, y: 0, z: 0}
+  searchCubePos: {x: 0, y: 0, z: 0}
   rangeCollider: {fileID: 7523205838727179985}
-  rangeSize: {x: 0.73, y: 1, z: 1.2}
-  rangePos: {x: 0, y: 0.45, z: 0.88}
+  rangeSize: {x: 0.5, y: 1, z: 1}
+  rangePos: {x: 0, y: 0.35, z: 0.65}
   searchCollider: {fileID: 772453129297269744}
-  searchColliderRange: {x: 2.5, y: 1.5, z: 4}
-  searchColliderPos: {x: 0, y: 0.45, z: 0.45}
+  searchColliderRange: {x: 6, y: 3, z: 8}
+  searchColliderPos: {x: 0, y: 0.45, z: 1}
   searchPlayer: 0
-  trackingDistance: 4
+  trackingDistance: 10
   disToPlayer: 0
   PatrolTransform: []
   patrolGroup: []
   targetPatrol: {x: 2, y: 0, z: 0}
-  patrolWaitTime: 3
+  patrolWaitTime: 1.5
   leftPatrolRange: 1
   rightPatrolRange: 1
   patrolDistance: 0.1
   onPatrol: 0
-  yWidth: 1.5
-  zWidth: 1
+  yWidth: 3
+  zWidth: 3
   wallRayHeight: 0
   wallRayLength: 0
   wallRayUpLength: 0
@@ -329,7 +330,7 @@ MonoBehaviour:
   onStun: 0
   reachCheck: 0
   attackRange: 0
-  flatObject: {fileID: 0}
+  flatObject: {fileID: 2703359832040041659}
   flatTime: 0
   rotLevel: 85
   testAngle: 0
@@ -348,7 +349,7 @@ MonoBehaviour:
   attackType: 0
   characterState: 0
   initMaxHP: 2
-  initMoveSpeed: 2
+  initMoveSpeed: 2.5
   HPBonus: 0
   MoveSpeedBonus: 0
   hp: 2
@@ -356,7 +357,7 @@ MonoBehaviour:
   rotationSpeed: 50
   attackSpeed: 0
   attackCoolTimebonus: 0
-  initattackCoolTime: 1.5
+  initattackCoolTime: 0.75
   attackDelay: 1
   canMove: 1
   canAttack: 1
@@ -366,6 +367,21 @@ MonoBehaviour:
     partValue: 0
   onInvincible: 0
   invincibleTimer: 0
+--- !u!114 &1830545421260590273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557678266298197566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6468d904bc89c6a41b68e57303ecc421, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  caught: 0
+  thrown: 0
+  cursorTargetCollider: {fileID: 0}
 --- !u!1 &760889696902095029
 GameObject:
   m_ObjectHideFlags: 0
@@ -452,8 +468,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.5, y: 1.5, z: 4}
-  m_Center: {x: 0, y: 0.45, z: 0.45}
+  m_Size: {x: 6, y: 3, z: 8}
+  m_Center: {x: 0, y: 0.45, z: 1}
 --- !u!114 &4416602718049262562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1804,8 +1820,8 @@ Transform:
   m_GameObject: {fileID: 5928682154388525737}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.45, z: 0.88}
-  m_LocalScale: {x: 0.73, y: 1, z: 1.2}
+  m_LocalPosition: {x: 0, y: 0.35, z: 0.65}
+  m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6803117431170513233}
@@ -2139,8 +2155,8 @@ Transform:
   m_GameObject: {fileID: 7347882113131451088}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.45, z: 0.45}
-  m_LocalScale: {x: 2.5, y: 1.5, z: 4}
+  m_LocalPosition: {x: 0, y: 0.45, z: 1}
+  m_LocalScale: {x: 6, y: 3, z: 8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 36697554421484249}
@@ -2283,8 +2299,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.73, y: 1, z: 1.2}
-  m_Center: {x: 0, y: 0.45, z: 0.88}
+  m_Size: {x: 0.5, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.35, z: 0.65}
 --- !u!1 &7616434635415577799
 GameObject:
   m_ObjectHideFlags: 0

@@ -328,6 +328,38 @@ Transform:
   - {fileID: 1856971278512738439}
   m_Father: {fileID: 6677111061241828558}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1708118682233672629
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4939365635400075190}
+  m_Layer: 9
+  m_Name: Pivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4939365635400075190
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708118682233672629}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6151807462401382767}
+  m_Father: {fileID: 6513247298425961137}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2005908731332941212
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,7 +393,7 @@ Transform:
   m_Children:
   - {fileID: 4343763489837393807}
   - {fileID: 3924504651420837042}
-  m_Father: {fileID: 6513247298425961137}
+  m_Father: {fileID: 4939365635400075190}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3723374977564606092
 Animator:
@@ -549,8 +581,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 1.5, z: 3.5}
-  m_Center: {x: 0, y: 0.25, z: 0.5}
+  m_Size: {x: 4, y: 2, z: 5}
+  m_Center: {x: 0, y: 0, z: 0.5}
 --- !u!114 &1877478978774989018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -686,8 +718,8 @@ Transform:
   m_GameObject: {fileID: 2598269014547892694}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.25, z: 0.5}
-  m_LocalScale: {x: 2, y: 1.5, z: 3.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5}
+  m_LocalScale: {x: 4, y: 2, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6076286279727721560}
@@ -959,6 +991,7 @@ GameObject:
   - component: {fileID: 7256481338655193921}
   - component: {fileID: 6418714577508714290}
   - component: {fileID: 5074688806391238698}
+  - component: {fileID: 8794227815122547737}
   m_Layer: 9
   m_Name: BulbEnemy
   m_TagString: Enemy
@@ -976,10 +1009,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.70710886, z: -0, w: -0.7071048}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_LocalScale: {x: 2.6, y: 2.6, z: 2.6}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 6151807462401382767}
+  - {fileID: 4939365635400075190}
   - {fileID: 3462015952631015005}
   - {fileID: 3215342015959018340}
   - {fileID: 7374863779315376107}
@@ -1010,6 +1043,7 @@ MonoBehaviour:
   hittedMat: {fileID: 0}
   skinRenderer: {fileID: 0}
   moveEffect: {fileID: 0}
+  environmentforce: {x: 0, y: 0, z: 0}
   isMove: 0
   searchCubeRange: {x: 3, y: 0.45, z: 0.7}
   searchCubePos: {x: 0, y: 0, z: 0}
@@ -1017,18 +1051,19 @@ MonoBehaviour:
   rangeSize: {x: 0, y: 0, z: 0}
   rangePos: {x: 0, y: 0, z: 0}
   searchCollider: {fileID: 2268291284102243975}
-  searchColliderRange: {x: 2, y: 1.5, z: 3.5}
-  searchColliderPos: {x: 0, y: 0.25, z: 0.5}
+  searchColliderRange: {x: 4, y: 2, z: 5}
+  searchColliderPos: {x: 0, y: 0, z: 0.5}
   searchPlayer: 0
-  trackingDistance: 4
+  trackingDistance: 8
   disToPlayer: 0
+  PatrolTransform: []
   patrolGroup: []
-  targetPatrol: {x: 1.6, y: 0, z: 0}
+  targetPatrol: {x: 2, y: 0, z: 0}
   patrolWaitTime: 1
-  leftPatrolRange: 0.8
-  rightPatrolRange: 0.8
+  leftPatrolRange: 1
+  rightPatrolRange: 1
   patrolDistance: 0.1
-  onPatrol: 0
+  onPatrol: 1
   yWidth: 3
   zWidth: 3
   wallRayHeight: 0.3
@@ -1053,7 +1088,7 @@ MonoBehaviour:
   onStun: 0
   reachCheck: 0
   attackRange: 0
-  flatObject: {fileID: 0}
+  flatObject: {fileID: 1708118682233672629}
   flatTime: 0
   rotLevel: 85
   testAngle: 0
@@ -1096,16 +1131,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackType: 0
   characterState: 0
-  initMaxHP: 2
-  initMoveSpeed: 1.5
+  initMaxHP: 1
+  initMoveSpeed: 3
   HPBonus: 0
   MoveSpeedBonus: 0
-  hp: 2
+  hp: 1
   atk: 1
-  rotationSpeed: 4
+  rotationSpeed: 8
   attackSpeed: 0
   attackCoolTimebonus: 0
-  initattackCoolTime: 5
+  initattackCoolTime: 2
   attackDelay: 0
   canMove: 1
   canAttack: 1
@@ -1142,6 +1177,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &8794227815122547737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4439787244619641238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6468d904bc89c6a41b68e57303ecc421, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  caught: 0
+  thrown: 0
+  cursorTargetCollider: {fileID: 0}
 --- !u!1 &4486331466674760506
 GameObject:
   m_ObjectHideFlags: 0

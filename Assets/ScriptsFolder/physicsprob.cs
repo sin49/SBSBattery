@@ -30,8 +30,11 @@ public class physicsprob : MonoBehaviour
     {
         rb.mass = mass;
 
-        rb.AddForce(EnvironmentForce,ForceMode.VelocityChange);
-        EnvironmentForce = Vector3.zero;
-        rb.velocity = Vector3.zero;
+        if (EnvironmentForce != Vector3.zero)
+        {
+            rb.AddForce(EnvironmentForce, ForceMode.VelocityChange);
+            EnvironmentForce = Vector3.zero;
+            rb.velocity = Vector3.zero;
+        }
     }
 }

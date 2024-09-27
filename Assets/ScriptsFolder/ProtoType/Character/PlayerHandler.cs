@@ -138,6 +138,7 @@ public class PlayerHandler : MonoBehaviour
     {
         if (PlayerStat.instance.hp > 1)
         {
+            playerjumpaccept();
             Rigidbody rb = null;
             if (CurrentPlayer.TryGetComponent<Rigidbody>(out rb))
             {
@@ -306,8 +307,11 @@ public class PlayerHandler : MonoBehaviour
 
             #endregion
             if (formChange)
+            {
                 CurrentPlayer.Humonoidanimator.Play("TransformEnd");
-        }
+                CurrentPlayer.downAttack = false;
+            }
+            }
         else
             Debug.Log("ListOutofRangeError");
     }
@@ -518,18 +522,9 @@ public class PlayerHandler : MonoBehaviour
 
             if (Input.GetKey(KeySettingManager.instance.DeformKeycode))
             {
-                switch (CurrentType)
-                {
-                    case TransformType.remoteform:
-                        DeTransformtimer += Time.deltaTime;
-                        if (DeTransformtimer > DeTransformtime)
-                        {
-                            DeTransformtimer = 0;
-                            //Deform();
-                        }
-                        break;
-                    default:
-                        break;
+                if (CurrentType != TransformType.Default) { 
+                            Deform();
+                    
 
                 }
             }
