@@ -522,18 +522,9 @@ public class PlayerHandler : MonoBehaviour
 
             if (Input.GetKey(KeySettingManager.instance.DeformKeycode))
             {
-                switch (CurrentType)
-                {
-                    case TransformType.remoteform:
-                        DeTransformtimer += Time.deltaTime;
-                        if (DeTransformtimer > DeTransformtime)
-                        {
-                            DeTransformtimer = 0;
-                            //Deform();
-                        }
-                        break;
-                    default:
-                        break;
+                if (CurrentType != TransformType.Default) { 
+                            Deform();
+                    
 
                 }
             }

@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 5.5, y: 3, z: 8}
+  m_LocalScale: {x: 8, y: 3, z: 8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7338983320533711652}
@@ -158,7 +158,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5.5, y: 3, z: 8}
+  m_Size: {x: 8, y: 3, z: 8}
   m_Center: {x: 0, y: 0, z: 1}
 --- !u!114 &948908282389110036
 MonoBehaviour:
@@ -483,7 +483,7 @@ MonoBehaviour:
   rangeSize: {x: 1.1, y: 1.5, z: 4.5}
   rangePos: {x: 0, y: 0, z: 1.5}
   searchCollider: {fileID: 957656819024854305}
-  searchColliderRange: {x: 5.5, y: 3, z: 8}
+  searchColliderRange: {x: 8, y: 3, z: 8}
   searchColliderPos: {x: 0, y: 0, z: 1}
   searchPlayer: 0
   trackingDistance: 10
@@ -525,11 +525,11 @@ MonoBehaviour:
   rotLevel: 85
   testAngle: 0
   rushinitdelay: 1
-  rushtime: 1
-  rushspeed: 7.5
-  rushcooltime: 1.5
-  PlayerForce: 9
-  Playerstuntime: 0.35
+  rushtime: 1.25
+  rushspeed: 7
+  rushcooltime: 0.5
+  PlayerForce: 7
+  Playerstuntime: 0.25
 --- !u!114 &1024772792019391105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -545,12 +545,12 @@ MonoBehaviour:
   attackType: 0
   characterState: 0
   initMaxHP: 5
-  initMoveSpeed: 1.35
+  initMoveSpeed: 2.5
   HPBonus: 0
   MoveSpeedBonus: 0
-  hp: 2
+  hp: 3
   atk: 1
-  rotationSpeed: 5
+  rotationSpeed: 8
   attackSpeed: 0
   attackCoolTimebonus: 0
   initattackCoolTime: 0
@@ -559,8 +559,8 @@ MonoBehaviour:
   canAttack: 0
   eState: 0
   dropGroup:
-    parts: {fileID: 0}
-    partValue: 0
+    parts: {fileID: 1484204634486695996, guid: 757caba741c6ccc40886737a7e2215df, type: 3}
+    partValue: 1
   onInvincible: 0
   invincibleTimer: 0
 --- !u!114 &5215787290754587816
