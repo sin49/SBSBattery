@@ -379,7 +379,10 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'Bip001 Neck'\n\tTransform 'Bip001 Spine'\n\tTransform
+    'Bip001 Neck'\n\tTransform 'Bip001 Spine'\n\tFrom animation clip 'EnemyStandC'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -704,7 +707,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2598269014547892694}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -956,6 +959,7 @@ GameObject:
   - component: {fileID: 7256481338655193921}
   - component: {fileID: 6418714577508714290}
   - component: {fileID: 5074688806391238698}
+  - component: {fileID: 8794227815122547737}
   m_Layer: 9
   m_Name: BulbEnemy
   m_TagString: Enemy
@@ -973,7 +977,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.70710886, z: -0, w: -0.7071048}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6151807462401382767}
@@ -1007,6 +1011,7 @@ MonoBehaviour:
   hittedMat: {fileID: 0}
   skinRenderer: {fileID: 0}
   moveEffect: {fileID: 0}
+  environmentforce: {x: 0, y: 0, z: 0}
   isMove: 0
   searchCubeRange: {x: 3, y: 0.45, z: 0.7}
   searchCubePos: {x: 0, y: 0, z: 0}
@@ -1019,6 +1024,7 @@ MonoBehaviour:
   searchPlayer: 0
   trackingDistance: 4
   disToPlayer: 0
+  PatrolTransform: []
   patrolGroup: []
   targetPatrol: {x: 1.6, y: 0, z: 0}
   patrolWaitTime: 1
@@ -1050,6 +1056,8 @@ MonoBehaviour:
   onStun: 0
   reachCheck: 0
   attackRange: 0
+  flatObject: {fileID: 0}
+  flatTime: 0
   rotLevel: 85
   testAngle: 0
   explosion: {fileID: 0}
@@ -1137,6 +1145,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &8794227815122547737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4439787244619641238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6468d904bc89c6a41b68e57303ecc421, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  caught: 0
+  thrown: 0
+  cursorTargetCollider: {fileID: 0}
 --- !u!1 &4486331466674760506
 GameObject:
   m_ObjectHideFlags: 0

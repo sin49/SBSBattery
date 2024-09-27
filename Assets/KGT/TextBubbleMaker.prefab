@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 3799577278553688462}
   - component: {fileID: 5636336280949818504}
   - component: {fileID: 4684828048563122250}
+  - component: {fileID: 8927863232952375753}
   m_Layer: 0
   m_Name: TextBubbleMaker
   m_TagString: InteractiveObject
@@ -152,6 +153,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InteractOnce: 0
   CanInteract: 1
-  soundEffectListPlayer: {fileID: 0}
+  soundEffectListPlayer: {fileID: 8927863232952375753}
   textbubble: {fileID: 0}
   textasset_: {fileID: 0}
+--- !u!114 &8927863232952375753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5835016476592391818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c358efc4e7446f147a9d6a4f71757744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list:
+  - clip: {fileID: 8300000, guid: b7bff984fb3b9fa4b9c7cf939c703022, type: 3}
+    volume: 0.8

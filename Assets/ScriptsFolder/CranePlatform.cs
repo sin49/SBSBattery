@@ -30,7 +30,7 @@ public class CranePlatform : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-
+            PlayerHandler.instance.playerjumpaccept();
             collision.transform.SetParent(null);
 
         }

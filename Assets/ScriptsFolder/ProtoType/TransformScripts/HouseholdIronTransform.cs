@@ -1,3 +1,4 @@
+using Cinemachine;
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
@@ -919,13 +920,14 @@ public class HouseholdIronTransform : Player
         }
     }
     #endregion
-
+    public CinemachineImpulseSource source;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ground"))
         {
             if (downAttack)
             {
+                source.GenerateImpulse();
                 PlayerHandler.instance.CantHandle = true;
                 downEnd = true;
                 if (!ironDownAtkEffect.gameObject.activeSelf)
@@ -1035,12 +1037,12 @@ public class HouseholdIronTransform : Player
     {
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            rushVert = 1;
+            rushVert = -1;
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            rushVert = -1;
+            rushVert = 1;
         }
 
         if (!Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))

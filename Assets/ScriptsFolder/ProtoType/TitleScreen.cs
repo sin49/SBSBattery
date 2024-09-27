@@ -8,12 +8,13 @@ public class TitleScreen : MonoBehaviour
     public List<TItleText> titletexts;
     public int index;
     public TextMeshProUGUI ResetText;
+    public string startscenename;
     public ButtonSoundEffectPlayer ButtionSoundEffectPlayer_;
 
     public void StartNewGame()
     {
         GameManager.instance.DeleteSaveSetting();
-        GameManager.instance.LoadingSceneWithKariEffect("Level_LDJ");
+        GameManager.instance.LoadingSceneWithKariEffect(startscenename);
    
     }
     public void ContinueGame()

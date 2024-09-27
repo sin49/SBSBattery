@@ -271,7 +271,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1840961726563666726}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1250,9 +1250,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5972430000464431206}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: -0.0000014305114, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8252638664993472453}
@@ -1262,7 +1262,7 @@ Transform:
   - {fileID: 186578048033501869}
   - {fileID: 8560900777148706441}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &6632304941756833643
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1335,6 +1335,7 @@ MonoBehaviour:
   hittedMat: {fileID: 2100000, guid: f7b3a12ef30f40544b225d4665485f28, type: 2}
   skinRenderer: {fileID: 5487582872936014451}
   moveEffect: {fileID: 0}
+  environmentforce: {x: 0, y: 0, z: 0}
   isMove: 0
   searchCubeRange: {x: 3.5, y: 0.63, z: 0.7}
   searchCubePos: {x: 0, y: 0.61, z: 0}
@@ -1347,6 +1348,7 @@ MonoBehaviour:
   searchPlayer: 0
   trackingDistance: 4
   disToPlayer: 0
+  PatrolTransform: []
   patrolGroup: []
   targetPatrol: {x: 1.2, y: 0.5, z: 0}
   patrolWaitTime: 1
@@ -1400,7 +1402,7 @@ MonoBehaviour:
   attackType: 0
   characterState: 0
   initMaxHP: 3
-  initMoveSpeed: 1
+  initMoveSpeed: 2
   HPBonus: 0
   MoveSpeedBonus: 0
   hp: 3
@@ -1408,7 +1410,7 @@ MonoBehaviour:
   rotationSpeed: 3
   attackSpeed: 0
   attackCoolTimebonus: 0
-  initattackCoolTime: 1.5
+  initattackCoolTime: 1
   attackDelay: 1
   canMove: 1
   canAttack: 1
@@ -1580,7 +1582,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6360932444653619128}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1874,7 +1876,10 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'Bip001 Neck'\n\tTransform 'Bip001 Spine'\n\tTransform
+    'Bip001 Neck'\n\tTransform 'Bip001 Spine'\n\tFrom animation clip 'EnemyStandC'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
