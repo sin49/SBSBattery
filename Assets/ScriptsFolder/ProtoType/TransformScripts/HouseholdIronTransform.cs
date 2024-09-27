@@ -149,6 +149,7 @@ public class HouseholdIronTransform : Player
             if (!downAttack)
             {
                 downAttack = true;
+                onInvincible = true;
                 PlayerHandler.instance.CantHandle = true;
                 StartFreeze();
                 StartCoroutine(IronDownAttack());
@@ -203,6 +204,7 @@ public class HouseholdIronTransform : Player
                 downAtkEndTimer = downAtkEndTimeMax;
                 PlayerHandler.instance.CantHandle = false;
                 onDownCoolTime = true;
+                onInvincible = false;
             }
         }
 
@@ -813,6 +815,11 @@ public class HouseholdIronTransform : Player
         SecondFormDeactive();
     }
 
+    public override bool TransformInvincibleEvent()
+    {
+        return onRush;
+    }
+
     public override void PlayerJumpEvent()
     {
         if(!onRush)
@@ -889,6 +896,7 @@ public class HouseholdIronTransform : Player
     public void RushEnd()
     {
         PlayerHandler.instance.CantHandle = true;
+        playerRb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePosition;
         //onRush = false;
         meleeCollider.SetActive(false);
         rushEnd = true;
@@ -911,10 +919,12 @@ public class HouseholdIronTransform : Player
         {
             while (Humonoidanimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
             {
+                playerRb.velocity = Vector3.zero;
                 //Debug.Log($"돌진 종료 체크{Humonoidanimator.GetCurrentAnimatorStateInfo(0).normalizedTime}");
                 yield return null;
             }
             PlayerHandler.instance.CantHandle = false;
+            playerRb.constraints = RigidbodyConstraints.FreezeRotation;
             onInvincible = false;
             ironAttack = true;
             onRush = false;            

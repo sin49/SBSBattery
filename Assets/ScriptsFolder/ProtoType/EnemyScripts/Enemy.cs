@@ -187,14 +187,18 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         }
         else
         {
-            if (timer < flatTime)
+            if (onFlat)
             {
-                timer += Time.deltaTime;
+                if (timer < flatTime)
+                {
+                    timer += Time.deltaTime;
+                }
+                else
+                {
+                    RollBackFormFlatState();
+                }
             }
-            else
-            {
-                RollBackFormFlatState();
-            }
+
         }
     }
     
@@ -494,6 +498,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public float flatScaleY;
     public float flatTime=0;
     public float timer;
+    bool onFlat;
     Vector3 originScale;
     Vector3 flatScale;
     //납작하게 되는 함수
@@ -503,6 +508,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             return;
 
         onStun = true;
+        onFlat = true;
         flatObject.transform.localScale = flatScale;
         flatTime = flat;
         attackRange = false;
@@ -519,6 +525,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public void RollBackFormFlatState()
     {
         onStun = false;
+        onFlat = false;
         timer = 0;
         if (skinRenderer != null)
         {

@@ -1200,7 +1200,12 @@ public class Player : Character,environmentObject
     {
         yield return new WaitForSeconds(PlayerStat.instance.invincibleCoolTime);
 
+        if(!TransformInvincibleEvent())
         onInvincible = false;
+    }
+    public virtual bool TransformInvincibleEvent()
+    {
+        return false;
     }
 
     IEnumerator WaitEndDamaged()
