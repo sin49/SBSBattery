@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 3806855424090343670}
   - component: {fileID: 4980398533071736132}
   - component: {fileID: 724401123593733236}
-  m_Layer: 12
+  m_Layer: 9
   m_Name: BlueMonsterTvEnemy (1)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -84,7 +84,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2c2539763bdf3c4e8351a33233d35ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eStat: {fileID: 0}
+  testcolor: {r: 0, g: 0, b: 0, a: 0}
+  movepattern: 1
+  eStat: {fileID: 724401123593733236}
   patrolType: 0
   attackCollider: {fileID: 2582524626774844617}
   deadEffect: {fileID: 0}
@@ -123,7 +125,9 @@ MonoBehaviour:
   wallCheck: 0
   attackTimer: 0
   attackDelay: 0
+  actionhandler: {fileID: 0}
   callCheck: 0
+  rotCheck: 0
   onAttack: 0
   activeAttack: 0
   checkPlayer: 0
@@ -134,7 +138,10 @@ MonoBehaviour:
   onStun: 0
   reachCheck: 0
   attackRange: 0
+  flatObject: {fileID: 0}
+  flatTime: 0
   rotLevel: 85
+  testAngle: 0
   tvColor: 2
   checkTv: 0
   activeTv: 0
@@ -796,6 +803,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 0}
+  childMat: {fileID: 0}
 --- !u!65 &9199802104685863812
 BoxCollider:
   m_ObjectHideFlags: 0

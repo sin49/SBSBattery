@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -13,36 +14,45 @@ public class MouseFormCursor : MonoBehaviour
     public float forwardThrowForce;
     public float upThrowForce;
 
+    public ParticleSystem clickEffect;
+    GameObject playerRotate;
+
+    private void Awake()
+    {
+        playerRotate = GetComponentInParent<Player>().transform.GetChild(0).gameObject;
+    }
+
     private void Update()
     {
         if (interactObj != null)
         {
             interactObj.transform.position = cursorParent.transform.position + transform.forward * interactObj.ColliderEndPoint();
+            interactObj.transform.rotation = playerRotate.transform.rotation;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy") || other.CompareTag("InteractivePlatform"))
+        if (!onCatch)
         {
-            if (!onCatch)
+            CursorInteractObject cursorInteract;
+            if (other.TryGetComponent<CursorInteractObject>(out cursorInteract))
             {
-                CursorInteractObject cursorInteract;
-                if(other.TryGetComponent<CursorInteractObject>(out cursorInteract))
-                {
-                    onCatch = true;
-                    interactObj = cursorInteract;
-                    interactObj.GetComponent<Rigidbody>().useGravity = false;
-                    interactObj.GetComponent<Rigidbody>().isKinematic = true;
-                    interactObj.GetComponent<Collider>().isTrigger = true;
-                    other.transform.position = cursorParent.transform.position;
-                    other.transform.rotation = Quaternion.identity;
-                    cursorInteract.caught = true;
+                onCatch = true;
+                interactObj = cursorInteract;
+                interactObj.GetComponent<Rigidbody>().useGravity = false;
+                interactObj.GetComponent<Rigidbody>().isKinematic = true;
+                interactObj.GetComponent<Collider>().isTrigger = true;
+                other.transform.position = cursorParent.transform.position;
+                clickEffect.Play();
 
-                    if (cursorInteract.CompareTag("InteractivePlatform"))
-                    {
-                        cursorInteract.gameObject.layer = LayerMask.NameToLayer("DontMoveIgnore");
-                    }
+                cursorInteract.caught = true;
+                cursorInteract.CaughtTypeCheck();
+
+                if (cursorInteract.CompareTag("InteractivePlatform"))
+                {
+                    other.transform.rotation = Quaternion.identity;
+                    cursorInteract.gameObject.layer = LayerMask.NameToLayer("DontMoveIgnore");
                 }
             }
         }
@@ -66,6 +76,7 @@ public class MouseFormCursor : MonoBehaviour
                 DropPlatformObject();
             }
         }
+        clickEffect.Play();
     }
 
     public void ThrowMonster()
