@@ -1,3 +1,4 @@
+using Cinemachine;
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,6 +6,7 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HouseholdIronTransform : Player
 {
@@ -31,7 +33,8 @@ public class HouseholdIronTransform : Player
     [Header("방향 전환 딜레이 시간")]
     public float rotateTimeMax;
     float rotateTimer;
-
+    [Header("돌진 이펙트")]
+    public ParticleSystem ironDashEffect;
     [Header("돌진 캔슬을 위한 레이")]
     public float rushRay;
     public float rayHeightValue;
@@ -48,12 +51,13 @@ public class HouseholdIronTransform : Player
     float downAtkEndTimer;
     [Header("다림질 공격력")]public float ironDownDamage;
     [Header("다림질 재사용 대기 시간")]public float ironDownCoolTimeMax;
+    [Header("다림질 이펙트")] public ParticleSystem ironDownAtkEffect;
     float downCoolTimer;
     bool onDownCoolTime;
 
     float rushHori, rushVert;
-    direction saveDirection = direction.none;
-    directionZ saveDirectionZ = directionZ.none;
+    public direction saveDirection = direction.none;
+    public directionZ saveDirectionZ = directionZ.none;
     protected override void Awake()
     {
         base.Awake();
@@ -113,6 +117,7 @@ public class HouseholdIronTransform : Player
     public void RushCancel()
     {
         Humonoidanimator.SetTrigger("RushCancel");
+        ironDashEffect.Stop();
         SecondFormDeactive();
         onRush = false;
         rushEnd = true;
@@ -144,6 +149,7 @@ public class HouseholdIronTransform : Player
             {
                 downAttack = true;
                 PlayerHandler.instance.CantHandle = true;
+                StartFreeze();
                 StartCoroutine(IronDownAttack());
             }
         }
@@ -153,16 +159,33 @@ public class HouseholdIronTransform : Player
         SecondFormActive();
 
         playerRb.useGravity = false;
+        while (playerRb.velocity != Vector3.zero)
+        {
+            playerRb.velocity = Vector3.zero;
+            yield return null;
+        }
         playerRb.velocity = Vector3.zero;
-        playerRb.AddForce(transform.up * 2.5f);
+        playerRb.AddForce(transform.up * 30f);
 
         yield return new WaitForSeconds(ironFlyTime);
 
+        EndFreeze();
         playerRb.useGravity = true;
         playerRb.velocity = Vector3.zero;
         playerRb.AddForce(-transform.up * downAtkSpeed, ForceMode.Impulse);
         downAttackCollider.SetActive(true);
     }
+
+    public void StartFreeze()
+    {
+        playerRb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+    }
+
+    public void EndFreeze()
+    {
+        playerRb.constraints = RigidbodyConstraints.FreezeRotation;
+    }
+
 
     // 다림질 시간 관련 체크
     public void IronDownAttackTimeCheck()
@@ -333,10 +356,10 @@ public class HouseholdIronTransform : Player
     bool onRushRot, onlyRot;
     Vector3 currentRotateVector;
     // 돌진 회전
-    /*public void RushRotate(float hori, float vert)
+    public void RushRotate(float hori, float vert)
     {
         Vector3 rotateVector = Vector3.zero;
-        Vector3 saveRotateVector= Vector3.zero;
+        Vector3 saveRotateVector = Vector3.zero;
         // Check horizontal and vertical inputs and determine the direction
         if (hori == 1)
         {
@@ -433,41 +456,72 @@ public class HouseholdIronTransform : Player
         rotateVector += new Vector3(0, 90, 0);
 
         transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
-    }*/
-
-    public void RushRotate(float hori, float vert)
+    }
+    bool inputHori, inputVert;
+    float saveHori, saveVert;
+    /*public void RushRotate(float hori, float vert)
     {
-        if (onRushRot /*|| @*/)
+        if (onRushRot || )
             return;
         Vector3 rotateVector = Vector3.zero;
-        
+
         ReverseDirection();
         // Check horizontal and vertical inputs and determine the direction
         if (hori == 1)
         {
-            saveDirection = direction;
+            if (saveHori == -hori)
+            {
+                saveHori = hori;
+                saveDirection = direction;
+            }
             direction = direction.Right;
         }
         else if (hori == -1)
         {
-            saveDirection = direction;
+            if (saveHori == -hori)
+            {
+                saveHori = hori;
+                saveDirection = direction;
+            }
             direction = direction.Left;
         }
         else
+        {                       
+            if (saveHori != hori && saveHori == -hori)
+            {
+                saveHori = hori;
+                saveDirection = direction;
+            }
             direction = direction.none;
+        }
         if (vert == 1)
         {
-            saveDirectionZ = directionz;
+            if (saveVert == -vert)
+            {
+                saveVert = vert;
+                saveDirectionZ = directionz;
+            }
             directionz = directionZ.back;
         }
         else if (vert == -1)
         {
-            saveDirectionZ = directionz;
+            if (saveVert == -vert)
+            {
+                saveVert = vert;
+                saveDirectionZ = directionz;
+            }
             directionz = directionZ.forward;
         }
         else
+        {
+            if (saveVert != vert && saveVert == -vert)
+            {
+                saveVert = vert;
+                saveDirectionZ = directionz;
+            }
             directionz = directionZ.none;
-        
+        }
+
         //PlayerStat.instance.Trans3D
         //PlayerStat.instance.direction = direction;
         if (hori == -1 && vert == 0) // Left
@@ -521,12 +575,51 @@ public class HouseholdIronTransform : Player
                 onRushRot = true;
                 StartCoroutine(RushRotation(rotateVector));
             }
-        }            
-    }
-    
+        }
+        else
+        {
+            transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
+        }
+    }*/
+
     public void ReverseDirection()
     {
-        if (saveDirection == direction.Right && direction == direction.Left)
+        /*if (saveDirection == direction.Right && saveDirectionZ == directionZ.forward)
+        {
+            if (direction == direction.Left && directionz == directionZ.back)
+            {
+                onlyRot = true;
+            }
+        }
+        else if (saveDirection == direction.Left && saveDirectionZ == directionZ.back)
+        {
+            if (direction == direction.Right && directionz == directionZ.forward)
+            {
+                onlyRot = true;
+            }
+        }
+        else */if (saveDirection == direction.Right && direction == direction.Left)
+        {
+            onlyRot = true;
+        }
+        else if (saveDirectionZ == directionZ.forward && directionz == directionZ.back)
+        {
+            onlyRot = true;
+        }
+        else if (saveDirection == direction.Left && direction == direction.Right)
+        {
+            onlyRot = true;
+        }
+        else if (saveDirectionZ == directionZ.back && directionz == directionZ.forward)
+        {
+            onlyRot = true;
+        }
+        else
+        {
+            onlyRot = false;
+        }
+
+        /*if (saveDirection == direction.Right && direction == direction.Left)
         {
             onlyRot = true;
         }
@@ -559,7 +652,7 @@ public class HouseholdIronTransform : Player
         else
         {
             onlyRot = false;
-        }            
+        }            */
     }
 
     IEnumerator RushRotation(Vector3 lastVector)
@@ -568,13 +661,15 @@ public class HouseholdIronTransform : Player
         float rotateSpeed = (lastVector - currentRotateVector).magnitude / rotateTime;
         Debug.Log($"돌진 회전 속도{rotateSpeed}");
         float timer=0;
-        while (timer < rotateTime+0.2f)
+        while (timer < rotateTime)
         {
             transform.GetChild(0).Rotate(0, rotateSpeed * Time.fixedDeltaTime, 0);
             timer += Time.deltaTime;
             yield return null;
         }
         transform.GetChild(0).rotation = Quaternion.Euler(lastVector);
+
+        yield return new WaitForSeconds(.5f);
         onRushRot = false;
 
     }
@@ -637,6 +732,7 @@ public class HouseholdIronTransform : Player
         rushTimer = rushTimeMax;
         canRushAttack = false;
         rushAtkTimer = rushAtkTimeMax;
+        SecondFormDeactive();
     }
 
     public override void PlayerJumpEvent()
@@ -681,6 +777,8 @@ public class HouseholdIronTransform : Player
     public void RushStart()
     {
         PlayerHandler.instance.CantHandle = true;
+        saveDirection = direction;
+        saveDirectionZ = directionz;
         onInvincible = true;        
         readyRush = true;
         Humonoidanimator.SetTrigger("RushStart");
@@ -698,6 +796,11 @@ public class HouseholdIronTransform : Player
                 yield return null;
             }
             SecondFormActive();
+            if (!ironDashEffect.gameObject.activeSelf)
+            {
+                ironDashEffect.gameObject.SetActive(true);
+            }
+            ironDashEffect.Play();
             onRush = true;
             rushEnd = false;
             ironAttack = true;
@@ -713,6 +816,7 @@ public class HouseholdIronTransform : Player
         rushEnd = true;
         readyRush = false;
         rushTimer = rushTimeMax;
+        ironDashEffect.Stop();
         SecondFormDeactive();
         Humonoidanimator.Play("RushEnd");
         StartCoroutine(RushEndCheck());
@@ -739,15 +843,21 @@ public class HouseholdIronTransform : Player
         }
     }
     #endregion
-
+    public CinemachineImpulseSource source;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ground"))
         {
             if (downAttack)
             {
+                source.GenerateImpulse();
                 PlayerHandler.instance.CantHandle = true;
                 downEnd = true;
+                if (!ironDownAtkEffect.gameObject.activeSelf)
+                {
+                    ironDownAtkEffect.gameObject.SetActive(true);
+                    ironDownAtkEffect.Play();
+                }
             }
         }
     }
@@ -765,6 +875,7 @@ public class HouseholdIronTransform : Player
 
     public void SecondFormDeactive()
     {
+
         Destroy(Instantiate(changeEffect, transform.position, Quaternion.identity), 2f);
         for (int i = 0; i < Humonoidanimator.transform.childCount; i++)
         {
@@ -849,12 +960,12 @@ public class HouseholdIronTransform : Player
     {
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            rushVert = 1;
+            rushVert = -1;
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            rushVert = -1;
+            rushVert = 1;
         }
 
         if (!Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))

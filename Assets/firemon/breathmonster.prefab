@@ -699,7 +699,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.55, y: 1, z: 2.5}
+  m_Size: {x: 0.55, y: 1, z: 3}
   m_Center: {x: 0, y: 0, z: 1.32}
 --- !u!1 &3264799327130695366
 GameObject:
@@ -879,8 +879,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 3, z: 5.07}
-  m_Center: {x: 0, y: 0.5, z: 1.19}
+  m_Size: {x: 5.5, y: 3, z: 6.5}
+  m_Center: {x: 0, y: 0.5, z: 1}
 --- !u!114 &2394768542255590077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1456,8 +1456,8 @@ Transform:
   m_GameObject: {fileID: 6198355208888350071}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 1.19}
-  m_LocalScale: {x: 4, y: 3, z: 5.07}
+  m_LocalPosition: {x: 0, y: 0.5, z: 1}
+  m_LocalScale: {x: 5.5, y: 3, z: 6.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4932577059295063402}
@@ -1598,7 +1598,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1.32}
-  m_LocalScale: {x: 0.55, y: 1, z: 2.5}
+  m_LocalScale: {x: 0.55, y: 1, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6866060035026694462}
@@ -1750,6 +1750,7 @@ GameObject:
   - component: {fileID: 4052292671318435744}
   - component: {fileID: 4325721189205129153}
   - component: {fileID: 7099814431224940492}
+  - component: {fileID: 7288491940059367752}
   m_Layer: 9
   m_Name: breathmonster
   m_TagString: Enemy
@@ -1767,7 +1768,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1.75, y: 1.75, z: 1.75}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7885078347496709425}
@@ -1810,6 +1811,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee5b73dea85ad2443b85ae1438ff2f1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyHitCol2D: {fileID: 0}
   testcolor: {r: 0, g: 0, b: 0, a: 0}
   movepattern: 1
   eStat: {fileID: 7099814431224940492}
@@ -1822,23 +1824,25 @@ MonoBehaviour:
   hittedMat: {fileID: 2100000, guid: 68aa62768728c9a42b4466438664f462, type: 2}
   skinRenderer: {fileID: 0}
   moveEffect: {fileID: 0}
+  environmentforce: {x: 0, y: 0, z: 0}
   isMove: 0
   searchCubeRange: {x: 0, y: 0, z: 0}
   searchCubePos: {x: 0, y: 0, z: 0}
   rangeCollider: {fileID: 3140308014256626685}
-  rangeSize: {x: 0.55, y: 1, z: 2.5}
+  rangeSize: {x: 0.55, y: 1, z: 3}
   rangePos: {x: 0, y: 0, z: 1.32}
   searchCollider: {fileID: 3336978199051425999}
-  searchColliderRange: {x: 4, y: 3, z: 5.07}
-  searchColliderPos: {x: 0, y: 0.5, z: 1.19}
+  searchColliderRange: {x: 5.5, y: 3, z: 6.5}
+  searchColliderPos: {x: 0, y: 0.5, z: 1}
   searchPlayer: 0
-  trackingDistance: 7
+  trackingDistance: 10
   disToPlayer: 0
+  PatrolTransform: []
   patrolGroup: []
-  targetPatrol: {x: 3, y: 1, z: 0}
+  targetPatrol: {x: 4, y: 1, z: 0}
   patrolWaitTime: 1
-  leftPatrolRange: 1.5
-  rightPatrolRange: 1.5
+  leftPatrolRange: 2
+  rightPatrolRange: 2
   patrolDistance: 0.1
   onPatrol: 1
   yWidth: 3
@@ -1865,14 +1869,14 @@ MonoBehaviour:
   onStun: 0
   reachCheck: 0
   attackRange: 0
-  flatObject: {fileID: 0}
+  flatObject: {fileID: 8254255563256872280}
   flatTime: 0
   rotLevel: 0
   testAngle: 0
   breathinittime: 1.1
-  breathtime: 1.85
-  breathspreadmaxtime: 1.45
-  breathdelay: 1.8
+  breathtime: 1.6
+  breathspreadmaxtime: 1
+  breathdelay: 0.75
   breathendtime: 0.25
   fireeffects:
   - {fileID: 5478712217591405179}
@@ -1926,16 +1930,16 @@ MonoBehaviour:
   attackType: 0
   characterState: 0
   initMaxHP: 5
-  initMoveSpeed: 0.85
+  initMoveSpeed: 2
   HPBonus: 0
   MoveSpeedBonus: 0
   hp: 3
   atk: 1
-  rotationSpeed: 5
+  rotationSpeed: 8
   attackSpeed: 0
   attackCoolTimebonus: 0
-  initattackCoolTime: 1
-  attackDelay: 1
+  initattackCoolTime: 0.5
+  attackDelay: 0.5
   canMove: 0
   canAttack: 0
   eState: 0
@@ -1944,6 +1948,21 @@ MonoBehaviour:
     partValue: 0
   onInvincible: 0
   invincibleTimer: 0
+--- !u!114 &7288491940059367752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7475420661886871759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6468d904bc89c6a41b68e57303ecc421, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  caught: 0
+  thrown: 0
+  cursorTargetCollider: {fileID: 0}
 --- !u!1 &7543950349492052196
 GameObject:
   m_ObjectHideFlags: 0
@@ -2444,7 +2463,7 @@ PrefabInstance:
     - target: {fileID: 4755800261602918240, guid: 53fc6dbd3a259a74890cf3eab2229ece,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 1.65
+      value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 4755800261602918240, guid: 53fc6dbd3a259a74890cf3eab2229ece,
         type: 3}
@@ -2453,8 +2472,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4755800261602918240, guid: 53fc6dbd3a259a74890cf3eab2229ece,
         type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4755800261602918240, guid: 53fc6dbd3a259a74890cf3eab2229ece,
+        type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 1
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 4755800261602918240, guid: 53fc6dbd3a259a74890cf3eab2229ece,
         type: 3}
@@ -2484,7 +2508,7 @@ PrefabInstance:
     - target: {fileID: 5073913352455812266, guid: 53fc6dbd3a259a74890cf3eab2229ece,
         type: 3}
       propertyPath: m_Intensity
-      value: 3.204884
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6194310983420661476, guid: 53fc6dbd3a259a74890cf3eab2229ece,
         type: 3}
@@ -2510,6 +2534,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CFXR Fire Breath 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484651965934191736, guid: 53fc6dbd3a259a74890cf3eab2229ece,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7742403367226208680, guid: 53fc6dbd3a259a74890cf3eab2229ece,
         type: 3}

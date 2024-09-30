@@ -24,7 +24,8 @@ public class DownAttackCollider : MeleeCollider
             {
                 if (GetComponentInParent<HouseholdIronTransform>())
                 {                    
-                    other.GetComponent<Enemy>().FlatByIronDwonAttack();
+                    HouseholdIronTransform iron = GetComponentInParent<HouseholdIronTransform>();
+                    other.GetComponent<Enemy>().FlatByIronDwonAttack(iron.downAtkEndTimeMax);
                 }
                 script.Damaged(damage);
                 Debug.Log("몬스터 Damage받음");

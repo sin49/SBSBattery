@@ -11,11 +11,17 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using UnityEngine.Windows.Speech;
 
+
+public interface environmentObject
+{
+    public void AddEnviromentPower(Vector3 power);
+}
+
 public enum MoveInput { MoveRightin2D = 1, MoveRightin3D }
 
 public enum direction { Left = -1, none = 0, Right = 1 }
 public enum directionZ { back = -1, none = 0, forward = 1 }
-public class Player : Character
+public class Player : Character,environmentObject
 {
     public MoveInput Moveinput_;
 
@@ -69,6 +75,7 @@ public class Player : Character
     public bool isRun;
     public bool isIdle;
     public bool isAttack;
+    bool ladderClimb;
 
     [Header("변신 애니메이션 테스트용 변수")]
     public float animationSpeed; // 애니메이터 모션의 속도 조절
@@ -478,10 +485,17 @@ public class Player : Character
         //    jumpRaycastCheck();
         if (Humonoidanimator != null)
         {
-            Humonoidanimator.SetBool("run", isRun);
-            Humonoidanimator.SetBool("Onground", onGround);
-            ModelAnimator.SetBool("Rolling", downAttack);
-            Humonoidanimator.SetBool("DownAttack", downAttack);
+            if (PlayerHandler.instance.ladderInteract)
+            {
+                Humonoidanimator.SetBool("climb", ladderClimb);
+            }
+            else
+            {
+                Humonoidanimator.SetBool("run", isRun);
+                Humonoidanimator.SetBool("Onground", onGround);
+                ModelAnimator.SetBool("Rolling", downAttack);
+                Humonoidanimator.SetBool("DownAttack", downAttack);
+            }
         }
 
         /*if (RunEffect != null)
@@ -953,6 +967,18 @@ public class Player : Character
             }
             //Humonoidanimator.RunAnimation(isRun);
         }
+        else if(PlayerHandler.instance.ladderInteract)
+        {
+            if (MoveCheck(hori, Vert))
+            {
+                ladderClimb = true;
+            }
+            else
+            {
+                ladderClimb = false;
+            }
+
+        }
 
         velocityMove = playerRb.velocity;
         rigidbodyPos = playerRb.position;
@@ -961,7 +987,19 @@ public class Player : Character
 
     }
 
+    public void StartLadderClimb()
+    {
+        Humonoidanimator.ResetTrigger("ladderExit");
+        Humonoidanimator.SetTrigger("ladder");
+        playerRb.useGravity = false;
+    }
 
+    public void StopLadderClimb()
+    {
+        PlayerHandler.instance.ladderInteract = false;
+        Humonoidanimator.SetTrigger("ladderExit");
+        playerRb.useGravity = true;
+    }
 
     bool MoveCheck(float hori, float vert)
     {
@@ -1230,6 +1268,13 @@ public class Player : Character
     public void Jump()
     {
         if (cantmove) return;
+
+        if (PlayerHandler.instance.ladderInteract)
+        {
+            PlayerHandler.instance.ladderInteract = false;
+            StopLadderClimb();
+        }
+
         isJump = true;
         jumpBufferTimer = 0;
         //canjumpInput = false;
@@ -1237,7 +1282,6 @@ public class Player : Character
         if (jumpkeyinputcheckvalue <= 0)
             jumpkeyinputcheckvalue = jumpkeyinputCheck;
         PlayerJumpEvent();
-
        
         isRun = false;
         if (SoundPlayer != null)

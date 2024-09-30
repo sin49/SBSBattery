@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class AnimationEvent : MonoBehaviour
@@ -52,21 +53,39 @@ public class AnimationEvent : MonoBehaviour
     {
         if (enemy != null)
         {
+            CursorInteractObject cursorInteract;
             if (enemy.skinRenderer != null)
             {
-                Material[] materials = enemy.skinRenderer.materials;
-                materials[1] = enemy.idleMat;
-                enemy.skinRenderer.materials = materials;
+                if (TryGetComponent<CursorInteractObject>(out cursorInteract))
+                {
+                    enemy.activeAttack = false;
+                    return;
+                }
+                else
+                {
+                    Material[] materials = enemy.skinRenderer.materials;
+                    materials[1] = enemy.idleMat;
+                    enemy.skinRenderer.materials = materials;
+                }
             }
             enemy.activeAttack = false;
         }
         else
         {
+            CursorInteractObject cursorInteract;
             if (bse.skinRenderer != null)
             {
-                Material[] materials = bse.skinRenderer.materials;
-                materials[1] = bse.idleMat;
-                bse.skinRenderer.materials = materials;
+                if (TryGetComponent<CursorInteractObject>(out cursorInteract))
+                {
+                    bse.activeAttack = false;
+                    return;
+                }
+                else
+                {
+                    Material[] materials = bse.skinRenderer.materials;
+                    materials[1] = bse.idleMat;
+                    bse.skinRenderer.materials = materials;
+                }
             }
             bse.activeAttack = false;
         }

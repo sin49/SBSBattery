@@ -984,15 +984,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4545535272630405155}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7070683, z: -0, w: 0.7071453}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_LocalScale: {x: 2.75, y: 2.75, z: 2.75}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6742441760973323279}
   - {fileID: 8757468424551944592}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 89.994, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!136 &5071744322922531240
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1071,11 +1071,11 @@ MonoBehaviour:
   chrmat: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
   jumpholdLevel: 1
-  jumpBufferTimeMax: 0.2
+  jumpBufferTimeMax: 0.1
   jumpBufferTimer: 0
   canjumpInput: 0
   jumpLimitInput: 0
-  attackBufferTimeMax: 0.15
+  attackBufferTimeMax: 0.1
   attackBufferTimer: 0
   attackInputValue: 0
   attackLimitInput: 0
@@ -1090,7 +1090,7 @@ MonoBehaviour:
   isIdle: 0
   isAttack: 0
   animationSpeed: 10
-  waitTime: 0.5
+  waitTime: 0.25
   formChange: 0
   changeEffect: {fileID: 4362988856311913179}
   onTransform: 0
@@ -1104,10 +1104,13 @@ MonoBehaviour:
   isMove: 0
   canAttack: 0
   wallcheck: 0
-  jumpkeyinputCheck: 0.05
+  jumpkeyinputCheck: 0.01
   inputCheck: 0
   velocityMove: {x: 0, y: 0, z: 0}
   rigidbodyPos: {x: 0, y: 0, z: 0}
+  onstairforce: 4
+  stairdownforce: 60
+  onstair: 0
   sizeX: 2
   sizeY: 2
   sizeFir: 0
@@ -1117,12 +1120,14 @@ MonoBehaviour:
   jumpInputValue: 0
   boxRaySize: {x: 0, y: 0, z: 0}
   distanceRay: 0
-  JumprayDistance: 0.4
+  JumprayDistance: 0.5
+  jumpanimtimer: 0
   RunEffect: {fileID: 4178956066575844729}
   HittedEffect: {fileID: 6488235396216312475}
   AttackEffect: {fileID: 3406404469038252828}
   LandingEffect: {fileID: 5904224259897742900}
   JumpEffect: {fileID: 1535256578140317931}
+  OnMoveAnimationCorutine: 0
   Decelatate: 2
   hori: 0
   Vert: 0
@@ -1271,13 +1276,13 @@ MonoBehaviour:
   MoveClip: {fileID: 8300000, guid: 83315124d8bd65140b4035305992fb6b, type: 3}
   MoveVolume: 0
   AttackClip: {fileID: 8300000, guid: 3d4be4a67a7d64045bb002a4229864a6, type: 3}
-  AttackVolume: 1
+  AttackVolume: 0.8
   JumpClip: {fileID: 8300000, guid: 85ea7b8994df41b45ad65459747ef044, type: 3}
-  JumpVolume: 0.789
+  JumpVolume: 0.8
   LandClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
-  LandVolume: 0.726
+  LandVolume: 0.5
   SkillClip: {fileID: 8300000, guid: 9ecec375ab1cce948bf45e6e5422d763, type: 3}
-  SkillVolume: 0.933
+  SkillVolume: 0.8
 --- !u!1 &4803581823414980192
 GameObject:
   m_ObjectHideFlags: 0
@@ -1341,8 +1346,8 @@ Transform:
   m_GameObject: {fileID: 5037821556395340132}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.133, z: 0}
-  m_LocalScale: {x: 0.15, y: 0.05000001, z: 0.20000003}
+  m_LocalPosition: {x: 0, y: -0.1407, z: 0}
+  m_LocalScale: {x: 0.233805, y: 0.06544001, z: 0.27058005}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4815913517657289761}
@@ -1362,7 +1367,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5037821556395340132}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2097,7 +2102,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8292323791867201806}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2857,7 +2862,7 @@ PrefabInstance:
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.19128561
+      value: 0.17804866
       objectReference: {fileID: 0}
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
@@ -2872,7 +2877,7 @@ PrefabInstance:
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.16600001
+      value: 0.1726
       objectReference: {fileID: 0}
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
@@ -3155,18 +3160,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7693115892030442081, guid: bc7393225b2a5e240bac27ac818d7f61,
         type: 3}
+      propertyPath: m_BoundingSphereOverride.w
+      value: 182
+      objectReference: {fileID: 0}
+    - target: {fileID: 7693115892030442081, guid: bc7393225b2a5e240bac27ac818d7f61,
+        type: 3}
       propertyPath: m_BoundingSphereOverride.x
-      value: 6.08e-43
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7693115892030442081, guid: bc7393225b2a5e240bac27ac818d7f61,
         type: 3}
       propertyPath: m_BoundingSphereOverride.y
-      value: 3e-45
+      value: 182
       objectReference: {fileID: 0}
     - target: {fileID: 7693115892030442081, guid: bc7393225b2a5e240bac27ac818d7f61,
         type: 3}
       propertyPath: m_BoundingSphereOverride.z
-      value: 4.3e-44
+      value: 18
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
