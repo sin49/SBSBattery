@@ -49,7 +49,7 @@ public class MouseFormCursor : MonoBehaviour
                 cursorInteract.caught = true;
                 cursorInteract.CaughtTypeCheck();
 
-                if (cursorInteract.CompareTag("InteractivePlatform"))
+                if (cursorInteract.CompareTag("CursorObject"))
                 {
                     other.transform.rotation = Quaternion.identity;
                     cursorInteract.gameObject.layer = LayerMask.NameToLayer("DontMoveIgnore");
