@@ -1,16 +1,12 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
-
+using TMPro;
 using UnityEngine;
 
 
 
-//개선하기
-//1.카메라 옵션 반영하기 2D/3D
-//선택.CineMacihneBasicCamera 기능 확장하기?
-//2.카메라 전환 중 ortho/Pers 전환 자연스럽게 하기
-//3.카메라 전환 방식 Blend/NotBlend 로 선택할수있게
+
 public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
 {
 
@@ -23,18 +19,9 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     public PlayerMoveState movestate3D;
     float orthosize;
     float fovview;
-    //[Header("2D 카메라 orthographic 사이즈")]
-    //public float orthographicSize2D = 5f;
-    //[Header("2D 카메라 near/far clipping planes")]
-    //public float nearClipPlane2D = -10f;
-    //public float farClipPlane2D = 10f;
-    //[Header("3D 카메라 field of view")]
-    //public float fieldOfView3D = 60f;
-    //[Header("3D 카메라 near/far clipping planes")]
-    //public float nearClipPlane3D = 0.1f;
-    //public float farClipPlane3D = 1000f;
 
 
+    public TextMeshProUGUI TEstTExt;
     public void switch2Dcamera(CinemachineVirtualCamera c)
     {
         activedcamera.enabled = false;
@@ -55,6 +42,9 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     {
         this.camera3D.GetComponent<CinemachineConfiner>().m_BoundingVolume = col;
     }
+    
+ 
+   
     public void settingBoss1ccamera(CinemachineVirtualCamera camera2D, CinemachineVirtualCamera camera3D,
         Collider col, PlayerMoveState movestate)
     {
@@ -69,6 +59,8 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
             this.camera3D.GetComponent<CinemachineConfiner>().m_BoundingVolume = col;
         }
         camera2D.m_Lens.Orthographic = true;
+        this.GetComponent<Camera>().orthographic = true;
+        camera3D.m_Lens.Orthographic = true;
         orthosize = camera2D.m_Lens.OrthographicSize;
         fovview = camera3D.m_Lens.FieldOfView;
       
@@ -105,23 +97,30 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         if ((int)PlayerStat.instance.MoveState < 4)
         {
             camera3D.enabled=(false);
+            camera2D.enabled = true;
         }
         else
         {
             camera2D.enabled = (false);
+            camera3D.enabled = true;
         }
     }
     protected override void Start()
     {
         base.Start();
+        cam = this.GetComponent<Camera>();
         PlayerHandler.instance.registerCorutineRegisterEvent(RegiserCameraChangeHandler);
         camera2D.m_Lens.Orthographic = true;
         if (camera2D!=null)
         orthosize = camera2D.m_Lens.OrthographicSize;
         fovview = camera3D.m_Lens.FieldOfView;
-
+        camera3D.enabled = true;
+        camera2D.enabled = false;
         updatecamera();
        
+
+      
+
     }
     void RegiserCameraChangeHandler()
     {
@@ -188,7 +187,73 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
             camera2D.enabled = true;
         }
     }
+    public IEnumerator SwitchCameraForTransDimensionCorutinenoblending()
 
+    {
+        if (camera2D == null || camera3D == null)
+            yield break;
+        //trans3D = !trans3D;
+
+        //UpdatePlayerMovestate();
+        PlayerHandler.instance.CurrentPlayer.rotateBy3Dto2D();
+        PlayerHandler.instance.CantHandle = true;
+        camera2D.m_Lens.Orthographic = false;
+        camera2D.m_Lens.FieldOfView = fovview;
+  
+        renderpassmanager_.changepixel(trans3D);
+        if (trans3D)
+        {
+            //camera3D.transform.position = camera2D.transform.position;
+            yield return StartCoroutine(SwitchCameraCoroutine(camera3D));
+
+        }
+        else
+        {
+            //camera2D.transform.position = camera3D.transform.position;
+            yield return StartCoroutine(SwitchCameraCoroutine(camera2D));
+        }
+        Time.timeScale = 1;
+        camera2D.m_Lens.Orthographic = true;
+        camera2D.m_Lens.OrthographicSize = orthosize;
+        PlayerHandler.instance.CantHandle = false;
+        GetCameraSettingByTrans3D();
+    }
+    
+    public IEnumerator SwitchCameranoblending(CinemachineVirtualCamera newCamera)
+    {
+        if (activedcamera == newCamera)
+            yield break;
+
+       
+        if (activedcamera != null)
+        {
+
+
+
+            // Blend 설정
+
+            //var blend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Style.EaseInOut, transitionDuration);
+            //cinemachineBrain.m_DefaultBlend = blend;
+            cam.orthographic = false;
+            // 현재 카메라와 새 카메라 간의 전환 시작
+            Vector3 newcameraposition = newCamera.transform.position;
+            newCamera.enabled = (true);
+            activedcamera.enabled = (false);
+           
+            
+            newCamera.transform.position = newcameraposition;
+   
+            activedcamera = newCamera;
+
+           
+
+            //if (currentCamera != newCamera)
+            //{
+            //    currentCamera.gameObject.SetActive(false);
+            //}
+        }
+        yield return null;
+    }
     public void SwapDefaultCamera(CinemachineVirtualCamera camera)
     {
         if (VirtualCameras.Length == 0)

@@ -210,7 +210,6 @@ public class PlayerHandler : MonoBehaviour
             obj.TryGetComponent<RemoteTransform>(out transform))
         {
             transform.RemoteObjectEvent += ingameUIManger.UpdateRemoteTargetUI;
-            Debug.Log("이벤트 추가");
         }
     }
     public void transformed(TransformType type, Action eventhandler = null)
@@ -341,8 +340,11 @@ public class PlayerHandler : MonoBehaviour
         {
             if (ladderCheck)
             {
-                if (interactobject.GetComponent<Ladder>().resultPoint != null)
+                Ladder l=null;
+                if (interactobject.TryGetComponent<Ladder>(out l))
                 {
+                    if(l.resultPoint
+                        !=null)
                     ingameUIManger.UpdateInteractUI(interactobject.GetComponent<Ladder>().resultPoint.gameObject);
                 }
             }
