@@ -191,7 +191,13 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         }
 
     }
-    
+    protected virtual void MoveAnimationPlay()
+    {
+        if (animaor != null)
+        {
+            animaor.SetBool("isMove", isMove);
+        }
+    }
     private void FixedUpdate()
     {
         /*if (searchPlayer)
@@ -224,10 +230,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                     isMove = false;
                 }
             }
-            if (animaor != null)
-            {
-                animaor.SetBool("isMove", isMove);
-            }
+            MoveAnimationPlay();
         }
         ForwardWallRayCheck();
         UpWallRayCheck();
