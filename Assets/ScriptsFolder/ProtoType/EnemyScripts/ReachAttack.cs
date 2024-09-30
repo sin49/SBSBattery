@@ -30,8 +30,11 @@ public class ReachAttack : MonoBehaviour
     {
         if (other.CompareTag("Player") && !PlayerHandler.instance.CurrentPlayer.onInvincible)
         {
-            other.GetComponent<Player>().Damaged(damage);
-            enemy.reachCheck = true;
+            if (!enemy.onStun)
+            {
+                other.GetComponent<Player>().Damaged(damage);
+                enemy.reachCheck = true;
+            }
         }
     }
 }

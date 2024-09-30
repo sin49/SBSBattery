@@ -54,6 +54,18 @@ public class MouseFormCursor : MonoBehaviour
                     other.transform.rotation = Quaternion.identity;
                     cursorInteract.gameObject.layer = LayerMask.NameToLayer("DontMoveIgnore");
                 }
+
+                if (other.TryGetComponent<fireenemy>(out fireenemy fire))
+                {
+                    ParticleSystem[] breath = fire.fireeffects;
+                    foreach (ParticleSystem a in breath)
+                    {
+                        a.gameObject.SetActive(false);
+                    }
+
+                    fire.breathsmallcollider.gameObject.SetActive(false);
+                    fire.breathcollider.gameObject.SetActive(false);
+                }
             }
         }
     }
@@ -90,8 +102,15 @@ public class MouseFormCursor : MonoBehaviour
             enemy.GetComponent<Rigidbody>().useGravity = true;
             enemy.GetComponent<Rigidbody>().isKinematic = false;
             enemy.GetComponent<Rigidbody>().AddForce(transform.forward * forwardThrowForce + transform.up * upThrowForce, ForceMode.VelocityChange);
+
             interactObj = null;
             onCatch = false;
+
+            RagdolEnemy re;
+            if (enemy.TryGetComponent<RagdolEnemy>(out re))
+            {
+                re.ThrowRagdoll();
+            }
         }
     }
 

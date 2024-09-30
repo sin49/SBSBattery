@@ -905,6 +905,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8763085929167148684}
+  - component: {fileID: 5110653460783295991}
   m_Layer: 0
   m_Name: Bip001
   m_TagString: Untagged
@@ -929,6 +930,24 @@ Transform:
   - {fileID: 2607885371664257738}
   m_Father: {fileID: 4635466552638274391}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5110653460783295991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3860940069074602360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baedd976e12657241bf7ff2d1c685342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Direction: 2
+  m_Center: {x: -0.008, y: 0, z: 0.1}
+  m_Bound: 0
+  m_Radius: 0.075
+  m_Height: 0.28
+  m_Radius2: 0
 --- !u!1 &3872222890953966332
 GameObject:
   m_ObjectHideFlags: 0
@@ -1327,6 +1346,7 @@ MonoBehaviour:
   isMove: 0
   canAttack: 0
   wallcheck: 0
+  cantmove: 0
   jumpkeyinputCheck: 0.02
   inputCheck: 0
   velocityMove: {x: 0, y: 0, z: 0}
@@ -1361,10 +1381,10 @@ MonoBehaviour:
   DownAttackForce: 0
   CullingPlatform: 0
   ironSecondForm: {fileID: 1855982811379681853}
-  rushSpeed: 8
   speedValue: 6
   rushTimeMax: 4.5
   canRushAttack: 0
+  onRush: 0
   rushCoolTimeMax: 1.5
   rushDamage: 1
   rushCycleMax: 0
@@ -1383,8 +1403,7 @@ MonoBehaviour:
   ironDownDamage: 2
   ironDownCoolTimeMax: 1.5
   ironDownAtkEffect: {fileID: 5007434926133503498}
-  saveDirection: 0
-  saveDirectionZ: 0
+  flatTime: 3
   rotateTime: 0.01
   source: {fileID: 2382477968564158788}
 --- !u!136 &5837779147130351167
@@ -1449,7 +1468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9ac8d30c6a0d9642a11e5be4c440740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Root: {fileID: 0}
+  m_Root: {fileID: 1920122363291485841}
   m_Roots: []
   m_UpdateRate: 80
   m_UpdateMode: 3
@@ -1501,7 +1520,7 @@ MonoBehaviour:
   m_Force: {x: 0, y: 0, z: 0}
   m_BlendWeight: 1
   m_Colliders:
-  - {fileID: 0}
+  - {fileID: 5110653460783295991}
   m_Exclusions: []
   m_FreezeAxis: 0
   m_DistantDisable: 0
