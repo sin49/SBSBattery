@@ -13,7 +13,7 @@ public class Platform2DFixer : MonoBehaviour
     public void FixPlatform()
     {
         if (!ChangeComplete&&oncollide&& !(
-              (int)PlayerStat.instance.MoveState >= 4)&&!PlayerHandler.instance.CantHandle&&!PlayerHandler.instance.CurrentPlayer.OnMoveAnimationCorutine)
+              (int)PlayerStat.instance.MoveState >= 4)&&!PlayerHandler.instance.CantHandle&&!PlayerHandler.instance.CurrentPlayer.cantmove)
         {
 
             Transform player = PlayerHandler.instance.CurrentPlayer.transform;
