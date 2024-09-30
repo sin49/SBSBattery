@@ -19,7 +19,8 @@ public class Switch :  signalSender
     }
     private void OnCollisionEnter(Collision collision)
     {
-      if(collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
+      if(collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy")||
+            collision.gameObject.CompareTag("CursorObject"))
         {
        
             active = true;
