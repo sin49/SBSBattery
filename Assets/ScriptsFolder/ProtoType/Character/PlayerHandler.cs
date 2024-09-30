@@ -171,13 +171,7 @@ public class PlayerHandler : MonoBehaviour
             PlayerFallOut();
 
 
-        if (alwaysFuncActive)
-        {
-            if (AlwaysInvincible)
-                CurrentPlayer.onInvincible = true;
-            else
-                CurrentPlayer.onInvincible = false;
-        }
+        
 
 
         #region 캐릭터 조작
