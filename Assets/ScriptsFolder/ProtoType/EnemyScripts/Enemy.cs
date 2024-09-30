@@ -502,7 +502,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public float flatScaleY;
     public float flatTime=0;
     public float timer;
-    bool onFlat;
+    [HideInInspector] public bool onFlat;
     Vector3 originScale;
     Vector3 flatScale;
     //납작하게 되는 함수
@@ -526,7 +526,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         }
     }
 
-    public void RollBackFormFlatState()
+    public virtual void RollBackFormFlatState()
     {
         onStun = false;
         onFlat = false;

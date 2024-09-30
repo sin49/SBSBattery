@@ -26,6 +26,7 @@ public class DownAttackCollider : MeleeCollider
                 {                    
                     HouseholdIronTransform iron = GetComponentInParent<HouseholdIronTransform>();
                     other.GetComponent<Enemy>().FlatByIronDwonAttack(iron.flatTime);
+                    CheckMonster(other);
                 }
                 script.Damaged(damage);
                 Debug.Log("몬스터 Damage받음");
@@ -79,4 +80,20 @@ public class DownAttackCollider : MeleeCollider
         return r;
     }
     #endregion
+
+    public void CheckMonster(Collider other)
+    {
+        fireenemy fireMonster;
+        if (other.TryGetComponent<fireenemy>(out fireMonster))
+        {
+            fireMonster.StopCoroutine();
+            ParticleSystem[] effects = fireMonster.fireeffects;
+            foreach (ParticleSystem fires in effects)
+            {
+                fires.gameObject.SetActive(false);
+            }
+            fireMonster.breathsmallcollider.gameObject.SetActive(false);
+            fireMonster.breathcollider.gameObject.SetActive(false);
+        }
+    }
 }

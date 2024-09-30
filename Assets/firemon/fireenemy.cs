@@ -153,4 +153,11 @@ public class fireenemy : Enemy
 
     }
   
+
+    public void StopCoroutine()
+    {
+        StopAllCoroutines();
+        initializebreath();
+        InitAttackCoolTime();
+    }
 }
