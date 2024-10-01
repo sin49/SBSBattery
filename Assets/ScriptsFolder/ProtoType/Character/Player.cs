@@ -1197,9 +1197,13 @@ public class Player : Character,environmentObject
             StartCoroutine(WaitEndDamaged());
         }
     }
-   
+    public virtual bool TransformInvincibleEvent()
+    {
+        return false;
+    }
     IEnumerator ActiveInvincible()
     {
+
         float timer = 0;
         bool whitechecker=false;
 
