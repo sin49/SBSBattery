@@ -43,8 +43,7 @@ public class BossTv : RemoteObject
 
 
     int index;
-    [Header("플레이어 추격")]
-    public bool TargetPlayer;
+
 
     [Header("랜덤 패턴(끄면 순서대로)")]
     public bool randomPattern;
@@ -113,7 +112,7 @@ public class BossTv : RemoteObject
         {
             return;
         }
-        if (TargetPlayer && PlayerHandler.instance != null)
+        if (PlayerHandler.instance != null)
             target = PlayerHandler.instance.CurrentPlayer.transform;
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {

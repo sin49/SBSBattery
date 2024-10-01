@@ -15,14 +15,8 @@ public class BossCreater : MonoBehaviour,colliderDisplayer
     [Header("보스 필드")]
     public Transform bossfield;
 
-    [Header("CameraMoveRange")]
-    public Collider CameraRange;
 
-    [Header("카메라 전환 속도")]
-    public float transistionDuration = 1.0f;
 
-    [Header("캐릭터 이동을 바꿈")]
-    public PlayerMoveState PlayerMoveState;
 
     [Header("보스 프리팹 ")]
     public GameObject BossObject;
@@ -47,16 +41,8 @@ public class BossCreater : MonoBehaviour,colliderDisplayer
     {
         if (other.CompareTag("Player"))
         {
-            CameraManager_Switching2D3D m;
-            if (PlayerHandler.instance.CurrentCamera.gameObject.TryGetComponent<CameraManager_Switching2D3D>(out m))
-            {
-           
-                m.transitionDuration = transistionDuration;
-
-                m.settingBoss1ccamera(camera2D, camera3D, CameraRange, PlayerMoveState);
-            }
-            PlayerStat.instance.MoveState = PlayerMoveState;
-            PlayerHandler.instance.CurrentPlayer.rotateBy3Dto2D();
+            
+          
             CreateBoss();
             Destroy(this.gameObject);
         }

@@ -30,16 +30,28 @@ public class BossStageBox : MonoBehaviour
 
     public Vector3 fieldMin;
     Vector3 targetVec;
-
+    public bool endCorutine;
+    public float DisableTimer = 0.75f;
 
     public Action ObjectgroundedSoundEvent;
 
     bool fixVec;
+    IEnumerator FallEffectCorutine()
+    {
+        rb.useGravity = false;
+        rb.isKinematic = true;
+        yield return new WaitForSeconds(DisableTimer);
+        rb.isKinematic = false;
+        rb.useGravity = true;
+        warningObj.SetActive(false);
+        endCorutine = true;
+    }
     private void Start()
     {
         rb = GetComponent<Rigidbody>();        
         warningPos = new(transform.position.x, fieldPos.y+0.1f, transform.position.z);
         RandomDistanceValue();
+        StartCoroutine(FallEffectCorutine());
     }
   
     private void OnDestroy()
@@ -50,7 +62,7 @@ public class BossStageBox : MonoBehaviour
     }
     private void Update()
     {
-        if (!onGround)
+        if (!onGround&& !endCorutine)
         {
             transform.Translate(Vector3.down.normalized * fallingSpeed * Time.deltaTime, Space.World);
             //warningObj.transform.position = warningPos;
