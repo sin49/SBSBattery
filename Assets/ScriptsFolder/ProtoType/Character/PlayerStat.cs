@@ -47,6 +47,14 @@ public class PlayerStat : CharacterStat
     //public float dashTimer;// 쿨타임 
     //public float dashCoolTime; // 대쉬 최대 쿨타임    
 
+    [Header("피격+무적 때 색깔")]
+    public Color Hittedcolor;
+    public Color invinciblecolor;
+    [Header("번쩍이는 간격")]
+    [Header("무적시간은 singlton->playerstat 쪽에서 건들어야 할 듯")]
+    public float blinkdelay = 0.1f;
+
+
 
     [Header("이동 상태")]
     public PlayerMoveState MoveState;
