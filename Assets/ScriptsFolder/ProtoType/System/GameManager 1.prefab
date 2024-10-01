@@ -54,7 +54,7 @@ MonoBehaviour:
   TimerText: {fileID: 7141967676321118710}
   pauseActive: 0
   LoadingEffect: {fileID: 6484557584999357712}
-  MinimumLoadingTime: 1
+  MinimumLoadingTime: 0.5
 --- !u!114 &8649570016583478519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,9 +70,9 @@ MonoBehaviour:
   defaultMIxergroup: {fileID: 24100000, guid: 312bf2824884aa2498ec2e88766fcad0, type: 2}
   SE: {fileID: 966100010275369420, guid: 312bf2824884aa2498ec2e88766fcad0, type: 2}
   BG: {fileID: -1390576044470264239, guid: 312bf2824884aa2498ec2e88766fcad0, type: 2}
-  BGVolume: 0.15
-  SEVolume: 0.5
-  MasterVolume: 0.8
+  BGVolume: 1
+  SEVolume: 1
+  MasterVolume: 1
 --- !u!1 &1042892926911940595
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,7 +424,7 @@ GameObject:
   - component: {fileID: 5713411574943272048}
   - component: {fileID: 3629419246064788396}
   m_Layer: 0
-  m_Name: Global Volume
+  m_Name: Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -458,7 +458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IsGlobal: 1
-  priority: 0
+  priority: 2
   blendDistance: 0
   weight: 1
   sharedProfile: {fileID: 11400000, guid: c48a278dbbe72334f9df76a96c14f4b3, type: 2}

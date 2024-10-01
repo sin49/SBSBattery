@@ -250,8 +250,8 @@ Transform:
   m_GameObject: {fileID: 1840961726563666726}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3, z: 1.54}
-  m_LocalScale: {x: 0.65, y: 0.7, z: 3}
+  m_LocalPosition: {x: 0, y: 0.3, z: 1.6}
+  m_LocalScale: {x: 0.3, y: 1, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3121131663611280635}
@@ -271,7 +271,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1840961726563666726}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -429,8 +429,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.65, y: 0.7, z: 3}
-  m_Center: {x: 0, y: 0.3, z: 1.54}
+  m_Size: {x: 0.3, y: 1, z: 3}
+  m_Center: {x: 0, y: 0.3, z: 1.6}
 --- !u!1 &2306202720200260681
 GameObject:
   m_ObjectHideFlags: 0
@@ -1206,8 +1206,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 2, z: 2.8}
-  m_Center: {x: 0, y: 1, z: 1.5}
+  m_Size: {x: 6, y: 2, z: 6}
+  m_Center: {x: 0, y: 0.5, z: 1.25}
 --- !u!114 &6413879201968333993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1234,6 +1234,7 @@ GameObject:
   - component: {fileID: 419587200676306589}
   - component: {fileID: 879045053675682833}
   - component: {fileID: 1876247488755515892}
+  - component: {fileID: 6055292048117327387}
   m_Layer: 9
   m_Name: RangeEnemyTest
   m_TagString: Enemy
@@ -1251,7 +1252,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8252638664993472453}
@@ -1322,6 +1323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fc923cf0503caf44bb5443de2c56279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyHitCol2D: {fileID: 0}
   testcolor: {r: 0, g: 0, b: 0, a: 0}
   movepattern: 0
   eStat: {fileID: 1876247488755515892}
@@ -1334,23 +1336,25 @@ MonoBehaviour:
   hittedMat: {fileID: 2100000, guid: f7b3a12ef30f40544b225d4665485f28, type: 2}
   skinRenderer: {fileID: 5487582872936014451}
   moveEffect: {fileID: 0}
+  environmentforce: {x: 0, y: 0, z: 0}
   isMove: 0
-  searchCubeRange: {x: 3.5, y: 0.63, z: 0.7}
-  searchCubePos: {x: 0, y: 0.61, z: 0}
+  searchCubeRange: {x: 0, y: 0, z: 0}
+  searchCubePos: {x: 0, y: 0, z: 0}
   rangeCollider: {fileID: 2202126381614901408}
-  rangeSize: {x: 0.65, y: 0.7, z: 3}
-  rangePos: {x: 0, y: 0.3, z: 1.54}
+  rangeSize: {x: 0.3, y: 1, z: 3}
+  rangePos: {x: 0, y: 0.3, z: 1.6}
   searchCollider: {fileID: 5917569411468154374}
-  searchColliderRange: {x: 2, y: 2, z: 2.8}
-  searchColliderPos: {x: 0, y: 1, z: 1.5}
+  searchColliderRange: {x: 6, y: 2, z: 6}
+  searchColliderPos: {x: 0, y: 0.5, z: 1.25}
   searchPlayer: 0
-  trackingDistance: 4
+  trackingDistance: 10
   disToPlayer: 0
+  PatrolTransform: []
   patrolGroup: []
-  targetPatrol: {x: 1.2, y: 0.5, z: 0}
+  targetPatrol: {x: 2.4, y: 0.5, z: 0}
   patrolWaitTime: 1
-  leftPatrolRange: 0.6
-  rightPatrolRange: 0.6
+  leftPatrolRange: 1.2
+  rightPatrolRange: 1.2
   patrolDistance: 0.1
   onPatrol: 1
   yWidth: 3
@@ -1377,6 +1381,8 @@ MonoBehaviour:
   onStun: 0
   reachCheck: 0
   attackRange: 0
+  flatObject: {fileID: 8290176016248668541}
+  flatTime: 1.5
   rotLevel: 85
   testAngle: 0
   rangePrefab: {fileID: 6779815533108054730, guid: 97bc6e6f9f22fe742841b1cae458a0a6,
@@ -1397,15 +1403,15 @@ MonoBehaviour:
   attackType: 0
   characterState: 0
   initMaxHP: 3
-  initMoveSpeed: 1
+  initMoveSpeed: 2.2
   HPBonus: 0
   MoveSpeedBonus: 0
-  hp: 3
+  hp: 2
   atk: 1
-  rotationSpeed: 3
+  rotationSpeed: 5
   attackSpeed: 0
   attackCoolTimebonus: 0
-  initattackCoolTime: 1.5
+  initattackCoolTime: 0.35
   attackDelay: 1
   canMove: 1
   canAttack: 1
@@ -1415,6 +1421,21 @@ MonoBehaviour:
     partValue: 0
   onInvincible: 0
   invincibleTimer: 0
+--- !u!114 &6055292048117327387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5972430000464431206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6468d904bc89c6a41b68e57303ecc421, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  caught: 0
+  thrown: 0
+  cursorTargetCollider: {fileID: 0}
 --- !u!1 &5986735344200566167
 GameObject:
   m_ObjectHideFlags: 0
@@ -1541,8 +1562,8 @@ Transform:
   m_GameObject: {fileID: 6360932444653619128}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 1.5}
-  m_LocalScale: {x: 2, y: 2, z: 2.8}
+  m_LocalPosition: {x: 0, y: 0.5, z: 1.25}
+  m_LocalScale: {x: 6, y: 2, z: 6}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8560900777148706441}
@@ -1562,7 +1583,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6360932444653619128}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1856,7 +1877,10 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'Bip001 Neck'\n\tTransform 'Bip001 Spine'\n\tTransform
+    'Bip001 Neck'\n\tTransform 'Bip001 Spine'\n\tFrom animation clip 'EnemyStandC'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
