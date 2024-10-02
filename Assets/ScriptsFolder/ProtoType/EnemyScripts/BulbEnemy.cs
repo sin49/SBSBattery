@@ -22,33 +22,34 @@ public class BulbEnemy : Enemy
         }
     }
 
-    /*public override void Move()
+    // 0번째: 필라멘트, 1번째: 바디, 2번째: 헤드
+    public override void StartEmmissionHitMat()
     {
-        if (lightCheck && eStat.eState != EnemyState.dead || eStat.eState != EnemyState.hitted)
-        {
+        Material[] materials = skinRenderer.materials;
+        materials[0] = emmissionBackMat; // 필라멘트
+        materials[1] = emmissionHittedMat; // 바디
+        materials[2] = emmissionHeadMat; //헤드
 
-            if (tracking)
-            {
-                TrackingMove();
-            }
-            if (!callCheck)
-            {
-                Patrol();
-            }
-        }
-    }*/
+        skinRenderer.materials = materials;
+    }
+
+    public override void EndEmmissionHitMat()
+    {
+        Material[] materials = skinRenderer.materials;
+        materials[0] = backMat;
+        materials[1] = idleMat;
+        materials[2] = headMat;
+
+        skinRenderer.materials = materials;
+    }
+
+    public override void EndHitMat()
+    {
+        return;
+    }
 
     public override void Attack()
     {
         
     }    
-
-    /*private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            collision.gameObject.GetComponent<Player>().Damaged(eStat.atk);
-            Dead();
-        }
-    }*/
 }

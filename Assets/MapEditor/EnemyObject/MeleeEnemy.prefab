@@ -373,6 +373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4981e4ac21ac1e4c87802ce1b5d2ba5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyHitCol2D: {fileID: 0}
   testcolor: {r: 0, g: 0, b: 0, a: 0}
   movepattern: 0
   eStat: {fileID: 8243888719237057114}
@@ -382,8 +383,17 @@ MonoBehaviour:
     type: 3}
   animaor: {fileID: 7477330049228919783}
   idleMat: {fileID: 2100000, guid: e05bcd830f8909d4aa73cfc0fd455522, type: 2}
+  backMat: {fileID: 2100000, guid: 66ebc49adba9ccb47b9ac6eff2688e23, type: 2}
+  headMat: {fileID: 2100000, guid: 66ebc49adba9ccb47b9ac6eff2688e23, type: 2}
   hittedMat: {fileID: 2100000, guid: f7b3a12ef30f40544b225d4665485f28, type: 2}
+  emmissionHittedMat: {fileID: 2100000, guid: 98447d4f92961f44c91ab9e504c84f43, type: 2}
+  emmissionHeadMat: {fileID: 2100000, guid: 964fab2fdaf4ca248bb3a17ea54e2d28, type: 2}
+  emmissionBackMat: {fileID: 2100000, guid: 964fab2fdaf4ca248bb3a17ea54e2d28, type: 2}
   skinRenderer: {fileID: 7225222973139956466}
+  skinHead: {fileID: 2555037051629589340}
+  weaponMesh: {fileID: 6620182943828670007}
+  weaponMat: {fileID: 2100000, guid: e762973d5bffbc346add03e2dcedfd23, type: 2}
+  emmissionweapoinMat: {fileID: 2100000, guid: 7a24e50a2b34855479f8259c3f7d786f, type: 2}
   moveEffect: {fileID: 0}
   environmentforce: {x: 0, y: 0, z: 0}
   isMove: 0
@@ -434,6 +444,7 @@ MonoBehaviour:
   flatScaleY: 0.3
   flatTime: 0
   timer: 0
+  onFlat: 0
   rotLevel: 85
   testAngle: 0
 --- !u!114 &8243888719237057114

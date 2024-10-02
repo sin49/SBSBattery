@@ -7,6 +7,8 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Rendering;
 using UnityEngine;
+using static Unity.Burst.Intrinsics.X86;
+
 public enum EnemyMovePattern { stop,patrol}
 public interface DamagedByPAttack
 {
@@ -29,9 +31,19 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     bool posRetry;
     [Header("적 애니메이션 관련")]
     public Animator animaor;
+    [Header("기본 머티리얼")]
     public Material idleMat;
+    public Material backMat;
+    public Material headMat;
     public Material hittedMat;
-    public Renderer skinRenderer;
+    [Header("이미션 머티리얼")]
+    public Material emmissionHittedMat;
+    public Material emmissionHeadMat;
+    public Material emmissionBackMat;
+    public Renderer skinRenderer, skinHead;
+    [Header("무기 렌더러와 머티리얼(별도로 있는 애들만)")]
+    public Renderer weaponMesh;
+    public Material weaponMat, emmissionweapoinMat;
     public ParticleSystem moveEffect;
     public Vector3 environmentforce;
     [HideInInspector]
@@ -204,8 +216,10 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             }
 
         }
+
+
     }
-    
+
     private void FixedUpdate()
     {
         /*if (searchPlayer)
@@ -474,6 +488,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         else
         {
             HittedRotate();
+            StopCoroutine("HittedEnd");
             if (!onStun)
             {
                 rb.velocity = Vector3.zero;
@@ -486,17 +501,78 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                     animaor.SetTrigger("isHitted");
                     activeAttack = true;
                     attackTimer = eStat.initattackCoolTime;
-                    if (skinRenderer != null)
-                    {
-                        Material[] materials = skinRenderer.materials;
-                        materials[1] = hittedMat;
-                        skinRenderer.materials = materials;
-                    }
                 }
-                //InitAttackCoolTime();
+                //InitAttackCoolTime();                
+                StartCoroutine("HittedEnd");
             }
         }
     }
+    #region 피격 코루틴
+    public virtual IEnumerator HittedEnd()
+    {
+        if (skinRenderer != null)
+        {
+            StartEmmissionHitMat();
+        }
+        
+        yield return new WaitForSeconds(0.5f);
+        
+        if (skinRenderer != null)
+        {
+            EndEmmissionHitMat();
+        }
+
+        if (animaor.GetCurrentAnimatorStateInfo(0).IsName("Enemy_Damaged_ToBack"))
+        {
+            while (animaor.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+            {
+                yield return null;
+            }
+            Debug.Log("피격 코루틴 복귀");
+        }
+
+        if (skinRenderer != null)
+        {
+            EndHitMat();
+        }
+
+        activeAttack = false;
+    }
+
+    public virtual void StartEmmissionHitMat()
+    {
+        Material[] materials = skinRenderer.materials;
+        materials[0] = emmissionBackMat;
+        materials[1] = emmissionHittedMat;
+        if(skinHead != null)
+        skinHead.material = emmissionHeadMat;
+        skinRenderer.materials = materials;
+    }
+
+    public virtual void EndEmmissionHitMat()
+    {
+        Material[] materials = skinRenderer.materials;
+        materials[0] = backMat;
+        materials[1] = hittedMat;
+        if(skinHead !=null)
+        skinHead.material = headMat;
+        skinRenderer.materials = materials;
+    }
+
+    public virtual void EndHitMat()
+    {
+        Material[] materials = skinRenderer.materials;
+        materials[0] = backMat;
+        materials[1] = idleMat;
+        if(skinHead != null)
+        skinHead.material = backMat;
+        skinRenderer.materials = materials;
+
+        Debug.Log("기본 머테리얼로 복귀");
+    }
+
+    #endregion
+
     [Header("납작해지도록 적용될 스케일 오브젝트")]
     public GameObject flatObject;
     public float flatScaleY;

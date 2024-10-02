@@ -92,4 +92,27 @@ public class jumpenemy : Enemy
             }
         }
     }
+    //0번째: 바디, 1번째: 투명 유리
+    public override void StartEmmissionHitMat()
+    {
+        Material[] materials = skinRenderer.materials;
+        materials[0] = hittedMat;
+        materials[1] = emmissionHeadMat;
+
+        skinRenderer.materials = materials;
+    }
+
+    public override void EndEmmissionHitMat()
+    {
+        Material[] materials = skinRenderer.materials;
+        materials[0] = idleMat;
+        materials[1] = headMat;
+
+        skinRenderer.materials = materials;
+    }
+
+    public override void EndHitMat()
+    {
+        return;
+    }
 }

@@ -38,6 +38,7 @@ public class fireenemy : Enemy
         base.Damaged(damage);
         else
         {
+            StopCoroutine("WhileBreath");
             InvokeHittedEvent();
             eStat.hp -= damage;
             if (eStat.hp <= 0)
@@ -46,8 +47,19 @@ public class fireenemy : Enemy
 
                 Dead();
             }
+            StartCoroutine("WhileBreath");
         }
     }
+
+    IEnumerator WhileBreath()
+    {
+        skinRenderer.material = hittedMat;
+
+        yield return new WaitForSeconds(0.2f);
+
+        skinRenderer.material = idleMat;
+    }
+
     public override void Attack()
     {
          
@@ -160,4 +172,16 @@ public class fireenemy : Enemy
         initializebreath();
         InitAttackCoolTime();
     }
+
+    public override void StartEmmissionHitMat()
+    {
+        skinRenderer.material = hittedMat;
+    }
+
+    public override void EndEmmissionHitMat()
+    {
+        skinRenderer.material = idleMat;
+    }
+
+
 }

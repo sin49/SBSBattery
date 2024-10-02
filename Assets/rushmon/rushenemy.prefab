@@ -463,6 +463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84103317445cc7043b69d425eca078e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyHitCol2D: {fileID: 0}
   testcolor: {r: 0, g: 0, b: 0, a: 0}
   movepattern: 1
   eStat: {fileID: 1024772792019391105}
@@ -472,8 +473,17 @@ MonoBehaviour:
     type: 3}
   animaor: {fileID: 5413784116424149211}
   idleMat: {fileID: 2100000, guid: 1d86a5bbeab1a304a97b11ff604fc10f, type: 2}
-  hittedMat: {fileID: 2100000, guid: a77d85e72ad2b11458dc4da7d9750a8b, type: 2}
-  skinRenderer: {fileID: 0}
+  backMat: {fileID: 0}
+  headMat: {fileID: 0}
+  hittedMat: {fileID: 0}
+  emmissionHittedMat: {fileID: 2100000, guid: a77d85e72ad2b11458dc4da7d9750a8b, type: 2}
+  emmissionHeadMat: {fileID: 0}
+  emmissionBackMat: {fileID: 0}
+  skinRenderer: {fileID: 8231907639549373210}
+  skinHead: {fileID: 0}
+  weaponMesh: {fileID: 0}
+  weaponMat: {fileID: 0}
+  emmissionweapoinMat: {fileID: 0}
   moveEffect: {fileID: 0}
   environmentforce: {x: 0, y: 0, z: 0}
   isMove: 0
@@ -523,6 +533,8 @@ MonoBehaviour:
   flatObject: {fileID: 8626328424362783420}
   flatScaleY: 0.2
   flatTime: 0
+  timer: 0
+  onFlat: 0
   rotLevel: 85
   testAngle: 0
   rushinitdelay: 1
@@ -853,3 +865,9 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!23 &8231907639549373210 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8017911081055999085, guid: 12e6e7f409a4e1b44bfbfa89cf630e69,
+    type: 3}
+  m_PrefabInstance: {fileID: 2123671283960446839}
+  m_PrefabAsset: {fileID: 0}

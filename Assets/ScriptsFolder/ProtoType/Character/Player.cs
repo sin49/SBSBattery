@@ -4,6 +4,7 @@ using System.Collections;
 using System.Security.Cryptography;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 using UnityEngine.Experimental.Rendering.RenderGraphModule;
 using UnityEngine.PlayerLoop;
 using UnityEngine.Rendering;
@@ -470,7 +471,7 @@ public class Player : Character,environmentObject
         {
             jumpanimtimer += Time.fixedDeltaTime;
         }
-        groundraycheck();
+        //groundraycheck();
         JumpKeyInput();
         AttackNotHold();
         if (!downAttack)
@@ -1198,7 +1199,16 @@ public class Player : Character,environmentObject
 
     IEnumerator ActiveInvincible()
     {
-        yield return new WaitForSeconds(PlayerStat.instance.invincibleCoolTime);
+        float time = PlayerStat.instance.invincibleCoolTime;
+        float invincibleTimer = 0;
+        //yield return new WaitForSeconds(PlayerStat.instance.invincibleCoolTime);
+
+        while (invincibleTimer < time)
+        {
+            invincibleTimer += Time.deltaTime;
+            Debug.Log(invincibleTimer);
+            yield return null;
+        }
 
         if(!TransformInvincibleEvent())
         onInvincible = false;
