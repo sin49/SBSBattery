@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 
 
@@ -19,7 +20,7 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     public PlayerMoveState movestate3D;
     float orthosize;
     float fovview;
-
+    
 
     public TextMeshProUGUI TEstTExt;
     public void switch2Dcamera(CinemachineVirtualCamera c)
@@ -92,15 +93,18 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         camera3D.enabled = true;
         camera2D.enabled = false;
         updatecamera();
-       
 
-      
+
+        cam.cullingMask = ~(1 << 23);
+     
 
     }
+ 
     void RegiserCameraChangeHandler()
     {
         PlayerHandler.instance.RegisterCameraRotateCorutine(SwitchCameraForTransDimensionCorutine());
     }
+
     public void UpdatePlayerMovestate()
     {
         if (trans3D)
@@ -130,14 +134,17 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         renderpassmanager_.changepixel(trans3D);
         if (trans3D)
         {
+            cam.cullingMask = ~(1 << 24);
             //camera3D.transform.position = camera2D.transform.position;
             yield return StartCoroutine(SwitchCameraCoroutine(camera3D));
           
         }
         else
         {
+            cam.cullingMask = ~(1 << 23);
             //camera2D.transform.position = camera3D.transform.position;
             yield return StartCoroutine(SwitchCameraCoroutine(camera2D));
+
         }
         Time.timeScale = 1;
         camera2D.m_Lens.Orthographic = true;
