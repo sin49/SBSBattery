@@ -62,7 +62,7 @@ public class BossStageBox : MonoBehaviour
     }
     private void Update()
     {
-        if (!onGround&& !endCorutine)
+        if (!onGround&& endCorutine)
         {
             transform.Translate(Vector3.down.normalized * fallingSpeed * Time.deltaTime, Space.World);
             //warningObj.transform.position = warningPos;
