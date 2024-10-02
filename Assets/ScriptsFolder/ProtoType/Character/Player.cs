@@ -6,6 +6,7 @@ using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 using UnityEngine.Experimental.Rendering.RenderGraphModule;
+using UnityEngine.Playables;
 using UnityEngine.PlayerLoop;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
@@ -49,8 +50,8 @@ public class Player : Character,environmentObject
     public Animator Humonoidanimator;
     public Renderer ChrRenderer;
     public Material chrmat;
-    public Color color;
 
+   
     //public float moveValue; // 움직임 유무를 결정하기 위한 변수
 
 
@@ -151,8 +152,8 @@ public class Player : Character,environmentObject
             StartCoroutine(FormInvincible());
         }
 
-        //chrmat = ChrRenderer.material;
-        //color = Color.red;
+        chrmat = ChrRenderer.material;
+
 
         canAttack = true;
         onDash = true;
@@ -220,7 +221,8 @@ public class Player : Character,environmentObject
     IEnumerator FormInvincible()
     {
         onInvincible = true;
-
+     
+       
         yield return new WaitForSeconds(PlayerStat.instance.invincibleCoolTime);
 
         PlayerStat.instance.formInvincible = false;
@@ -479,7 +481,7 @@ public class Player : Character,environmentObject
         
        
 
-        /* chrmat.SetColor("_Emissive_Color", color);*///emission 건들기
+       
         if (Input.GetKeyDown(KeyCode.Tab)) { HittedTest(); }
 
         //if (onGround && isJump && playerRb.velocity.y <= 0)
@@ -1178,7 +1180,7 @@ public class Player : Character,environmentObject
             return;
         base.Damaged(damage);
         onInvincible = true;
-
+    
         PlayerStat.instance.pState = PlayerState.hitted;
         HittedEffect.gameObject.SetActive(true);
         PlayerStat.instance.hp -= damage;
@@ -1197,25 +1199,32 @@ public class Player : Character,environmentObject
         }
     }
 
-    IEnumerator ActiveInvincible()
-    {
-        float time = PlayerStat.instance.invincibleCoolTime;
-        float invincibleTimer = 0;
-        //yield return new WaitForSeconds(PlayerStat.instance.invincibleCoolTime);
 
-        while (invincibleTimer < time)
-        {
-            invincibleTimer += Time.deltaTime;
-            Debug.Log(invincibleTimer);
-            yield return null;
-        }
 
-        if(!TransformInvincibleEvent())
-        onInvincible = false;
-    }
     public virtual bool TransformInvincibleEvent()
     {
         return false;
+    }
+    IEnumerator ActiveInvincible()
+    {
+
+        float timer = 0;
+        bool whitechecker=false;
+
+        yield return new WaitForSecondsRealtime(PlayerStat.instance.HittedStopTime);
+        while (timer < PlayerStat.instance.invincibleCoolTime)
+        {
+            if(whitechecker)
+                chrmat.SetColor("_Emissive_Color", new Vector4(0, 0, 0, 1));
+            else
+                chrmat.SetColor("_Emissive_Color", PlayerStat.instance.invinciblecolor);//emission 건들기
+            whitechecker = !whitechecker;
+            timer += PlayerStat.instance.blinkdelay;
+            yield return new WaitForSeconds(PlayerStat.instance.blinkdelay);
+        }
+
+        chrmat.SetColor("_Emissive_Color", new Vector4(0, 0, 0, 1));
+        onInvincible = false;
     }
 
     IEnumerator WaitEndDamaged()
@@ -1223,12 +1232,16 @@ public class Player : Character,environmentObject
         if (Humonoidanimator != null)
         {
             Humonoidanimator.SetTrigger("Damaged");
+            Humonoidanimator.updateMode = AnimatorUpdateMode.UnscaledTime;
         }
         playerRb.velocity = Vector3.zero;
         PlayerHandler.instance.CantHandle = true;
         playerRb.AddForce(-transform.forward * 1.2f, ForceMode.Impulse);
-
-        yield return new WaitForSeconds(PlayerStat.instance.HittedStopTime);
+        Time.timeScale = 0;
+       chrmat.SetColor("_Emissive_Color", PlayerStat.instance.Hittedcolor);//emission 건들기
+        yield return new WaitForSecondsRealtime(PlayerStat.instance.HittedStopTime);
+        Humonoidanimator.updateMode = AnimatorUpdateMode.Normal;
+        Time.timeScale = 1;
         PlayerHandler.instance.CantHandle = false;
         PlayerStat.instance.pState = PlayerState.idle;
     }

@@ -20,7 +20,7 @@ public class PlayerSpawnManager : MonoBehaviour
     public GameObject SaveEffect;
     public GameObject CurrentPlayer;// 행동 작업
     public bool DontSave;
-    public bool dontloadTransformInfo = false;
+    //public bool dontloadTransformInfo = false;
     public bool IgnoreSavedCheckPoint;
     public void ChangeCheckPoint(CheckPoint ChkPoint)
     {
@@ -63,31 +63,27 @@ public class PlayerSpawnManager : MonoBehaviour
     //{
 
     //    StartCoroutine(ReSpawnPlayer(LastestCheckPointID));
-        
+
     //}
     //IEnumerator ReSpawnPlayer(int n)
     //{
-   
+
     //    yield return StartCoroutine(GameManager.instance.RELoadingTest());
 
     //    spawnCheckPoint(n);
     //}
+    public PlayerFormList formlist;
+
     public void Spawn()
     {
-        PlayerFormList p;
-        Debug.Log("SpawnTest");
+
+  
        
-            if (TryGetComponent<PlayerFormList>(out p))
-            {
-            if (!dontloadTransformInfo)
-            {
-                DefaultForm = p.playerformlist[GameManager.instance.LOadPlayerTransformtype()];
-            }
-            else
-            {
-                DefaultForm = p.playerformlist[0];
-            }
-        }
+      
+      
+                DefaultForm = formlist.playerformlist[GameManager.instance.LOadPlayerTransformtype()];
+          
+       
                 
         
             var a = CurrentCheckPoint.spawn(DefaultForm);
@@ -156,10 +152,12 @@ public class PlayerSpawnManager : MonoBehaviour
         {
             PlayerStat.instance.hp = PlayerStat.instance.hpMax;
         }
-        if(!dontloadTransformInfo)
+
         PlayerHandler.instance.CurrentType = (TransformType)GameManager.instance.LOadPlayerTransformtype();
-        else
-            PlayerHandler.instance.CurrentType = TransformType.Default;
+        if(GameManager.instance.LOadPlayerTransformtype()!=0)
+        PlayerHandler.instance.LastTransformPlace = formlist.
+            PlayerFormObject[GameManager.instance.LOadPlayerTransformtype()];
+
         FindCheckpoint(GameManager.instance.LoadCheckPointIndexKey());
         Spawn();
     }

@@ -13,6 +13,10 @@ public class jumpenemy : Enemy
     public float jumpdelay=1;
    
     bool oncorutine;
+    protected override void MoveAnimationPlay()
+    {
+        
+    }
     public override void enemymovepattern()
     {
        
@@ -73,10 +77,13 @@ public class jumpenemy : Enemy
         yield return new WaitForSeconds(jumpdelay);
         oncorutine = false;
     }
+ 
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
-        {
+    {
+      
+        
      
                 onground = false;
        

@@ -33,6 +33,8 @@ public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
     [Header("카메라 전환 속도")]
     public float transistionDuration = 1.0f;
 
+    [Header("카메라 화면 전환 옵션(끄면 스페이스랑 같은거 키면 다른거)")]
+    public bool cameraScreenChangeOption;
     public Renderer ColliderDisplay;
     public Renderer CameraRangeDisplay2D;
     public Renderer CameraRangeDisplay3D;
@@ -67,34 +69,62 @@ public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("COllider");
+ 
             CameraManager_Switching2D3D m;
             if (PlayerHandler.instance.CurrentCamera.gameObject.TryGetComponent<CameraManager_Switching2D3D>(out m))
             {
                 m.transitionDuration = transistionDuration;
-               
-                    if (virtualCamera2D != null)
+
+                if (virtualCamera2D != null)
+                {
                     m.camera2D = virtualCamera2D;
+              
+                }
                 if (virtualCamera3D != null)
+                {
                     m.camera3D = virtualCamera3D;
+               
+                }
 
                 if (CameraRange2D != null)
                     m.Set2DCamerabinding(CameraRange2D);
                 if (CameraRange3D != null)
                     m.Set3DCamerabinding(CameraRange3D);
-
-                switch (switchingstate)
+                if (!cameraScreenChangeOption)
                 {
-                    case camerachangerswitchingstate.change2D:
-             
-                        m.trans3D = false;
-                        StartCoroutine(m.SwitchCameraForTransDimensionCorutine());
-                        break;
-                    case camerachangerswitchingstate.change3D:
+                    switch (switchingstate)
+                    {
+                        case camerachangerswitchingstate.change2D:
 
-                        m.trans3D = true;
-                        StartCoroutine(m.SwitchCameraForTransDimensionCorutine());
-                        break;
+                            m.trans3D = false;
+                            StartCoroutine(m.SwitchCameraForTransDimensionCorutine());
+                            break;
+                        case camerachangerswitchingstate.change3D:
+
+                            m.trans3D = true;
+                            StartCoroutine(m.SwitchCameraForTransDimensionCorutine());
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (switchingstate)
+                    {
+                        case camerachangerswitchingstate.change2D:
+
+                            m.trans3D = false;
+                            StartCoroutine(m.SwitchCameraForTransDimensionCorutinenoblending());
+                            break;
+                        case camerachangerswitchingstate.change3D:
+
+                            m.trans3D = true;
+                            StartCoroutine(m.SwitchCameraForTransDimensionCorutinenoblending());
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
             

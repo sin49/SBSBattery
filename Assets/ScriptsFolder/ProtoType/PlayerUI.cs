@@ -49,7 +49,7 @@ public class PlayerUI: MonoBehaviour
                var a=     Instantiate(Hpbar.gameObject, HPbartransform).GetComponent<Image>();
                 HPbarList.Add(a);
             }
-            if (n <= hp)
+            if (n < hp)
                 HPbarList[n].sprite = Fill;
             else
                 HPbarList[n].sprite = Empty;
