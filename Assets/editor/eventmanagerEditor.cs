@@ -38,18 +38,18 @@ public class eventmanagerEditor : Editor
 
             // 이벤트 핸들러 상태에 따른 색상 설정
             GUIStyle style = new GUIStyle();
-            if (handler.eventcomplete)
-            {
-                style.normal.textColor = Color.yellow;
-            }
-            else if (handler.evenactive)
-            {
-                style.normal.textColor = Color.green; // 활성화된 이벤트 핸들러는 녹색 글씨
-            }
-            else
-            {
-                style.normal.textColor = Color.red; // 비활성화된 이벤트 핸들러는 빨간 글씨
-            }
+            //if (handler.eventcomplete)
+            //{
+            //    style.normal.textColor = Color.yellow;
+            //}
+            //else if (handler.evenactive)
+            //{
+            //    style.normal.textColor = Color.green; // 활성화된 이벤트 핸들러는 녹색 글씨
+            //}
+            //else
+            //{
+            //    style.normal.textColor = Color.red; // 비활성화된 이벤트 핸들러는 빨간 글씨
+            //}
 
 
             // 이벤트 핸들러 정보 표시

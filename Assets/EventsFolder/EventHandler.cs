@@ -229,6 +229,8 @@ public class EventHandler : MonoBehaviour
             {
                 checker |= a.input();
             }
+            if (inputevents.Count == 0)
+                checker = true;
             if (EventCheckDelay <= 0)
                 yield return null;
             else

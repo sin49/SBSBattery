@@ -26,7 +26,7 @@ public class EnemySpawnOutputEvent : OutputEvent
     {
         Debug.Log("플레이어에 의한 인덱스 몬스터");
         base.output();
-        if (signalSender.gameObject != null && eKillEvent.gameObject != null)
+        if (signalSender != null && eKillEvent.gameObject != null)
             StartCoroutine(SpawnCondition());
         else
             EnemySpawn();

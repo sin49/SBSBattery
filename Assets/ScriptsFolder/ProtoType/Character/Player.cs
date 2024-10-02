@@ -250,7 +250,7 @@ public class Player : Character,environmentObject
             if (Physics.Raycast(this.transform.position + Vector3.right * playersizeX - Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance))
             {
 
-                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController"))
+                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject"))
                 {
 
                     onGround = true;
@@ -274,7 +274,7 @@ public class Player : Character,environmentObject
             if (Physics.Raycast(this.transform.position - Vector3.right * playersizeX - Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance))
             {
 
-                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController"))
+                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject"))
                 {
 
                     onGround = true;
@@ -298,7 +298,7 @@ public class Player : Character,environmentObject
             if (Physics.Raycast(this.transform.position + Vector3.right * playersizeX + Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance))
             {
 
-                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController"))
+                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject"))
                 {
 
                     onGround = true;
@@ -322,7 +322,7 @@ public class Player : Character,environmentObject
             if (Physics.Raycast(this.transform.position - Vector3.right * playersizeX + Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance))
             {
 
-                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController"))
+                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject"))
                 {
 
                     onGround = true;
@@ -366,7 +366,7 @@ public class Player : Character,environmentObject
             {
                 Debug.Log("hit°ªÀÌ null·Î µé¾î¿È");
             }
-            else if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractiveObject"))
+            else if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractiveObject") || hit.collider.CompareTag("CursorObject"))
             {
                 wallcheck = true;
                 Debug.Log("º® Ã¼Å©µÊ");
@@ -1476,7 +1476,7 @@ public class Player : Character,environmentObject
         if (collision.gameObject.CompareTag("Ground") ||
 
             collision.gameObject.CompareTag("Enemy") ||
-            collision.gameObject.CompareTag("GameController"))
+            collision.gameObject.CompareTag("GameController") || collision.collider.CompareTag("CursorObject"))
         {
             onGround = false;
 
@@ -1491,7 +1491,7 @@ public class Player : Character,environmentObject
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Ground") && jumpkeyinputcheckvalue <= 0)
+        if (other.CompareTag("Ground") && jumpkeyinputcheckvalue <= 0 || other.CompareTag("CursorObject") && jumpkeyinputcheckvalue <= 0)
         {
             jumpRaycastCheck();
         }
@@ -1500,7 +1500,7 @@ public class Player : Character,environmentObject
     private void OnCollisionStay(Collision collision)
     {
         //#region ¹Ù´Ú »óÈ£ÀÛ¿ë
-        if (collision.gameObject.CompareTag("Ground") && jumpkeyinputcheckvalue <= 0)
+        if (collision.gameObject.CompareTag("Ground") && jumpkeyinputcheckvalue <= 0 || collision.collider.CompareTag("CursorObject") && jumpkeyinputcheckvalue <= 0)
         {
             jumpRaycastCheck();
         }
