@@ -161,7 +161,7 @@ public class HouseholdIronTransform : Player
     IEnumerator IronDownAttack()
     {
         SecondFormActive();
-
+        soundPlayer.PlayInitDownAttackSound();
         playerRb.useGravity = false;
         while (playerRb.velocity != Vector3.zero)
         {
@@ -948,6 +948,7 @@ public class HouseholdIronTransform : Player
             {
                 source.GenerateImpulse();
                 PlayerHandler.instance.CantHandle = true;
+                soundPlayer.PlayDownAttackEndSound();
                 downEnd = true;
                 if (!ironDownAtkEffect.gameObject.activeSelf)
                 {
