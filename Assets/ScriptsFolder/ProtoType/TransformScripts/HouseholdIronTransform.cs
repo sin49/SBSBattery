@@ -41,6 +41,8 @@ public class HouseholdIronTransform : Player
     public float rayHeightValue;
     public float rayUpValue, rayMiddleValue, rayDownValue;
 
+    public HouseHoldFormSoundPlayer soundPlayer;
+
     bool readyRush, downEnd, rushEnd;
     bool ironAttack = true;
 
@@ -886,6 +888,7 @@ public class HouseholdIronTransform : Player
                 ironDashEffect.gameObject.SetActive(true);
             }
             ironDashEffect.Play();
+            soundPlayer.rushingAudio();
             onRush = true;
             rushEnd = false;
             ironAttack = true;
@@ -903,6 +906,7 @@ public class HouseholdIronTransform : Player
         readyRush = false;
         rushTimer = rushTimeMax;
         ironDashEffect.Stop();
+        soundPlayer.rushsoundend();
         SecondFormDeactive();
         Humonoidanimator.Play("RushEnd");
         StartCoroutine(RushEndCheck());

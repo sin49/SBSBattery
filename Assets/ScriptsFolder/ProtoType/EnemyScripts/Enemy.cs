@@ -616,7 +616,11 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
         }        
     }
-
+    protected virtual void PlayMoveSound()
+    {
+        if (soundplayer != null)
+            soundplayer.PlayMoveSound();
+    }
     #region 추격
     public virtual void TrackingMove()
     {
@@ -633,8 +637,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         if (SetRotation())
         {
             enemymovepattern();
-            if (soundplayer != null)
-                soundplayer.PlayMoveSound();
+            PlayMoveSound();
         }
         /*var a = new Vector3(vector.x, vector.y);
         float f = testTarget.z - transform.position.z; // -> 절대값을 하여 z값이 n보다 크면 false로 빠져나가도록 
@@ -667,8 +670,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         {
           
             enemymovepattern();
-            if (soundplayer != null)
-                soundplayer.PlayMoveSound();
+            PlayMoveSound();
         }
         if (testTarget.magnitude < patrolDistance)
         {
@@ -925,14 +927,19 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     #endregion
 
     #region 공격함수
+
+    protected virtual void PlayAttackSound()
+    {
+        if (soundplayer != null)
+            soundplayer.PlayAttackAudio();
+    }
     public override void Attack()
     {
         base.Attack();
         if(animaor != null)
             animaor.Play("EnemyAttack");
-        if (soundplayer != null)
-            soundplayer.PlayAttackAudio();
-        if(actionhandler!=null)
+        PlayAttackSound();
+        if (actionhandler!=null)
         actionhandler.invokemainaction();
     }
 

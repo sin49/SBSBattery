@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class fireenemy : Enemy
 {
+    [Header("공격 사운드:브레스 사운드")]
     [Header("브레스 전 대기 시간")]
     public float breathinittime;
     [Header("브레스 지속 시간")]
@@ -50,9 +51,12 @@ public class fireenemy : Enemy
     }
     public override void Attack()
     {
-         
-        
-        base.Attack();
+
+
+        if (animaor != null)
+            animaor.Play("EnemyAttack");
+        if (actionhandler != null)
+            actionhandler.invokemainaction();
         StopAllCoroutines();
         initializebreath();
         if (oncorutine)
@@ -98,6 +102,7 @@ public class fireenemy : Enemy
         {
             a.Play();
         }
+        PlayAttackSound();
         fireLight.gameObject.SetActive(true);
         breath.SetActive(true);
         breathsmallcollider.gameObject.SetActive(true);

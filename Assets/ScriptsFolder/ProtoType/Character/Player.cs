@@ -257,6 +257,7 @@ public class Player : Character,environmentObject
                   
                     if (downAttack)
                     {
+                        SoundPlayer.PlayDownAttackEndSound();
                         downAttack = false;
                         if (LandingEffect != null)
                             LandingEffect.SetActive(true);
@@ -281,6 +282,7 @@ public class Player : Character,environmentObject
                    
                     if (downAttack)
                     {
+                        SoundPlayer.PlayDownAttackEndSound();
                         downAttack = false;
                         if (LandingEffect != null)
                             LandingEffect.SetActive(true);
@@ -305,6 +307,7 @@ public class Player : Character,environmentObject
                 
                     if (downAttack)
                     {
+                        SoundPlayer.PlayDownAttackEndSound();
                         downAttack = false;
                         if (LandingEffect != null )
                             LandingEffect.SetActive(true);
@@ -329,6 +332,7 @@ public class Player : Character,environmentObject
                     isJump = false;
                     if (downAttack)
                     {
+                        SoundPlayer.PlayDownAttackEndSound();
                         downAttack = false;
                         if (LandingEffect != null)
                             LandingEffect.SetActive(true);
@@ -1114,7 +1118,7 @@ public class Player : Character,environmentObject
         playerRb.velocity = Vector3.zero;
 
         playerRb.AddForce(transform.up * 3f, ForceMode.Impulse);
-
+        SoundPlayer.PlayInitDownAttackSound();
         yield return new WaitForSeconds(0.2f);
         playerRb.velocity = Vector3.zero;
 
@@ -1457,11 +1461,13 @@ public class Player : Character,environmentObject
         onInvincible = true;
         Time.timeScale = 0.2f;
         ModelAnimator.SetTrigger("FormChange");
+        SoundPlayer.PlayInitTransformedSound();
         ModelAnimator.SetFloat("Speed", animationSpeed);
 
         yield return new WaitForSeconds(waitTime);
 
         PlayerHandler.instance.CurrentPower = PlayerHandler.instance.MaxPower;
+        SoundPlayer.PlayTransformedEndSound();
         Instantiate(changeEffect, transform.position, Quaternion.identity);
         PlayerHandler.instance.transformed(type, event_);
         if (PlayerHandler.instance.CurrentPlayer != null)
