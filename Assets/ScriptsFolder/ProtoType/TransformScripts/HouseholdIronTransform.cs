@@ -64,7 +64,8 @@ public class HouseholdIronTransform : Player
     protected override void Awake()
     {
         base.Awake();
-        InitTimer();        
+        InitTimer();
+        soundPlayer = this.GetComponent<HouseHoldFormSoundPlayer>();
     }
 
     private void Start()

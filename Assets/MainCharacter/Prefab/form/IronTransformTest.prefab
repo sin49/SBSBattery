@@ -1258,8 +1258,8 @@ GameObject:
   - component: {fileID: 2432691346111002418}
   - component: {fileID: 7519379821462962435}
   - component: {fileID: 126969326634588035}
-  - component: {fileID: 3616320240839429382}
   - component: {fileID: 2382477968564158788}
+  - component: {fileID: 4249797183300891814}
   m_Layer: 6
   m_Name: IronTransformTest
   m_TagString: Player
@@ -1310,7 +1310,6 @@ MonoBehaviour:
   Humonoidanimator: {fileID: 4479537047354870170}
   ChrRenderer: {fileID: 5158458977046534887}
   chrmat: {fileID: 0}
-  color: {r: 1, g: 1, b: 1, a: 0}
   jumpholdLevel: 1
   jumpBufferTimeMax: 0.05
   jumpBufferTimer: 0
@@ -1374,7 +1373,6 @@ MonoBehaviour:
   Decelatate: 2
   hori: 0
   Vert: 0
-  blinkdelay: 0.1
   doublejumpeffect: {fileID: 0}
   oninteractivetimer: 0
   onInterarctive: 0
@@ -1397,6 +1395,7 @@ MonoBehaviour:
   rayUpValue: 0.25
   rayMiddleValue: 0.25
   rayDownValue: 0.25
+  soundPlayer: {fileID: 0}
   downAtkSpeed: 25
   ironFlyTime: 0.45
   downAtkEndTimeMax: 1.25
@@ -1609,28 +1608,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32177de85efdfc943b70253b78ba038e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3616320240839429382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6022164399677782045}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab58d2e89b14edd4bb013c33c8f0cd8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveClip: {fileID: 8300000, guid: 83315124d8bd65140b4035305992fb6b, type: 3}
-  MoveVolume: 0
-  AttackClip: {fileID: 8300000, guid: 25c5897575b078c4ba66ca5ffa7908c5, type: 3}
-  AttackVolume: 1
-  JumpClip: {fileID: 8300000, guid: 85ea7b8994df41b45ad65459747ef044, type: 3}
-  JumpVolume: 1
-  LandClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
-  LandVolume: 0.1
-  SkillClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
-  SkillVolume: 1
 --- !u!114 &2382477968564158788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1684,6 +1661,41 @@ MonoBehaviour:
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0, y: -1, z: 0}
+--- !u!114 &4249797183300891814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6022164399677782045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4072bc6a82ed2864cb5a18159c6c2c6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClip: {fileID: 0}
+  MoveVolume: 0
+  AttackClip: {fileID: 0}
+  AttackVolume: 0
+  JumpClip: {fileID: 0}
+  JumpVolume: 0
+  InitDownAttackClip: {fileID: 0}
+  InitDownAttackVolume: 0
+  DownAttackEndClip: {fileID: 0}
+  DownAttackEndVolume: 0
+  InitTransformedClip: {fileID: 0}
+  InitTransformedVolume: 0
+  TransformedEndClip: {fileID: 0}
+  TransformedEndVolume: 0
+  HittedClip: {fileID: 0}
+  HittedVolume: 0
+  LandClip: {fileID: 0}
+  LandVolume: 0
+  SkillClip: {fileID: 0}
+  SkillVolume: 0
+  rushingClip: {fileID: 0}
+  rushingVolume: 0
+  rushing: 0
 --- !u!1 &6609269512338968028
 GameObject:
   m_ObjectHideFlags: 0
