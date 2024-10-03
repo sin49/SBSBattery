@@ -129,7 +129,17 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     bool complete;
     public bool attackRange;
 
-   protected override void Awake()
+    public bool viewActive;
+
+    private void OnEnable()
+    {
+        if (!viewActive)
+        {
+            StartCoroutine(InitPatrolTarget());
+        }
+    }
+
+    protected override void Awake()
     {
 
         base.Awake();
@@ -181,7 +191,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     private void Start()
     {                
         attackTimer = eStat.initattackCoolTime;
-        
+
         /*if (onStun)
         {         
             StartCoroutine(WaitStunTime());
@@ -773,6 +783,10 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
       
         
         tracking = true;
+        if (!viewActive)
+        {
+            viewActive = true;
+        }
     }    
        
     public virtual void PatrolChange()
@@ -997,6 +1011,10 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             }
             else
             Instantiate(deadEffect, transform.position, Quaternion.identity);
+        }
+        if (transform.parent.gameObject.TryGetComponent<EnemyEnable>(out EnemyEnable enable))
+        {
+            transform.parent.gameObject.SetActive(false);
         }
         gameObject.SetActive(false);
     }

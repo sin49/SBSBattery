@@ -54,9 +54,10 @@ public class MouseFormCursor : MonoBehaviour
                     other.transform.rotation = Quaternion.identity;
                     cursorInteract.gameObject.layer = LayerMask.NameToLayer("DontMoveIgnore");
                 }
-
+                Debug.Log(other.gameObject);
                 if (other.TryGetComponent<fireenemy>(out fireenemy fire))
                 {
+                    Debug.Log("불몬 잡았나?");
                     ParticleSystem[] breath = fire.fireeffects;
                     foreach (ParticleSystem a in breath)
                     {
@@ -65,6 +66,11 @@ public class MouseFormCursor : MonoBehaviour
 
                     fire.breathsmallcollider.gameObject.SetActive(false);
                     fire.breathcollider.gameObject.SetActive(false);
+                    Debug.Log("불몬 화염방사 취소되나?");
+                }
+                else
+                {
+                    Debug.Log("불몬 안잡힘");
                 }
             }
         }
