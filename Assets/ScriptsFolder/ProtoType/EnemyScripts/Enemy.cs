@@ -133,10 +133,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
     private void OnEnable()
     {
-        if (!viewActive)
-        {
-            StartCoroutine(InitPatrolTarget());
-        }
+        StartCoroutine(InitPatrolTarget());
     }
 
     protected override void Awake()
@@ -782,11 +779,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         }
       
         
-        tracking = true;
-        if (!viewActive)
-        {
-            viewActive = true;
-        }
+        tracking = true;        
     }    
        
     public virtual void PatrolChange()
