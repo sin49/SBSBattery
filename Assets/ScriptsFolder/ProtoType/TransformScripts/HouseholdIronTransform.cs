@@ -293,22 +293,26 @@ public class HouseholdIronTransform : Player
                     rushHori = -rushHori;
                     rushVert = -rushVert;
                     break;
+                    //회전하는 부분?
             }
 
             Vector3 moveInput = new Vector3(hori, 0, Vert);
             Vector3 regularMove = new Vector3(rushHori, 0, rushVert);
             if (rushHori != 0 || rushVert != 0)
             {
+                soundPlayer.rushsoundpause();
                 rotate(regularMove.x, regularMove.z);
                 //SoundPlayer.PlayMoveSound();
             }
 
             if (!onRushRot)
             {
+                soundPlayer.rushsoundresume();
                 Vector3 moveVelocity = Vector3.zero;
                 Vector3 vector = regularMove.normalized * rushSpeed;
                 Vector3 forwardForce = transform.GetChild(0).forward * rushSpeed;
                 moveVelocity = forwardForce - playerRb.velocity.x * Vector3.right - playerRb.velocity.z * Vector3.forward;
+               
                 if (!wallcheck)
                     playerRb.AddForce(moveVelocity, ForceMode.VelocityChange);
                 else
