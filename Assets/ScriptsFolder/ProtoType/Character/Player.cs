@@ -143,7 +143,7 @@ public class Player : Character,environmentObject
         SoundPlayer = GetComponent<PlayerSoundPlayer>();
     }
     // Start is called before the first frame update
-    void Start()
+   protected virtual void Start()
     {
 
         if (PlayerStat.instance.formInvincible)
@@ -1205,6 +1205,7 @@ public class Player : Character,environmentObject
     {
         return false;
     }
+  
     IEnumerator ActiveInvincible()
     {
 

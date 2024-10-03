@@ -67,9 +67,10 @@ public class HouseholdIronTransform : Player
         InitTimer();
         soundPlayer = this.GetComponent<HouseHoldFormSoundPlayer>();
     }
-
-    private void Start()
+   
+   protected override void Start()
     {
+        base.Start();
         saveSpeed = PlayerStat.instance.moveSpeed;
         rushSpeed = PlayerStat.instance.moveSpeed + speedValue;
     }
