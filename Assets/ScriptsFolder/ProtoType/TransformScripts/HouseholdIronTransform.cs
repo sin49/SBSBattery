@@ -119,19 +119,6 @@ public class HouseholdIronTransform : Player
         }
     }
 
-    public void RushCancel()
-    {
-        Humonoidanimator.SetTrigger("RushCancel");
-        ironDashEffect.Stop();
-        SecondFormDeactive();
-        onRush = false;
-        rushEnd = true;
-        rushTimer = rushTimeMax;
-        rushAtkTimer = rushAtkTimeMax;
-        rushCoolTimer = rushCoolTimeMax;
-        readyRush = false;
-    }
-
     private void OnDrawGizmos()
     {
         RushRayCheck();
@@ -597,6 +584,7 @@ public class HouseholdIronTransform : Player
         }
     }
 
+    //돌진 시작
     public void RushStart()
     {
         PlayerHandler.instance.CantHandle = true;
@@ -632,6 +620,7 @@ public class HouseholdIronTransform : Player
         }
     }
 
+    //돌진 끝
     public void RushEnd()
     {
         PlayerHandler.instance.CantHandle = true;
@@ -669,6 +658,21 @@ public class HouseholdIronTransform : Player
             ironAttack = true;
             onRush = false;            
         }
+    }
+
+    //충돌로 인한 돌진 캔슬
+    public void RushCancel()
+    {
+        Humonoidanimator.SetTrigger("RushCancel");
+        ironDashEffect.Stop();
+        SecondFormDeactive();
+        onRush = false;
+        rushEnd = true;
+        rushTimer = rushTimeMax;
+        rushAtkTimer = rushAtkTimeMax;
+        rushCoolTimer = rushCoolTimeMax;
+        readyRush = false;
+        onInvincible = false;
     }
     #endregion
     public CinemachineImpulseSource source;
