@@ -31,7 +31,9 @@ public class PlayerStat : CharacterStat
     [Header("공격시 전진 거리")]
     public float attackForce; // 근접 공격 시 addforce에 적용할 값
     [Header("점프력")]
-    public float jumpForce; // velocity.y 값에 영향을 주는 점프 가중치            
+    public float jumpForce; // velocity.y 값에 영향을 주는 점프 가중치
+    public float jumpheight;
+    public float jumptime;
     [Header("내려찍는 속도")]
     public float downForce; // 내려찍는 힘   
     [Header("내려찍기 전 체공 시간")]
@@ -98,14 +100,12 @@ public class PlayerStat : CharacterStat
         }
         MoveState = PlayerMoveState.Xmove;
     }
-    
-  
 
 
-    /*private void FixedUpdate()
+
+
+    private void FixedUpdate()
     {
-        if (hp <= 0)
-            SceneManager.LoadScene("Title");
-
-    }*/    
+        jumpForce = jumpheight / jumptime;
+    }
 }
