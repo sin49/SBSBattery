@@ -11,7 +11,7 @@ public class EnemyHitted2D : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("PlayerAttack"))
+        if (collision.CompareTag("PlayerAttack")&&(int)PlayerStat.instance.MoveState<4)
         {
             enemy.Damaged(1);
         }

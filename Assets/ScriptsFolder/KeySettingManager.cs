@@ -7,7 +7,10 @@ using UnityEngine.UI;
 public class KeySettingManager : MonoBehaviour
 {
     public static KeySettingManager instance;
-
+    [Header("프리셋")]
+    public KeysettingPreset preset;
+    [Header("프리셋 이름")]
+    public string keysettingpresetname;
     [Header("공격")]
     public KeyCode AttackKeycode=KeyCode.X;
     [Header("점프")]
@@ -34,5 +37,4 @@ public class KeySettingManager : MonoBehaviour
         if (interactText != null)
             interactText.text = InteractKeycode.ToString();
     }
-
 }

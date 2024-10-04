@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class BreakableWall : MonoBehaviour,DamagedByPAttack
 {
+   
     public int hp;
     public ParticleSystem DestroyEffect;
+
+
+    
     public void Damaged(float f)
     {
         hp--;
@@ -13,6 +17,7 @@ public class BreakableWall : MonoBehaviour,DamagedByPAttack
         {
             if(DestroyEffect!=null)
             Instantiate(DestroyEffect,transform.position,transform.rotation);
+          
             //파괴 연출 들어간다
             this.gameObject.SetActive(false);
         }

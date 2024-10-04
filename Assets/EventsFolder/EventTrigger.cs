@@ -8,7 +8,7 @@ public class EventTrigger : MonoBehaviour,colliderDisplayer
     public List<EventHandler> starthandlers = new List<EventHandler>();
     [Header("끝나는 이벤트")]
     public List<EventHandler> stophandlers = new List<EventHandler>();
-    [HideInInspector]
+  
     public bool actived;
     public MeshRenderer _meshrenderer;
     public void ActiveColliderDisplay()
@@ -31,7 +31,7 @@ public class EventTrigger : MonoBehaviour,colliderDisplayer
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")&& actived)
+        if (other.CompareTag("Player"))
         {
             foreach (var a in starthandlers)
             {

@@ -25,9 +25,9 @@ Transform:
   m_GameObject: {fileID: 286629046752026641}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -81.452866, y: 17.2, z: -12.947749}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4021059259204434937}
   - {fileID: 2202347921496523192}
@@ -1475,6 +1475,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b909d1a818c2cd64a8aa6444c68ef964, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyHitCol2D: {fileID: 0}
   testcolor: {r: 0, g: 0, b: 0, a: 0}
   movepattern: 1
   eStat: {fileID: 6543432565588157350}
@@ -1504,7 +1505,7 @@ MonoBehaviour:
   - {fileID: 2202347921496523192}
   - {fileID: 8036995619034803111}
   patrolGroup: []
-  targetPatrol: {x: -79.60287, y: 14.690001, z: -11.227749}
+  targetPatrol: {x: 1.575, y: -3.7649999, z: 2.58}
   patrolWaitTime: 1
   leftPatrolRange: 0.5
   rightPatrolRange: 1.2
@@ -1535,7 +1536,10 @@ MonoBehaviour:
   reachCheck: 0
   attackRange: 0
   flatObject: {fileID: 0}
+  flatScaleY: 0
   flatTime: 0
+  timer: 0
+  onFlat: 0
   rotLevel: 85
   testAngle: 0
 --- !u!65 &8480712168937411764

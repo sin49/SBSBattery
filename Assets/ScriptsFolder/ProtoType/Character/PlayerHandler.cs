@@ -171,13 +171,7 @@ public class PlayerHandler : MonoBehaviour
             PlayerFallOut();
 
 
-        if (alwaysFuncActive)
-        {
-            if (AlwaysInvincible)
-                CurrentPlayer.onInvincible = true;
-            else
-                CurrentPlayer.onInvincible = false;
-        }
+        
 
 
         #region 캐릭터 조작
@@ -210,7 +204,6 @@ public class PlayerHandler : MonoBehaviour
             obj.TryGetComponent<RemoteTransform>(out transform))
         {
             transform.RemoteObjectEvent += ingameUIManger.UpdateRemoteTargetUI;
-            Debug.Log("이벤트 추가");
         }
     }
     public void transformed(TransformType type, Action eventhandler = null)
@@ -341,8 +334,11 @@ public class PlayerHandler : MonoBehaviour
         {
             if (ladderCheck)
             {
-                if (interactobject.GetComponent<Ladder>().resultPoint != null)
+                Ladder l=null;
+                if (interactobject.TryGetComponent<Ladder>(out l))
                 {
+                    if(l.resultPoint
+                        !=null)
                     ingameUIManger.UpdateInteractUI(interactobject.GetComponent<Ladder>().resultPoint.gameObject);
                 }
             }
@@ -476,7 +472,7 @@ public class PlayerHandler : MonoBehaviour
         if (CurrentPlayer.onInterarctive && (int)PlayerStat.instance.MoveState < 4)
         {
 
-            if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode) && !Input.GetKey(KeyCode.DownArrow)
+            if (Input.GetKey(KeySettingManager.instance.jumpKeycode) && !Input.GetKey(KeyCode.DownArrow)
                  )
             {
 
