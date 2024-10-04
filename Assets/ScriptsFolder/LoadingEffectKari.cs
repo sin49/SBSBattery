@@ -72,6 +72,14 @@ public class LoadingEffectKari : MonoBehaviour
         }
         else if(LoadingComplete)
         {
+            if (PlayerHandler.instance != null && PlayerHandler.instance.CurrentPlayer)
+            {
+                vignette.center.value = PlayerHandler.instance.CurrentCamera.WorldToViewportPoint(PlayerHandler.instance.CurrentPlayer.transform.position);
+            }
+            else
+            {
+                vignette.center.value = new Vector2(0.5f, 0.5f);
+            }
             if (alpha > 0)
             {
                 alpha -= Effectspeed * Time.unscaledDeltaTime;
@@ -83,14 +91,7 @@ public class LoadingEffectKari : MonoBehaviour
             {
                 intensity -= intensityspeed * Time.unscaledDeltaTime;
 
-                if (PlayerHandler.instance != null && PlayerHandler.instance.CurrentPlayer)
-                {
-                    vignette.center.value = PlayerHandler.instance.CurrentCamera.WorldToViewportPoint(PlayerHandler.instance.CurrentPlayer.transform.position);
-                }
-                else
-                {
-                    vignette.center.value = new Vector2(0.5f, 0.5f);
-                }
+             
                 vignette.intensity.value = intensity;
             }
             if (intensity <= 0)

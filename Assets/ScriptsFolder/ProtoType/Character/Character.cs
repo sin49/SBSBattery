@@ -33,7 +33,7 @@ public abstract class Character: MonoBehaviour
     {
         jumpevent += a;
     }
-
+    
     public virtual void Attack()
     {
         attackevent?.Invoke();

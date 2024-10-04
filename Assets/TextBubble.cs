@@ -71,8 +71,12 @@ public class TextBubble : MonoBehaviour
     void readtextasset(TextAsset asset)//¼öÁ¤ ÈÄ
     {
         string s = textasset.text;
-        texts = s.Split('|');
-
+        texts = s.Split("|");
+        for(int n = 0; n < texts.Length; n++)
+        {
+            texts[n] = texts[n].Trim();
+        }
+       
     }
   
    

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerXChangePortal : InteractiveObject
 {
+    [Header("사운드 1번 녹색 빛 된 순간")]
+    [Header("사운드 2번 적색 빛 된 순간")]
+    [Header("사운드 0번은 활성화키 누른 순간 나는 소리라서 비워나도 됨")]
     //float ZchangeVaule;
     public PlayerXChangePortal Destination;
 
@@ -76,8 +79,9 @@ public class PlayerXChangePortal : InteractiveObject
         PlayerHandler.instance.CantHandle = true;
     
         yield return new WaitForSeconds(waitingopendoortime);//도착한 텔레포터 닫힌 문 보여주는 시간
+     
         closed= false;
-  
+        soundEffectListPlayer.PlayAudio(2);
         yield return new WaitForSeconds(playermovewaitingtime);//텔레포터 열기 까지 대기시간
 
 
@@ -104,7 +108,9 @@ public class PlayerXChangePortal : InteractiveObject
         yield return StartCoroutine(PlayerHandler.instance.CurrentPlayer.moveportalanimation(teleportertransform));
         _animation.SetTrigger("Close");
         Destination. _animation.SetTrigger("Open");
+      
         closed = true;
+        soundEffectListPlayer.PlayAudio(1);
         Destination.closed = true;
      
         yield return new WaitForSeconds(WaitingLoadingTIme);//s어두워지기 전 딜레이
