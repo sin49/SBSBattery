@@ -43,7 +43,7 @@ public class PlayerHandler : MonoBehaviour
     public void playerjumprestirct()
     {
         jumprestrict = true;
-        CurrentPlayer.jumpBufferTimer = 0;
+        //CurrentPlayer.jumpBufferTimer = 0;
     }
     public void playerjumpaccept()
     {

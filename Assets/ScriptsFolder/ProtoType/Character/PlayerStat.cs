@@ -39,8 +39,8 @@ public class PlayerStat : CharacterStat
     public float jumpBufferTimeMax=1;
     [Header("점프 키 막는 거")]
     public float jumpkeyinputchecktimer=0.1f;
-    [HideInInspector]
-    public float jumpkeyinputcheckvalue;
+    //[HideInInspector]
+    //public float jumpkeyinputcheckvalue;
     [Header("내려찍는 속도")]
     public float downForce; // 내려찍는 힘   
     [Header("내려찍기 전 체공 시간")]
@@ -114,11 +114,11 @@ public class PlayerStat : CharacterStat
     private void FixedUpdate()
     {
         jumpForce = jumpheight / jumptime;
-        if (jumpkeyinputcheckvalue > 0)
-        {
+        //if (jumpkeyinputcheckvalue > 0)
+        //{
 
-            jumpkeyinputcheckvalue -= Time.fixedDeltaTime;
-        }
+        //    jumpkeyinputcheckvalue -= Time.fixedDeltaTime;
+        //}
 
     }
 }

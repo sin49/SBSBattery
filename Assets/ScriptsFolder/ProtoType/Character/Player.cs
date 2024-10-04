@@ -1321,6 +1321,12 @@ IEnumerator jumpForceLimitCorutine()
     }
     IEnumerator jumpstopcorutine;
     bool doublejumpComplete;
+    IEnumerator jumpstopcorutione()
+    {
+        PlayerHandler.instance.playerjumprestirct();
+        yield return new WaitForSecondsRealtime(PlayerStat.instance.jumpkeyinputchecktimer);
+        PlayerHandler.instance.playerjumpaccept();
+    }
     public void GetJumpBuffer()
     {
 
@@ -1329,7 +1335,8 @@ IEnumerator jumpForceLimitCorutine()
         if (!jumpLimitInput && jumpBufferTimer <= 0)
         {
             jumpBufferTimer = PlayerStat.instance.jumpBufferTimeMax;
-            PlayerStat.instance.jumpkeyinputcheckvalue = 0.08f;
+            StartCoroutine(jumpstopcorutione());
+            //PlayerStat.instance.jumpkeyinputcheckvalue = 0.08f;
         }
        
               
@@ -1337,14 +1344,14 @@ IEnumerator jumpForceLimitCorutine()
 
 
     }
-
+    public bool jumpinput;
     public void GetDounleZinput()
     {
-        if (PlayerStat.instance. jumpkeyinputcheckvalue <= 0)
-        {
+        //if (PlayerStat.instance.jumpkeyinputcheckvalue <= 0)
+        //{
 
             doubleZinput = true;
-        }
+        //}
     }
     public void jumphold()
     {
