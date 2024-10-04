@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 
 
@@ -19,7 +20,7 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     public PlayerMoveState movestate3D;
     float orthosize;
     float fovview;
-
+    
 
     public TextMeshProUGUI TEstTExt;
     public void switch2Dcamera(CinemachineVirtualCamera c)
@@ -45,32 +46,7 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
     
  
    
-    public void settingBoss1ccamera(CinemachineVirtualCamera camera2D, CinemachineVirtualCamera camera3D,
-        Collider col, PlayerMoveState movestate)
-    {
-        camera3D.enabled = (false); 
-        this.camera2D= camera2D;
-        this.camera3D = camera3D;
-        camera2D.enabled = (false);
-        camera3D.enabled = (true);
-        if (col != null)
-        {
-            this.camera2D.GetComponent<CinemachineConfiner>().m_BoundingVolume = col;
-            this.camera3D.GetComponent<CinemachineConfiner>().m_BoundingVolume = col;
-        }
-        camera2D.m_Lens.Orthographic = true;
-        this.GetComponent<Camera>().orthographic = true;
-        camera3D.m_Lens.Orthographic = true;
-        orthosize = camera2D.m_Lens.OrthographicSize;
-        fovview = camera3D.m_Lens.FieldOfView;
-      
-        trans3D = true;
-        //this. movestate = movestate;
-        //PlayerStat.instance.MoveState = this.movestate;
-        VirtualCameras[0] = camera3D;
-        activedcamera = camera3D;
-        //GetCameraSettingByTrans3D();
-    }
+  
     protected override void initializeCamera()
     {
       
@@ -117,15 +93,18 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         camera3D.enabled = true;
         camera2D.enabled = false;
         updatecamera();
-       
 
-      
+
+        cam.cullingMask = ~(1 << 23);
+     
 
     }
+ 
     void RegiserCameraChangeHandler()
     {
         PlayerHandler.instance.RegisterCameraRotateCorutine(SwitchCameraForTransDimensionCorutine());
     }
+
     public void UpdatePlayerMovestate()
     {
         if (trans3D)
@@ -155,14 +134,17 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         renderpassmanager_.changepixel(trans3D);
         if (trans3D)
         {
+            cam.cullingMask = ~(1 << 24);
             //camera3D.transform.position = camera2D.transform.position;
             yield return StartCoroutine(SwitchCameraCoroutine(camera3D));
           
         }
         else
         {
+            cam.cullingMask = ~(1 << 23);
             //camera2D.transform.position = camera3D.transform.position;
             yield return StartCoroutine(SwitchCameraCoroutine(camera2D));
+
         }
         Time.timeScale = 1;
         camera2D.m_Lens.Orthographic = true;

@@ -58,6 +58,10 @@ public class PlayerStat : CharacterStat
 
     [Header("이동 상태")]
     public PlayerMoveState MoveState;
+    public float blinkdelay=0.1f;
+    public Color invinciblecolor;
+
+    public Color Hittedcolor;
 
     event Action recoverevent;
    public void registerRecoverAction(Action a)

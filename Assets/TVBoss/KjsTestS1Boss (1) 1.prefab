@@ -476,6 +476,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundEffectListPlayer: {fileID: 0}
   onActive: 0
+  activeonce: 0
   CanControl: 1
   HudTarget: {fileID: 8317646022107918091}
   UI: {fileID: 3366133091168755281}
@@ -486,7 +487,6 @@ MonoBehaviour:
   TestAction: {fileID: 3715751788046449860}
   lifeCount: 0
   lifeCountMax: 100
-  TargetPlayer: 0
   randomPattern: 0
   OnlyTestPattern: 1
   HandHP: 1
@@ -505,7 +505,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d1226a0a1abae4687f3c26a8f450cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Possibility: 1
   ActionLifeTIme: 0
   fallingObj2:
   - fallingobj: {fileID: 4006880101536269725, guid: c893fd765a9a01d4eb3c9f0487912a37,
@@ -553,7 +552,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2ff81b2136b4e0419fcba45556c3dbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Possibility: 1
   ActionLifeTIme: 0
   Lhand: {fileID: 6602919900276604124}
   LhandDefeatTransform: {fileID: 3079245634506789802}
@@ -581,7 +579,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d90e6a773455d7b4baf3c439d3b0d315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Possibility: 1
   ActionLifeTIme: 10
   LaserSpeed: 2.5
   warning: {fileID: 5616328608315701964}
@@ -1250,34 +1247,56 @@ MonoBehaviour:
   randomPattern: 0
   OnlySweapPattern: 0
   OnlylaserPattern: 0
-  OnlyfallPattern: 0
-  HandHP: 0
-  LhandDefeatTransform: {fileID: 0}
-  RhandDefeatTransform: {fileID: 0}
-  fallingObj2: []
-  fallingBoxCreateObj: []
-  damage: 0
-  createTime: 0
-  minSpeed: 0
-  maxSpeed: 0
-  createCountMax: 0
-  fallingHeight: 0
-  fallingRange: 0
+  OnlyfallPattern: 1
+  HandHP: 1
+  LhandDefeatTransform: {fileID: 3079245634506789802}
+  RhandDefeatTransform: {fileID: 8208100128127074496}
+  fallingObj2:
+  - fallingobj: {fileID: 4006880101536269725, guid: c893fd765a9a01d4eb3c9f0487912a37,
+      type: 3}
+    number: 1
+    possibility: 0
+  - fallingobj: {fileID: 1975036747362771099, guid: dbc0de5fe612b08479e0596338c883cd,
+      type: 3}
+    number: 0
+    possibility: 2
+  - fallingobj: {fileID: 5326211950569126072, guid: 5420f4ca1ab7f9e4087551c79b57d315,
+      type: 3}
+    number: 0
+    possibility: 2
+  - fallingobj: {fileID: 4756603030403936131, guid: b59293f5176b4214bb91859110bf7f57,
+      type: 3}
+    number: 0
+    possibility: 2
+  fallingBoxCreateObj:
+  - Createobj: {fileID: 3294068082175523137, guid: 7a2304b68bcbcd2498a3ffb793facc23,
+      type: 3}
+    possibility: 0
+  - Createobj: {fileID: 1484204634486695996, guid: 757caba741c6ccc40886737a7e2215df,
+      type: 3}
+    possibility: 1
+  damage: 1
+  createTime: 0.4
+  minSpeed: 1
+  maxSpeed: 3
+  createCountMax: 20
+  fallingHeight: 10
+  fallingRange: 1.15
   GizmoColor: {r: 0, g: 0, b: 0, a: 0}
   handsize: 1
-  SweaperPatternDealy: 0
-  SweaperStartMoveTime: 0
-  sweaperwaitTime: 0
-  SweaperEndMoveTime: 0
+  SweaperPatternDealy: 3
+  SweaperStartMoveTime: 1.5
+  sweaperwaitTime: 1.5
+  SweaperEndMoveTime: 0.8
   SweaperEndWaitTime: 0
-  sweaperReturnTime: 0
+  sweaperReturnTime: 1.55
   SweapColor: {r: 0, g: 0, b: 0, a: 0}
-  laserlifetime: 1.5
-  LaserSpeed: 0
+  laserlifetime: 10
+  LaserSpeed: 2.5
   laserActiveTimer: 1.5
   TrailColScale: 1
-  TrailDuration: 0
-  ColliderSpawnTime: 0
+  TrailDuration: 7
+  ColliderSpawnTime: 0.5
 --- !u!1 &2737180749609164076
 GameObject:
   m_ObjectHideFlags: 0
