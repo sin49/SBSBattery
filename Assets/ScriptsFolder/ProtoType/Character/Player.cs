@@ -106,7 +106,7 @@ public class Player : Character,environmentObject
     public bool doubleZinput;
 
     public float jumpkeyinputCheck = 0.05f;
-    float jumpkeyinputcheckvalue;
+   
     public bool inputCheck;
     void groundCheckEvnet()
     {
@@ -423,12 +423,7 @@ public class Player : Character,environmentObject
                 onInterarctive = false;
         }
 
-        if (jumpkeyinputcheckvalue > 0)
-        {
-
-            jumpkeyinputcheckvalue -= Time.fixedDeltaTime;
-        }
- 
+      
         if (isJump)
         {
             if ( (!(playerRb.velocity.y > 0) && jumpanimtimer > 0.18f))
@@ -1334,7 +1329,7 @@ IEnumerator jumpForceLimitCorutine()
         if (!jumpLimitInput && jumpBufferTimer <= 0)
         {
             jumpBufferTimer = PlayerStat.instance.jumpBufferTimeMax;
-            jumpkeyinputcheckvalue = 0.08f;
+            PlayerStat.instance.jumpkeyinputcheckvalue = 0.08f;
         }
        
               
@@ -1345,7 +1340,7 @@ IEnumerator jumpForceLimitCorutine()
 
     public void GetDounleZinput()
     {
-        if (jumpkeyinputcheckvalue <= 0)
+        if (PlayerStat.instance. jumpkeyinputcheckvalue <= 0)
         {
 
             doubleZinput = true;
