@@ -1,16 +1,8 @@
-using JetBrains.Annotations;
 using System;
 using System.Collections;
-using System.Security.Cryptography;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.RenderGraphModule;
-using UnityEngine.Playables;
-using UnityEngine.PlayerLoop;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
-using UnityEngine.Windows.Speech;
+
 
 
 public interface environmentObject
@@ -436,7 +428,7 @@ public class Player : Character,environmentObject
                 jumpanimtimer += Time.fixedDeltaTime;
             }
         }
-        groundraycheck();
+        //groundraycheck();
         JumpKeyInput();
         AttackNotHold();
         if (!downAttack)
@@ -1012,18 +1004,14 @@ public class Player : Character,environmentObject
                     attackBufferTimer = 0;
                     attackInputValue = 1;
 
-                    if (!onGround)
-                    {
-                        attackSky = true;
-                    }
-                    else
-                    {
+
+                    if(onGround)
                         playerRb.velocity = Vector3.zero;
-                        dontAttack = true;
-                        dontMoveTimer = PlayerStat.instance.attackDelay;
-                        dontAttackTimer = PlayerStat.instance.initattackCoolTime;
-                        attackGround = true;
-                    }
+                    dontAttack = true;
+                    dontMoveTimer = PlayerStat.instance.attackDelay;
+                    dontAttackTimer = PlayerStat.instance.initattackCoolTime;
+                    attackGround = true;
+
 
 
                     StartCoroutine(TestMeleeAttack());
@@ -1162,6 +1150,9 @@ public class Player : Character,environmentObject
             StartCoroutine(WaitEndDamaged());
         }
     }
+
+
+
     public virtual bool TransformInvincibleEvent()
     {
         return false;
@@ -1381,18 +1372,9 @@ IEnumerator jumpForceLimitCorutine()
     {
         AttackMove();
 
-        if (attackSky)
-        {
-            meleeCollider.SetActive(true);
-            meleeCollider.GetComponent<SphereCollider>().enabled = true;
-        }
-        else if (attackGround)
-        {
+        meleeCollider.SetActive(true);
+        meleeCollider.GetComponent<SphereCollider>().enabled = true;
 
-            meleeCollider.SetActive(true);
-            meleeCollider.GetComponent<SphereCollider>().enabled = true;
-
-        }
         if (AttackEffect != null)
         {
             AttackEffect.SetActive(false);
@@ -1402,19 +1384,6 @@ IEnumerator jumpForceLimitCorutine()
         AttackEvents();
         yield return new WaitForSeconds(PlayerStat.instance.attackDelay);
 
-
-        if (attackSky)
-        {
-            meleeCollider.SetActive(false);
-            meleeCollider.GetComponent<SphereCollider>().enabled = false;
-            attackSky = false;
-        }
-        else if (attackGround)
-        {
-            meleeCollider.SetActive(false);
-            meleeCollider.GetComponent<SphereCollider>().enabled = false;
-            attackGround = false;
-        }
         canAttack = true;
     }
 
