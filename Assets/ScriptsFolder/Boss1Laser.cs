@@ -13,7 +13,7 @@ public class Boss1Laser : EnemyAction
     Boss1SOundManager boss1SOundManager;
     [Header("레이저 속도")]
     public float LaserSpeed;
-
+    public float laserYpos;
     public Transform warning;
     public ParticleSystem particle;
     float laserlifetime;

@@ -57,6 +57,8 @@ public class Boss1Status : MonoBehaviour
     [Header("휩쓸기 기즈모 색깔")]
     public Color SweapColor;
     [Header("보스 레이저")]
+    [Header("보스 레이저 y 위치")]
+    public float bosslaserYpos = -6.4f;
     [Header("레이저 지속 시간")]
     public float laserlifetime = 1.5f;
     [Header("레이저 속도")]
@@ -122,6 +124,7 @@ public class Boss1Status : MonoBehaviour
             sweap.SweaperPatternDealy = SweaperPatternDealy;
             sweap.sweapColor = SweapColor;
 
+            laser.laserYpos = bosslaserYpos;
             laser.ActionLifeTIme = laserlifetime;
             laser.laserActiveTimer = laserActiveTimer;
             laser.TrailColScale = TrailColScale;
