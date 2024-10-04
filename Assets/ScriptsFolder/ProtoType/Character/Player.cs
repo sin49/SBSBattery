@@ -1336,8 +1336,8 @@ IEnumerator jumpForceLimitCorutine()
     bool doublejumpComplete;
     public void GetJumpBuffer()
     {
-        if (jumpkeyinputcheckvalue > 0)/*&&onGround)*/
-            return;
+        //if (jumpkeyinputcheckvalue > 0)/*&&onGround)*/
+        //    return;
 
         if (jumpBufferTimer > 0)
             doubleZinput = true;
