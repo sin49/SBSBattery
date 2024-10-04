@@ -123,7 +123,7 @@ public class Player : Character,environmentObject
         PlayerStat.instance.doubleJump = true;
         doublejumpComplete = false;
         SoundPlayer.PlayLandingSound();
-
+        jumpBufferTimer = 0;
         doubleZinput = false;
         flyTimer = flyTime;
     }
@@ -1273,7 +1273,7 @@ public class Player : Character,environmentObject
         }
 
         isJump = true;
-        jumpBufferTimer = 0;
+        //jumpBufferTimer = 0;
         //canjumpInput = false;
         jumpLimitInput = true;
         //if (jumpkeyinputcheckvalue <= 0)
