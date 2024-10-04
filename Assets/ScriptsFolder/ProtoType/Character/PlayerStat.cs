@@ -59,6 +59,7 @@ public class PlayerStat : CharacterStat
     [Header("이동 상태")]
     public PlayerMoveState MoveState;
 
+
     event Action recoverevent;
    public void registerRecoverAction(Action a)
     {
