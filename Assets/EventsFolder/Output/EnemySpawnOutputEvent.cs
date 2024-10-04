@@ -1,22 +1,20 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawnOutputEvent : OutputEvent
 {
-    [Header("인덱스 구현은 하지 않아서 불편하시더라도 직접 할당 부탁드립니다\n빠른 시일 내 구현해볼게요")]
     public int index;
     [Header("몬스터 오브젝트 할당")]
     public GameObject enemy;
-    [Header("좌표 오브젝트 할당")]
+    [Header("좌표 오브젝트 할당\n(대량 생산이 아닐 때)")]
     public Transform spawnPoint;
 
-    [Header("스폰 위치가 되는 트랜스폼 오브젝트")]
+    [Header("스폰 위치가 되는 트랜스폼 오브젝트\n이건 이전에 쌓이는 TV 몹처럼 한 번에 대량 스폰할 좌표들 있을때")]
     public List<Transform> spawnPosGroup;
-
-    [Header("시그널을 주는 오브젝트 할당\n여기서는 떨어지는 셔터를\n활성화 시키는 스위치가 될거임")]
-    public signalSender signalSender;
+    
+    [Header("몬스터 생성을 막을 신호를 받는 오브젝트 (셔터)")]
+    public signalReceiver signalReceiver;
     [Header("추가되어있는\n몬스터 킬 입력 이벤트를 넣어주세요")]
     public EnemyKillInputEvent eKillEvent;
     [Header("스폰되는 시간 간격")]
@@ -26,8 +24,12 @@ public class EnemySpawnOutputEvent : OutputEvent
     {
         Debug.Log("플레이어에 의한 인덱스 몬스터");
         base.output();
-        if (signalSender != null && eKillEvent.gameObject != null)
+        if (signalReceiver != null && spawnPosGroup.Count !=0)
             StartCoroutine(SpawnCondition());
+        else if (signalReceiver!= null)
+        {
+            StartCoroutine(SpawnNoGroup());
+        }
         else
             EnemySpawn();
     }
@@ -44,7 +46,7 @@ public class EnemySpawnOutputEvent : OutputEvent
 
     IEnumerator SpawnCondition()
     {        
-        while (!signalSender.active)
+        while (!signalReceiver.active)
         {
             for (int i = 0; i < spawnPosGroup.Count; i++)
             {
@@ -52,6 +54,18 @@ public class EnemySpawnOutputEvent : OutputEvent
                 if (eKillEvent != null)
                     eKillEvent.AddEnemyDeadEvent(monster);
             }
+
+            yield return new WaitForSeconds(spawnTime);
+        }
+    }
+
+    IEnumerator SpawnNoGroup()
+    {
+        while (!signalReceiver.active)
+        {
+            var monster = Instantiate(enemy, spawnPoint.position, Quaternion.identity);
+            if (eKillEvent != null)
+                eKillEvent.AddEnemyDeadEvent(monster);
 
             yield return new WaitForSeconds(spawnTime);
         }
