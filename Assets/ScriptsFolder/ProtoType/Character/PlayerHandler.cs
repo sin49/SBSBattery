@@ -111,7 +111,7 @@ public class PlayerHandler : MonoBehaviour
         {
             instance = this;
         }
-
+        Debug.Log("PlayerHandlerAwake");
         #endregion
         PlayerFormList p;
         if (TryGetComponent<PlayerFormList>(out p))
@@ -476,8 +476,10 @@ public class PlayerHandler : MonoBehaviour
                  )
             {
 
-
-                CurrentPlayer.GetJumpBuffer();
+                    if (CurrentPlayer.jumpBufferTimer <= 0)
+                        CurrentPlayer.GetJumpBuffer();
+                    else
+                        CurrentPlayer.GetDounleZinput();
 
 
             }
@@ -496,21 +498,25 @@ public class PlayerHandler : MonoBehaviour
             {
 
 
-                CurrentPlayer.GetJumpBuffer();
+                    if (CurrentPlayer.jumpBufferTimer <= 0)
+                        CurrentPlayer.GetJumpBuffer();
+                    else
+                        CurrentPlayer.GetDounleZinput();
 
 
-            }
-            else
+
+                }
+                else
             {
                 CurrentPlayer.jumpLimitInput = false;
                 /*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
                     CurrentPlayer.jumpLimitInput = false;*/
             }
         }
-        if (!Input.GetKey(KeySettingManager.instance.jumpKeycode))
-        {
-            CurrentPlayer.jumphold();
-        }
+        //if (!Input.GetKey(KeySettingManager.instance.jumpKeycode))
+        //{
+        //    CurrentPlayer.jumphold();
+        //}
 
 
         if (!ladderInteract)
@@ -577,20 +583,20 @@ PlayerInventory.instance.checkessesntialitem("item01")*/)
                 InteractTimer = PlayerStat.instance.InteractDelay;
             }
         }
-        if (Input.GetKey(KeyCode.C) && !jumprestrict)
-        {
+        //if (Input.R(KeyCode.C) && !jumprestrict)
+        //{
 
 
-            CurrentPlayer.GetJumpBuffer();
+        //    CurrentPlayer.GetJumpBuffer();
 
 
-        }
-        else
-        {
-            CurrentPlayer.jumpLimitInput = false;
-            /*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
-                CurrentPlayer.jumpLimitInput = false;*/
-        }
+        //}
+        //else
+        //{
+        //    CurrentPlayer.jumpLimitInput = false;
+        //    /*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
+        //        CurrentPlayer.jumpLimitInput = false;*/
+        //}
         if (!Input.GetKey(KeyCode.C))
         {
             CurrentPlayer.jumphold();
