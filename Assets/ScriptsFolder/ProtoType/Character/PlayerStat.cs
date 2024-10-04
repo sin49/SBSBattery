@@ -34,6 +34,7 @@ public class PlayerStat : CharacterStat
     public float jumpForce; // velocity.y 값에 영향을 주는 점프 가중치
     public float jumpheight;
     public float jumptime;
+    public float jumpBufferTimeMax=1;
     [Header("내려찍는 속도")]
     public float downForce; // 내려찍는 힘   
     [Header("내려찍기 전 체공 시간")]
@@ -48,6 +49,7 @@ public class PlayerStat : CharacterStat
     //public float dashForce; // 대쉬 가중치
     //public float dashTimer;// 쿨타임 
     //public float dashCoolTime; // 대쉬 최대 쿨타임    
+
 
     [Header("피격+무적 때 색깔")]
     public Color Hittedcolor;

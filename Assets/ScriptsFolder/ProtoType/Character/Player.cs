@@ -56,7 +56,7 @@ public class Player : Character,environmentObject
 
     [Header("#점프 홀딩 조절")]
     public float jumpholdLevel = 0.85f;
-    public float jumpBufferTimeMax;
+ 
     public float jumpBufferTimer;
     public bool canjumpInput;
     public bool jumpLimitInput;
@@ -1343,7 +1343,7 @@ IEnumerator jumpForceLimitCorutine()
             doubleZinput = true;
 
         if (!jumpLimitInput)
-            jumpBufferTimer = jumpBufferTimeMax;
+            jumpBufferTimer =PlayerStat.instance .jumpBufferTimeMax;
 
  
 
