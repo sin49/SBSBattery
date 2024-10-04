@@ -58,7 +58,7 @@ public class Player : Character,environmentObject
     public float jumpholdLevel = 0.85f;
  
     public float jumpBufferTimer;
-    public bool canjumpInput;
+
     public bool jumpLimitInput;
     [Header("#키 선입력 관련")]
     public float attackBufferTimeMax;
@@ -402,7 +402,7 @@ public class Player : Character,environmentObject
         {
             if (groundraychecker())
             {
-                Debug.Log("중력 가중치");
+
                 playerRb.AddForce(Vector3.down * stairdownforce);
             }
 
@@ -425,13 +425,10 @@ public class Player : Character,environmentObject
 
         if (jumpkeyinputcheckvalue > 0)
         {
-            canjumpInput = false;
+
             jumpkeyinputcheckvalue -= Time.fixedDeltaTime;
         }
-        else
-        {
-            canjumpInput = true;
-        }
+ 
         if (isJump)
         {
             if ( (!(playerRb.velocity.y > 0) && jumpanimtimer > 0.18f))
@@ -449,10 +446,11 @@ public class Player : Character,environmentObject
         AttackNotHold();
         if (!downAttack)
             Attack();
-        
-       
 
-       
+    
+
+
+
         if (Input.GetKeyDown(KeyCode.Tab)) { HittedTest(); }
 
         //if (onGround && isJump && playerRb.velocity.y <= 0)
@@ -1305,18 +1303,12 @@ IEnumerator jumpForceLimitCorutine()
         if (jumpBufferTimer > 0)
         {
            
-                if ( /*&& onGround*/ PlayerStat.instance.jump && canjumpInput)
+                if ( /*&& onGround*/ PlayerStat.instance.jump)
                 {
                     PlayerStat.instance.jump = false;
                     Jump();
                 }
-                //else if (/*canjumpInput &&*/ PlayerStat.instance.doubleJump)
-                //{
-                //    PlayerStat.instance.doubleJump = false;
-                //    ModelAnimator.SetTrigger("rolling2");
-                //    Jump();
-                 
-                //}
+               
 
         }
         //더블 점프 처리
@@ -1336,17 +1328,28 @@ IEnumerator jumpForceLimitCorutine()
     bool doublejumpComplete;
     public void GetJumpBuffer()
     {
-        //if (jumpkeyinputcheckvalue > 0)/*&&onGround)*/
-        //    return;
 
-        if (jumpBufferTimer > 0)
+
+
+        if (!jumpLimitInput && jumpBufferTimer <= 0)
+        {
+            jumpBufferTimer = PlayerStat.instance.jumpBufferTimeMax;
+            jumpkeyinputcheckvalue = 0.08f;
+        }
+       
+              
+
+
+
+    }
+
+    public void GetDounleZinput()
+    {
+        if (jumpkeyinputcheckvalue <= 0)
+        {
+
             doubleZinput = true;
-
-        if (!jumpLimitInput)
-            jumpBufferTimer =PlayerStat.instance .jumpBufferTimeMax;
-
- 
-
+        }
     }
     public void jumphold()
     {
@@ -1488,7 +1491,7 @@ IEnumerator jumpForceLimitCorutine()
     }
     private void OnTriggerStay(Collider other)
     {
-        if ((other.CompareTag("Ground") && jumpkeyinputcheckvalue <= 0) ||( other.CompareTag("CursorObject") && jumpkeyinputcheckvalue <= 0))
+        if ((other.CompareTag("Ground")) ||( other.CompareTag("CursorObject")))
         {
             jumpRaycastCheck();
         }
@@ -1497,13 +1500,13 @@ IEnumerator jumpForceLimitCorutine()
     private void OnCollisionStay(Collision collision)
     {
         //#region 바닥 상호작용
-        if ((collision.gameObject.CompareTag("Ground") && jumpkeyinputcheckvalue <= 0) || (collision.collider.CompareTag("CursorObject") && jumpkeyinputcheckvalue <= 0))
+        if ((collision.gameObject.CompareTag("Ground") || collision.collider.CompareTag("CursorObject")))
         {
             jumpRaycastCheck();
         }
         //#endregion
 
-        if (collision.gameObject.CompareTag("InteractivePlatform") && jumpkeyinputcheckvalue <= 0)
+        if (collision.gameObject.CompareTag("InteractivePlatform") )
         {
             jumpRaycastCheck();
             onInterarctive = true;
@@ -1528,8 +1531,7 @@ IEnumerator jumpForceLimitCorutine()
                    (int)PlayerStat.instance.MoveState < 4
                    && !CullingPlatform)
                 {
-                    if (jumpkeyinputcheckvalue <= 0)
-                        jumpkeyinputcheckvalue = jumpkeyinputCheck;
+              
                     PlayerHandler.instance.doubleDownInput = false;
                     CullingPlatform = true;
                     Physics.IgnoreLayerCollision(6, 11, true);
