@@ -626,7 +626,6 @@ public class HouseholdIronTransform : Player
     {
         PlayerHandler.instance.CantHandle = true;
         playerRb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePosition;
-        //onRush = false;
         meleeCollider.SetActive(false);
         rushEnd = true;
         readyRush = false;
