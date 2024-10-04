@@ -592,7 +592,7 @@ public class Player : Character,environmentObject
         transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
     }
     #region ¿Ãµø
-    public void rotate(float hori, float vert)
+    public virtual void rotate(float hori, float vert)
     {
         Vector3 rotateVector = Vector3.zero;
 
