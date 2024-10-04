@@ -225,7 +225,35 @@ public class HouseholdIronTransform : Player
             }
         }
     }
+    bool oncorutine;
+    IEnumerator rotatedelaycorutine()
+    {
 
+        oncorutine = true;
+        onRushRot = true;
+        playerRb.velocity = new Vector3(playerRb.velocity.x * 0.5f, playerRb.velocity.y, playerRb.velocity.z * 0.5f);
+        yield return new WaitForSeconds(0.5f);
+
+
+        onRushRot = false;
+        yield return new WaitForSeconds(0.25f  );
+        oncorutine = false;
+    }
+    float lasthori;
+    float lastvert;
+    public override void rotate(float hori, float vert)
+    {
+        if (onRush) {
+            if (!onRushRot && (lasthori != hori || lastvert != vert) && !oncorutine)
+                StartCoroutine(rotatedelaycorutine());
+            else
+                return;
+        }
+        base.rotate(hori, vert);
+
+        lasthori = hori;
+        lastvert = vert;
+    }
     public override void Move()
     {
         if (onRush)
@@ -350,6 +378,7 @@ public class HouseholdIronTransform : Player
         else
             base.Move();
     }
+
     bool MoveCheck(float hori, float vert)
     {
         bool moveResult = false;
