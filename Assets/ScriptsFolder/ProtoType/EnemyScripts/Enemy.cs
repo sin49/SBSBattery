@@ -36,14 +36,8 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public Material backMat;
     public Material headMat;
     public Material hittedMat;
-    [Header("이미션 머티리얼")]
-    public Material emmissionHittedMat;
-    public Material emmissionHeadMat;
-    public Material emmissionBackMat;
-    public Renderer skinRenderer, skinHead;
-    [Header("무기 렌더러와 머티리얼(별도로 있는 애들만)")]
-    public Renderer weaponMesh;
-    public Material weaponMat, emmissionweapoinMat;
+    public Renderer skinRenderer;
+    
     public ParticleSystem moveEffect;
     public Vector3 environmentforce;
     [HideInInspector]
@@ -553,12 +547,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
     public virtual void StartEmmissionHitMat()
     {
-        Material[] materials = skinRenderer.materials;
-        materials[0] = emmissionBackMat;
-        materials[1] = emmissionHittedMat;
-        if(skinHead != null)
-        skinHead.material = emmissionHeadMat;
-        skinRenderer.materials = materials;
+        
     }
 
     public virtual void EndEmmissionHitMat()
@@ -566,8 +555,6 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         Material[] materials = skinRenderer.materials;
         materials[0] = backMat;
         materials[1] = hittedMat;
-        if(skinHead !=null)
-        skinHead.material = headMat;
         skinRenderer.materials = materials;
     }
 
@@ -576,8 +563,6 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         Material[] materials = skinRenderer.materials;
         materials[0] = backMat;
         materials[1] = idleMat;
-        if(skinHead != null)
-        skinHead.material = backMat;
         skinRenderer.materials = materials;
 
         Debug.Log("기본 머테리얼로 복귀");

@@ -48,6 +48,7 @@ public class fireenemy : Enemy
 
                 Dead();
             }
+            else
             StartCoroutine("WhileBreath");
         }
     }

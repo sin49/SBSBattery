@@ -13,6 +13,9 @@ public class jumpenemy : Enemy
     public float jumpdelay=1;
    
     bool oncorutine;
+    [Header("얼굴 부분 이미션 머티리얼")]
+    public Material emmissionHeadMat;
+
     protected override void MoveAnimationPlay()
     {
         

@@ -75,7 +75,7 @@ public class rushenemy : Enemy
 
     public override void StartEmmissionHitMat()
     {
-        skinRenderer.material = emmissionHittedMat;
+        skinRenderer.material = hittedMat;
     }
 
     public override void EndEmmissionHitMat()

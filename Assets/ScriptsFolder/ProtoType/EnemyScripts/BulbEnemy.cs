@@ -7,6 +7,10 @@ public class BulbEnemy : Enemy
 {
     public ParticleSystem explosion;
     public bool lightCheck;
+    [Header("이미션 머티리얼")]
+    public Material emmissionHittedMat;
+    public Material emmissionHeadMat;
+    public Material emmissionBackMat;
 
     private void Update()
     {
