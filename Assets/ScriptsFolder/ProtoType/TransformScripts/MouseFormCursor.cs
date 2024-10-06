@@ -17,6 +17,11 @@ public class MouseFormCursor : MonoBehaviour
     public ParticleSystem clickEffect;
     GameObject playerRotate;
 
+    public DontMoveCollider dontMove;
+    public Vector3 dontMoveOriginScale;
+
+    public float dontMoveScalevalue;
+
     private void Awake()
     {
         playerRotate = GetComponentInParent<Player>().transform.GetChild(0).gameObject;
@@ -38,6 +43,7 @@ public class MouseFormCursor : MonoBehaviour
             CursorInteractObject cursorInteract;
             if (other.TryGetComponent<CursorInteractObject>(out cursorInteract))
             {
+                dontMove.ChangeScaleByFormCursor(dontMoveScalevalue);
                 onCatch = true;
                 interactObj = cursorInteract;
                 interactObj.GetComponent<Rigidbody>().useGravity = false;
@@ -94,6 +100,7 @@ public class MouseFormCursor : MonoBehaviour
                 DropPlatformObject();
             }
         }
+        dontMove.ReturnScale();
         clickEffect.Play();
     }
 

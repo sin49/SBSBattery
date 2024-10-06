@@ -140,4 +140,12 @@ public class MouseTransform : Player
     {
         Debug.Log("마우스 스킬 구현해야됨");
     }
+
+    public override bool FormCheck()
+    {
+        if (cursor.onCatch)
+            return true;
+        else
+            return false;
+    }
 }
