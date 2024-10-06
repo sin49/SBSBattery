@@ -290,8 +290,8 @@ Transform:
   m_GameObject: {fileID: 712865500379613551}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.0273, z: 0}
-  m_LocalScale: {x: 1, y: 1.0547, z: 1}
+  m_LocalPosition: {x: 0, y: 0.34281445, z: 0}
+  m_LocalScale: {x: 1, y: 1.7948885, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 797424878650206676}
@@ -325,7 +325,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 298ea3e0d6d184f409e8a0a71393eed1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -435,7 +435,7 @@ GameObject:
   m_Layer: 0
   m_Name: LdjTestS1Boss
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -484,12 +484,12 @@ MonoBehaviour:
   BossSweap: {fileID: 1058498811892394508}
   BossLaser: {fileID: 1561318454975055217}
   BossFall: {fileID: 3715751788046449860}
-  TestAction: {fileID: 3715751788046449860}
+  TestAction: {fileID: 0}
   lifeCount: 0
   lifeCountMax: 100
   randomPattern: 0
   OnlyTestPattern: 1
-  HandHP: 1
+  HandHP: 4
   LHand: {fileID: 6602919900276604124}
   RHand: {fileID: 4055101929726195839}
   target: {fileID: 0}
@@ -552,7 +552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2ff81b2136b4e0419fcba45556c3dbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActionLifeTIme: 0
+  ActionLifeTIme: 1
   Lhand: {fileID: 6602919900276604124}
   LhandDefeatTransform: {fileID: 3079245634506789802}
   RhandDefeatTransform: {fileID: 8208100128127074496}
@@ -560,11 +560,11 @@ MonoBehaviour:
   BossField: {fileID: 0}
   handsize: 1
   SweaperPatternDealy: 3
-  SweaperStartMoveTime: 1.5
-  sweaperwaitTime: 1.5
-  SweaperEndMoveTime: 0.8
-  SweaperEndWaitTime: 0
-  sweaperReturnTime: 1.55
+  SweaperStartMoveTime: 1
+  sweaperwaitTime: 1
+  SweaperEndMoveTime: 2
+  SweaperEndWaitTime: 1
+  sweaperReturnTime: 1
   SweapDistanceRandomWeight: 10
   sweapColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1561318454975055217
@@ -580,15 +580,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActionLifeTIme: 10
-  LaserSpeed: 2.5
+  LaserSpeed: 2
   warning: {fileID: 5616328608315701964}
   particle: {fileID: 3535991812482029710}
-  laserActiveTimer: 1.5
+  laserActiveTimer: 2
   ColliderSpawnPoint: {fileID: 4950981256772793302}
   Laser: {fileID: 7427717219698257347}
   laserBeam: {fileID: 4012401425669217505}
   TrailColScale: 1
-  TrailDuration: 7
+  TrailDuration: 5
   ColliderSpawnTime: 0.5
   pullingtransform: {fileID: 5554753117505871416}
   LaserCollider: {fileID: 5226116098530326790, guid: 6121d6bc9c1c2d94dbe28ad33c3648bc,
@@ -605,7 +605,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c358efc4e7446f147a9d6a4f71757744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  list: []
+  list:
+  - clip: {fileID: 8300000, guid: 9ecec375ab1cce948bf45e6e5422d763, type: 3}
+    volume: 1
+  - clip: {fileID: 0}
+    volume: 0
 --- !u!114 &3023562827182172201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -619,19 +623,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HandSwerapStartclip: {fileID: 0}
-  HandSwerapStartVolume: 0
+  HandSwerapStartVolume: 1
   HandSwerapEndclip: {fileID: 0}
-  HandSwerapEndVolume: 0
+  HandSwerapEndVolume: 1
   LazerStartclip: {fileID: 0}
-  LazerStartVolume: 0
+  LazerStartVolume: 1
   Lazerinitclip: {fileID: 0}
-  LazerinitVolume: 0
+  LazerinitVolume: 1
   ObjectFallingclip: {fileID: 0}
-  ObjectFallingVolume: 0
+  ObjectFallingVolume: 1
   Objectgroundedclip: {fileID: 0}
-  ObjectgroundedVolume: 0
+  ObjectgroundedVolume: 1
   MonitiorHittedclip: {fileID: 0}
-  MonitiorHittedVolume: 0
+  MonitiorHittedVolume: 1
 --- !u!95 &3807007669676288973
 Animator:
   serializedVersion: 5
@@ -745,7 +749,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1017849828787296110
 Transform:
   m_ObjectHideFlags: 0
@@ -1245,9 +1249,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeCountMax: 0
   randomPattern: 0
-  OnlySweapPattern: 0
+  OnlySweapPattern: 1
   OnlylaserPattern: 0
-  OnlyfallPattern: 1
+  OnlyfallPattern: 0
   HandHP: 1
   LhandDefeatTransform: {fileID: 3079245634506789802}
   RhandDefeatTransform: {fileID: 8208100128127074496}
@@ -1276,9 +1280,9 @@ MonoBehaviour:
       type: 3}
     possibility: 1
   damage: 1
-  createTime: 0.4
+  createTime: 0.5
   minSpeed: 1
-  maxSpeed: 3
+  maxSpeed: 2
   createCountMax: 20
   fallingHeight: 10
   fallingRange: 1.15
@@ -1287,9 +1291,9 @@ MonoBehaviour:
   SweaperPatternDealy: 3
   SweaperStartMoveTime: 1.5
   sweaperwaitTime: 1.5
-  SweaperEndMoveTime: 0.8
+  SweaperEndMoveTime: 1
   SweaperEndWaitTime: 0
-  sweaperReturnTime: 1.55
+  sweaperReturnTime: 1.5
   SweapColor: {r: 0, g: 0, b: 0, a: 0}
   laserlifetime: 10
   LaserSpeed: 2.5
@@ -1325,10 +1329,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2737180749609164076}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.258819, w: 0.9659259}
-  m_LocalPosition: {x: 0.00048013777, y: -0.2554932, z: -0.24977064}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5977368534207628317}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1364,9 +1368,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0151844025, y: -0.15185475}
+  m_Offset: {x: 0, y: -0.35}
   serializedVersion: 2
-  m_Radius: 1.917429
+  m_Radius: 1
 --- !u!114 &2930659360629601959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1765,8 +1769,8 @@ Transform:
   m_GameObject: {fileID: 3970028692762344223}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 16.5, z: 10}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalPosition: {x: 0, y: 11, z: 3}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5630353462280915887}
@@ -1883,7 +1887,7 @@ GameObject:
   m_Layer: 0
   m_Name: LhandDefeatPosition (1)
   m_TagString: Untagged
-  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -1896,7 +1900,7 @@ Transform:
   m_GameObject: {fileID: 4060480575233447352}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.5, y: 14.06, z: -6}
+  m_LocalPosition: {x: -10, y: 0, z: -3}
   m_LocalScale: {x: 0.62111807, y: 0.62111807, z: 0.621118}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1927,7 +1931,7 @@ Transform:
   m_GameObject: {fileID: 4205034568594866889}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 23.73, y: -6.38, z: 7.64}
+  m_LocalPosition: {x: 23.73, y: -6.38, z: 4.54}
   m_LocalScale: {x: 1, y: 4.7282686, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2019,7 +2023,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4080561669073936443
 Transform:
   m_ObjectHideFlags: 0
@@ -2112,8 +2116,8 @@ RectTransform:
   m_GameObject: {fileID: 5146121390867643944}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6883347614999189528}
   - {fileID: 2913873000349985417}
@@ -2122,7 +2126,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 518.0731, y: -417.38037}
+  m_AnchoredPosition: {x: 738.0731, y: -478}
   m_SizeDelta: {x: 883.8538, y: 245.2393}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2294930991929512830
@@ -2182,7 +2186,7 @@ GameObject:
   m_Layer: 0
   m_Name: TVBoss_LHand
   m_TagString: Enemy
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -2195,9 +2199,9 @@ Transform:
   m_GameObject: {fileID: 5240444313098218687}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.2588191, w: 0.9659258}
-  m_LocalPosition: {x: -10, y: 4, z: 1.12}
-  m_LocalScale: {x: 2, y: 2, z: 2}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -6, y: 0.5, z: -6}
+  m_LocalScale: {x: 1.65, y: 1.65, z: 1.65}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1017849828787296110}
   - {fileID: 2674284365638186972}
@@ -2231,7 +2235,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 239378781582670930, guid: b276dece69e95e74b98098424cd07243, type: 3}
+  - {fileID: 2100000, guid: f0dd1ac919da5b2418a71d417ef68004, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2272,8 +2276,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.93972385
-  m_Center: {x: 0.0004793502, y: -0.25549412, z: 0.2162379}
+  m_Radius: 1
+  m_Center: {x: 0, y: -0.35, z: 0}
 --- !u!54 &6124693056501081543
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2366,7 +2370,7 @@ GameObject:
   m_Layer: 0
   m_Name: TVBoss_RHand
   m_TagString: Enemy
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -2379,9 +2383,9 @@ Transform:
   m_GameObject: {fileID: 5580091231082257511}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.258819, w: 0.9659259}
-  m_LocalPosition: {x: 10, y: 4, z: 1.12}
-  m_LocalScale: {x: 2, y: 2, z: 2}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 6, y: 0.5, z: -6}
+  m_LocalScale: {x: 1.65, y: 1.65, z: 1.65}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4080561669073936443}
   - {fileID: 3631741958297886628}
@@ -2415,7 +2419,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 239378781582670930, guid: b276dece69e95e74b98098424cd07243, type: 3}
+  - {fileID: 2100000, guid: f47805e5de0fb934a8e60dfa6e23b3d2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2456,8 +2460,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.93972385
-  m_Center: {x: 0.0004793502, y: -0.25549412, z: 0.2162379}
+  m_Radius: 1
+  m_Center: {x: 0, y: -0.35, z: 0}
 --- !u!54 &4199448946113701755
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2649,13 +2653,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7030159270707263308}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.258819, w: 0.9659259}
-  m_LocalPosition: {x: -0.004145801, y: -0.46000528, z: -0.13477063}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1616370361351078321}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -30}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &5362374267946607210
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2688,9 +2692,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0151844025, y: -0.15185475}
+  m_Offset: {x: 0, y: -0.35}
   serializedVersion: 2
-  m_Radius: 1.917429
+  m_Radius: 1
 --- !u!114 &5890044111903358918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7919,7 +7923,7 @@ GameObject:
   m_Layer: 0
   m_Name: HudPositon
   m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -7932,7 +7936,7 @@ Transform:
   m_GameObject: {fileID: 8317646022107918091}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.2, z: 0}
+  m_LocalPosition: {x: 0, y: -3.17, z: 1.946}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7963,7 +7967,7 @@ Transform:
   m_GameObject: {fileID: 9109529950268536764}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.5, y: 14.06, z: -6}
+  m_LocalPosition: {x: 10, y: 0, z: -3}
   m_LocalScale: {x: 0.62111807, y: 0.62111807, z: 0.621118}
   m_ConstrainProportionsScale: 0
   m_Children: []
