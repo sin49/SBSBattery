@@ -555,6 +555,11 @@ PlayerInventory.instance.checkessesntialitem("item01")*/)
                 Skill1InputTimer -= Time.fixedDeltaTime;
         }
     }
+    public void DimensionChange()
+    {
+
+        StartCoroutine(ChangeDimension());
+    }
     void charactermove()
     {
         if (!CurrentPlayer.downAttack)
@@ -563,8 +568,7 @@ PlayerInventory.instance.checkessesntialitem("item01")*/)
         }
         if (Input.GetKeyDown(KeyCode.Space) && !Changing && !DImensionChangeDisturb)
         {
-
-            StartCoroutine(ChangeDimension());
+            DimensionChange();
             //Dimensionchangeevent?.Invoke();
 
         }

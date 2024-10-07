@@ -10,20 +10,21 @@ using UnityEngine.XR;
 public class Boss1Sweap : EnemyAction
 {
     public Boss1Hand Lhand;
-    Vector3 LHandPosition;
-    Vector3 LhandOneRotation;
+
     public Transform LhandDefeatTransform;
     public Transform RhandDefeatTransform;
-    Vector3 RHandPosition;
-    Vector3 RhandOneRotation;
+
     public Boss1Hand RHand;
     Boss1Hand activehand;
     Transform target;
     [Header("보스 스테이지 바닥")]
     public Transform BossField;
     Boss1SOundManager boss1SOundManager;
-    Vector3 fieldMin;
-    Vector3 fieldMax;
+
+    public List<Transform> LhandSweapPos=new List<Transform>();
+    public List<Transform> RhandSweapPos=new List<Transform>();
+
+
     //[Header("휩쓸기 손 회전?")]
     //public Vector3 HandRotation;
     [Header("손 크기(손 y축 오프셋 전용)")]
@@ -92,21 +93,7 @@ public class Boss1Sweap : EnemyAction
         StartCoroutine(DisableAction(0));
     }
     public Color sweapColor;
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = sweapColor;
-        if (BossField != null)
-        {
-            Vector3 min = new Vector3(-0.5f, 0.5f, -0.5f);
-            Vector3 max = new Vector3(0.5f, 0.5f, 0.5f);
-
-            fieldMin = BossField.TransformPoint(min);
-            fieldMax = BossField.TransformPoint(max);
-            Gizmos.DrawWireCube(BossField.transform.position,
-                 new(Mathf.Abs(fieldMax.x - fieldMin.x), fieldMin.y, Mathf.Abs(fieldMax.z - fieldMin.z))
-                );
-        }
-    }
+  
 
     public override void Invoke(Action ActionENd,Transform target = null)
     {
@@ -114,34 +101,20 @@ public class Boss1Sweap : EnemyAction
         registerActionHandler(ActionENd);
         StartCoroutine(SweaperPattern());
     }
-    public void SetHandPosition()
-    {
-        if (Lhand != null)
-        {
-            LHandPosition = Lhand.transform.position;
-            LhandOneRotation = Lhand.transform.rotation.eulerAngles;
-        }
-        if (RHand != null)
-        {
-            RHandPosition = RHand.transform.position;
-            RhandOneRotation = RHand.transform.rotation.eulerAngles;
-        }
-    }
+   
     private void Awake()
     {
         boss1SOundManager=GetComponent<Boss1SOundManager>();
-        if (BossField != null)
-        {
-            Vector3 min = new Vector3(-0.5f, 0.5f, -0.5f);
-            Vector3 max = new Vector3(0.5f, 0.5f, 0.5f);
-
-            fieldMin = BossField.TransformPoint(min);
-            fieldMax = BossField.TransformPoint(max);
-
-            SweapDistanceRandomWeight = Mathf.Abs(fieldMax.z - fieldMin.z);
-        }
+        
 
    
+    }
+    Tuple<Vector3 ,Vector3 > GetRandPosition()
+    {
+        int randint = UnityEngine.Random.Range(0, LhandSweapPos.Count);
+
+        return new Tuple<Vector3 , Vector3 >(LhandSweapPos[randint].position,
+            RhandSweapPos[randint].position);
     }
     public Tuple<Vector3, float> calculateSweapvector(Vector3 goal, Vector3 startpos, float time)
     {
@@ -153,42 +126,42 @@ public class Boss1Sweap : EnemyAction
       
         return new Tuple<Vector3, float>(vec, speed);
     }
-    public Tuple<Vector3, float> calculateSweapvector(Vector3 goal, Vector3 startpos,float randomweight, float time)
-    {
-        //goal = new Vector3(goal.x, goal.y, target.transform.position.z + randomweight);
-        goal = new Vector3(target.transform.position.x + randomweight, target.transform.position.y, target.transform.position.z + randomweight);
-        Vector3 vec = goal - startpos;
-    
-        float distance = vec.magnitude;
-        float speed = distance / time;
 
-        return new Tuple<Vector3, float>(vec, speed);
-    }
     public IEnumerator SweaperPattern()
     {
         if (Lhand.active && RHand.active)
         {
             bool randombool = UnityEngine.Random.Range(0, 2) == 0;
+            Vector3 Lpos;
+            Vector3 Rpos;
+            var a = GetRandPosition();
             if (randombool)
             {
-                
-                yield return StartCoroutine(Sweaper(Lhand, fieldMin, fieldMax));
+           
+    
+
+                yield return StartCoroutine(Sweaper(Lhand, a.Item1, a.Item2));
                 
                 yield return new WaitForSeconds(SweaperPatternDealy);
-                yield return StartCoroutine(Sweaper(RHand, fieldMax, fieldMin));
+               a = GetRandPosition();
+ 
+                yield return StartCoroutine(Sweaper(RHand, a.Item2, a.Item1));
             }
             else
             {
-                yield return StartCoroutine(Sweaper(RHand, fieldMax, fieldMin));
+                yield return StartCoroutine(Sweaper(RHand, a.Item2, a.Item1));
                 yield return new WaitForSeconds(SweaperPatternDealy);
-                yield return StartCoroutine(Sweaper(Lhand, fieldMin, fieldMax));
+                      a = GetRandPosition();
+                yield return StartCoroutine(Sweaper(Lhand, a.Item1, a.Item2));
             }
         }else if(Lhand.active && !RHand.active)
         {
-            yield return StartCoroutine(Sweaper2(Lhand, fieldMin, fieldMax));
+            var a = GetRandPosition();
+            yield return StartCoroutine(Sweaper2(Lhand, a.Item1, a.Item2));
         }else if(!Lhand.active && RHand.active)
         {
-            yield return StartCoroutine(Sweaper2(RHand, fieldMax, fieldMin));
+            var a = GetRandPosition();
+            yield return StartCoroutine(Sweaper2(RHand, a.Item2, a.Item1));
         }
         yield return StartCoroutine(DisableAction(0.1f));
     }
@@ -197,12 +170,11 @@ public class Boss1Sweap : EnemyAction
         activehand = hand;
         Transform handtransform=hand.transform;
         Vector3 HandOnepositon= handtransform.position;
-        float randdistance = UnityEngine.Random.Range(0, SweapDistanceRandomWeight);
-        int randomValue = UnityEngine.Random.Range(0, 2) * 2 - 1;
-        randdistance *= randomValue;
+
+
 
         //시작지점으로 손이 감
-        var tuple = calculateSweapvector(StartPos, handtransform.position, randdistance, SweaperStartMoveTime);
+        var tuple = calculateSweapvector(StartPos, handtransform.position , SweaperStartMoveTime);
         Vector3 vec = tuple.Item1;
         vec.y += handsize * 0.5f;
         float speed = tuple.Item2;
@@ -218,7 +190,7 @@ public class Boss1Sweap : EnemyAction
         hand.AttackState = true;
         yield return new WaitForSeconds(sweaperwaitTime);
         //손이 휩쓸기 스타트
-        tuple = calculateSweapvector(EndPos, handtransform.position,-randdistance, SweaperEndMoveTime);
+        tuple = calculateSweapvector(EndPos, handtransform.position, SweaperEndMoveTime);
         vec = tuple.Item1;
         vec.y = 0;
         speed = tuple.Item2;
@@ -255,13 +227,9 @@ public class Boss1Sweap : EnemyAction
         activehand = hand;
         Transform handtransform = hand.transform;
         Vector3 HandOnepositon = handtransform.position;
-        float randdistance = UnityEngine.Random.Range(0, SweapDistanceRandomWeight);
-        int randomValue = UnityEngine.Random.Range(0, 2) * 2 - 1;
-
-        randdistance *= randomValue;
 
         //시작지점으로 손이 감
-        var tuple = calculateSweapvector(StartPos, handtransform.position, randdistance, SweaperStartMoveTime);
+        var tuple = calculateSweapvector(StartPos, handtransform.position, SweaperStartMoveTime);
         Vector3 vec = tuple.Item1;
         vec.y += handsize * 0.5f;
         float speed = tuple.Item2;
@@ -280,7 +248,7 @@ public class Boss1Sweap : EnemyAction
         hand.AttackState = true;
         yield return new WaitForSeconds(sweaperwaitTime);
         //손이 휩쓸기 스타트
-        tuple = calculateSweapvector(EndPos, handtransform.position, -randdistance, SweaperEndMoveTime);
+        tuple = calculateSweapvector(EndPos, handtransform.position, SweaperEndMoveTime);
         vec = tuple.Item1;
         vec.y = 0;
         speed = tuple.Item2;
@@ -296,7 +264,7 @@ public class Boss1Sweap : EnemyAction
         sweapertimer = 0;
         yield return new WaitForSeconds(SweaperPatternDealy);
         //한번더
-        tuple = calculateSweapvector(StartPos, handtransform.position, randdistance, SweaperEndMoveTime);
+        tuple = calculateSweapvector(StartPos, handtransform.position, SweaperEndMoveTime);
         vec = tuple.Item1;
         vec.y = 0;
         speed = tuple.Item2;

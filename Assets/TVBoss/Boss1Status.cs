@@ -59,6 +59,9 @@ public class Boss1Status : MonoBehaviour
     [Header("보스 레이저")]
     [Header("레이저 지속 시간")]
     public float laserlifetime = 1.5f;
+    [Header("레이저 Y축 위치")]
+    public float LaserYpos = -6.4f;
+
     [Header("레이저 속도")]
     public float LaserSpeed;
     [Header("레이저 활성화 까지의 시간")]
@@ -123,6 +126,7 @@ public class Boss1Status : MonoBehaviour
             sweap.sweapColor = SweapColor;
 
             laser.ActionLifeTIme = laserlifetime;
+            laser.LaserYpos = LaserYpos;
             laser.laserActiveTimer = laserActiveTimer;
             laser.TrailColScale = TrailColScale;
             laser.TrailDuration = TrailDuration;
