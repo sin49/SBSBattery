@@ -128,7 +128,7 @@ public class BossTv : RemoteObject
 
             //CanControl = true;
             animator.enabled = true;
-            animator.Play("PhaseChange");
+            animator.Play("Boss1PhaseChange");
             Debug.Log("2페이즈 전환 연출");
         }
     }
