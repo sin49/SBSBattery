@@ -897,6 +897,7 @@ MonoBehaviour:
   attackTime: 0
   hitEffect: {fileID: 6455099831139738100, guid: 6cae3c6bcfef1234aa8098b1226d219f,
     type: 3}
+  soundEffectListPlayer: {fileID: 0}
 --- !u!1 &3860940069074602360
 GameObject:
   m_ObjectHideFlags: 0
@@ -1395,6 +1396,7 @@ MonoBehaviour:
   rayUpValue: 0.25
   rayMiddleValue: 0.25
   rayDownValue: 0.25
+  soundPlayer: {fileID: 0}
   downAtkSpeed: 25
   ironFlyTime: 0.45
   downAtkEndTimeMax: 1
@@ -2481,6 +2483,7 @@ GameObject:
   - component: {fileID: 8662225138925515128}
   - component: {fileID: 8854460605276781726}
   - component: {fileID: 2663314242661817638}
+  - component: {fileID: 8048595550320088646}
   m_Layer: 0
   m_Name: GroundMelee2D
   m_TagString: PlayerAttack
@@ -2565,6 +2568,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &8048595550320088646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8917807653965726783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e18407ae69b6a8c4da6baf0862ae5d14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &649141901164870335
 PrefabInstance:
   m_ObjectHideFlags: 0
