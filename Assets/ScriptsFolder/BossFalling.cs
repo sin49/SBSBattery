@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -49,6 +50,10 @@ public class Boss1BoxFallCreateObj
 public class BossFalling : EnemyAction
 {
 
+    public float shakertimer;
+
+    public CinemachineImpulseSource fallingshaker;
+
     //[Header("낙하물 오브젝트")]
     //public List< GameObject> fallingObj;
 
@@ -58,6 +63,8 @@ public class BossFalling : EnemyAction
     List<GameObject> fallingobjects = new List<GameObject>();
 
     HashSet<GameObject> EssenetialFallObjectHashSet = new HashSet<GameObject>();
+
+    Animator ani;
 
     public Boss1SOundManager soundmanager;
     
@@ -89,7 +96,8 @@ public class BossFalling : EnemyAction
     // Start is called before the first frame update
     void Start()
     {
-        soundmanager=GetComponent<Boss1SOundManager>();
+        ani=GetComponent<Animator>();
+        soundmanager =GetComponent<Boss1SOundManager>();
         if (bossField != null)
         {
             Vector3 min = new Vector3(-0.5f, 0.5f, -0.5f);
@@ -140,8 +148,28 @@ public class BossFalling : EnemyAction
     public override void Invoke(Action ActionENd,  Transform target = null)
     {
         registerActionHandler(ActionENd);
-        StartCoroutine (FallingAttack());
+        ani.enabled = true;
+   ani.Play("FallingAttack");
+       
+    }
+    IEnumerator ShakeLoop()
+    {
+        float timer = 0;
+        Debug.Log("Shake 실행");
+        while (timer < createTime * createCountMax + 0.12f)
+        {
+            Debug.Log(createTime * createCountMax + 0.12f+" "+timer);
+            fallingshaker.GenerateImpulse();
+            timer += shakertimer;
+            yield return new WaitForSeconds(shakertimer);
+        }
+    }
+ public   void StartfallingAttack()
+    {
+       
+        StartCoroutine(FallingAttack());
    
+        ani.enabled = false;
     }
     Queue<Tuple<GameObject, Vector3>> ReturnFallObjectList()
     {
@@ -184,6 +212,7 @@ public class BossFalling : EnemyAction
     }
     IEnumerator FallingAttack()
     {
+        StartCoroutine(ShakeLoop());
         //while (createCount < createCountMax)
         //{
         //    GameObject obj = Instantiate(enemy, RandomSpawn(), Quaternion.identity);
