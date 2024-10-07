@@ -4106,7 +4106,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 48
+    FieldOfView: 60
     OrthographicSize: 3.5
     NearClipPlane: 0.02
     FarClipPlane: 100
@@ -18063,7 +18063,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &531288732
 Transform:
   m_ObjectHideFlags: 0
@@ -29558,6 +29558,9 @@ Transform:
   - {fileID: 531288732}
   - {fileID: 611428895}
   - {fileID: 205632086}
+  - {fileID: 3213159255263167634}
+  - {fileID: 7787518965598208404}
+  - {fileID: 8786670590649994985}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &945431071
@@ -34555,6 +34558,11 @@ PrefabInstance:
       propertyPath: BossField
       value: 
       objectReference: {fileID: 205632086}
+    - target: {fileID: 1878068066000798418, guid: 40b8748c76f7fa64a90fee771e28bf0e,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c39fad862beacd74fb28a9affcbff410, type: 2}
     - target: {fileID: 3275392592021635294, guid: 40b8748c76f7fa64a90fee771e28bf0e,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -53078,6 +53086,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 875001612157954130, guid: 8b1971f631f33ef41942ddbd832ebfcb,
         type: 3}
+      propertyPath: field of view
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 875001612157954130, guid: 8b1971f631f33ef41942ddbd832ebfcb,
+        type: 3}
       propertyPath: orthographic size
       value: 3.5
       objectReference: {fileID: 0}
@@ -63019,7 +63032,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2011889937
 Transform:
   m_ObjectHideFlags: 0
@@ -69012,6 +69025,440 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21a9d6cba7753f146bfb32220abcdcbb, type: 3}
+--- !u!4 &104743218555593306
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6312548700333730073}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.00086553174, y: -0.31060562, z: 0.0064022215, w: 0.95051694}
+  m_LocalPosition: {x: -0.034399416, y: -0.00000006103516, z: 0.0000014648438}
+  m_LocalScale: {x: 1.226607, y: 1, z: 1.000001}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3158117039815588731}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &174099685578940516
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7787518965598208404}
+  - component: {fileID: 3512792496880392920}
+  m_Layer: 0
+  m_Name: TVBoss_Hand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &534841643841011656
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2533467276399220471}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7787518965598208404}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &705667274693814866
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4508951104514812279}
+  serializedVersion: 2
+  m_LocalRotation: {x: -1.8369704e-16, y: 6.123229e-17, z: 0.0000002663161, w: 1}
+  m_LocalPosition: {x: -0.053337406, y: 0, z: 0.00000003051758}
+  m_LocalScale: {x: 0.9999997, y: 1, z: 0.9999997}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1988096269181728303}
+  m_Father: {fileID: 6106301925457464587}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1122623445623263485
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391086003356391482}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.0008655031, y: -0.31060562, z: 0.0064022252, w: 0.95051694}
+  m_LocalPosition: {x: -0.034399416, y: -0.000000068664555, z: 0.0000014801026}
+  m_LocalScale: {x: 1.226607, y: 1, z: 1.000001}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5062078323526801925}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1327776998351514733
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5427489068232014967}
+  m_Layer: 0
+  m_Name: TVBoss_Arm_Bone015
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1391086003356391482
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1122623445623263485}
+  m_Layer: 0
+  m_Name: TVBoss_Claw03
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1419504682262797806
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996122077873232700}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.00000013314185, y: 0.0000002663242, z: 0.000060853232, w: 1}
+  m_LocalPosition: {x: -0.05244773, y: 0.00000001525879, z: 0}
+  m_LocalScale: {x: 0.99500006, y: 0.99500006, z: 0.99500006}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1644010037148499304}
+  m_Father: {fileID: 1728127326753434609}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1507754889862740647
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1913630402470892873}
+  m_Layer: 0
+  m_Name: TVBoss_Bone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1644010037148499304
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7265657994644893898}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.0000022636868, y: 0.00000026631642, z: 0.00000013315746,
+    w: 1}
+  m_LocalPosition: {x: -0.05270815, y: 0, z: 0}
+  m_LocalScale: {x: 0.99100035, y: 0.99100035, z: 0.99100035}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8097875002310906822}
+  m_Father: {fileID: 1419504682262797806}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1666419077989343879
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2569791795248252403}
+  - component: {fileID: 7407629552074977178}
+  m_Layer: 0
+  m_Name: TVBoss_SubTV
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1728127326753434609
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3285933458698942547}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.00000023841844, y: -0.0000005848706, z: 0.00000023841844,
+    w: 1}
+  m_LocalPosition: {x: -0.052449405, y: 0, z: 0}
+  m_LocalScale: {x: 0.99700004, y: 0.99700004, z: 0.99700004}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1419504682262797806}
+  m_Father: {fileID: 7732362023146141716}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!137 &1850942000665112748
+SkinnedMeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2533467276399220471}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 3
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: -4963801623029300775, guid: 45dfc79cf7a6d994e88c3acfdb644aa6, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  serializedVersion: 2
+  m_Quality: 0
+  m_UpdateWhenOffscreen: 0
+  m_SkinnedMotionVectors: 1
+  m_Mesh: {fileID: 2668913334029059821, guid: 45dfc79cf7a6d994e88c3acfdb644aa6, type: 3}
+  m_Bones:
+  - {fileID: 7288157332581680002}
+  - {fileID: 5427489068232014967}
+  - {fileID: 6897793354652364924}
+  - {fileID: 8950025305483849630}
+  - {fileID: 7732362023146141716}
+  - {fileID: 1728127326753434609}
+  - {fileID: 1419504682262797806}
+  - {fileID: 2942225345666690051}
+  - {fileID: 8786670590649994985}
+  - {fileID: 1644010037148499304}
+  - {fileID: 8097875002310906822}
+  - {fileID: 6106301925457464587}
+  - {fileID: 705667274693814866}
+  - {fileID: 1988096269181728303}
+  m_BlendShapeWeights: []
+  m_RootBone: {fileID: 8786670590649994985}
+  m_AABB:
+    m_Center: {x: 0.3376938, y: 0.0000018961728, z: -0.000013325363}
+    m_Extent: {x: 0.33947372, y: 0.026645722, z: 0.02663205}
+  m_DirtyAABB: 0
+--- !u!4 &1913630402470892873
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507754889862740647}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.5, y: -0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4761291582904386960}
+  m_Father: {fileID: 3213159255263167634}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1988096269181728303
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6653124141654986326}
+  serializedVersion: 2
+  m_LocalRotation: {x: 6.123233e-17, y: -6.123235e-17, z: -0.00000013315805, w: 1}
+  m_LocalPosition: {x: -0.051630955, y: 0, z: 0}
+  m_LocalScale: {x: 1.016, y: 1.016, z: 1.016}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2942225345666690051}
+  m_Father: {fileID: 705667274693814866}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2003682199226553787
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7288157332581680002}
+  m_Layer: 0
+  m_Name: TVBoss_Arm_Bone014
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2342451452268065834
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3900790937981948594}
+  serializedVersion: 2
+  m_LocalRotation: {x: 8.1977415e-13, y: 2.5607796e-13, z: 0.29816738, w: 0.9545136}
+  m_LocalPosition: {x: -0.05000002, y: 0.000000007629395, z: 5.5511154e-20}
+  m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8967549569037483075}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2440468494359436493
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4761291582904386960}
+  m_Layer: 0
+  m_Name: TVboss_Neck00
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &2533467276399220471
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 534841643841011656}
+  - component: {fileID: 1850942000665112748}
+  m_Layer: 0
+  m_Name: TVBoss_Arm
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2569791795248252403
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666419077989343879}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: -8.621e-42, z: 1.6411464e-18}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3213159255263167634}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2872381755871469096
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3213159255263167634}
+  m_Layer: 0
+  m_Name: TVBoss (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2942225345666690051
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4950394173707892179}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.00000013315805, y: -6.123235e-17, z: -6.123233e-17, w: 1}
+  m_LocalPosition: {x: -0.03372307, y: 0.0000098114015, z: 0}
+  m_LocalScale: {x: 0.95129067, y: 0.99899995, z: 0.999}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1988096269181728303}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3045602515253764914
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3158117039815588731}
+  m_Layer: 0
+  m_Name: TVBoss_Claw12
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &3074303822650655148
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4419570651603787864}
+  m_Layer: 0
+  m_Name: TVBoss_Claw22
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1001 &3149726539033145664
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -69303,6 +69750,230 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &3158117039815588731
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3045602515253764914}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.5147466, y: -0.48859388, z: -0.48374012, w: 0.51215965}
+  m_LocalPosition: {x: -0.033663776, y: -0.00000007629395, z: 0}
+  m_LocalScale: {x: 1.053908, y: 0.999999, z: 1.000001}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 104743218555593306}
+  m_Father: {fileID: 3557887062128952370}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &3213159255263167634
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2872381755871469096}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.0000000745058}
+  m_LocalPosition: {x: 20, y: 23.5, z: 17.5}
+  m_LocalScale: {x: 90, y: 90, z: 90}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 9139395385119034563}
+  - {fileID: 1913630402470892873}
+  - {fileID: 2569791795248252403}
+  m_Father: {fileID: 941912411}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+--- !u!1 &3248588308929117332
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5062078323526801925}
+  m_Layer: 0
+  m_Name: TVBoss_Claw02
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &3285933458698942547
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1728127326753434609}
+  m_Layer: 0
+  m_Name: TVBoss_Arm_Bone019
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!137 &3512792496880392920
+SkinnedMeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174099685578940516}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 3
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: -4963801623029300775, guid: 45dfc79cf7a6d994e88c3acfdb644aa6, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  serializedVersion: 2
+  m_Quality: 0
+  m_UpdateWhenOffscreen: 0
+  m_SkinnedMotionVectors: 1
+  m_Mesh: {fileID: -4573470294318992712, guid: 45dfc79cf7a6d994e88c3acfdb644aa6, type: 3}
+  m_Bones:
+  - {fileID: 8786670590649994985}
+  - {fileID: 7410737085285018944}
+  - {fileID: 3557887062128952370}
+  - {fileID: 8125257687855019539}
+  - {fileID: 5062078323526801925}
+  - {fileID: 1122623445623263485}
+  - {fileID: 3158117039815588731}
+  - {fileID: 104743218555593306}
+  - {fileID: 4419570651603787864}
+  - {fileID: 4126469442344222529}
+  m_BlendShapeWeights: []
+  m_RootBone: {fileID: 8786670590649994985}
+  m_AABB:
+    m_Center: {x: -0.018806458, y: 0.0049845725, z: -0.024140827}
+    m_Extent: {x: 0.04490833, y: 0.106979996, z: 0.09620052}
+  m_DirtyAABB: 0
+--- !u!4 &3557887062128952370
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5976211655261379733}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.11407399, y: 0.22584388, z: 0.8762832, w: 0.41001147}
+  m_LocalPosition: {x: -0.010720917, y: -0.023508318, z: 0.0135598}
+  m_LocalScale: {x: 1.055322, y: 1.032331, z: 1.001083}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3158117039815588731}
+  m_Father: {fileID: 8786670590649994985}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3638840602516134048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8786670590649994985}
+  m_Layer: 0
+  m_Name: TVBoss_Hand_Bone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &3900790937981948594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2342451452268065834}
+  m_Layer: 0
+  m_Name: TVBoss_Neck02
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4126469442344222529
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8707636443317438219}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.0008655111, y: -0.31060562, z: 0.0064022113, w: 0.95051694}
+  m_LocalPosition: {x: -0.03439941, y: -0.00000010681153, z: 0.0000014953614}
+  m_LocalScale: {x: 1.226606, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4419570651603787864}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4419570651603787864
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3074303822650655148}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.55537164, y: -0.44187143, z: -0.43726167, w: 0.55237144}
+  m_LocalPosition: {x: -0.033663757, y: -0.00000008392335, z: 0.00000003051758}
+  m_LocalScale: {x: 1.053908, y: 0.999999, z: 1.000001}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4126469442344222529}
+  m_Father: {fileID: 8125257687855019539}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4508951104514812279
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 705667274693814866}
+  m_Layer: 0
+  m_Name: TVBoss_Arm_Bone024
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &4639554871966354749
 GameObject:
   m_ObjectHideFlags: 0
@@ -69319,6 +69990,54 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4761291582904386960
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2440468494359436493}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.11544992, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8967549569037483075}
+  m_Father: {fileID: 1913630402470892873}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4950394173707892179
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2942225345666690051}
+  m_Layer: 0
+  m_Name: TVBoss_Arm_Bone026
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5062078323526801925
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3248588308929117332}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.55537164, y: -0.4418714, z: -0.4372617, w: 0.55237144}
+  m_LocalPosition: {x: -0.033663806, y: -0.000000091552735, z: 0.00000001525879}
+  m_LocalScale: {x: 1.053908, y: 0.999999, z: 1.000001}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1122623445623263485}
+  m_Father: {fileID: 7410737085285018944}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &5415809722115463047
 Transform:
   m_ObjectHideFlags: 0
@@ -69334,6 +70053,569 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1345470606}
   m_LocalEulerAnglesHint: {x: 0, y: -178.853, z: 0}
+--- !u!4 &5427489068232014967
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1327776998351514733}
+  serializedVersion: 2
+  m_LocalRotation: {x: 1, y: -6.123235e-17, z: -0.00000013315805, w: -6.123235e-17}
+  m_LocalPosition: {x: -0.05399013, y: -0.000021881104, z: -0.00000021362305}
+  m_LocalScale: {x: 1.05, y: 1.05, z: 1.05}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6897793354652364924}
+  m_Father: {fileID: 7288157332581680002}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5462820732583550161
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8967549569037483075}
+  m_Layer: 0
+  m_Name: TVboss_Neck01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &5694979641202294055
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8125257687855019539}
+  m_Layer: 0
+  m_Name: TVBoss_Claw21
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &5910315741977378338
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8950025305483849630}
+  m_Layer: 0
+  m_Name: TVBoss_Arm_Bone017
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &5976211655261379733
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3557887062128952370}
+  m_Layer: 0
+  m_Name: TVBoss_Claw11
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6106301925457464587
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8940373528102544323}
+  serializedVersion: 2
+  m_LocalRotation: {x: 6.123234e-17, y: 6.123234e-17, z: 6.123234e-17, w: 1}
+  m_LocalPosition: {x: -0.05193275, y: 0, z: 0}
+  m_LocalScale: {x: 0.9750002, y: 0.9750002, z: 0.9750002}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 705667274693814866}
+  m_Father: {fileID: 8097875002310906822}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6312548700333730073
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 104743218555593306}
+  m_Layer: 0
+  m_Name: TVBoss_Claw13
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &6653124141654986326
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1988096269181728303}
+  m_Layer: 0
+  m_Name: TVBoss_Arm_Bone025
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &6831709750491449446
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8097875002310906822}
+  m_Layer: 0
+  m_Name: TVBoss_Arm_Bone022
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6897793354652364924
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6903918055048538789}
+  serializedVersion: 2
+  m_LocalRotation: {x: 1, y: -0.000000023128884, z: -0.0000003017485, w: -7.0403384e-15}
+  m_LocalPosition: {x: -0.052449405, y: 0.000006393433, z: 0}
+  m_LocalScale: {x: 0.98, y: 0.98, z: 0.98}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8950025305483849630}
+  m_Father: {fileID: 5427489068232014967}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6903918055048538789
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6897793354652364924}
+  m_Layer: 0
+  m_Name: TVBoss_Arm_Bone016
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &7246236771662635022
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7410737085285018944}
+  m_Layer: 0
+  m_Name: TVBoss_Claw01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &7265657994644893898
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1644010037148499304}
+  m_Layer: 0
+  m_Name: TVBoss_Arm_Bone021
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7288157332581680002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003682199226553787}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.00000013315808, y: 0.00000013315803, z: 1, w: -0.00000023841856}
+  m_LocalPosition: {x: -0.00000001525879, y: -0.00000001525879, z: -0.00000003051758}
+  m_LocalScale: {x: 1.0092385, y: 0.96104074, z: 0.9610403}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5427489068232014967}
+  m_Father: {fileID: 8786670590649994985}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!137 &7407629552074977178
+SkinnedMeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666419077989343879}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 3
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 5967751492454651251, guid: 45dfc79cf7a6d994e88c3acfdb644aa6, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  serializedVersion: 2
+  m_Quality: 0
+  m_UpdateWhenOffscreen: 0
+  m_SkinnedMotionVectors: 1
+  m_Mesh: {fileID: 6538650469451070649, guid: 45dfc79cf7a6d994e88c3acfdb644aa6, type: 3}
+  m_Bones:
+  - {fileID: 1913630402470892873}
+  m_BlendShapeWeights: []
+  m_RootBone: {fileID: 1913630402470892873}
+  m_AABB:
+    m_Center: {x: -0.16569373, y: 0.024537787, z: 0.0025324225}
+    m_Extent: {x: 0.052162826, y: 0.10122514, z: 0.10888451}
+  m_DirtyAABB: 0
+--- !u!4 &7410737085285018944
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7246236771662635022}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.41001165, y: 0.87628317, z: 0.22584379, w: 0.11407407}
+  m_LocalPosition: {x: -0.010720886, y: 0.023510972, z: 0.013559785}
+  m_LocalScale: {x: 1.055322, y: 1.032331, z: 1.001083}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5062078323526801925}
+  m_Father: {fileID: 8786670590649994985}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &7732362023146141716
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8139012859726286417}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.0000001192093, y: -0.0000000149011115, z: -0.00000041619256,
+    w: 1}
+  m_LocalPosition: {x: -0.0527735, y: 0, z: -0.00000003051758}
+  m_LocalScale: {x: 1.0049999, y: 1.0049999, z: 1.0049999}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1728127326753434609}
+  m_Father: {fileID: 8950025305483849630}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &7787518965598208404
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174099685578940516}
+  serializedVersion: 2
+  m_LocalRotation: {x: -4.9605235e-15, y: -1, z: 0.00000006657903, w: -0.0000000745058}
+  m_LocalPosition: {x: 40.000076, y: 22.26, z: -14.425388}
+  m_LocalScale: {x: 60, y: 60, z: 60}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 534841643841011656}
+  m_Father: {fileID: 941912411}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &8097875002310906822
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6831709750491449446}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.0000022636868, y: 6.029175e-13, z: -0.0000002663161, w: 1}
+  m_LocalPosition: {x: -0.053155635, y: 0.0000031585696, z: 0.000013961792}
+  m_LocalScale: {x: 1.0239997, y: 1.0239997, z: 1.0239997}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6106301925457464587}
+  m_Father: {fileID: 1644010037148499304}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &8125257687855019539
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5694979641202294055}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.30093357, y: -0.6398741, z: 0.6398743, w: 0.3009336}
+  m_LocalPosition: {x: -0.010720886, y: 0.0000013732911, z: -0.027160065}
+  m_LocalScale: {x: 1.055322, y: 1.032331, z: 1.001083}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4419570651603787864}
+  m_Father: {fileID: 8786670590649994985}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8139012859726286417
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7732362023146141716}
+  m_Layer: 0
+  m_Name: TVBoss_Arm_Bone018
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &8555926018442183701
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9139395385119034563}
+  - component: {fileID: 8635313208329874696}
+  m_Layer: 0
+  m_Name: TV_Msin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!137 &8635313208329874696
+SkinnedMeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8555926018442183701}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 3
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2878906130077978799, guid: 45dfc79cf7a6d994e88c3acfdb644aa6, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  serializedVersion: 2
+  m_Quality: 0
+  m_UpdateWhenOffscreen: 0
+  m_SkinnedMotionVectors: 1
+  m_Mesh: {fileID: 3980965696090160843, guid: 45dfc79cf7a6d994e88c3acfdb644aa6, type: 3}
+  m_Bones:
+  - {fileID: 8967549569037483075}
+  - {fileID: 1913630402470892873}
+  - {fileID: 2342451452268065834}
+  - {fileID: 4761291582904386960}
+  m_BlendShapeWeights: []
+  m_RootBone: {fileID: 1913630402470892873}
+  m_AABB:
+    m_Center: {x: -0.14565071, y: -0.03317319, z: 0.010806903}
+    m_Extent: {x: 0.14547545, y: 0.11726284, z: 0.09189965}
+  m_DirtyAABB: 0
+--- !u!1 &8707636443317438219
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4126469442344222529}
+  m_Layer: 0
+  m_Name: TVBoss_Claw23
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8786670590649994985
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3638840602516134048}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.70710665, y: -0.70710695, z: -0.00000014684053, w: -0.0000001468405}
+  m_LocalPosition: {x: 39.999996, y: 4.686533, z: -14.426192}
+  m_LocalScale: {x: 57.07274, y: 59.935028, z: 59.935055}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7288157332581680002}
+  - {fileID: 7410737085285018944}
+  - {fileID: 3557887062128952370}
+  - {fileID: 8125257687855019539}
+  m_Father: {fileID: 941912411}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8940373528102544323
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6106301925457464587}
+  m_Layer: 0
+  m_Name: TVBoss_Arm_Bone023
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8950025305483849630
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5910315741977378338}
+  serializedVersion: 2
+  m_LocalRotation: {x: 5.88132e-12, y: 0.00000009685755, z: -0.000060720075, w: 1}
+  m_LocalPosition: {x: -0.052747622, y: -0.00000001525879, z: -0.00000001525879}
+  m_LocalScale: {x: 1.0099998, y: 1.0099998, z: 1.0099998}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7732362023146141716}
+  m_Father: {fileID: 6897793354652364924}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &8967549569037483075
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5462820732583550161}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.00081453536, y: -0.0026217804, z: 0.29555476, w: 0.95532185}
+  m_LocalPosition: {x: -0.034550082, y: 0.000000009165166, z: -0.000000002608363}
+  m_LocalScale: {x: 1.0000001, y: 0.9999999, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2342451452268065834}
+  m_Father: {fileID: 4761291582904386960}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8996122077873232700
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1419504682262797806}
+  m_Layer: 0
+  m_Name: TVBoss_Arm_Bone020
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9139395385119034563
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8555926018442183701}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: -8.621e-42, z: 1.6411464e-18}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3213159255263167634}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
