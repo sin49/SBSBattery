@@ -36,6 +36,12 @@ public class Ladder : InteractiveObject
 
     public override void Active(direction direct)
     {
+        Player player = PlayerHandler.instance.CurrentPlayer;
+        if (player.TryGetComponent<HouseholdIronTransform>(out HouseholdIronTransform iron))
+        {
+            if (iron.onRush)
+                return;
+        }
         base.Active(direct);
         LadderActive();
         PlayerHandler.instance.ladderInteract = true;

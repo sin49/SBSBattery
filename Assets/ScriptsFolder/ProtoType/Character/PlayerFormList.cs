@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerFormList : MonoBehaviour
 {
     public List<GameObject> playerformlist = new List<GameObject>();
+
+    public List<TransformPlace> PlayerFormObject = new List<TransformPlace>();
     public void CheckList()
     {
         //if (playerformlist.Count > 0)

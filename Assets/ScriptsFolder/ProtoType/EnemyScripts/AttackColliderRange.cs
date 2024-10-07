@@ -140,7 +140,7 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
                 enemy.onAttack = true;
             }
 
-            if (!enemy.wallCheck)            
+            if (!enemy.wallCheck && !enemy.onStun)            
                 enemy.attackRange = true;
         }
     }

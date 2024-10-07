@@ -76,6 +76,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2371963892509846552}
+  - component: {fileID: 3944079238277546113}
   m_Layer: 16
   m_Name: Bip001
   m_TagString: Untagged
@@ -100,6 +101,24 @@ Transform:
   - {fileID: 8833963364282835039}
   m_Father: {fileID: 5920382889603617412}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3944079238277546113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087711409972801013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baedd976e12657241bf7ff2d1c685342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Direction: 2
+  m_Center: {x: -0.008, y: 0, z: 0.1}
+  m_Bound: 0
+  m_Radius: 0.075
+  m_Height: 0.28
+  m_Radius2: 0
 --- !u!1 &1206671169219673147
 GameObject:
   m_ObjectHideFlags: 0
@@ -969,6 +988,7 @@ GameObject:
   - component: {fileID: 6275850010516100579}
   - component: {fileID: 1904571488958281887}
   - component: {fileID: 4458127367073708013}
+  - component: {fileID: -5422591874494991453}
   m_Layer: 6
   m_Name: RemoteTransform
   m_TagString: Player
@@ -1067,15 +1087,15 @@ MonoBehaviour:
   firePoint: {fileID: 2298639832111796674}
   ModelAnimator: {fileID: 6171821661710556434}
   Humonoidanimator: {fileID: 2015325655607406669}
-  ChrRenderer: {fileID: 0}
+  ChrRenderer: {fileID: 8988115878784306912}
   chrmat: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
   jumpholdLevel: 1
-  jumpBufferTimeMax: 0.1
+  jumpBufferTimeMax: 0.2
   jumpBufferTimer: 0
   canjumpInput: 0
   jumpLimitInput: 0
-  attackBufferTimeMax: 0.1
+  attackBufferTimeMax: 0.15
   attackBufferTimer: 0
   attackInputValue: 0
   attackLimitInput: 0
@@ -1090,7 +1110,7 @@ MonoBehaviour:
   isIdle: 0
   isAttack: 0
   animationSpeed: 10
-  waitTime: 0.25
+  waitTime: 0.5
   formChange: 0
   changeEffect: {fileID: 4362988856311913179}
   onTransform: 0
@@ -1104,7 +1124,8 @@ MonoBehaviour:
   isMove: 0
   canAttack: 0
   wallcheck: 0
-  jumpkeyinputCheck: 0.01
+  cantmove: 0
+  jumpkeyinputCheck: 0.02
   inputCheck: 0
   velocityMove: {x: 0, y: 0, z: 0}
   rigidbodyPos: {x: 0, y: 0, z: 0}
@@ -1127,7 +1148,6 @@ MonoBehaviour:
   AttackEffect: {fileID: 3406404469038252828}
   LandingEffect: {fileID: 5904224259897742900}
   JumpEffect: {fileID: 1535256578140317931}
-  OnMoveAnimationCorutine: 0
   Decelatate: 2
   hori: 0
   Vert: 0
@@ -1276,13 +1296,84 @@ MonoBehaviour:
   MoveClip: {fileID: 8300000, guid: 83315124d8bd65140b4035305992fb6b, type: 3}
   MoveVolume: 0
   AttackClip: {fileID: 8300000, guid: 3d4be4a67a7d64045bb002a4229864a6, type: 3}
-  AttackVolume: 0.8
+  AttackVolume: 1
   JumpClip: {fileID: 8300000, guid: 85ea7b8994df41b45ad65459747ef044, type: 3}
-  JumpVolume: 0.8
+  JumpVolume: 0.789
   LandClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
-  LandVolume: 0.5
+  LandVolume: 0.726
   SkillClip: {fileID: 8300000, guid: 9ecec375ab1cce948bf45e6e5422d763, type: 3}
-  SkillVolume: 0.8
+  SkillVolume: 0.933
+--- !u!114 &-5422591874494991453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4545535272630405155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9ac8d30c6a0d9642a11e5be4c440740, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Root: {fileID: 9157716791109951244}
+  m_Roots: []
+  m_UpdateRate: 80
+  m_UpdateMode: 3
+  m_Damping: 0.55
+  m_DampingDistrib:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_Elasticity: 0.07
+  m_ElasticityDistrib:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_Stiffness: 0
+  m_StiffnessDistrib:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_Inert: 0.65
+  m_InertDistrib:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_Friction: 0
+  m_FrictionDistrib:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_Radius: 0
+  m_RadiusDistrib:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_EndLength: 0
+  m_EndOffset: {x: 0, y: 0, z: 0}
+  m_Gravity: {x: 0, y: 0.02, z: 0}
+  m_Force: {x: 0, y: 0, z: 0}
+  m_BlendWeight: 1
+  m_Colliders:
+  - {fileID: 3944079238277546113}
+  m_Exclusions: []
+  m_FreezeAxis: 0
+  m_DistantDisable: 0
+  m_ReferenceObject: {fileID: 0}
+  m_DistanceToObject: 20
+  m_Multithread: 1
 --- !u!1 &4803581823414980192
 GameObject:
   m_ObjectHideFlags: 0
@@ -1346,8 +1437,8 @@ Transform:
   m_GameObject: {fileID: 5037821556395340132}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.1407, z: 0}
-  m_LocalScale: {x: 0.233805, y: 0.06544001, z: 0.27058005}
+  m_LocalPosition: {x: 0, y: -0.133, z: 0}
+  m_LocalScale: {x: 0.15, y: 0.05000001, z: 0.20000003}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4815913517657289761}
@@ -1367,7 +1458,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5037821556395340132}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2102,7 +2193,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8292323791867201806}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2862,7 +2953,7 @@ PrefabInstance:
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.17804866
+      value: 0.19128561
       objectReference: {fileID: 0}
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
@@ -2877,7 +2968,7 @@ PrefabInstance:
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1726
+      value: 0.16600001
       objectReference: {fileID: 0}
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
@@ -3160,23 +3251,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7693115892030442081, guid: bc7393225b2a5e240bac27ac818d7f61,
         type: 3}
-      propertyPath: m_BoundingSphereOverride.w
-      value: 182
-      objectReference: {fileID: 0}
-    - target: {fileID: 7693115892030442081, guid: bc7393225b2a5e240bac27ac818d7f61,
-        type: 3}
       propertyPath: m_BoundingSphereOverride.x
-      value: 0
+      value: 6.08e-43
       objectReference: {fileID: 0}
     - target: {fileID: 7693115892030442081, guid: bc7393225b2a5e240bac27ac818d7f61,
         type: 3}
       propertyPath: m_BoundingSphereOverride.y
-      value: 182
+      value: 3e-45
       objectReference: {fileID: 0}
     - target: {fileID: 7693115892030442081, guid: bc7393225b2a5e240bac27ac818d7f61,
         type: 3}
       propertyPath: m_BoundingSphereOverride.z
-      value: 18
+      value: 4.3e-44
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

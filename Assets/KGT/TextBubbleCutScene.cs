@@ -44,6 +44,7 @@ public class TextBubbleCutScene : TextBubble
                     textfield.text = playingtext;
                     calculatetextbubblesize();
                     skipped = false;
+                    break;
                 }
                 else
                 {

@@ -10,7 +10,7 @@ public class CameraManagerSwitchingBlendingOption : CameraManager
     
 
     private CinemachineBrain cinemachineBrain;
-    private bool isTransitioning;
+    protected bool isTransitioning;
     protected override void Start()
     {
         base.Start();
@@ -40,7 +40,8 @@ public class CameraManagerSwitchingBlendingOption : CameraManager
 
         StartCoroutine(SwitchCameraCoroutine(newCamera));
     }
-    Camera cam;
+   protected Camera cam;
+   
     public IEnumerator SwitchCameraCoroutine(CinemachineVirtualCamera newCamera)
     {
         if (activedcamera == newCamera)

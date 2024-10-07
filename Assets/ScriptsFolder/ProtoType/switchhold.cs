@@ -6,7 +6,9 @@ public class switchhold : Switch
 {
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy")
+            ||
+            collision.gameObject.CompareTag("CursorObject"))
         {
             Debug.Log("Switch DeActive");
             active = false;

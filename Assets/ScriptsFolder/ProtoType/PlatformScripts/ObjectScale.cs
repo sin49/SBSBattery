@@ -16,9 +16,12 @@ public class ObjectScale : MonoBehaviour
             }
             else
             {
-                if(parent != null)
-                    parent.transform.localScale = new Vector3(1, 0.1f, 1);
-                other.gameObject.SetActive(false);
+                if (other.TryGetComponent<DownAttackCollider>(out DownAttackCollider downAtk))
+                {
+                    if (parent != null)
+                        parent.transform.localScale = new Vector3(1, 0.1f, 1);
+                    other.gameObject.SetActive(false);
+                }
             }
         }
     }

@@ -2,18 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class physicsprob : MonoBehaviour
+public class physicsprob : MonoBehaviour,environmentObject
 {
     [Header("Áú·®")]
     public float mass;
     Rigidbody rb;
     Vector3 EnvironmentForce;
 
-    public void getenvironmentforce(Vector3 v)
+    public void AddEnviromentPower(Vector3 power)
     {
-        EnvironmentForce = v;
+        EnvironmentForce = power;
     }
 
+   
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
