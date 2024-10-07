@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class DownAttackCollider : MeleeCollider
 {
- 
-
 
     private void Start()
     {
