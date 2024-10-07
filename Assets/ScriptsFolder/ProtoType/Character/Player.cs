@@ -889,7 +889,9 @@ public class Player : Character,environmentObject
         else
         {
             if (!PlayerHandler.instance.ladderInteract)
+            {                         
                 playerRb.AddForce(EnvironmentPower, ForceMode.VelocityChange);
+            }
             else
                 playerRb.AddForce(Movevelocity, ForceMode.VelocityChange);
         }
@@ -944,6 +946,11 @@ public class Player : Character,environmentObject
 
 
 
+    }
+
+    public virtual bool FormCheck()
+    {
+        return false;
     }
 
     public void StartLadderClimb()
@@ -1064,7 +1071,12 @@ public class Player : Character,environmentObject
     IEnumerator GoDownAttack()
     {
         playerRb.useGravity = false;
-        playerRb.velocity = Vector3.zero;
+        while (playerRb.velocity != Vector3.zero)
+        {
+            playerRb.velocity = Vector3.zero;
+            Debug.Log(playerRb.velocity);
+            yield return null;
+        }
 
         playerRb.AddForce(transform.up * 3f, ForceMode.Impulse);
         SoundPlayer.PlayInitDownAttackSound();

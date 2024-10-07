@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class MouseTransform : Player
@@ -48,6 +50,22 @@ public class MouseTransform : Player
     public override void Move()
     {
         base.Move();
+    }
+    bool init;
+    direction dir = direction.none;
+    directionZ dirZ = directionZ.none;
+    public override void rotate(float hori, float vert)
+    {
+        base.rotate(hori, vert);
+        if (hori != 0 || vert != 0)
+        {
+            if (dir != direction || dirZ != directionz)
+            {
+                dir = direction;
+                dirZ = directionz;
+                cursor.InitCursorPos();
+            }
+        }
     }
 
     public override void PlayerJumpEvent()
@@ -120,6 +138,7 @@ public class MouseTransform : Player
         {
             Humonoidanimator.transform.GetChild(i).gameObject.SetActive(false);
         }
+        cursor.InitCursorPos();
         secondForm.SetActive(true);
         soundplayer_.FormChangePlay();
     }
@@ -136,10 +155,19 @@ public class MouseTransform : Player
             Humonoidanimator.transform.GetChild(i).gameObject.SetActive(true);
         }
         secondForm.SetActive(false);
+        cursor.InitCursorPos();
     }
 
     public override void Skill1()
     {
         Debug.Log("마우스 스킬 구현해야됨");
+    }
+
+    public override bool FormCheck()
+    {
+        if (cursor.onCatch)
+            return true;
+        else
+            return false;
     }
 }

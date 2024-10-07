@@ -2293,7 +2293,6 @@ GameObject:
   - component: {fileID: 8211498554429514334}
   - component: {fileID: 2409806719121851857}
   - component: {fileID: 2295043175363463264}
-  - component: {fileID: 2307991030773382863}
   m_Layer: 0
   m_Name: CursorCollider
   m_TagString: Untagged
@@ -2404,25 +2403,13 @@ MonoBehaviour:
   interactObj: {fileID: 0}
   forwardThrowForce: 15
   upThrowForce: 2
-  soundEffectListPlayer: {fileID: 0}
   clickEffect: {fileID: 732005738522817820}
---- !u!114 &2307991030773382863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6903488102122311105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c358efc4e7446f147a9d6a4f71757744, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  list:
-  - clip: {fileID: 8300000, guid: c704878007385674b981badebf45b8a7, type: 3}
-    volume: 1
-  - clip: {fileID: 8300000, guid: 68c21bb2db2e5c9419beee3ac849ae50, type: 3}
-    volume: 1
+  dontMove: {fileID: 7029283843205116056}
+  dontMoveOriginScale: {x: 0, y: 0, z: 0}
+  dontMoveScalevalue: 4
+  saveCursorPos: {x: 0, y: 0, z: 0}
+  upPos: 1
+  forwardPos: 0.8
 --- !u!1 &6929880189956093402
 GameObject:
   m_ObjectHideFlags: 0
@@ -2791,7 +2778,7 @@ GameObject:
   - component: {fileID: 5372438622181097726}
   - component: {fileID: 2549399948347683774}
   - component: {fileID: 6375916410277004208}
-  - component: {fileID: 5565724517128491900}
+  - component: {fileID: 1846617356516652154}
   m_Layer: 6
   m_Name: MouseForm
   m_TagString: Player
@@ -2913,7 +2900,6 @@ MonoBehaviour:
   cursor: {fileID: 2295043175363463264}
   secondForm: {fileID: 265119623298886349}
   cursorCoolTime: 1
-  soundplayer_: {fileID: 0}
 --- !u!136 &2560769990855941229
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3117,7 +3103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32177de85efdfc943b70253b78ba038e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5565724517128491900
+--- !u!114 &1846617356516652154
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3126,31 +3112,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 8743425202220772919}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51bcd63440f8c9e4887eb6e1ddc1242c, type: 3}
+  m_Script: {fileID: 11500000, guid: ab58d2e89b14edd4bb013c33c8f0cd8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveClip: {fileID: 0}
-  MoveVolume: 1
-  AttackClip: {fileID: 0}
-  AttackVolume: 1
+  MoveClip: {fileID: 8300000, guid: 83315124d8bd65140b4035305992fb6b, type: 3}
+  MoveVolume: 0
+  AttackClip: {fileID: 8300000, guid: 25c5897575b078c4ba66ca5ffa7908c5, type: 3}
+  AttackVolume: 0.8
   JumpClip: {fileID: 8300000, guid: 85ea7b8994df41b45ad65459747ef044, type: 3}
-  JumpVolume: 1
-  InitDownAttackClip: {fileID: 8300000, guid: 5795d3a606bf0184c913e6e578e2603a, type: 3}
-  InitDownAttackVolume: 1
-  DownAttackEndClip: {fileID: 8300000, guid: d43aa9fc48589ea43a4a9c6962066b70, type: 3}
-  DownAttackEndVolume: 1
-  InitTransformedClip: {fileID: 8300000, guid: ea3d2dc6b4cecf64d9482f509d91781e, type: 3}
-  InitTransformedVolume: 1
-  TransformedEndClip: {fileID: 8300000, guid: 6999731b72f1baf42bf110ddb2d2da4c, type: 3}
-  TransformedEndVolume: 1
-  HittedClip: {fileID: 8300000, guid: cc8fd7d49ea7f1f44b99ba7457f5d02d, type: 3}
-  HittedVolume: 1
+  JumpVolume: 0.8
+  InitDownAttackClip: {fileID: 0}
+  InitDownAttackVolume: 0
+  DownAttackEndClip: {fileID: 0}
+  DownAttackEndVolume: 0
+  InitTransformedClip: {fileID: 0}
+  InitTransformedVolume: 0
+  TransformedEndClip: {fileID: 0}
+  TransformedEndVolume: 0
+  HittedClip: {fileID: 0}
+  HittedVolume: 0
   LandClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
-  LandVolume: 1
-  SkillClip: {fileID: 0}
-  SkillVolume: 1
-  formchangeClip: {fileID: 8300000, guid: 885bab525551d6547a819baecd582c2a, type: 3}
-  formchangeVolume: 1
+  LandVolume: 0.5
+  SkillClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
+  SkillVolume: 0.8
 --- !u!1 &8838346370489677746
 GameObject:
   m_ObjectHideFlags: 0
@@ -3809,25 +3793,40 @@ PrefabInstance:
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2847214877333766161, guid: 54455ecc44ae98d429a08a8af9e3838d,
+        type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3330371270448281986, guid: 54455ecc44ae98d429a08a8af9e3838d,
+        type: 3}
+      propertyPath: stopAction
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3330371270448281986, guid: 54455ecc44ae98d429a08a8af9e3838d,
         type: 3}
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3330371270448281986, guid: 54455ecc44ae98d429a08a8af9e3838d,
+        type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6675777831050429561, guid: 54455ecc44ae98d429a08a8af9e3838d,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.050000016
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 6675777831050429561, guid: 54455ecc44ae98d429a08a8af9e3838d,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.05
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 6675777831050429561, guid: 54455ecc44ae98d429a08a8af9e3838d,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.050000016
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 6675777831050429561, guid: 54455ecc44ae98d429a08a8af9e3838d,
         type: 3}
@@ -4095,13 +4094,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
+        type: 3}
       propertyPath: m_LocalScale.y
       value: 0.19143364
       objectReference: {fileID: 0}
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.062901475
+      value: 0.15239495
       objectReference: {fileID: 0}
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
@@ -4111,12 +4115,12 @@ PrefabInstance:
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0862
+      value: 0.086199984
       objectReference: {fileID: 0}
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.13237
+      value: 0.20578432
       objectReference: {fileID: 0}
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
@@ -4164,6 +4168,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6949334962542738422}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7029283843205116056 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 143542608406104942, guid: c1b689fe0910c994dabca0654ef5c952,
+    type: 3}
+  m_PrefabInstance: {fileID: 6949334962542738422}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b502a88ab6d1bab4f9c3211dd56dca8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8891087565189056172
 PrefabInstance:
   m_ObjectHideFlags: 0

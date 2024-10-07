@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -19,19 +20,35 @@ public class MouseFormCursor : MonoBehaviour
     public ParticleSystem clickEffect;
     GameObject playerRotate;
 
+    public DontMoveCollider dontMove;
+    public Vector3 dontMoveOriginScale;
+
+    public float dontMoveScalevalue;
+
+    public Vector3 saveCursorPos;
+    public float upPos, forwardPos;
     private void Awake()
     {
         playerRotate = GetComponentInParent<Player>().transform.GetChild(0).gameObject;
+
         soundEffectListPlayer=GetComponent<SoundEffectListPlayer>();
+
     }
 
     private void Update()
     {
+        UpdateCursorPos();
+    }    
+
+    public void UpdateCursorPos()
+    {
         if (interactObj != null)
         {
-            interactObj.transform.position = cursorParent.transform.position + transform.forward * interactObj.ColliderEndPoint();
+            interactObj.transform.position = cursorParent.transform.position + PlayerHandler.instance.CurrentPlayer.transform.GetChild(0).forward * interactObj.ColliderEndPoint();
             interactObj.transform.rotation = playerRotate.transform.rotation;
         }
+
+        //Debug.Log((transform.parent.position - PlayerHandler.instance.CurrentPlayer.transform.position));
     }
 
     private void OnTriggerEnter(Collider other)
@@ -41,6 +58,9 @@ public class MouseFormCursor : MonoBehaviour
             CursorInteractObject cursorInteract;
             if (other.TryGetComponent<CursorInteractObject>(out cursorInteract))
             {
+                cursorInteract.AddComponent<CursorInteractObjectCheck>();
+                cursorInteract.GetComponent<CursorInteractObjectCheck>().cursorParent = transform.parent.gameObject;
+                //dontMove.ChangeScaleByFormCursor(dontMoveScalevalue);
                 onCatch = true;
                 soundEffectListPlayer.PlayAudio(0);
                 interactObj = cursorInteract;
@@ -83,6 +103,7 @@ public class MouseFormCursor : MonoBehaviour
     public void InteractTypeCheck()
     {
         Debug.Log("Ã¼Å©ÇÏ·¯ ¸¶½Ç ³ª¿Ô½À´Ï´Ù");
+        clickEffect.Play();
         CursorInteractObject cursorInteract;
         if (interactObj != null && interactObj.TryGetComponent<CursorInteractObject>(out cursorInteract))
         {
@@ -97,8 +118,9 @@ public class MouseFormCursor : MonoBehaviour
                 Debug.Log("ÇÃ·§Æû °í°´´ÔÀÌ½Ã³×¿ä");
                 DropPlatformObject();
             }
+            Destroy(cursorInteract.GetComponent<CursorInteractObjectCheck>());
         }
-        clickEffect.Play();
+        //dontMove.ReturnScale();                
     }
 
     public void ThrowMonster()
@@ -133,5 +155,13 @@ public class MouseFormCursor : MonoBehaviour
         interactObj = null;
         onCatch = false;
         soundEffectListPlayer.PlayAudio(1);
+    }
+
+    public void InitCursorPos()
+    {
+        saveCursorPos = (PlayerHandler.instance.CurrentPlayer.transform.GetChild(0).forward * forwardPos) +
+            (PlayerHandler.instance.CurrentPlayer.transform.GetChild(0).up * upPos);
+        cursorParent.transform.position = (PlayerHandler.instance.CurrentPlayer.transform.GetChild(0).position + saveCursorPos);
+        cursorParent.transform.rotation = PlayerHandler.instance.CurrentPlayer.transform.GetChild(0).rotation;
     }
 }
