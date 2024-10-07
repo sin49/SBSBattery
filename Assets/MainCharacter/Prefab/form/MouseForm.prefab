@@ -2418,7 +2418,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c358efc4e7446f147a9d6a4f71757744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  list: []
+  list:
+  - clip: {fileID: 8300000, guid: c704878007385674b981badebf45b8a7, type: 3}
+    volume: 1
+  - clip: {fileID: 8300000, guid: 68c21bb2db2e5c9419beee3ac849ae50, type: 3}
+    volume: 1
 --- !u!1 &6929880189956093402
 GameObject:
   m_ObjectHideFlags: 0
@@ -2787,7 +2791,7 @@ GameObject:
   - component: {fileID: 5372438622181097726}
   - component: {fileID: 2549399948347683774}
   - component: {fileID: 6375916410277004208}
-  - component: {fileID: 1846617356516652154}
+  - component: {fileID: 5565724517128491900}
   m_Layer: 6
   m_Name: MouseForm
   m_TagString: Player
@@ -3113,7 +3117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32177de85efdfc943b70253b78ba038e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1846617356516652154
+--- !u!114 &5565724517128491900
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3122,29 +3126,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 8743425202220772919}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab58d2e89b14edd4bb013c33c8f0cd8b, type: 3}
+  m_Script: {fileID: 11500000, guid: 51bcd63440f8c9e4887eb6e1ddc1242c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveClip: {fileID: 8300000, guid: 83315124d8bd65140b4035305992fb6b, type: 3}
-  MoveVolume: 0
-  AttackClip: {fileID: 8300000, guid: 25c5897575b078c4ba66ca5ffa7908c5, type: 3}
-  AttackVolume: 0.8
+  MoveClip: {fileID: 0}
+  MoveVolume: 1
+  AttackClip: {fileID: 0}
+  AttackVolume: 1
   JumpClip: {fileID: 8300000, guid: 85ea7b8994df41b45ad65459747ef044, type: 3}
-  JumpVolume: 0.8
-  InitDownAttackClip: {fileID: 0}
-  InitDownAttackVolume: 0
-  DownAttackEndClip: {fileID: 0}
-  DownAttackEndVolume: 0
-  InitTransformedClip: {fileID: 0}
-  InitTransformedVolume: 0
-  TransformedEndClip: {fileID: 0}
-  TransformedEndVolume: 0
-  HittedClip: {fileID: 0}
-  HittedVolume: 0
+  JumpVolume: 1
+  InitDownAttackClip: {fileID: 8300000, guid: 5795d3a606bf0184c913e6e578e2603a, type: 3}
+  InitDownAttackVolume: 1
+  DownAttackEndClip: {fileID: 8300000, guid: d43aa9fc48589ea43a4a9c6962066b70, type: 3}
+  DownAttackEndVolume: 1
+  InitTransformedClip: {fileID: 8300000, guid: ea3d2dc6b4cecf64d9482f509d91781e, type: 3}
+  InitTransformedVolume: 1
+  TransformedEndClip: {fileID: 8300000, guid: 6999731b72f1baf42bf110ddb2d2da4c, type: 3}
+  TransformedEndVolume: 1
+  HittedClip: {fileID: 8300000, guid: cc8fd7d49ea7f1f44b99ba7457f5d02d, type: 3}
+  HittedVolume: 1
   LandClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
-  LandVolume: 0.5
-  SkillClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
-  SkillVolume: 0.8
+  LandVolume: 1
+  SkillClip: {fileID: 0}
+  SkillVolume: 1
+  formchangeClip: {fileID: 8300000, guid: 885bab525551d6547a819baecd582c2a, type: 3}
+  formchangeVolume: 1
 --- !u!1 &8838346370489677746
 GameObject:
   m_ObjectHideFlags: 0
