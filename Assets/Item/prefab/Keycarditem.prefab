@@ -107,7 +107,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 0.65
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7377740463956868747
 MonoBehaviour:
@@ -124,6 +124,7 @@ MonoBehaviour:
   GetItemEffect: {fileID: 6869346342021920014, guid: 29a36de40eb1d6644abeafdc22702bea,
     type: 3}
   soundEffectListPlayer: {fileID: 0}
+  timer: 1.5
   instantitem: {fileID: 11400000, guid: b02bb06586ab1d54fb865729e7bc0167, type: 2}
 --- !u!114 &5770831415135624237
 MonoBehaviour:
@@ -137,7 +138,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c358efc4e7446f147a9d6a4f71757744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  list: []
+  list:
+  - clip: {fileID: 8300000, guid: c865631291ca1de4db4886c158a612b2, type: 3}
+    volume: 1
 --- !u!1001 &2422879356814124913
 PrefabInstance:
   m_ObjectHideFlags: 0

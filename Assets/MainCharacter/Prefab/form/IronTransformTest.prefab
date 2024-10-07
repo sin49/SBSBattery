@@ -894,6 +894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  attackTime: 0
   hitEffect: {fileID: 6455099831139738100, guid: 6cae3c6bcfef1234aa8098b1226d219f,
     type: 3}
 --- !u!1 &3860940069074602360
@@ -1311,9 +1312,7 @@ MonoBehaviour:
   ChrRenderer: {fileID: 5158458977046534887}
   chrmat: {fileID: 2100000, guid: d02c6456d2c67f843b1ac31b52d7cae8, type: 2}
   jumpholdLevel: 1
-  jumpBufferTimeMax: 0.1
   jumpBufferTimer: 0
-  canjumpInput: 0
   jumpLimitInput: 0
   attackBufferTimeMax: 0.05
   attackBufferTimer: 0
@@ -1346,6 +1345,7 @@ MonoBehaviour:
   canAttack: 0
   wallcheck: 0
   cantmove: 0
+  doubleZinput: 0
   jumpkeyinputCheck: 0.02
   inputCheck: 0
   velocityMove: {x: 0, y: 0, z: 0}
@@ -1625,20 +1625,20 @@ MonoBehaviour:
   AttackVolume: 0.6
   JumpClip: {fileID: 8300000, guid: 85ea7b8994df41b45ad65459747ef044, type: 3}
   JumpVolume: 0.6
-  InitDownAttackClip: {fileID: 0}
-  InitDownAttackVolume: 0
-  DownAttackEndClip: {fileID: 0}
-  DownAttackEndVolume: 0
-  InitTransformedClip: {fileID: 0}
-  InitTransformedVolume: 0
-  TransformedEndClip: {fileID: 0}
-  TransformedEndVolume: 0
-  HittedClip: {fileID: 0}
-  HittedVolume: 0
+  InitDownAttackClip: {fileID: 8300000, guid: 5795d3a606bf0184c913e6e578e2603a, type: 3}
+  InitDownAttackVolume: 1
+  DownAttackEndClip: {fileID: 8300000, guid: 671fd714cf48c1d45bc240f8cb13d228, type: 3}
+  DownAttackEndVolume: 1
+  InitTransformedClip: {fileID: 8300000, guid: 5795d3a606bf0184c913e6e578e2603a, type: 3}
+  InitTransformedVolume: 1
+  TransformedEndClip: {fileID: 8300000, guid: 6999731b72f1baf42bf110ddb2d2da4c, type: 3}
+  TransformedEndVolume: 1
+  HittedClip: {fileID: 8300000, guid: cc8fd7d49ea7f1f44b99ba7457f5d02d, type: 3}
+  HittedVolume: 1
   LandClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
   LandVolume: 0.4
   SkillClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
-  SkillVolume: 0.6
+  SkillVolume: 1
 --- !u!114 &2382477968564158788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1993,6 +1993,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  attackTime: 0
   hitEffect: {fileID: 6455099831139738100, guid: 6cae3c6bcfef1234aa8098b1226d219f,
     type: 3}
   saveEffect: {fileID: 0}
