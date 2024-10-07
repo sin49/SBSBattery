@@ -889,11 +889,7 @@ public class Player : Character,environmentObject
         else
         {
             if (!PlayerHandler.instance.ladderInteract)
-            {
-                if (FormCheck())
-                {
-                    playerRb.velocity = new(0, playerRb.velocity.y, 0);
-                }         
+            {                         
                 playerRb.AddForce(EnvironmentPower, ForceMode.VelocityChange);
             }
             else

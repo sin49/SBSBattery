@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class MouseTransform : Player
@@ -47,6 +49,22 @@ public class MouseTransform : Player
     public override void Move()
     {
         base.Move();
+    }
+    bool init;
+    direction dir = direction.none;
+    directionZ dirZ = directionZ.none;
+    public override void rotate(float hori, float vert)
+    {
+        base.rotate(hori, vert);
+        if (hori != 0 || vert != 0)
+        {
+            if (dir != direction || dirZ != directionz)
+            {
+                dir = direction;
+                dirZ = directionz;
+                cursor.InitCursorPos();
+            }
+        }
     }
 
     public override void PlayerJumpEvent()

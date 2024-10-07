@@ -40,11 +40,11 @@ public class MouseFormCursor : MonoBehaviour
     {
         if (interactObj != null)
         {
-            interactObj.transform.position = cursorParent.transform.position + transform.forward * interactObj.ColliderEndPoint();
+            interactObj.transform.position = cursorParent.transform.position + PlayerHandler.instance.CurrentPlayer.transform.GetChild(0).forward * interactObj.ColliderEndPoint();
             interactObj.transform.rotation = playerRotate.transform.rotation;
         }
 
-        Debug.Log((transform.parent.position - PlayerHandler.instance.CurrentPlayer.transform.position));
+        //Debug.Log((transform.parent.position - PlayerHandler.instance.CurrentPlayer.transform.position));
     }
 
     private void OnTriggerEnter(Collider other)
@@ -156,5 +156,6 @@ public class MouseFormCursor : MonoBehaviour
         saveCursorPos = (PlayerHandler.instance.CurrentPlayer.transform.GetChild(0).forward * forwardPos) +
             (PlayerHandler.instance.CurrentPlayer.transform.GetChild(0).up * upPos);
         cursorParent.transform.position = (PlayerHandler.instance.CurrentPlayer.transform.GetChild(0).position + saveCursorPos);
+        cursorParent.transform.rotation = PlayerHandler.instance.CurrentPlayer.transform.GetChild(0).rotation;
     }
 }
