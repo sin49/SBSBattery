@@ -13,6 +13,8 @@ public class MouseFormCursor : MonoBehaviour
     public CursorInteractObject interactObj;
     public float forwardThrowForce;
     public float upThrowForce;
+    [Header("0번 잡았을 때 1번 놓았을 때")]
+    public SoundEffectListPlayer soundEffectListPlayer;
 
     public ParticleSystem clickEffect;
     GameObject playerRotate;
@@ -20,6 +22,7 @@ public class MouseFormCursor : MonoBehaviour
     private void Awake()
     {
         playerRotate = GetComponentInParent<Player>().transform.GetChild(0).gameObject;
+        soundEffectListPlayer=GetComponent<SoundEffectListPlayer>();
     }
 
     private void Update()
@@ -39,6 +42,7 @@ public class MouseFormCursor : MonoBehaviour
             if (other.TryGetComponent<CursorInteractObject>(out cursorInteract))
             {
                 onCatch = true;
+                soundEffectListPlayer.PlayAudio(0);
                 interactObj = cursorInteract;
                 interactObj.GetComponent<Rigidbody>().useGravity = false;
                 interactObj.GetComponent<Rigidbody>().isKinematic = true;
@@ -111,7 +115,7 @@ public class MouseFormCursor : MonoBehaviour
 
             interactObj = null;
             onCatch = false;
-
+            soundEffectListPlayer.PlayAudio(1);
             RagdolEnemy re;
             if (enemy.TryGetComponent<RagdolEnemy>(out re))
             {
@@ -128,5 +132,6 @@ public class MouseFormCursor : MonoBehaviour
         interactObj.GetComponent<Rigidbody>().isKinematic = false;
         interactObj = null;
         onCatch = false;
+        soundEffectListPlayer.PlayAudio(1);
     }
 }

@@ -580,6 +580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  attackTime: 0
   hitEffect: {fileID: 5024009746357069194, guid: ec3f674830402cc45bce805cf6493db7,
     type: 3}
   saveEffect: {fileID: 0}
@@ -1692,6 +1693,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  attackTime: 0
   hitEffect: {fileID: 6455099831139738100, guid: 6cae3c6bcfef1234aa8098b1226d219f,
     type: 3}
   saveEffect: {fileID: 0}
@@ -2291,6 +2293,7 @@ GameObject:
   - component: {fileID: 8211498554429514334}
   - component: {fileID: 2409806719121851857}
   - component: {fileID: 2295043175363463264}
+  - component: {fileID: 2307991030773382863}
   m_Layer: 0
   m_Name: CursorCollider
   m_TagString: Untagged
@@ -2401,7 +2404,21 @@ MonoBehaviour:
   interactObj: {fileID: 0}
   forwardThrowForce: 15
   upThrowForce: 2
+  soundEffectListPlayer: {fileID: 0}
   clickEffect: {fileID: 732005738522817820}
+--- !u!114 &2307991030773382863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6903488102122311105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c358efc4e7446f147a9d6a4f71757744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list: []
 --- !u!1 &6929880189956093402
 GameObject:
   m_ObjectHideFlags: 0
@@ -2822,9 +2839,7 @@ MonoBehaviour:
   ChrRenderer: {fileID: 448461119942151519}
   chrmat: {fileID: 0}
   jumpholdLevel: 1
-  jumpBufferTimeMax: 0.1
   jumpBufferTimer: 0
-  canjumpInput: 0
   jumpLimitInput: 0
   attackBufferTimeMax: 0.1
   attackBufferTimer: 0
@@ -2857,6 +2872,7 @@ MonoBehaviour:
   canAttack: 0
   wallcheck: 0
   cantmove: 0
+  doubleZinput: 0
   jumpkeyinputCheck: 0.05
   inputCheck: 0
   velocityMove: {x: 0, y: 0, z: 0}
@@ -2893,6 +2909,7 @@ MonoBehaviour:
   cursor: {fileID: 2295043175363463264}
   secondForm: {fileID: 265119623298886349}
   cursorCoolTime: 1
+  soundplayer_: {fileID: 0}
 --- !u!136 &2560769990855941229
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3114,6 +3131,16 @@ MonoBehaviour:
   AttackVolume: 0.8
   JumpClip: {fileID: 8300000, guid: 85ea7b8994df41b45ad65459747ef044, type: 3}
   JumpVolume: 0.8
+  InitDownAttackClip: {fileID: 0}
+  InitDownAttackVolume: 0
+  DownAttackEndClip: {fileID: 0}
+  DownAttackEndVolume: 0
+  InitTransformedClip: {fileID: 0}
+  InitTransformedVolume: 0
+  TransformedEndClip: {fileID: 0}
+  TransformedEndVolume: 0
+  HittedClip: {fileID: 0}
+  HittedVolume: 0
   LandClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
   LandVolume: 0.5
   SkillClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
