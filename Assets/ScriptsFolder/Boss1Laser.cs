@@ -13,6 +13,9 @@ public class Boss1Laser : EnemyAction
     Boss1SOundManager boss1SOundManager;
     [Header("레이저 속도")]
     public float LaserSpeed;
+    [Header("레이저 Y축 위치")]
+    public float LaserYpos=-6.4f;
+
 
     public Transform warning;
     public ParticleSystem particle;
@@ -46,7 +49,7 @@ public class Boss1Laser : EnemyAction
     public override void Invoke(Action ActionENd, Transform target = null)
     {
         this.Target = target;
-        Laser.transform.position = new Vector3(target.position.x, -6.4f,
+        Laser.transform.position = new Vector3(target.position.x, LaserYpos,
            target.position.z);
         laserBeam.gameObject.SetActive(false);
         warning.position = Laser.transform.position-Vector3.up*2;

@@ -1089,11 +1089,8 @@ MonoBehaviour:
   Humonoidanimator: {fileID: 2015325655607406669}
   ChrRenderer: {fileID: 8988115878784306912}
   chrmat: {fileID: 0}
-  color: {r: 0, g: 0, b: 0, a: 0}
   jumpholdLevel: 1
-  jumpBufferTimeMax: 0.2
   jumpBufferTimer: 0
-  canjumpInput: 0
   jumpLimitInput: 0
   attackBufferTimeMax: 0.15
   attackBufferTimer: 0
@@ -1125,6 +1122,7 @@ MonoBehaviour:
   canAttack: 0
   wallcheck: 0
   cantmove: 0
+  doubleZinput: 0
   jumpkeyinputCheck: 0.02
   inputCheck: 0
   velocityMove: {x: 0, y: 0, z: 0}
@@ -1296,13 +1294,23 @@ MonoBehaviour:
   MoveClip: {fileID: 8300000, guid: 83315124d8bd65140b4035305992fb6b, type: 3}
   MoveVolume: 0
   AttackClip: {fileID: 8300000, guid: 3d4be4a67a7d64045bb002a4229864a6, type: 3}
-  AttackVolume: 1
+  AttackVolume: 0.7
   JumpClip: {fileID: 8300000, guid: 85ea7b8994df41b45ad65459747ef044, type: 3}
-  JumpVolume: 0.789
-  LandClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
-  LandVolume: 0.726
+  JumpVolume: 0.6
+  InitDownAttackClip: {fileID: 8300000, guid: 5795d3a606bf0184c913e6e578e2603a, type: 3}
+  InitDownAttackVolume: 1
+  DownAttackEndClip: {fileID: 8300000, guid: d43aa9fc48589ea43a4a9c6962066b70, type: 3}
+  DownAttackEndVolume: 1
+  InitTransformedClip: {fileID: 8300000, guid: ea3d2dc6b4cecf64d9482f509d91781e, type: 3}
+  InitTransformedVolume: 1
+  TransformedEndClip: {fileID: 8300000, guid: 6999731b72f1baf42bf110ddb2d2da4c, type: 3}
+  TransformedEndVolume: 1
+  HittedClip: {fileID: 8300000, guid: cc8fd7d49ea7f1f44b99ba7457f5d02d, type: 3}
+  HittedVolume: 1
+  LandClip: {fileID: 8300000, guid: de5f0be1d38b74a4aafd8d7e557fc545, type: 3}
+  LandVolume: 0.6
   SkillClip: {fileID: 8300000, guid: 9ecec375ab1cce948bf45e6e5422d763, type: 3}
-  SkillVolume: 0.933
+  SkillVolume: 0.7
 --- !u!114 &-5422591874494991453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1527,6 +1535,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  attackTime: 0
   hitEffect: {fileID: 5024009746357069194, guid: ec3f674830402cc45bce805cf6493db7,
     type: 3}
   saveEffect: {fileID: 0}
@@ -2262,6 +2271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  attackTime: 0
   hitEffect: {fileID: 5024009746357069194, guid: ec3f674830402cc45bce805cf6493db7,
     type: 3}
   saveEffect: {fileID: 0}

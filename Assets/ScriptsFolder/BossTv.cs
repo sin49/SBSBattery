@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ public class BossTv : RemoteObject
     {
         BossEnable = true;
         UI.gameObject.SetActive(true);
-        BossSweap.GetComponent<Boss1Sweap>().SetHandPosition();
+      ;
         animator.enabled = false;
     }
     public void BossDeActive()
@@ -22,6 +23,26 @@ public class BossTv : RemoteObject
         BossEnable = false;
         UI.gameObject.SetActive(false);
 
+    }
+    public CinemachineImpulseSource shaker;
+    public void CameraShake()
+    {
+        shaker.GenerateImpulse();
+    }
+    public void Change3DCamera()
+    {
+        var c_manager = PlayerHandler.instance.CurrentCamera.GetComponent<CameraManager_Switching2D3D>();
+        //c_manager.trans3D = true;
+        PlayerHandler.instance.DimensionChange();
+        //StartCoroutine(c_manager.SwitchCameraForTransDimensionCorutinenoblending());
+    }
+    public void PlayerEnableCantHandle()
+    {
+        PlayerHandler.instance.CantHandle = true;
+    }
+    public void PlayerDisableCantHandle()
+    {
+        PlayerHandler.instance.CantHandle = false;
     }
     public Boss1UI UI;
     [Header("보스는 SoundEffectListPlayer와")]
@@ -95,14 +116,20 @@ public class BossTv : RemoteObject
         RHand.active = false;
         HandDominateEvent();
     }
+    public void animationEnd()
+    {
+        animator.enabled = false;
+    }
     void HandDominateEvent()
     {
         CancelAction();
         if (!LHand.active && !RHand.active)
         {
-           
-            CanControl = true;
-            
+
+            //CanControl = true;
+            animator.enabled = true;
+            animator.Play("Boss1PhaseChange");
+            Debug.Log("2페이즈 전환 연출");
         }
     }
    
