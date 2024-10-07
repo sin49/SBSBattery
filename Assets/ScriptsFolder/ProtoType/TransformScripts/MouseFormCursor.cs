@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -22,18 +23,28 @@ public class MouseFormCursor : MonoBehaviour
 
     public float dontMoveScalevalue;
 
+    public Vector3 saveCursorPos;
+    public float upPos, forwardPos;
     private void Awake()
     {
         playerRotate = GetComponentInParent<Player>().transform.GetChild(0).gameObject;
+        Debug.Log(cursorParent.transform.position);
     }
 
     private void Update()
+    {
+        UpdateCursorPos();
+    }    
+
+    public void UpdateCursorPos()
     {
         if (interactObj != null)
         {
             interactObj.transform.position = cursorParent.transform.position + transform.forward * interactObj.ColliderEndPoint();
             interactObj.transform.rotation = playerRotate.transform.rotation;
         }
+
+        Debug.Log((transform.parent.position - PlayerHandler.instance.CurrentPlayer.transform.position));
     }
 
     private void OnTriggerEnter(Collider other)
@@ -43,7 +54,9 @@ public class MouseFormCursor : MonoBehaviour
             CursorInteractObject cursorInteract;
             if (other.TryGetComponent<CursorInteractObject>(out cursorInteract))
             {
-                dontMove.ChangeScaleByFormCursor(dontMoveScalevalue);
+                cursorInteract.AddComponent<CursorInteractObjectCheck>();
+                cursorInteract.GetComponent<CursorInteractObjectCheck>().cursorParent = transform.parent.gameObject;
+                //dontMove.ChangeScaleByFormCursor(dontMoveScalevalue);
                 onCatch = true;
                 interactObj = cursorInteract;
                 interactObj.GetComponent<Rigidbody>().useGravity = false;
@@ -85,6 +98,7 @@ public class MouseFormCursor : MonoBehaviour
     public void InteractTypeCheck()
     {
         Debug.Log("Ã¼Å©ÇÏ·¯ ¸¶½Ç ³ª¿Ô½À´Ï´Ù");
+        clickEffect.Play();
         CursorInteractObject cursorInteract;
         if (interactObj != null && interactObj.TryGetComponent<CursorInteractObject>(out cursorInteract))
         {
@@ -99,9 +113,9 @@ public class MouseFormCursor : MonoBehaviour
                 Debug.Log("ÇÃ·§Æû °í°´´ÔÀÌ½Ã³×¿ä");
                 DropPlatformObject();
             }
+            Destroy(cursorInteract.GetComponent<CursorInteractObjectCheck>());
         }
-        dontMove.ReturnScale();
-        clickEffect.Play();
+        //dontMove.ReturnScale();                
     }
 
     public void ThrowMonster()
@@ -135,5 +149,12 @@ public class MouseFormCursor : MonoBehaviour
         interactObj.GetComponent<Rigidbody>().isKinematic = false;
         interactObj = null;
         onCatch = false;
+    }
+
+    public void InitCursorPos()
+    {
+        saveCursorPos = (PlayerHandler.instance.CurrentPlayer.transform.GetChild(0).forward * forwardPos) +
+            (PlayerHandler.instance.CurrentPlayer.transform.GetChild(0).up * upPos);
+        cursorParent.transform.position = (PlayerHandler.instance.CurrentPlayer.transform.GetChild(0).position + saveCursorPos);
     }
 }

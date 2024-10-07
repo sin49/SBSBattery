@@ -140,6 +140,7 @@ public class HouseholdIronTransform : Player
             if (!downAttack)
             {
                 downAttack = true;
+                ironDownAttack = true;
                 onInvincible = true;
                 PlayerHandler.instance.CantHandle = true;
                 StartFreeze();
@@ -705,14 +706,40 @@ public class HouseholdIronTransform : Player
     }
     #endregion
     public CinemachineImpulseSource source;
-    private void OnTriggerEnter(Collider other)
+
+    bool ironDownAttack;
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ground"))
         {
+            Debug.Log("¶¥¿¡ ´ê¾Ò´Ù");
+            if (ironDownAttack)
+            {
+                source.GenerateImpulse();
+                PlayerHandler.instance.CantHandle = true;
+                ironDownAttack = false;
+                //soundPlayer.PlayDownAttackEndSound();
+                downEnd = true;
+                if (!ironDownAtkEffect.gameObject.activeSelf)
+                {
+                    ironDownAtkEffect.gameObject.SetActive(true);
+                    ironDownAtkEffect.Play();
+                }
+            }
+        }
+    }*/
+
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            Debug.Log("ÄÝ¸®Áð Ã¼Å© -> ¶¥¿¡ ´ê¾Ò´Ù");
             if (downAttack)
             {
                 source.GenerateImpulse();
                 PlayerHandler.instance.CantHandle = true;
+                ironDownAttack = false;
                 //soundPlayer.PlayDownAttackEndSound();
                 downEnd = true;
                 if (!ironDownAtkEffect.gameObject.activeSelf)

@@ -119,6 +119,7 @@ public class MouseTransform : Player
         {
             Humonoidanimator.transform.GetChild(i).gameObject.SetActive(false);
         }
+        cursor.InitCursorPos();
         secondForm.SetActive(true);
     }
 
@@ -134,6 +135,7 @@ public class MouseTransform : Player
             Humonoidanimator.transform.GetChild(i).gameObject.SetActive(true);
         }
         secondForm.SetActive(false);
+        cursor.InitCursorPos();
     }
 
     public override void Skill1()

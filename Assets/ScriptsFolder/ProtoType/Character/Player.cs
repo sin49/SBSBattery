@@ -1075,7 +1075,12 @@ public class Player : Character,environmentObject
     IEnumerator GoDownAttack()
     {
         playerRb.useGravity = false;
-        playerRb.velocity = Vector3.zero;
+        while (playerRb.velocity != Vector3.zero)
+        {
+            playerRb.velocity = Vector3.zero;
+            Debug.Log(playerRb.velocity);
+            yield return null;
+        }
 
         playerRb.AddForce(transform.up * 3f, ForceMode.Impulse);
         SoundPlayer.PlayInitDownAttackSound();
