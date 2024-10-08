@@ -782,7 +782,7 @@ MonoBehaviour:
   lifeCount: 0
   lifeCountMax: 100
   randomPattern: 0
-  OnlyTestPattern: 1
+  OnlyTestPattern: 0
   HandHP: 4
   LHand: {fileID: 6602919900276604124}
   RHand: {fileID: 4055101929726195839}
@@ -801,7 +801,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActionLifeTIme: 0
   shakertimer: 0.2
-  fallingshaker: {fileID: 0}
+  fallingshaker: {fileID: 8974792421224292486}
   fallingObj2:
   - fallingobj: {fileID: 4006880101536269725, guid: c893fd765a9a01d4eb3c9f0487912a37,
       type: 3}
@@ -848,7 +848,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2ff81b2136b4e0419fcba45556c3dbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActionLifeTIme: 1
+  ActionLifeTIme: 5
   Lhand: {fileID: 6602919900276604124}
   LhandDefeatTransform: {fileID: 3079245634506789802}
   RhandDefeatTransform: {fileID: 8208100128127074496}
@@ -911,7 +911,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   list:
-  - clip: {fileID: 8300000, guid: d0837cc9cde82a34e94fb2fd34367019, type: 3}
+  - clip: {fileID: 8300000, guid: 731d89ab210cbb04eb4bf67f3a4a560d, type: 3}
     volume: 1
   - clip: {fileID: 0}
     volume: 0
@@ -927,19 +927,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a72a4db4d1619b44a2fa3873d490a31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HandSwerapStartclip: {fileID: 0}
+  HandSwerapStartclip: {fileID: 8300000, guid: bedb9d0216a4ffe479f2961dca8239c3, type: 3}
   HandSwerapStartVolume: 1
-  HandSwerapEndclip: {fileID: 0}
+  HandSwerapEndclip: {fileID: 8300000, guid: 41ea84c94e3f29243b64235de8956f21, type: 3}
   HandSwerapEndVolume: 1
-  LazerStartclip: {fileID: 0}
+  LazerStartclip: {fileID: 8300000, guid: 137aba4cff5699e46883a885de9ae4f9, type: 3}
   LazerStartVolume: 1
-  Lazerinitclip: {fileID: 0}
+  Lazerinitclip: {fileID: 8300000, guid: bedb9d0216a4ffe479f2961dca8239c3, type: 3}
   LazerinitVolume: 1
-  ObjectFallingclip: {fileID: 0}
+  ObjectFallingclip: {fileID: 8300000, guid: 0ee182a44149baf438a5a6349d79815f, type: 3}
   ObjectFallingVolume: 1
-  Objectgroundedclip: {fileID: 0}
+  Objectgroundedclip: {fileID: 8300000, guid: 8683c7383ff0ce649ad9dbe589ae3942, type: 3}
   ObjectgroundedVolume: 1
-  MonitiorHittedclip: {fileID: 0}
+  MonitiorHittedclip: {fileID: 8300000, guid: d0837cc9cde82a34e94fb2fd34367019, type: 3}
   MonitiorHittedVolume: 1
 --- !u!95 &3807007669676288973
 Animator:
@@ -976,14 +976,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ImpulseDefinition:
     m_ImpulseChannel: 1
-    m_ImpulseShape: 3
+    m_ImpulseShape: 4
     m_CustomImpulseShape:
       serializedVersion: 2
       m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    m_ImpulseDuration: 3
+    m_ImpulseDuration: 0.8
     m_ImpulseType: 0
     m_DissipationRate: 0.25
     m_RawSignal: {fileID: 0}
@@ -1014,7 +1014,7 @@ MonoBehaviour:
     m_DissipationMode: 2
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
-  m_DefaultVelocity: {x: 0, y: -10, z: 0}
+  m_DefaultVelocity: {x: 0.2, y: 1, z: 0}
 --- !u!1 &1076148760595868473
 GameObject:
   m_ObjectHideFlags: 0
@@ -2113,17 +2113,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeCountMax: 0
   randomPattern: 0
-  OnlySweapPattern: 1
+  OnlySweapPattern: 0
   OnlylaserPattern: 0
   OnlyfallPattern: 0
-  HandHP: 3
+  HandHP: 5
   LhandDefeatTransform: {fileID: 3079245634506789802}
   RhandDefeatTransform: {fileID: 8208100128127074496}
   fallingObj2:
   - fallingobj: {fileID: 4006880101536269725, guid: c893fd765a9a01d4eb3c9f0487912a37,
       type: 3}
     number: 1
-    possibility: 0
+    possibility: 1
   - fallingobj: {fileID: 1975036747362771099, guid: dbc0de5fe612b08479e0596338c883cd,
       type: 3}
     number: 0
@@ -2137,31 +2137,31 @@ MonoBehaviour:
     number: 0
     possibility: 2
   fallingBoxCreateObj:
-  - Createobj: {fileID: 3294068082175523137, guid: 7a2304b68bcbcd2498a3ffb793facc23,
+  - Createobj: {fileID: 557678266298197566, guid: 06511a03621618a4f8bd0ad830ab2be7,
       type: 3}
-    possibility: 0
+    possibility: 1
   - Createobj: {fileID: 1484204634486695996, guid: 757caba741c6ccc40886737a7e2215df,
       type: 3}
     possibility: 1
   damage: 1
-  createTime: 0.5
-  minSpeed: 1
-  maxSpeed: 2
+  createTime: 0.65
+  minSpeed: 0.8
+  maxSpeed: 1
   createCountMax: 20
   fallingHeight: 10
   fallingRange: 1.15
   GizmoColor: {r: 0, g: 0, b: 0, a: 0}
   handsize: 1
   SweaperPatternDealy: 2
-  SweaperStartMoveTime: 2
+  SweaperStartMoveTime: 1
   sweaperwaitTime: 1
   SweaperEndMoveTime: 2
   SweaperEndWaitTime: 1
   sweaperReturnTime: 1
   SweapColor: {r: 0, g: 0, b: 0, a: 0}
-  laserlifetime: 7.5
+  laserlifetime: 8
   LaserYpos: 3
-  LaserSpeed: 2.5
+  LaserSpeed: 2.75
   laserActiveTimer: 1.5
   TrailColScale: 1
   TrailDuration: 3
@@ -2841,7 +2841,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4101879628467827727
 Transform:
   m_ObjectHideFlags: 0
@@ -3732,8 +3732,8 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1017849828787296110}
-  - {fileID: 2674284365638186972}
   - {fileID: 4871454957540080039}
+  - {fileID: 2674284365638186972}
   - {fileID: 4549051986295825074}
   m_Father: {fileID: 3420186837365374865}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 30}
@@ -3814,10 +3814,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802a701e922fae84c94a1c7c40dd6ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HandHittedclip: {fileID: 0}
-  HandHittedVolume: 0
-  HandDestoryclip: {fileID: 0}
-  HandDestoryVolume: 0
+  HandHittedclip: {fileID: 8300000, guid: d0837cc9cde82a34e94fb2fd34367019, type: 3}
+  HandHittedVolume: 1
+  HandDestoryclip: {fileID: 8300000, guid: 731d89ab210cbb04eb4bf67f3a4a560d, type: 3}
+  HandDestoryVolume: 1
 --- !u!1 &5487375281990270418
 GameObject:
   m_ObjectHideFlags: 0
@@ -4034,8 +4034,8 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4080561669073936443}
-  - {fileID: 3631741958297886628}
   - {fileID: 8801305412640554122}
+  - {fileID: 3631741958297886628}
   - {fileID: 5256235927722247994}
   m_Father: {fileID: 3420186837365374865}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -30}
@@ -4116,10 +4116,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802a701e922fae84c94a1c7c40dd6ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HandHittedclip: {fileID: 0}
-  HandHittedVolume: 0
-  HandDestoryclip: {fileID: 0}
-  HandDestoryVolume: 0
+  HandHittedclip: {fileID: 8300000, guid: d0837cc9cde82a34e94fb2fd34367019, type: 3}
+  HandHittedVolume: 1
+  HandDestoryclip: {fileID: 8300000, guid: 731d89ab210cbb04eb4bf67f3a4a560d, type: 3}
+  HandDestoryVolume: 1
 --- !u!1 &5700165742995164630
 GameObject:
   m_ObjectHideFlags: 0
@@ -10184,7 +10184,7 @@ GameObject:
   - component: {fileID: 1636891207910634641}
   - component: {fileID: 2069014380558521383}
   m_Layer: 0
-  m_Name: TVBoss (1)
+  m_Name: TVBoss (new)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
