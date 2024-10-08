@@ -23,6 +23,7 @@ public class Boss1Laser2D : EnemyAction
     IEnumerator laserpattern()
     {
         Debug.Log("레이저 패턴 체크");
+  
         for (int n = 0; n < lasers.Count; n++)
         {
             lasers[n].gameObject.SetActive(true);

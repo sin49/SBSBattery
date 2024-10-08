@@ -82,7 +82,7 @@ public class Boss1Status2Phase : MonoBehaviour
         boss = transform.parent.GetComponent<BossTv>();
         BossFalling = transform.parent.GetComponent<BossFalling>();
         sweap = transform.parent.GetComponent<Boss1Sweap>();
-        Debug.Log("레이저 패턴 체크");
+ 
         updateStatus();
     }
     private void Update()
