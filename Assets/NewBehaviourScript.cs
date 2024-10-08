@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    public string keysetting;
     // Start is called before the first frame update
     void Start()
     {

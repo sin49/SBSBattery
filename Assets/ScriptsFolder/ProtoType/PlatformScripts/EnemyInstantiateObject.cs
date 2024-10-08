@@ -32,17 +32,19 @@ public class EnemyInstantiateObject : MonoBehaviour
 
     public void SpawnBoxEnemy()
     {
+        if(deadEffect!=null)
         Instantiate(deadEffect, transform.position, Quaternion.identity);
-        Instantiate(enemyPrefab, transform.position, enemyPrefab.transform.rotation);
+        if (enemyPrefab != null)
+            Instantiate(enemyPrefab, transform.position, enemyPrefab.transform.rotation);
         //soundEffectListPlayer.PlayAudio(0);
     }
 
-    private void OnDrawGizmos()
-    {
-        if (activeCollider != null)
-        {
-            activeCollider.size = activeRange;
-            activeCollider.center = activePos;
-        }
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    if (activeCollider != null)
+    //    {
+    //        activeCollider.size = activeRange;
+    //        activeCollider.center = activePos;
+    //    }
+    //}
 }

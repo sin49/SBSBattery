@@ -45,7 +45,8 @@ public class AnimationEvent : MonoBehaviour
         {
             GetComponentInParent<EnemyInstantiateObject>().SpawnBoxEnemy();
         }
-        Destroy(transform.parent.gameObject);
+        this.transform.parent.gameObject.SetActive(false);
+        //Destroy(transform.parent.gameObject);
           
     }
 

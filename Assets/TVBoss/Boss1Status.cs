@@ -40,7 +40,25 @@ public class Boss1Status : MonoBehaviour
     public float fallingRange;
     [Header("낙하 범위 기즈모 색")]
     public Color GizmoColor;
-    [Header("보스 휩쓸기")]
+    [Header("내려찍기 횟수")]
+    public int stombcount;
+    [Header("내려찍을 때 y축 높이 조정")]
+    public float stombYPlus;
+    [Header("내려찍기 준비 시간")]
+    public float stombinittime;
+
+    [Header("내려찍기 전 대기 시간")]
+    public float stombwaitTIme;
+    [Header("내려찍는 시간")]
+    public float stombtime;
+    [Header("내려찍기 찍고 대기 시간")]
+    public float stombendwaitTIme;
+    [Header("내려찍고 돌아오는 시간")]
+    public float stombreturntime;
+
+
+
+    [Header("보스 휩쓸기(이거 빼면 2페이즈 부분에 값 새로 넣어야 되가지고 일단 놔둠)")]
     [Header("손 크기(손 y축 오프셋 전용)")]
     public float handsize = 1;
     [Header("휩쓸기 한 번 후 다음 휩쓸기 까지의 간격")]
@@ -127,7 +145,13 @@ public class Boss1Status : MonoBehaviour
             sweap.sweaperwaitTime = sweaperwaitTime;
             sweap.SweaperPatternDealy = SweaperPatternDealy;
             sweap.sweapColor = SweapColor;
-
+            sweap.stombcount = stombcount;
+            sweap.stombYPlus= stombYPlus;
+            sweap.stombinittime = stombinittime;
+            sweap.stombtime = stombtime;
+            sweap.stombwaitTIme= stombwaitTIme;
+            sweap.stombendwaitTIme= stombendwaitTIme;
+            sweap.stombreturntime= stombreturntime;
           
 
             BossFalling.fallingObj2 = fallingObj2;
