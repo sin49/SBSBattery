@@ -68,17 +68,15 @@ public class FallingObject : MonoBehaviour
         {
             Debug.Log("보스 낙하물 피격");
             PlayerHandler.instance.CurrentPlayer.Damaged(damage);
-            Instantiate(hitEffect, transform.position, Quaternion.identity);
-
-;
+            if(hitEffect != null)
+            Destroy(Instantiate(hitEffect, transform.position, Quaternion.identity), 2f);
             Destroy(gameObject);
         }
 
         if (other.CompareTag("Ground"))
         {
-            Instantiate(hitEffect, transform.position, Quaternion.identity);
-          
-
+            if(hitEffect != null)
+            Destroy(Instantiate(hitEffect, transform.position, Quaternion.identity), 2f);
             Destroy(gameObject);
         }
     }

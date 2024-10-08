@@ -23,7 +23,7 @@ public class KeysettingManagerEditor : Editor
 
 
 
-        AssetDatabase.CreateAsset(k,$"Assets\\Keysetting\\{m_Instance.keysettingpresetname}.asset");
+        AssetDatabase.CreateAsset(k,$"Asset\\KeySetting\\{m_Instance.keysettingpresetname}.asset");
         AssetDatabase.SaveAssets();
         m_Instance.preset = k;
     }

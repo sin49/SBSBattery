@@ -10,8 +10,6 @@ public class DisturbDimensionChangeField : MonoBehaviour, colliderDisplayer
     public bool restrictBool;
     [Header("전환 금지 옵션")]
     public bool RestirctDimension;
-    [Header("2D일 때만 적용")]
-    public bool REstrictOn2D;
 
     public DisturbDimensionMoveDirection movedirection;
     public Renderer renderer_;
@@ -42,13 +40,10 @@ public class DisturbDimensionChangeField : MonoBehaviour, colliderDisplayer
 
     private void Update()
     {
-        if (REstrictOn2D)
-        {
-            if ((int)PlayerStat.instance.MoveState < 4)
-                col.enabled = true;
-            else
-                col.enabled = false;
-        }
+        if ((int)PlayerStat.instance.MoveState < 4)
+            col.enabled = true;
+        else
+            col.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)

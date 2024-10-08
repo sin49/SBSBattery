@@ -45,11 +45,7 @@ public abstract class EnemyAction : MonoBehaviour
 
         StartCoroutine(DisableAction(ActionLifeTIme));
     }
-    protected void DisableActionMethod()
-    {
-        ActionEndHandler?.Invoke();
-        ActionEndHandler = null;
-    }
+
     protected IEnumerator DisableAction(float lifetime)//행동이 끝남
     {
  
