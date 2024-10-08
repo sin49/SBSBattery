@@ -10178,8 +10178,6 @@ MonoBehaviour:
   TrailColScale: 1
   TrailDuration: 3
   ColliderSpawnTime: 0.5
-  laserwarngingTIme: 0
-  laseractiveTIme: 0
 --- !u!1 &291498740
 GameObject:
   m_ObjectHideFlags: 0
@@ -34333,6 +34331,11 @@ PrefabInstance:
       propertyPath: laser2D
       value: 
       objectReference: {fileID: 2111085356040949574}
+    - target: {fileID: 7775747558215482256, guid: 40b8748c76f7fa64a90fee771e28bf0e,
+        type: 3}
+      propertyPath: OnlyfallPattern
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7775747558215482256, guid: 40b8748c76f7fa64a90fee771e28bf0e,
         type: 3}
       propertyPath: laseractiveTIme
@@ -71417,8 +71420,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 459aa2682ff0b7a44bfa99494a9bf7e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActionLifeTIme: 0
-  LaserWaringTime: 0
+  ActionLifeTIme: 1
+  LaserWaringTime: 2
   laseractiveTime: 0
   lasers:
   - {fileID: 8660025602180281895}
@@ -83884,7 +83887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cc0d4fd3ac6de44d878e6d4136dc30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  space: 1
+  space: 2
   ypos: 1
   lasers:
   - {fileID: 831245771382684705}
@@ -84699,7 +84702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cc0d4fd3ac6de44d878e6d4136dc30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  space: 1
+  space: 2
   ypos: 1
   lasers:
   - {fileID: 7910797255301718179}
