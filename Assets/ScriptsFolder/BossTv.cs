@@ -51,9 +51,12 @@ public class BossTv : RemoteObject
     public GameObject Monitor;
     public EnemyAction BossSweap;
     public EnemyAction BossLaser;
+    //public EnemyAction BossLaser2D;
     public EnemyAction BossFall;
    
     public EnemyAction TestAction;
+
+    public bool Phase2;
     List<EnemyAction> actions=new List<EnemyAction>();
     [HideInInspector]
     public int lifeCount;
@@ -87,9 +90,9 @@ public class BossTv : RemoteObject
         base.Awake();
         bossaudioplayer = GetComponent<Boss1SOundManager>();
         actions.Add(BossSweap);
-        actions.Add(BossLaser);
+        //actions.Add(BossLaser2D);
         actions.Add(BossFall);
-        animator=GetComponent<Animator>();
+        animator =GetComponent<Animator>();
     }
     private void Start()
     {
@@ -125,8 +128,10 @@ public class BossTv : RemoteObject
         CancelAction();
         if (!LHand.active && !RHand.active)
         {
-
+            Phase2 = true;
             //CanControl = true;
+            //actions.Remove(BossLaser2D);
+            actions.Add(BossLaser);
             animator.enabled = true;
             animator.Play("Boss1PhaseChange");
             Debug.Log("2페이즈 전환 연출");
@@ -203,7 +208,6 @@ public class BossTv : RemoteObject
                 }
             }
             TestAction.Invoke(patternComplete,target);
-            Debug.Log("실행됨");
             onPattern = true;
         }
 

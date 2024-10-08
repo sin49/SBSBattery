@@ -52,6 +52,7 @@ public class BossFalling : EnemyAction
 
     public float shakertimer;
 
+
     public CinemachineImpulseSource fallingshaker;
 
     //[Header("낙하물 오브젝트")]

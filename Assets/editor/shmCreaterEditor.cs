@@ -37,7 +37,7 @@ public class shmCreaterEditor : Editor
                 ShadowsMidtonesHighlights smh;
                 if (shmmanager.volume.profile.TryGet<ShadowsMidtonesHighlights>(out smh))
                 {
-                    CreatePreset(smh,shmmanager.CurrentSettingName);
+                
                 }
                 
             }

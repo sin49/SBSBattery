@@ -15,39 +15,26 @@ public class SMHChanger : volumeParameterChanger,colliderDisplayer
             ColliderDisplayManager.Instance.register(this);
         }
     }
-    [Header("로컬/월드 전환(On=월드,off=로컬)")]
-    public bool loadworldProcessing;
+    [Header("포스트 프로세싱 끄는 기능(이거 키면 프로세싱 교체가 아니라 그냥 끄는거)")]
+    public bool postprocessingoff;
 
+    VolumeProfile profile;
 
-    bool active;
     private void Start()
     {
         registerColliderDIsplay();
+     
     }
 
 
     protected override void Awake()
     {
         base.Awake();
-  
-    }
-    //public void SavePreset()
-    //{
-    //    ShadowsMidtonesHighlights smh;
-    //    if (volume.profile.TryGet<ShadowsMidtonesHighlights>(out smh))
-    //    {
-    //        //smh = PresetSetting;
-    //        SetParameter(PresetSetting.highlights, smh.highlights);
-    //        SetParameter(PresetSetting.shadows, smh.shadows);
-    //        SetParameter(PresetSetting.midtones, smh.midtones);
-    //        SetParameter(PresetSetting.shadowsStart, smh.shadowsStart);
-    //        SetParameter(PresetSetting.shadowsEnd, smh.shadowsEnd);
-    //        SetParameter(PresetSetting.highlightsStart, smh.highlightsStart);
-    //        SetParameter(PresetSetting.highlightsEnd, smh.highlightsEnd);
 
-    //        Debug.Log("프리셋 로딩 완료");
-    //    }
-    //}
+        profile = volume.profile;
+        volume.enabled = false;
+    }
+  
 
     public override void LoadPreset()
     {
@@ -69,28 +56,20 @@ public class SMHChanger : volumeParameterChanger,colliderDisplayer
         //}
 
     }
-
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-       
+
         if (other.CompareTag("Player"))
         {
-            if(!loadworldProcessing)
-            {
-                LoadPreset();
-                volume.enabled = true;
-                if (GlobalPostProcessingManager.instance != null)
-                    GlobalPostProcessingManager.instance.DisableGlobalPreset(this);
-            }
+
+            if(!postprocessingoff)
+            GlobalPostProcessingManager.instance.volume.profile = profile;
             else
-            {
-                if (GlobalPostProcessingManager.instance != null)
-                    GlobalPostProcessingManager.instance.EnableGlobalPreset();
-            }
-     
+                GlobalPostProcessingManager.instance.volume.profile = null;
+
         }
     }
-
+   
     public void ActiveColliderDisplay()
     {
         ColliderDisplay.enabled = true;
@@ -100,10 +79,5 @@ public class SMHChanger : volumeParameterChanger,colliderDisplayer
     {
         ColliderDisplay.enabled = false;
     }
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    volume.enabled = false;
-    //    if (GlobalPostProcessingManager.instance != null)
-    //        GlobalPostProcessingManager.instance.EnableGlobalPreset();
-    //}
+  
 }
