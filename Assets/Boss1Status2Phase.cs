@@ -2,31 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boss1Status : MonoBehaviour
+public class Boss1Status2Phase : MonoBehaviour
 {
     [Header("보스 스탯")]
     [Header("보스 모니터 체력(노기능)")]
     public int lifeCountMax;
-    [Header("랜덤 패턴(끄면 순서대로)")]
-    public bool randomPattern;
-    [Header("휩쓸기 패턴만 사용")]
-    public bool OnlySweapPattern;
-    [Header("레이저 패턴만 사용")]
-    public bool OnlylaserPattern;
-    [Header("레이저2D 패턴만 사용")]
-    public bool Onlylaser2DPattern;
-    [Header("낙하물 패턴만 사용")]
-    public bool OnlyfallPattern;
-    [Header("손 체력(플레이모드중 바꿔도 적용 안됨)")]
+  
+    [Header(" 2페이즈 손 체력")]
     public float HandHP;
     [Header("손 파괴시 이동 위치")]
     public Transform LhandDefeatTransform;
     public Transform RhandDefeatTransform;
     [Header("보스 낙하물")]
-    [Header("보스 낙하물리스트(플레이모드중 바꿔도 적용 안됨)")]
-    public List<Boss1FallObj> fallingObj2;
-    [Header("낙하 상자 오브젝트 생성(플레이모드중 바꿔도 적용 안됨)")]
-    public List<Boss1BoxFallCreateObj> fallingBoxCreateObj;
+    //[Header("보스 낙하물리스트(플레이모드중 바꿔도 적용 안됨)")]
+    //public List<Boss1FallObj> fallingObj2;
+    //[Header("낙하 상자 오브젝트 생성(플레이모드중 바꿔도 적용 안됨)")]
+    //public List<Boss1BoxFallCreateObj> fallingBoxCreateObj;
     [Header("데미지")]
     public float damage;
     [Header("생성시간, 최소/최대속도")]
@@ -58,9 +49,22 @@ public class Boss1Status : MonoBehaviour
     public float sweaperReturnTime;
     [Header("휩쓸기 기즈모 색깔")]
     public Color SweapColor;
+    [Header("보스 레이저")]
+    [Header("레이저 지속 시간")]
+    public float laserlifetime = 1.5f;
+    [Header("레이저 Y축 위치")]
+    public float LaserYpos = -6.4f;
 
-
-  
+    [Header("레이저 속도")]
+    public float LaserSpeed;
+    [Header("레이저 활성화 까지의 시간")]
+    public float laserActiveTimer = 1.5f;
+    [Header("장판 범위")]
+    public float TrailColScale = 1;
+    [Header("장판 지속 시간")]
+    public float TrailDuration;
+    [Header("장판 공격 판정 생성 간격")]
+    public float ColliderSpawnTime;
     [Header("레이저2D 경고 시간")]
     public float laserwarngingTIme;
     [Header("레이저2D 활성화 시간")]
@@ -71,7 +75,7 @@ public class Boss1Status : MonoBehaviour
     BossTv boss;
     BossFalling BossFalling;
     Boss1Sweap sweap;
-    public Boss1Laser2D laser2D;
+
     private void Awake()
     {
         laser = transform.parent.GetComponent<Boss1Laser>();
@@ -83,40 +87,29 @@ public class Boss1Status : MonoBehaviour
     }
     private void Update()
     {
-        if(!boss.Phase2)
+        laserupdate();
+
         updateStatus();
     }
-    void updateStatus()
+    void laserupdate()
     {
         if (boss != null)
         {
+            laser.ActionLifeTIme = laserlifetime;
+            laser.LaserYpos = LaserYpos;
+            laser.laserActiveTimer = laserActiveTimer;
+            laser.TrailColScale = TrailColScale;
+            laser.TrailDuration = TrailDuration;
+            laser.ColliderSpawnTime = ColliderSpawnTime;
+        }
+    }
+    void updateStatus()
+    {
+        if (boss != null&&boss.Phase2)
+        {
             boss.lifeCountMax = lifeCountMax;
             boss.HandHP = HandHP;
-            boss.randomPattern = randomPattern;
-            if (OnlySweapPattern)
-            {
-                boss.OnlyTestPattern = true;
-                boss.TestAction = sweap;
-            }
-            else if (OnlyfallPattern)
-            {
-                boss.OnlyTestPattern = true;
-                boss.TestAction = BossFalling;
-            }
-            else if (OnlylaserPattern)
-            {
-                boss.OnlyTestPattern = true;
-                boss.TestAction = laser;
-            }
-          else if (Onlylaser2DPattern) {
-                boss.OnlyTestPattern = true;
-                boss.TestAction = laser2D;
-            }
-
-            else
-            {
-                boss.OnlyTestPattern = false;
-            }
+        
             sweap.LhandDefeatTransform = LhandDefeatTransform;
             sweap.RhandDefeatTransform = RhandDefeatTransform;
             sweap.handsize = handsize;
@@ -129,9 +122,8 @@ public class Boss1Status : MonoBehaviour
             sweap.sweapColor = SweapColor;
 
           
-
-            BossFalling.fallingObj2 = fallingObj2;
-            BossFalling.fallingBoxCreateObj = fallingBoxCreateObj;
+            //BossFalling.fallingObj2 = fallingObj2;
+            //BossFalling.fallingBoxCreateObj = fallingBoxCreateObj;
 
             BossFalling.damage = damage;
             BossFalling.createTime = createTime;
@@ -143,10 +135,8 @@ public class Boss1Status : MonoBehaviour
             BossFalling.fallingHeight = fallingHeight;
             BossFalling.GizmoColor = GizmoColor;
 
-            laser2D.LaserWaringTime = laserwarngingTIme;
-            laser2D.laseractiveTime = laseractiveTIme;
+           
 
         }
     }
 }
-
