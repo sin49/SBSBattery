@@ -170,7 +170,7 @@ public class BossFalling : EnemyAction
        
         StartCoroutine(FallingAttack());
    
-        ani.enabled = false;
+   
     }
     Queue<Tuple<GameObject, Vector3>> ReturnFallObjectList()
     {
@@ -213,6 +213,7 @@ public class BossFalling : EnemyAction
     }
     IEnumerator FallingAttack()
     {
+        ani.enabled = false;
         StartCoroutine(ShakeLoop());
         //while (createCount < createCountMax)
         //{
