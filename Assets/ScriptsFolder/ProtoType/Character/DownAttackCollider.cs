@@ -9,7 +9,14 @@ public class DownAttackCollider : MeleeCollider
         damage = PlayerStat.instance.atk;
         gameObject.SetActive(false);
     }
-
+    protected override void Update()
+    {
+        
+    }
+    public void DeactiveCollider()
+    {
+        this.gameObject.SetActive(false);
+    }
     protected override void OnTriggerEnter(Collider other)
     {
 
@@ -57,8 +64,7 @@ public class DownAttackCollider : MeleeCollider
                 {
                     return;
                 }
-                else
-                    gameObject.SetActive(false);
+            
             }
         }        
     }
