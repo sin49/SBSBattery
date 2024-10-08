@@ -211,9 +211,13 @@ public class BossFalling : EnemyAction
     {
         base.CancelActionEvent();
     }
-    IEnumerator FallingAttack()
+    public void animatorFalse()
     {
         ani.enabled = false;
+    }
+    IEnumerator FallingAttack()
+    {
+       
         StartCoroutine(ShakeLoop());
         //while (createCount < createCountMax)
         //{
