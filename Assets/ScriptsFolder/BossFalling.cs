@@ -51,12 +51,45 @@ public class BossFalling : EnemyAction
 {
 
     public float shakertimer;
+    public Transform LhandTransform;
+    public Transform RhandTransform;
+    Vector3 LhandOriginPosition;
+    Vector3 RhandOriginPosition;
+    public float handreturntime = 2;
+    IEnumerator handreturn()
+    {
+   
+        float timer = 0;
+        float rotationspeed = 60 / handreturntime;
+        Vector3 Lhandvector = (-LhandTransform.position + LhandOriginPosition);
+        float LSpeed = Lhandvector.magnitude / handreturntime;
+        Vector3 Rhandvector = (-RhandTransform.position + RhandOriginPosition);
+        float RSpeed = Rhandvector.magnitude / handreturntime;
+        while (timer < handreturntime)
+        {
+            LhandTransform.Rotate(Vector3.forward * -1 * rotationspeed * Time.fixedDeltaTime);
+            RhandTransform.Rotate(Vector3.forward * rotationspeed * Time.fixedDeltaTime);
+            LhandTransform.Translate(LSpeed * Lhandvector.normalized * Time.fixedDeltaTime, Space.World);
+            RhandTransform.Translate(RSpeed * Rhandvector.normalized * Time.fixedDeltaTime, Space.World);
+            timer += Time.fixedDeltaTime;
+            yield return null;
+        }
+        LhandTransform.position = LhandOriginPosition;
+        RhandTransform.position = RhandOriginPosition;
+        LhandTransform.rotation = Quaternion.Euler(0, 0, 30);
+        RhandTransform.rotation = Quaternion.Euler(0, 0, -30);
+        yield return new WaitForSeconds(0.5f);
+        DisableActionMethod();
 
+
+    }
     public override void StopAction()
     {
         base.StopAction();
         StopAllCoroutines();
-        StartCoroutine(DisableAction(0.1f));
+        ani.Play("FallingAttack");
+        ani.enabled = false;
+        StartCoroutine(handreturn());
     }
     public CinemachineImpulseSource fallingshaker;
 
@@ -153,6 +186,8 @@ public class BossFalling : EnemyAction
 
     public override void Invoke(Action ActionENd,  Transform target = null)
     {
+        LhandOriginPosition = LhandTransform.position;
+        RhandOriginPosition = RhandTransform.position;
         registerActionHandler(ActionENd);
         ani.enabled = true;
    ani.Play("FallingAttack");

@@ -29,6 +29,10 @@ public class BossTv : RemoteObject
     {
         shaker.GenerateImpulse();
     }
+    public void animatorfalse()
+    {
+        animator.enabled = false;
+    }
     public void Change3DCamera()
     {
         var c_manager = PlayerHandler.instance.CurrentCamera.GetComponent<CameraManager_Switching2D3D>();
@@ -41,6 +45,7 @@ public class BossTv : RemoteObject
         actions.Add(BossLaser);
 
         PlayerHandler.instance.DimensionChange();
+    
         //StartCoroutine(c_manager.SwitchCameraForTransDimensionCorutinenoblending());
     }
     public void PlayerEnableCantHandle()

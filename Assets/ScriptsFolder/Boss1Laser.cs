@@ -60,6 +60,7 @@ public class Boss1Laser : EnemyAction
         LhandOriginPosition = LhandTransform.position;
         RhandOriginPosition = RhandTransform.position;
         this.Target = target;
+        Laser.gameObject.SetActive(true);
         //Laser.transform.position = new Vector3(target.position.x, LaserYpos,
         //   target.position.z);
         ani.enabled = true;
