@@ -349,6 +349,16 @@ public class PlayerHandler : MonoBehaviour
         {
             ingameUIManger.InteractTargetUI.SetActive(false);
         }
+
+        if (alwaysFuncActive && CurrentPlayer != null)
+        {
+            if (AlwaysInvincible)
+            {
+                CurrentPlayer.onInvincible = true;
+            }
+            else
+                CurrentPlayer.onInvincible = false;
+        }
     }
     [Header("키 두번 입력에 대한 처리")]
     public bool firstUpInput;
