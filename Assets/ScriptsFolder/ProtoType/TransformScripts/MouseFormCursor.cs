@@ -58,8 +58,11 @@ public class MouseFormCursor : MonoBehaviour
             CursorInteractObject cursorInteract;
             if (other.TryGetComponent<CursorInteractObject>(out cursorInteract))
             {
-                cursorInteract.AddComponent<CursorInteractObjectCheck>();
-                cursorInteract.GetComponent<CursorInteractObjectCheck>().cursorParent = transform.parent.gameObject;
+                if (cursorInteract.CompareTag("CursorObject"))
+                {
+                    cursorInteract.AddComponent<CursorInteractObjectCheck>();
+                    cursorInteract.GetComponent<CursorInteractObjectCheck>().cursorParent = transform.parent.gameObject;
+                }
                 //dontMove.ChangeScaleByFormCursor(dontMoveScalevalue);
                 onCatch = true;
                 soundEffectListPlayer.PlayAudio(0);
@@ -118,6 +121,7 @@ public class MouseFormCursor : MonoBehaviour
                 Debug.Log("ÇÃ·§Æû °í°´´ÔÀÌ½Ã³×¿ä");
                 DropPlatformObject();
             }
+            if(cursorInteract.CompareTag("CursorObject"))
             Destroy(cursorInteract.GetComponent<CursorInteractObjectCheck>());
         }
         //dontMove.ReturnScale();                
