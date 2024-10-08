@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -49,6 +50,49 @@ public class Boss1BoxFallCreateObj
 public class BossFalling : EnemyAction
 {
 
+    public float shakertimer;
+    public Transform LhandTransform;
+    public Transform RhandTransform;
+    Vector3 LhandOriginPosition;
+    Vector3 RhandOriginPosition;
+    public float handreturntime = 2;
+    IEnumerator handreturn()
+    {
+   
+        float timer = 0;
+        float rotationspeed = 60 / handreturntime;
+        Vector3 Lhandvector = (-LhandTransform.position + LhandOriginPosition);
+        float LSpeed = Lhandvector.magnitude / handreturntime;
+        Vector3 Rhandvector = (-RhandTransform.position + RhandOriginPosition);
+        float RSpeed = Rhandvector.magnitude / handreturntime;
+        while (timer < handreturntime)
+        {
+            LhandTransform.Rotate(Vector3.forward * -1 * rotationspeed * Time.fixedDeltaTime);
+            RhandTransform.Rotate(Vector3.forward * rotationspeed * Time.fixedDeltaTime);
+            LhandTransform.Translate(LSpeed * Lhandvector.normalized * Time.fixedDeltaTime, Space.World);
+            RhandTransform.Translate(RSpeed * Rhandvector.normalized * Time.fixedDeltaTime, Space.World);
+            timer += Time.fixedDeltaTime;
+            yield return null;
+        }
+        LhandTransform.position = LhandOriginPosition;
+        RhandTransform.position = RhandOriginPosition;
+        LhandTransform.rotation = Quaternion.Euler(0, 0, 30);
+        RhandTransform.rotation = Quaternion.Euler(0, 0, -30);
+        yield return new WaitForSeconds(0.5f);
+        DisableActionMethod();
+
+
+    }
+    public override void StopAction()
+    {
+        base.StopAction();
+        StopAllCoroutines();
+        ani.Play("FallingAttack");
+        ani.enabled = false;
+        StartCoroutine(handreturn());
+    }
+    public CinemachineImpulseSource fallingshaker;
+
     //[Header("낙하물 오브젝트")]
     //public List< GameObject> fallingObj;
 
@@ -58,6 +102,8 @@ public class BossFalling : EnemyAction
     List<GameObject> fallingobjects = new List<GameObject>();
 
     HashSet<GameObject> EssenetialFallObjectHashSet = new HashSet<GameObject>();
+
+    Animator ani;
 
     public Boss1SOundManager soundmanager;
     
@@ -89,7 +135,8 @@ public class BossFalling : EnemyAction
     // Start is called before the first frame update
     void Start()
     {
-        soundmanager=GetComponent<Boss1SOundManager>();
+        ani=GetComponent<Animator>();
+        soundmanager =GetComponent<Boss1SOundManager>();
         if (bossField != null)
         {
             Vector3 min = new Vector3(-0.5f, 0.5f, -0.5f);
@@ -139,8 +186,30 @@ public class BossFalling : EnemyAction
 
     public override void Invoke(Action ActionENd,  Transform target = null)
     {
+        LhandOriginPosition = LhandTransform.position;
+        RhandOriginPosition = RhandTransform.position;
         registerActionHandler(ActionENd);
-        StartCoroutine (FallingAttack());
+        ani.enabled = true;
+   ani.Play("FallingAttack");
+       
+    }
+    IEnumerator ShakeLoop()
+    {
+        float timer = 0;
+        Debug.Log("Shake 실행");
+        while (timer < createTime * createCountMax + 0.12f)
+        {
+            Debug.Log(createTime * createCountMax + 0.12f+" "+timer);
+            fallingshaker.GenerateImpulse();
+            timer += shakertimer;
+            yield return new WaitForSeconds(shakertimer);
+        }
+    }
+ public   void StartfallingAttack()
+    {
+       
+        StartCoroutine(FallingAttack());
+   
    
     }
     Queue<Tuple<GameObject, Vector3>> ReturnFallObjectList()
@@ -182,8 +251,14 @@ public class BossFalling : EnemyAction
     {
         base.CancelActionEvent();
     }
+    public void animatorFalse()
+    {
+        ani.enabled = false;
+    }
     IEnumerator FallingAttack()
     {
+       
+        StartCoroutine(ShakeLoop());
         //while (createCount < createCountMax)
         //{
         //    GameObject obj = Instantiate(enemy, RandomSpawn(), Quaternion.identity);

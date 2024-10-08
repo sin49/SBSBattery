@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Rendering;
 using UnityEngine;
 using static UnityEngine.ParticleSystem;
 
@@ -16,7 +17,8 @@ public class Boss1Laser : EnemyAction
     [Header("레이저 Y축 위치")]
     public float LaserYpos=-6.4f;
 
-
+    public float handreturntime = 2;
+    float lasertime;
     public Transform warning;
     public ParticleSystem particle;
     float laserlifetime;
@@ -44,28 +46,52 @@ public class Boss1Laser : EnemyAction
     Queue<Boss1LaserCollider> LaserPulling=new Queue<Boss1LaserCollider>();
 
     IEnumerator activecoroutine;
-  
 
+    Animator ani;
+    public override void StopAction()
+    {
+        base.StopAction();
+        laserlifetime = 0;
+    }
     public override void Invoke(Action ActionENd, Transform target = null)
     {
+        lasertime = ActionLifeTIme;
+        ActionLifeTIme += handreturntime + 0.5f;
+        LhandOriginPosition = LhandTransform.position;
+        RhandOriginPosition = RhandTransform.position;
         this.Target = target;
-        Laser.transform.position = new Vector3(target.position.x, LaserYpos,
-           target.position.z);
+        Laser.gameObject.SetActive(true);
+        //Laser.transform.position = new Vector3(target.position.x, LaserYpos,
+        //   target.position.z);
+        ani.enabled = true;
+        ani.Play("LaserAttack");
+       
         laserBeam.gameObject.SetActive(false);
-        warning.position = Laser.transform.position-Vector3.up*2;
-        laserlifetime = ActionLifeTIme;
-        warning.gameObject.SetActive(true);
-        activecoroutine = laserPattern();
-        StartCoroutine(activecoroutine);
+
+        laserlifetime = lasertime;
+        handreturncorutine = false;
         var main = particle.main;
         main.startSize = TrailColScale * 3;
         main.duration = laserlifetime;
         main.startLifetime = TrailDuration;
         registerActionHandler(() => { /*StopAllCoroutines();*/ StopCoroutine(activecoroutine); });
-        base.Invoke( ActionENd,target);
+        registerActionHandler(ActionENd);
+
     }
 
-
+    public void LaserStart()
+    {
+        ani.enabled = false;
+        Vector3 v = (LhandTransform.position + RhandTransform.position) / 2;
+        v.y = LaserYpos;
+        Laser.transform.position = v;
+        
+        warning.position = Laser.transform.position+Vector3.up ;
+        warning.gameObject.SetActive(true);
+        activecoroutine = laserPattern();
+        StartCoroutine(activecoroutine);
+   
+    }
 
     protected override void CancelActionEvent()
     {
@@ -89,12 +115,16 @@ public class Boss1Laser : EnemyAction
 
 
 
-
+    public Transform LhandTransform;
+    public Transform RhandTransform;
+    Vector3 LhandOriginPosition;
+    Vector3 RhandOriginPosition;
     private void Awake()
     {
         boss1SOundManager=this.GetComponent<Boss1SOundManager>();
         laserBeam.gameObject.SetActive(false);
         ColliderSpawnPoint.gameObject.SetActive(false);
+        ani = GetComponent<Animator>();
     }
    
     IEnumerator laserPattern()
@@ -124,8 +154,12 @@ public class Boss1Laser : EnemyAction
         if (Target != null)
         {
             Vector3 LaserVector = (Target.transform.transform.position - Laser.transform.position).normalized;
+          
             LaserVector.y = 0;
             Laser.Translate(LaserVector * LaserSpeed * Time.fixedDeltaTime);
+            LhandTransform.position = Laser.transform.position + new Vector3(-1.5f, 5, 0);
+            RhandTransform.position = Laser.transform.position + new Vector3(1.5f
+                , 5, 0);
         }
     }
     void laserpullingevent(Boss1LaserCollider collider)
@@ -154,7 +188,33 @@ public class Boss1Laser : EnemyAction
         col.initLaserCollider(TrailDuration-0.1f, Vector3.one* TrailColScale,
               laserpullingevent);
     }
+    bool handreturncorutine;
+    IEnumerator handreturn(){
+        handreturncorutine = true;
+        float timer = 0;
+        float rotationspeed = 60 / handreturntime;
+        Vector3 Lhandvector = (-LhandTransform.position + LhandOriginPosition);
+        float LSpeed = Lhandvector.magnitude / handreturntime;
+        Vector3 Rhandvector = (-RhandTransform.position + RhandOriginPosition);
+        float RSpeed = Rhandvector.magnitude / handreturntime;
+        while (timer < handreturntime)
+        {
+            LhandTransform.Rotate(Vector3.forward * -1 * rotationspeed * Time.fixedDeltaTime);
+            RhandTransform.Rotate(Vector3.forward  * rotationspeed * Time.fixedDeltaTime);
+            LhandTransform.Translate(LSpeed * Lhandvector.normalized * Time.fixedDeltaTime,Space.World);
+            RhandTransform.Translate(RSpeed * Rhandvector.normalized * Time.fixedDeltaTime, Space.World);
+            timer += Time.fixedDeltaTime;
+            yield return null;
+        }
+        LhandTransform.position = LhandOriginPosition;
+        RhandTransform.position = RhandOriginPosition;
+        LhandTransform.rotation = Quaternion.Euler(0, 0, 30);
+       RhandTransform.rotation = Quaternion.Euler(0, 0, -30);
+        yield return new WaitForSeconds(0.5f);
+        DisableActionMethod();
 
+
+    }
     private void FixedUpdate()
     {
         if (!laserBeam.gameObject.activeSelf)
@@ -168,7 +228,8 @@ public class Boss1Laser : EnemyAction
             particle.Stop();
             if (boss1SOundManager != null)
                 boss1SOundManager.LazerStartClipEnd();
-        
+            if (!handreturncorutine)
+                StartCoroutine(handreturn());
         }
         else
             laserlifetime -= Time.fixedDeltaTime;

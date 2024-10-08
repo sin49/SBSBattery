@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Cinemachine;
 
 public class Boss1Hand : MonoBehaviour,DamagedByPAttack
 {
@@ -9,8 +10,26 @@ public class Boss1Hand : MonoBehaviour,DamagedByPAttack
     public BossTv bosstv;
     public bool AttackState;
    public bool active;
+    public float shakertimer;
+    public CinemachineImpulseSource shaker;
     public Boss1HandSoundPlayer soundplayer;
     public event Action HandDominateEvent;
+    IEnumerator shakecorutine()
+    {
+        while (true)
+        {
+            shaker.GenerateImpulse();
+            yield return new WaitForSeconds(shakertimer);
+        }
+    }
+    public void stopShake()
+    {
+        StopAllCoroutines();
+    }
+    public void makeshake()
+    {
+        StartCoroutine(shakecorutine());
+    }
     private void Awake()
     {
         soundplayer = GetComponent<Boss1HandSoundPlayer>();
@@ -22,6 +41,7 @@ public class Boss1Hand : MonoBehaviour,DamagedByPAttack
             HP-=f;
             if (HP == 0)
             {
+                stopShake();
                 HandDominateEvent?.Invoke();
                 active = false;
                 HandDominateEvent = null;

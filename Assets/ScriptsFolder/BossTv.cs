@@ -8,7 +8,7 @@ using UnityEngine;
 //패턴 테스트 편하게
 public class BossTv : RemoteObject
 {
-
+    public Boss1Status2Phase phase2status;
     bool BossEnable;
     Animator animator;
     public void BossActive()
@@ -29,11 +29,23 @@ public class BossTv : RemoteObject
     {
         shaker.GenerateImpulse();
     }
+    public void animatorfalse()
+    {
+        animator.enabled = false;
+    }
     public void Change3DCamera()
     {
         var c_manager = PlayerHandler.instance.CurrentCamera.GetComponent<CameraManager_Switching2D3D>();
         //c_manager.trans3D = true;
+        LHand.HP = phase2status.HandHP;
+        RHand.HP = phase2status.HandHP;
+        LHand.active = true;
+        RHand.active = true;
+        actions.Remove(BossLaser2D);
+        actions.Add(BossLaser);
+
         PlayerHandler.instance.DimensionChange();
+    
         //StartCoroutine(c_manager.SwitchCameraForTransDimensionCorutinenoblending());
     }
     public void PlayerEnableCantHandle()
@@ -43,6 +55,7 @@ public class BossTv : RemoteObject
     public void PlayerDisableCantHandle()
     {
         PlayerHandler.instance.CantHandle = false;
+        animator.enabled = false;
     }
     public Boss1UI UI;
     [Header("보스는 SoundEffectListPlayer와")]
@@ -51,9 +64,12 @@ public class BossTv : RemoteObject
     public GameObject Monitor;
     public EnemyAction BossSweap;
     public EnemyAction BossLaser;
+    public EnemyAction BossLaser2D;
     public EnemyAction BossFall;
    
     public EnemyAction TestAction;
+
+    public bool Phase2;
     List<EnemyAction> actions=new List<EnemyAction>();
     [HideInInspector]
     public int lifeCount;
@@ -87,9 +103,9 @@ public class BossTv : RemoteObject
         base.Awake();
         bossaudioplayer = GetComponent<Boss1SOundManager>();
         actions.Add(BossSweap);
-        actions.Add(BossLaser);
+        actions.Add(BossLaser2D);
         actions.Add(BossFall);
-        animator=GetComponent<Animator>();
+        animator =GetComponent<Animator>();
     }
     private void Start()
     {
@@ -125,11 +141,23 @@ public class BossTv : RemoteObject
         CancelAction();
         if (!LHand.active && !RHand.active)
         {
-
-            //CanControl = true;
-            animator.enabled = true;
-            animator.Play("Boss1PhaseChange");
-            Debug.Log("2페이즈 전환 연출");
+            if (!Phase2)
+            {
+                Phase2 = true;
+                //CanControl = true;
+               
+                
+                animator.enabled = true;
+                animator.Play("Boss1PhaseChange");
+                Debug.Log("2페이즈 전환 연출");
+            }
+            else
+            {
+              
+                       animator.enabled = true;
+                animator.Play("  BossDefeat");
+                Debug.Log("쓰러뜨림");
+            }
         }
     }
    
@@ -203,7 +231,6 @@ public class BossTv : RemoteObject
                 }
             }
             TestAction.Invoke(patternComplete,target);
-            Debug.Log("실행됨");
             onPattern = true;
         }
 

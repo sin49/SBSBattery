@@ -41,7 +41,7 @@ public class HouseholdIronTransform : Player
     public float rayHeightValue;
     public float rayUpValue, rayMiddleValue, rayDownValue;
 
-    //public HouseHoldFormSoundPlayer soundPlayer;
+    public HouseHoldFormSoundPlayer soundPlayer;
 
     bool readyRush, downEnd, rushEnd;
     bool ironAttack = true;
@@ -65,7 +65,7 @@ public class HouseholdIronTransform : Player
     {
         base.Awake();
         InitTimer();
-        //soundPlayer = this.GetComponent<HouseHoldFormSoundPlayer>();
+        soundPlayer = this.GetComponent<HouseHoldFormSoundPlayer>();
     }
    
    protected override void Start()
@@ -151,7 +151,7 @@ public class HouseholdIronTransform : Player
     IEnumerator IronDownAttack()
     {
         SecondFormActive();
-        //soundPlayer.PlayInitDownAttackSound();
+        soundPlayer.PlayInitDownAttackSound();
         playerRb.useGravity = false;
         while (playerRb.velocity != Vector3.zero)
         {
@@ -220,6 +220,7 @@ public class HouseholdIronTransform : Player
         oncorutine = true;
         onRushRot = true;
         playerRb.velocity = new Vector3(playerRb.velocity.x * 0.5f, playerRb.velocity.y, playerRb.velocity.z * 0.5f);
+        soundPlayer.PlayRushStop();
         yield return new WaitForSeconds(0.5f);
 
 
@@ -325,7 +326,8 @@ public class HouseholdIronTransform : Player
 
             if (!onRushRot)
             {
-                //soundPlayer.rushsoundresume();
+                soundPlayer.rushingAudio();
+
                 Vector3 moveVelocity = Vector3.zero;
                 Vector3 vector = regularMove.normalized * rushSpeed;
                 Vector3 forwardForce = transform.GetChild(0).forward * rushSpeed;
@@ -642,8 +644,7 @@ public class HouseholdIronTransform : Player
                 ironDashEffect.gameObject.SetActive(true);
             }
             ironDashEffect.Play();
-           //if(soundplayer!+null)
-           // soundPlayer.rushingAudio();
+   ;
             onRush = true;
             rushEnd = false;
             ironAttack = true;
@@ -657,11 +658,12 @@ public class HouseholdIronTransform : Player
         PlayerHandler.instance.CantHandle = true;
         playerRb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePosition;
         meleeCollider.SetActive(false);
+       
         rushEnd = true;
         readyRush = false;
         rushTimer = rushTimeMax;
         ironDashEffect.Stop();
-        //soundPlayer.rushsoundend();
+
         SecondFormDeactive();
         Humonoidanimator.Play("RushEnd");
         StartCoroutine(RushEndCheck());
@@ -670,6 +672,7 @@ public class HouseholdIronTransform : Player
     IEnumerator RushEndCheck()
     {
         playerRb.velocity = new(0, playerRb.velocity.y, 0);
+        soundPlayer.rushsoundend();
         yield return new WaitForSeconds(0.5f);
 
         AnimatorClipInfo[] clipGroup = Humonoidanimator.GetCurrentAnimatorClipInfo(0);
@@ -686,6 +689,7 @@ public class HouseholdIronTransform : Player
             playerRb.constraints = RigidbodyConstraints.FreezeRotation;
             onInvincible = false;
             ironAttack = true;
+       
             onRush = false;            
         }
     }
@@ -694,6 +698,7 @@ public class HouseholdIronTransform : Player
     public void RushCancel()
     {
         Humonoidanimator.SetTrigger("RushCancel");
+        soundPlayer.WallCollidePlay();
         ironDashEffect.Stop();
         SecondFormDeactive();
         onRush = false;
@@ -739,8 +744,11 @@ public class HouseholdIronTransform : Player
             {
                 source.GenerateImpulse();
                 PlayerHandler.instance.CantHandle = true;
+
+                soundPlayer.PlayDownAttackEndSound();
+
                 ironDownAttack = false;
-                //soundPlayer.PlayDownAttackEndSound();
+
                 downEnd = true;
                 if (!ironDownAtkEffect.gameObject.activeSelf)
                 {

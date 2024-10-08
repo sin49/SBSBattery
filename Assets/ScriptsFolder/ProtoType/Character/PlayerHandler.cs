@@ -359,6 +359,7 @@ public class PlayerHandler : MonoBehaviour
             else
                 CurrentPlayer.onInvincible = false;
         }
+
     }
     [Header("키 두번 입력에 대한 처리")]
     public bool firstUpInput;

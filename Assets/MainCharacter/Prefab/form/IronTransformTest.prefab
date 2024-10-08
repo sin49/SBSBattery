@@ -787,6 +787,7 @@ GameObject:
   - component: {fileID: 8198897299448461337}
   - component: {fileID: 4406154955831000737}
   - component: {fileID: 3532352842755590486}
+  - component: {fileID: 2919768999078609841}
   m_Layer: 0
   m_Name: GroundMelee
   m_TagString: PlayerAttack
@@ -897,6 +898,22 @@ MonoBehaviour:
   attackTime: 0
   hitEffect: {fileID: 6455099831139738100, guid: 6cae3c6bcfef1234aa8098b1226d219f,
     type: 3}
+  soundEffectListPlayer: {fileID: 0}
+--- !u!114 &2919768999078609841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3604143898815389188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c358efc4e7446f147a9d6a4f71757744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list:
+  - clip: {fileID: 8300000, guid: bc558b6b65b418245becace9c304f6a4, type: 3}
+    volume: 1
 --- !u!1 &3860940069074602360
 GameObject:
   m_ObjectHideFlags: 0
@@ -1259,8 +1276,8 @@ GameObject:
   - component: {fileID: 2432691346111002418}
   - component: {fileID: 7519379821462962435}
   - component: {fileID: 126969326634588035}
-  - component: {fileID: 3616320240839429382}
   - component: {fileID: 2382477968564158788}
+  - component: {fileID: 5956076676834499241}
   m_Layer: 6
   m_Name: IronTransformTest
   m_TagString: Player
@@ -1395,6 +1412,7 @@ MonoBehaviour:
   rayUpValue: 0.25
   rayMiddleValue: 0.25
   rayDownValue: 0.25
+  soundPlayer: {fileID: 0}
   downAtkSpeed: 25
   ironFlyTime: 0.45
   downAtkEndTimeMax: 1
@@ -1607,38 +1625,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32177de85efdfc943b70253b78ba038e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3616320240839429382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6022164399677782045}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab58d2e89b14edd4bb013c33c8f0cd8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveClip: {fileID: 8300000, guid: 83315124d8bd65140b4035305992fb6b, type: 3}
-  MoveVolume: 0
-  AttackClip: {fileID: 8300000, guid: 25c5897575b078c4ba66ca5ffa7908c5, type: 3}
-  AttackVolume: 0.6
-  JumpClip: {fileID: 8300000, guid: 85ea7b8994df41b45ad65459747ef044, type: 3}
-  JumpVolume: 0.6
-  InitDownAttackClip: {fileID: 8300000, guid: 5795d3a606bf0184c913e6e578e2603a, type: 3}
-  InitDownAttackVolume: 1
-  DownAttackEndClip: {fileID: 8300000, guid: 671fd714cf48c1d45bc240f8cb13d228, type: 3}
-  DownAttackEndVolume: 1
-  InitTransformedClip: {fileID: 8300000, guid: 5795d3a606bf0184c913e6e578e2603a, type: 3}
-  InitTransformedVolume: 1
-  TransformedEndClip: {fileID: 8300000, guid: 6999731b72f1baf42bf110ddb2d2da4c, type: 3}
-  TransformedEndVolume: 1
-  HittedClip: {fileID: 8300000, guid: cc8fd7d49ea7f1f44b99ba7457f5d02d, type: 3}
-  HittedVolume: 1
-  LandClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
-  LandVolume: 0.4
-  SkillClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
-  SkillVolume: 1
 --- !u!114 &2382477968564158788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1692,6 +1678,45 @@ MonoBehaviour:
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0, y: -1, z: 0}
+--- !u!114 &5956076676834499241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6022164399677782045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4072bc6a82ed2864cb5a18159c6c2c6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClip: {fileID: 0}
+  MoveVolume: 0
+  AttackClip: {fileID: 8300000, guid: 25c5897575b078c4ba66ca5ffa7908c5, type: 3}
+  AttackVolume: 1
+  JumpClip: {fileID: 8300000, guid: 85ea7b8994df41b45ad65459747ef044, type: 3}
+  JumpVolume: 1
+  InitDownAttackClip: {fileID: 8300000, guid: ea3d2dc6b4cecf64d9482f509d91781e, type: 3}
+  InitDownAttackVolume: 1
+  DownAttackEndClip: {fileID: 8300000, guid: 671fd714cf48c1d45bc240f8cb13d228, type: 3}
+  DownAttackEndVolume: 1
+  InitTransformedClip: {fileID: 8300000, guid: 5795d3a606bf0184c913e6e578e2603a, type: 3}
+  InitTransformedVolume: 1
+  TransformedEndClip: {fileID: 8300000, guid: 6999731b72f1baf42bf110ddb2d2da4c, type: 3}
+  TransformedEndVolume: 1
+  HittedClip: {fileID: 8300000, guid: cc8fd7d49ea7f1f44b99ba7457f5d02d, type: 3}
+  HittedVolume: 1
+  LandClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
+  LandVolume: 1
+  SkillClip: {fileID: 0}
+  SkillVolume: 1
+  rushingClip: {fileID: 0}
+  rushingVolume: 1
+  WallColClip: {fileID: 8300000, guid: 8683c7383ff0ce649ad9dbe589ae3942, type: 3}
+  WallColVolume: 1
+  RushSTopClip: {fileID: 8300000, guid: ae2734b8a8890134ab5c67bc8155b19e, type: 3}
+  RushSTopVolume: 1
+  rushing: 0
 --- !u!1 &6609269512338968028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2481,6 +2506,7 @@ GameObject:
   - component: {fileID: 8662225138925515128}
   - component: {fileID: 8854460605276781726}
   - component: {fileID: 2663314242661817638}
+  - component: {fileID: 8048595550320088646}
   m_Layer: 0
   m_Name: GroundMelee2D
   m_TagString: PlayerAttack
@@ -2565,6 +2591,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &8048595550320088646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8917807653965726783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e18407ae69b6a8c4da6baf0862ae5d14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &649141901164870335
 PrefabInstance:
   m_ObjectHideFlags: 0

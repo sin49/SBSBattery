@@ -18,6 +18,7 @@ public class MouseTransform : Player
     {
         base.Awake();
         InitMouseForm();
+        soundplayer_=GetComponent<MouseSoundPlayer>();
     }
 
     public void InitMouseForm()
@@ -129,7 +130,7 @@ public class MouseTransform : Player
             SecondFormDeactive();
         }
     }
-
+    public MouseSoundPlayer soundplayer_;
     public void SecondFormActive()
     {
         Destroy(Instantiate(changeEffect, transform.position, Quaternion.identity), 2f);
@@ -139,6 +140,7 @@ public class MouseTransform : Player
         }
         cursor.InitCursorPos();
         secondForm.SetActive(true);
+        soundplayer_.FormChangePlay();
     }
 
     public void SecondFormDeactive()

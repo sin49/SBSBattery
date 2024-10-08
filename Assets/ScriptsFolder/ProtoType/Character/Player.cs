@@ -100,10 +100,11 @@ public class Player : Character,environmentObject
     public float jumpkeyinputCheck = 0.05f;
    
     public bool inputCheck;
+    DownAttackCollider d_col;
     void groundCheckEvnet()
     {
         onGround = true;
-
+        d_col.DeactiveCollider();
         if (downAttack)
         {
             SoundPlayer.PlayDownAttackEndSound();
@@ -111,10 +112,14 @@ public class Player : Character,environmentObject
             if (LandingEffect != null)
                 LandingEffect.SetActive(true);
         }
+        else
+        {
+            SoundPlayer.PlayLandingSound();
+        }
         PlayerStat.instance.jump = true;
         PlayerStat.instance.doubleJump = true;
         doublejumpComplete = false;
-        SoundPlayer.PlayLandingSound();
+
         jumpBufferTimer = 0;
         doubleZinput = false;
         flyTimer = flyTime;
@@ -153,6 +158,7 @@ public class Player : Character,environmentObject
     {
         base.Awake();
         SoundPlayer = GetComponent<PlayerSoundPlayer>();
+        d_col = downAttackCollider.GetComponent<DownAttackCollider>();
     }
     // Start is called before the first frame update
    protected virtual void Start()
@@ -1077,7 +1083,7 @@ public class Player : Character,environmentObject
             Debug.Log(playerRb.velocity);
             yield return null;
         }
-
+        
         playerRb.AddForce(transform.up * 3f, ForceMode.Impulse);
         SoundPlayer.PlayInitDownAttackSound();
         yield return new WaitForSeconds(0.2f);

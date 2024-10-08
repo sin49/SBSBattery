@@ -11,13 +11,13 @@ public class PlayerAttackFor2D : MonoBehaviour
         if (other.TryGetComponent<DamagedByPAttack>(out Script))
         {
             Script.Damaged(damage);
-           transform.parent. gameObject.SetActive(false);
+
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy")&& 
-                (int)PlayerStat.instance.MoveState >= 4)
+                (int)PlayerStat.instance.MoveState < 4)
         {
             Debug.Log("플레이어 2D 공격");
             DamageCollider(collision);
