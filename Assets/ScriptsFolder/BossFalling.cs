@@ -52,7 +52,12 @@ public class BossFalling : EnemyAction
 
     public float shakertimer;
 
-
+    public override void StopAction()
+    {
+        base.StopAction();
+        StopAllCoroutines();
+        StartCoroutine(DisableAction(0.1f));
+    }
     public CinemachineImpulseSource fallingshaker;
 
     //[Header("낙하물 오브젝트")]

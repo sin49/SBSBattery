@@ -48,7 +48,11 @@ public class Boss1Laser : EnemyAction
     IEnumerator activecoroutine;
 
     Animator ani;
-
+    public override void StopAction()
+    {
+        base.StopAction();
+        laserlifetime = 0;
+    }
     public override void Invoke(Action ActionENd, Transform target = null)
     {
         lasertime = ActionLifeTIme;

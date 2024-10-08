@@ -37,7 +37,9 @@ public class BossTv : RemoteObject
         RHand.HP = phase2status.HandHP;
         LHand.active = true;
         RHand.active = true;
-        
+        actions.Remove(BossLaser2D);
+        actions.Add(BossLaser);
+
         PlayerHandler.instance.DimensionChange();
         //StartCoroutine(c_manager.SwitchCameraForTransDimensionCorutinenoblending());
     }
@@ -138,9 +140,7 @@ public class BossTv : RemoteObject
             {
                 Phase2 = true;
                 //CanControl = true;
-                actions.Remove(BossLaser2D);
-                actions.Add(BossLaser);
-            
+               
                 
                 animator.enabled = true;
                 animator.Play("Boss1PhaseChange");
