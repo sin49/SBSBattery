@@ -10133,6 +10133,53 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 284138198}
   m_Mesh: {fileID: 8832406474945461814, guid: 32b9570951491d8439f5c7c991a85f1a, type: 3}
+--- !u!1 &286549908 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2683152688034982521, guid: 40b8748c76f7fa64a90fee771e28bf0e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1092250642}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &286549911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286549908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d9df4adabcb1ce4ca015dbb6e5ea27f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeCountMax: 0
+  HandHP: 5
+  LhandDefeatTransform: {fileID: 1749019359}
+  RhandDefeatTransform: {fileID: 584658983}
+  damage: 1
+  createTime: 1
+  minSpeed: 0.5
+  maxSpeed: 1.5
+  createCountMax: 20
+  fallingHeight: 10
+  fallingRange: 1.15
+  GizmoColor: {r: 0, g: 0, b: 0, a: 0}
+  handsize: 1
+  SweaperPatternDealy: 1
+  SweaperStartMoveTime: 1
+  sweaperwaitTime: 1
+  SweaperEndMoveTime: 1
+  SweaperEndWaitTime: 1
+  sweaperReturnTime: 1
+  SweapColor: {r: 0, g: 0, b: 0, a: 0}
+  laserlifetime: 1.5
+  LaserYpos: -6.4
+  LaserSpeed: 1.5
+  laserActiveTimer: 1.5
+  TrailColScale: 1
+  TrailDuration: 3
+  ColliderSpawnTime: 0.5
+  laserwarngingTIme: 0
+  laseractiveTIme: 0
 --- !u!1 &291498740
 GameObject:
   m_ObjectHideFlags: 0
@@ -19817,6 +19864,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 582258339}
   m_Mesh: {fileID: 4300002, guid: 1c41da832ecadea449b1ef9abc9427f6, type: 3}
+--- !u!4 &584658983 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8208100128127074496, guid: 40b8748c76f7fa64a90fee771e28bf0e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1092250642}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &588942604
 GameObject:
   m_ObjectHideFlags: 0
@@ -34245,15 +34298,50 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4055101929726195839, guid: 40b8748c76f7fa64a90fee771e28bf0e,
+        type: 3}
+      propertyPath: shaker
+      value: 
+      objectReference: {fileID: 1332849838}
+    - target: {fileID: 4055101929726195839, guid: 40b8748c76f7fa64a90fee771e28bf0e,
+        type: 3}
+      propertyPath: shakertimer
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 4220509529037449717, guid: 40b8748c76f7fa64a90fee771e28bf0e,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6602919900276604124, guid: 40b8748c76f7fa64a90fee771e28bf0e,
+        type: 3}
+      propertyPath: shaker
+      value: 
+      objectReference: {fileID: 1998796955}
+    - target: {fileID: 6602919900276604124, guid: 40b8748c76f7fa64a90fee771e28bf0e,
+        type: 3}
+      propertyPath: shakertimer
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 7453909952837059340, guid: 40b8748c76f7fa64a90fee771e28bf0e,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7775747558215482256, guid: 40b8748c76f7fa64a90fee771e28bf0e,
+        type: 3}
+      propertyPath: laser2D
+      value: 
+      objectReference: {fileID: 2111085356040949574}
+    - target: {fileID: 7775747558215482256, guid: 40b8748c76f7fa64a90fee771e28bf0e,
+        type: 3}
+      propertyPath: laseractiveTIme
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7775747558215482256, guid: 40b8748c76f7fa64a90fee771e28bf0e,
+        type: 3}
+      propertyPath: laserwarngingTIme
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9123158585302966303, guid: 40b8748c76f7fa64a90fee771e28bf0e,
         type: 3}
@@ -34267,7 +34355,19 @@ PrefabInstance:
         type: 3}
       insertIndex: 3
       addedObject: {fileID: 4134602818364840864}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2683152688034982521, guid: 40b8748c76f7fa64a90fee771e28bf0e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 286549911}
+    - targetCorrespondingSourceObject: {fileID: 5580091231082257511, guid: 40b8748c76f7fa64a90fee771e28bf0e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1332849838}
+    - targetCorrespondingSourceObject: {fileID: 5240444313098218687, guid: 40b8748c76f7fa64a90fee771e28bf0e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1998796955}
   m_SourcePrefab: {fileID: 100100000, guid: 40b8748c76f7fa64a90fee771e28bf0e, type: 3}
 --- !u!1 &1097367957
 GameObject:
@@ -41728,6 +41828,65 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1331818890}
   m_Mesh: {fileID: 3236162767766111679, guid: 32b9570951491d8439f5c7c991a85f1a, type: 3}
+--- !u!1 &1332849832 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5580091231082257511, guid: 40b8748c76f7fa64a90fee771e28bf0e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1092250642}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1332849838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1332849832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_ImpulseShape: 2
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.2
+    m_ImpulseType: 0
+    m_DissipationRate: 0.25
+    m_RawSignal: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 100
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: 0, y: -1, z: 0}
 --- !u!1 &1332896237
 GameObject:
   m_ObjectHideFlags: 0
@@ -53903,6 +54062,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1745981842}
   m_Mesh: {fileID: 4300002, guid: 1c41da832ecadea449b1ef9abc9427f6, type: 3}
+--- !u!4 &1749019359 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3079245634506789802, guid: 40b8748c76f7fa64a90fee771e28bf0e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1092250642}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1750125159
 GameObject:
   m_ObjectHideFlags: 0
@@ -61831,6 +61996,65 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1996518845}
   m_Mesh: {fileID: 8832406474945461814, guid: 32b9570951491d8439f5c7c991a85f1a, type: 3}
+--- !u!1 &1998796949 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5240444313098218687, guid: 40b8748c76f7fa64a90fee771e28bf0e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1092250642}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1998796955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1998796949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_ImpulseShape: 2
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.2
+    m_ImpulseType: 0
+    m_DissipationRate: 0.25
+    m_RawSignal: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 100
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: 0, y: -1, z: 0}
 --- !u!1 &1999216203
 GameObject:
   m_ObjectHideFlags: 0
@@ -70174,6 +70398,7 @@ MonoBehaviour:
   ActionLifeTIme: 10
   LaserSpeed: 2
   LaserYpos: -6.4
+  handreturntime: 2
   warning: {fileID: 5616328608057280930}
   particle: {fileID: 3535991812725763040}
   laserActiveTimer: 2
@@ -70186,6 +70411,8 @@ MonoBehaviour:
   pullingtransform: {fileID: 5554753117749603670}
   LaserCollider: {fileID: 5226116098530326790, guid: 6121d6bc9c1c2d94dbe28ad33c3648bc,
     type: 3}
+  LhandTransform: {fileID: 0}
+  RhandTransform: {fileID: 0}
 --- !u!1001 &1570781567531425165
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -78719,6 +78946,8 @@ MonoBehaviour:
   bosstv: {fileID: 2849135284848316367}
   AttackState: 0
   active: 0
+  shakertimer: 0
+  shaker: {fileID: 0}
   soundplayer: {fileID: 0}
 --- !u!1 &4060480575527642838
 GameObject:
@@ -81961,6 +82190,8 @@ MonoBehaviour:
   bosstv: {fileID: 2849135284848316367}
   AttackState: 0
   active: 0
+  shakertimer: 0
+  shaker: {fileID: 0}
   soundplayer: {fileID: 0}
 --- !u!4 &6643340498848762553
 Transform:
@@ -83557,6 +83788,7 @@ MonoBehaviour:
   randomPattern: 0
   OnlySweapPattern: 0
   OnlylaserPattern: 0
+  Onlylaser2DPattern: 0
   OnlyfallPattern: 1
   HandHP: 3
   LhandDefeatTransform: {fileID: 3079245634782896324}
@@ -83601,13 +83833,9 @@ MonoBehaviour:
   SweaperEndWaitTime: 1
   sweaperReturnTime: 1
   SweapColor: {r: 0, g: 0, b: 0, a: 0}
-  laserlifetime: 1.5
-  LaserYpos: -6.4
-  LaserSpeed: 0
-  laserActiveTimer: 1.5
-  TrailColScale: 1
-  TrailDuration: 0
-  ColliderSpawnTime: 0
+  laserwarngingTIme: 0
+  laseractiveTIme: 0
+  laser2D: {fileID: 0}
 --- !u!65 &7786602241533455405
 BoxCollider:
   m_ObjectHideFlags: 0

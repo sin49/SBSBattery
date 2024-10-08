@@ -13,6 +13,8 @@ public class Boss1Status : MonoBehaviour
     public bool OnlySweapPattern;
     [Header("레이저 패턴만 사용")]
     public bool OnlylaserPattern;
+    [Header("레이저2D 패턴만 사용")]
+    public bool Onlylaser2DPattern;
     [Header("낙하물 패턴만 사용")]
     public bool OnlyfallPattern;
     [Header("손 체력(플레이모드중 바꿔도 적용 안됨)")]
@@ -56,38 +58,32 @@ public class Boss1Status : MonoBehaviour
     public float sweaperReturnTime;
     [Header("휩쓸기 기즈모 색깔")]
     public Color SweapColor;
-    [Header("보스 레이저")]
-    [Header("레이저 지속 시간")]
-    public float laserlifetime = 1.5f;
-    [Header("레이저 Y축 위치")]
-    public float LaserYpos = -6.4f;
 
-    [Header("레이저 속도")]
-    public float LaserSpeed;
-    [Header("레이저 활성화 까지의 시간")]
-    public float laserActiveTimer = 1.5f;
-    [Header("장판 범위")]
-    public float TrailColScale = 1;
-    [Header("장판 지속 시간")]
-    public float TrailDuration;
-    [Header("장판 공격 판정 생성 간격")]
-    public float ColliderSpawnTime;
+
+  
+    [Header("레이저2D 경고 시간")]
+    public float laserwarngingTIme;
+    [Header("레이저2D 활성화 시간")]
+    public float laseractiveTIme;
 
 
     Boss1Laser laser;
     BossTv boss;
     BossFalling BossFalling;
     Boss1Sweap sweap;
+    public Boss1Laser2D laser2D;
     private void Awake()
     {
-        laser=transform.parent.GetComponent<Boss1Laser>();
-        boss= transform.parent.GetComponent<BossTv>();
-        BossFalling=transform.parent.GetComponent<BossFalling>();
+        laser = transform.parent.GetComponent<Boss1Laser>();
+        boss = transform.parent.GetComponent<BossTv>();
+        BossFalling = transform.parent.GetComponent<BossFalling>();
         sweap = transform.parent.GetComponent<Boss1Sweap>();
+
         updateStatus();
     }
     private void Update()
     {
+        if(!boss.Phase2)
         updateStatus();
     }
     void updateStatus()
@@ -101,36 +97,38 @@ public class Boss1Status : MonoBehaviour
             {
                 boss.OnlyTestPattern = true;
                 boss.TestAction = sweap;
-            }else if (OnlyfallPattern)
+            }
+            else if (OnlyfallPattern)
             {
                 boss.OnlyTestPattern = true;
                 boss.TestAction = BossFalling;
-            }else if (OnlylaserPattern)
+            }
+            else if (OnlylaserPattern)
             {
                 boss.OnlyTestPattern = true;
                 boss.TestAction = laser;
             }
+          else if (Onlylaser2DPattern) {
+                boss.OnlyTestPattern = true;
+                boss.TestAction = laser2D;
+            }
+
             else
             {
                 boss.OnlyTestPattern = false;
             }
             sweap.LhandDefeatTransform = LhandDefeatTransform;
-            sweap.RhandDefeatTransform= RhandDefeatTransform;
+            sweap.RhandDefeatTransform = RhandDefeatTransform;
             sweap.handsize = handsize;
-            sweap.SweaperEndMoveTime= SweaperEndMoveTime;
-            sweap.SweaperEndWaitTime= SweaperEndWaitTime;
-            sweap.sweaperReturnTime= sweaperReturnTime;
-            sweap.SweaperStartMoveTime= SweaperStartMoveTime;
-            sweap.sweaperwaitTime= sweaperwaitTime;
+            sweap.SweaperEndMoveTime = SweaperEndMoveTime;
+            sweap.SweaperEndWaitTime = SweaperEndWaitTime;
+            sweap.sweaperReturnTime = sweaperReturnTime;
+            sweap.SweaperStartMoveTime = SweaperStartMoveTime;
+            sweap.sweaperwaitTime = sweaperwaitTime;
             sweap.SweaperPatternDealy = SweaperPatternDealy;
             sweap.sweapColor = SweapColor;
 
-            laser.ActionLifeTIme = laserlifetime;
-            laser.LaserYpos = LaserYpos;
-            laser.laserActiveTimer = laserActiveTimer;
-            laser.TrailColScale = TrailColScale;
-            laser.TrailDuration = TrailDuration;
-            laser.ColliderSpawnTime = ColliderSpawnTime;
+          
 
             BossFalling.fallingObj2 = fallingObj2;
             BossFalling.fallingBoxCreateObj = fallingBoxCreateObj;
@@ -144,6 +142,11 @@ public class Boss1Status : MonoBehaviour
             BossFalling.fallingRange = fallingRange;
             BossFalling.fallingHeight = fallingHeight;
             BossFalling.GizmoColor = GizmoColor;
+
+            laser2D.LaserWaringTime = laserwarngingTIme;
+            laser2D.laseractiveTime = laseractiveTIme;
+
         }
     }
 }
+

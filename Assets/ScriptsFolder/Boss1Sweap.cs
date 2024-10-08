@@ -129,38 +129,30 @@ public class Boss1Sweap : EnemyAction
 
     public IEnumerator SweaperPattern()
     {
+        var a = GetRandPosition();
         if (Lhand.active && RHand.active)
         {
             bool randombool = UnityEngine.Random.Range(0, 2) == 0;
-            Vector3 Lpos;
-            Vector3 Rpos;
-            var a = GetRandPosition();
+           
+           
             if (randombool)
             {
-           
-    
 
-                yield return StartCoroutine(Sweaper(Lhand, a.Item1, a.Item2));
-                
-                yield return new WaitForSeconds(SweaperPatternDealy);
-               a = GetRandPosition();
- 
-                yield return StartCoroutine(Sweaper(RHand, a.Item2, a.Item1));
+
+                yield return StartCoroutine(Sweaper2(Lhand, a.Item1, a.Item2));
             }
             else
             {
-                yield return StartCoroutine(Sweaper(RHand, a.Item2, a.Item1));
-                yield return new WaitForSeconds(SweaperPatternDealy);
-                      a = GetRandPosition();
-                yield return StartCoroutine(Sweaper(Lhand, a.Item1, a.Item2));
+  
+                yield return StartCoroutine(Sweaper2(RHand, a.Item2, a.Item1));
             }
         }else if(Lhand.active && !RHand.active)
         {
-            var a = GetRandPosition();
+
             yield return StartCoroutine(Sweaper2(Lhand, a.Item1, a.Item2));
         }else if(!Lhand.active && RHand.active)
         {
-            var a = GetRandPosition();
+
             yield return StartCoroutine(Sweaper2(RHand, a.Item2, a.Item1));
         }
         yield return StartCoroutine(DisableAction(0.1f));
@@ -269,10 +261,11 @@ public class Boss1Sweap : EnemyAction
         //손이 휩쓸기 스타트
         tuple = calculateSweapvector(EndPos, handtransform.position, SweaperEndMoveTime);
         vec = tuple.Item1;
-        vec.y = 0;
+
         speed = tuple.Item2;
         if (boss1SOundManager != null)
             boss1SOundManager.HandSwerapEndClipPlay();
+        hand.makeshake();
         while (sweapertimer <= SweaperEndMoveTime)
         {
             handtransform.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
@@ -281,11 +274,13 @@ public class Boss1Sweap : EnemyAction
         }
 
         sweapertimer = 0;
+        hand.stopShake();
         yield return new WaitForSeconds(SweaperPatternDealy);
         //한번더
+        hand.makeshake();
         tuple = calculateSweapvector(StartPos, handtransform.position, SweaperEndMoveTime);
         vec = tuple.Item1;
-        vec.y = 0;
+ 
         speed = tuple.Item2;
         if (boss1SOundManager != null)
             boss1SOundManager.HandSwerapEndClipPlay();
@@ -297,6 +292,7 @@ public class Boss1Sweap : EnemyAction
         }
         hand.AttackState = false;
         sweapertimer = 0;
+        hand.stopShake();
         yield return new WaitForSeconds(SweaperEndWaitTime);
         //손이 원위치로
         tuple = calculateSweapvector(HandOnepositon, handtransform.position, sweaperReturnTime);
