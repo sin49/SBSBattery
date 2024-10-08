@@ -37,6 +37,7 @@ public class BossTv : RemoteObject
         RHand.HP = phase2status.HandHP;
         LHand.active = true;
         RHand.active = true;
+        
         PlayerHandler.instance.DimensionChange();
         //StartCoroutine(c_manager.SwitchCameraForTransDimensionCorutinenoblending());
     }
@@ -47,6 +48,7 @@ public class BossTv : RemoteObject
     public void PlayerDisableCantHandle()
     {
         PlayerHandler.instance.CantHandle = false;
+        animator.enabled = false;
     }
     public Boss1UI UI;
     [Header("보스는 SoundEffectListPlayer와")]

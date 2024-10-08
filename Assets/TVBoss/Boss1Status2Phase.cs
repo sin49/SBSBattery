@@ -65,10 +65,7 @@ public class Boss1Status2Phase : MonoBehaviour
     public float TrailDuration;
     [Header("장판 공격 판정 생성 간격")]
     public float ColliderSpawnTime;
-    [Header("레이저2D 경고 시간")]
-    public float laserwarngingTIme;
-    [Header("레이저2D 활성화 시간")]
-    public float laseractiveTIme;
+
 
 
     Boss1Laser laser;
