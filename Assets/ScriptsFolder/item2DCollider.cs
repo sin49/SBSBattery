@@ -11,7 +11,7 @@ public class item2DCollider : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             if (PlayerStat.instance.hp < PlayerStat.instance.hpMax&&
-                (int)PlayerStat.instance.MoveState >= 4)
+                (int)PlayerStat.instance.MoveState < 4)
             {
                 PlayerStat.instance.RecoverHP(HPRecoverPoint);
                 Destroy(gameObject);
