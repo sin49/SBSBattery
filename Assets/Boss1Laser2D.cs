@@ -11,6 +11,15 @@ public class Boss1Laser2D : EnemyAction
 
     public List<bosslasergroup> lasers=new List<bosslasergroup>();
 
+    public override void StopAction()
+    {
+        base.StopAction();
+        foreach(var a in lasers)
+        {
+            a.DeactiveLaserWarning();
+            a.DeactiveLaserBeam();
+        }
+    }
     private void Awake()
     {
         foreach (bosslasergroup group in lasers)
