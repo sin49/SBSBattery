@@ -11,15 +11,15 @@ public class Boss1Laser2D : EnemyAction
 
     public List<bosslasergroup> lasers=new List<bosslasergroup>();
 
-    //private void Awake()
-    //{
-    //    foreach(bosslasergroup group in lasers)
-    //    {
-    //    group.gameObject.SetActive(false);
-    //        group.DeactiveLaserBeam();
-    //        group.DeactiveLaserWarning();
-    //    }
-    //}
+    private void Awake()
+    {
+        foreach (bosslasergroup group in lasers)
+        {
+            group.gameObject.SetActive(false);
+            group.DeactiveLaserBeam();
+            group.DeactiveLaserWarning();
+        }
+    }
     IEnumerator laserpattern()
     {
         Debug.Log("레이저 패턴 체크");
