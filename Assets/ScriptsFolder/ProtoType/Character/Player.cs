@@ -112,10 +112,14 @@ public class Player : Character,environmentObject
             if (LandingEffect != null)
                 LandingEffect.SetActive(true);
         }
+        else
+        {
+            SoundPlayer.PlayLandingSound();
+        }
         PlayerStat.instance.jump = true;
         PlayerStat.instance.doubleJump = true;
         doublejumpComplete = false;
-        SoundPlayer.PlayLandingSound();
+
         jumpBufferTimer = 0;
         doubleZinput = false;
         flyTimer = flyTime;
