@@ -9,7 +9,7 @@ public class TItleText : MonoBehaviour
     public event Action ButtonEffect;
     private void Awake()
     {
-        ImageHub.SetActive(false);
+        //ImageHub.SetActive(false);
     }
     public void ActiveImageHub()
     {

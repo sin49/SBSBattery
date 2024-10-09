@@ -144,7 +144,7 @@ PrefabInstance:
     - target: {fileID: 7774432933691627993, guid: 27d43a75952ae564db023b0474c2bb5b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 164
+      value: 165.078
       objectReference: {fileID: 0}
     - target: {fileID: 7774432933691627993, guid: 27d43a75952ae564db023b0474c2bb5b,
         type: 3}
@@ -2149,7 +2149,7 @@ PrefabInstance:
     - target: {fileID: 6143649437931658386, guid: 498faebe0b50512469dec30511b4f85f,
         type: 3}
       propertyPath: initMoveSpeed
-      value: 4
+      value: 4.65
       objectReference: {fileID: 0}
     - target: {fileID: 6143649437931658386, guid: 498faebe0b50512469dec30511b4f85f,
         type: 3}
@@ -2226,10 +2226,25 @@ PrefabInstance:
       propertyPath: Checkpoints.Array.data[6]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7626001844642870291, guid: 498faebe0b50512469dec30511b4f85f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8262377263790243442, guid: 498faebe0b50512469dec30511b4f85f,
         type: 3}
       propertyPath: m_Name
       value: SIngleton
+      objectReference: {fileID: 0}
+    - target: {fileID: 9123679734919622433, guid: 498faebe0b50512469dec30511b4f85f,
+        type: 3}
+      propertyPath: AlwaysInvincible
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9123679734919622433, guid: 498faebe0b50512469dec30511b4f85f,
+        type: 3}
+      propertyPath: alwaysFuncActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3730,6 +3745,13 @@ MonoBehaviour:
     GateFit: 2
     FocusDistance: 10
     m_SensorSize: {x: 1, y: 1}
+    Iso: 200
+    ShutterSpeed: 0.005
+    Aperture: 16
+    BladeCount: 5
+    Curvature: {x: 2, y: 11}
+    BarrelClipping: 0.25
+    Anamorphism: 0
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -3795,7 +3817,6 @@ MonoBehaviour:
   CameraFollowPlayer: 1
   CameraLookPlayer: 0
   CameraIndex: 0
-  setting: {fileID: 11400000, guid: 70b9e4176c74bcf47ba74326af42734a, type: 2}
 --- !u!4 &1687056841
 Transform:
   m_ObjectHideFlags: 0
@@ -6225,6 +6246,7 @@ MonoBehaviour:
   CameraRange2D: {fileID: 998234787}
   CameraRange3D: {fileID: 1490625464}
   transistionDuration: 0.4
+  cameraScreenChangeOption: 0
   ColliderDisplay: {fileID: 4505285941491150873}
   CameraRangeDisplay2D: {fileID: 998234788}
   CameraRangeDisplay3D: {fileID: 1490625465}
@@ -17845,6 +17867,7 @@ MonoBehaviour:
   CameraRange2D: {fileID: 998234787}
   CameraRange3D: {fileID: 1490625464}
   transistionDuration: 0.4
+  cameraScreenChangeOption: 0
   ColliderDisplay: {fileID: 3997498864043450966}
   CameraRangeDisplay2D: {fileID: 998234788}
   CameraRangeDisplay3D: {fileID: 1490625465}

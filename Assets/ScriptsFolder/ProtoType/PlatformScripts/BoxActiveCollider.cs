@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class BoxActiveCollider : MonoBehaviour
 {
-    EnemyInstantiateObject enemyBox;
+ public   EnemyInstantiateObject enemyBox;
 
     bool checkPlayer;
 
-    private void Awake()
-    {
-        enemyBox = GetComponentInParent<EnemyInstantiateObject>();
-    }
-
+  
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !checkPlayer)

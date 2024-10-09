@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 public class TitleScreen : MonoBehaviour
 {
     public List<TItleText> titletexts;
@@ -11,8 +13,13 @@ public class TitleScreen : MonoBehaviour
     public string startscenename;
     public ButtonSoundEffectPlayer ButtionSoundEffectPlayer_;
 
+    [Header("서브프로그래머 추가 작업")]
+    public Sprite activeButton;
+    public Sprite deactiveButton;
+
     public void StartNewGame()
     {
+        Debug.Log(startscenename);
         GameManager.instance.DeleteSaveSetting();
         GameManager.instance.LoadingSceneWithKariEffect(startscenename);
    
@@ -78,8 +85,11 @@ public class TitleScreen : MonoBehaviour
     }
     public void changehub(int before,int after)
     {
-        titletexts[before].DeActiveImageHub();
-        titletexts[after].ActiveImageHub();
+        /*titletexts[before].DeActiveImageHub();
+        titletexts[after].ActiveImageHub();*/
+
+        titletexts[before].ImageHub.GetComponent<Image>().sprite = deactiveButton;
+        titletexts[after].ImageHub.GetComponent<Image>().sprite = activeButton;
     }
     public void quitgame()
     {

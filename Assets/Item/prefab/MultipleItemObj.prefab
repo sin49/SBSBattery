@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5725542482891501158}
   - component: {fileID: 6073788978279491411}
   - component: {fileID: 6714796544363278076}
+  - component: {fileID: 1995207714555259793}
   m_Layer: 0
   m_Name: MultipleItemObj
   m_TagString: Item
@@ -104,7 +105,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 0.65
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6714796544363278076
 MonoBehaviour:
@@ -120,4 +121,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GetItemEffect: {fileID: 6869346342021920014, guid: 29a36de40eb1d6644abeafdc22702bea,
     type: 3}
+  soundEffectListPlayer: {fileID: 0}
+  timer: 1.5
   status: 0
+--- !u!114 &1995207714555259793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3598668152159868719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c358efc4e7446f147a9d6a4f71757744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list:
+  - clip: {fileID: 8300000, guid: 4a02abd1f1a955c42b38b93c4db50bae, type: 3}
+    volume: 1

@@ -22,7 +22,9 @@ public class PlayerStat : CharacterStat
     [Header("#이단점프, 무적시간 등의 변수"), HideInInspector]
 
     public bool jump;
-    
+
+
+
     public bool doubleJump; // 이단 점프 체크
     [HideInInspector]
     public bool ableJump;
@@ -31,7 +33,14 @@ public class PlayerStat : CharacterStat
     [Header("공격시 전진 거리")]
     public float attackForce; // 근접 공격 시 addforce에 적용할 값
     [Header("점프력")]
-    public float jumpForce; // velocity.y 값에 영향을 주는 점프 가중치            
+    public float jumpForce; // velocity.y 값에 영향을 주는 점프 가중치
+    public float jumpheight;
+    public float jumptime;
+    public float jumpBufferTimeMax=1;
+    [Header("점프 키 막는 거")]
+    public float jumpkeyinputchecktimer=0.1f;
+    [HideInInspector]
+    public float jumpkeyinputcheckvalue;
     [Header("내려찍는 속도")]
     public float downForce; // 내려찍는 힘   
     [Header("내려찍기 전 체공 시간")]
@@ -47,6 +56,7 @@ public class PlayerStat : CharacterStat
     //public float dashTimer;// 쿨타임 
     //public float dashCoolTime; // 대쉬 최대 쿨타임    
 
+
     [Header("피격+무적 때 색깔")]
     public Color Hittedcolor;
     public Color invinciblecolor;
@@ -58,6 +68,7 @@ public class PlayerStat : CharacterStat
 
     [Header("이동 상태")]
     public PlayerMoveState MoveState;
+
 
     event Action recoverevent;
    public void registerRecoverAction(Action a)
@@ -97,14 +108,18 @@ public class PlayerStat : CharacterStat
         }
         MoveState = PlayerMoveState.Xmove;
     }
-    
-  
 
 
-    /*private void FixedUpdate()
+
+
+    private void FixedUpdate()
     {
-        if (hp <= 0)
-            SceneManager.LoadScene("Title");
+        jumpForce = jumpheight / jumptime;
+        if (jumpkeyinputcheckvalue > 0)
+        {
 
-    }*/    
+            jumpkeyinputcheckvalue -= Time.fixedDeltaTime;
+        }
+
+    }
 }

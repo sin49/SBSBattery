@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -13,22 +14,41 @@ public class MouseFormCursor : MonoBehaviour
     public CursorInteractObject interactObj;
     public float forwardThrowForce;
     public float upThrowForce;
+    [Header("0번 잡았을 때 1번 놓았을 때")]
+    public SoundEffectListPlayer soundEffectListPlayer;
 
     public ParticleSystem clickEffect;
     GameObject playerRotate;
 
+    public DontMoveCollider dontMove;
+    public Vector3 dontMoveOriginScale;
+
+    public float dontMoveScalevalue;
+
+    public Vector3 saveCursorPos;
+    public float upPos, forwardPos;
     private void Awake()
     {
         playerRotate = GetComponentInParent<Player>().transform.GetChild(0).gameObject;
+
+        soundEffectListPlayer=GetComponent<SoundEffectListPlayer>();
+
     }
 
     private void Update()
     {
+        UpdateCursorPos();
+    }    
+
+    public void UpdateCursorPos()
+    {
         if (interactObj != null)
         {
-            interactObj.transform.position = cursorParent.transform.position + transform.forward * interactObj.ColliderEndPoint();
+            interactObj.transform.position = cursorParent.transform.position + PlayerHandler.instance.CurrentPlayer.transform.GetChild(0).forward * interactObj.ColliderEndPoint();
             interactObj.transform.rotation = playerRotate.transform.rotation;
         }
+
+        //Debug.Log((transform.parent.position - PlayerHandler.instance.CurrentPlayer.transform.position));
     }
 
     private void OnTriggerEnter(Collider other)
@@ -38,7 +58,14 @@ public class MouseFormCursor : MonoBehaviour
             CursorInteractObject cursorInteract;
             if (other.TryGetComponent<CursorInteractObject>(out cursorInteract))
             {
+                if (cursorInteract.CompareTag("CursorObject"))
+                {
+                    cursorInteract.AddComponent<CursorInteractObjectCheck>();
+                    cursorInteract.GetComponent<CursorInteractObjectCheck>().cursorParent = transform.parent.gameObject;
+                }
+                //dontMove.ChangeScaleByFormCursor(dontMoveScalevalue);
                 onCatch = true;
+                soundEffectListPlayer.PlayAudio(0);
                 interactObj = cursorInteract;
                 interactObj.GetComponent<Rigidbody>().useGravity = false;
                 interactObj.GetComponent<Rigidbody>().isKinematic = true;
@@ -54,9 +81,10 @@ public class MouseFormCursor : MonoBehaviour
                     other.transform.rotation = Quaternion.identity;
                     cursorInteract.gameObject.layer = LayerMask.NameToLayer("DontMoveIgnore");
                 }
-
+                Debug.Log(other.gameObject);
                 if (other.TryGetComponent<fireenemy>(out fireenemy fire))
                 {
+                    Debug.Log("불몬 잡았나?");
                     ParticleSystem[] breath = fire.fireeffects;
                     foreach (ParticleSystem a in breath)
                     {
@@ -65,6 +93,11 @@ public class MouseFormCursor : MonoBehaviour
 
                     fire.breathsmallcollider.gameObject.SetActive(false);
                     fire.breathcollider.gameObject.SetActive(false);
+                    Debug.Log("불몬 화염방사 취소되나?");
+                }
+                else
+                {
+                    Debug.Log("불몬 안잡힘");
                 }
             }
         }
@@ -73,6 +106,7 @@ public class MouseFormCursor : MonoBehaviour
     public void InteractTypeCheck()
     {
         Debug.Log("체크하러 마실 나왔습니다");
+        clickEffect.Play();
         CursorInteractObject cursorInteract;
         if (interactObj != null && interactObj.TryGetComponent<CursorInteractObject>(out cursorInteract))
         {
@@ -87,8 +121,10 @@ public class MouseFormCursor : MonoBehaviour
                 Debug.Log("플랫폼 고객님이시네요");
                 DropPlatformObject();
             }
+            if(cursorInteract.CompareTag("CursorObject"))
+            Destroy(cursorInteract.GetComponent<CursorInteractObjectCheck>());
         }
-        clickEffect.Play();
+        //dontMove.ReturnScale();                
     }
 
     public void ThrowMonster()
@@ -105,7 +141,7 @@ public class MouseFormCursor : MonoBehaviour
 
             interactObj = null;
             onCatch = false;
-
+            soundEffectListPlayer.PlayAudio(1);
             RagdolEnemy re;
             if (enemy.TryGetComponent<RagdolEnemy>(out re))
             {
@@ -122,5 +158,14 @@ public class MouseFormCursor : MonoBehaviour
         interactObj.GetComponent<Rigidbody>().isKinematic = false;
         interactObj = null;
         onCatch = false;
+        soundEffectListPlayer.PlayAudio(1);
+    }
+
+    public void InitCursorPos()
+    {
+        saveCursorPos = (PlayerHandler.instance.CurrentPlayer.transform.GetChild(0).forward * forwardPos) +
+            (PlayerHandler.instance.CurrentPlayer.transform.GetChild(0).up * upPos);
+        cursorParent.transform.position = (PlayerHandler.instance.CurrentPlayer.transform.GetChild(0).position + saveCursorPos);
+        cursorParent.transform.rotation = PlayerHandler.instance.CurrentPlayer.transform.GetChild(0).rotation;
     }
 }

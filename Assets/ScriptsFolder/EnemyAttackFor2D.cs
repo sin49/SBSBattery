@@ -13,7 +13,7 @@ public class EnemyAttackFor2D : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (
-                (int)PlayerStat.instance.MoveState >= 4 && collision.CompareTag("Player"))
+                (int)PlayerStat.instance.MoveState < 4 && collision.CompareTag("Player"))
         {
     
             Attack();
