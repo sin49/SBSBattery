@@ -13,6 +13,9 @@ public class jumpenemy : Enemy
     public float jumpdelay=1;
    
     bool oncorutine;
+    [Header("얼굴 부분 이미션 머티리얼")]
+    public Material emmissionHeadMat;
+
     protected override void MoveAnimationPlay()
     {
         
@@ -98,5 +101,28 @@ public class jumpenemy : Enemy
                 onground = true;
             }
         }
+    }
+    //0번째: 바디, 1번째: 투명 유리
+    public override void StartEmmissionHitMat()
+    {
+        Material[] materials = skinRenderer.materials;
+        materials[0] = hittedMat;
+        materials[1] = emmissionHeadMat;
+
+        skinRenderer.materials = materials;
+    }
+
+    public override void EndEmmissionHitMat()
+    {
+        Material[] materials = skinRenderer.materials;
+        materials[0] = idleMat;
+        materials[1] = headMat;
+
+        skinRenderer.materials = materials;
+    }
+
+    public override void EndHitMat()
+    {
+        return;
     }
 }

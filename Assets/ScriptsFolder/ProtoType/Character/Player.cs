@@ -1,16 +1,8 @@
-using JetBrains.Annotations;
 using System;
 using System.Collections;
-using System.Security.Cryptography;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.RenderGraphModule;
-using UnityEngine.Playables;
-using UnityEngine.PlayerLoop;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
-using UnityEngine.Windows.Speech;
+
 
 
 public interface environmentObject
@@ -56,9 +48,9 @@ public class Player : Character,environmentObject
 
     [Header("#점프 홀딩 조절")]
     public float jumpholdLevel = 0.85f;
-    public float jumpBufferTimeMax;
+ 
     public float jumpBufferTimer;
-    public bool canjumpInput;
+
     public bool jumpLimitInput;
     [Header("#키 선입력 관련")]
     public float attackBufferTimeMax;
@@ -103,10 +95,35 @@ public class Player : Character,environmentObject
     public bool wallcheck;
     #endregion
     public bool cantmove;
-    public float jumpkeyinputCheck = 0.05f;
-    float jumpkeyinputcheckvalue;
-    public bool inputCheck;
+    public bool doubleZinput;
 
+    public float jumpkeyinputCheck = 0.05f;
+   
+    public bool inputCheck;
+    DownAttackCollider d_col;
+    void groundCheckEvnet()
+    {
+        onGround = true;
+        d_col.DeactiveCollider();
+        if (downAttack)
+        {
+            SoundPlayer.PlayDownAttackEndSound();
+            downAttack = false;
+            if (LandingEffect != null)
+                LandingEffect.SetActive(true);
+        }
+        else
+        {
+            SoundPlayer.PlayLandingSound();
+        }
+        PlayerStat.instance.jump = true;
+        PlayerStat.instance.doubleJump = true;
+        doublejumpComplete = false;
+
+        jumpBufferTimer = 0;
+        doubleZinput = false;
+        flyTimer = flyTime;
+    }
     private void OnBecameInvisible()
     {
         //if (PlayerHandler.instance.CurrentPlayer == this)
@@ -141,6 +158,7 @@ public class Player : Character,environmentObject
     {
         base.Awake();
         SoundPlayer = GetComponent<PlayerSoundPlayer>();
+        d_col = downAttackCollider.GetComponent<DownAttackCollider>();
     }
     // Start is called before the first frame update
    protected virtual void Start()
@@ -162,6 +180,8 @@ public class Player : Character,environmentObject
 
     void Update()
     {
+        
+
         if (jumpBufferTimer > 0)
         {
             jumpBufferTimer -= Time.deltaTime;
@@ -252,22 +272,7 @@ public class Player : Character,environmentObject
 
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject"))
                 {
-
-                    onGround = true;
-                  
-                    if (downAttack)
-                    {
-                        SoundPlayer.PlayDownAttackEndSound();
-                        downAttack = false;
-                        if (LandingEffect != null)
-                            LandingEffect.SetActive(true);
-                    }
-                    PlayerStat.instance.jump = true;
-                    PlayerStat.instance.doubleJump = true;
-                    SoundPlayer.PlayLandingSound();
-             
-
-                    flyTimer = flyTime;
+                    groundCheckEvnet();
                 }
 
 
@@ -278,21 +283,7 @@ public class Player : Character,environmentObject
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject"))
                 {
 
-                    onGround = true;
-                   
-                    if (downAttack)
-                    {
-                        SoundPlayer.PlayDownAttackEndSound();
-                        downAttack = false;
-                        if (LandingEffect != null)
-                            LandingEffect.SetActive(true);
-                    }
-                    PlayerStat.instance.jump = true;
-                    PlayerStat.instance.doubleJump = true;
-                    SoundPlayer.PlayLandingSound();
-             
-
-                    flyTimer = flyTime;
+                    groundCheckEvnet();
                 }
 
 
@@ -303,21 +294,7 @@ public class Player : Character,environmentObject
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject"))
                 {
 
-                    onGround = true;
-                
-                    if (downAttack)
-                    {
-                        SoundPlayer.PlayDownAttackEndSound();
-                        downAttack = false;
-                        if (LandingEffect != null )
-                            LandingEffect.SetActive(true);
-                    }
-                    PlayerStat.instance.jump = true;
-                    PlayerStat.instance.doubleJump = true;
-                    SoundPlayer.PlayLandingSound();
-                  
-
-                    flyTimer = flyTime;
+                    groundCheckEvnet();
                 }
 
 
@@ -328,21 +305,7 @@ public class Player : Character,environmentObject
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject"))
                 {
 
-                    onGround = true;
-                    isJump = false;
-                    if (downAttack)
-                    {
-                        SoundPlayer.PlayDownAttackEndSound();
-                        downAttack = false;
-                        if (LandingEffect != null)
-                            LandingEffect.SetActive(true);
-                    }
-                    PlayerStat.instance.jump = true;
-                    PlayerStat.instance.doubleJump = true;
-                    SoundPlayer.PlayLandingSound();
-             
-
-                    flyTimer = flyTime;
+                    groundCheckEvnet();
                 }
 
 
@@ -437,7 +400,7 @@ public class Player : Character,environmentObject
         {
             if (groundraychecker())
             {
-                Debug.Log("중력 가중치");
+
                 playerRb.AddForce(Vector3.down * stairdownforce);
             }
 
@@ -458,33 +421,29 @@ public class Player : Character,environmentObject
                 onInterarctive = false;
         }
 
-        if (jumpkeyinputcheckvalue > 0)
+      
+        if (isJump)
         {
-            canjumpInput = false;
-            jumpkeyinputcheckvalue -= Time.fixedDeltaTime;
+            if ( (!(playerRb.velocity.y > 0) && jumpanimtimer > 0.18f))
+            {
+                jumpanimtimer = 0;
+                isJump = false;
+            }
+            else
+            {
+                jumpanimtimer += Time.fixedDeltaTime;
+            }
         }
-        else
-        {
-            canjumpInput = true;
-        }
-        if (isJump && (!(playerRb.velocity.y > 0)|| jumpanimtimer>0.18f))
-        {
-            jumpanimtimer = 0;
-            isJump = false;
-        }
-        else
-        {
-            jumpanimtimer += Time.fixedDeltaTime;
-        }
-        groundraycheck();
+        //groundraycheck();
         JumpKeyInput();
         AttackNotHold();
         if (!downAttack)
             Attack();
-        
-       
 
-       
+    
+
+
+
         if (Input.GetKeyDown(KeyCode.Tab)) { HittedTest(); }
 
         //if (onGround && isJump && playerRb.velocity.y <= 0)
@@ -592,7 +551,7 @@ public class Player : Character,environmentObject
         transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
     }
     #region 이동
-    public void rotate(float hori, float vert)
+    public virtual void rotate(float hori, float vert)
     {
         Vector3 rotateVector = Vector3.zero;
 
@@ -936,7 +895,9 @@ public class Player : Character,environmentObject
         else
         {
             if (!PlayerHandler.instance.ladderInteract)
+            {                         
                 playerRb.AddForce(EnvironmentPower, ForceMode.VelocityChange);
+            }
             else
                 playerRb.AddForce(Movevelocity, ForceMode.VelocityChange);
         }
@@ -991,6 +952,11 @@ public class Player : Character,environmentObject
 
 
 
+    }
+
+    public virtual bool FormCheck()
+    {
+        return false;
     }
 
     public void StartLadderClimb()
@@ -1051,18 +1017,14 @@ public class Player : Character,environmentObject
                     attackBufferTimer = 0;
                     attackInputValue = 1;
 
-                    if (!onGround)
-                    {
-                        attackSky = true;
-                    }
-                    else
-                    {
+
+                    if(onGround)
                         playerRb.velocity = Vector3.zero;
-                        dontAttack = true;
-                        dontMoveTimer = PlayerStat.instance.attackDelay;
-                        dontAttackTimer = PlayerStat.instance.initattackCoolTime;
-                        attackGround = true;
-                    }
+                    dontAttack = true;
+                    dontMoveTimer = PlayerStat.instance.attackDelay;
+                    dontAttackTimer = PlayerStat.instance.initattackCoolTime;
+                    attackGround = true;
+
 
 
                     StartCoroutine(TestMeleeAttack());
@@ -1115,8 +1077,13 @@ public class Player : Character,environmentObject
     IEnumerator GoDownAttack()
     {
         playerRb.useGravity = false;
-        playerRb.velocity = Vector3.zero;
-
+        while (playerRb.velocity != Vector3.zero)
+        {
+            playerRb.velocity = Vector3.zero;
+            Debug.Log(playerRb.velocity);
+            yield return null;
+        }
+        
         playerRb.AddForce(transform.up * 3f, ForceMode.Impulse);
         SoundPlayer.PlayInitDownAttackSound();
         yield return new WaitForSeconds(0.2f);
@@ -1201,6 +1168,9 @@ public class Player : Character,environmentObject
             StartCoroutine(WaitEndDamaged());
         }
     }
+
+
+
     public virtual bool TransformInvincibleEvent()
     {
         return false;
@@ -1305,11 +1275,11 @@ public class Player : Character,environmentObject
         }
 
         isJump = true;
-        jumpBufferTimer = 0;
+        //jumpBufferTimer = 0;
         //canjumpInput = false;
         jumpLimitInput = true;
-        if (jumpkeyinputcheckvalue <= 0)
-            jumpkeyinputcheckvalue = jumpkeyinputCheck;
+        //if (jumpkeyinputcheckvalue <= 0)
+        //    jumpkeyinputcheckvalue = jumpkeyinputCheck;
         PlayerJumpEvent();
        
         isRun = false;
@@ -1317,46 +1287,73 @@ public class Player : Character,environmentObject
             SoundPlayer.PlayJumpAudio();
         playerRb.velocity = Vector3.zero;
         playerRb.AddForce(Vector3.up * PlayerStat.instance.jumpForce, ForceMode.Impulse);
+        jumpstopcorutine = jumpForceLimitCorutine();
+        StartCoroutine(jumpstopcorutine);
         onGround = false;
 
 
     }
-
+IEnumerator jumpForceLimitCorutine()
+    {
+        yield return new WaitForSeconds(PlayerStat.instance.jumptime);
+        playerRb.velocity = new Vector3(playerRb.velocity.x, 0, playerRb.velocity.z);
+        jumpstopcorutine = null;
+    }
 
     public void JumpKeyInput()
     {
+        if (downAttack)
+            return;
         if (jumpBufferTimer > 0)
         {
-            if (!downAttack)
-            {
-                if ( /*&& onGround*/ PlayerStat.instance.jump && canjumpInput)
+           
+                if ( /*&& onGround*/ PlayerStat.instance.jump)
                 {
                     PlayerStat.instance.jump = false;
                     Jump();
                 }
-                else if (canjumpInput && PlayerStat.instance.doubleJump)
-                {
-                    PlayerStat.instance.doubleJump = false;
-                    ModelAnimator.SetTrigger("rolling2");
-                    Jump();
-                    /*if (
-                PlayerInventory.instance.checkessesntialitem("item02"))
-                    {
-                        PlayerStat.instance.doubleJump = false;
-                        Jump();
-                    }*/
-                }
+               
 
-            }
+        }
+        //더블 점프 처리
+        if (doubleZinput&&!onGround&&!isJump&&!doublejumpComplete)
+        {
+            PlayerStat.instance.doubleJump = false;
+            if (jumpstopcorutine != null)
+                StopCoroutine(jumpstopcorutine);
+            jumpstopcorutine = null;
+            ModelAnimator.SetTrigger("rolling2");
+            doubleZinput = false;
+            doublejumpComplete = true;
+            Jump();
         }
     }
+    IEnumerator jumpstopcorutine;
+    bool doublejumpComplete;
     public void GetJumpBuffer()
     {
-        if (jumpkeyinputcheckvalue > 0)/*&&onGround)*/
-            return;
 
-        if (!jumpLimitInput)
-            jumpBufferTimer = jumpBufferTimeMax;
+
+
+        if (!jumpLimitInput && jumpBufferTimer <= 0)
+        {
+            jumpBufferTimer = PlayerStat.instance.jumpBufferTimeMax;
+            PlayerStat.instance.jumpkeyinputcheckvalue = 0.08f;
+        }
+       
+              
+
+
+
+    }
+
+    public void GetDounleZinput()
+    {
+        if (PlayerStat.instance. jumpkeyinputcheckvalue <= 0)
+        {
+
+            doubleZinput = true;
+        }
     }
     public void jumphold()
     {
@@ -1393,18 +1390,9 @@ public class Player : Character,environmentObject
     {
         AttackMove();
 
-        if (attackSky)
-        {
-            meleeCollider.SetActive(true);
-            meleeCollider.GetComponent<SphereCollider>().enabled = true;
-        }
-        else if (attackGround)
-        {
+        meleeCollider.SetActive(true);
+        meleeCollider.GetComponent<SphereCollider>().enabled = true;
 
-            meleeCollider.SetActive(true);
-            meleeCollider.GetComponent<SphereCollider>().enabled = true;
-
-        }
         if (AttackEffect != null)
         {
             AttackEffect.SetActive(false);
@@ -1414,19 +1402,6 @@ public class Player : Character,environmentObject
         AttackEvents();
         yield return new WaitForSeconds(PlayerStat.instance.attackDelay);
 
-
-        if (attackSky)
-        {
-            meleeCollider.SetActive(false);
-            meleeCollider.GetComponent<SphereCollider>().enabled = false;
-            attackSky = false;
-        }
-        else if (attackGround)
-        {
-            meleeCollider.SetActive(false);
-            meleeCollider.GetComponent<SphereCollider>().enabled = false;
-            attackGround = false;
-        }
         canAttack = true;
     }
 
@@ -1498,7 +1473,7 @@ public class Player : Character,environmentObject
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Ground") && jumpkeyinputcheckvalue <= 0 || other.CompareTag("CursorObject") && jumpkeyinputcheckvalue <= 0)
+        if ((other.CompareTag("Ground")) ||( other.CompareTag("CursorObject")))
         {
             jumpRaycastCheck();
         }
@@ -1507,13 +1482,13 @@ public class Player : Character,environmentObject
     private void OnCollisionStay(Collision collision)
     {
         //#region 바닥 상호작용
-        if (collision.gameObject.CompareTag("Ground") && jumpkeyinputcheckvalue <= 0 || collision.collider.CompareTag("CursorObject") && jumpkeyinputcheckvalue <= 0)
+        if ((collision.gameObject.CompareTag("Ground") || collision.collider.CompareTag("CursorObject")))
         {
             jumpRaycastCheck();
         }
         //#endregion
 
-        if (collision.gameObject.CompareTag("InteractivePlatform") && jumpkeyinputcheckvalue <= 0)
+        if (collision.gameObject.CompareTag("InteractivePlatform") )
         {
             jumpRaycastCheck();
             onInterarctive = true;
@@ -1538,8 +1513,7 @@ public class Player : Character,environmentObject
                    (int)PlayerStat.instance.MoveState < 4
                    && !CullingPlatform)
                 {
-                    if (jumpkeyinputcheckvalue <= 0)
-                        jumpkeyinputcheckvalue = jumpkeyinputCheck;
+              
                     PlayerHandler.instance.doubleDownInput = false;
                     CullingPlatform = true;
                     Physics.IgnoreLayerCollision(6, 11, true);

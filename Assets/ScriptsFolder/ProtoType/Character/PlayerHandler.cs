@@ -111,7 +111,7 @@ public class PlayerHandler : MonoBehaviour
         {
             instance = this;
         }
-
+        Debug.Log("PlayerHandlerAwake");
         #endregion
         PlayerFormList p;
         if (TryGetComponent<PlayerFormList>(out p))
@@ -349,6 +349,17 @@ public class PlayerHandler : MonoBehaviour
         {
             ingameUIManger.InteractTargetUI.SetActive(false);
         }
+
+        if (alwaysFuncActive && CurrentPlayer != null)
+        {
+            if (AlwaysInvincible)
+            {
+                CurrentPlayer.onInvincible = true;
+            }
+            else
+                CurrentPlayer.onInvincible = false;
+        }
+            
     }
     [Header("키 두번 입력에 대한 처리")]
     public bool firstUpInput;
@@ -472,12 +483,14 @@ public class PlayerHandler : MonoBehaviour
         if (CurrentPlayer.onInterarctive && (int)PlayerStat.instance.MoveState < 4)
         {
 
-            if (Input.GetKey(KeySettingManager.instance.jumpKeycode) && !Input.GetKey(KeyCode.DownArrow)
+            if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode) && !Input.GetKey(KeyCode.DownArrow)
                  )
             {
 
-
-                CurrentPlayer.GetJumpBuffer();
+                    if (CurrentPlayer.jumpBufferTimer <= 0)
+                        CurrentPlayer.GetJumpBuffer();
+                    else
+                        CurrentPlayer.GetDounleZinput();
 
 
             }
@@ -496,21 +509,25 @@ public class PlayerHandler : MonoBehaviour
             {
 
 
-                CurrentPlayer.GetJumpBuffer();
+                    if (CurrentPlayer.jumpBufferTimer <= 0)
+                        CurrentPlayer.GetJumpBuffer();
+                    else
+                        CurrentPlayer.GetDounleZinput();
 
 
-            }
-            else
+
+                }
+                else
             {
                 CurrentPlayer.jumpLimitInput = false;
                 /*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
                     CurrentPlayer.jumpLimitInput = false;*/
             }
         }
-        if (!Input.GetKey(KeySettingManager.instance.jumpKeycode))
-        {
-            CurrentPlayer.jumphold();
-        }
+        //if (!Input.GetKey(KeySettingManager.instance.jumpKeycode))
+        //{
+        //    CurrentPlayer.jumphold();
+        //}
 
 
         if (!ladderInteract)
@@ -549,6 +566,11 @@ PlayerInventory.instance.checkessesntialitem("item01")*/)
                 Skill1InputTimer -= Time.fixedDeltaTime;
         }
     }
+    public void DimensionChange()
+    {
+
+        StartCoroutine(ChangeDimension());
+    }
     void charactermove()
     {
         if (!CurrentPlayer.downAttack)
@@ -557,8 +579,7 @@ PlayerInventory.instance.checkessesntialitem("item01")*/)
         }
         if (Input.GetKeyDown(KeyCode.Space) && !Changing && !DImensionChangeDisturb)
         {
-
-            StartCoroutine(ChangeDimension());
+            DimensionChange();
             //Dimensionchangeevent?.Invoke();
 
         }
@@ -577,20 +598,20 @@ PlayerInventory.instance.checkessesntialitem("item01")*/)
                 InteractTimer = PlayerStat.instance.InteractDelay;
             }
         }
-        if (Input.GetKey(KeyCode.C) && !jumprestrict)
-        {
+        //if (Input.R(KeyCode.C) && !jumprestrict)
+        //{
 
 
-            CurrentPlayer.GetJumpBuffer();
+        //    CurrentPlayer.GetJumpBuffer();
 
 
-        }
-        else
-        {
-            CurrentPlayer.jumpLimitInput = false;
-            /*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
-                CurrentPlayer.jumpLimitInput = false;*/
-        }
+        //}
+        //else
+        //{
+        //    CurrentPlayer.jumpLimitInput = false;
+        //    /*if(CurrentPlayer.onGround || CurrentPlayer.isJump)
+        //        CurrentPlayer.jumpLimitInput = false;*/
+        //}
         if (!Input.GetKey(KeyCode.C))
         {
             CurrentPlayer.jumphold();

@@ -72,4 +72,19 @@ public class rushenemy : Enemy
         base.FlatByIronDwonAttack(downAtkEndTime);
         stoprush();
     }
+
+    public override void StartEmmissionHitMat()
+    {
+        skinRenderer.material = hittedMat;
+    }
+
+    public override void EndEmmissionHitMat()
+    {
+        skinRenderer.material = idleMat;
+    }
+
+    public override void EndHitMat()
+    {
+        return;
+    }
 }

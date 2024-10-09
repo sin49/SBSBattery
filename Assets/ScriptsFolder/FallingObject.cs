@@ -18,13 +18,25 @@ public class FallingObject : MonoBehaviour
 
     public Action ObjectgroundedSoundEvent;
     public GameObject hitEffect;
-  
-    
+    public bool endCorutine;
+    public float DisableTimer=0.25f;
+
+    IEnumerator FallEffectCorutine()
+    {
+        rb.useGravity = false;
+        rb.isKinematic = true;
+        yield return new WaitForSeconds(DisableTimer);
+        rb.isKinematic = false;
+        rb.useGravity = true;
+        warningObj.SetActive(false);
+        endCorutine = true;
+    }
     void Start()
     {
 
         rb = GetComponent<Rigidbody>();
         circlePos = new(transform.position.x, fieldPos.y + 0.1f, transform.position.z);
+        StartCoroutine(FallEffectCorutine());
     }
 
     private void OnDestroy()
@@ -34,7 +46,7 @@ public class FallingObject : MonoBehaviour
     }
     private void Update()
     {
-
+        if(endCorutine)
         transform.Translate(Vector3.down * fallingSpeed * Time.deltaTime, Space.World);
         //warningObj.transform.position = circlePos;
         WarningValue();
@@ -56,15 +68,17 @@ public class FallingObject : MonoBehaviour
         {
             Debug.Log("보스 낙하물 피격");
             PlayerHandler.instance.CurrentPlayer.Damaged(damage);
-            if(hitEffect != null)
-            Destroy(Instantiate(hitEffect, transform.position, Quaternion.identity), 2f);
+            Instantiate(hitEffect, transform.position, Quaternion.identity);
+
+;
             Destroy(gameObject);
         }
 
         if (other.CompareTag("Ground"))
         {
-            if(hitEffect != null)
-            Destroy(Instantiate(hitEffect, transform.position, Quaternion.identity), 2f);
+            Instantiate(hitEffect, transform.position, Quaternion.identity);
+          
+
             Destroy(gameObject);
         }
     }

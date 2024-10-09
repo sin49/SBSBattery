@@ -24,6 +24,7 @@ public class EnemySpawnOutputEvent : OutputEvent
     {
         Debug.Log("플레이어에 의한 인덱스 몬스터");
         base.output();
+
         if (signalReceiver != null && spawnPosGroup.Count !=0)
             StartCoroutine(SpawnCondition());
         else if (signalReceiver!= null)

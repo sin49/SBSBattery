@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class DownAttackCollider : MeleeCollider
 {
- 
-
 
     private void Start()
     {
@@ -11,58 +9,67 @@ public class DownAttackCollider : MeleeCollider
         damage = PlayerStat.instance.atk;
         gameObject.SetActive(false);
     }
-
+    protected override void Update()
+    {
+        
+    }
+    public void DeactiveCollider()
+    {
+        this.gameObject.SetActive(false);
+    }
     protected override void OnTriggerEnter(Collider other)
     {
-
-        if (other.CompareTag("Enemy"))
+        if (
+                (int)PlayerStat.instance.MoveState >= 4)
         {
-            Debug.Log("¸ó½ºÅÍ È®ÀÎ");
-            //DamageCollider(other);
-            DamagedByPAttack script;
-            if (other.TryGetComponent<DamagedByPAttack>(out script))
+            if (other.CompareTag("Enemy"))
             {
-                if (GetComponentInParent<HouseholdIronTransform>())
-                {                    
-                    HouseholdIronTransform iron = GetComponentInParent<HouseholdIronTransform>();
-                    other.GetComponent<Enemy>().FlatByIronDwonAttack(iron.flatTime);
-                    CheckMonster(other);
+                Debug.Log("¸ó½ºÅÍ È®ÀÎ");
+                //DamageCollider(other);
+                DamagedByPAttack script;
+                if (other.TryGetComponent<DamagedByPAttack>(out script))
+                {
+                    if (GetComponentInParent<HouseholdIronTransform>())
+                    {
+                        HouseholdIronTransform iron = GetComponentInParent<HouseholdIronTransform>();
+                        other.GetComponent<Enemy>().FlatByIronDwonAttack(iron.flatTime);
+                        CheckMonster(other);
+                    }
+                    script.Damaged(damage);
+                    Debug.Log("¸ó½ºÅÍ Damage¹ÞÀ½");
                 }
-                script.Damaged(damage);
-                Debug.Log("¸ó½ºÅÍ Damage¹ÞÀ½");
+
+                saveEffect.transform.position = new(other.transform.position.x, other.transform.position.y + .5f, other.transform.position.z);
+                saveEffect.Play();
             }
 
-            saveEffect.transform.position = new(other.transform.position.x, other.transform.position.y + .5f, other.transform.position.z);
-            saveEffect.Play();
-        }
 
-
-        if (other.CompareTag("Ground"))
-        {
-            TransformPlace transformPlace;
-            if (other.TryGetComponent<TransformPlace>(out transformPlace))
+            if (other.CompareTag("Ground"))
             {
-                Debug.Log("Æ®·£½ºÆû¿ÀºêÁ§Æ® Å½Áö");
-                transformPlace.transformStart(PlayerHandler.instance.CurrentPlayer.gameObject);
-                PlayerHandler.instance.CurrentPlayer.onTransform = true;
-            }
-            else
-            {
-                BrokenPlatform brokenPlatform;
-                ObjectScale ironInteract;
-                if (other.TryGetComponent<BrokenPlatform>(out brokenPlatform))
+                TransformPlace transformPlace;
+                if (other.TryGetComponent<TransformPlace>(out transformPlace))
                 {
-                    Debug.Log("ºÎ¼­Áö´Â ÇÃ·§Æû");
-                    PlayerHandler.instance.CurrentPlayer.BounceByBroeknPlatform();
-                }
-                else if(TryGetComponent<ObjectScale>(out ironInteract))
-                {
-                    return;
+                    Debug.Log("Æ®·£½ºÆû¿ÀºêÁ§Æ® Å½Áö");
+                    transformPlace.transformStart(PlayerHandler.instance.CurrentPlayer.gameObject);
+                    PlayerHandler.instance.CurrentPlayer.onTransform = true;
                 }
                 else
-                    gameObject.SetActive(false);
+                {
+                    BrokenPlatform brokenPlatform;
+                    ObjectScale ironInteract;
+                    if (other.TryGetComponent<BrokenPlatform>(out brokenPlatform))
+                    {
+                        Debug.Log("ºÎ¼­Áö´Â ÇÃ·§Æû");
+                        PlayerHandler.instance.CurrentPlayer.BounceByBroeknPlatform();
+                    }
+                    else if (TryGetComponent<ObjectScale>(out ironInteract))
+                    {
+                        return;
+                    }
+
+                }
             }
-        }        
+        }
     }
     #region Æ¨±è ¹æÇâ
     public float DecideDirection()

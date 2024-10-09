@@ -41,7 +41,7 @@ public class HouseholdIronTransform : Player
     public float rayHeightValue;
     public float rayUpValue, rayMiddleValue, rayDownValue;
 
-    //public HouseHoldFormSoundPlayer soundPlayer;
+    public HouseHoldFormSoundPlayer soundPlayer;
 
     bool readyRush, downEnd, rushEnd;
     bool ironAttack = true;
@@ -65,7 +65,7 @@ public class HouseholdIronTransform : Player
     {
         base.Awake();
         InitTimer();
-        //soundPlayer = this.GetComponent<HouseHoldFormSoundPlayer>();
+        soundPlayer = this.GetComponent<HouseHoldFormSoundPlayer>();
     }
    
    protected override void Start()
@@ -119,19 +119,6 @@ public class HouseholdIronTransform : Player
         }
     }
 
-    public void RushCancel()
-    {
-        Humonoidanimator.SetTrigger("RushCancel");
-        ironDashEffect.Stop();
-        SecondFormDeactive();
-        onRush = false;
-        rushEnd = true;
-        rushTimer = rushTimeMax;
-        rushAtkTimer = rushAtkTimeMax;
-        rushCoolTimer = rushCoolTimeMax;
-        readyRush = false;
-    }
-
     private void OnDrawGizmos()
     {
         RushRayCheck();
@@ -153,6 +140,7 @@ public class HouseholdIronTransform : Player
             if (!downAttack)
             {
                 downAttack = true;
+                ironDownAttack = true;
                 onInvincible = true;
                 PlayerHandler.instance.CantHandle = true;
                 StartFreeze();
@@ -163,7 +151,7 @@ public class HouseholdIronTransform : Player
     IEnumerator IronDownAttack()
     {
         SecondFormActive();
-        //soundPlayer.PlayInitDownAttackSound();
+        soundPlayer.PlayInitDownAttackSound();
         playerRb.useGravity = false;
         while (playerRb.velocity != Vector3.zero)
         {
@@ -225,7 +213,36 @@ public class HouseholdIronTransform : Player
             }
         }
     }
+    bool oncorutine;
+    IEnumerator rotatedelaycorutine()
+    {
 
+        oncorutine = true;
+        onRushRot = true;
+        playerRb.velocity = new Vector3(playerRb.velocity.x * 0.5f, playerRb.velocity.y, playerRb.velocity.z * 0.5f);
+        soundPlayer.PlayRushStop();
+        yield return new WaitForSeconds(0.5f);
+
+
+        onRushRot = false;
+        yield return new WaitForSeconds(0.25f  );
+        oncorutine = false;
+    }
+    float lasthori;
+    float lastvert;
+    public override void rotate(float hori, float vert)
+    {
+        if (onRush) {
+            if (!onRushRot && (lasthori != hori || lastvert != vert) && !oncorutine)
+                StartCoroutine(rotatedelaycorutine());
+            else
+                return;
+        }
+        base.rotate(hori, vert);
+
+        lasthori = hori;
+        lastvert = vert;
+    }
     public override void Move()
     {
         if (onRush)
@@ -309,7 +326,8 @@ public class HouseholdIronTransform : Player
 
             if (!onRushRot)
             {
-                //soundPlayer.rushsoundresume();
+                soundPlayer.rushingAudio();
+
                 Vector3 moveVelocity = Vector3.zero;
                 Vector3 vector = regularMove.normalized * rushSpeed;
                 Vector3 forwardForce = transform.GetChild(0).forward * rushSpeed;
@@ -350,6 +368,7 @@ public class HouseholdIronTransform : Player
         else
             base.Move();
     }
+
     bool MoveCheck(float hori, float vert)
     {
         bool moveResult = false;
@@ -443,249 +462,14 @@ public class HouseholdIronTransform : Player
 
         transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
     }
-    /*public void RushRotate(float hori, float vert)
-    {
-        Vector3 rotateVector = Vector3.zero;
-        Vector3 saveRotateVector = Vector3.zero;
-        // Check horizontal and vertical inputs and determine the direction
-        if (hori == 1)
-        {
-            saveDirection = direction;
-            direction = direction.Right;
-        }
-        else if (hori == -1)
-        {
-            saveDirection = direction;
-            direction = direction.Left;
-        }
-        else
-            direction = direction.none;
-        if (vert == 1)
-        {
-            saveDirectionZ = directionz;
-            directionz = directionZ.back;
-        }
-        else if (vert == -1)
-        {
-            saveDirectionZ = directionz;
-            directionz = directionZ.forward;
-        }
-        else
-            directionz = directionZ.none;
-
-        //PlayerStat.instance.Trans3D
-        //PlayerStat.instance.direction = direction;
-        if (hori == -1 && vert == 0) // Left
-        {
-            rotateVector = new Vector3(0, 180, 0);
-            if (saveDirection == direction.Right)
-            {
-                saveRotateVector = new Vector3(0, 0, 0);
-            }
-        }
-        else if (hori == 1 && vert == 0) // Right
-        {
-            rotateVector = new Vector3(0, 0, 0);
-            if (saveDirection == direction.Left)
-            {
-                saveRotateVector = new Vector3(0, 180, 0);
-            }
-        }
-        else if (hori == 0 && vert == 1) // Up
-        {
-            rotateVector = new Vector3(0, -90, 0);
-            if (saveDirectionZ == directionZ.back)
-            {
-                saveRotateVector = new Vector3(0, 90, 0);
-            }
-        }
-        else if (hori == 0 && vert == -1) // Down
-        {
-            rotateVector = new Vector3(0, 90, 0);
-            if (saveDirectionZ == directionZ.forward)
-            {
-                saveRotateVector = new Vector3(0, -90, 0);
-            }
-        }
-        else if (hori == -1 && vert == 1) // UpLeft
-        {
-            rotateVector = new Vector3(0, -135, 0);
-            if (saveDirectionZ == directionZ.back && saveDirection == direction.Right)
-            {
-                saveRotateVector = new Vector3(0, 45, 0);
-            }
-
-        }
-        else if (hori == 1 && vert == 1) // UpRight
-        {
-            rotateVector = new Vector3(0, -45, 0);
-            if (saveDirectionZ == directionZ.back && direction == direction.Left)
-            {
-                saveRotateVector = new Vector3(0, 135, 0);
-            }
-        }
-        else if (hori == -1 && vert == -1) // DownLeft
-        {
-            rotateVector = new Vector3(0, 135, 0);
-            if (saveDirectionZ == directionZ.forward && saveDirection == direction.Right)
-            {
-                saveRotateVector = new Vector3(0, -45, 0);
-            }
-        }
-        else if (hori == 1 && vert == -1) // DownRight
-        {
-            rotateVector = new Vector3(0, 45, 0);
-            if (saveDirectionZ == directionZ.forward && saveDirection == direction.Left)
-            {
-                saveRotateVector = new Vector3(0, -135, 0);
-            }
-        }
-        rotateVector += new Vector3(0, 90, 0);
-
-        transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
-    }*/
+    
     bool inputHori, inputVert;
     float saveHori, saveVert;
-    /*public void RushRotate(float hori, float vert)
-    {
-        if (onRushRot || )
-            return;
-        Vector3 rotateVector = Vector3.zero;
-
-        ReverseDirection();
-        // Check horizontal and vertical inputs and determine the direction
-        if (hori == 1)
-        {
-            if (saveHori == -hori)
-            {
-                saveHori = hori;
-                saveDirection = direction;
-            }
-            direction = direction.Right;
-        }
-        else if (hori == -1)
-        {
-            if (saveHori == -hori)
-            {
-                saveHori = hori;
-                saveDirection = direction;
-            }
-            direction = direction.Left;
-        }
-        else
-        {                       
-            if (saveHori != hori && saveHori == -hori)
-            {
-                saveHori = hori;
-                saveDirection = direction;
-            }
-            direction = direction.none;
-        }
-        if (vert == 1)
-        {
-            if (saveVert == -vert)
-            {
-                saveVert = vert;
-                saveDirectionZ = directionz;
-            }
-            directionz = directionZ.back;
-        }
-        else if (vert == -1)
-        {
-            if (saveVert == -vert)
-            {
-                saveVert = vert;
-                saveDirectionZ = directionz;
-            }
-            directionz = directionZ.forward;
-        }
-        else
-        {
-            if (saveVert != vert && saveVert == -vert)
-            {
-                saveVert = vert;
-                saveDirectionZ = directionz;
-            }
-            directionz = directionZ.none;
-        }
-
-        //PlayerStat.instance.Trans3D
-        //PlayerStat.instance.direction = direction;
-        if (hori == -1 && vert == 0) // Left
-        {
-            rotateVector = new Vector3(0, 180, 0);
-
-
-        }
-        else if (hori == 1 && vert == 0) // Right
-        {
-            rotateVector = new Vector3(0, 0, 0);
-
-        }
-        else if (hori == 0 && vert == 1) // Up
-        {
-            rotateVector = new Vector3(0, -90, 0);
-
-        }
-        else if (hori == 0 && vert == -1) // Down
-        {
-            rotateVector = new Vector3(0, 90, 0);
-
-        }
-        else if (hori == -1 && vert == 1) // UpLeft
-        {
-            rotateVector = new Vector3(0, -135, 0);
-
-        }
-        else if (hori == 1 && vert == 1) // UpRight
-        {
-            rotateVector = new Vector3(0, -45, 0);
-
-        }
-        else if (hori == -1 && vert == -1) // DownLeft
-        {
-            rotateVector = new Vector3(0, 135, 0);
-
-        }
-        else if (hori == 1 && vert == -1) // DownRight
-        {
-            rotateVector = new Vector3(0, 45, 0);
-
-        }
-        rotateVector += new Vector3(0, 90, 0);
-        currentRotateVector = transform.GetChild(0).eulerAngles;
-        //transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
-        if (onlyRot)
-        {
-            if (!onRushRot)
-            {
-                onRushRot = true;
-                StartCoroutine(RushRotation(rotateVector));
-            }
-        }
-        else
-        {
-            transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
-        }
-    }*/
+    
 
     public void ReverseDirection()
     {
-        /*if (saveDirection == direction.Right && saveDirectionZ == directionZ.forward)
-        {
-            if (direction == direction.Left && directionz == directionZ.back)
-            {
-                onlyRot = true;
-            }
-        }
-        else if (saveDirection == direction.Left && saveDirectionZ == directionZ.back)
-        {
-            if (direction == direction.Right && directionz == directionZ.forward)
-            {
-                onlyRot = true;
-            }
-        }
-        else */if (saveDirection == direction.Right && direction == direction.Left)
+        if (saveDirection == direction.Right && direction == direction.Left)
         {
             onlyRot = true;
         }
@@ -705,41 +489,6 @@ public class HouseholdIronTransform : Player
         {
             onlyRot = false;
         }
-
-        /*if (saveDirection == direction.Right && direction == direction.Left)
-        {
-            onlyRot = true;
-        }
-        else if (saveDirectionZ == directionZ.forward && directionz == directionZ.back)
-        {
-            onlyRot = true;
-        }
-        else if (saveDirection == direction.Left && direction == direction.Right)
-        {
-            onlyRot = true;
-        }
-        else if (saveDirectionZ == directionZ.back && directionz == directionZ.forward)
-        {
-            onlyRot = true;
-        }
-        else if (saveDirection == direction.Right && saveDirectionZ == directionZ.forward)
-        {
-            if (direction == direction.Left && directionz == directionZ.back)
-            {
-                onlyRot = true;
-            }
-        }
-        else if (saveDirection == direction.Left && saveDirectionZ == directionZ.back)
-        {
-            if (direction == direction.Right && directionz == directionZ.forward)
-            {
-                onlyRot = true;
-            }
-        }
-        else
-        {
-            onlyRot = false;
-        }            */
     }
 
     IEnumerator RushRotation(Vector3 lastVector)
@@ -867,6 +616,7 @@ public class HouseholdIronTransform : Player
         }
     }
 
+    //µ¹Áø ½ÃÀÛ
     public void RushStart()
     {
         PlayerHandler.instance.CantHandle = true;
@@ -894,8 +644,7 @@ public class HouseholdIronTransform : Player
                 ironDashEffect.gameObject.SetActive(true);
             }
             ironDashEffect.Play();
-           //if(soundplayer!+null)
-           // soundPlayer.rushingAudio();
+   ;
             onRush = true;
             rushEnd = false;
             ironAttack = true;
@@ -903,17 +652,18 @@ public class HouseholdIronTransform : Player
         }
     }
 
+    //µ¹Áø ³¡
     public void RushEnd()
     {
         PlayerHandler.instance.CantHandle = true;
         playerRb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePosition;
-        //onRush = false;
         meleeCollider.SetActive(false);
+       
         rushEnd = true;
         readyRush = false;
         rushTimer = rushTimeMax;
         ironDashEffect.Stop();
-        //soundPlayer.rushsoundend();
+
         SecondFormDeactive();
         Humonoidanimator.Play("RushEnd");
         StartCoroutine(RushEndCheck());
@@ -922,6 +672,7 @@ public class HouseholdIronTransform : Player
     IEnumerator RushEndCheck()
     {
         playerRb.velocity = new(0, playerRb.velocity.y, 0);
+        soundPlayer.rushsoundend();
         yield return new WaitForSeconds(0.5f);
 
         AnimatorClipInfo[] clipGroup = Humonoidanimator.GetCurrentAnimatorClipInfo(0);
@@ -938,20 +689,66 @@ public class HouseholdIronTransform : Player
             playerRb.constraints = RigidbodyConstraints.FreezeRotation;
             onInvincible = false;
             ironAttack = true;
+       
             onRush = false;            
         }
     }
+
+    //Ãæµ¹·Î ÀÎÇÑ µ¹Áø Äµ½½
+    public void RushCancel()
+    {
+        Humonoidanimator.SetTrigger("RushCancel");
+        soundPlayer.WallCollidePlay();
+        ironDashEffect.Stop();
+        SecondFormDeactive();
+        onRush = false;
+        rushEnd = true;
+        rushTimer = rushTimeMax;
+        rushAtkTimer = rushAtkTimeMax;
+        rushCoolTimer = rushCoolTimeMax;
+        readyRush = false;
+        onInvincible = false;
+    }
     #endregion
     public CinemachineImpulseSource source;
-    private void OnTriggerEnter(Collider other)
+
+    bool ironDownAttack;
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ground"))
         {
-            if (downAttack)
+            Debug.Log("¶¥¿¡ ´ê¾Ò´Ù");
+            if (ironDownAttack)
             {
                 source.GenerateImpulse();
                 PlayerHandler.instance.CantHandle = true;
+                ironDownAttack = false;
                 //soundPlayer.PlayDownAttackEndSound();
+                downEnd = true;
+                if (!ironDownAtkEffect.gameObject.activeSelf)
+                {
+                    ironDownAtkEffect.gameObject.SetActive(true);
+                    ironDownAtkEffect.Play();
+                }
+            }
+        }
+    }*/
+
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            Debug.Log("ÄÝ¸®Áð Ã¼Å© -> ¶¥¿¡ ´ê¾Ò´Ù");
+            if (ironDownAttack)
+            {
+                source.GenerateImpulse();
+                PlayerHandler.instance.CantHandle = true;
+
+                soundPlayer.PlayDownAttackEndSound();
+
+                ironDownAttack = false;
+
                 downEnd = true;
                 if (!ironDownAtkEffect.gameObject.activeSelf)
                 {

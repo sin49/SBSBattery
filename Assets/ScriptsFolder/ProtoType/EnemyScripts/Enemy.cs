@@ -7,6 +7,8 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Rendering;
 using UnityEngine;
+using static Unity.Burst.Intrinsics.X86;
+
 public enum EnemyMovePattern { stop,patrol}
 public interface DamagedByPAttack
 {
@@ -29,9 +31,13 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     bool posRetry;
     [Header("적 애니메이션 관련")]
     public Animator animaor;
+    [Header("기본 머티리얼")]
     public Material idleMat;
+    public Material backMat;
+    public Material headMat;
     public Material hittedMat;
     public Renderer skinRenderer;
+    
     public ParticleSystem moveEffect;
     public Vector3 environmentforce;
     [HideInInspector]
@@ -117,7 +123,14 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     bool complete;
     public bool attackRange;
 
-   protected override void Awake()
+    public bool viewActive;
+
+    private void OnEnable()
+    {
+        StartCoroutine(InitPatrolTarget());
+    }
+
+    protected override void Awake()
     {
 
         base.Awake();
@@ -169,7 +182,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     private void Start()
     {                
         attackTimer = eStat.initattackCoolTime;
-        
+
         /*if (onStun)
         {         
             StartCoroutine(WaitStunTime());
@@ -204,7 +217,10 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             }
 
         }
+
+
     }
+
     protected virtual void MoveAnimationPlay()
     {
         if (animaor != null)
@@ -212,6 +228,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             animaor.SetBool("isMove", isMove);
         }
     }
+
     private void FixedUpdate()
     {
         /*if (searchPlayer)
@@ -477,6 +494,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         else
         {
             HittedRotate();
+            StopCoroutine("HittedEnd");
             if (!onStun)
             {
                 rb.velocity = Vector3.zero;
@@ -489,17 +507,69 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                     animaor.SetTrigger("isHitted");
                     activeAttack = true;
                     attackTimer = eStat.initattackCoolTime;
-                    if (skinRenderer != null)
-                    {
-                        Material[] materials = skinRenderer.materials;
-                        materials[1] = hittedMat;
-                        skinRenderer.materials = materials;
-                    }
                 }
-                //InitAttackCoolTime();
+                //InitAttackCoolTime();                
+                StartCoroutine("HittedEnd");
             }
         }
     }
+    #region 피격 코루틴
+    public virtual IEnumerator HittedEnd()
+    {
+        if (skinRenderer != null)
+        {
+            StartEmmissionHitMat();
+        }
+        
+        yield return new WaitForSeconds(0.5f);
+        
+        if (skinRenderer != null)
+        {
+            EndEmmissionHitMat();
+        }
+
+        if (animaor.GetCurrentAnimatorStateInfo(0).IsName("Enemy_Damaged_ToBack"))
+        {
+            while (animaor.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+            {
+                yield return null;
+            }
+            Debug.Log("피격 코루틴 복귀");
+        }
+
+        if (skinRenderer != null)
+        {
+            EndHitMat();
+        }
+
+        activeAttack = false;
+    }
+
+    public virtual void StartEmmissionHitMat()
+    {
+        
+    }
+
+    public virtual void EndEmmissionHitMat()
+    {
+        Material[] materials = skinRenderer.materials;
+        materials[0] = backMat;
+        materials[1] = hittedMat;
+        skinRenderer.materials = materials;
+    }
+
+    public virtual void EndHitMat()
+    {
+        Material[] materials = skinRenderer.materials;
+        materials[0] = backMat;
+        materials[1] = idleMat;
+        skinRenderer.materials = materials;
+
+        Debug.Log("기본 머테리얼로 복귀");
+    }
+
+    #endregion
+
     [Header("납작해지도록 적용될 스케일 오브젝트")]
     public GameObject flatObject;
     public float flatScaleY;
@@ -696,33 +766,39 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         }
       
         
-        tracking = true;
+        tracking = true;        
     }    
        
     public virtual void PatrolChange()
     {
-        patrolGroup[0].x = leftPatrol.x - leftPatrolRange;
-        patrolGroup[0].y = transform.position.y;
-        patrolGroup[0].z = transform.position.z;
+        if (patrolGroup.Length >=2)
+        {
+            patrolGroup[0].x = leftPatrol.x - leftPatrolRange;
+            patrolGroup[0].y = transform.position.y;
+            patrolGroup[0].z = transform.position.z;
 
-        patrolGroup[1].x =rightPatrol.x + rightPatrolRange;
-        patrolGroup[1].y = transform.position.y;
-        patrolGroup[1].z = transform.position.z;
+            patrolGroup[1].x = rightPatrol.x + rightPatrolRange;
+            patrolGroup[1].y = transform.position.y;
+            patrolGroup[1].z = transform.position.z;
+        }
     }
 
     public bool SetPatrolTarget()
     {
         int randomTarget = Random.Range(0, patrolGroup.Length);
-        
-        if (targetPatrol == patrolGroup[randomTarget])
+        if (patrolGroup.Length >= 2)
         {
-            setPatrol = true;
+            if (targetPatrol == patrolGroup[randomTarget])
+            {
+                setPatrol = true;
+            }
+            else
+            {
+                targetPatrol = patrolGroup[randomTarget];
+                setPatrol = false;
+            }
         }
-        else
-        {
-            targetPatrol = patrolGroup[randomTarget];
-            setPatrol = false;
-        }
+
         return setPatrol;
     }
 
@@ -921,6 +997,10 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             }
             else
             Instantiate(deadEffect, transform.position, Quaternion.identity);
+        }
+        if (transform.parent.gameObject.TryGetComponent<EnemyEnable>(out EnemyEnable enable))
+        {
+            transform.parent.gameObject.SetActive(false);
         }
         gameObject.SetActive(false);
     }
