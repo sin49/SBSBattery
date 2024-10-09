@@ -19,6 +19,7 @@ public class TitleScreen : MonoBehaviour
 
     public void StartNewGame()
     {
+        Debug.Log(startscenename);
         GameManager.instance.DeleteSaveSetting();
         GameManager.instance.LoadingSceneWithKariEffect(startscenename);
    

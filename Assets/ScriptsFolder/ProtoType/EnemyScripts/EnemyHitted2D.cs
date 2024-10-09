@@ -13,7 +13,10 @@ public class EnemyHitted2D : MonoBehaviour
     {
         if (collision.CompareTag("PlayerAttack")&&(int)PlayerStat.instance.MoveState<4)
         {
+            if(enemy!=null)
             enemy.Damaged(1);
+           
+
         }
     }
 }
