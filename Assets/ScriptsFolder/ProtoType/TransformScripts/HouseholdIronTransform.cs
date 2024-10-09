@@ -740,7 +740,7 @@ public class HouseholdIronTransform : Player
         if (collision.gameObject.CompareTag("Ground"))
         {
             Debug.Log("ÄÝ¸®Áð Ã¼Å© -> ¶¥¿¡ ´ê¾Ò´Ù");
-            if (downAttack)
+            if (ironDownAttack)
             {
                 source.GenerateImpulse();
                 PlayerHandler.instance.CantHandle = true;
