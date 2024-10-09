@@ -15,7 +15,7 @@ public class EnemyHitted2D : MonoBehaviour
         {
             if(enemy!=null)
             enemy.Damaged(1);
-            else
+           
 
         }
     }
