@@ -238,6 +238,7 @@ public class BossTv : RemoteObject
     void patternComplete()
     {
         onPattern = false;
+        animator.enabled = true;
         Debug.Log("角青 肯丰");
         //绢录备历录备
     }
