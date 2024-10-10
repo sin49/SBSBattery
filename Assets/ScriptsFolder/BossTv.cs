@@ -16,7 +16,7 @@ public class BossTv : RemoteObject
         BossEnable = true;
         UI.gameObject.SetActive(true);
       ;
-        animator.enabled = false;
+    
     }
     public void BossDeActive()
     {
@@ -31,7 +31,7 @@ public class BossTv : RemoteObject
     }
     public void animatorfalse()
     {
-        animator.enabled = false;
+ 
     }
     public void Change3DCamera()
     {
@@ -55,7 +55,7 @@ public class BossTv : RemoteObject
     public void PlayerDisableCantHandle()
     {
         PlayerHandler.instance.CantHandle = false;
-        animator.enabled = false;
+
     }
     public Boss1UI UI;
     [Header("보스는 SoundEffectListPlayer와")]
@@ -134,7 +134,7 @@ public class BossTv : RemoteObject
     }
     public void animationEnd()
     {
-        animator.enabled = false;
+        
     }
     void HandDominateEvent()
     {
