@@ -10,7 +10,7 @@ public class Boss1Laser2D : EnemyAction
     public float laseractiveTime;
 
     public List<bosslasergroup> lasers=new List<bosslasergroup>();
-
+    Boss1SOundManager boss1SOundManager;
     public override void StopAction()
     {
         base.StopAction();
@@ -28,6 +28,7 @@ public class Boss1Laser2D : EnemyAction
             group.DeactiveLaserBeam();
             group.DeactiveLaserWarning();
         }
+        boss1SOundManager = this.GetComponent<Boss1SOundManager>();
     }
     IEnumerator laserpattern()
     {
@@ -38,7 +39,11 @@ public class Boss1Laser2D : EnemyAction
             lasers[n].gameObject.SetActive(true);
 
             lasers[n].activeLaserWarning();
+            if (boss1SOundManager != null)
+                boss1SOundManager.LazerinitClipPlay();
             yield return new WaitForSeconds(LaserWaringTime);
+            if (boss1SOundManager != null)
+                boss1SOundManager.LazerStartClipEnd();
             lasers[n].DeactiveLaserWarning();
             lasers[n].activeLaserBeam();
             yield return new WaitForSeconds(laseractiveTime);
