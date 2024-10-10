@@ -101,14 +101,16 @@ public class Player : Character,environmentObject
    
     public bool inputCheck;
     DownAttackCollider d_col;
+
     void groundCheckEvnet()
     {
         onGround = true;
         d_col.DeactiveCollider();
+      
         if (downAttack)
         {
-            SoundPlayer.PlayDownAttackEndSound();
             downAttack = false;
+            SoundPlayer.PlayDownAttackEndSound();
             if (LandingEffect != null)
                 LandingEffect.SetActive(true);
         }
@@ -123,6 +125,7 @@ public class Player : Character,environmentObject
         jumpBufferTimer = 0;
         doubleZinput = false;
         flyTimer = flyTime;
+  
     }
     private void OnBecameInvisible()
     {
@@ -150,6 +153,7 @@ public class Player : Character,environmentObject
     public float jumpInitDelay;
 
     public int jumpInputValue;
+   
     [Header("박스 캐스트 테스트")]
     public Vector3 boxRaySize; // box 레이캐스트 >> 벽에 고정되는 것 방지를 위한
     public float distanceRay; // box 캐스트의 거리
@@ -273,6 +277,7 @@ public class Player : Character,environmentObject
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject"))
                 {
                     groundCheckEvnet();
+                    return;
                 }
 
 
@@ -284,6 +289,7 @@ public class Player : Character,environmentObject
                 {
 
                     groundCheckEvnet();
+                    return;
                 }
 
 
@@ -295,6 +301,7 @@ public class Player : Character,environmentObject
                 {
 
                     groundCheckEvnet();
+                    return;
                 }
 
 
@@ -306,6 +313,7 @@ public class Player : Character,environmentObject
                 {
 
                     groundCheckEvnet();
+                    return;
                 }
 
 
@@ -1154,7 +1162,7 @@ public class Player : Character,environmentObject
         PlayerStat.instance.pState = PlayerState.hitted;
         HittedEffect.gameObject.SetActive(true);
         PlayerStat.instance.hp -= damage;
-
+        SoundPlayer.PlayHittedSound();
 
         if (PlayerStat.instance.hp <= 0)
         {

@@ -7,7 +7,15 @@ public class Boss1Status2Phase : MonoBehaviour
     [Header("보스 스탯")]
     [Header("보스 모니터 체력(노기능)")]
     public int lifeCountMax;
-  
+    [Header("랜덤 패턴(끄면 순서대로)")]
+    public bool randomPattern;
+    [Header("휩쓸기 패턴만 사용")]
+    public bool OnlySweapPattern;
+    [Header("레이저 패턴만 사용")]
+    public bool OnlylaserPattern;
+
+    [Header("낙하물 패턴만 사용")]
+    public bool OnlyfallPattern;
     [Header(" 2페이즈 손 체력")]
     public float HandHP;
     [Header("손 파괴시 이동 위치")]
@@ -106,7 +114,28 @@ public class Boss1Status2Phase : MonoBehaviour
         {
             boss.lifeCountMax = lifeCountMax;
             boss.HandHP = HandHP;
-        
+            boss.randomPattern = randomPattern;
+            if (OnlySweapPattern)
+            {
+                boss.OnlyTestPattern = true;
+                boss.TestAction = sweap;
+            }
+            else if (OnlyfallPattern)
+            {
+                boss.OnlyTestPattern = true;
+                boss.TestAction = BossFalling;
+            }
+            else if (OnlylaserPattern)
+            {
+                boss.OnlyTestPattern = true;
+                boss.TestAction = laser;
+            }
+          
+
+            else
+            {
+                boss.OnlyTestPattern = false;
+            }
             sweap.LhandDefeatTransform = LhandDefeatTransform;
             sweap.RhandDefeatTransform = RhandDefeatTransform;
             sweap.handsize = handsize;

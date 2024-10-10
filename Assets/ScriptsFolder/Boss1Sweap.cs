@@ -164,7 +164,17 @@ public class Boss1Sweap : EnemyAction
         }
         else
         {
-            yield return StartCoroutine(Stomb(Lhand, RHand));
+            if (Lhand.active && RHand.active)
+            {
+                yield return StartCoroutine(Stomb(Lhand, RHand));
+            }else if (!Lhand.active)
+            {
+                yield return StartCoroutine(Stomb(RHand, RHand));
+            }
+            else if (!RHand.active)
+            {
+                yield return StartCoroutine(Stomb(Lhand, Lhand));
+            }
         }
         yield return StartCoroutine(DisableAction(0.1f));
     }
