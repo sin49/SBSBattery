@@ -42,6 +42,7 @@ public class Boss1Hand : MonoBehaviour,DamagedByPAttack
         if (HP > 0)
         {
             HP-=f;
+            if(HittedEffect!=null)
             Instantiate(HittedEffect, this.transform.position, Quaternion.identity);
             if (HP == 0)
             {
