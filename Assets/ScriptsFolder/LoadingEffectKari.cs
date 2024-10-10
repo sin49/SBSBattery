@@ -67,6 +67,7 @@ public class LoadingEffectKari : MonoBehaviour
             }
             if (alpha >= 1)
             {
+                if(loadingImage != null)
                 loadingImage.SetActive(true);
                 FadeOff = true;
                 EffectEnd?.Invoke(LoadSceneName);
@@ -75,7 +76,8 @@ public class LoadingEffectKari : MonoBehaviour
         }
         else if(LoadingComplete)
         {
-            loadingImage.SetActive(false);
+            if (loadingImage != null)
+                loadingImage.SetActive(false);
             if (PlayerHandler.instance != null && PlayerHandler.instance.CurrentPlayer)
             {
                 vignette.center.value = PlayerHandler.instance.CurrentCamera.WorldToViewportPoint(PlayerHandler.instance.CurrentPlayer.transform.position);

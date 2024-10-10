@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using JetBrains.Annotations;
 
-public class PauseGraphicSetting : MonoBehaviour
+public class PauseGraphicSetting : UIInteract
 {
     public TestSettingUI choiceSetUI;
 
@@ -53,7 +54,7 @@ public class PauseGraphicSetting : MonoBehaviour
                 break;
             case 2:
             case 3:
-                graphicList[beforeIndex].GetComponent<Image>().sprite = deactiveButton;
+                DeactiveButton();
                 break;
             default:
                 Debug.Log("out of range");
@@ -68,7 +69,7 @@ public class PauseGraphicSetting : MonoBehaviour
                 break;
             case 2:
             case 3:
-                graphicList[index].GetComponent<Image>().sprite = activeButton;
+                ActiveButton();
                 break;
             default:
                 Debug.Log("out of range");
@@ -198,7 +199,11 @@ public class PauseGraphicSetting : MonoBehaviour
         foreach (GameObject obj in buttonList)
         {
             obj.SetActive(false);
-            obj.GetComponent<Image>().sprite = deactiveButton;
+        }
+        if (index > graphicList.Count - 3)
+        {
+            graphicList[index].GetComponent<Image>().sprite = deactiveButton;
+            fontList[index].color = deactiveFontColor;
         }
         screw.SetActive(false);
         gameObject.SetActive(false);
@@ -216,7 +221,7 @@ public class PauseGraphicSetting : MonoBehaviour
             }
             screw.transform.SetParent(graphicList[index].transform.GetChild(1));
             screw.transform.position = graphicList[index].transform.GetChild(1).position;
-            graphicList[index].GetComponent<Image>().sprite = activeButton;
+            ActiveButton();
         }
         else
         {
@@ -230,7 +235,7 @@ public class PauseGraphicSetting : MonoBehaviour
 
         if (beforeIndex > graphicList.Count - 3)
         {
-            graphicList[beforeIndex].GetComponent<Image>().sprite = deactiveButton;
+            DeactiveButton();
         }
         else
         {
@@ -246,5 +251,17 @@ public class PauseGraphicSetting : MonoBehaviour
     public void UpdateScreenUI()
     {
         screenTMP.text = screenString[screenIndex];
+    }
+
+    public void ActiveButton()
+    {
+        graphicList[index].GetComponent<Image>().sprite = activeButton;
+        fontList[index].color = activeFontColor;
+    }
+
+    public void DeactiveButton()
+    {
+        graphicList[beforeIndex].GetComponent<Image>().sprite = deactiveButton;
+        fontList[beforeIndex].color = deactiveFontColor;
     }
 }

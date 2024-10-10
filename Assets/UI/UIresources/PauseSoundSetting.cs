@@ -6,7 +6,7 @@ using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PauseSoundSetting : MonoBehaviour
+public class PauseSoundSetting : UIInteract
 {
     public TestSettingUI choiceSetUI;
 
@@ -28,7 +28,8 @@ public class PauseSoundSetting : MonoBehaviour
     bool onButton;
 
     public List<GameObject> buttonList = new List<GameObject>();
-    public Transform savePoint, cancelPoint;
+
+    Vector2 scale = new Vector2(0.7f, 0.7f);
 
     private void OnEnable()
     {
@@ -131,7 +132,8 @@ public class PauseSoundSetting : MonoBehaviour
                 break;
             case 3:
             case 4:
-                interactList[beforeIndex].GetComponent<Image>().sprite = deactivebutton;
+                screw.SetActive(false);
+                DeactiveButton();
                 break;
             default:
                 Debug.Log("out of range");
@@ -146,9 +148,9 @@ public class PauseSoundSetting : MonoBehaviour
                 interactList[index].GetComponent<Image>().sprite = activeVolume;
                 break;
             case 3:
-            case 4:
-                interactList[index].GetComponent<Image>().sprite = activeButton;
+            case 4:                
                 screw.SetActive(true);
+                ActiveButton();
                 break;
             default:
                 Debug.Log("out of range");
@@ -168,9 +170,20 @@ public class PauseSoundSetting : MonoBehaviour
         onButton = false;
         foreach (GameObject obj in buttonList)
         {
-            obj.SetActive(false);
-            obj.GetComponent<Image>().sprite = deactivebutton;
+            obj.SetActive(false);            
         }
+        switch(index)
+        {
+            case 0:
+            case 1:
+            case 2:
+                break;
+            case 3:
+            case 4:
+                DeactiveButton();
+                break;
+        }
+
         screw.SetActive(false);
         gameObject.SetActive(false);
         choiceSetUI.ShowChoiceScreen();
@@ -197,10 +210,11 @@ public class PauseSoundSetting : MonoBehaviour
             {
                 onButton = true;
                 screw.SetActive(true);
+                screw.transform.localScale = scale;
             }
             screw.transform.SetParent(interactList[index].transform.GetChild(1));
             screw.transform.position = interactList[index].transform.GetChild(1).position;
-            interactList[index].GetComponent<Image>().sprite = activeButton;
+            ActiveButton();
         }
         else
         {
@@ -214,7 +228,7 @@ public class PauseSoundSetting : MonoBehaviour
 
         if (beforeIndex > interactList.Count - 3)
         {
-            interactList[beforeIndex].GetComponent<Image>().sprite = deactivebutton;
+            DeactiveButton();
         }
         else
         {
@@ -271,5 +285,17 @@ public class PauseSoundSetting : MonoBehaviour
                 volumeSlider[index].transform.localScale = new(seSlider, 1, 1);
                 break;
         }
+    }
+
+    public void ActiveButton()
+    {
+        interactList[index].GetComponent<Image>().sprite = activeButton;
+        fontList[index].color = activeFontColor;
+    }
+
+    public void DeactiveButton()
+    {
+        interactList[beforeIndex].GetComponent<Image>().sprite = deactivebutton;
+        fontList[beforeIndex].color = deactiveFontColor;
     }
 }

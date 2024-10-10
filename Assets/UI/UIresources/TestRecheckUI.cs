@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TestRecheckUI : MonoBehaviour
+public class TestRecheckUI : UIInteract
 {
     public TextMeshProUGUI Description;
 
@@ -66,12 +66,9 @@ public class TestRecheckUI : MonoBehaviour
 
     public void InitButton()
     {
-        for (int i = 0; i < buttonList.Count; i++)
-        {
-            buttonList[i].GetComponent<Image>().sprite = deactiveButton;
-        }
+        DeactiveButton();
         index = 0;
-        buttonList[index].GetComponent<Image>().sprite = activeButton;
+        ActiveButton();
     }
 
     void UpdateUI()
@@ -86,16 +83,14 @@ public class TestRecheckUI : MonoBehaviour
         {
             SelectedUI.SetParent(YesButton);
             SelectedUI.position = YesButton.position;
-            buttonList[index].GetComponent<Image>().sprite = activeButton;
-            buttonList[beforeIndex].GetComponent<Image>().sprite = deactiveButton;
         }
         else
         {
             SelectedUI.SetParent(NoButton);
             SelectedUI.position = NoButton.position;
-            buttonList[index].GetComponent<Image>().sprite = activeButton;
-            buttonList[beforeIndex].GetComponent<Image>().sprite = deactiveButton;
         }
+        DeactiveButton();
+        ActiveButton();
     }
     void OkButtonInput()
     {
@@ -158,5 +153,17 @@ public class TestRecheckUI : MonoBehaviour
     {
         if (this.gameObject.activeSelf)
             handleUI();
+    }
+
+    public void ActiveButton()
+    {
+        buttonList[index].GetComponent<Image>().sprite = activeButton;
+        fontList[index].color = activeFontColor;
+    }
+    
+    public void DeactiveButton()
+    {
+        buttonList[beforeIndex].GetComponent<Image>().sprite = deactiveButton;
+        fontList[beforeIndex].color = deactiveFontColor;
     }
 }

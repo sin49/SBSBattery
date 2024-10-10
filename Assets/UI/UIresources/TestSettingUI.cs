@@ -4,7 +4,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TestSettingUI : MonoBehaviour
+public class TestSettingUI : UIInteract
 {
     //public SelectUI uiGroup;
     //[HideInInspector]public TestPauseUI uiGroup;
@@ -126,18 +126,16 @@ public class TestSettingUI : MonoBehaviour
 
     public void UpdateUI()
     {
-        buttonList[beforeIndex].sprite = deactiveButton;
-        buttonList[index].sprite = activeButton;
+        DeactiveButton();
+        ActiveButton();
     }
 
     public void InitButtonUI()
     {
+        beforeIndex = index;
         index = 0;
-        for (int i = 0; i < buttonList.Count; i++)
-        {
-            buttonList[i].sprite = deactiveButton;
-        }        
-        buttonList[index].sprite = activeButton;
+        DeactiveButton();
+        ActiveButton();
 
         StartCoroutine(EndSettingAnimation());
     }
@@ -158,5 +156,17 @@ public class TestSettingUI : MonoBehaviour
         buttonList[index].sprite = activeButton;
         choiceSetting = false;
 
+    }
+
+    public void ActiveButton()
+    {
+        buttonList[index].GetComponent<Image>().sprite = activeButton;
+        fontList[index].color = activeFontColor;
+    }
+
+    public void DeactiveButton()
+    {
+        buttonList[beforeIndex].GetComponent<Image>().sprite = deactiveButton;
+        fontList[beforeIndex].color = deactiveFontColor;
     }
 }
