@@ -8,7 +8,7 @@ public class AnimationEvent : MonoBehaviour
     public Player player;
     Enemy enemy;
     BossStageEnemy bse;
-
+  
     private void Awake()
     {
         if (GetComponentInParent<Player>() != null)
@@ -24,11 +24,15 @@ public class AnimationEvent : MonoBehaviour
             bse = GetComponentInParent<BossStageEnemy>();
         }
     }
-
+    public void transformstart()
+    {
+        PlayerHandler.instance.CurrentPlayer.modelrotate();
+    }
     public void TransformEnd()
     {
         PlayerHandler.instance.formChange = false;
         Time.timeScale = 1f;
+        PlayerHandler.instance.CurrentPlayer.returnrotation();
     }
 
     public void RushEndCanHandle()

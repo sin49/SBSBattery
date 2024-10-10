@@ -178,6 +178,7 @@ public class Player : Character,environmentObject
 
         canAttack = true;
         onDash = true;
+        if(!PlayerHandler.instance.formChange)
         rotateBy3Dto2D();
 
     }
@@ -869,13 +870,15 @@ public class Player : Character,environmentObject
 
         Vector3 moveInput = new Vector3(hori, 0, Vert);
         Vector3 ladderInput = new Vector3(0, Vert, 0);
-
-        if (hori != 0 || Vert != 0)
+        if (!PlayerHandler.instance.formChange)
         {
-            if (canAttack && !PlayerHandler.instance.ladderInteract)
-                rotate(moveInput.x, moveInput.z);
-            SoundPlayer.PlayMoveSound();
+            if (hori != 0 || Vert != 0)
+            {
+                if (canAttack && !PlayerHandler.instance.ladderInteract)
+                    rotate(moveInput.x, moveInput.z);
+                SoundPlayer.PlayMoveSound();
 
+            }
         }
         //Vert 회전 추가
         //translateFix = new(hori, 0, 0);
@@ -973,7 +976,24 @@ public class Player : Character,environmentObject
         Humonoidanimator.SetTrigger("ladder");
         playerRb.useGravity = false;
     }
+    public float rotatetimedelay;
+    public Vector3 rotationVaule;
+    public Vector3 rotation3DVaule;
+    Vector3 onerotation;
+  public  void modelrotate()
+    {
+        onerotation = transform.rotation.eulerAngles;
+        if ((int)PlayerStat.instance.MoveState < 4)
+            transform.localRotation = Quaternion.Euler(rotationVaule);
+        else
+            transform.localRotation = Quaternion.Euler(rotation3DVaule);
+       
 
+    }
+    public void returnrotation()
+    {
+        //transform.GetChild(0).rotation = Quaternion.Euler(onerotation); ;
+    }
     public void StopLadderClimb()
     {
         PlayerHandler.instance.ladderInteract = false;
@@ -1435,7 +1455,7 @@ IEnumerator jumpForceLimitCorutine()
 
         StartCoroutine(EndFormChange(type, event_));
     }
-
+   
     IEnumerator EndFormChange(TransformType type, Action event_)
     {
 
@@ -1456,6 +1476,11 @@ IEnumerator jumpForceLimitCorutine()
         PlayerHandler.instance.transformed(type, event_);
         if (PlayerHandler.instance.CurrentPlayer != null)
             PlayerHandler.instance.CurrentPlayer.direction = direction;
+    }
+    public virtual void transformENdAnimation()
+    {
+    Humonoidanimator.Play("TransformEnd");
+      downAttack = false;
     }
     #endregion
     public float oninteractivetimer = 0f;
