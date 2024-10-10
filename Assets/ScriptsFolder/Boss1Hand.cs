@@ -15,7 +15,7 @@ public class Boss1Hand : MonoBehaviour,DamagedByPAttack
     public Boss1HandSoundPlayer soundplayer;
     public event Action HandDominateEvent;
 
-
+    
     public GameObject HittedEffect;
     IEnumerator shakecorutine()
     {
