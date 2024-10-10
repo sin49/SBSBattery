@@ -9,8 +9,7 @@ public class SelectUI : MonoBehaviour
     public GameObject SelectedUI;
 
     public PauseUI pauseui;
-    public RecheckUI recheckui;
-
+    public TestRecheckUI testRecheckUI;
 
     int index, beforeIndex;
 
@@ -93,11 +92,11 @@ public class SelectUI : MonoBehaviour
                 ShowSettingUI();
                 break;
             case 3://재확인 시키기
-                recheckui.ActiveUI("타이틀로 돌아갑니다.", TitleBackEvent, ButtonselectedDisable);
+                testRecheckUI.ActiveUI("타이틀로 돌아갑니다.", TitleBackEvent, ButtonselectedDisable);
                 buttonselected = true;
                 break;
             case 4://재확인 시키기
-                recheckui.ActiveUI("게임을 종료합니다.", ExitEvent, ButtonselectedDisable);
+                testRecheckUI.ActiveUI("게임을 종료합니다.", ExitEvent, ButtonselectedDisable);
                 buttonselected = true;
 
                 break;
