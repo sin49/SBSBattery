@@ -771,28 +771,34 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
        
     public virtual void PatrolChange()
     {
-        patrolGroup[0].x = leftPatrol.x - leftPatrolRange;
-        patrolGroup[0].y = transform.position.y;
-        patrolGroup[0].z = transform.position.z;
+        if (patrolGroup.Length >=2)
+        {
+            patrolGroup[0].x = leftPatrol.x - leftPatrolRange;
+            patrolGroup[0].y = transform.position.y;
+            patrolGroup[0].z = transform.position.z;
 
-        patrolGroup[1].x =rightPatrol.x + rightPatrolRange;
-        patrolGroup[1].y = transform.position.y;
-        patrolGroup[1].z = transform.position.z;
+            patrolGroup[1].x = rightPatrol.x + rightPatrolRange;
+            patrolGroup[1].y = transform.position.y;
+            patrolGroup[1].z = transform.position.z;
+        }
     }
 
     public bool SetPatrolTarget()
     {
         int randomTarget = Random.Range(0, patrolGroup.Length);
-        
-        if (targetPatrol == patrolGroup[randomTarget])
+        if (patrolGroup.Length >= 2)
         {
-            setPatrol = true;
+            if (targetPatrol == patrolGroup[randomTarget])
+            {
+                setPatrol = true;
+            }
+            else
+            {
+                targetPatrol = patrolGroup[randomTarget];
+                setPatrol = false;
+            }
         }
-        else
-        {
-            targetPatrol = patrolGroup[randomTarget];
-            setPatrol = false;
-        }
+
         return setPatrol;
     }
 

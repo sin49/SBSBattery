@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerAttackFor2D : MonoBehaviour
 {
     public float damage;
+
     public virtual void DamageCollider(Collider2D other)
     {
         DamagedByPAttack Script;

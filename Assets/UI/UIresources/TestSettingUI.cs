@@ -8,6 +8,7 @@ public class TestSettingUI : MonoBehaviour
 {
     //public SelectUI uiGroup;
     //[HideInInspector]public TestPauseUI uiGroup;
+
     public SelectUI uiSelect;      
 
     public bool settingActive;
@@ -20,6 +21,7 @@ public class TestSettingUI : MonoBehaviour
 
     public Animator settingAnimator;
     Vector3 settingScale = new(0.8f, 0.8f, 0.8f);
+
 
     bool choiceSetting;
 
@@ -116,6 +118,7 @@ public class TestSettingUI : MonoBehaviour
             }
 
             gameObject.SetActive(false);
+
             uiSelect.uiGroup.SetActive(true);
             uiSelect.PauseBackSetting();
         }

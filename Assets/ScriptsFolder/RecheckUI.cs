@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RecheckUI : MonoBehaviour
 {
@@ -16,6 +17,12 @@ public class RecheckUI : MonoBehaviour
 
     public event Action OKEvent;
     public event Action CancelEvent;
+
+    public Sprite activeButton, deactiveButton;
+    public List<GameObject> buttonList = new List<GameObject>();
+    int index, beforeIndex;
+
+    public Animator recheckAnimator;
     private void Awake()
     {
         //if (this.gameObject.activeSelf)
@@ -31,21 +38,61 @@ public class RecheckUI : MonoBehaviour
     }
     void initializeUI()
     {
-        ok = true;
-        UpdateUI();
+        InitButton();
+        StartCoroutine(SettingChangeReCheck());
+        //UpdateUI();
     }
     private void OnEnable()
     {
         initializeUI();
     }
+
+    IEnumerator SettingChangeReCheck()
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
+
+        if (recheckAnimator.GetCurrentAnimatorStateInfo(0).IsName("SettingUI"))
+        {
+            while (recheckAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+            {
+                yield return null;
+            }
+            ok = true;            
+        }
+    }
+
+    public void InitButton()
+    {
+        for (int i = 0; i < buttonList.Count; i++)
+        {
+            buttonList[i].GetComponent<Image>().sprite = deactiveButton;
+        }
+        index = 0;
+        buttonList[index].GetComponent<Image>().sprite = activeButton;
+    }
+
     void UpdateUI()
     {
         SelectedUI.gameObject.SetActive(true);
 
-        if (ok)
+
+        /*if (ok)
             SelectedUI.transform.position = YesButton.transform.position;
         else
-            SelectedUI.transform.position = NoButton.transform.position;
+            SelectedUI.transform.position = NoButton.transform.position;*/
+        if (ok)
+        {
+            SelectedUI.position = YesButton.position;
+            buttonList[index].GetComponent<Image>().sprite = activeButton;
+            buttonList[beforeIndex].GetComponent<Image>().sprite = deactiveButton;
+        }
+        else
+        {
+            SelectedUI.position = NoButton.position;
+            buttonList[index].GetComponent<Image>().sprite = activeButton;
+            buttonList[beforeIndex].GetComponent<Image>().sprite = deactiveButton;
+        }
+
     }
     void OkButtonInput()
     {
@@ -63,13 +110,23 @@ public class RecheckUI : MonoBehaviour
         {
             if (!ok)
                 ok = true;
-            UpdateUI();
+            if (index > 0)
+            {
+                beforeIndex = index;
+                index--;
+                UpdateUI();
+            }
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             if (ok)
                 ok = false;
-            UpdateUI();
+            if (index < buttonList.Count - 1)
+            {
+                beforeIndex = index;
+                index++;
+                UpdateUI();
+            }
         }
         if (Input.GetKeyDown(KeyCode.C))
         {

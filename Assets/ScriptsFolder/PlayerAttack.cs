@@ -39,7 +39,8 @@ public class PlayerAttack : MonoBehaviour
     }
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy") &&
+                (int)PlayerStat.instance.MoveState >= 4)
         {
             DamageCollider(other);
 
