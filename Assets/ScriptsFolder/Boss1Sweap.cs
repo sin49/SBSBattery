@@ -181,6 +181,7 @@ public class Boss1Sweap : EnemyAction
     }
     public int stombcount;
     public float stombYPlus;
+    public float stombYEnd;
     public float stombinittime;
     public float stombtime;
     public float stombwaitTIme;
@@ -202,7 +203,8 @@ public class Boss1Sweap : EnemyAction
             Vector3 HandOnepositon = handtransform.position;
             Quaternion handrot = handtransform.rotation;
             Vector3 Playerpos = PlayerHandler.instance.CurrentPlayer.transform.position;
-
+            Playerpos.y = 0;
+            Playerpos += Vector3.up* stombYEnd;
             var tuple = calculateSweapvector(Playerpos + Vector3.up * stombYPlus,
                 handtransform.position, stombinittime
                 );

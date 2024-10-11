@@ -199,7 +199,7 @@ public class BossFalling : EnemyAction
         Debug.Log("Shake ½ÇÇà");
         while (timer < createTime * createCountMax + 0.12f)
         {
-            Debug.Log(createTime * createCountMax + 0.12f+" "+timer);
+
             fallingshaker.GenerateImpulse();
             timer += shakertimer;
             yield return new WaitForSeconds(shakertimer);
@@ -259,27 +259,7 @@ public class BossFalling : EnemyAction
     {
        
         StartCoroutine(ShakeLoop());
-        //while (createCount < createCountMax)
-        //{
-        //    GameObject obj = Instantiate(enemy, RandomSpawn(), Quaternion.identity);
-
-        //    if (obj.GetComponent<FallingObject>() != null)
-        //    {
-        //        var a = obj.GetComponent<FallingObject>();
-        //        a.fallingSpeed = UnityEngine.Random.Range(minSpeed, maxSpeed);
-        //        a.fieldPos = fieldMax;
-        //        a.damage = damage;
-        //    }
-        //    else
-        //    {
-        //        var a = obj.GetComponent<BossStageBox>();
-        //        a.fallingSpeed = UnityEngine.Random.Range(minSpeed, maxSpeed);
-        //        a.fieldPos = fieldMax;
-        //    }
-
-        //    createCount++;
-
-        //    yield return new WaitForSeconds(createTime);
+     
         //}
 
         yield return null;
@@ -335,19 +315,5 @@ public class BossFalling : EnemyAction
         return fallingPoint;
     }
     public Color GizmoColor;
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = GizmoColor;
-        if (bossField != null)
-        {
-            Vector3 min = new Vector3(-0.5f, 0.5f, -0.5f);
-            Vector3 max = new Vector3(0.5f, 0.5f, 0.5f);
-
-            fieldMin = bossField.TransformPoint(min);
-            fieldMax = bossField.TransformPoint(max);
-        }
-        Vector3 center = (fieldMin + fieldMax)/2;
-        Vector3 size = new(Mathf.Abs(fieldMax.x - fieldMin.x) / fallingRange, fieldMin.y, Mathf.Abs(fieldMax.z - fieldMin.z) / fallingRange);
-        Gizmos.DrawWireCube(center, size);
-    }
+   
 }

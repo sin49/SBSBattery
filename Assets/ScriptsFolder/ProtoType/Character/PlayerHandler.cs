@@ -374,8 +374,13 @@ public class PlayerHandler : MonoBehaviour
     public bool DImensionChangeDisturb;
     event Action Dimensionchangeevent;
     event Action CAmeraChangeevent;
+    event Action camerachangeafterevent;
     event Action CorutineRegisterEvent;
     IEnumerator CameraRotateCorutine;
+    public void registerCameraChangeAfterEvent(Action a)
+    {
+        camerachangeafterevent += a;
+    }
     public void registerCameraChangeAction(Action a)
     {
         CAmeraChangeevent += a;
@@ -424,6 +429,7 @@ public class PlayerHandler : MonoBehaviour
             {
                 CAmeraChangeevent?.Invoke();
                 yield return StartCoroutine(CameraRotateCorutine);
+                camerachangeafterevent?.Invoke();
             }
             //카메라처리
         }
@@ -436,6 +442,7 @@ public class PlayerHandler : MonoBehaviour
             {
                 yield return StartCoroutine(CameraRotateCorutine);
                 CAmeraChangeevent?.Invoke();
+                camerachangeafterevent?.Invoke();
 
             }
             yield return StartCoroutine(InvokeDimensionEvent());
