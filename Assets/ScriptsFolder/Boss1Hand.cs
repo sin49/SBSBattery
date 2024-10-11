@@ -11,6 +11,7 @@ public class Boss1Hand : MonoBehaviour,DamagedByPAttack
     public bool AttackState;
    public bool active;
     public float shakertimer;
+    float invinclibletimer_;
     public CinemachineImpulseSource shaker;
     public Boss1HandSoundPlayer soundplayer;
     public event Action HandDominateEvent;
@@ -42,11 +43,17 @@ public class Boss1Hand : MonoBehaviour,DamagedByPAttack
     {
         soundplayer = GetComponent<Boss1HandSoundPlayer>();
     }
-    IEnumerator makeinvincible()
+
+    private void FixedUpdate()
     {
-        invincible = true;
-        yield return new WaitForSeconds(invincibletimer);
-        invincible = false;
+        if (invinclibletimer_ > 0)
+        {
+            invinclibletimer_ -= Time.deltaTime;
+            if (invinclibletimer_ <= 0)
+            {
+                invincible = false;
+            }
+        }
     }
     public void Damaged(float f)
     {
@@ -57,7 +64,8 @@ public class Boss1Hand : MonoBehaviour,DamagedByPAttack
             HP-=f;
             if(HittedEffect!=null)
             Instantiate(HittedEffect, this.transform.position, Quaternion.identity);
-            StartCoroutine(makeinvincible());
+            invincible = true;
+            invinclibletimer_ = invincibletimer;
             if (HP == 0)
             {
                 stopShake();

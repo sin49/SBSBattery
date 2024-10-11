@@ -88,6 +88,8 @@ public class BossFalling : EnemyAction
     public override void StopAction()
     {
         base.StopAction();
+        Lhand.AttackState = false;
+        Rhand.AttackState = false;
         StopAllCoroutines();
 
         ani.enabled = false;
