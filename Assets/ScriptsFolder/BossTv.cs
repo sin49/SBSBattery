@@ -170,7 +170,8 @@ public class BossTv : RemoteObject
             else
             {
               
-                       animator.enabled = true;
+                       BossEnable = false;
+                CanControl = true;
                 Active();
                 Debug.Log("¾²·¯¶ß¸²");
             }
