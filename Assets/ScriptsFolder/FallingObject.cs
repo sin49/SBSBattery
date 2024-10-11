@@ -12,6 +12,7 @@ public class FallingObject : MonoBehaviour
 
     public Vector3 fieldPos;
     public GameObject warningObj;
+    public GameObject warningObj3D;
     public Vector3 circlePos;
     public float disToField;
 
@@ -28,7 +29,9 @@ public class FallingObject : MonoBehaviour
         yield return new WaitForSeconds(DisableTimer);
         rb.isKinematic = false;
         rb.useGravity = true;
+  
         warningObj.SetActive(false);
+        warningObj3D.SetActive(false);
         endCorutine = true;
     }
     void Start()
@@ -51,7 +54,19 @@ public class FallingObject : MonoBehaviour
         //warningObj.transform.position = circlePos;
         WarningValue();
     }
-
+    private void OnEnable()
+    {
+        if ((int)PlayerStat.instance.MoveState < 4)
+        {
+            warningObj.SetActive(true);
+            warningObj3D.SetActive(false);
+        }
+        else
+        {
+            warningObj3D.SetActive(true);
+            warningObj.SetActive(false);
+        }
+    }
     public void WarningValue()
     {
         Vector3 vec = circlePos - transform.position;
