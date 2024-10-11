@@ -185,6 +185,7 @@ public class Boss1Sweap : EnemyAction
     public float stombinittime;
     public float stombtime;
     public float stombwaitTIme;
+    public float stombwaitTIme2;
     public float stombendwaitTIme;
     public float stombreturntime;
     public IEnumerator Stomb(Boss1Hand Lhand,Boss1Hand Rhand)
@@ -246,6 +247,21 @@ public class Boss1Sweap : EnemyAction
             timer = 0;
             hand.AttackState = false;
             yield return new WaitForSeconds(stombendwaitTIme);
+            tuple = calculateSweapvector(Playerpos + Vector3.up * stombYPlus, handtransform.position, stombendwaitTIme);
+            vec = tuple.Item1;
+            speed = tuple.Item2;
+      
+            while (timer <= stombendwaitTIme)
+            {
+               
+                handtransform.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
+                timer += Time.fixedDeltaTime;
+                yield return null;
+            }
+ 
+            timer = 0;
+     
+            yield return new WaitForSeconds(stombwaitTIme2);
             tuple = calculateSweapvector(HandOnepositon, handtransform.position, stombreturntime);
             vec = tuple.Item1;
             speed = tuple.Item2;

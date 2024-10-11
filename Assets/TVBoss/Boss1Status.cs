@@ -53,8 +53,10 @@ public class Boss1Status : MonoBehaviour
     public float stombtime;
     [Header("내려찍기 찍고 대기 시간")]
     public float stombendwaitTIme;
-    [Header("내려찍고 돌아오는 시간")]
+    [Header("내려찍고 위로 돌아오는 시간")]
     public float stombreturntime;
+    [Header("위에서 제자리로 돌아오는 시간")]
+    public float stombreturntime2;
     [Header("내려찍는 y좌표")]
     public float  stombYpos ;
 
@@ -155,7 +157,7 @@ public class Boss1Status : MonoBehaviour
             sweap.stombendwaitTIme= stombendwaitTIme;
             sweap.stombreturntime= stombreturntime;
             sweap.stombYEnd = stombYpos;
-
+            sweap.stombwaitTIme2 = stombreturntime2;
             BossFalling.fallingObj2 = fallingObj2;
             BossFalling.fallingBoxCreateObj = fallingBoxCreateObj;
 
