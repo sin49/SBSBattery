@@ -7,6 +7,8 @@ public class Boss1Status : MonoBehaviour
     [Header("보스 스탯")]
     [Header("보스 모니터 체력(노기능)")]
     public int lifeCountMax;
+    [Header("패턴 후 딜레이시간")]
+    public float patterndelay;
     [Header("랜덤 패턴(끄면 순서대로)")]
     public bool randomPattern;
     [Header("휩쓸기 패턴만 사용")]
@@ -139,6 +141,7 @@ public class Boss1Status : MonoBehaviour
             {
                 boss.OnlyTestPattern = false;
             }
+            boss.patterndelay = patterndelay;
             sweap.LhandDefeatTransform = LhandDefeatTransform;
             sweap.RhandDefeatTransform = RhandDefeatTransform;
             sweap.handsize = handsize;

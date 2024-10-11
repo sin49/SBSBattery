@@ -10,6 +10,8 @@ public class BossTv : RemoteObject
 {
     public Boss1Status2Phase phase2status;
     bool BossEnable;
+    public BackGroundAudioPlayer BossBgmPlayer;
+
     Animator animator;
     bool changepattern;
     public void BossActive()
@@ -31,6 +33,18 @@ public class BossTv : RemoteObject
 
 
 
+    }
+    public void BossBgmPlay()
+    {
+        BossBgmPlayer.AudioPlay();
+    }
+    public void BossBgmStop()
+    {
+        BossBgmPlayer.AudioStop();
+    }
+    public void BossBgmPause()
+    {
+        BossBgmPlayer.AudioPause();
     }
     public void BossDeActive2()
     {
@@ -227,6 +241,7 @@ public class BossTv : RemoteObject
         Debug.Log("행동이 취소당함");
         TestAction.StopAction();
     }
+   
     void DoAction()
     {
         if (!onPattern)
@@ -254,11 +269,18 @@ public class BossTv : RemoteObject
     }
     void patternComplete()
     {
-        onPattern = false;
+     
         animator.enabled = true;
         animator.Play("Boss1Idle");
+        StartCoroutine(PatternDelayCorutine());
         Debug.Log("실행 완료");
         //어쩌구저쩌구
+    }
+    public float patterndelay;
+    IEnumerator PatternDelayCorutine()
+    {
+        yield return new WaitForSeconds(patterndelay);
+        onPattern = false;
     }
     Boss1SOundManager bossaudioplayer;
     public override void Active()
