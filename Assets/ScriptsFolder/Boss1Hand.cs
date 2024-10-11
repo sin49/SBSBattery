@@ -14,6 +14,9 @@ public class Boss1Hand : MonoBehaviour,DamagedByPAttack
     public CinemachineImpulseSource shaker;
     public Boss1HandSoundPlayer soundplayer;
     public event Action HandDominateEvent;
+
+    
+    public GameObject HittedEffect;
     IEnumerator shakecorutine()
     {
         while (true)
@@ -39,6 +42,8 @@ public class Boss1Hand : MonoBehaviour,DamagedByPAttack
         if (HP > 0)
         {
             HP-=f;
+            if(HittedEffect!=null)
+            Instantiate(HittedEffect, this.transform.position, Quaternion.identity);
             if (HP == 0)
             {
                 stopShake();
@@ -64,6 +69,7 @@ public class Boss1Hand : MonoBehaviour,DamagedByPAttack
             {
                 Debug.Log("¼Õ°ø°Ý");
                 other.GetComponent<Player>().Damaged(1);
+
             }
         }
     }

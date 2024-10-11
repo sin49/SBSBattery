@@ -950,8 +950,8 @@ Transform:
   m_GameObject: {fileID: 2379479381999405329}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.8, z: 0}
-  m_LocalScale: {x: 5, y: 2, z: 8}
+  m_LocalPosition: {x: 0, y: 1, z: 0.5}
+  m_LocalScale: {x: 6, y: 2, z: 9}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6695227901757261625}
@@ -1732,8 +1732,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.35, y: 0.85, z: 1.2}
-  m_Center: {x: 0, y: 0.3, z: 0.65}
+  m_Size: {x: 0.35, y: 0.99, z: 1.2}
+  m_Center: {x: 0, y: 0.43, z: 0.78}
 --- !u!1 &3943126530241521953
 GameObject:
   m_ObjectHideFlags: 0
@@ -2558,8 +2558,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.36058572
-  m_Center: {x: 0, y: 0.28159425, z: -0}
+  m_Radius: 0.36376715
+  m_Center: {x: 0, y: 0.27841282, z: -0}
 --- !u!54 &6694907696969450301
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2601,7 +2601,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyHitCol2D: {fileID: 3027465547958485918}
   testcolor: {r: 0, g: 0, b: 0, a: 0}
-  movepattern: 0
+  movepattern: 1
   eStat: {fileID: 6399371868865806208}
   patrolType: 1
   attackCollider: {fileID: 40720322756340349}
@@ -2619,13 +2619,13 @@ MonoBehaviour:
   searchCubeRange: {x: 0, y: 0, z: 0}
   searchCubePos: {x: 0, y: 0, z: 0}
   rangeCollider: {fileID: 3681817933639915115}
-  rangeSize: {x: 0.35, y: 0.85, z: 1.2}
-  rangePos: {x: 0, y: 0.3, z: 0.65}
+  rangeSize: {x: 0.35, y: 0.99, z: 1.2}
+  rangePos: {x: 0, y: 0.43, z: 0.78}
   searchCollider: {fileID: 6137782046602912412}
-  searchColliderRange: {x: 5, y: 2, z: 8}
-  searchColliderPos: {x: 0, y: 0.8, z: 0}
+  searchColliderRange: {x: 6, y: 2, z: 9}
+  searchColliderPos: {x: 0, y: 1, z: 0.5}
   searchPlayer: 0
-  trackingDistance: 6
+  trackingDistance: 8
   disToPlayer: 0
   PatrolTransform: []
   patrolGroup: []
@@ -2637,9 +2637,9 @@ MonoBehaviour:
   onPatrol: 0
   yWidth: 2
   zWidth: 1
-  wallRayHeight: 0
-  wallRayLength: 0
-  wallRayUpLength: 0
+  wallRayHeight: 0.3
+  wallRayLength: 3.5
+  wallRayUpLength: 3.5
   forwardWall: {fileID: 0}
   upWall: {fileID: 0}
   disToWall: 6.4031243
@@ -2686,7 +2686,7 @@ MonoBehaviour:
   attackType: 0
   characterState: 0
   initMaxHP: 2
-  initMoveSpeed: 1.65
+  initMoveSpeed: 2.5
   HPBonus: 0
   MoveSpeedBonus: 0
   hp: 2
@@ -2694,8 +2694,8 @@ MonoBehaviour:
   rotationSpeed: 60
   attackSpeed: 0
   attackCoolTimebonus: 0
-  initattackCoolTime: 1.5
-  attackDelay: 1.5
+  initattackCoolTime: 1
+  attackDelay: 1
   canMove: 1
   canAttack: 1
   eState: 0
@@ -2861,8 +2861,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5, y: 2, z: 8}
-  m_Center: {x: 0, y: 0.8, z: 0}
+  m_Size: {x: 6, y: 2, z: 9}
+  m_Center: {x: 0, y: 1, z: 0.5}
 --- !u!114 &4554639551137100570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3690,8 +3690,8 @@ Transform:
   m_GameObject: {fileID: 8957257790224117914}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3, z: 0.65}
-  m_LocalScale: {x: 0.35, y: 0.85, z: 1.2}
+  m_LocalPosition: {x: 0, y: 0.43, z: 0.78}
+  m_LocalScale: {x: 0.35, y: 0.99, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5329625773792054488}

@@ -8,6 +8,15 @@ using UnityEngine;
 
 public class RemoteTransform : Player
 {
+    public override void transformENdAnimation()
+    {
+     
+        base.transformENdAnimation();
+       
+    }
+  
+
+
     [Header("차징 스킬 변수")]
     //public float handleMaxTime; // 최대 차징 시간
     //float handletimer; // 차징 타이머 (시간이 증가하는 만큼 범위 증가)

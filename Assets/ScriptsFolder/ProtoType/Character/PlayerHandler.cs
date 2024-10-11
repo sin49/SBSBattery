@@ -281,7 +281,7 @@ public class PlayerHandler : MonoBehaviour
 
 
             p.transform.position = tf.position;
-            p.transform.rotation = tf.rotation;
+            //p.transform.rotation = tf.rotation;
             canthandle handle;
             EventHandle Ehandler;
             if (p.TryGetComponent<canthandle>(out handle))
@@ -301,8 +301,7 @@ public class PlayerHandler : MonoBehaviour
             #endregion
             if (formChange)
             {
-                CurrentPlayer.Humonoidanimator.Play("TransformEnd");
-                CurrentPlayer.downAttack = false;
+                CurrentPlayer.transformENdAnimation();
             }
             }
         else

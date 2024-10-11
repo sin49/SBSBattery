@@ -94,8 +94,10 @@ public class PlayerSoundPlayer : CharacterSoundPlayer
     }
     public void PlayDownAttackEndSound()
     {
+        
         if (DownAttackEndClip != null)
         {
+            Debug.Log("내려찍기 완료 사운드 출력시도");
             audiosource.Stop();
             audiosource.clip = DownAttackEndClip;
             audiosource.volume = DownAttackEndVolume;

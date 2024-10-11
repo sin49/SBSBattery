@@ -1004,7 +1004,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4545535272630405155}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.75, y: 2.75, z: 2.75}
   m_ConstrainProportionsScale: 1
@@ -1013,7 +1013,7 @@ Transform:
   - {fileID: 8757468424551944592}
   - {fileID: 491474486234180554}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!136 &5071744322922531240
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1150,6 +1150,9 @@ MonoBehaviour:
   Decelatate: 2
   hori: 0
   Vert: 0
+  rotatetimedelay: 1
+  rotationVaule: {x: 0, y: 90, z: 0}
+  rotation3DVaule: {x: 0, y: 90, z: 0}
   doublejumpeffect: {fileID: 0}
   oninteractivetimer: 0
   onInterarctive: 0
@@ -1295,7 +1298,7 @@ MonoBehaviour:
   MoveClip: {fileID: 8300000, guid: 83315124d8bd65140b4035305992fb6b, type: 3}
   MoveVolume: 0
   AttackClip: {fileID: 8300000, guid: 3d4be4a67a7d64045bb002a4229864a6, type: 3}
-  AttackVolume: 0.5
+  AttackVolume: 0.3
   JumpClip: {fileID: 8300000, guid: 85ea7b8994df41b45ad65459747ef044, type: 3}
   JumpVolume: 0.4
   InitDownAttackClip: {fileID: 8300000, guid: 5795d3a606bf0184c913e6e578e2603a, type: 3}
