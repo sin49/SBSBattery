@@ -137,6 +137,7 @@ public class BossTv : RemoteObject
         lifeCount = lifeCountMax;
         CanControl = false;
         index = actions.Count - 1;
+        animator.Play("Boss1Start");
     }
     void LhandDominateEvent()
     {
