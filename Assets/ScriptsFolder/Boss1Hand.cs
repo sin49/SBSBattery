@@ -17,6 +17,10 @@ public class Boss1Hand : MonoBehaviour,DamagedByPAttack
 
     
     public GameObject HittedEffect;
+    public void shakeonce()
+    {
+        shaker.GenerateImpulse();
+    }
     IEnumerator shakecorutine()
     {
         while (true)

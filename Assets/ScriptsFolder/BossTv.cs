@@ -12,6 +12,9 @@ public class BossTv : RemoteObject
     bool BossEnable;
     Animator animator;
     bool changepattern;
+
+    public float Phase2ChangeWaitTime;
+
     public void BossActive()
     {
         BossEnable = true;
@@ -25,28 +28,23 @@ public class BossTv : RemoteObject
         UI.gameObject.SetActive(false);
 
     }
-    public void BossActive2()
-    {
-        BossEnable = true;
-
-
-
-    }
     public void BossDeActive2()
     {
         BossEnable = false;
-  
 
+    }
+    IEnumerator phase2Start()
+    {
+        yield return new WaitForSeconds(Phase2ChangeWaitTime);
+        BossEnable = true;
+        PlayerDisableCantHandle();
     }
     public CinemachineImpulseSource shaker;
     public void CameraShake()
     {
         shaker.GenerateImpulse();
     }
-    public void animatorfalse()
-    {
- 
-    }
+   
     public void Change3DCamera()
     {
         var c_manager = PlayerHandler.instance.CurrentCamera.GetComponent<CameraManager_Switching2D3D>();
@@ -59,6 +57,7 @@ public class BossTv : RemoteObject
         actions.Add(BossLaser);
 
         PlayerHandler.instance.DimensionChange();
+        StartCoroutine(phase2Start());
     
         //StartCoroutine(c_manager.SwitchCameraForTransDimensionCorutinenoblending());
     }
