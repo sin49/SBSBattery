@@ -101,14 +101,16 @@ public class Player : Character,environmentObject
    
     public bool inputCheck;
     DownAttackCollider d_col;
+
     void groundCheckEvnet()
     {
         onGround = true;
         d_col.DeactiveCollider();
+      
         if (downAttack)
         {
-            SoundPlayer.PlayDownAttackEndSound();
             downAttack = false;
+            SoundPlayer.PlayDownAttackEndSound();
             if (LandingEffect != null)
                 LandingEffect.SetActive(true);
         }
@@ -123,6 +125,7 @@ public class Player : Character,environmentObject
         jumpBufferTimer = 0;
         doubleZinput = false;
         flyTimer = flyTime;
+  
     }
     private void OnBecameInvisible()
     {
@@ -150,6 +153,7 @@ public class Player : Character,environmentObject
     public float jumpInitDelay;
 
     public int jumpInputValue;
+   
     [Header("박스 캐스트 테스트")]
     public Vector3 boxRaySize; // box 레이캐스트 >> 벽에 고정되는 것 방지를 위한
     public float distanceRay; // box 캐스트의 거리
@@ -174,6 +178,7 @@ public class Player : Character,environmentObject
 
         canAttack = true;
         onDash = true;
+        if(!PlayerHandler.instance.formChange)
         rotateBy3Dto2D();
 
     }
@@ -273,6 +278,7 @@ public class Player : Character,environmentObject
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject"))
                 {
                     groundCheckEvnet();
+                    return;
                 }
 
 
@@ -284,6 +290,7 @@ public class Player : Character,environmentObject
                 {
 
                     groundCheckEvnet();
+                    return;
                 }
 
 
@@ -295,6 +302,7 @@ public class Player : Character,environmentObject
                 {
 
                     groundCheckEvnet();
+                    return;
                 }
 
 
@@ -306,6 +314,7 @@ public class Player : Character,environmentObject
                 {
 
                     groundCheckEvnet();
+                    return;
                 }
 
 
@@ -861,13 +870,15 @@ public class Player : Character,environmentObject
 
         Vector3 moveInput = new Vector3(hori, 0, Vert);
         Vector3 ladderInput = new Vector3(0, Vert, 0);
-
-        if (hori != 0 || Vert != 0)
+        if (!PlayerHandler.instance.formChange)
         {
-            if (canAttack && !PlayerHandler.instance.ladderInteract)
-                rotate(moveInput.x, moveInput.z);
-            SoundPlayer.PlayMoveSound();
+            if (hori != 0 || Vert != 0)
+            {
+                if (canAttack && !PlayerHandler.instance.ladderInteract)
+                    rotate(moveInput.x, moveInput.z);
+                SoundPlayer.PlayMoveSound();
 
+            }
         }
         //Vert 회전 추가
         //translateFix = new(hori, 0, 0);
@@ -965,7 +976,24 @@ public class Player : Character,environmentObject
         Humonoidanimator.SetTrigger("ladder");
         playerRb.useGravity = false;
     }
+    public float rotatetimedelay;
+    public Vector3 rotationVaule;
+    public Vector3 rotation3DVaule;
+    Vector3 onerotation;
+  public  void modelrotate()
+    {
+        onerotation = transform.rotation.eulerAngles;
+        if ((int)PlayerStat.instance.MoveState < 4)
+            transform.localRotation = Quaternion.Euler(rotationVaule);
+        else
+            transform.localRotation = Quaternion.Euler(rotation3DVaule);
+       
 
+    }
+    public void returnrotation()
+    {
+        //transform.GetChild(0).rotation = Quaternion.Euler(onerotation); ;
+    }
     public void StopLadderClimb()
     {
         PlayerHandler.instance.ladderInteract = false;
@@ -1154,7 +1182,7 @@ public class Player : Character,environmentObject
         PlayerStat.instance.pState = PlayerState.hitted;
         HittedEffect.gameObject.SetActive(true);
         PlayerStat.instance.hp -= damage;
-
+        SoundPlayer.PlayHittedSound();
 
         if (PlayerStat.instance.hp <= 0)
         {
@@ -1427,7 +1455,7 @@ IEnumerator jumpForceLimitCorutine()
 
         StartCoroutine(EndFormChange(type, event_));
     }
-
+   
     IEnumerator EndFormChange(TransformType type, Action event_)
     {
 
@@ -1448,6 +1476,11 @@ IEnumerator jumpForceLimitCorutine()
         PlayerHandler.instance.transformed(type, event_);
         if (PlayerHandler.instance.CurrentPlayer != null)
             PlayerHandler.instance.CurrentPlayer.direction = direction;
+    }
+    public virtual void transformENdAnimation()
+    {
+    Humonoidanimator.Play("TransformEnd");
+      downAttack = false;
     }
     #endregion
     public float oninteractivetimer = 0f;
