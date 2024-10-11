@@ -33451,6 +33451,11 @@ PrefabInstance:
       propertyPath: BossBgmPlayer
       value: 
       objectReference: {fileID: 412937561}
+    - target: {fileID: 2849135284605516961, guid: 40b8748c76f7fa64a90fee771e28bf0e,
+        type: 3}
+      propertyPath: Phase2ChangeWaitTime
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3420186837365374865, guid: 40b8748c76f7fa64a90fee771e28bf0e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -33800,6 +33805,11 @@ PrefabInstance:
         type: 3}
       propertyPath: OnlylaserPattern
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8072104595018603660, guid: 40b8748c76f7fa64a90fee771e28bf0e,
+        type: 3}
+      propertyPath: SweaperPatternDealy
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8158746434739615538, guid: 40b8748c76f7fa64a90fee771e28bf0e,
         type: 3}
@@ -68403,7 +68413,8 @@ MonoBehaviour:
   CanControl: 1
   HudTarget: {fileID: 8317646022368418917}
   phase2status: {fileID: 0}
-  BossBgmPlayer: {fileID: 0}
+  Phase2ChangeWaitTime: 0
+  patterndelay: 0
   shaker: {fileID: 8974792420930229224}
   UI: {fileID: 3366133090875747647}
   Monitor: {fileID: 3970028692518602865}
@@ -68421,7 +68432,6 @@ MonoBehaviour:
   LHand: {fileID: 6602919900568817586}
   RHand: {fileID: 4055101929985903377}
   target: {fileID: 0}
-  patterndelay: 0
 --- !u!224 &2913873000106121703
 RectTransform:
   m_ObjectHideFlags: 0

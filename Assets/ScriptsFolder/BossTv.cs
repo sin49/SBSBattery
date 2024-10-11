@@ -15,6 +15,8 @@ public class BossTv : RemoteObject
 
     public float Phase2ChangeWaitTime;
 
+
+    public float patterndelay;
     public void BossActive()
     {
         BossEnable = true;
@@ -36,6 +38,11 @@ public class BossTv : RemoteObject
     IEnumerator phase2Start()
     {
         yield return new WaitForSeconds(Phase2ChangeWaitTime);
+  
+        LHand.active = true;
+        RHand.active = true;
+        actions.Remove(BossLaser2D);
+        actions.Add(BossLaser);
         BossEnable = true;
         PlayerDisableCantHandle();
     }
@@ -49,14 +56,11 @@ public class BossTv : RemoteObject
     {
         var c_manager = PlayerHandler.instance.CurrentCamera.GetComponent<CameraManager_Switching2D3D>();
         //c_manager.trans3D = true;
-        LHand.HP = phase2status.HandHP;
-        RHand.HP = phase2status.HandHP;
-        LHand.active = true;
-        RHand.active = true;
-        actions.Remove(BossLaser2D);
-        actions.Add(BossLaser);
+       
 
         PlayerHandler.instance.DimensionChange();
+        LHand.HP = phase2status.HandHP;
+        RHand.HP = phase2status.HandHP;
         StartCoroutine(phase2Start());
     
         //StartCoroutine(c_manager.SwitchCameraForTransDimensionCorutinenoblending());
@@ -254,11 +258,16 @@ public class BossTv : RemoteObject
     }
     void patternComplete()
     {
-        onPattern = false;
+        
         animator.enabled = true;
         animator.Play("Boss1Idle");
-        Debug.Log("角青 肯丰");
+        StartCoroutine(patterndelaycorutine());
         //绢录备历录备
+    }
+    IEnumerator patterndelaycorutine()
+    {
+        yield return new WaitForSeconds(patterndelay);
+        onPattern = false;
     }
     Boss1SOundManager bossaudioplayer;
     public override void Active()

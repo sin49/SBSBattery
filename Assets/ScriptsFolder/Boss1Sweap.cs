@@ -247,9 +247,9 @@ public class Boss1Sweap : EnemyAction
             }
             timer = 0;
             hand.AttackState = false;
-            hand.makeshake();
-            yield return new WaitForSeconds(stombendwaitTIme);
             hand.shakeonce();
+            yield return new WaitForSeconds(stombendwaitTIme);
+
             tuple = calculateSweapvector(Playerpos + Vector3.up * stombYPlus, handtransform.position, stombendwaitTIme);
             vec = tuple.Item1;
             speed = tuple.Item2;
