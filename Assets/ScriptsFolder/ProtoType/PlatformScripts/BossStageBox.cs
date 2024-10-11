@@ -18,6 +18,7 @@ public class BossStageBox : MonoBehaviour
     public GameObject deadEffect;
 
     public GameObject warningObj;
+    public GameObject warningObj3D;
     public float fallingSpeed;
     public Vector3 fieldPos;
     public Vector3 warningPos;
@@ -44,6 +45,7 @@ public class BossStageBox : MonoBehaviour
         rb.isKinematic = false;
         rb.useGravity = true;
         warningObj.SetActive(false);
+        warningObj3D.SetActive(false);
         endCorutine = true;
     }
     private void Start()
@@ -69,7 +71,19 @@ public class BossStageBox : MonoBehaviour
         }
         WarningValue();
     }
-
+    private void OnEnable()
+    {
+        if ((int)PlayerStat.instance.MoveState < 4)
+        {
+            warningObj.SetActive(true);
+            warningObj3D.SetActive(false);
+        }
+        else
+        {
+            warningObj3D.SetActive(true);
+            warningObj.SetActive(false);
+        }
+    }
     public void WarningValue()
     {
         Vector3 vec = warningPos - transform.position;
