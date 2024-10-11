@@ -40,9 +40,10 @@ public class TestRecheckUI : UIInteract
     void initializeUI()
     {
         ok = true;
-        InitButton();
         StartCoroutine(SettingChangeReCheck());
-        //UpdateUI();
+        beforeIndex = index;
+        index = 0;
+        UpdateUI();
     }
     private void OnEnable()
     {
@@ -62,13 +63,6 @@ public class TestRecheckUI : UIInteract
             }
             reCheckActive = true;
         }
-    }
-
-    public void InitButton()
-    {
-        DeactiveButton();
-        index = 0;
-        ActiveButton();
     }
 
     void UpdateUI()
@@ -151,7 +145,7 @@ public class TestRecheckUI : UIInteract
     // Update is called once per frame
     void Update()
     {
-        if (this.gameObject.activeSelf)
+        if (this.gameObject.activeSelf && reCheckActive)
             handleUI();
     }
 

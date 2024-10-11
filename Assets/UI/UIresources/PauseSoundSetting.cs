@@ -199,6 +199,8 @@ public class PauseSoundSetting : UIInteract
         {
             Debug.Log("사운드 설정값이 저장되었습니다!");
         }
+
+        CurrentSettingExit();
     }
 
     //설정 갱신
