@@ -55,10 +55,12 @@ public class Boss1Status : MonoBehaviour
     public float stombendwaitTIme;
     [Header("내려찍고 돌아오는 시간")]
     public float stombreturntime;
-
+    [Header("내려찍는 y좌표")]
+    public float  stombYpos ;
 
 
     [Header("보스 휩쓸기(이거 빼면 2페이즈 부분에 값 새로 넣어야 되가지고 일단 놔둠)")]
+  
     [Header("손 크기(손 y축 오프셋 전용)")]
     public float handsize = 1;
     [Header("휩쓸기 한 번 후 다음 휩쓸기 까지의 간격")]
@@ -152,7 +154,7 @@ public class Boss1Status : MonoBehaviour
             sweap.stombwaitTIme= stombwaitTIme;
             sweap.stombendwaitTIme= stombendwaitTIme;
             sweap.stombreturntime= stombreturntime;
-          
+            sweap.stombYEnd = stombYpos;
 
             BossFalling.fallingObj2 = fallingObj2;
             BossFalling.fallingBoxCreateObj = fallingBoxCreateObj;

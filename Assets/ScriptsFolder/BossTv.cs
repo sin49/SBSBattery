@@ -15,7 +15,7 @@ public class BossTv : RemoteObject
     {
         BossEnable = true;
         UI.gameObject.SetActive(true);
-      ;
+      
     
     }
     public void BossDeActive()
