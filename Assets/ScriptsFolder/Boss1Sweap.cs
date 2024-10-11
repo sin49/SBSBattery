@@ -228,6 +228,7 @@ public class Boss1Sweap : EnemyAction
             handtransform.localRotation = Quaternion.identity;
             timer = 0;
             hand.AttackState = true;
+
             yield return new WaitForSeconds(stombwaitTIme);
             tuple = calculateSweapvector(Playerpos ,
                 handtransform.position, stombtime
@@ -246,7 +247,9 @@ public class Boss1Sweap : EnemyAction
             }
             timer = 0;
             hand.AttackState = false;
+            hand.makeshake();
             yield return new WaitForSeconds(stombendwaitTIme);
+            hand.shakeonce();
             tuple = calculateSweapvector(Playerpos + Vector3.up * stombYPlus, handtransform.position, stombendwaitTIme);
             vec = tuple.Item1;
             speed = tuple.Item2;

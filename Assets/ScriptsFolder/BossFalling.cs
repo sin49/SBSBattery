@@ -87,7 +87,7 @@ public class BossFalling : EnemyAction
     {
         base.StopAction();
         StopAllCoroutines();
-        ani.Play("FallingAttack");
+
         ani.enabled = false;
         StartCoroutine(handreturn());
     }
@@ -253,7 +253,7 @@ public class BossFalling : EnemyAction
     }
     public void animatorFalse()
     {
-        ani.enabled = false;
+      
     }
     IEnumerator FallingAttack()
     {

@@ -102,6 +102,7 @@ public class Boss1Status2Phase : MonoBehaviour
     {
         if (boss != null)
         {
+            laser.LaserSpeed = LaserSpeed;
             laser.ActionLifeTIme = laserlifetime;
             laser.LaserYpos = LaserYpos;
             laser.LaserSpeed = LaserSpeed;
