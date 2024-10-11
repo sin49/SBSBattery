@@ -15,6 +15,17 @@ public class BossTv : RemoteObject
 
     public float Phase2ChangeWaitTime;
 
+    public BackGroundAudioPlayer bossbgmplayer;
+
+    public void bgmplay()
+    {
+        bossbgmplayer.AudioPlay();
+    }
+    public void bgmStop()
+    {
+        bossbgmplayer.AudioStop();
+    }
+
 
     public float patterndelay;
     public void BossActive()

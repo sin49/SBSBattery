@@ -14,7 +14,8 @@ public class Boss1Hand : MonoBehaviour,DamagedByPAttack
     public CinemachineImpulseSource shaker;
     public Boss1HandSoundPlayer soundplayer;
     public event Action HandDominateEvent;
-
+    public bool invincible;
+    public float invincibletimer = 0.12f;
     
     public GameObject HittedEffect;
     public void shakeonce()
@@ -41,13 +42,22 @@ public class Boss1Hand : MonoBehaviour,DamagedByPAttack
     {
         soundplayer = GetComponent<Boss1HandSoundPlayer>();
     }
+    IEnumerator makeinvincible()
+    {
+        invincible = true;
+        yield return new WaitForSeconds(invincibletimer);
+        invincible = false;
+    }
     public void Damaged(float f)
     {
+        if (invincible)
+            return;
         if (HP > 0)
         {
             HP-=f;
             if(HittedEffect!=null)
             Instantiate(HittedEffect, this.transform.position, Quaternion.identity);
+            StartCoroutine(makeinvincible());
             if (HP == 0)
             {
                 stopShake();
@@ -64,17 +74,20 @@ public class Boss1Hand : MonoBehaviour,DamagedByPAttack
 
         
     }
+    public void handattack()
+    {
+        if (AttackState)
+        {
+            Debug.Log("손공격");
+           PlayerHandler.instance.CurrentPlayer.Damaged(1);
 
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            if (AttackState)
-            {
-                Debug.Log("손공격");
-                other.GetComponent<Player>().Damaged(1);
-
-            }
+            handattack();
         }
     }
 }

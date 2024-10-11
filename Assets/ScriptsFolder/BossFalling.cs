@@ -53,6 +53,8 @@ public class BossFalling : EnemyAction
     public float shakertimer;
     public Transform LhandTransform;
     public Transform RhandTransform;
+    Boss1Hand Lhand;
+    Boss1Hand Rhand;
     Vector3 LhandOriginPosition;
     Vector3 RhandOriginPosition;
     public float handreturntime = 2;
@@ -146,6 +148,8 @@ public class BossFalling : EnemyAction
             fieldMax = bossField.TransformPoint(max);
         }
         MakeBossFallingObjectsPossibility();
+        Lhand = LhandTransform.GetComponent<Boss1Hand>();
+        Rhand = RhandTransform.GetComponent<Boss1Hand>();
         //Falling();
     }
 
@@ -188,6 +192,8 @@ public class BossFalling : EnemyAction
     {
         LhandOriginPosition = LhandTransform.position;
         RhandOriginPosition = RhandTransform.position;
+        Lhand.AttackState = true;
+        Rhand.AttackState = true;
         registerActionHandler(ActionENd);
         ani.enabled = true;
    ani.Play("FallingAttack");
@@ -257,7 +263,8 @@ public class BossFalling : EnemyAction
     }
     IEnumerator FallingAttack()
     {
-       
+        Lhand.AttackState = false;
+        Rhand.AttackState = false;
         StartCoroutine(ShakeLoop());
      
         //}
