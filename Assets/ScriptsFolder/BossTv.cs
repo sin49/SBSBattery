@@ -240,6 +240,7 @@ public class BossTv : RemoteObject
         Debug.Log("행동이 취소당함");
         TestAction.StopAction();
     }
+   
     void DoAction()
     {
         if (!onPattern)
@@ -267,11 +268,18 @@ public class BossTv : RemoteObject
     }
     void patternComplete()
     {
-        onPattern = false;
+     
         animator.enabled = true;
         animator.Play("Boss1Idle");
+        StartCoroutine(PatternDelayCorutine());
         Debug.Log("실행 완료");
         //어쩌구저쩌구
+    }
+    public float patterndelay;
+    IEnumerator PatternDelayCorutine()
+    {
+        yield return new WaitForSeconds(patterndelay);
+        onPattern = false;
     }
     Boss1SOundManager bossaudioplayer;
     public override void Active()
