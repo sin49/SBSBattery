@@ -51,6 +51,8 @@ public class Boss1Sweap : EnemyAction
     protected override void CancelActionEvent()
     {
         StopAllCoroutines();
+        Lhand.AttackState = false;
+        RHand.AttackState = false;
         StartCoroutine(InitializeHandPosition());
 
     }
@@ -227,9 +229,10 @@ public class Boss1Sweap : EnemyAction
             }
             handtransform.localRotation = Quaternion.identity;
             timer = 0;
-            hand.AttackState = true;
+          
 
             yield return new WaitForSeconds(stombwaitTIme);
+            hand.AttackState = true;
             tuple = calculateSweapvector(Playerpos ,
                 handtransform.position, stombtime
                 );
@@ -316,8 +319,9 @@ public class Boss1Sweap : EnemyAction
         }
         handtransform.localRotation = Quaternion.identity;
         sweapertimer = 0;
-        hand.AttackState = true;
+       
         yield return new WaitForSeconds(sweaperwaitTime);
+        hand.AttackState = true;
         //손이 휩쓸기 스타트
         tuple = calculateSweapvector(EndPos, handtransform.position, SweaperEndMoveTime);
         vec = tuple.Item1;

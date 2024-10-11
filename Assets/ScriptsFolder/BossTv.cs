@@ -2,6 +2,7 @@ using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 //주석처리
@@ -127,7 +128,7 @@ public class BossTv : RemoteObject
 
 
     public Transform target;
- 
+
     protected override void Awake()
     {
         base.Awake();
@@ -174,13 +175,7 @@ public class BossTv : RemoteObject
         {
             if (!Phase2)
             {
-                Phase2 = true;
-                //CanControl = true;
-               
-                
-                animator.enabled = true;
-                animator.Play("Boss1PhaseChange");
-                Debug.Log("2페이즈 전환 연출");
+                StartCoroutine(phasechangeeventStack());
             }
             else
             {
@@ -192,7 +187,18 @@ public class BossTv : RemoteObject
             }
         }
     }
-   
+    IEnumerator phasechangeeventStack()
+    {
+        BossEnable = false;
+        yield return new WaitUntil(() => { return !onPattern; });
+        Phase2 = true;
+        //CanControl = true;
+
+
+        animator.enabled = true;
+        animator.Play("Boss1PhaseChange");
+        Debug.Log("2페이즈 전환 연출");
+    }
     private void FixedUpdate()
     {
         if (!BossEnable)
@@ -271,7 +277,8 @@ public class BossTv : RemoteObject
     {
         
         animator.enabled = true;
-        animator.Play("Boss1Idle");
+        if(BossEnable)
+            animator.Play("Boss1Idle");
         StartCoroutine(patterndelaycorutine());
         //어쩌구저쩌구
     }
