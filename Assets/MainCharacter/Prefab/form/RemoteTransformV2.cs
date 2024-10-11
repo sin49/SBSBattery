@@ -15,6 +15,22 @@ public class RemoteTransformV2 : Player
     public float chargingBufferTimeMax;
 
 
+    public override void transformENdAnimation()
+    {
+        base.transformENdAnimation();
+        StartCoroutine(modelrotate());
+    }
+    public float rotatetimedelay;
+    public Vector3 rotationVaule;
+    IEnumerator modelrotate()
+    {
+        Vector3 rot =transform.rotation.eulerAngles;
+
+        transform.GetChild(0).rotation = Quaternion.Euler(rotationVaule);
+        yield return new WaitForSeconds(rotatetimedelay);
+        transform.GetChild(0).rotation = Quaternion.Euler(rot);
+    }
+
     public List<GameObject> remoteObj; // 탐지 범위에 저장될 상호작용 오브젝트 정보
 
     public GameObject RemoteObjectEffect;

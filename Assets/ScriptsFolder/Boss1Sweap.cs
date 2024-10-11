@@ -94,11 +94,12 @@ public class Boss1Sweap : EnemyAction
         StartCoroutine(DisableAction(0));
     }
     public Color sweapColor;
-  
 
+    Animator ani;
     public override void Invoke(Action ActionENd,Transform target = null)
     {
         this.target = target;
+        ani.enabled = false;
         registerActionHandler(ActionENd);
         StartCoroutine(SweaperPattern());
     }
@@ -107,7 +108,7 @@ public class Boss1Sweap : EnemyAction
     {
         boss1SOundManager=GetComponent<Boss1SOundManager>();
         tv = GetComponent<BossTv>();
-
+        ani = GetComponent<Animator>();
 
 
     }
@@ -164,7 +165,17 @@ public class Boss1Sweap : EnemyAction
         }
         else
         {
-            yield return StartCoroutine(Stomb(Lhand, RHand));
+            if (Lhand.active && RHand.active)
+            {
+                yield return StartCoroutine(Stomb(Lhand, RHand));
+            }else if (!Lhand.active)
+            {
+                yield return StartCoroutine(Stomb(RHand, RHand));
+            }
+            else if (!RHand.active)
+            {
+                yield return StartCoroutine(Stomb(Lhand, Lhand));
+            }
         }
         yield return StartCoroutine(DisableAction(0.1f));
     }
