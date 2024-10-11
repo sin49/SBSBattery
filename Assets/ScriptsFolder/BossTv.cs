@@ -10,6 +10,8 @@ public class BossTv : RemoteObject
 {
     public Boss1Status2Phase phase2status;
     bool BossEnable;
+    public BackGroundAudioPlayer BossBgmPlayer;
+
     Animator animator;
     bool changepattern;
     public void BossActive()
@@ -31,6 +33,18 @@ public class BossTv : RemoteObject
 
 
 
+    }
+    public void BossBgmPlay()
+    {
+        BossBgmPlayer.AudioPlay();
+    }
+    public void BossBgmStop()
+    {
+        BossBgmPlayer.AudioStop();
+    }
+    public void BossBgmPause()
+    {
+        BossBgmPlayer.AudioPause();
     }
     public void BossDeActive2()
     {

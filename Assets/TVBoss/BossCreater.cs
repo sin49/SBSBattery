@@ -10,7 +10,8 @@ public class BossCreater : MonoBehaviour
 
 
 
-
+    //[Header("백그라운드 뮤직")]
+    //public BackGroundAudioPlayer
 
 
     [Header("보스 프리팹 ")]
