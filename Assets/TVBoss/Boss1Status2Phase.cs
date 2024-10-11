@@ -104,6 +104,7 @@ public class Boss1Status2Phase : MonoBehaviour
         {
             laser.ActionLifeTIme = laserlifetime;
             laser.LaserYpos = LaserYpos;
+            laser.LaserSpeed = LaserSpeed;
             laser.laserActiveTimer = laserActiveTimer;
             laser.TrailColScale = TrailColScale;
             laser.TrailDuration = TrailDuration;
