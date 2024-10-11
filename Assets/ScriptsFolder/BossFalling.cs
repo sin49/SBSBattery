@@ -67,8 +67,8 @@ public class BossFalling : EnemyAction
         float RSpeed = Rhandvector.magnitude / handreturntime;
         while (timer < handreturntime)
         {
-            LhandTransform.Rotate(Vector3.forward * -1 * rotationspeed * Time.fixedDeltaTime);
-            RhandTransform.Rotate(Vector3.forward * rotationspeed * Time.fixedDeltaTime);
+            LhandTransform.Rotate(Vector3.forward  * rotationspeed * Time.fixedDeltaTime);
+            RhandTransform.Rotate(Vector3.forward*-1 * rotationspeed * Time.fixedDeltaTime);
             LhandTransform.Translate(LSpeed * Lhandvector.normalized * Time.fixedDeltaTime, Space.World);
             RhandTransform.Translate(RSpeed * Rhandvector.normalized * Time.fixedDeltaTime, Space.World);
             timer += Time.fixedDeltaTime;

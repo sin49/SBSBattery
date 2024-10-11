@@ -11,6 +11,7 @@ public class BossTv : RemoteObject
     public Boss1Status2Phase phase2status;
     bool BossEnable;
     Animator animator;
+    bool changepattern;
     public void BossActive()
     {
         BossEnable = true;
@@ -22,6 +23,19 @@ public class BossTv : RemoteObject
     {
         BossEnable = false;
         UI.gameObject.SetActive(false);
+
+    }
+    public void BossActive2()
+    {
+        BossEnable = true;
+
+
+
+    }
+    public void BossDeActive2()
+    {
+        BossEnable = false;
+  
 
     }
     public CinemachineImpulseSource shaker;
@@ -51,11 +65,13 @@ public class BossTv : RemoteObject
     public void PlayerEnableCantHandle()
     {
         PlayerHandler.instance.CantHandle = true;
+   
     }
     public void PlayerDisableCantHandle()
     {
         PlayerHandler.instance.CantHandle = false;
-
+        if (!BossEnable)
+            BossEnable = true;
     }
     public Boss1UI UI;
     [Header("보스는 SoundEffectListPlayer와")]
@@ -155,7 +171,7 @@ public class BossTv : RemoteObject
             {
               
                        animator.enabled = true;
-                animator.Play("  BossDefeat");
+                Active();
                 Debug.Log("쓰러뜨림");
             }
         }
@@ -239,6 +255,7 @@ public class BossTv : RemoteObject
     {
         onPattern = false;
         animator.enabled = true;
+        animator.Play("Boss1Idle");
         Debug.Log("실행 완료");
         //어쩌구저쩌구
     }
