@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +13,7 @@ public class SelectUI : MonoBehaviour
     public PauseUI pauseui;
     public ItemListUI itemlistui;
     public TestRecheckUI testRecheckUI;
-
+    public TextMeshProUGUI tokenText;
 
     int index, beforeIndex;
 
@@ -59,7 +60,7 @@ public class SelectUI : MonoBehaviour
 
     public void ActiveUI(int index = 0)
     {
-
+        tokenText.text = PlayerInventory.instance.TokenValue.ToString();
         OnHandle = true;
         this.index = index;
         ShowPauseUI();
@@ -80,7 +81,11 @@ public class SelectUI : MonoBehaviour
     }
     void ExitEvent()
     {
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+#endif
     }
     void ButtonselectedDisable()
     {

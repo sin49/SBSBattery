@@ -17,6 +17,12 @@ public class TitleScreen : UIInteract
     public Sprite activeButton;
     public Sprite deactiveButton;
 
+    public bool onHandle;
+    public TestSettingUI settingUI;
+    public TitleSceneAudio settingAudio;
+
+    public TestRecheckUI recheckUI;
+
     public void StartNewGame()
     {
         Debug.Log(startscenename);
@@ -33,8 +39,25 @@ public class TitleScreen : UIInteract
 
       
     }
+    public void Setting()
+    {
+        onHandle = false;
+        if (!settingUI.gameObject.activeSelf)
+        {
+            Debug.Log("설정창 활성화시키자");
+            settingUI.gameObject.SetActive(true);
+            settingAudio.active = true;
+        }
+        titletexts[index].ImageHub.GetComponent<Image>().sprite = deactiveButton;
+        fontList[index].color = deactiveFontColor;
+    }
+
     public void ResetData()
     {
+        //onHandle=false;
+        //recheckUI.gameObject.SetActive(true);
+        //settingAudio.active = true;
+
         GameManager.instance.DeleteSaveSetting();
         ResetText.gameObject.SetActive(true);
     }
@@ -45,6 +68,13 @@ public class TitleScreen : UIInteract
         //    t.removeevent();
         //}
     }
+
+    public void SettingBackScreen()
+    {
+        onHandle = true;
+        settingAudio.active = false;
+    }
+
     public void handletitle()
     {
         int LastIndex;
@@ -107,13 +137,16 @@ public class TitleScreen : UIInteract
         titletexts[index].ActiveImageHub();
         titletexts[0].ButtonEffect += StartNewGame;
         titletexts[1].ButtonEffect += ContinueGame;
-        titletexts[2].ButtonEffect += ResetData;
+        titletexts[2].ButtonEffect += Setting;
+        titletexts[3].ButtonEffect += ResetData;
         titletexts[titletexts.Count - 1].ButtonEffect += quitgame;
         ResetText.gameObject.SetActive(false);
     }
+
     private void Awake()
     {
         ButtionSoundEffectPlayer_ = gameObject.GetComponent<ButtonSoundEffectPlayer>();
+        onHandle = true;
     }
     private void Start()
     {
@@ -124,6 +157,8 @@ public class TitleScreen : UIInteract
     // Update is called once per frame
     void Update()
     {
+        if (!onHandle)
+            return;
         handletitle();
     }
 }

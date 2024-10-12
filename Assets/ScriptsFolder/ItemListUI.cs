@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemListUI : MonoBehaviour
 {
@@ -10,13 +11,13 @@ public class ItemListUI : MonoBehaviour
     List<ItemIconUI> EssentialItemList=new List<ItemIconUI>();
     public Transform EssentialItemListTransform;
     public SettingUI settingUi;
-    public SelectUI KjsSetting;
+    public SelectUI KjsSetting; //추가함
 
     public MultiplyItemIconUI EnergyMultiple;
     public MultiplyItemIconUI SpeedMultiple;
     List<ItemIconUI> MultiplyItemList = new List<ItemIconUI>();
     public Transform MultiplyItemListTransform;
-
+    public Transform MultiplySpeedTransform;//추가함
 
     List<ItemIconUI> handleitemlist;
 
@@ -28,7 +29,10 @@ public class ItemListUI : MonoBehaviour
 
     public GameObject SelectedUI;
 
-    public ItemDescriptionUi ItemDescriptionUI;
+    //public ItemDescriptionUi ItemDescriptionUI;
+    [Header("플레이어 상태 이미지")]
+    public Image formInfo;
+    public List<Sprite> characterFormUI;
 
     void swapUI()
     {
@@ -112,11 +116,11 @@ public class ItemListUI : MonoBehaviour
                 {
                     case UpgradeStatus.Energy:
                         AddItem(EnergyMultiple,PlayerInventory.instance.MultiplyItems[n], Mlist[
-                    PlayerInventory.instance.MultiplyItems[n].upgradeStatus], MultiplyItemList, MultiplyItemListTransform);
+                    PlayerInventory.instance.MultiplyItems[n].upgradeStatus], MultiplyItemList, MultiplyItemListTransform); // 수정함
                         break;
                     case UpgradeStatus.MoveSpeed:
                         AddItem(SpeedMultiple,PlayerInventory.instance.MultiplyItems[n], Mlist[
-                   PlayerInventory.instance.MultiplyItems[n].upgradeStatus], MultiplyItemList, MultiplyItemListTransform);
+                   PlayerInventory.instance.MultiplyItems[n].upgradeStatus], MultiplyItemList, MultiplySpeedTransform); // 수정함
                         break;
                 }
             }
@@ -128,7 +132,21 @@ public class ItemListUI : MonoBehaviour
             }
         }
 
-       
+        switch (PlayerHandler.instance.CurrentType)
+        {
+            case TransformType.Default:
+                formInfo.sprite = characterFormUI[0];
+                break;
+            case TransformType.remoteform:
+                formInfo.sprite = characterFormUI[1];
+                break;
+            case TransformType.mouseform:
+                formInfo.sprite = characterFormUI[2];
+                break;
+            case TransformType.ironform:
+                formInfo.sprite = characterFormUI[3];
+                break;
+        }
 
         UpdateSelectInfo();
     }
@@ -138,12 +156,12 @@ public class ItemListUI : MonoBehaviour
         if (OnHandle)
         {
             SelectedUI.SetActive(true);
-            ItemDescriptionUI.gameObject.SetActive(true);
+            //ItemDescriptionUI.gameObject.SetActive(true);
         }
         else
         {
             SelectedUI.SetActive(false);
-            ItemDescriptionUI.gameObject.SetActive(false);
+            //ItemDescriptionUI.gameObject.SetActive(false);
             return;
         }
         if (index >= handleitemlist.Count)
@@ -153,12 +171,15 @@ public class ItemListUI : MonoBehaviour
         selectitemicon = handleitemlist[index];
         SelectedUI.transform.position=selectitemicon.transform.position;
         if (handleitemlist == EssentialItemList)
-            ItemDescriptionUI.UpdateInfo(handleitemlist[index].Getitem());
+        {
+
+            //ItemDescriptionUI.UpdateInfo(handleitemlist[index].Getitem());
+        }
         else
         {
-         MultiplyItemIconUI ui= handleitemlist[index] as MultiplyItemIconUI;
+            MultiplyItemIconUI ui = handleitemlist[index] as MultiplyItemIconUI;
             var tuple = ui.GetMultiplyitem();
-            ItemDescriptionUI.UpdateInfo(tuple.Item1, tuple.Item2);
+            //ItemDescriptionUI.UpdateInfo(tuple.Item1, tuple.Item2);
         }
         //description에다 아이템 정보 받아서 제목,설명 표기
     }
@@ -167,43 +188,43 @@ public class ItemListUI : MonoBehaviour
         if (!OnHandle)
             return;
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            if (index < handleitemlist.Count-1)
-            {
-                index++;
-                UpdateSelectInfo();
-            }
-            /*else
-            {
-                swapUI();
-            }*/
-        }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            if (index >0)
-            {
-                index--;
-                UpdateSelectInfo();
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            if(handleitemlist!=EssentialItemList)
-            {
-                handleitemlist = EssentialItemList;
-                UpdateSelectInfo();
-            }    
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            if (handleitemlist == EssentialItemList)
-            {
-                //여기에 multiply
-                handleitemlist = MultiplyItemList;
-                UpdateSelectInfo();
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.RightArrow))
+        //{
+        //    if (index < handleitemlist.Count - 1)
+        //    {
+        //        index++;
+        //        UpdateSelectInfo();
+        //    }
+        //    /*else
+        //    {
+        //        swapUI();
+        //    }*/
+        //}
+        //if (Input.GetKeyDown(KeyCode.LeftArrow))
+        //{
+        //    if (index > 0)
+        //    {
+        //        index--;
+        //        UpdateSelectInfo();
+        //    }
+        //}
+        //if (Input.GetKeyDown(KeyCode.UpArrow))
+        //{
+        //    if (handleitemlist != EssentialItemList)
+        //    {
+        //        handleitemlist = EssentialItemList;
+        //        UpdateSelectInfo();
+        //    }
+        //}
+        //if (Input.GetKeyDown(KeyCode.DownArrow))
+        //{
+        //    if (handleitemlist == EssentialItemList)
+        //    {
+        //        //여기에 multiply
+        //        handleitemlist = MultiplyItemList;
+        //        UpdateSelectInfo();
+        //    }
+        //}
 
         if (Input.GetKeyDown(KeySettingManager.instance.UIdeactiveKeycode))
         {
