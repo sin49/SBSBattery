@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -54,13 +55,25 @@ public class TitleScreen : UIInteract
 
     public void ResetData()
     {
-        //onHandle=false;
-        //recheckUI.gameObject.SetActive(true);
-        //settingAudio.active = true;
+        onHandle = false;
+        recheckUI.gameObject.SetActive(true);
+        settingAudio.active = true;
+        titletexts[index].ImageHub.GetComponent<Image>().sprite = deactiveButton;
+        fontList[index].color = deactiveFontColor;
+
+        //GameManager.instance.DeleteSaveSetting();
+        //ResetText.gameObject.SetActive(true);
+    }
+
+    public void DeleteData()
+    {
+        onHandle = true;
+        settingAudio.active = false;
 
         GameManager.instance.DeleteSaveSetting();
         ResetText.gameObject.SetActive(true);
     }
+
     public void removeEvents()
     {
         //foreach (TItleText t in titletexts)

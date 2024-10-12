@@ -60,6 +60,7 @@ public class SelectUI : MonoBehaviour
 
     public void ActiveUI(int index = 0)
     {
+        pauseui.pauseInteract = false;
         tokenText.text = PlayerInventory.instance.TokenValue.ToString();
         OnHandle = true;
         this.index = index;
@@ -78,14 +79,11 @@ public class SelectUI : MonoBehaviour
     {
         Time.timeScale = 1;
         GameManager.instance.LoadingSceneWithKariEffect("TitleTest");
+        //GameManager.instance.LoadingSceneWithKariEffect("CheckTitleTest");
     }
     void ExitEvent()
     {
-#if UNITY_EDITOR
-        EditorApplication.isPlaying = false;
-#else
         Application.Quit();
-#endif
     }
     void ButtonselectedDisable()
     {
@@ -99,6 +97,7 @@ public class SelectUI : MonoBehaviour
         {
             case 0:
                 ResumeGame();
+                pauseui.pauseInteract = false;
                 break;
             case 1:
                 Time.timeScale = 1;
@@ -106,16 +105,20 @@ public class SelectUI : MonoBehaviour
                 break;
             case 2:
                 swapUI();
+                pauseui.pauseInteract = false;
                 break;
             case 3:
                 ShowSettingUI();
+                pauseui.pauseInteract = false;
                 break;
             case 4://재확인 시키기
                 testRecheckUI.ActiveUI("타이틀로 돌아갑니다.", TitleBackEvent, ButtonselectedDisable);
+                pauseui.pauseInteract = false;
                 buttonselected = true;
                 break;
             case 5://재확인 시키기
                 testRecheckUI.ActiveUI("게임을 종료합니다.", ExitEvent, ButtonselectedDisable);
+                pauseui.pauseInteract = false;
                 buttonselected = true;
                 break;
         }
@@ -132,7 +135,6 @@ public class SelectUI : MonoBehaviour
 
             DeInteractUI();
             SelectedUI.transform.localScale = screwScale;
-
             InteractUI();
             SelectedUI.transform.localScale = screwScale;
         }
@@ -221,6 +223,7 @@ public class SelectUI : MonoBehaviour
             uiGroupActive = true;
             UpdateUI();
             SelectedUI.gameObject.SetActive(true);
+            pauseui.pauseInteract = true;
         }
     }
 
@@ -241,6 +244,7 @@ public class SelectUI : MonoBehaviour
                 yield return null;
             }
             settingActive = false;
+            pauseui.pauseInteract = true;
         }
     }
 

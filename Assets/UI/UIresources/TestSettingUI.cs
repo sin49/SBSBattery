@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -70,6 +71,11 @@ public class TestSettingUI : UIInteract
             if (Input.GetKeyDown(KeyCode.C))
             {
                 ChoiceInteractUI();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                SettingExit();
             }
         }
     }
