@@ -2,6 +2,7 @@ using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 //주석처리
@@ -11,11 +12,28 @@ public class BossTv : RemoteObject
     public Boss1Status2Phase phase2status;
     bool BossEnable;
     Animator animator;
+    bool changepattern;
+
+    public float Phase2ChangeWaitTime;
+
+    public BackGroundAudioPlayer bossbgmplayer;
+
+    public void bgmplay()
+    {
+        bossbgmplayer.AudioPlay();
+    }
+    public void bgmStop()
+    {
+        bossbgmplayer.AudioStop();
+    }
+
+
+    public float patterndelay;
     public void BossActive()
     {
         BossEnable = true;
         UI.gameObject.SetActive(true);
-      ;
+      
     
     }
     public void BossDeActive()
@@ -24,38 +42,51 @@ public class BossTv : RemoteObject
         UI.gameObject.SetActive(false);
 
     }
+    public void BossDeActive2()
+    {
+        BossEnable = false;
+
+    }
+    IEnumerator phase2Start()
+    {
+        yield return new WaitForSeconds(Phase2ChangeWaitTime);
+  
+        LHand.active = true;
+        RHand.active = true;
+        actions.Remove(BossLaser2D);
+        actions.Add(BossLaser);
+        BossEnable = true;
+        PlayerDisableCantHandle();
+    }
     public CinemachineImpulseSource shaker;
     public void CameraShake()
     {
         shaker.GenerateImpulse();
     }
-    public void animatorfalse()
-    {
- 
-    }
+   
     public void Change3DCamera()
     {
         var c_manager = PlayerHandler.instance.CurrentCamera.GetComponent<CameraManager_Switching2D3D>();
         //c_manager.trans3D = true;
-        LHand.HP = phase2status.HandHP;
-        RHand.HP = phase2status.HandHP;
-        LHand.active = true;
-        RHand.active = true;
-        actions.Remove(BossLaser2D);
-        actions.Add(BossLaser);
+       
 
         PlayerHandler.instance.DimensionChange();
+        LHand.HP = phase2status.HandHP;
+        RHand.HP = phase2status.HandHP;
+        StartCoroutine(phase2Start());
     
         //StartCoroutine(c_manager.SwitchCameraForTransDimensionCorutinenoblending());
     }
     public void PlayerEnableCantHandle()
     {
         PlayerHandler.instance.CantHandle = true;
+   
     }
     public void PlayerDisableCantHandle()
     {
         PlayerHandler.instance.CantHandle = false;
-
+        if (!BossEnable)
+            BossEnable = true;
     }
     public Boss1UI UI;
     [Header("보스는 SoundEffectListPlayer와")]
@@ -97,7 +128,7 @@ public class BossTv : RemoteObject
 
 
     public Transform target;
- 
+
     protected override void Awake()
     {
         base.Awake();
@@ -121,6 +152,7 @@ public class BossTv : RemoteObject
         lifeCount = lifeCountMax;
         CanControl = false;
         index = actions.Count - 1;
+        animator.Play("Boss1Start");
     }
     void LhandDominateEvent()
     {
@@ -143,24 +175,30 @@ public class BossTv : RemoteObject
         {
             if (!Phase2)
             {
-                Phase2 = true;
-                //CanControl = true;
-               
-                
-                animator.enabled = true;
-                animator.Play("Boss1PhaseChange");
-                Debug.Log("2페이즈 전환 연출");
+                StartCoroutine(phasechangeeventStack());
             }
             else
             {
               
-                       animator.enabled = true;
-                animator.Play("  BossDefeat");
+                       BossEnable = false;
+                CanControl = true;
+                Active();
                 Debug.Log("쓰러뜨림");
             }
         }
     }
-   
+    IEnumerator phasechangeeventStack()
+    {
+        BossEnable = false;
+        yield return new WaitUntil(() => { return !onPattern; });
+        Phase2 = true;
+        //CanControl = true;
+
+
+        animator.enabled = true;
+        animator.Play("Boss1PhaseChange");
+        Debug.Log("2페이즈 전환 연출");
+    }
     private void FixedUpdate()
     {
         if (!BossEnable)
@@ -237,10 +275,17 @@ public class BossTv : RemoteObject
     }
     void patternComplete()
     {
-        onPattern = false;
+        
         animator.enabled = true;
-        Debug.Log("실행 완료");
+        if(BossEnable)
+            animator.Play("Boss1Idle");
+        StartCoroutine(patterndelaycorutine());
         //어쩌구저쩌구
+    }
+    IEnumerator patterndelaycorutine()
+    {
+        yield return new WaitForSeconds(patterndelay);
+        onPattern = false;
     }
     Boss1SOundManager bossaudioplayer;
     public override void Active()

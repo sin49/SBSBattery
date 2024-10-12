@@ -52,7 +52,8 @@ public class bosslasergroup : MonoBehaviour
     {
         for (int n = 0; n < laserbeams.Length; n++)
         {
-
+            if (laserbeams[n] == null)
+                break;
             laserbeams[n].gameObject.SetActive(true);
 
         }
@@ -61,7 +62,8 @@ public class bosslasergroup : MonoBehaviour
     {
         for (int n = 0; n < laserbeams.Length; n++)
         {
-
+            if (laserbeams[n] == null)
+                break;
             laserbeams[n].gameObject.SetActive(false);
 
         }
@@ -70,7 +72,8 @@ public class bosslasergroup : MonoBehaviour
     {
         for (int n = 0; n < laserswarning.Length; n++)
         {
-
+            if (laserswarning[n] == null)
+                break;
             laserswarning[n].gameObject.SetActive(true);
 
         }
@@ -79,7 +82,8 @@ public class bosslasergroup : MonoBehaviour
     {
         for (int n = 0; n < laserswarning.Length; n++)
         {
-
+            if (laserswarning[n] == null)
+                break;
             laserswarning[n].gameObject.SetActive(false);
           
         }

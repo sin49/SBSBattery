@@ -7,6 +7,8 @@ public class Boss1Status : MonoBehaviour
     [Header("보스 스탯")]
     [Header("보스 모니터 체력(노기능)")]
     public int lifeCountMax;
+    [Header("패턴 후 딜레이시간")]
+    public float patterndelay;
     [Header("랜덤 패턴(끄면 순서대로)")]
     public bool randomPattern;
     [Header("휩쓸기 패턴만 사용")]
@@ -53,12 +55,16 @@ public class Boss1Status : MonoBehaviour
     public float stombtime;
     [Header("내려찍기 찍고 대기 시간")]
     public float stombendwaitTIme;
-    [Header("내려찍고 돌아오는 시간")]
+    [Header("내려찍고 위로 돌아오는 시간")]
     public float stombreturntime;
-
+    [Header("위에서 제자리로 돌아오는 시간")]
+    public float stombreturntime2;
+    [Header("내려찍는 y좌표")]
+    public float  stombYpos ;
 
 
     [Header("보스 휩쓸기(이거 빼면 2페이즈 부분에 값 새로 넣어야 되가지고 일단 놔둠)")]
+  
     [Header("손 크기(손 y축 오프셋 전용)")]
     public float handsize = 1;
     [Header("휩쓸기 한 번 후 다음 휩쓸기 까지의 간격")]
@@ -135,6 +141,7 @@ public class Boss1Status : MonoBehaviour
             {
                 boss.OnlyTestPattern = false;
             }
+            boss.patterndelay = patterndelay;
             sweap.LhandDefeatTransform = LhandDefeatTransform;
             sweap.RhandDefeatTransform = RhandDefeatTransform;
             sweap.handsize = handsize;
@@ -152,8 +159,8 @@ public class Boss1Status : MonoBehaviour
             sweap.stombwaitTIme= stombwaitTIme;
             sweap.stombendwaitTIme= stombendwaitTIme;
             sweap.stombreturntime= stombreturntime;
-          
-
+            sweap.stombYEnd = stombYpos;
+            sweap.stombwaitTIme2 = stombreturntime2;
             BossFalling.fallingObj2 = fallingObj2;
             BossFalling.fallingBoxCreateObj = fallingBoxCreateObj;
 

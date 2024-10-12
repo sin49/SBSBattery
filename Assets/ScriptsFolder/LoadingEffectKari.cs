@@ -22,6 +22,8 @@ public class LoadingEffectKari : MonoBehaviour
     float alpha;
     public event Action<string> EffectEnd;
     Image image_;
+    public GameObject loadingImage;
+
     private void Awake()
     {
         image_ = GetComponent<Image>();
@@ -65,6 +67,8 @@ public class LoadingEffectKari : MonoBehaviour
             }
             if (alpha >= 1)
             {
+                if(loadingImage != null)
+                loadingImage.SetActive(true);
                 FadeOff = true;
                 EffectEnd?.Invoke(LoadSceneName);
                 //this.gameObject.SetActive(false);
@@ -72,6 +76,8 @@ public class LoadingEffectKari : MonoBehaviour
         }
         else if(LoadingComplete)
         {
+            if (loadingImage != null)
+                loadingImage.SetActive(false);
             if (PlayerHandler.instance != null && PlayerHandler.instance.CurrentPlayer)
             {
                 vignette.center.value = PlayerHandler.instance.CurrentCamera.WorldToViewportPoint(PlayerHandler.instance.CurrentPlayer.transform.position);
