@@ -26,7 +26,10 @@ public class BossTv : RemoteObject
     {
         bossbgmplayer.AudioStop();
     }
-
+    public void playphaseChangeAudio()
+    {
+        bossaudioplayer.phase2StartClipPlay();
+    }
 
     public float patterndelay;
     public void BossActive()

@@ -110,6 +110,20 @@ public class Boss1SOundManager : SEPlayer
             audiosource.Play();
         }
     }
+    [Header("2페이즈 시작 사운드")]
+    public AudioClip phase2Startclip;
+    [Header("2페이즈 시작 볼륨"), Range(0, 1)]
+    public float phase2StartVolume;
+    public void phase2StartClipPlay()
+    {
+        if (phase2Startclip != null)
+        {
+            audiosource.Stop();
+            audiosource.clip = phase2Startclip;
+            audiosource.volume = phase2StartVolume;
+            audiosource.Play();
+        }
+    }
     [Header("모니터 피격 사운드")]
     public AudioClip MonitiorHittedclip;
     [Header("모니터 피격 볼륨"), Range(0, 1)]
