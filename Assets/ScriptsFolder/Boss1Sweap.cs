@@ -15,6 +15,9 @@ public class Boss1Sweap : EnemyAction
     public Transform LhandDefeatTransform;
     public Transform RhandDefeatTransform;
 
+
+    public GameObject handeffect;
+
     public Boss1Hand RHand;
     Boss1Hand activehand;
     Transform target;
@@ -186,6 +189,11 @@ public class Boss1Sweap : EnemyAction
     public float stombwaitTIme;
     public float stombendwaitTIme;
     public float stombreturntime;
+    public void createhandeffect(Boss1Hand hand)
+    {
+        if(handeffect!=null)
+        Instantiate(handeffect, hand.transform.position, quaternion.identity);
+    }
     public IEnumerator Stomb(Boss1Hand Lhand,Boss1Hand Rhand)
     {
         for(int n = 0; n < stombcount; n++)
@@ -242,6 +250,7 @@ public class Boss1Sweap : EnemyAction
                 yield return null;
             }
             timer = 0;
+            createhandeffect(hand);
             hand.AttackState = false;
             yield return new WaitForSeconds(stombendwaitTIme);
             tuple = calculateSweapvector(HandOnepositon, handtransform.position, stombreturntime);
