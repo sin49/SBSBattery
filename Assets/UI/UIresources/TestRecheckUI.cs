@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TestRecheckUI : UIInteract
@@ -24,6 +25,9 @@ public class TestRecheckUI : UIInteract
     int index, beforeIndex;
 
     public Animator recheckAnimator;
+
+    public TitleScreen title;
+
     private void Awake()
     {
         //if (this.gameObject.activeSelf)
@@ -42,7 +46,7 @@ public class TestRecheckUI : UIInteract
         ok = true;
         StartCoroutine(SettingChangeReCheck());
         beforeIndex = index;
-        index = 0;
+        index = 1;
         UpdateUI();
     }
     private void OnEnable()
@@ -73,28 +77,39 @@ public class TestRecheckUI : UIInteract
             SelectedUI.transform.position = YesButton.transform.position;
         else
             SelectedUI.transform.position = NoButton.transform.position;*/
-        if (ok)
+        switch(index)
         {
-            SelectedUI.SetParent(YesButton);
-            SelectedUI.position = YesButton.position;
-        }
-        else
-        {
-            SelectedUI.SetParent(NoButton);
-            SelectedUI.position = NoButton.position;
+            case 0:
+                SelectedUI.SetParent(YesButton);
+                SelectedUI.position = YesButton.position;
+                break;
+            case 1:
+                SelectedUI.SetParent(NoButton);
+                SelectedUI.position = NoButton.position;
+                break;
         }
         DeactiveButton();
         ActiveButton();
     }
     void OkButtonInput()
     {
-        OKEvent?.Invoke();
-        DeActiveUI();
+        if (SceneManager.GetActiveScene().name != "CheckTitleTest" && SceneManager.GetActiveScene().name != "TitleTest")
+        {
+            OKEvent?.Invoke();
+            DeActiveUI();
+        }
+        else
+            SaveDeleteInTitle();
     }
     void CancelButtonInput()
     {
-        CancelEvent?.Invoke();
-        DeActiveUI();
+        if (SceneManager.GetActiveScene().name != "CheckTitleTest" && SceneManager.GetActiveScene().name != "TitleTest")
+        {
+            CancelEvent?.Invoke();
+            DeActiveUI();
+        }
+        else
+            RecheckExitTitle();
     }
     void handleUI()
     {
@@ -159,5 +174,26 @@ public class TestRecheckUI : UIInteract
     {
         buttonList[beforeIndex].GetComponent<Image>().sprite = deactiveButton;
         fontList[beforeIndex].color = deactiveFontColor;
+    }
+
+    public void RecheckExitTitle()
+    {
+        if (SceneManager.GetActiveScene().name == "TitleTest" || SceneManager.GetActiveScene().name == "CheckTitleTest")
+        {
+            reCheckActive = false;
+            gameObject.SetActive(false);
+            title.SettingBackScreen();
+        }
+        else
+        {
+            Debug.Log("타이틀이 아닙니다");
+        }
+    }
+
+    public void SaveDeleteInTitle()
+    {
+        reCheckActive = false;
+        title.DeleteData();
+        gameObject.SetActive(false);
     }
 }

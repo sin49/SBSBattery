@@ -107,7 +107,7 @@ public class PauseSoundSetting : UIInteract
                     SaveSoundValue();
                     break;
                 case 4:
-                    CurrentSettingExit();
+                    SettingCancel();
                     break;
             }
         }
@@ -157,13 +157,42 @@ public class PauseSoundSetting : UIInteract
                 break;
         }
 
+        originMaster = AudioManager.instance.MasterVolume;
+        originBG = AudioManager.instance.BGVolume;
+        originSE = AudioManager.instance.SEVolume;
+
         masterSlider = PlayerPrefs.GetFloat("LastestMasterVolume", AudioManager.instance.MasterVolume);
-        volumeSlider[0].transform.localScale = new(masterSlider, 1, 1);
         bgmSlider = PlayerPrefs.GetFloat("LastestBgmVolume", AudioManager.instance.BGVolume);
-        volumeSlider[1].transform.localScale = new(bgmSlider, 1, 1);
         seSlider = PlayerPrefs.GetFloat("LastestSeVolume", AudioManager.instance.SEVolume);
+
+        SetSlider();
+    }
+
+    public void SetSlider()
+    {
+        volumeSlider[0].transform.localScale = new(masterSlider, 1, 1);
+        volumeSlider[1].transform.localScale = new(bgmSlider, 1, 1);
         volumeSlider[2].transform.localScale = new(seSlider, 1, 1);
     }
+
+    public float originMaster, originBG, originSE;
+    public void SettingCancel()
+    {
+        AudioManager.instance.MasterVolume = originMaster;
+        AudioManager.instance.BGVolume = originBG;
+        AudioManager.instance.SEVolume = originSE;
+
+
+
+        masterSlider = originMaster;
+        bgmSlider = originBG;
+        seSlider = originSE;
+
+        SetSlider();
+
+        CurrentSettingExit();
+    }
+
     //현재 화면에서 나감
     public void CurrentSettingExit()
     {

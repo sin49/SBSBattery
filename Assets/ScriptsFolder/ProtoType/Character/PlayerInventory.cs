@@ -13,6 +13,9 @@ public class PlayerInventory : MonoBehaviour
     Dictionary<string, Essentialitem> EssentialItems = new Dictionary<string, Essentialitem>();
     public Dictionary<string, instantitem> instants = new Dictionary<string, instantitem>();
     event Action itemGetAction;
+
+    public int TokenValue;
+
     public bool checkinstantitem(string s)
     {
         if (instants.ContainsKey(s))
@@ -170,7 +173,7 @@ public class PlayerInventory : MonoBehaviour
 
     public void ADDEssentialItem(Essentialitem i)
     {
-
+        TokenValue++;
         if (!EssentialItems.ContainsKey(i.itemcode))
             EssentialItems.Add(i.itemcode, i);
         SaveInventoryData();
