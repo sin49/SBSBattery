@@ -51,6 +51,8 @@ public class Boss1Sweap : EnemyAction
     protected override void CancelActionEvent()
     {
         StopAllCoroutines();
+        Lhand.AttackState = false;
+        RHand.AttackState = false;
         StartCoroutine(InitializeHandPosition());
 
     }
@@ -181,9 +183,11 @@ public class Boss1Sweap : EnemyAction
     }
     public int stombcount;
     public float stombYPlus;
+    public float stombYEnd;
     public float stombinittime;
     public float stombtime;
     public float stombwaitTIme;
+    public float stombwaitTIme2;
     public float stombendwaitTIme;
     public float stombreturntime;
     public IEnumerator Stomb(Boss1Hand Lhand,Boss1Hand Rhand)
@@ -202,7 +206,8 @@ public class Boss1Sweap : EnemyAction
             Vector3 HandOnepositon = handtransform.position;
             Quaternion handrot = handtransform.rotation;
             Vector3 Playerpos = PlayerHandler.instance.CurrentPlayer.transform.position;
-
+            Playerpos.y = 0;
+            Playerpos += Vector3.up* stombYEnd;
             var tuple = calculateSweapvector(Playerpos + Vector3.up * stombYPlus,
                 handtransform.position, stombinittime
                 );
@@ -224,8 +229,10 @@ public class Boss1Sweap : EnemyAction
             }
             handtransform.localRotation = Quaternion.identity;
             timer = 0;
-            hand.AttackState = true;
+          
+
             yield return new WaitForSeconds(stombwaitTIme);
+            hand.AttackState = true;
             tuple = calculateSweapvector(Playerpos ,
                 handtransform.position, stombtime
                 );
@@ -243,7 +250,24 @@ public class Boss1Sweap : EnemyAction
             }
             timer = 0;
             hand.AttackState = false;
+            hand.shakeonce();
             yield return new WaitForSeconds(stombendwaitTIme);
+
+            tuple = calculateSweapvector(Playerpos + Vector3.up * stombYPlus, handtransform.position, stombendwaitTIme);
+            vec = tuple.Item1;
+            speed = tuple.Item2;
+      
+            while (timer <= stombendwaitTIme)
+            {
+               
+                handtransform.Translate(vec.normalized * speed * Time.fixedDeltaTime, Space.World);
+                timer += Time.fixedDeltaTime;
+                yield return null;
+            }
+ 
+            timer = 0;
+     
+            yield return new WaitForSeconds(stombwaitTIme2);
             tuple = calculateSweapvector(HandOnepositon, handtransform.position, stombreturntime);
             vec = tuple.Item1;
             speed = tuple.Item2;
@@ -295,8 +319,9 @@ public class Boss1Sweap : EnemyAction
         }
         handtransform.localRotation = Quaternion.identity;
         sweapertimer = 0;
-        hand.AttackState = true;
+       
         yield return new WaitForSeconds(sweaperwaitTime);
+        hand.AttackState = true;
         //손이 휩쓸기 스타트
         tuple = calculateSweapvector(EndPos, handtransform.position, SweaperEndMoveTime);
         vec = tuple.Item1;

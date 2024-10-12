@@ -16,5 +16,9 @@ public class Boss1Hand2DColliderTrigger : MonoBehaviour
  
      
         }
+        if ((int)PlayerStat.instance.MoveState < 4 && collision.CompareTag("Player"))
+        {
+            hand.handattack();
+        }
     }
 }
