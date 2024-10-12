@@ -1,31 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TestSettingUI : UIInteract
+public class TestSettingUI : MonoBehaviour
 {
     //public SelectUI uiGroup;
     //[HideInInspector]public TestPauseUI uiGroup;
+    public SelectUI uiGroup;
 
-    public SelectUI uiSelect;      
+    public List<Image> settingVolume = new List<Image>();
+    public List<Image> settingButton= new List<Image>();
+    int buttonIndex, beforeButtonIndex;
+    int volumeIndex, beforeVolumeIndex;
+    public GameObject screw;
 
-    public bool settingActive;
+    bool settingActive;
 
-    public List<Image> buttonList = new List<Image>();
-    int index, beforeIndex;
+    public Sprite choiceButton;
+    public Sprite originButton;
 
-    public Sprite activeButton;
-    public Sprite deactiveButton;
+    public Sprite choiceVolume;
+    public Sprite originVolume;
 
     public Animator settingAnimator;
     Vector3 settingScale = new(0.8f, 0.8f, 0.8f);
 
-
-    bool choiceSetting;
-
-    public GameObject choice, sound, graphic;
+    bool uiVolume, uiButton;
 
     private void Awake()
     {
@@ -33,73 +34,76 @@ public class TestSettingUI : UIInteract
     }
 
     private void OnEnable()
-    {        
+    {
+        screw.SetActive(true);
+        InitVolumeUI();
         InitButtonUI();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (settingActive)
+        if(settingActive)
         {
-            if (!choiceSetting)
+            /*if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                if (Input.GetKeyDown(KeyCode.UpArrow))
+                beforeVolumeIndex = volumeIndex;
+                if (volumeIndex <= 0)
                 {
-                    if (index > 0)
-                    {
-                        beforeIndex = index;
-                        index--;
-                        UpdateUI();
-                    }                    
+                    volumeIndex = settingVolume.Count - 1;
                 }
-                if (Input.GetKeyDown(KeyCode.DownArrow))
+                else
+                    volumeIndex--;
+            }
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                beforeButtonIndex = buttonIndex;
+                if (volumeIndex >= settingVolume.Count)
                 {
-                    if (index < buttonList.Count - 1)
-                    {
-                        beforeIndex = index;
-                        index++;
-                        UpdateUI();
-                    }
+                    volumeIndex = 0;
                 }
-            }            
+                else
+                    volumeIndex++;
+            }*/
+
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                beforeButtonIndex = buttonIndex;
+                if (buttonIndex <= 0)
+                    buttonIndex = settingButton.Count - 1;
+                else
+                    buttonIndex--;
+                UpdateSettingButton();
+            }
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                beforeButtonIndex = buttonIndex;
+                if (buttonIndex >= settingButton.Count - 1)
+                    buttonIndex = 0;
+                else
+                    buttonIndex++;
+                UpdateSettingButton();
+            }
 
             if (Input.GetKeyDown(KeyCode.C))
             {
-                ChoiceInteractUI();
+                if (screw.activeSelf)
+                {
+                    switch (buttonIndex)
+                    {
+                        case 0:
+                            SettingSaveButton();
+                            break;
+                        case 1:
+                            SettingSaveButton();
+                            break;
+                    }
+                }                
             }
         }
     }
 
-    public void ChoiceInteractUI()
-    {
-        switch (index)
-        {
-            case 0:
-                Debug.Log("소리 설정");
-                NextSelectSetting(sound);
-                break;
-            case 1:
-                Debug.Log("그래픽 설정");
-                NextSelectSetting(graphic);
-                break;
-            case 2:
-                SettingExit();
-                break;
-            default:
-                Debug.Log("범위 초과함");
-                break;
-        }
-    }
-
-    public void NextSelectSetting(GameObject selectSetting)
-    {
-        choiceSetting = true;
-        choice.SetActive(false);
-        selectSetting.SetActive(true);
-    }
-
-    public void SettingExit()
+    public void SettingSaveButton()
     {
         settingActive = false;
         settingAnimator.Play("SettingChangePause");
@@ -118,55 +122,49 @@ public class TestSettingUI : UIInteract
             }
 
             gameObject.SetActive(false);
-
-            uiSelect.uiGroup.SetActive(true);
-            uiSelect.PauseBackSetting();
+            uiGroup.uiGroup.SetActive(true);
+            uiGroup.PauseBackSetting();
         }
     }
 
-    public void UpdateUI()
+    public void UpdateSettingVolume()
     {
-        DeactiveButton();
-        ActiveButton();
+
+    }
+
+    public void InitVolumeUI()
+    {
+        for (int i = 0; i < settingVolume.Count; i++)
+        {
+
+        }
+    }
+
+    public void UpdateSettingButton()
+    {
+        screw.transform.SetParent(settingButton[buttonIndex].transform.GetChild(1));
+        screw.transform.position = settingButton[buttonIndex].transform.GetChild(1).position;
+
+        settingButton[buttonIndex].sprite = choiceButton;
+        settingButton[beforeButtonIndex].sprite = originButton;
     }
 
     public void InitButtonUI()
     {
-        beforeIndex = index;
-        index = 0;
-        DeactiveButton();
-        ActiveButton();
-
-        StartCoroutine(EndSettingAnimation());
-    }
-
-    IEnumerator EndSettingAnimation()
-    {
-        while (settingAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
-        {
-            yield return null;
-        }
         settingActive = true;
+        for (int i = 0; i < settingButton.Count; i++)
+        {
+            settingButton[i].sprite = originButton;
+        }
     }
 
-    public void ShowChoiceScreen()
+
+    public void store()
     {
-        choice.SetActive(true);
-        buttonList[beforeIndex].sprite = deactiveButton;
-        buttonList[index].sprite = activeButton;
-        choiceSetting = false;
-
-    }
-
-    public void ActiveButton()
-    {
-        buttonList[index].GetComponent<Image>().sprite = activeButton;
-        fontList[index].color = activeFontColor;
-    }
-
-    public void DeactiveButton()
-    {
-        buttonList[beforeIndex].GetComponent<Image>().sprite = deactiveButton;
-        fontList[beforeIndex].color = deactiveFontColor;
-    }
+        screw.SetActive(true);
+        screw.transform.localScale = settingScale;
+        screw.transform.SetParent(settingButton[buttonIndex].transform.GetChild(1));
+        screw.transform.position = settingButton[buttonIndex].transform.GetChild(1).position;
+        settingButton[buttonIndex].sprite = choiceButton;
+    }   
 }

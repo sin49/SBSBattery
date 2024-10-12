@@ -28,10 +28,6 @@ public class KeySettingManager : MonoBehaviour
     public KeyCode DeformKeycode = KeyCode.Q;
     public TextMeshProUGUI interactText;
 
-    [Header("UI 상호작용")]
-    public KeyCode UIactiveKeycode = KeyCode.C;
-    public KeyCode UIdeactiveKeycode = KeyCode.X;
-
     private void Awake()
     {
         instance = this;

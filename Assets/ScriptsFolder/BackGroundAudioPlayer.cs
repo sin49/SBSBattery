@@ -12,7 +12,6 @@ public class BackGroundAudioPlayer : MonoBehaviour
     [Header("이 오디오의 볼륨"), Range(0, 1)]
     public float volume;
 
-    public bool PlayAutoDIsable;
 
  AudioSource audiosource;
     private void Awake()
@@ -33,18 +32,6 @@ public class BackGroundAudioPlayer : MonoBehaviour
     {
         audiosource.volume = volume;
     }
-    public void AudioPlay()
-    {
-        audiosource.Play();
-    }
-    public void AudioStop()
-    {
-        audiosource.Stop();
-    }
-    public void AudioPause()
-    {
-        audiosource.Pause();
-    }
     private void OnEnable()
     {
         audiosource.clip = audioclip;
@@ -52,7 +39,7 @@ public class BackGroundAudioPlayer : MonoBehaviour
         {
             AudioManager.instance.GetAudioSetting(audiotype, audiosource);
         }
-      if(!PlayAutoDIsable)
+      
         audiosource.Play();
     }
     private void OnDisable()

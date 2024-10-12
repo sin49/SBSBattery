@@ -67,7 +67,7 @@ public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")&&!PlayerHandler.instance.formChange)
+        if (other.CompareTag("Player"))
         {
  
             CameraManager_Switching2D3D m;

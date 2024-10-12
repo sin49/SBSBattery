@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class TitleScreen : UIInteract
+public class TitleScreen : MonoBehaviour
 {
     public List<TItleText> titletexts;
     public int index;
@@ -89,9 +89,7 @@ public class TitleScreen : UIInteract
         titletexts[after].ActiveImageHub();*/
 
         titletexts[before].ImageHub.GetComponent<Image>().sprite = deactiveButton;
-        fontList[before].color = deactiveFontColor;
         titletexts[after].ImageHub.GetComponent<Image>().sprite = activeButton;
-        fontList[after].color = activeFontColor;
     }
     public void quitgame()
     {

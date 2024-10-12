@@ -8,8 +8,6 @@ public class PlatformActive3D : MonoBehaviour
     MeshRenderer renderer_;
     public float Zmove = 1;
     public bool BcolliderActive3D = true;
-
-    public bool CameraChangeAfter;
     private void Awake()
     {
         Bcollider = GetComponent<BoxCollider>();
@@ -18,10 +16,7 @@ public class PlatformActive3D : MonoBehaviour
     private void Start()
     {
         PlatformChange3D();
-        if(!CameraChangeAfter)
         PlayerHandler.instance.registerCameraChangeAction(PlatformChange);
-        else
-            PlayerHandler.instance.registerCameraChangeAfterEvent(PlatformChange);
     }
     void PlatformChange3D()
     {

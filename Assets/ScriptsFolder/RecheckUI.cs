@@ -28,13 +28,13 @@ public class RecheckUI : MonoBehaviour
         //if (this.gameObject.activeSelf)
         //    this.gameObject.SetActive(false);
     }
-    public void ActiveUI(string Desc, Action OKEvent, Action CancelEvent)
+    public void ActiveUI(string Desc,Action OKEvent,Action CancelEvent)
     {
         Description.text = Desc;
         this.OKEvent += OKEvent;
-        this.CancelEvent += CancelEvent;
+       this. CancelEvent += CancelEvent;
         gameObject.SetActive(true);
-        Debug.Log("UI 활성화­");
+        Debug.Log("UI 활성화");
     }
     void initializeUI()
     {
@@ -75,7 +75,6 @@ public class RecheckUI : MonoBehaviour
     {
         SelectedUI.gameObject.SetActive(true);
 
-
         /*if (ok)
             SelectedUI.transform.position = YesButton.transform.position;
         else
@@ -92,7 +91,6 @@ public class RecheckUI : MonoBehaviour
             buttonList[index].GetComponent<Image>().sprite = activeButton;
             buttonList[beforeIndex].GetComponent<Image>().sprite = deactiveButton;
         }
-
     }
     void OkButtonInput()
     {
@@ -135,7 +133,7 @@ public class RecheckUI : MonoBehaviour
             else
                 CancelButtonInput();
         }
-
+        
     }
     private void OnDisable()
     {
@@ -143,11 +141,11 @@ public class RecheckUI : MonoBehaviour
     }
     void DeActiveUI()
     {
-
+       
         CancelEvent = null;
         OKEvent = null;
         this.gameObject.SetActive(false);
-        Debug.Log("UI 비활성화­");
+        Debug.Log("UI 비활성화");
     }
     // Update is called once per frame
     void Update()

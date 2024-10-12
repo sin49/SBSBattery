@@ -10,7 +10,6 @@ public class ItemListUI : MonoBehaviour
     List<ItemIconUI> EssentialItemList=new List<ItemIconUI>();
     public Transform EssentialItemListTransform;
     public SettingUI settingUi;
-    public SelectUI KjsSetting;
 
     public MultiplyItemIconUI EnergyMultiple;
     public MultiplyItemIconUI SpeedMultiple;
@@ -32,17 +31,7 @@ public class ItemListUI : MonoBehaviour
 
     void swapUI()
     {
-        if (settingUi != null)
-            settingUi.ActiveUI();
-        else
-        {
-            if (KjsSetting != null)
-            {
-                gameObject.SetActive(false);
-                KjsSetting.uiGroup.gameObject.SetActive(true);
-                KjsSetting.ActiveUI();
-            }
-        }
+        settingUi.ActiveUI();
         OnHandle = false;
         UpdateSelectInfo();
     }
@@ -174,10 +163,10 @@ public class ItemListUI : MonoBehaviour
                 index++;
                 UpdateSelectInfo();
             }
-            /*else
+            else
             {
                 swapUI();
-            }*/
+            }
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -203,11 +192,6 @@ public class ItemListUI : MonoBehaviour
                 handleitemlist = MultiplyItemList;
                 UpdateSelectInfo();
             }
-        }
-
-        if (Input.GetKeyDown(KeySettingManager.instance.UIdeactiveKeycode))
-        {
-            swapUI();
         }
         //if (Input.GetKeyDown(KeyCode.X))
         //{

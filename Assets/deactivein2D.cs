@@ -5,26 +5,18 @@ using UnityEngine;
 public class deactivein2D : MonoBehaviour
 {
     public GameObject obj;
-    public bool camerachangeafter;
     // Start is called before the first frame update
     void Start()
     {
-        if (camerachangeafter)
-        {
-            PlayerHandler.instance.registerCameraChangeAfterEvent(() => { activeevent(); });
-        }
-        else
-        {
-            PlayerHandler.instance.registerCameraChangeAction(() => { activeevent(); });
-        }
+        
     }
-    void activeevent()
+
+    // Update is called once per frame
+    void Update()
     {
         if ((int)PlayerStat.instance.MoveState < 4)
             obj.SetActive(false);
         else
             obj.SetActive(true);
     }
-
-   
 }

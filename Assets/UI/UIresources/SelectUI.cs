@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,8 +9,7 @@ public class SelectUI : MonoBehaviour
     public GameObject SelectedUI;
 
     public PauseUI pauseui;
-    public ItemListUI itemlistui;
-    public TestRecheckUI testRecheckUI;
+    public RecheckUI recheckui;
 
 
     int index, beforeIndex;
@@ -20,7 +18,6 @@ public class SelectUI : MonoBehaviour
     bool buttonselected;
 
     public List<GameObject> ButtonList = new List<GameObject>();
-    public List<TextMeshProUGUI> fontList= new List<TextMeshProUGUI>();
 
     //void initlizeUI()
     //{
@@ -40,8 +37,6 @@ public class SelectUI : MonoBehaviour
     Vector3 choiceScale = new(1.1f, 1.1f, 1.1f);
     Vector3 originScale = new(1, 1, 1);
 
-    Vector2 screwScale = new(.75f, .75f);
-
     public bool uiGroupActive;
     public bool settingActive;
     public bool reCheckActive;
@@ -50,13 +45,8 @@ public class SelectUI : MonoBehaviour
     void swapUI()
     {        
         ; OnHandle = false;
-        itemlistui.gameObject.SetActive(true);
-        itemlistui.ActiveItemListUI();
         UpdateUI();
-        uiGroup.gameObject.SetActive(false);
-        uiGroupActive = false;
     }
-
     public void ActiveUI(int index = 0)
     {
 
@@ -100,18 +90,16 @@ public class SelectUI : MonoBehaviour
                 GameManager.instance.LoadingSceneWithKariEffect(GameManager.instance.LoadLastestStage());
                 break;
             case 2:
-                swapUI();
-                break;
-            case 3:
                 ShowSettingUI();
                 break;
-            case 4://재확인 시키기
-                testRecheckUI.ActiveUI("타이틀로 돌아갑니다.", TitleBackEvent, ButtonselectedDisable);
+            case 3://재확인 시키기
+                recheckui.ActiveUI("타이틀로 돌아갑니다.", TitleBackEvent, ButtonselectedDisable);
                 buttonselected = true;
                 break;
-            case 5://재확인 시키기
-                testRecheckUI.ActiveUI("게임을 종료합니다.", ExitEvent, ButtonselectedDisable);
+            case 4://재확인 시키기
+                recheckui.ActiveUI("게임을 종료합니다.", ExitEvent, ButtonselectedDisable);
                 buttonselected = true;
+
                 break;
         }
     }
@@ -119,25 +107,24 @@ public class SelectUI : MonoBehaviour
     {
 
         if (OnHandle)
-        {
             SelectedUI.SetActive(true);
-            SelectedUI.transform.SetParent(ButtonList[index].transform.GetChild(1));
-            SelectedUI.transform.position = ButtonList[index].transform.GetChild(1).position;
-            screwAnimator.Play("ScrewRotate", 0, 0f);
-
-            DeInteractUI();
-            SelectedUI.transform.localScale = screwScale;
-
-            InteractUI();
-            SelectedUI.transform.localScale = screwScale;
-        }
         else
-        {
             SelectedUI.SetActive(false);
-            ButtonList[index].GetComponent<Image>().color = originColor;
-            ButtonList[index].transform.localScale = originScale;
-        }
         //SelectedUI.transform.position = ButtonList[index].transform.position;
+
+        SelectedUI.transform.SetParent(ButtonList[index].transform.GetChild(1));
+        SelectedUI.transform.position = ButtonList[index].transform.GetChild(1).position;
+        screwAnimator.Play("ScrewRotate", 0, 0f);
+
+        ButtonList[beforeIndex].GetComponent<Image>().color = originColor;
+        ButtonList[beforeIndex].transform.localScale = originScale;
+        SelectedUI.transform.localScale = originScale;
+
+        ButtonList[index].GetComponent<Image>().color = choiceColor;
+        ButtonList[index].transform.localScale = choiceScale;
+        SelectedUI.transform.localScale = choiceScale;
+
+
     }
 
     private void OnDisable()
@@ -169,10 +156,10 @@ public class SelectUI : MonoBehaviour
                     UpdateUI();
                 }
             }
-            /*if (Input.GetKeyDown(KeyCode.LeftArrow))
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 swapUI();
-            }*/
+            }
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
 
@@ -248,23 +235,13 @@ public class SelectUI : MonoBehaviour
         SelectedUI.transform.position = ButtonList[index].transform.GetChild(1).position;
         screwAnimator.Play("ScrewRotate", 0, 0f);
 
-        DeInteractUI();
-        SelectedUI.transform.localScale = originScale;
-
-        InteractUI();
-        SelectedUI.transform.localScale = choiceScale;
-    }
-
-    public void InteractUI()
-    {
-        ButtonList[index].GetComponent<Image>().color = choiceColor;
-        ButtonList[index].transform.localScale = choiceScale;        
-    }
-
-    public void DeInteractUI()
-    {
         ButtonList[beforeIndex].GetComponent<Image>().color = originColor;
         ButtonList[beforeIndex].transform.localScale = originScale;
+        SelectedUI.transform.localScale = originScale;
+
+        ButtonList[index].GetComponent<Image>().color = choiceColor;
+        ButtonList[index].transform.localScale = choiceScale;
+        SelectedUI.transform.localScale = choiceScale;
     }
 
     public void ShowSettingUI()
