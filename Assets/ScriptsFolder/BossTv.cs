@@ -178,6 +178,7 @@ public class BossTv : RemoteObject
         {
             if (!Phase2)
             {
+                playphaseChangeAudio();
                 StartCoroutine(phasechangeeventStack());
             }
             else
