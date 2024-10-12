@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.RenderGraphModule;
+using UnityEngine.Playables;
 using UnityEngine.PlayerLoop;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
@@ -48,8 +49,8 @@ public class Player : Character,environmentObject
     public Animator Humonoidanimator;
     public Renderer ChrRenderer;
     public Material chrmat;
-    public Color color;
 
+   
     //public float moveValue; // 움직임 유무를 결정하기 위한 변수
 
 
@@ -142,7 +143,7 @@ public class Player : Character,environmentObject
         SoundPlayer = GetComponent<PlayerSoundPlayer>();
     }
     // Start is called before the first frame update
-    void Start()
+   protected virtual void Start()
     {
 
         if (PlayerStat.instance.formInvincible)
@@ -150,8 +151,8 @@ public class Player : Character,environmentObject
             StartCoroutine(FormInvincible());
         }
 
-        //chrmat = ChrRenderer.material;
-        //color = Color.red;
+        chrmat = ChrRenderer.material;
+
 
         canAttack = true;
         onDash = true;
@@ -219,7 +220,8 @@ public class Player : Character,environmentObject
     IEnumerator FormInvincible()
     {
         onInvincible = true;
-
+     
+       
         yield return new WaitForSeconds(PlayerStat.instance.invincibleCoolTime);
 
         PlayerStat.instance.formInvincible = false;
@@ -248,13 +250,14 @@ public class Player : Character,environmentObject
             if (Physics.Raycast(this.transform.position + Vector3.right * playersizeX - Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance))
             {
 
-                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController"))
+                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject"))
                 {
 
                     onGround = true;
                   
                     if (downAttack)
                     {
+                        SoundPlayer.PlayDownAttackEndSound();
                         downAttack = false;
                         if (LandingEffect != null)
                             LandingEffect.SetActive(true);
@@ -272,13 +275,14 @@ public class Player : Character,environmentObject
             if (Physics.Raycast(this.transform.position - Vector3.right * playersizeX - Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance))
             {
 
-                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController"))
+                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject"))
                 {
 
                     onGround = true;
                    
                     if (downAttack)
                     {
+                        SoundPlayer.PlayDownAttackEndSound();
                         downAttack = false;
                         if (LandingEffect != null)
                             LandingEffect.SetActive(true);
@@ -296,13 +300,14 @@ public class Player : Character,environmentObject
             if (Physics.Raycast(this.transform.position + Vector3.right * playersizeX + Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance))
             {
 
-                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController"))
+                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject"))
                 {
 
                     onGround = true;
                 
                     if (downAttack)
                     {
+                        SoundPlayer.PlayDownAttackEndSound();
                         downAttack = false;
                         if (LandingEffect != null )
                             LandingEffect.SetActive(true);
@@ -320,13 +325,14 @@ public class Player : Character,environmentObject
             if (Physics.Raycast(this.transform.position - Vector3.right * playersizeX + Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance))
             {
 
-                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController"))
+                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject"))
                 {
 
                     onGround = true;
                     isJump = false;
                     if (downAttack)
                     {
+                        SoundPlayer.PlayDownAttackEndSound();
                         downAttack = false;
                         if (LandingEffect != null)
                             LandingEffect.SetActive(true);
@@ -364,7 +370,7 @@ public class Player : Character,environmentObject
             {
                 Debug.Log("hit값이 null로 들어옴");
             }
-            else if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractiveObject"))
+            else if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractiveObject") || hit.collider.CompareTag("CursorObject"))
             {
                 wallcheck = true;
                 Debug.Log("벽 체크됨");
@@ -478,7 +484,7 @@ public class Player : Character,environmentObject
         
        
 
-        /* chrmat.SetColor("_Emissive_Color", color);*///emission 건들기
+       
         if (Input.GetKeyDown(KeyCode.Tab)) { HittedTest(); }
 
         //if (onGround && isJump && playerRb.velocity.y <= 0)
@@ -1112,7 +1118,7 @@ public class Player : Character,environmentObject
         playerRb.velocity = Vector3.zero;
 
         playerRb.AddForce(transform.up * 3f, ForceMode.Impulse);
-
+        SoundPlayer.PlayInitDownAttackSound();
         yield return new WaitForSeconds(0.2f);
         playerRb.velocity = Vector3.zero;
 
@@ -1177,7 +1183,7 @@ public class Player : Character,environmentObject
             return;
         base.Damaged(damage);
         onInvincible = true;
-
+    
         PlayerStat.instance.pState = PlayerState.hitted;
         HittedEffect.gameObject.SetActive(true);
         PlayerStat.instance.hp -= damage;
@@ -1195,11 +1201,30 @@ public class Player : Character,environmentObject
             StartCoroutine(WaitEndDamaged());
         }
     }
-
+    public virtual bool TransformInvincibleEvent()
+    {
+        return false;
+    }
+  
     IEnumerator ActiveInvincible()
     {
-        yield return new WaitForSeconds(PlayerStat.instance.invincibleCoolTime);
 
+        float timer = 0;
+        bool whitechecker=false;
+
+        yield return new WaitForSecondsRealtime(PlayerStat.instance.HittedStopTime);
+        while (timer < PlayerStat.instance.invincibleCoolTime)
+        {
+            if(whitechecker)
+                chrmat.SetColor("_Emissive_Color", new Vector4(0, 0, 0, 1));
+            else
+                chrmat.SetColor("_Emissive_Color", PlayerStat.instance.invinciblecolor);//emission 건들기
+            whitechecker = !whitechecker;
+            timer += PlayerStat.instance.blinkdelay;
+            yield return new WaitForSeconds(PlayerStat.instance.blinkdelay);
+        }
+
+        chrmat.SetColor("_Emissive_Color", new Vector4(0, 0, 0, 1));
         onInvincible = false;
     }
 
@@ -1208,12 +1233,16 @@ public class Player : Character,environmentObject
         if (Humonoidanimator != null)
         {
             Humonoidanimator.SetTrigger("Damaged");
+            Humonoidanimator.updateMode = AnimatorUpdateMode.UnscaledTime;
         }
         playerRb.velocity = Vector3.zero;
         PlayerHandler.instance.CantHandle = true;
         playerRb.AddForce(-transform.forward * 1.2f, ForceMode.Impulse);
-
-        yield return new WaitForSeconds(PlayerStat.instance.HittedStopTime);
+        Time.timeScale = 0;
+       chrmat.SetColor("_Emissive_Color", PlayerStat.instance.Hittedcolor);//emission 건들기
+        yield return new WaitForSecondsRealtime(PlayerStat.instance.HittedStopTime);
+        Humonoidanimator.updateMode = AnimatorUpdateMode.Normal;
+        Time.timeScale = 1;
         PlayerHandler.instance.CantHandle = false;
         PlayerStat.instance.pState = PlayerState.idle;
     }
@@ -1433,11 +1462,13 @@ public class Player : Character,environmentObject
         onInvincible = true;
         Time.timeScale = 0.2f;
         ModelAnimator.SetTrigger("FormChange");
+        SoundPlayer.PlayInitTransformedSound();
         ModelAnimator.SetFloat("Speed", animationSpeed);
 
         yield return new WaitForSeconds(waitTime);
 
         PlayerHandler.instance.CurrentPower = PlayerHandler.instance.MaxPower;
+        SoundPlayer.PlayTransformedEndSound();
         Instantiate(changeEffect, transform.position, Quaternion.identity);
         PlayerHandler.instance.transformed(type, event_);
         if (PlayerHandler.instance.CurrentPlayer != null)
@@ -1452,7 +1483,7 @@ public class Player : Character,environmentObject
         if (collision.gameObject.CompareTag("Ground") ||
 
             collision.gameObject.CompareTag("Enemy") ||
-            collision.gameObject.CompareTag("GameController"))
+            collision.gameObject.CompareTag("GameController") || collision.collider.CompareTag("CursorObject"))
         {
             onGround = false;
 
@@ -1467,7 +1498,7 @@ public class Player : Character,environmentObject
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Ground") && jumpkeyinputcheckvalue <= 0)
+        if (other.CompareTag("Ground") && jumpkeyinputcheckvalue <= 0 || other.CompareTag("CursorObject") && jumpkeyinputcheckvalue <= 0)
         {
             jumpRaycastCheck();
         }
@@ -1476,7 +1507,7 @@ public class Player : Character,environmentObject
     private void OnCollisionStay(Collision collision)
     {
         //#region 바닥 상호작용
-        if (collision.gameObject.CompareTag("Ground") && jumpkeyinputcheckvalue <= 0)
+        if (collision.gameObject.CompareTag("Ground") && jumpkeyinputcheckvalue <= 0 || collision.collider.CompareTag("CursorObject") && jumpkeyinputcheckvalue <= 0)
         {
             jumpRaycastCheck();
         }

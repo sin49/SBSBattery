@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class rushenemy : Enemy
 {
+    [Header("공격 사운드:돌진 사운드")]
     [Header("돌진 사전 딜레이")]
     public float rushinitdelay;
     [Header("돌진 시간")]
@@ -25,6 +26,7 @@ public class rushenemy : Enemy
 
        
         yield return new WaitForSeconds(rushinitdelay);
+        PlayAttackSound();
         float timer = 0;
         while (timer < rushtime)
         {
@@ -57,7 +59,17 @@ public class rushenemy : Enemy
     {
         if (onrush)
             return;
-        base.Attack();
+     
+        if (animaor != null)
+            animaor.Play("EnemyAttack");
+        if (actionhandler != null)
+            actionhandler.invokemainaction();
         StartCoroutine(rush());
+    }
+
+    public override void FlatByIronDwonAttack(float downAtkEndTime)
+    {
+        base.FlatByIronDwonAttack(downAtkEndTime);
+        stoprush();
     }
 }

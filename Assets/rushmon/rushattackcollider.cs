@@ -23,8 +23,11 @@ public class rushattackcollider : MonoBehaviour
         {
             rushenemy_.stoprush();
             Player p = PlayerHandler.instance.CurrentPlayer;
-            p.Damaged(1);
-            StartCoroutine(playerforced(p));
+            if (!p.onInvincible)
+            {
+                p.Damaged(1);
+                StartCoroutine(playerforced(p));
+            }
         }
     }
     

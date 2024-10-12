@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7278045078610182673}
   - component: {fileID: 7122715644280884044}
   - component: {fileID: 7377740463956868747}
+  - component: {fileID: 5770831415135624237}
   m_Layer: 0
   m_Name: Keycarditem
   m_TagString: Item
@@ -30,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 0.375}
+  m_LocalScale: {x: 1, y: 1, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3480468476133289369}
@@ -122,7 +123,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GetItemEffect: {fileID: 6869346342021920014, guid: 29a36de40eb1d6644abeafdc22702bea,
     type: 3}
+  soundEffectListPlayer: {fileID: 0}
   instantitem: {fileID: 11400000, guid: b02bb06586ab1d54fb865729e7bc0167, type: 2}
+--- !u!114 &5770831415135624237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183137835229764737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c358efc4e7446f147a9d6a4f71757744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list: []
 --- !u!1001 &2422879356814124913
 PrefabInstance:
   m_ObjectHideFlags: 0

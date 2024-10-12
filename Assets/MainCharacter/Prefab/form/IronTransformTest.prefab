@@ -803,7 +803,7 @@ Transform:
   m_GameObject: {fileID: 3604143898815389188}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.33, y: 0.1, z: 0.275}
+  m_LocalPosition: {x: -0.33, y: 0.098, z: 0.295}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -905,6 +905,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8763085929167148684}
+  - component: {fileID: 5110653460783295991}
   m_Layer: 0
   m_Name: Bip001
   m_TagString: Untagged
@@ -929,6 +930,24 @@ Transform:
   - {fileID: 2607885371664257738}
   m_Father: {fileID: 4635466552638274391}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5110653460783295991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3860940069074602360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baedd976e12657241bf7ff2d1c685342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Direction: 2
+  m_Center: {x: -0.008, y: 0, z: 0.1}
+  m_Bound: 0
+  m_Radius: 0.075
+  m_Height: 0.28
+  m_Radius2: 0
 --- !u!1 &3872222890953966332
 GameObject:
   m_ObjectHideFlags: 0
@@ -1289,11 +1308,10 @@ MonoBehaviour:
   firePoint: {fileID: 0}
   ModelAnimator: {fileID: 7991346420522287831}
   Humonoidanimator: {fileID: 4479537047354870170}
-  ChrRenderer: {fileID: 0}
+  ChrRenderer: {fileID: 5158458977046534887}
   chrmat: {fileID: 0}
-  color: {r: 0, g: 0, b: 0, a: 0}
   jumpholdLevel: 1
-  jumpBufferTimeMax: 0.05
+  jumpBufferTimeMax: 0.1
   jumpBufferTimer: 0
   canjumpInput: 0
   jumpLimitInput: 0
@@ -1327,6 +1345,7 @@ MonoBehaviour:
   isMove: 0
   canAttack: 0
   wallcheck: 0
+  cantmove: 0
   jumpkeyinputCheck: 0.02
   inputCheck: 0
   velocityMove: {x: 0, y: 0, z: 0}
@@ -1351,7 +1370,6 @@ MonoBehaviour:
   AttackEffect: {fileID: 6870641048750092314}
   LandingEffect: {fileID: 2919755438539823030}
   JumpEffect: {fileID: 5540454051107276014}
-  OnMoveAnimationCorutine: 0
   Decelatate: 2
   hori: 0
   Vert: 0
@@ -1361,16 +1379,16 @@ MonoBehaviour:
   DownAttackForce: 0
   CullingPlatform: 0
   ironSecondForm: {fileID: 1855982811379681853}
-  rushSpeed: 8
-  speedValue: 6
-  rushTimeMax: 4.5
+  speedValue: 5
+  rushTimeMax: 4
   canRushAttack: 0
-  rushCoolTimeMax: 1.5
+  onRush: 0
+  rushCoolTimeMax: 1
   rushDamage: 1
   rushCycleMax: 0
   rushAtkTimeMax: 0.5
   rushAtkWaitTime: 0
-  rotateTimeMax: 8
+  rotateTimeMax: 6
   ironDashEffect: {fileID: 2169715752738555872}
   rushRay: 0
   rayHeightValue: 0.25
@@ -1379,12 +1397,11 @@ MonoBehaviour:
   rayDownValue: 0.25
   downAtkSpeed: 25
   ironFlyTime: 0.45
-  downAtkEndTimeMax: 1.25
-  ironDownDamage: 2
-  ironDownCoolTimeMax: 1.5
+  downAtkEndTimeMax: 1
+  ironDownDamage: 3
+  ironDownCoolTimeMax: 1
   ironDownAtkEffect: {fileID: 5007434926133503498}
-  saveDirection: 0
-  saveDirectionZ: 0
+  flatTime: 3
   rotateTime: 0.01
   source: {fileID: 2382477968564158788}
 --- !u!136 &5837779147130351167
@@ -1436,7 +1453,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &2432691346111002418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1449,7 +1466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9ac8d30c6a0d9642a11e5be4c440740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Root: {fileID: 0}
+  m_Root: {fileID: 1920122363291485841}
   m_Roots: []
   m_UpdateRate: 80
   m_UpdateMode: 3
@@ -1501,7 +1518,7 @@ MonoBehaviour:
   m_Force: {x: 0, y: 0, z: 0}
   m_BlendWeight: 1
   m_Colliders:
-  - {fileID: 0}
+  - {fileID: 5110653460783295991}
   m_Exclusions: []
   m_FreezeAxis: 0
   m_DistantDisable: 0
@@ -1605,13 +1622,23 @@ MonoBehaviour:
   MoveClip: {fileID: 8300000, guid: 83315124d8bd65140b4035305992fb6b, type: 3}
   MoveVolume: 0
   AttackClip: {fileID: 8300000, guid: 25c5897575b078c4ba66ca5ffa7908c5, type: 3}
-  AttackVolume: 1
+  AttackVolume: 0.6
   JumpClip: {fileID: 8300000, guid: 85ea7b8994df41b45ad65459747ef044, type: 3}
-  JumpVolume: 1
+  JumpVolume: 0.6
+  InitDownAttackClip: {fileID: 0}
+  InitDownAttackVolume: 0
+  DownAttackEndClip: {fileID: 0}
+  DownAttackEndVolume: 0
+  InitTransformedClip: {fileID: 0}
+  InitTransformedVolume: 0
+  TransformedEndClip: {fileID: 0}
+  TransformedEndVolume: 0
+  HittedClip: {fileID: 0}
+  HittedVolume: 0
   LandClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
-  LandVolume: 0.1
+  LandVolume: 0.4
   SkillClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
-  SkillVolume: 1
+  SkillVolume: 0.6
 --- !u!114 &2382477968564158788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1951,8 +1978,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.3819379, y: 1.0166149, z: 1.1961718}
+  m_Center: {x: 0, y: -0.0083074765, z: 0}
 --- !u!114 &4138602211227797961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3690,12 +3717,12 @@ PrefabInstance:
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.19866532
+      value: 0.2577329
       objectReference: {fileID: 0}
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.062901475
+      value: 0.073575854
       objectReference: {fileID: 0}
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
@@ -3705,12 +3732,12 @@ PrefabInstance:
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0825
+      value: 0.061
       objectReference: {fileID: 0}
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.13237
+      value: 0.1377
       objectReference: {fileID: 0}
     - target: {fileID: 9037748081606101588, guid: c1b689fe0910c994dabca0654ef5c952,
         type: 3}

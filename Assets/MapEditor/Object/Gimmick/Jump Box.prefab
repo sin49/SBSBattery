@@ -12,13 +12,14 @@ GameObject:
   - component: {fileID: 8779432015978685006}
   - component: {fileID: 7351339361882863592}
   - component: {fileID: 1671305994393034952}
-  - component: {fileID: 2714585421801285349}
+  - component: {fileID: 7698372419076262332}
+  - component: {fileID: 6718543398804265507}
   m_Layer: 0
   m_Name: OnConvayerBelt
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2128276444046768928
 Transform:
@@ -104,9 +105,9 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.119128406, z: 1}
-  m_Center: {x: 0, y: 0.4404358, z: 0}
---- !u!114 &2714585421801285349
+  m_Size: {x: 1, y: 0.14940137, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &7698372419076262332
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,11 +116,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 114254765704939316}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d076a5b2470011448e769b8b3ce95fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 5aa674661ac7d3446837e85df5a1f545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  conveyorSpeed: 1.5
-  conveyorDirection: {x: 0, y: 4, z: 0}
+  conveyorSpeed: 5
+  conveyorDirection: {x: 1, y: 0, z: 0}
+  soundEffectListPlayer: {fileID: 0}
+--- !u!114 &6718543398804265507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114254765704939316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c358efc4e7446f147a9d6a4f71757744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list: []
 --- !u!1 &1102610025081782971
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,7 +152,7 @@ GameObject:
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &3975948017567605574
 Transform:
@@ -148,8 +163,8 @@ Transform:
   m_GameObject: {fileID: 1102610025081782971}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.125, z: 0}
-  m_LocalScale: {x: 1, y: 0.75, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4217086896946655211}
@@ -240,7 +255,7 @@ GameObject:
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4217086896946655211
 Transform:
