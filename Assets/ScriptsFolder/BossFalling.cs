@@ -53,6 +53,8 @@ public class BossFalling : EnemyAction
     public float shakertimer;
     public Transform LhandTransform;
     public Transform RhandTransform;
+    Boss1Hand Lhand;
+    Boss1Hand Rhand;
     Vector3 LhandOriginPosition;
     Vector3 RhandOriginPosition;
     public float handreturntime = 2;
@@ -67,8 +69,8 @@ public class BossFalling : EnemyAction
         float RSpeed = Rhandvector.magnitude / handreturntime;
         while (timer < handreturntime)
         {
-            LhandTransform.Rotate(Vector3.forward * -1 * rotationspeed * Time.fixedDeltaTime);
-            RhandTransform.Rotate(Vector3.forward * rotationspeed * Time.fixedDeltaTime);
+            LhandTransform.Rotate(Vector3.forward  * rotationspeed * Time.fixedDeltaTime);
+            RhandTransform.Rotate(Vector3.forward*-1 * rotationspeed * Time.fixedDeltaTime);
             LhandTransform.Translate(LSpeed * Lhandvector.normalized * Time.fixedDeltaTime, Space.World);
             RhandTransform.Translate(RSpeed * Rhandvector.normalized * Time.fixedDeltaTime, Space.World);
             timer += Time.fixedDeltaTime;
@@ -86,8 +88,10 @@ public class BossFalling : EnemyAction
     public override void StopAction()
     {
         base.StopAction();
+        Lhand.AttackState = false;
+        Rhand.AttackState = false;
         StopAllCoroutines();
-        ani.Play("FallingAttack");
+
         ani.enabled = false;
         StartCoroutine(handreturn());
     }
@@ -146,6 +150,8 @@ public class BossFalling : EnemyAction
             fieldMax = bossField.TransformPoint(max);
         }
         MakeBossFallingObjectsPossibility();
+        Lhand = LhandTransform.GetComponent<Boss1Hand>();
+        Rhand = RhandTransform.GetComponent<Boss1Hand>();
         //Falling();
     }
 
@@ -188,6 +194,8 @@ public class BossFalling : EnemyAction
     {
         LhandOriginPosition = LhandTransform.position;
         RhandOriginPosition = RhandTransform.position;
+        Lhand.AttackState = true;
+        Rhand.AttackState = true;
         registerActionHandler(ActionENd);
         ani.enabled = true;
    ani.Play("FallingAttack");
@@ -199,7 +207,7 @@ public class BossFalling : EnemyAction
         Debug.Log("Shake ½ÇÇà");
         while (timer < createTime * createCountMax + 0.12f)
         {
-            Debug.Log(createTime * createCountMax + 0.12f+" "+timer);
+
             fallingshaker.GenerateImpulse();
             timer += shakertimer;
             yield return new WaitForSeconds(shakertimer);
@@ -253,33 +261,14 @@ public class BossFalling : EnemyAction
     }
     public void animatorFalse()
     {
-        ani.enabled = false;
+      
     }
     IEnumerator FallingAttack()
     {
-       
+        Lhand.AttackState = false;
+        Rhand.AttackState = false;
         StartCoroutine(ShakeLoop());
-        //while (createCount < createCountMax)
-        //{
-        //    GameObject obj = Instantiate(enemy, RandomSpawn(), Quaternion.identity);
-
-        //    if (obj.GetComponent<FallingObject>() != null)
-        //    {
-        //        var a = obj.GetComponent<FallingObject>();
-        //        a.fallingSpeed = UnityEngine.Random.Range(minSpeed, maxSpeed);
-        //        a.fieldPos = fieldMax;
-        //        a.damage = damage;
-        //    }
-        //    else
-        //    {
-        //        var a = obj.GetComponent<BossStageBox>();
-        //        a.fallingSpeed = UnityEngine.Random.Range(minSpeed, maxSpeed);
-        //        a.fieldPos = fieldMax;
-        //    }
-
-        //    createCount++;
-
-        //    yield return new WaitForSeconds(createTime);
+     
         //}
 
         yield return null;
@@ -335,19 +324,5 @@ public class BossFalling : EnemyAction
         return fallingPoint;
     }
     public Color GizmoColor;
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = GizmoColor;
-        if (bossField != null)
-        {
-            Vector3 min = new Vector3(-0.5f, 0.5f, -0.5f);
-            Vector3 max = new Vector3(0.5f, 0.5f, 0.5f);
-
-            fieldMin = bossField.TransformPoint(min);
-            fieldMax = bossField.TransformPoint(max);
-        }
-        Vector3 center = (fieldMin + fieldMax)/2;
-        Vector3 size = new(Mathf.Abs(fieldMax.x - fieldMin.x) / fallingRange, fieldMin.y, Mathf.Abs(fieldMax.z - fieldMin.z) / fallingRange);
-        Gizmos.DrawWireCube(center, size);
-    }
+   
 }

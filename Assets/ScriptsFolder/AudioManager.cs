@@ -23,6 +23,13 @@ public class AudioManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+
+        if (PlayerPrefs.HasKey("LastestMasterVolume"))
+            MasterVolume = PlayerPrefs.GetFloat("LastestMasterVolume");
+        if (PlayerPrefs.HasKey("LastestBgmVolume"))
+            BGVolume = PlayerPrefs.GetFloat("LastestBgmVolume");
+        if (PlayerPrefs.HasKey("LastestSeVolume"))
+            SEVolume = PlayerPrefs.GetFloat("LastestSeVolume");
     }
     [Header("백그라운드 오디오 볼륨"), Range(0, 1)]
     public float BGVolume;
