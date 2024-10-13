@@ -51,6 +51,7 @@ public class Boss1Laser : EnemyAction
     public override void StopAction()
     {
         base.StopAction();
+        particle.Stop();
         laserlifetime = 0;
     }
     public override void Invoke(Action ActionENd, Transform target = null)
@@ -112,9 +113,18 @@ public class Boss1Laser : EnemyAction
         base.CancelActionEvent();
     }
 
+    public GameObject bosslasereffect;
+    public ParticleSystem Bosslasergaze;
 
-
-
+    public void lasergazeparticleon()
+    {
+        Bosslasergaze.gameObject.SetActive(true);
+    }
+    public void lasergazeparticleoff()
+    {
+        Bosslasergaze.Stop();
+        Bosslasergaze.gameObject.SetActive(false);
+    }
     public Transform LhandTransform;
     public Transform RhandTransform;
     Vector3 LhandOriginPosition;
@@ -210,6 +220,7 @@ public class Boss1Laser : EnemyAction
         RhandTransform.position = RhandOriginPosition;
         LhandTransform.rotation = Quaternion.Euler(0, 0, 30);
        RhandTransform.rotation = Quaternion.Euler(0, 0, -30);
+
         yield return new WaitForSeconds(0.5f);
         DisableActionMethod();
 
@@ -220,7 +231,10 @@ public class Boss1Laser : EnemyAction
         if (!laserBeam.gameObject.activeSelf)
             return;
         laserMove();
-
+        if (Bosslasergaze.isPlaying)
+        {
+            bosslasereffect.transform.position = (LhandTransform.position + RhandTransform.position) / 2;
+        }
        
         if(laserlifetime < 0)
         {

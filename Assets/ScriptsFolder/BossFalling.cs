@@ -49,7 +49,7 @@ public class Boss1BoxFallCreateObj
 
 public class BossFalling : EnemyAction
 {
-
+    public GameObject handeffect;
     public float shakertimer;
     public Transform LhandTransform;
     public Transform RhandTransform;
@@ -58,6 +58,12 @@ public class BossFalling : EnemyAction
     Vector3 LhandOriginPosition;
     Vector3 RhandOriginPosition;
     public float handreturntime = 2;
+
+    public void createhandeffect()
+    {
+        Instantiate(handeffect, LhandTransform.position, Quaternion.identity);
+        Instantiate(handeffect, RhandTransform.position, Quaternion.identity);
+    }
     IEnumerator handreturn()
     {
    
