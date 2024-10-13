@@ -87,7 +87,7 @@ public class TitleScreen : UIInteract
         onHandle = true;
         settingAudio.active = false;
 
-        titletexts[index].GetComponent<Image>().sprite = activeButton;
+        titletexts[index].ImageHub.GetComponent<Image>().sprite = activeButton;
         fontList[index].color = activeFontColor;
     }
 
