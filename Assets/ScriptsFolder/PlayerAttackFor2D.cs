@@ -12,7 +12,7 @@ public class PlayerAttackFor2D : MonoBehaviour
         if (other.TryGetComponent<DamagedByPAttack>(out Script))
         {
             Script.Damaged(damage);
-
+            this.transform.parent.gameObject.SetActive(false);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
