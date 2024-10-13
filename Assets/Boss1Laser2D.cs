@@ -43,10 +43,12 @@ public class Boss1Laser2D : EnemyAction
                 boss1SOundManager.LazerinitClipPlay();
             yield return new WaitForSeconds(LaserWaringTime);
             if (boss1SOundManager != null)
-                boss1SOundManager.LazerStartClipEnd();
+                boss1SOundManager.LazerStartClipPlay();
             lasers[n].DeactiveLaserWarning();
             lasers[n].activeLaserBeam();
             yield return new WaitForSeconds(laseractiveTime);
+            if (boss1SOundManager != null)
+                boss1SOundManager.LazerStartClipEnd();
             lasers[n].DeactiveLaserBeam();
             lasers[n].gameObject.SetActive(false);
         }
