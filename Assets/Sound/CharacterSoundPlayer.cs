@@ -8,12 +8,25 @@ public class CharacterSoundPlayer : SEPlayer
     public AudioClip MoveClip;
     [Header("이동 사운드 볼륨"), Range(0, 1)]
     public float MoveVolume;
+    [Header("피격 사운드")]
+    public AudioClip HittedClip;
+    [Header("피격 사운드 볼륨"), Range(0, 1)]
+    public float HittedVolume;
 
     [Header("공격 사운드")]
     public AudioClip AttackClip;
     [Header("공격 사운드 볼륨"), Range(0, 1)]
     public float AttackVolume;
-   
+    public void PlayHittedSound()
+    {
+        if (HittedClip != null)
+        {
+            audiosource.Stop();
+            audiosource.clip = HittedClip;
+            audiosource.volume = HittedVolume;
+            audiosource.Play();
+        }
+    }
     public void PlayMoveSound()
     {
         if (MoveClip != null && !audiosource.isPlaying)
