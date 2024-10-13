@@ -10,7 +10,7 @@ public class Boss1Laser2D : EnemyAction
     public float laseractiveTime;
 
     public List<bosslasergroup> lasers=new List<bosslasergroup>();
-    Boss1SOundManager boss1SOundManager;
+  public  Boss1SOundManager boss1SOundManager;
     public override void StopAction()
     {
         base.StopAction();
