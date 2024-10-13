@@ -42,7 +42,7 @@ public class PlayerUI: MonoBehaviour
      for(int n = 0; n < maxhp; n++)
         {
             
-                if (HPbarList.Count <= n)
+                if (HPbarList.Count == n)
             {
             
              
