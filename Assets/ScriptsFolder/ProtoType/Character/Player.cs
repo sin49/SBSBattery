@@ -1456,7 +1456,10 @@ IEnumerator jumpForceLimitCorutine()
 
         StartCoroutine(EndFormChange(type, event_));
     }
-   
+    public void playformchangeendsound()
+    {
+        SoundPlayer.PlayTransformedEndSound();
+    }
     IEnumerator EndFormChange(TransformType type, Action event_)
     {
 
@@ -1472,7 +1475,7 @@ IEnumerator jumpForceLimitCorutine()
         yield return new WaitForSeconds(waitTime);
 
         PlayerHandler.instance.CurrentPower = PlayerHandler.instance.MaxPower;
-        SoundPlayer.PlayTransformedEndSound();
+
         Instantiate(changeEffect, transform.position, Quaternion.identity);
         PlayerHandler.instance.transformed(type, event_);
         if (PlayerHandler.instance.CurrentPlayer != null)
@@ -1481,6 +1484,7 @@ IEnumerator jumpForceLimitCorutine()
     public virtual void transformENdAnimation()
     {
     Humonoidanimator.Play("TransformEnd");
+        SoundPlayer.PlayTransformedEndSound();
       downAttack = false;
     }
     #endregion

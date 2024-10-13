@@ -75,7 +75,7 @@ public class PlayerSoundPlayer : CharacterSoundPlayer
     {
         if (TransformedEndClip != null)
         {
-            Debug.Log("변신완료  사운드");
+            Debug.Log("변신완료  사운드"+this.gameObject.name);
             audiosource.Stop();
             audiosource.clip = TransformedEndClip;
             audiosource.volume = TransformedEndVolume;
