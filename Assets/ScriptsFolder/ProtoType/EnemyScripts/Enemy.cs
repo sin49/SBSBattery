@@ -493,6 +493,8 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         }
         else
         {
+          
+
             HittedRotate();
             StopCoroutine("HittedEnd");
             if (!onStun)
