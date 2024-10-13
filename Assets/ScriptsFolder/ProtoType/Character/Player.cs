@@ -116,6 +116,7 @@ public class Player : Character,environmentObject
         }
         else
         {
+            if(!PlayerHandler.instance.formChange)
             SoundPlayer.PlayLandingSound();
         }
         PlayerStat.instance.jump = true;

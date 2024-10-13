@@ -209,6 +209,7 @@ public class BossTv : RemoteObject
     void HandDominateEvent()
     {
         CancelAction();
+        StartCoroutine(monitorhit());
         if (!LHand.active && !RHand.active)
         {
             if (!Phase2)
@@ -286,6 +287,7 @@ public class BossTv : RemoteObject
     {
         Debug.Log("행동이 취소당함");
         TestAction.StopAction();
+        animator.enabled = true;
     }
     void DoAction()
     {

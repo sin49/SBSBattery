@@ -11,6 +11,16 @@ public class Switch :  signalSender
     {
         base.Awake();
     }
+    public override void Send(bool signal)
+    {
+        if (Receiver.Count != 0)
+        {
+            foreach (var a in Receiver)
+            {
+                a.Receive(signal, signalnumber);
+            }
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -22,8 +32,11 @@ public class Switch :  signalSender
       if(collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy")||
             collision.gameObject.CompareTag("CursorObject"))
         {
-       
-            active = true;
+            if (!active)
+            {
+                active = true;
+                sound.PlayAudio(0);
+            }
             Send(active);
         }
     }

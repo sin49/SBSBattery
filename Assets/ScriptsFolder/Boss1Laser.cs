@@ -50,8 +50,9 @@ public class Boss1Laser : EnemyAction
     Animator ani;
     public override void StopAction()
     {
+    
         base.StopAction();
-        particle.Stop();
+        ani.enabled = false;
         laserlifetime = 0;
     }
     public override void Invoke(Action ActionENd, Transform target = null)
@@ -75,8 +76,11 @@ public class Boss1Laser : EnemyAction
         main.startSize = TrailColScale * 3;
         main.duration = laserlifetime;
         main.startLifetime = TrailDuration;
-        registerActionHandler(() => { /*StopAllCoroutines();*/ StopCoroutine(activecoroutine); });
-        registerActionHandler(ActionENd);
+
+            registerActionHandler(() => { /*StopAllCoroutines();*/ StopCoroutine(activecoroutine); });
+  
+            registerActionHandler(ActionENd);
+         
 
     }
 
@@ -119,6 +123,7 @@ public class Boss1Laser : EnemyAction
     public void lasergazeparticleon()
     {
         Bosslasergaze.gameObject.SetActive(true);
+       
     }
     public void lasergazeparticleoff()
     {
@@ -228,22 +233,24 @@ public class Boss1Laser : EnemyAction
     }
     private void FixedUpdate()
     {
+        bosslasereffect.transform.position = (LhandTransform.position + RhandTransform.position) / 2;
         if (!laserBeam.gameObject.activeSelf)
             return;
         laserMove();
-        if (Bosslasergaze.isPlaying)
-        {
-            bosslasereffect.transform.position = (LhandTransform.position + RhandTransform.position) / 2;
-        }
+
+         
+
        
         if(laserlifetime < 0)
         {
             laserBeam.gameObject.SetActive(false);
+            lasergazeparticleoff();
             particle.Stop();
             if (boss1SOundManager != null)
                 boss1SOundManager.LazerStartClipEnd();
             if (!handreturncorutine)
                 StartCoroutine(handreturn());
+
         }
         else
             laserlifetime -= Time.fixedDeltaTime;
