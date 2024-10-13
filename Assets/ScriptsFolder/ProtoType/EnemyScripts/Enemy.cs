@@ -500,7 +500,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 rb.velocity = Vector3.zero;
                 if (attackCollider != null)
                     attackCollider.SetActive(false);
-
+                if(soundplayer!=null)
                 soundplayer.PlayHittedSound();
                 if (animaor != null)
                 {
