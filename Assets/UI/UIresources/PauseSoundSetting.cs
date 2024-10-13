@@ -227,6 +227,10 @@ public class PauseSoundSetting : UIInteract
     //설정 저장
     public void SaveSoundValue()
     {
+        AudioManager.instance.MasterVolume = masterSlider;
+        AudioManager.instance.BGVolume = bgmSlider;
+        AudioManager.instance.SEVolume = seSlider;
+        
         PlayerPrefs.SetFloat("LastestMasterVolume", masterSlider);
         PlayerPrefs.SetFloat("LastestBgmVolume", bgmSlider);
         PlayerPrefs.SetFloat("LastestSeVolume", seSlider);
