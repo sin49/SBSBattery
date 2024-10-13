@@ -27,17 +27,11 @@ public class HPRecoverItem : ItemObject
     {
         if (PlayerStat.instance.hp < PlayerStat.instance.hpMax)
         {
+          
             base.getitem();
+            ItemPickUp();
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-           
-              
-           
-        }
-    }
+  
 }
