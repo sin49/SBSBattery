@@ -27,7 +27,7 @@ public class TestRecheckUI : UIInteract
     public Animator recheckAnimator;
 
     public TitleScreen title;
-
+    public SelectUI selectui;
     private void Awake()
     {
         //if (this.gameObject.activeSelf)
@@ -155,6 +155,8 @@ public class TestRecheckUI : UIInteract
         CancelEvent = null;
         OKEvent = null;
         this.gameObject.SetActive(false);
+        if (SceneManager.GetActiveScene().name != "CheckTitleTest" && SceneManager.GetActiveScene().name != "TitleTest")
+            selectui.pauseui.pauseInteract = true;
         Debug.Log("UI 비활성화");
     }
     // Update is called once per frame
