@@ -363,16 +363,23 @@ public class Player : Character,environmentObject
     }
     void shadowmake()
     {
-        if ((int)PlayerStat.instance.MoveState >= 4)
+        if (PlayerHandler.instance.playerblackcircle != null)
         {
-            RaycastHit shadowhit;
-            if (Physics.Raycast(this.transform.position, Vector3.down, out shadowhit, 15))
+            if ((int)PlayerStat.instance.MoveState >= 4)
             {
-                if (shadowhit.collider.CompareTag("Ground") || shadowhit.collider.CompareTag("InteractivePlatform"))
+                RaycastHit shadowhit;
+                if (Physics.Raycast(this.transform.position, Vector3.down, out shadowhit, 15))
                 {
-                    PlayerHandler.instance.playerblackcircle.SetActive(true);
-                    PlayerHandler.instance.playerblackcircle.transform.position = shadowhit.point;
-                    PlayerHandler.instance.playerblackcircle.transform.rotation = Quaternion.FromToRotation(Vector3.up, shadowhit.normal);
+                    if (shadowhit.collider.CompareTag("Ground") || shadowhit.collider.CompareTag("InteractivePlatform"))
+                    {
+                        PlayerHandler.instance.playerblackcircle.SetActive(true);
+                        PlayerHandler.instance.playerblackcircle.transform.position = shadowhit.point;
+                        PlayerHandler.instance.playerblackcircle.transform.rotation = Quaternion.FromToRotation(Vector3.up, shadowhit.normal);
+                    }
+                    else
+                    {
+                        PlayerHandler.instance.playerblackcircle.SetActive(false);
+                    }
                 }
                 else
                 {
@@ -383,10 +390,6 @@ public class Player : Character,environmentObject
             {
                 PlayerHandler.instance.playerblackcircle.SetActive(false);
             }
-        }
-        else
-        {
-            PlayerHandler.instance.playerblackcircle.SetActive(false);
         }
     }
     private void OnDrawGizmos()
