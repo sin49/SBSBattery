@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 
-public class DownAttackCollider2D : MeleeCollider
+public class DownAttackCollider2D : MonoBehaviour
 {
-
-    protected override void Start()
+    public ParticleSystem hitEffect;
+    ParticleSystem saveEffect;
+    float damage;
+    protected  void Start()
     {
         saveEffect = Instantiate(hitEffect).GetComponent<ParticleSystem>();
         damage = PlayerStat.instance.atk;
 
     }
-    protected override void Update()
+    protected  void Update()
     {
       
     }
