@@ -20,6 +20,7 @@ public class MUltiPlyitem : item
             case UpgradeStatus.Energy:
                 PlayerStat.instance.HPBonus -= ReturnItemPower(itemnumber - 1);
                 PlayerStat.instance.HPBonus += ReturnItemPower(itemnumber);
+                PlayerStat.instance.hp++;
                 break;
             case UpgradeStatus.MoveSpeed:
                 PlayerStat.instance.MoveSpeedBonus -= ReturnItemPower(itemnumber - 1);
