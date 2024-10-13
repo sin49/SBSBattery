@@ -43,7 +43,7 @@ public class TestRecheckUI : UIInteract
     }
     void initializeUI()
     {
-        ok = true;
+        ok = false;
         StartCoroutine(SettingChangeReCheck());
         beforeIndex = index;
         index = 1;
@@ -156,7 +156,13 @@ public class TestRecheckUI : UIInteract
         OKEvent = null;
         this.gameObject.SetActive(false);
         if (SceneManager.GetActiveScene().name != "CheckTitleTest" && SceneManager.GetActiveScene().name != "TitleTest")
-            selectui.pauseui.pauseInteract = true;
+        {
+            if (SelectedUI != null)
+            {
+                selectui.pauseui.pauseInteract = true;
+                selectui.RecheckBackSetting();
+            }
+        }
         Debug.Log("UI 비활성화");
     }
     // Update is called once per frame

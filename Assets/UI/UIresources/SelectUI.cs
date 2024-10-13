@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -111,17 +112,36 @@ public class SelectUI : MonoBehaviour
                 pauseui.pauseInteract = false;
                 break;
             case 4://재확인 시키기
+                ButtonList[index].GetComponent<Image>().color = originColor;
+                ButtonList[index].transform.localScale = originScale;
+                SelectedUI.SetActive(false);
+
                 testRecheckUI.ActiveUI("타이틀로 돌아갑니다.", TitleBackEvent, ButtonselectedDisable);
                 pauseui.pauseInteract = false;
                 buttonselected = true;
                 break;
             case 5://재확인 시키기
+                ButtonList[index].GetComponent<Image>().color = originColor;
+                ButtonList[index].transform.localScale = originScale;
+                SelectedUI.SetActive(false);
+
                 testRecheckUI.ActiveUI("게임을 종료합니다.", ExitEvent, ButtonselectedDisable);
                 pauseui.pauseInteract = false;
                 buttonselected = true;
                 break;
         }
     }
+
+    public void RecheckBackSetting()
+    {
+        ButtonList[index].GetComponent<Image>().color = choiceColor;
+        ButtonList[index].transform.localScale = choiceScale;
+        SelectedUI.SetActive(true);
+        SelectedUI.transform.SetParent(ButtonList[index].transform.GetChild(1));
+        SelectedUI.transform.position = ButtonList[index].transform.GetChild(1).position;
+        SelectedUI.transform.localScale = screwScale;
+    }
+
     void UpdateUI()
     {
 
@@ -149,6 +169,9 @@ public class SelectUI : MonoBehaviour
     private void OnDisable()
     {
         OnHandle = false;
+
+        ButtonList[index].GetComponent<Image>().color = originColor;
+        ButtonList[index].transform.localScale = originScale;
     }
     public void ResumeGame()
     {
