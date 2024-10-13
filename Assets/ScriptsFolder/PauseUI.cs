@@ -78,8 +78,6 @@ public class PauseUI : MonoBehaviour
     //}
     private void Update()
     {
-        if (!pauseInteract)
-            return;
         if(Input.GetKeyDown(KeyCode.Escape) && pauseInteract)
             PauseUiActive();
 

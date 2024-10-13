@@ -174,12 +174,12 @@ public class GameManager : MonoBehaviour
         AsyncOperation syncoperation = SceneManager.LoadSceneAsync(scenename);
 
         Debug.Log(LoadLastestStage() + scenename);
-        if (GameManager.instance.LoadLastestStage() != scenename&& scenename != "TitleTest")
+        if (GameManager.instance.LoadLastestStage() != scenename&& scenename != "CheckTitleTest")
         {
             Debug.Log("씬 변화가 감지됨(단 방향이니깐 체크포인트 인덱스를 0으로 강제 초기화)\n 만약에 왕복으로 만들고 싶으면 PD한테 문의");
             GameManager.instance.saveCheckPointIndexKey(0);
         }
-        if (scenename != "TitleTest")
+        if (scenename != "CheckTitleTest")
             SaveCurrentStage(scenename);
         syncoperation.allowSceneActivation = false;
 

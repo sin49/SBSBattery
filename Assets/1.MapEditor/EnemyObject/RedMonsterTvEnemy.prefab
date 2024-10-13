@@ -138,7 +138,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 462a56cffb8af8941b7e313abedf3d9e, type: 2}
+  - {fileID: 2100000, guid: 7ca7e6b3993d42f4d92c115c3374bf05, type: 2}
   - {fileID: 2100000, guid: c4504a0f4566988408ed55dd2280241f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -584,6 +584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2c2539763bdf3c4e8351a33233d35ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyHitCol2D: {fileID: 0}
   testcolor: {r: 0, g: 0, b: 0, a: 0}
   movepattern: 1
   eStat: {fileID: 60971711035078781}
@@ -592,6 +593,8 @@ MonoBehaviour:
   deadEffect: {fileID: 0}
   animaor: {fileID: 7753982572842244621}
   idleMat: {fileID: 0}
+  backMat: {fileID: 0}
+  headMat: {fileID: 0}
   hittedMat: {fileID: 0}
   skinRenderer: {fileID: 0}
   moveEffect: {fileID: 0}
@@ -640,8 +643,12 @@ MonoBehaviour:
   onStun: 0
   reachCheck: 0
   attackRange: 0
+  viewActive: 0
   flatObject: {fileID: 0}
+  flatScaleY: 0
   flatTime: 0
+  timer: 0
+  onFlat: 0
   rotLevel: 85
   testAngle: 0
   tvColor: 1
