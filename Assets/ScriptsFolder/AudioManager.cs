@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Rendering.HighDefinition;
+
 public enum AudioType { BG,SE}
 public class AudioManager : MonoBehaviour
 {
@@ -39,7 +41,8 @@ public class AudioManager : MonoBehaviour
     public float MasterVolume;
     void UpdateMixerSetting()
     {
-        if(MasterVolume>0)
+        
+        if (MasterVolume>0)
         defaultMIxergroup.SetFloat("MasterVolume",Mathf.Log10( MasterVolume)*20);
         else
             defaultMIxergroup.SetFloat("MasterVolume", -80);
@@ -51,6 +54,7 @@ public class AudioManager : MonoBehaviour
         defaultMIxergroup.SetFloat("SEVolume", Mathf.Log10(SEVolume) * 20);
         else
             defaultMIxergroup.SetFloat("SEVolume",-80);
+
     }
     public void GetAudioSetting(AudioType type,AudioSource source)
     {
