@@ -29,11 +29,7 @@ public class PlayerSoundPlayer : CharacterSoundPlayer
     public AudioClip TransformedEndClip;
     [Header("변신 완료 사운드 볼륨"), Range(0, 1)]
     public float TransformedEndVolume;
-    [Header("피격 사운드")]
-    public AudioClip HittedClip;
-    [Header("피격 사운드 볼륨"), Range(0, 1)]
-    public float HittedVolume;
-
+   
     [Header("착지 사운드")]
     public AudioClip LandClip;
     [Header("착지 사운드 볼륨"), Range(0, 1)]
@@ -46,22 +42,14 @@ public class PlayerSoundPlayer : CharacterSoundPlayer
     {
         if (LandClip != null)
         {
+            Debug.Log("착지 사운드 재생 시도");
             audiosource.Stop();
             audiosource.clip = LandClip;
             audiosource.volume = LandVolume;
             audiosource.Play();
         }
     }
-    public void PlayHittedSound()
-    {
-        if (HittedClip != null )
-        {
-            audiosource.Stop();
-            audiosource.clip = HittedClip;
-            audiosource.volume = HittedVolume;
-            audiosource.Play();
-        }
-    }
+   
     public void PlayInitDownAttackSound()
     {
         if (InitDownAttackClip != null)
@@ -76,6 +64,7 @@ public class PlayerSoundPlayer : CharacterSoundPlayer
     {
         if (InitTransformedClip != null)
         {
+            Debug.Log("변신시도  사운드");
             audiosource.Stop();
             audiosource.clip = InitTransformedClip;
             audiosource.volume = InitTransformedVolume;
@@ -86,6 +75,7 @@ public class PlayerSoundPlayer : CharacterSoundPlayer
     {
         if (TransformedEndClip != null)
         {
+            Debug.Log("변신완료  사운드");
             audiosource.Stop();
             audiosource.clip = TransformedEndClip;
             audiosource.volume = TransformedEndVolume;

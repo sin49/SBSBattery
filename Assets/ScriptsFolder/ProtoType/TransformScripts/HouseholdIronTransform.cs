@@ -745,7 +745,7 @@ public class HouseholdIronTransform : Player
                 source.GenerateImpulse();
                 PlayerHandler.instance.CantHandle = true;
 
-                soundPlayer.PlayDownAttackEndSound();
+                //soundPlayer.PlayDownAttackEndSound();
 
                 ironDownAttack = false;
 
