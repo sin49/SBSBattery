@@ -169,6 +169,7 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
             camera2D.enabled = true;
         }
     }
+    public bool noorthochange;
     public IEnumerator SwitchCameraForTransDimensionCorutinenoblending()
 
     {
@@ -179,6 +180,7 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         //UpdatePlayerMovestate();
         PlayerHandler.instance.CurrentPlayer.rotateBy3Dto2D();
         PlayerHandler.instance.CantHandle = true;
+        if(!noorthochange)
         camera2D.m_Lens.Orthographic = false;
         camera2D.m_Lens.FieldOfView = fovview;
   
@@ -195,7 +197,8 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
             yield return StartCoroutine(SwitchCameraCoroutine(camera2D));
         }
         Time.timeScale = 1;
-        camera2D.m_Lens.Orthographic = true;
+        if (!noorthochange)
+            camera2D.m_Lens.Orthographic = true;
         camera2D.m_Lens.OrthographicSize = orthosize;
         PlayerHandler.instance.CantHandle = false;
         GetCameraSettingByTrans3D();

@@ -63,7 +63,7 @@ public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
             ColliderDisplayManager.Instance.register(this);
         }
     }
-
+    public bool noorthochange;
 
     protected virtual void OnTriggerEnter(Collider other)
     {
@@ -74,7 +74,7 @@ public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
             if (PlayerHandler.instance.CurrentCamera.gameObject.TryGetComponent<CameraManager_Switching2D3D>(out m))
             {
                 m.transitionDuration = transistionDuration;
-
+                m.noorthochange = noorthochange;
                 if (virtualCamera2D != null)
                 {
                     m.camera2D = virtualCamera2D;
