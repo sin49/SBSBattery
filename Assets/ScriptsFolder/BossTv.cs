@@ -3,12 +3,46 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 //주석처리
 //패턴 테스트 편하게
 public class BossTv : RemoteObject
 {
+    public Material phase1mat;
+    public Material phase2mat;
+    public Material hitmaterial;
+    public Material[] noisemats;
+
+    public Renderer monitorrenderer;
+
+    public float hittimer = 0.22f;
+    public float noisechangetimer = 0.12f;
+    IEnumerator monitorhit()
+    {
+        monitorrenderer.material = hitmaterial;
+        yield return new WaitForSeconds(hittimer);
+        if (Phase2)
+            monitorrenderer.material = phase2mat;
+        else
+            monitorrenderer.material = phase1mat;
+    }
+
+    IEnumerator monitornoise()
+    {
+      
+        while (true)
+        {
+            for (int n = 0; n < noisemats.Length; n++)
+            {
+                monitorrenderer.material = noisemats[n];
+                yield return new WaitForSeconds(noisechangetimer);
+            }
+        }
+    }
+
+
     public Boss1Status2Phase phase2status;
     bool BossEnable;
     Animator animator;
@@ -26,7 +60,10 @@ public class BossTv : RemoteObject
     {
         bossbgmplayer.AudioStop();
     }
-
+    public void playphaseChangeAudio()
+    {
+        bossaudioplayer.phase2StartClipPlay();
+    }
 
     public float patterndelay;
     public void BossActive()
@@ -71,6 +108,7 @@ public class BossTv : RemoteObject
        
 
         PlayerHandler.instance.DimensionChange();
+        monitorrenderer.material = phase2mat;
         LHand.HP = phase2status.HandHP;
         RHand.HP = phase2status.HandHP;
         StartCoroutine(phase2Start());
@@ -144,7 +182,7 @@ public class BossTv : RemoteObject
         Debug.Log("보스 활성화 연출이 들어간다");
         LHand.HP = HandHP;
         RHand.HP = HandHP;
-
+        monitorrenderer.material = phase1mat;
         LHand.active = true;
         RHand.active = true;
         LHand.HandDominateEvent += LhandDominateEvent;
@@ -175,6 +213,7 @@ public class BossTv : RemoteObject
         {
             if (!Phase2)
             {
+                playphaseChangeAudio();
                 StartCoroutine(phasechangeeventStack());
             }
             else
@@ -293,10 +332,11 @@ public class BossTv : RemoteObject
      base.Active();
         Debug.Log("모니터 공격 연출이 들어간다");
         animator.Play("BossDefeat");
+        StartCoroutine(monitornoise());
         if(bossaudioplayer!=null)
         bossaudioplayer.MonitiorHittedClipPlay();
         CanControl = false;
-        PlayerHandler.instance.CurrentPlayer.GetComponent<RemoteTransform>().RemoveClosesObject();
+        //PlayerHandler.instance.CurrentPlayer.GetComponent<RemoteTransform>().RemoveClosesObject();
         lifeCount = 0;
         Debug.Log("보스를 클리어 한다");
     }
