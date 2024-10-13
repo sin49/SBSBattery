@@ -17,7 +17,7 @@ public class DontMoveCollider : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {        
-        if ((other.CompareTag("Ground") && !other.GetComponent<TransformPlace>() )|| other.CompareTag("Enemy") ||
+        if ((other.CompareTag("Ground")  )|| other.CompareTag("Enemy") ||
          (   other.CompareTag("InteractivePlatform") && !PlayerHandler.instance.CurrentPlayer.CullingPlatform) || other.CompareTag("CursorObject"))
         {
             if ( PlayerHandler.instance.CurrentPlayer != null)
@@ -38,7 +38,7 @@ public class DontMoveCollider : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if ((other.CompareTag("Ground") && !other.GetComponent<TransformPlace>() )|| other.CompareTag("Enemy") ||
+        if ((other.CompareTag("Ground")  )|| other.CompareTag("Enemy") ||
             (other.CompareTag("InteractivePlatform") && !PlayerHandler.instance.CurrentPlayer.CullingPlatform) || other.CompareTag("CursorObject"))
         {
             if (PlayerHandler.instance.CurrentPlayer != null)
