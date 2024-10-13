@@ -5,17 +5,17 @@ using UnityEngine;
 
 public class item2DCollider : MonoBehaviour
 {
-    public float HPRecoverPoint=1;
+    public ItemObject itemobj;
+    private void Awake()
+    {
+        itemobj.transform.parent.GetComponent<item2DCollider>();
+        
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && (int)PlayerStat.instance.MoveState < 4)
         {
-            if (PlayerStat.instance.hp < PlayerStat.instance.hpMax&&
-                (int)PlayerStat.instance.MoveState < 4)
-            {
-                PlayerStat.instance.RecoverHP(HPRecoverPoint);
-                Destroy(gameObject);
-            }
+            itemobj.getitem();
         }
     }
 }

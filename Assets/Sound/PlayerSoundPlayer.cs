@@ -46,6 +46,7 @@ public class PlayerSoundPlayer : CharacterSoundPlayer
     {
         if (LandClip != null)
         {
+            Debug.Log("착지 사운드 재생 시도");
             audiosource.Stop();
             audiosource.clip = LandClip;
             audiosource.volume = LandVolume;
@@ -76,6 +77,7 @@ public class PlayerSoundPlayer : CharacterSoundPlayer
     {
         if (InitTransformedClip != null)
         {
+            Debug.Log("변신시도  사운드");
             audiosource.Stop();
             audiosource.clip = InitTransformedClip;
             audiosource.volume = InitTransformedVolume;
@@ -86,6 +88,7 @@ public class PlayerSoundPlayer : CharacterSoundPlayer
     {
         if (TransformedEndClip != null)
         {
+            Debug.Log("변신완료  사운드");
             audiosource.Stop();
             audiosource.clip = TransformedEndClip;
             audiosource.volume = TransformedEndVolume;

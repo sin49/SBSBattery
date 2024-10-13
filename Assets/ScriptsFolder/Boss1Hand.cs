@@ -71,7 +71,7 @@ public class Boss1Hand : MonoBehaviour,DamagedByPAttack
                 stopShake();
                 HandDominateEvent?.Invoke();
                 active = false;
-                HandDominateEvent = null;
+       
                 if(soundplayer!=null)
                 soundplayer.HandDestoryClipPlay();
                 return;
