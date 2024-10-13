@@ -37,37 +37,19 @@ public class GameManager : MonoBehaviour
 
     public bool TimerTest=true;
     public float GameTimer;
-    public TextMeshProUGUI TimerText;
+
     public bool pauseActive;
-    string GetTimerText(float f)
-    {
-        int hour = (int)f / 3600;
-        int min= ((int)f%3600) / 60;
-        int sec = (int)f % 60;
-        return $"{hour:00}:{min:00}:{sec:00}";
-    }
-    private void LateUpdate()
-    {
-        if (TimerTest)
-        {
-            if (SceneManager.GetActiveScene().name == "TitleTest" || pauseActive || SceneManager.GetActiveScene().name == name)
-            {
-                TimerText.gameObject.SetActive(false);
-            }
-            else
-            {
-                TimerText.gameObject.SetActive(true);
-                GameTimer += Time.unscaledDeltaTime;
-                TimerText.text ="Time: "+ GetTimerText(GameTimer);
-            }
-        }
-    
-    }
+
 
     public void DeleteSaveSetting()
     {
-        PlayerPrefs.DeleteAll();
+
+        PlayerPrefs.DeleteKey("PlayerHp");
+        PlayerPrefs.DeleteKey("TransformType");
+        PlayerPrefs.DeleteKey("CheckPointIndex");
+        PlayerPrefs.DeleteKey("LastestStageName");
         DeleteInventoryData();
+       
     }
     public void DeleteInventoryData()
     {
@@ -87,7 +69,7 @@ public class GameManager : MonoBehaviour
         }
     }
    
-    public float LoadPlayerHP() { if (PlayerPrefs.HasKey("PlayerHP")) return PlayerPrefs.GetFloat("PlayerHP"); else return 3; }
+    public float LoadPlayerHP() { if (PlayerPrefs.HasKey("PlayerHP")) return PlayerPrefs.GetFloat("PlayerHP"); else return PlayerStat.instance.hpMax; }
     public int LOadPlayerTransformtype() { if (PlayerPrefs.HasKey("TransformType")) return PlayerPrefs.GetInt("TransformType"); else return 0; }
     public void saveCheckPointIndexKey(int index)
     {
