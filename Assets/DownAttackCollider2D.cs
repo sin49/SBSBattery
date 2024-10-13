@@ -9,16 +9,10 @@ public class DownAttackCollider2D : MeleeCollider
     {
         saveEffect = Instantiate(hitEffect).GetComponent<ParticleSystem>();
         damage = PlayerStat.instance.atk;
-        gameObject.SetActive(false);
-    }
-    protected override void Update()
-    {
 
     }
-    public void DeactiveCollider()
-    {
-        this.gameObject.SetActive(false);
-    }
+
+
     private void OnTriggerEnter2D(Collider2D other)
     {
 
