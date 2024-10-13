@@ -3,7 +3,7 @@ using UnityEngine;
 public class DownAttackCollider : MeleeCollider
 {
 
-    private void Start()
+   protected override void Start()
     {
         saveEffect = Instantiate(hitEffect).GetComponent<ParticleSystem>();
         damage = PlayerStat.instance.atk;

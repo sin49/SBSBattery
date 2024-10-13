@@ -1,17 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class DownAttackCollider2D : MeleeCollider
 {
 
-    private void Start()
+    protected override void Start()
     {
         saveEffect = Instantiate(hitEffect).GetComponent<ParticleSystem>();
         damage = PlayerStat.instance.atk;
 
     }
-
+    protected override void Update()
+    {
+      
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {

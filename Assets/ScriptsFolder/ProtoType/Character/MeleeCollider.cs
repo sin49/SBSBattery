@@ -8,7 +8,7 @@ public class MeleeCollider : PlayerAttack
     
     public ParticleSystem saveEffect; // 파티클 저장
 
-    private void Start()
+    protected virtual void Start()
     {
         if(hitEffect!=null)
         saveEffect = Instantiate(hitEffect).GetComponent<ParticleSystem>();

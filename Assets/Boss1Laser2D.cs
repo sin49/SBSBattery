@@ -28,7 +28,7 @@ public class Boss1Laser2D : EnemyAction
             group.DeactiveLaserBeam();
             group.DeactiveLaserWarning();
         }
-        boss1SOundManager = this.GetComponent<Boss1SOundManager>();
+     
     }
     IEnumerator laserpattern()
     {
