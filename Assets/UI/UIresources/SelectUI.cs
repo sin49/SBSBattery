@@ -267,6 +267,8 @@ public class SelectUI : MonoBehaviour
             }
             settingActive = false;
             pauseui.pauseInteract = true;
+            SelectedUI.transform.SetParent(ButtonList[index].transform.GetChild(1));
+            SelectedUI.transform.position = ButtonList[index].transform.GetChild(1).position;
         }
     }
 
