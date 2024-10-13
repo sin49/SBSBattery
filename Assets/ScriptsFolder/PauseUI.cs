@@ -11,6 +11,8 @@ public class PauseUI : MonoBehaviour
     public RectTransform pauseUI;
     bool pauseActive;
     public ButtonSoundEffectPlayer ButtonSoundEffectPlayer_;
+
+    public bool pauseInteract;
     //public string TitleSceneName;
     
     //public ItemListUI itemListUI;
@@ -34,6 +36,7 @@ public class PauseUI : MonoBehaviour
     {
         pauseUI.gameObject.SetActive(false);
         pauseActive = false;
+        pauseInteract = true;
         Time.timeScale = 1f;
         ButtonSoundEffectPlayer_=gameObject.GetComponent<ButtonSoundEffectPlayer>();
         //SelectedUIImage= SelectedUIChecker.GetComponent<Image>();
@@ -75,8 +78,9 @@ public class PauseUI : MonoBehaviour
     //}
     private void Update()
     {
-        
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (!pauseInteract)
+            return;
+        if(Input.GetKeyDown(KeyCode.Escape) && pauseInteract)
             PauseUiActive();
 
         if (pauseActive)

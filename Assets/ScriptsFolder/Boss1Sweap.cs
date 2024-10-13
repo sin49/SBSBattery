@@ -190,6 +190,7 @@ public class Boss1Sweap : EnemyAction
     public float stombwaitTIme2;
     public float stombendwaitTIme;
     public float stombreturntime;
+    public GameObject HandEffect;
     public IEnumerator Stomb(Boss1Hand Lhand,Boss1Hand Rhand)
     {
         for(int n = 0; n < stombcount; n++)
@@ -248,6 +249,7 @@ public class Boss1Sweap : EnemyAction
                 timer += Time.fixedDeltaTime;
                 yield return null;
             }
+            Instantiate(HandEffect, hand.transform.position, quaternion.identity);
             timer = 0;
             hand.AttackState = false;
             hand.shakeonce();
