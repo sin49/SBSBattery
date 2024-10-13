@@ -18,7 +18,7 @@ public class IngameUIManager : MonoBehaviour
     }
     private void Start()
     {
-        StageNameText.text=SceneManager.GetActiveScene().name;//나중에 따로 이름 정할수있는 공간 만들기
+        //StageNameText.text=SceneManager.GetActiveScene().name;//나중에 따로 이름 정할수있는 공간 만들기
         StageNameText.gameObject.SetActive(true);
     }
     public void UpdateRemoteTargetUI(GameObject target)
