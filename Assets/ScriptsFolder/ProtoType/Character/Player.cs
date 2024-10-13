@@ -16,6 +16,9 @@ public enum direction { Left = -1, none = 0, Right = 1 }
 public enum directionZ { back = -1, none = 0, forward = 1 }
 public class Player : Character,environmentObject
 {
+
+    public Vector3 EMergenctRotation;
+
     public MoveInput Moveinput_;
 
     IngameUIManager gameuimanager;
@@ -450,6 +453,7 @@ public class Player : Character,environmentObject
     public float jumpanimtimer;
     private void FixedUpdate()
     {
+        transform.rotation = Quaternion.Euler(EMergenctRotation);
         shadowmake();
         InteractivePlatformrayCheck();
         InteractivePlatformrayCheck2();
