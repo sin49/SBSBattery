@@ -180,10 +180,11 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         //UpdatePlayerMovestate();
         PlayerHandler.instance.CurrentPlayer.rotateBy3Dto2D();
         PlayerHandler.instance.CantHandle = true;
-        if(!noorthochange)
-        camera2D.m_Lens.Orthographic = false;
-        camera2D.m_Lens.FieldOfView = fovview;
-  
+        if (!noorthochange)
+        {
+            camera2D.m_Lens.Orthographic = false;
+            camera2D.m_Lens.FieldOfView = fovview;
+        }
         renderpassmanager_.changepixel(trans3D);
         if (trans3D)
         {
@@ -198,8 +199,10 @@ public class CameraManager_Switching2D3D : CameraManagerSwitchingBlendingOption
         }
         Time.timeScale = 1;
         if (!noorthochange)
+        {
             camera2D.m_Lens.Orthographic = true;
-        camera2D.m_Lens.OrthographicSize = orthosize;
+            camera2D.m_Lens.OrthographicSize = orthosize;
+        }
         PlayerHandler.instance.CantHandle = false;
         GetCameraSettingByTrans3D();
     }
