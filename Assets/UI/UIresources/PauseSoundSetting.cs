@@ -1,5 +1,3 @@
-using Cinemachine.Editor;
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering;
