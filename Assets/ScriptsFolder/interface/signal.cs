@@ -15,15 +15,20 @@ public abstract class signalSender : MonoBehaviour
         sound = GetComponent<SoundEffectListPlayer>();
     }
     public abstract void register(signalReceiver receiver, int index);
-    public virtual void Send(bool signal)
+   public virtual void playsound(bool signal)
     {
         if (sound != null)
         {
+
             if (signal)
                 sound.PlayAudio(0);
             else
                 sound.PlayAudio(1);
         }
+    }
+    public virtual void Send(bool signal)
+    {
+        playsound(signal);
         if (Receiver .Count!=0)
         {
             foreach(var a in Receiver)

@@ -11,7 +11,11 @@ public class switchhold : Switch
             collision.gameObject.CompareTag("CursorObject"))
         {
             Debug.Log("Switch DeActive");
-            active = false;
+            if (active)
+            {
+                active = false;
+                sound.PlayAudio(1);
+            }
             Send(active);
         }
     }
