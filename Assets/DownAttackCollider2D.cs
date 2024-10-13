@@ -6,7 +6,9 @@ using UnityEngine;
 public class DownAttackCollider2D : MonoBehaviour
 {
     public ParticleSystem hitEffect;
+    public HouseholdIronTransform hosueiron;
     ParticleSystem saveEffect;
+    public DownAttackCollider downattack;
     float damage;
     protected  void Start()
     {
@@ -30,18 +32,16 @@ public class DownAttackCollider2D : MonoBehaviour
                 {
                     Debug.Log("몬스터 확인");
                     //DamageCollider(other);
-                    DamagedByPAttack script;
-                    if (other.TryGetComponent<DamagedByPAttack>(out script))
-                    {
-                        if (transform.parent. GetComponentInParent<HouseholdIronTransform>())
+        
+                   
+                        if (hosueiron!=null)
                         {
-                            HouseholdIronTransform iron = transform.parent.GetComponentInParent<HouseholdIronTransform>();
-                            other.GetComponent<Enemy>().FlatByIronDwonAttack(iron.flatTime);
+                           
+                            other.transform.parent.GetComponent<Enemy>().FlatByIronDwonAttack(hosueiron.flatTime);
                             CheckMonster(other);
                         }
-                        script.Damaged(damage);
-                        Debug.Log("몬스터 Damage받음");
-                    }
+
+                   
 
                     saveEffect.transform.position = new(other.transform.position.x, other.transform.position.y + .5f, other.transform.position.z);
                     saveEffect.Play();
