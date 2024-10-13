@@ -259,11 +259,10 @@ public class Player : Character,environmentObject
     #region 레이 체크
     void jumpRaycastCheck()
     {
+        
 
-
-
-        //+Vector3.down * sizeY * 0.15f
-        if (!onGround && !isJump)
+            //+Vector3.down * sizeY * 0.15f
+            if (!onGround && !isJump)
         {
             RaycastHit hit;
 
@@ -362,7 +361,34 @@ public class Player : Character,environmentObject
     {
         wallcheck = checking;
     }
-
+    void shadowmake()
+    {
+        if ((int)PlayerStat.instance.MoveState >= 4)
+        {
+            RaycastHit shadowhit;
+            if (Physics.Raycast(this.transform.position, Vector3.down, out shadowhit, 15))
+            {
+                if (shadowhit.collider.CompareTag("Ground") || shadowhit.collider.CompareTag("InteractivePlatform"))
+                {
+                    PlayerHandler.instance.playerblackcircle.SetActive(true);
+                    PlayerHandler.instance.playerblackcircle.transform.position = shadowhit.point;
+                    PlayerHandler.instance.playerblackcircle.transform.rotation = Quaternion.FromToRotation(Vector3.up, shadowhit.normal);
+                }
+                else
+                {
+                    PlayerHandler.instance.playerblackcircle.SetActive(false);
+                }
+            }
+            else
+            {
+                PlayerHandler.instance.playerblackcircle.SetActive(false);
+            }
+        }
+        else
+        {
+            PlayerHandler.instance.playerblackcircle.SetActive(false);
+        }
+    }
     private void OnDrawGizmos()
     {
         Debug.DrawRay(transform.position + Vector3.right * 0.05f * (int)direction, Vector3.right * (int)direction * distanceRay, Color.white, 0.1f);
@@ -421,7 +447,7 @@ public class Player : Character,environmentObject
     public float jumpanimtimer;
     private void FixedUpdate()
     {
-
+        shadowmake();
         InteractivePlatformrayCheck();
         InteractivePlatformrayCheck2();
         if (oninteractivetimer > 0 && onInterarctive)

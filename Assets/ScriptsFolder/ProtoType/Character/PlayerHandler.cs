@@ -11,6 +11,8 @@ using UnityEngine.UIElements;
 
 public class PlayerHandler : MonoBehaviour
 {
+    public GameObject playerblackcircle;
+
     public bool ladderCheck;
     public bool ladderInteract;
     public event Action PlayerDeathEvent;
@@ -302,6 +304,7 @@ public class PlayerHandler : MonoBehaviour
             if (formChange)
             {
                 CurrentPlayer.transformENdAnimation();
+
             }
             }
         else
