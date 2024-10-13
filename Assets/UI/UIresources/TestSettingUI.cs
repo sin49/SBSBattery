@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TestSettingUI : UIInteract
@@ -9,7 +12,8 @@ public class TestSettingUI : UIInteract
     //public SelectUI uiGroup;
     //[HideInInspector]public TestPauseUI uiGroup;
 
-    public SelectUI uiSelect;      
+    public SelectUI uiSelect;
+    public TitleScreen title;
 
     public bool settingActive;
 
@@ -68,7 +72,22 @@ public class TestSettingUI : UIInteract
             {
                 ChoiceInteractUI();
             }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                SettingExit();
+            }
         }
+    }
+    public bool CheckTitle()
+    {
+        bool check = false;
+        if (SceneManager.GetActiveScene().name == "CheckTitleTest" || SceneManager.GetActiveScene().name == "TitleTest")
+        {
+            check = true;
+        }
+
+        return check;
     }
 
     public void ChoiceInteractUI()
@@ -102,8 +121,17 @@ public class TestSettingUI : UIInteract
     public void SettingExit()
     {
         settingActive = false;
-        settingAnimator.Play("SettingChangePause");
-        StartCoroutine(SCP());
+        if (SceneManager.GetActiveScene().name != "CheckTitleTest" && SceneManager.GetActiveScene().name != "TitleTest")
+        {
+            settingAnimator.Play("SettingChangePause");
+            StartCoroutine(SCP());
+        }
+        else
+        {
+            gameObject.SetActive(false);
+            title.SettingBackScreen();
+        }
+
     }
 
     IEnumerator SCP()
@@ -137,7 +165,12 @@ public class TestSettingUI : UIInteract
         DeactiveButton();
         ActiveButton();
 
-        StartCoroutine(EndSettingAnimation());
+        if (SceneManager.GetActiveScene().name != "CheckTitleTest" && SceneManager.GetActiveScene().name != "TitleTest")
+        {
+            StartCoroutine(EndSettingAnimation());
+        }
+        else
+            settingActive = true;
     }
 
     IEnumerator EndSettingAnimation()

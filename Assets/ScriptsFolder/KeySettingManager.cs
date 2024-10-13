@@ -30,7 +30,7 @@ public class KeySettingManager : MonoBehaviour
 
     [Header("UI 상호작용")]
     public KeyCode UIactiveKeycode = KeyCode.C;
-    public KeyCode UIdeactiveKeycode = KeyCode.X;
+    public KeyCode UIdeactiveKeycode = KeyCode.Escape;
 
     private void Awake()
     {
