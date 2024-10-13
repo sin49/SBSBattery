@@ -33,19 +33,24 @@ public abstract class ItemObject : MonoBehaviour
         yield return new WaitForSeconds(timer);
         this.gameObject.SetActive(false);
     }
+    public virtual void getitem()
+    {
+        if (!itemactive)
+        {
+            getItemSoundPlay();
+            ItemPickUp();
+            createitemeffect();
+            this.GetComponent<Renderer>().enabled = false;
+            StartCoroutine(itemDeactivecorutine());
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            if (!itemactive)
-            {
-                getItemSoundPlay();
-                ItemPickUp();
-                createitemeffect();
-                this.GetComponent<Renderer>().enabled = false ;
-                StartCoroutine(itemDeactivecorutine());
-            }
-        
+            getitem();
+
+
         }
     }
 }
