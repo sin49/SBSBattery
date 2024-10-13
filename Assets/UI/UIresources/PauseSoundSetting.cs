@@ -112,6 +112,7 @@ public class PauseSoundSetting : UIInteract
             }
         }
     }
+
     //사운드 설정 초기화(활성화시)
     public void InitSoundSetting()
     {
@@ -122,6 +123,10 @@ public class PauseSoundSetting : UIInteract
 
         if (index > interactList.Count - 3)
             onButton = true;
+        else
+        {
+            onButton = false;
+        }
 
         switch (beforeIndex)
         {
@@ -206,9 +211,11 @@ public class PauseSoundSetting : UIInteract
             case 0:
             case 1:
             case 2:
+                interactList[index].GetComponent<Image>().sprite = deactiveVolume;
                 break;
             case 3:
             case 4:
+                screw.transform.SetParent(buttonList[index - 3].transform.GetChild(1));
                 DeactiveButton();
                 break;
         }

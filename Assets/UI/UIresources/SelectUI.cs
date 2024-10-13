@@ -62,7 +62,7 @@ public class SelectUI : MonoBehaviour
     {
         pauseui.pauseInteract = false;
         tokenText.text = PlayerInventory.instance.TokenValue.ToString();
-        OnHandle = true;
+        OnHandle = true;                
         this.index = index;
         ShowPauseUI();
         
@@ -78,8 +78,8 @@ public class SelectUI : MonoBehaviour
     void TitleBackEvent()
     {
         Time.timeScale = 1;
-        GameManager.instance.LoadingSceneWithKariEffect("TitleTest");
-        //GameManager.instance.LoadingSceneWithKariEffect("CheckTitleTest");
+        //GameManager.instance.LoadingSceneWithKariEffect("TitleTest");
+        GameManager.instance.LoadingSceneWithKariEffect("CheckTitleTest");
     }
     void ExitEvent()
     {
@@ -97,7 +97,6 @@ public class SelectUI : MonoBehaviour
         {
             case 0:
                 ResumeGame();
-                pauseui.pauseInteract = false;
                 break;
             case 1:
                 Time.timeScale = 1;

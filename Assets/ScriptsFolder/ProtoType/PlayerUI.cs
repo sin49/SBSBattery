@@ -13,22 +13,26 @@ public class PlayerUI: MonoBehaviour
     public Sprite Fill;
     public Transform HPbartransform;
     List<Image> HPbarList=new List<Image>();
-
+    public List<Sprite> formList = new List<Sprite>();
+    public Image currentFormImage;
    void FormUIUpdate()
     {
         switch (PlayerHandler.instance.CurrentType)
         {
             case TransformType.Default:
                 PlayerFormText.text = "배터리";
- 
+                currentFormImage.sprite = formList[0];
                 break;
             case TransformType.remoteform:
                 PlayerFormText.text = "리모컨";
-   
+                currentFormImage.sprite = formList[1];
                 break;
             case TransformType.mouseform:
                 PlayerFormText.text = "마우스";
-
+                currentFormImage.sprite = formList[2];
+                break;
+            case TransformType.ironform:
+                currentFormImage.sprite = formList[3];
                 break;
         }
     }
