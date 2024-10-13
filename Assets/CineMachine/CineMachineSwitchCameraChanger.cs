@@ -105,6 +105,7 @@ public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
                             StartCoroutine(m.SwitchCameraForTransDimensionCorutine());
                             break;
                         default:
+                            StartCoroutine(m.SwitchCameraForTransDimensionCorutinenoblending());
                             break;
                     }
                 }
@@ -123,6 +124,7 @@ public class CineMachineSwitchCameraChanger : MonoBehaviour,colliderDisplayer
                             StartCoroutine(m.SwitchCameraForTransDimensionCorutinenoblending());
                             break;
                         default:
+                            StartCoroutine(m.SwitchCameraForTransDimensionCorutinenoblending());
                             break;
                     }
                 }
