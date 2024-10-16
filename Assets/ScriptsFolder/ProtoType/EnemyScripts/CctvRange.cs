@@ -48,7 +48,7 @@ public class CctvRange : MonoBehaviour
 
         if (cctvE.eStat.hp > 0)
         {
-            cctvE.EnemyCall();
+            //cctvE.EnemyCall();
         }
     }
 

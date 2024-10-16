@@ -20,7 +20,7 @@ public class RollingEnemy : Enemy
                 }
             }
 
-            RollingPatrol();
+            //RollingPatrol();
         }
     }
 
@@ -31,20 +31,20 @@ public class RollingEnemy : Enemy
         soundplayer.PlayMoveSound();
     }
 
-    public void RollingPatrol()
-    {
-        Collider[] colliders = Physics.OverlapBox(transform.position + searchCubePos, searchCubeRange);
+    //public void RollingPatrol()
+    //{
+    //    Collider[] colliders = Physics.OverlapBox(transform.position + searchCubePos, searchCubeRange);
 
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            if (colliders[i].CompareTag("Player"))
-            {
-                target = colliders[i].transform;
-                checkPlayer = true;
-                tracking = true;
-            }
-        }
-    }
+    //    for (int i = 0; i < colliders.Length; i++)
+    //    {
+    //        if (colliders[i].CompareTag("Player"))
+    //        {
+    //            target = colliders[i].transform;
+    //            checkPlayer = true;
+    //            tracking = true;
+    //        }
+    //    }
+    //}
 
     public override void Damaged(float damage)
     {

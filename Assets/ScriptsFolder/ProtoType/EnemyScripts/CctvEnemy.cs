@@ -27,30 +27,30 @@ public class CctvEnemy : Enemy
         endWait = true;
     }
 
-    public void EnemyCall()
-    {
+    //public void EnemyCall()
+    //{
         
-        Collider[] colliders = Physics.OverlapBox(transform.position + searchCubePos, searchCubeRange);        
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            if (colliders[i].CompareTag("Enemy"))
-            {
-                Debug.Log($"호출적군 감지{colliders[i].gameObject}");
-                Enemy enemy = colliders[i].GetComponent<Enemy>();
-                enemy.onPatrol = false;
-                enemy.callCheck = true;
-                enemy.tracking = true;
-                enemy.target = target; 
-                enemy.searchPlayer = true;
-            }                  
-        }
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(transform.position + searchCubePos, searchCubeRange * 2f);
-        //Gizmos.DrawWireSphere(transform.position, searchRange);
-    }
+    //    Collider[] colliders = Physics.OverlapBox(transform.position + searchCubePos, searchCubeRange);        
+    //    for (int i = 0; i < colliders.Length; i++)
+    //    {
+    //        if (colliders[i].CompareTag("Enemy"))
+    //        {
+    //            Debug.Log($"호출적군 감지{colliders[i].gameObject}");
+    //            Enemy enemy = colliders[i].GetComponent<Enemy>();
+    //            enemy.onPatrol = false;
+    //            enemy.callCheck = true;
+    //            enemy.tracking = true;
+    //            enemy.target = target; 
+    //            enemy.searchPlayer = true;
+    //        }                  
+    //    }
+    //}
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.blue;
+    //    Gizmos.DrawWireCube(transform.position + searchCubePos, searchCubeRange * 2f);
+    //    //Gizmos.DrawWireSphere(transform.position, searchRange);
+    //}
 
     public override void Move()
     {

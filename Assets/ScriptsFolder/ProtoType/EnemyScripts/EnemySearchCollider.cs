@@ -8,6 +8,9 @@ public class EnemySearchCollider : MonoBehaviour, colliderDisplayer
     Enemy enemy;
     BoxCollider searchCollider;
     public MeshRenderer childMat;
+    public EnemyTrackingAndPatrol tap;
+
+    public bool searchPlayer, onPatrol;
 
     public void ActiveColliderDisplay()
     {
@@ -48,8 +51,8 @@ public class EnemySearchCollider : MonoBehaviour, colliderDisplayer
     {
         if (enemy.searchCollider != null && searchCollider != null)
         {
-            searchCollider.center = enemy.searchColliderPos;
-            searchCollider.size = enemy.searchColliderRange;
+            searchCollider.center = tap.searchColliderPos;
+            searchCollider.size = tap.searchColliderRange;
             if (childMat != null)
             {
                 childMat.transform.localPosition = searchCollider.center;
@@ -73,13 +76,13 @@ public class EnemySearchCollider : MonoBehaviour, colliderDisplayer
             enemy.target = other.transform;
             if (!enemy.wallCheck)
             {
-                enemy.searchPlayer = true;
-                enemy.onPatrol = false;
+                searchPlayer = true;
+                onPatrol = false;
             }
             else
             {
-                enemy.searchPlayer = false;
-                enemy.onPatrol = true;
+                searchPlayer = false;
+                onPatrol = true;
             }            
         }
     }

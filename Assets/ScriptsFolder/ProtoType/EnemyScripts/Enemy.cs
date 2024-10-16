@@ -1,13 +1,6 @@
-
-
 using System.Collections;
-using System.Linq;
-using System.Net.Http.Headers;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.Rendering;
+using System.Collections.Generic;
 using UnityEngine;
-using static Unity.Burst.Intrinsics.X86;
 
 public enum EnemyMovePattern { stop,patrol}
 public interface DamagedByPAttack
@@ -41,10 +34,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public ParticleSystem moveEffect;
     public Vector3 environmentforce;
     [HideInInspector]
-    public bool isMove;
-    [Header("#플레이어 탐색 큐브 조정#\n(현재 CCTV 몬스터에서만)")]
-    [Tooltip("범위")] public Vector3 searchCubeRange; // 플레이어 인지 범위를 Cube 사이즈로 설정
-    [Tooltip("위치")] public Vector3 searchCubePos; // Cube 위치 조정       
+    public bool isMove;   
 
     [Header("#공격 활성화 콜라이더 큐브 조정#")]
     [Tooltip("활성화 콜라이더")] public GameObject rangeCollider; // 공격 범위 콜라이더 오브젝트
@@ -456,7 +446,13 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         onStun = false;
         eStat.onInvincible = false;
     }
-
+    public Vector3 direction;//목적지
+    //public bool 행동여부;//
+ 
+    void move()
+    {
+     
+    }
     #region 피격함수
     public virtual void HittedRotate()
     {
@@ -660,25 +656,27 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     #endregion
   protected  bool onmove;
     #region 이동함수
+  
+    
     public override void Move()
     {
-  
+
         if (eStat.eState != EnemyState.dead || eStat.eState != EnemyState.hitted)
         {
-           
+
             if (tracking)
             {
                 if (!activeAttack && !onAttack)
                 {
-                    if (movepattern == EnemyMovePattern. patrol)
+                    if (movepattern == EnemyMovePattern.patrol)
                     {
                         if (patrolType == PatrolType.movePatrol && onPatrol)
                         {
-                        
+
                             PatrolTracking();
                         }
                     }
-                    if(searchPlayer)
+                    if (searchPlayer)
                         TrackingMove();
                 }
             }
@@ -855,38 +853,6 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     #endregion
 
     #region 정찰
-    public void Patrol()
-    {        
-
-        //Debug.Log("추적하고있지 않다면 주변을 정찰합니다");
-        //Collider[] colliders = Physics.OverlapSphere(transform.position, searchRange);
-        Collider[] colliders = Physics.OverlapBox(transform.position + searchCubePos, searchCubeRange, Quaternion.identity);
-        bool playerCheck = false;
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            if (colliders[i].CompareTag("Player"))
-            {
-                if (!posRetry)
-                {
-                    posRetry = true;
-                    transform.position = new(transform.position.x, transform.position.y, PlayerHandler.instance.CurrentPlayer.transform.localPosition.z);
-                }
-
-                target = colliders[i].transform;
-                //checkPlayer = true;
-                playerCheck = true;
-            }
-
-            tracking = playerCheck;
-
-            /*if (!tracking && !onAttack && activeAttack)
-            {
-                LookTarget();
-            }*/
-
-        }
-    }
-
 
     private void OnDrawGizmos()
     {
