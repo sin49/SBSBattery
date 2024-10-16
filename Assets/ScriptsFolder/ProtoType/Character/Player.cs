@@ -1286,9 +1286,7 @@ public class Player : Character,environmentObject
     {
         PlayerStat.instance.pState = PlayerState.dead;
         PlayerHandler.instance.InvokePlayerDeathEvent();
-        if (!PlayerSpawnManager.Instance.DontSave)
-            GameManager.instance.LoadingSceneWithKariEffect(GameManager.instance.LoadLastestStage());
-        else
+    
             GameManager.instance.LoadingSceneWithKariEffect(SceneManager.GetActiveScene().name);
     }
     #endregion

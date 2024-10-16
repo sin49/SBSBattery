@@ -16,7 +16,7 @@ public class CharacterStat : MonoBehaviour
     public State characterState;
 
     [Header("체력 초기치")]
-    public float initMaxHP;
+    public float initMaxHP ;
     [Header("이동속도 초기치")]
     public float initMoveSpeed;
     [HideInInspector]

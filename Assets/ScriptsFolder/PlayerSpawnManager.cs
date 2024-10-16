@@ -19,7 +19,7 @@ public class PlayerSpawnManager : MonoBehaviour
     public CheckPoint CurrentCheckPoint;
     public GameObject SaveEffect;
     public GameObject CurrentPlayer;// 행동 작업
-    public bool DontSave;
+
     //public bool dontloadTransformInfo = false;
     public bool IgnoreSavedCheckPoint;
     public void ChangeCheckPoint(CheckPoint ChkPoint)
@@ -32,28 +32,27 @@ public class PlayerSpawnManager : MonoBehaviour
         CurrentCheckPoint = ChkPoint;
         CurrentCheckPoint.activecheckpoint();
         Debug.Log("세이브" +ChkPoint.index);
-        if (!DontSave)
-        {
+    
             SaveEffect.gameObject.SetActive(true);
 
             GameManager.instance.saveCheckPointIndexKey(ChkPoint.index);
             GameManager.instance.SaveCurrentStage(SceneManager.GetActiveScene().name);
             GameManager.instance.SavePlayerStatus();
             PlayerInventory.instance.SaveInventoryData();
-        }
+  
         //Debug.Log($"Playerprefs chkpointindex{GameManager.instance.LoadCheckPointIndexKey()} LastestStage{GameManager.instance.LoadLastestStage()}");
 
     }
     public CheckPoint GetCurrentCheckpoint()
     {
-        if (!DontSave&& GameManager.instance.LoadCheckPointIndexKey()< Checkpoints.Length)
+        if (GameManager.instance.LoadCheckPointIndexKey()< Checkpoints.Length)
             return Checkpoints[GameManager.instance.LoadCheckPointIndexKey()];
         else
             return Checkpoints[0];
     }
     public CheckPoint LoadCheckPoint()
     {
-       if(!DontSave&& GameManager.instance.LoadCheckPointIndexKey()< ChkPointsDic.Count)
+       if( GameManager.instance.LoadCheckPointIndexKey()< ChkPointsDic.Count)
         CurrentCheckPoint = ChkPointsDic[GameManager.instance.LoadCheckPointIndexKey()];
         else
             CurrentCheckPoint= ChkPointsDic[0];
@@ -141,17 +140,12 @@ public class PlayerSpawnManager : MonoBehaviour
     private void Start()
     {
 
-        if (DevelopmentManager.instance != null)
-            DontSave = DevelopmentManager.instance.dontsave;
-        if (!DontSave)
-        {
+     
+   
             PlayerInventory.instance.LoadInventoryData();
             PlayerStat.instance.hp = GameManager.instance.LoadPlayerHP();
             
-        }else
-        {
-            PlayerStat.instance.hp = PlayerStat.instance.hpMax;
-        }
+      
 
         PlayerHandler.instance.CurrentType = (TransformType)GameManager.instance.LOadPlayerTransformtype();
         if(GameManager.instance.LOadPlayerTransformtype()!=0)
