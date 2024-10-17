@@ -19,14 +19,12 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public EnemyStat eStat;
     public PatrolType patrolType;
     //public Rigidbody enemyRb; // 적 리지드바디
-    public GameObject attackCollider; // 적의 공격 콜라이더 오브젝트    
-    public ParticleSystem deadEffect;
+    public GameObject attackCollider; // 적의 공격 콜라이더 오브젝트        
     bool posRetry;
     [Header("적 애니메이션 관련")]
     public Animator animaor;
     
-    
-    public ParticleSystem moveEffect;
+       
     public Vector3 environmentforce;
     [HideInInspector]
     public bool isMove;
@@ -34,20 +32,17 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public EnemyTrackingAndPatrol tap;
     public EnemySearchCollider searchCollider;
     public EnemyMaterialAndEffect mae;
-    
-    [Header("#그려질 정찰 큐브 사이즈 결정#")]
-    [Tooltip("붉은색 높이")] public float yWidth;
-    [Tooltip("붉은색 z축 넓이")] public float zWidth;
-    Vector3 center;
+    public AttackColliderRange acr;
+    public ReachAttack reachAttack;
 
     [Header("벽 체크 레이캐스트")]
     [Tooltip("벽 체크 Ray의 높이")] public float wallRayHeight;
     [Tooltip("정면 Ray 길이")] public float wallRayLength;
     [Tooltip("위쪽 Ray 길이")] public float wallRayUpLength;    
     
-    public Collider forwardWall;
-    public Collider upWall;
-    public float disToWall;    
+    Collider forwardWall;
+    Collider upWall;
+    float disToWall;    
     public bool wallCheck;
     bool forwardCheck, upCheck;
     
@@ -57,17 +52,14 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public float attackDelay; // 공격 후 딜레이
    public EnemyAttackHandler actionhandler;
 
-    public bool callCheck;
     public bool rotCheck;
     
     public bool onAttack; // 공격 활성화 여부 (공격 범위 내에 플레이어를 인식했을 때 true 변환)
     
-    public bool activeAttack; // 공격 가능한 상태인지 체크
-    [HideInInspector]
-    public bool checkPlayer; // 범위 내 플레이어 체크    
+    [HideInInspector] public bool activeAttack; // 공격 가능한 상태인지 체크
 
-    [Header("목표 회전을 테스트하기 위한 변수")]
     public Transform target; // 추적할 타겟
+    [Header("목표 회전을 테스트하기 위한 변수")]    
     public bool tracking; // 추적 활성화 체크
     public Vector3 testTarget; // 타겟을 바라보는 시점을 테스트하기 위한 임시 변수
     float rotationY; // 로테이션 값을 이해하기 위한 테스트 변수
@@ -78,13 +70,12 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
     [Header("기절상태")]
     /*[HideInInspector]*/
-    public bool onStun;
-    public bool reachCheck;
+    bool onStun;
     bool complete;
     public bool attackRange;
 
     public bool viewActive;
-
+    protected bool die, hitted;
     private void OnEnable()
     {
         StartCoroutine(InitPatrolTarget());
@@ -114,6 +105,9 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             originScale = flatObject.transform.localScale;
             flatScale = new(flatObject.transform.localScale.x, flatScaleY, flatObject.transform.localScale.z);
         }
+
+        if (reachAttack != null)
+            reachAttack.SetDamage(eStat.atk);
     }
 
     public void InitPatrolPoint()
@@ -175,12 +169,12 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
         if (!onStun)
         {
-            if (!attackRange)
+            if (!acr.attackRange)
                 Move();
 
             if (movepattern == EnemyMovePattern.stop)
             {
-                if (tracking && !onAttack && !attackRange && searchCollider.searchPlayer)
+                if (tracking && !onAttack && !acr.attackRange && searchCollider.searchPlayer)
                 {
                     isMove = true;
                 }
@@ -191,7 +185,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             }
             else
             {
-                if (tracking && !onAttack && !attackRange)
+                if (tracking && !acr.onAttack && !acr.attackRange)
                 {
                     isMove = true;
                 }
@@ -393,9 +387,9 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         }
     }
     #region 피격 코루틴
-    public virtual IEnumerator HittedEnd()
+    public IEnumerator HittedEnd()
     {
-        if (mae != null)
+        if (mae !=null)
         {
             StartEmmissionHitMat();
         }
@@ -463,14 +457,15 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         if (flatObject == null)
             return;
 
-        onStun = true;
+        StartStun();
+
         onFlat = true;
         flatObject.transform.localScale = flatScale;
         flatTime = flat;
         attackRange = false;
         Debug.Log(flat);
 
-        if (mae != null)
+        if (mae != null && mae.skinRenderer != null)
         {
             Material[] materials = mae.skinRenderer.materials;
             materials[1] = mae.hittedMat;
@@ -480,10 +475,12 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
     public virtual void RollBackFormFlatState()
     {
-        onStun = false;
+        EndStun();
+
+
         onFlat = false;
         timer = 0;
-        if (mae != null)
+        if (mae != null && mae.skinRenderer != null)
         {
             Material[] materials = mae.skinRenderer.materials;
             materials[1] = mae.idleMat;
@@ -493,15 +490,30 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         flatObject.transform.localScale = originScale;
     }    
 
-    IEnumerator HiiitedState()
+    public void StartStun()
     {
-        eStat.eState = EnemyState.hitted;
-        yield return new WaitForSeconds(1f);
-        if (!onAttack)
-            eStat.eState = EnemyState.idle;
-        else if(onAttack)
-            eStat.eState = EnemyState.attack;
+        onStun = true;
+        acr.onStun = true;
+        if(reachAttack!=null)
+        reachAttack.onStun = false;
     }
+
+    public void EndStun()
+    {
+        onStun = false;
+        acr.onStun = false;
+        if(reachAttack!=null)
+        reachAttack.onStun = false;
+    }
+    //IEnumerator HiiitedState()
+    //{
+    //    eStat.eState = EnemyState.hitted;
+    //    yield return new WaitForSeconds(1f);
+    //    if (!onAttack)
+    //        eStat.eState = EnemyState.idle;
+    //    else if(onAttack)
+    //        eStat.eState = EnemyState.attack;
+    //}
     #endregion
   protected  bool onmove;
     #region 이동함수
@@ -510,7 +522,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public override void Move()
     {
 
-        if (eStat.eState != EnemyState.dead || eStat.eState != EnemyState.hitted)
+        if (!die || !hitted)
         {
 
             if (tracking)
@@ -543,33 +555,23 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     #region 추격
     public virtual void TrackingMove()
     {
-        testTarget = target.position - transform.position;
-        //var vector = testTarget;
+        testTarget = target.position - transform.position;        
         testTarget.y = 0;
         tap.disToPlayer = testTarget.magnitude;
 
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), eStat.rotationSpeed * Time.deltaTime);
-        /*rotationY = transform.localRotation.y;
-        notMinusRotation = 360 - rotationY;
-        eulerAnglesY = transform.eulerAngles.y;*/
-
+        
         if (SetRotation())
         {
             enemymovepattern();
             PlayMoveSound();
         }
-        /*var a = new Vector3(vector.x, vector.y);
-        float f = testTarget.z - transform.position.z; // -> 절대값을 하여 z값이 n보다 크면 false로 빠져나가도록 
-        f = Mathf.Abs(f);
-        disToPlayer = a.magnitude;*/
-        if (!callCheck)
+        
+        if (tap.disToPlayer > tap.trackingDistance /*|| f > 6*/)
         {
-            if (tap.disToPlayer > tap.trackingDistance /*|| f > 6*/)
-            {
-                searchCollider.searchPlayer = false;
-                target = null;
-                searchCollider.onPatrol = true;
-            }
+            searchCollider.searchPlayer = false;
+            target = null;
+            searchCollider.onPatrol = true;
         }
     }
     public virtual void enemymovepattern()
@@ -649,20 +651,8 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         }
 
         return setPatrol;
-    }
-
-    /*public void LookTarget()
-    {
-        if (target != null)
-        {
-            testTarget = target.position - transform.position;
-            testTarget.y = 0;
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), rotationSpeed * Time.deltaTime);
-        }
-    }*/
-    [Header("#로테이션레벨(기본적으로 85)")]
-    public float rotLevel;
-    public float testAngle;
+    }    
+    
     public virtual bool SetRotation()
     {
         bool completeRot = false;
@@ -671,7 +661,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             Vector3 targetTothis = target.position - transform.position;
             targetTothis.y = 0;
             Quaternion q = Quaternion.LookRotation(targetTothis);
-            testAngle = Quaternion.Angle(transform.rotation, q);
+            float testAngle = Quaternion.Angle(transform.rotation, q);
             if (testAngle < 45f)
                 completeRot = true;
         }
@@ -680,7 +670,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             Vector3 patrolTothis = tap.targetPatrol - transform.position;
             patrolTothis.y = 0;
             Quaternion q = Quaternion.LookRotation(patrolTothis);
-            testAngle = Quaternion.Angle(transform.rotation, q);
+            float testAngle = Quaternion.Angle(transform.rotation, q);
             if (testAngle < 1.5f)
                 completeRot = true;
         }
@@ -702,14 +692,14 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         {
             if (tap.patrolGroup.Length >= 2)
             {
-                center = (tap.patrolGroup[0] + tap.patrolGroup[1]) / 2; //s
+                tap.center = (tap.patrolGroup[0] + tap.patrolGroup[1]) / 2; //s
                 float xPoint = tap.patrolGroup[1].x - tap.patrolGroup[0].x;
-                Vector3 size = new(xPoint, yWidth, zWidth);
+                Vector3 size = new(xPoint, tap.yWidth, tap.zWidth);
                 if (CharColliderColor.instance != null)
                     Gizmos.color = CharColliderColor.instance.patrolRange;
                 else
                     Gizmos.color = Color.red;
-                Gizmos.DrawWireCube(center, size);
+                Gizmos.DrawWireCube(tap.center, size);
             }
             else
             {
@@ -717,15 +707,15 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 Vector3 p2 = transform.position;
                 p1.x = p1.x - tap.leftPatrolRange*2;
                 p2.x = p2.x + tap.rightPatrolRange*2;
-                center = (p1 + p2) / 2;
+                tap.center = (p1 + p2) / 2;
                 float xPoint = p2.x - p1.x;
-                Vector3 size = new(xPoint, yWidth, zWidth);
+                Vector3 size = new(xPoint, tap.yWidth, tap.zWidth);
 
                 if (CharColliderColor.instance != null)
                     Gizmos.color = CharColliderColor.instance.patrolRange;
                 else
                     Gizmos.color = Color.red;
-                Gizmos.DrawWireCube(center, size);
+                Gizmos.DrawWireCube(tap.center, size);
                 tap.targetPatrol = p2;
 
                 ForwardWallRayCheck();
@@ -748,11 +738,11 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public override void Dead()
     {
         base.Dead();
-        eStat.eState = EnemyState.dead;
+        die = true;
         if (PlayerHandler.instance != null)
             PlayerHandler.instance.CurrentPlayer.wallcheck = false;
 
-        if (mae != null)
+        if (mae != null && mae.deadEffect != null)
         {
             if (TryGetComponent<RagdolEnemy>(out RagdolEnemy enemy))
             {
@@ -796,7 +786,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     // 공격 준비시간
     public void ReadyAttackTime()
     {
-        if (onAttack && eStat.eState != EnemyState.dead)
+        if (onAttack && !die)
         {
             if(!activeAttack)
             {

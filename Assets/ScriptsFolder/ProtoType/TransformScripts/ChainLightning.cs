@@ -117,14 +117,7 @@ public class ChainLightning : MonoBehaviour
                 if (other.GetComponent<Enemy>())
                 {
                     Enemy enemy = other.GetComponent<Enemy>();
-                    if (!enemy.eStat.onInvincible)
-                    {
-                        enemy.Damaged(damage);
-                    }
-                    else
-                    {
-                        Destroy(gameObject);
-                    }
+                    enemy.Damaged(damage);
                 }
                 else
                 {

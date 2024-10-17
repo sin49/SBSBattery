@@ -95,18 +95,18 @@ public class BoxTestt : MonoBehaviour
     public void Move()
     {
 
-        if (eStat.eState != EnemyState.dead)
-        {
-            if (tracking)
-            {
-                if (!activeAttack && !onAttack)
-                {
-                    TrackingMove();
-                }
-            }
+        //if (eStat.eState != EnemyState.dead)
+        //{
+        //    if (tracking)
+        //    {
+        //        if (!activeAttack && !onAttack)
+        //        {
+        //            TrackingMove();
+        //        }
+        //    }
 
-            Patrol();
-        }
+        //    Patrol();
+        //}
     }
 
     #region Ãß°Ý
@@ -210,20 +210,21 @@ public class BoxTestt : MonoBehaviour
     public void ReadyAttackTime()
     {
 
-        if (onAttack && eStat.eState != EnemyState.dead)
-        {
+        //if (onAttack && eStat.eState != EnemyState.dead)
+        //{
 
-            if (attackTimer > 0 && !activeAttack)
-            {
-                attackTimer -= Time.deltaTime;
-            }
-            else if (attackTimer <= 0)
-            {
-                activeAttack = true;
-                attackTimer = attackInitCoolTime;
-                Attack();
-            }
-        }
+        //    if (attackTimer > 0 && !activeAttack)
+        //    {
+        //        attackTimer -= Time.deltaTime;
+        //    }
+        //    else if (attackTimer <= 0)
+        //    {
+        //        activeAttack = true;
+        //        attackTimer = attackInitCoolTime;
+        //        Attack();
+        //    }
+        //}
+
         /*else
         {
             InitAttackCoolTime();
@@ -278,18 +279,18 @@ public class BoxTestt : MonoBehaviour
             tracking = true;
         }
 
-        if (other.CompareTag("PlayerAttack"))
-        {
+        //if (other.CompareTag("PlayerAttack"))
+        //{
 
-            eStat.eState = EnemyState.dead;
+        //    eStat.eState = EnemyState.dead;
 
-            rangeCollider.SetActive(false);
-            //gameObject.SetActive(false);
-            GetComponent<BoxCollider>().enabled = false;
-            Instantiate(breakBox, transform.position, Quaternion.identity).transform.parent = this.transform;
-            Instantiate(enemy, transform.position, Quaternion.identity).GetComponent<Enemy>().onStun = true;
-            gameObject.SetActive(false);
-        }
+        //    rangeCollider.SetActive(false);
+        //    //gameObject.SetActive(false);
+        //    GetComponent<BoxCollider>().enabled = false;
+        //    Instantiate(breakBox, transform.position, Quaternion.identity).transform.parent = this.transform;
+        //    //Instantiate(enemy, transform.position, Quaternion.identity).GetComponent<Enemy>().onStun = true;
+        //    gameObject.SetActive(false);
+        //}
     }
 
     /*IEnumerator Broken()

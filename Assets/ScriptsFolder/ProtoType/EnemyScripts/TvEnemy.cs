@@ -66,7 +66,7 @@ public class TvEnemy : Enemy
 
     public override void Move()
     {
-        if (eStat.eState != EnemyState.dead || eStat.eState != EnemyState.hitted)
+        if (!die || !hitted)
         {
             if (tracking && activeTv)
             {

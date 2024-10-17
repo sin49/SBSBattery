@@ -5,7 +5,6 @@ using UnityEngine;
 [ExecuteAlways]
 public class EnemySearchCollider : MonoBehaviour, colliderDisplayer
 {
-    Enemy enemy;
     BoxCollider searchCollider;
     public MeshRenderer childMat;
     public EnemyTrackingAndPatrol tap;
@@ -34,7 +33,6 @@ public class EnemySearchCollider : MonoBehaviour, colliderDisplayer
 
     private void Awake()
     {
-        enemy = GetComponentInParent<Enemy>();
         searchCollider = GetComponent<BoxCollider>();        
         if (childMat == null && transform.childCount != 0)
         {
@@ -49,7 +47,7 @@ public class EnemySearchCollider : MonoBehaviour, colliderDisplayer
 
     private void FixedUpdate()
     {
-        if (enemy.searchCollider != null && searchCollider != null)
+        if (tap.searchCollider != null && searchCollider != null)
         {
             searchCollider.center = tap.searchColliderPos;
             searchCollider.size = tap.searchColliderRange;
@@ -68,13 +66,13 @@ public class EnemySearchCollider : MonoBehaviour, colliderDisplayer
             childMat.sharedMaterials[0].color = CharColliderColor.instance.searchRange;
         }
     }
-
+    public bool wallCheck;
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            enemy.target = other.transform;
-            if (!enemy.wallCheck)
+            //enemy.target = other.transform;
+            if (wallCheck)
             {
                 searchPlayer = true;
                 onPatrol = false;

@@ -76,58 +76,20 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
         {
             childMat.sharedMaterials[0].color = CharColliderColor.instance.attackActiveRange;
         }
-
-
-        /*Collider collider = GetComponent<Collider>();
-        if (collider is BoxCollider box)
-        {
-            Gizmos.color = Color.magenta;
-            Transform boxTransform = transform;
-            Vector3 center = box.bounds.center;
-            Vector3 halfSize = box.bounds.size / 2;
-            Vector3[] points = new Vector3[8];
-            points[0] = (center + new Vector3(-halfSize.x, -halfSize.y, -halfSize.z));
-            points[1] = (center + new Vector3(-halfSize.x, halfSize.y, -halfSize.z));
-            points[2] = (center + new Vector3(-halfSize.x, halfSize.y, halfSize.z));
-            points[3] = (center + new Vector3(-halfSize.x, -halfSize.y, halfSize.z));
-            points[4] = (center + new Vector3(halfSize.x, -halfSize.y, -halfSize.z));
-            points[5] = (center + new Vector3(halfSize.x, halfSize.y, -halfSize.z));
-            points[6] = (center + new Vector3(halfSize.x, -halfSize.y, halfSize.z));
-            points[7] = (center + new Vector3(halfSize.x, halfSize.y, halfSize.z));
-
-            Gizmos.DrawLine(points[0], points[1]);
-            Gizmos.DrawLine(points[0], points[3]);
-            Gizmos.DrawLine(points[0], points[4]);
-
-            Gizmos.DrawLine(points[1], points[2]);
-            Gizmos.DrawLine(points[1], points[5]);
-
-
-            Gizmos.DrawLine(points[2], points[3]);
-            Gizmos.DrawLine(points[2], points[7]);
-
-            Gizmos.DrawLine(points[3], points[6]);
-
-            Gizmos.DrawLine(points[4], points[5]);
-            Gizmos.DrawLine(points[4], points[6]);
-
-            Gizmos.DrawLine(points[5], points[7]);
-
-            Gizmos.DrawLine(points[6], points[7]);
-        }*/
     }
 
-
+    public bool onAttack, onStun, wallCheck, attackRange;
     private void OnTriggerStay(Collider other)
     {
         //ebug.Log($"트리거 감지 중 {other.gameObject}");   
-        if (other.CompareTag("Player") &&enemy.target!=null && !enemy.onStun && !enemy.onAttack)
+        if (other.CompareTag("Player") /*&&enemy.target!=null*/ && onStun && onAttack)
         {
-            if (!enemy.wallCheck)
+            if (wallCheck)
             {
-                Vector3 point = other.transform.position - enemy.transform.position;
-                point.y = 0;
-                enemy.transform.rotation = Quaternion.LookRotation(point);
+                //Vector3 point = other.transform.position - enemy.transform.position;
+                //point.y = 0;
+                //enemy.transform.rotation = Quaternion.LookRotation(point);
+
                 /*if (enemy.transform.position.x < enemy.target.position.x)
                 {
                     enemy.transform.rotation = Quaternion.Euler(0, 90, 0);
@@ -140,16 +102,16 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
                 enemy.onAttack = true;
             }
 
-            if (!enemy.wallCheck && !enemy.onStun)            
-                enemy.attackRange = true;
+            if (wallCheck && onStun)            
+                attackRange = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") && enemy.target != null && !enemy.onStun)
+        if (other.CompareTag("Player") /*&& enemy.target != null*/ && onStun)
         {
-            enemy.attackRange = false;
+            attackRange = false;
         }
     }
 }

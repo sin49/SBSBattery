@@ -20,21 +20,21 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
 
     [Header("#정찰 이동관련(정찰 그룹, 정찰목표값, 정찰 대기시간)#")]
     public Transform[] PatrolTransform;
-    [Tooltip("설정 X")] public Vector3[] patrolGroup; // 0번째: 왼쪽, 1번째: 오른쪽
-    [Tooltip("설정 X")] public Vector3 targetPatrol; // 정찰 목표지점-> patrolGroup에서 지정
+    [Header("스크립트 상에서 값을 임의 결정하게 되어있음")]public Vector3[] patrolGroup; // 0번째: 왼쪽, 1번째: 오른쪽
+    [Header("스크립트 상에서 값이 결정됨")]public Vector3 targetPatrol; // 정찰 목표지점-> patrolGroup에서 지정
     [Tooltip("정찰 대기시간")] public float patrolWaitTime; // 정찰 대기시간
 
     [Header("#정찰 범위 관련#")]
     [Tooltip("왼쪽 정찰 범위")] public float leftPatrolRange; // 좌측 정찰 범위
     [Tooltip("오른쪽 정찰 범위")] public float rightPatrolRange; // 우측 정찰 범위
-    [Tooltip("정찰 거리(설정 안해도됨)")] public float patrolDistance; // 정찰 거리
+    [Header("정찰 거리(설정 안해도됨)")] public float patrolDistance; // 정찰 거리
 
-    public Vector3 leftPatrol, rightPatrol;
+    [HideInInspector]public Vector3 leftPatrol, rightPatrol;
    
     [Header("#그려질 정찰 큐브 사이즈 결정#")]
     [Tooltip("붉은색 높이")] public float yWidth;
     [Tooltip("붉은색 z축 넓이")] public float zWidth;
-    Vector3 center;
+    [HideInInspector]public Vector3 center;
 
     private void Update()
     {

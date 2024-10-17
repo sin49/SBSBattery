@@ -10,7 +10,7 @@ public class RollingEnemy : Enemy
 
     public override void Move()
     {
-        if (eStat.eState != EnemyState.dead)
+        if (!die)
         {
             if (tracking)
             {

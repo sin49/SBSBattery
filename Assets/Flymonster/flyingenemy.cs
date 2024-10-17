@@ -38,16 +38,13 @@ public class flyingenemy : Enemy
         enemymovepattern();
             if (soundplayer != null)
                 soundplayer.PlayMoveSound();
-   
 
-        if (!callCheck)
+
+        if (tap.disToPlayer > tap.trackingDistance /*|| f > 6*/)
         {
-            if (tap.disToPlayer > tap.trackingDistance /*|| f > 6*/)
-            {
-                searchCollider.searchPlayer = false;
-                target = null;
-                searchCollider.onPatrol = true;
-            }
+            searchCollider.searchPlayer = false;
+            target = null;
+            searchCollider.onPatrol = true;
         }
     }
     public override void Attack()

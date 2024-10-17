@@ -12,9 +12,7 @@ public class jumpenemy : Enemy
     [Header("점프 후 딜레이")]
     public float jumpdelay=1;
    
-    bool oncorutine;
-    [Header("얼굴 부분 이미션 머티리얼")]
-    public Material emmissionHeadMat;
+    bool oncorutine;    
 
     protected override void MoveAnimationPlay()
     {
@@ -35,7 +33,7 @@ public class jumpenemy : Enemy
     }
     public override void Move()
     {
-        if (eStat.eState != EnemyState.dead || eStat.eState != EnemyState.hitted)
+        if (!die || !hitted)
         {
 
             if (tracking)
@@ -106,8 +104,8 @@ public class jumpenemy : Enemy
     public override void StartEmmissionHitMat()
     {
         Material[] materials = mae.skinRenderer.materials;
-        materials[0] = mae.hittedMat;
-        materials[1] = emmissionHeadMat;
+        materials[0] = mae.emmissionBackMat; // 몸통
+        materials[1] = mae.emmissionHeadMat; // 얼굴 반투명유리
 
         mae.skinRenderer.materials = materials;
     }

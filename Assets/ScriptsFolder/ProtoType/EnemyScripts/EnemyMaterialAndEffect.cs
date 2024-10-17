@@ -13,4 +13,16 @@ public class EnemyMaterialAndEffect : MonoBehaviour
 
     public ParticleSystem deadEffect;
     public ParticleSystem moveEffect;
+
+    [Header("Emmission 머티리얼")] 
+    public Material emmissionBackMat;
+    public Material emmissionHeadMat;
+    public Material emmissionHittedMat;
+    [Header("일반몹만 사용")]public Renderer skinHead; //  일반 몬스터와 전구몬스터만 씀
+
+    //몬스터 머티리얼 부분
+    // 3개 => 전구몬스터(몸통, 전구유리, 필라멘트)
+    // 2개 / 1개(==스킨 렌더러 2개)  => 일반몬스터(얼굴,등), (머리 막대기)
+    // 2개 => 점프 몬스터(몸통, 얼굴 투명관)
+    // 1개 => 돌진 몬스터, 불 몬스터
 }
