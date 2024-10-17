@@ -43,13 +43,13 @@ public class jumpenemy : Enemy
 
                 if (movepattern == EnemyMovePattern.patrol)
                 {
-                    if (patrolType == PatrolType.movePatrol && onPatrol)
+                    if (patrolType == PatrolType.movePatrol && searchCollider.onPatrol)
                     {
 
                         PatrolTracking();
                     }
                 }
-                if (searchPlayer)
+                if (searchCollider.searchPlayer)
                     TrackingMove();
 
             }
@@ -105,20 +105,20 @@ public class jumpenemy : Enemy
     //0번째: 바디, 1번째: 투명 유리
     public override void StartEmmissionHitMat()
     {
-        Material[] materials = skinRenderer.materials;
-        materials[0] = hittedMat;
+        Material[] materials = mae.skinRenderer.materials;
+        materials[0] = mae.hittedMat;
         materials[1] = emmissionHeadMat;
 
-        skinRenderer.materials = materials;
+        mae.skinRenderer.materials = materials;
     }
 
     public override void EndEmmissionHitMat()
     {
-        Material[] materials = skinRenderer.materials;
-        materials[0] = idleMat;
-        materials[1] = headMat;
+        Material[] materials = mae.skinRenderer.materials;
+        materials[0] = mae.idleMat;
+        materials[1] = mae.headMat;
 
-        skinRenderer.materials = materials;
+        mae.skinRenderer.materials = materials;
     }
 
     public override void EndHitMat()

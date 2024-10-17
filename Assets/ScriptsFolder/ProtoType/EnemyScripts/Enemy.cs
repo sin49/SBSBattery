@@ -24,47 +24,17 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     bool posRetry;
     [Header("적 애니메이션 관련")]
     public Animator animaor;
-    [Header("기본 머티리얼")]
-    public Material idleMat;
-    public Material backMat;
-    public Material headMat;
-    public Material hittedMat;
-    public Renderer skinRenderer;
+    
     
     public ParticleSystem moveEffect;
     public Vector3 environmentforce;
     [HideInInspector]
-    public bool isMove;   
+    public bool isMove;
 
-    [Header("#공격 활성화 콜라이더 큐브 조정#")]
-    [Tooltip("활성화 콜라이더")] public GameObject rangeCollider; // 공격 범위 콜라이더 오브젝트
-    [Tooltip("활성화 범위")] public Vector3 rangeSize;
-    [Tooltip("활성화 위치")] public Vector3 rangePos;    
-
-    [Header("#플레이어 탐색 큐브 조정(콜라이더)#")]
-    [Tooltip("탐색 콜라이더")] public GameObject searchCollider; // 탐지 범위 콜라이더
-    [Tooltip("탐색 범위")] public Vector3 searchColliderRange;
-    [Tooltip("탐색 위치")] public Vector3 searchColliderPos;
-    public bool searchPlayer;
-
-    [Header("#추격 범위#")]
-    [Tooltip("탐색 후 추격 유지 범위")]public float trackingDistance;
-    [Tooltip("설정 X")] public float disToPlayer;
-
-    [Header("#정찰 이동관련(정찰 그룹, 정찰목표값, 정찰 대기시간)#")]
-    public Transform[] PatrolTransform;
-    [Tooltip("설정 X")]public Vector3[] patrolGroup; // 0번째: 왼쪽, 1번째: 오른쪽
-    [Tooltip("설정 X")]public Vector3 targetPatrol; // 정찰 목표지점-> patrolGroup에서 지정
-    [Tooltip("정찰 대기시간")]public float patrolWaitTime; // 정찰 대기시간
-
-    [Header("#정찰 범위 관련#")]
-    [Tooltip("왼쪽 정찰 범위")]public float leftPatrolRange; // 좌측 정찰 범위
-    [Tooltip("오른쪽 정찰 범위")]public float rightPatrolRange; // 우측 정찰 범위
-    [Tooltip("정찰 거리(설정 안해도됨)")]public float patrolDistance; // 정찰 거리
+    public EnemyTrackingAndPatrol tap;
+    public EnemySearchCollider searchCollider;
+    public EnemyMaterialAndEffect mae;
     
-   protected Vector3 leftPatrol, rightPatrol;
-    
-    public bool onPatrol;
     [Header("#그려질 정찰 큐브 사이즈 결정#")]
     [Tooltip("붉은색 높이")] public float yWidth;
     [Tooltip("붉은색 z축 넓이")] public float zWidth;
@@ -132,7 +102,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         if (patrolType == PatrolType.movePatrol)
         {
             InitPatrolPoint();
-            if(onPatrol)
+            if(searchCollider.onPatrol)
                 StartCoroutine(InitPatrolTarget());
         }
         actionhandler = GetComponent<EnemyAttackHandler>();
@@ -148,25 +118,8 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
     public void InitPatrolPoint()
     {
-        onPatrol = true;
-        if (PatrolTransform.Length==0)
-        {
-            patrolGroup = new Vector3[2];
-            patrolGroup[0] = new(transform.position.x - leftPatrolRange, transform.position.y, transform.position.z);
-            patrolGroup[1] = new(transform.position.x + rightPatrolRange, transform.position.y, transform.position.z);
-            leftPatrol = patrolGroup[0];
-            rightPatrol = patrolGroup[1];
-        }
-        else
-        {
-            patrolGroup = new Vector3[PatrolTransform.Length];
-          for(int n=0; n < PatrolTransform.Length; n++)
-            {
-                patrolGroup[n] = PatrolTransform[n].position;
-            }
-            leftPatrol = patrolGroup[0];
-            rightPatrol = patrolGroup[1];
-        }
+        searchCollider.onPatrol = true;
+        tap.SetPoint(transform);
     }    
 
     private void Start()
@@ -186,11 +139,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
             ReadyAttackTime();
 
-            if (rangeCollider != null)
-            {
-                rangeCollider.GetComponent<BoxCollider>().center = rangePos;
-                rangeCollider.GetComponent<BoxCollider>().size = rangeSize;
-            }
+            
         }
         else
         {
@@ -231,7 +180,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
             if (movepattern == EnemyMovePattern.stop)
             {
-                if (tracking && !onAttack && !attackRange && searchPlayer)
+                if (tracking && !onAttack && !attackRange && searchCollider.searchPlayer)
                 {
                     isMove = true;
                 }
@@ -273,7 +222,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             {
                 testTarget = target.position - transform.position;
                 testTarget.y = 0;
-                disToPlayer = testTarget.magnitude;
+                tap.disToPlayer = testTarget.magnitude;
             }
         }
     }
@@ -301,7 +250,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 {
                     if (PlayerHandler.instance.CurrentPlayer != null && target.gameObject == PlayerHandler.instance.CurrentPlayer.gameObject)
                     {
-                        if (disToPlayer < disToWall)
+                        if (tap.disToPlayer < disToWall)
                         {
                             isWall = false; // 플레이어와의 거리가 벽과의 거리보다 가까울 경우
                         }
@@ -313,36 +262,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 }
             }
         }
-        /*RaycastHit[] forwardHits = Physics.RaycastAll(transform.position + Vector3.up * wallRayHeight, transform.forward, wallRayLength);
-        for (int i = 0; i < forwardHits.Length; i++)
-        {
-            if (forwardHits[i].collider.CompareTag("Ground"))
-            {
-                forwardWall = forwardHits[i].collider;
-                isWall = true;
-                Debug.Log("Forward탐지");
-            }
-
-            if (forwardWall != null)
-            {
-                Vector3 targetWall = forwardWall.transform.position - transform.position;
-                disToWall = targetWall.magnitude;
-                if (target != null && PlayerHandler.instance != null)
-                {
-                    if (PlayerHandler.instance.CurrentPlayer != null && target.gameObject == PlayerHandler.instance.CurrentPlayer.gameObject)
-                    {
-                        if (disToPlayer < disToWall)
-                        {
-                            isWall = false; // 플레이어와의 거리가 벽과의 거리보다 가까울 경우
-                        }
-                        else
-                        {
-                            isWall = true;
-                        }
-                    }
-                }
-            }
-        }*/
+        
         if (forwardWall == null)
         {
             isWall = false;
@@ -380,44 +300,16 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                         else
                         {
                             isWall = true;
-                            if (searchPlayer && !onPatrol)
+                            if (searchCollider.searchPlayer && !searchCollider.onPatrol)
                             {
-                                searchPlayer = false;
-                                onPatrol = true;
+                                searchCollider.searchPlayer = false;
+                                searchCollider.onPatrol = true;
                             }
                         }
                     }
                 }
             }
-        }
-        /*RaycastHit[] upHits = Physics.RaycastAll(transform.position + Vector3.up * wallRayHeight, transform.up, wallRayUpLength);
-        for (int j = 0; j < upHits.Length; j++)
-        {
-            if (upHits[j].collider.CompareTag("Ground"))
-            {
-                upWall = upHits[j].collider;
-                isWall = true;
-                Debug.Log("Up탐지");
-            }
-
-            if (upWall != null)
-            {
-                if (target != null && PlayerHandler.instance != null)
-                {
-                    if (PlayerHandler.instance.CurrentPlayer != null && target.gameObject == PlayerHandler.instance.CurrentPlayer.gameObject)
-                    {
-                        if (target.transform.position.y < upWall.transform.position.y)
-                        {
-                            isWall = false; //플레이어 y축이 위쪽 바닥의 y축 보다 값이 작으면 false
-                        }
-                        else
-                        {
-                            isWall = true;
-                        }
-                    }
-                }
-            }
-        }*/
+        }       
 
         if (upWall == null)
         {
@@ -434,18 +326,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         else
             wallCheck = false;
     }
-
-    IEnumerator WaitStunTime()
-    {
-        eStat.onInvincible = true;
-        transform.rotation = Quaternion.Euler(0, -90 * (int)PlayerStat.instance.direction, 0);
-        rb.AddForce(-((transform.forward + transform.up)*5f), ForceMode.Impulse);
-
-        yield return new WaitForSeconds(eStat.invincibleTimer);
-
-        onStun = false;
-        eStat.onInvincible = false;
-    }
+   
     public Vector3 direction;//목적지
     //public bool 행동여부;//
  
@@ -456,7 +337,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     #region 피격함수
     public virtual void HittedRotate()
     {
-        if (target != null)
+        if (target != null) 
         {
             if (PlayerHandler.instance.CurrentPlayer != null && target.gameObject == PlayerHandler.instance.CurrentPlayer.gameObject)
             {
@@ -514,14 +395,14 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     #region 피격 코루틴
     public virtual IEnumerator HittedEnd()
     {
-        if (skinRenderer != null)
+        if (mae != null)
         {
             StartEmmissionHitMat();
         }
         
         yield return new WaitForSeconds(0.5f);
         
-        if (skinRenderer != null)
+        if (mae != null)
         {
             EndEmmissionHitMat();
         }
@@ -535,7 +416,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             Debug.Log("피격 코루틴 복귀");
         }
 
-        if (skinRenderer != null)
+        if (mae != null)
         {
             EndHitMat();
         }
@@ -550,18 +431,18 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
     public virtual void EndEmmissionHitMat()
     {
-        Material[] materials = skinRenderer.materials;
-        materials[0] = backMat;
-        materials[1] = hittedMat;
-        skinRenderer.materials = materials;
+        Material[] materials = mae.skinRenderer.materials;
+        materials[0] = mae.backMat;
+        materials[1] = mae.hittedMat;
+        mae.skinRenderer.materials = materials;
     }
 
     public virtual void EndHitMat()
     {
-        Material[] materials = skinRenderer.materials;
-        materials[0] = backMat;
-        materials[1] = idleMat;
-        skinRenderer.materials = materials;
+        Material[] materials = mae.skinRenderer.materials;
+        materials[0] = mae.backMat;
+        materials[1] = mae.idleMat;
+        mae.skinRenderer.materials = materials;
 
         Debug.Log("기본 머테리얼로 복귀");
     }
@@ -589,11 +470,11 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         attackRange = false;
         Debug.Log(flat);
 
-        if (skinRenderer != null)
+        if (mae != null)
         {
-            Material[] materials = skinRenderer.materials;
-            materials[1] = hittedMat;
-            skinRenderer.materials = materials;
+            Material[] materials = mae.skinRenderer.materials;
+            materials[1] = mae.hittedMat;
+            mae.skinRenderer.materials = materials;
         }
     }
 
@@ -602,47 +483,15 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         onStun = false;
         onFlat = false;
         timer = 0;
-        if (skinRenderer != null)
+        if (mae != null)
         {
-            Material[] materials = skinRenderer.materials;
-            materials[1] = idleMat;
-            skinRenderer.materials = materials;
+            Material[] materials = mae.skinRenderer.materials;
+            materials[1] = mae.idleMat;
+            mae.skinRenderer.materials = materials;
         }
 
         flatObject.transform.localScale = originScale;
-    }
-
-    /*IEnumerator RollBackFromFlatState(float flat)
-    {
-        float timer = 0;
-        Debug.Log("납작 코루틴 실행됨");
-        onStun = true;
-        attackRange = false;
-        flatObject.transform.localScale = flatScale;
-        if (skinRenderer != null)
-        {
-            Material[] materials = skinRenderer.materials;
-            materials[1] = hittedMat;
-            skinRenderer.materials = materials;
-        }
-
-        while (timer < flatTime)
-        {
-            timer += Time.deltaTime;
-            Debug.Log($"{timer}, {flat}");
-            yield return null;
-        }
-        
-        flatObject.transform.localScale = originScale;
-        Debug.Log("원래 스케일로 돌아와!");
-        if (skinRenderer != null)
-        {
-            Material[] materials = skinRenderer.materials;
-            materials[1] = idleMat;
-            skinRenderer.materials = materials;
-        }
-        onStun = false;
-    }*/
+    }    
 
     IEnumerator HiiitedState()
     {
@@ -670,13 +519,13 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 {
                     if (movepattern == EnemyMovePattern.patrol)
                     {
-                        if (patrolType == PatrolType.movePatrol && onPatrol)
+                        if (patrolType == PatrolType.movePatrol && searchCollider.onPatrol)
                         {
 
                             PatrolTracking();
                         }
                     }
-                    if (searchPlayer)
+                    if (searchCollider.searchPlayer)
                         TrackingMove();
                 }
             }
@@ -697,7 +546,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         testTarget = target.position - transform.position;
         //var vector = testTarget;
         testTarget.y = 0;
-        disToPlayer = testTarget.magnitude;
+        tap.disToPlayer = testTarget.magnitude;
 
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), eStat.rotationSpeed * Time.deltaTime);
         /*rotationY = transform.localRotation.y;
@@ -715,11 +564,11 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         disToPlayer = a.magnitude;*/
         if (!callCheck)
         {
-            if (disToPlayer > trackingDistance /*|| f > 6*/)
+            if (tap.disToPlayer > tap.trackingDistance /*|| f > 6*/)
             {
-                searchPlayer = false;
+                searchCollider.searchPlayer = false;
                 target = null;
-                onPatrol = true;
+                searchCollider.onPatrol = true;
             }
         }
     }
@@ -731,7 +580,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public virtual void PatrolTracking()
     {
     
-        testTarget = targetPatrol - transform.position;
+        testTarget = tap.targetPatrol - transform.position;
         testTarget.y = 0;
 
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), eStat.rotationSpeed * Time.deltaTime);
@@ -742,7 +591,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             enemymovepattern();
             PlayMoveSound();
         }
-        if (testTarget.magnitude < patrolDistance)
+        if (testTarget.magnitude < tap.patrolDistance)
         {
             tracking = false;
             StartCoroutine(InitPatrolTarget());
@@ -754,7 +603,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
   protected  IEnumerator InitPatrolTarget()
     {
-        yield return new WaitForSeconds(patrolWaitTime);        
+        yield return new WaitForSeconds(tap.patrolWaitTime);        
         PatrolChange();
         
 
@@ -771,30 +620,30 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
        
     public virtual void PatrolChange()
     {
-        if (patrolGroup.Length >=2)
+        if (tap.patrolGroup.Length >=2)
         {
-            patrolGroup[0].x = leftPatrol.x - leftPatrolRange;
-            patrolGroup[0].y = transform.position.y;
-            patrolGroup[0].z = transform.position.z;
+            tap.patrolGroup[0].x = tap.leftPatrol.x - tap.leftPatrolRange;
+            tap.patrolGroup[0].y = transform.position.y;
+            tap.patrolGroup[0].z = transform.position.z;
 
-            patrolGroup[1].x = rightPatrol.x + rightPatrolRange;
-            patrolGroup[1].y = transform.position.y;
-            patrolGroup[1].z = transform.position.z;
+            tap.patrolGroup[1].x = tap.rightPatrol.x + tap.rightPatrolRange;
+            tap.patrolGroup[1].y = transform.position.y;
+            tap.patrolGroup[1].z = transform.position.z;
         }
     }
 
     public bool SetPatrolTarget()
     {
-        int randomTarget = Random.Range(0, patrolGroup.Length);
-        if (patrolGroup.Length >= 2)
+        int randomTarget = Random.Range(0, tap.patrolGroup.Length);
+        if (tap.patrolGroup.Length >= 2)
         {
-            if (targetPatrol == patrolGroup[randomTarget])
+            if (tap.targetPatrol == tap.patrolGroup[randomTarget])
             {
                 setPatrol = true;
             }
             else
             {
-                targetPatrol = patrolGroup[randomTarget];
+                tap.targetPatrol = tap.patrolGroup[randomTarget];
                 setPatrol = false;
             }
         }
@@ -817,7 +666,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public virtual bool SetRotation()
     {
         bool completeRot = false;
-        if (target != null && !onPatrol)
+        if (target != null && !searchCollider.onPatrol)
         {
             Vector3 targetTothis = target.position - transform.position;
             targetTothis.y = 0;
@@ -826,27 +675,15 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             if (testAngle < 45f)
                 completeRot = true;
         }
-        else if (onPatrol)
+        else if (searchCollider.onPatrol)
         {
-            Vector3 patrolTothis = targetPatrol - transform.position;
+            Vector3 patrolTothis = tap.targetPatrol - transform.position;
             patrolTothis.y = 0;
             Quaternion q = Quaternion.LookRotation(patrolTothis);
             testAngle = Quaternion.Angle(transform.rotation, q);
             if (testAngle < 1.5f)
                 completeRot = true;
         }
-        /*eulerAnglesY = transform.eulerAngles.y;
-        if (transform.eulerAngles.y >= rotLevel && transform.eulerAngles.y <= 10 + rotLevel)
-        {
-            completeRot = true;
-        }
-        else if (transform.eulerAngles.y >= 175 -rotLevel && transform.eulerAngles.y <= 190 -rotLevel ||
-            transform.eulerAngles.y >= 350 - rotLevel && transform.eulerAngles.y <= 360 - rotLevel)
-        { 
-            completeRot = true;
-        }*/
-        //Debug.Log($"체크가 되는 거냐? {complete = completeRot}\n로테이션앵글:{transform.eulerAngles.y}");
-        //Debug.Log(completeRot);
         return completeRot;
 
     }
@@ -863,10 +700,10 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
         if (patrolType == PatrolType.movePatrol)
         {
-            if (patrolGroup.Length >= 2)
+            if (tap.patrolGroup.Length >= 2)
             {
-                center = (patrolGroup[0] + patrolGroup[1]) / 2; //s
-                float xPoint = patrolGroup[1].x - patrolGroup[0].x;
+                center = (tap.patrolGroup[0] + tap.patrolGroup[1]) / 2; //s
+                float xPoint = tap.patrolGroup[1].x - tap.patrolGroup[0].x;
                 Vector3 size = new(xPoint, yWidth, zWidth);
                 if (CharColliderColor.instance != null)
                     Gizmos.color = CharColliderColor.instance.patrolRange;
@@ -878,8 +715,8 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             {
                 Vector3 p1 = transform.position;
                 Vector3 p2 = transform.position;
-                p1.x = p1.x -leftPatrolRange*2;
-                p2.x = p2.x + rightPatrolRange*2;
+                p1.x = p1.x - tap.leftPatrolRange*2;
+                p2.x = p2.x + tap.rightPatrolRange*2;
                 center = (p1 + p2) / 2;
                 float xPoint = p2.x - p1.x;
                 Vector3 size = new(xPoint, yWidth, zWidth);
@@ -889,7 +726,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 else
                     Gizmos.color = Color.red;
                 Gizmos.DrawWireCube(center, size);
-                targetPatrol = p2;
+                tap.targetPatrol = p2;
 
                 ForwardWallRayCheck();
                 UpWallRayCheck();               
@@ -899,43 +736,8 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 Gizmos.color = CharColliderColor.instance.trackingRange;
             else
                 Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(transform.position, trackingDistance);
-            //Gizmos.color = Color.yellow;
-
-            //Gizmos.DrawWireSphere(transform.position, trackingDistance); 
-        }
-
-        if (searchCollider != null)
-        {
-            searchCollider.GetComponent<BoxCollider>().size = searchColliderRange;
-            searchCollider.GetComponent<BoxCollider>().center = searchColliderPos;
-
-            if (searchCollider.transform.childCount != 0)
-            {
-                searchCollider.transform.GetChild(0).localScale = searchColliderRange;
-                searchCollider.transform.GetChild(0).localPosition = searchColliderPos;
-            }
-        }
-
-
-        if (rangeCollider != null)
-        {
-            rangeCollider.GetComponent<BoxCollider>().size = rangeSize;
-            rangeCollider.GetComponent<BoxCollider>().center = rangePos;
-
-            if (rangeCollider.transform.childCount != 0)
-            {
-                rangeCollider.transform.GetChild(0).localScale = rangeSize;
-                rangeCollider.transform.GetChild(0).localPosition = rangePos;
-            }
-                
-        }
-
-
-        //Gizmos.DrawWireSphere(patrolGroup[0], 10f);
-        //Gizmos.DrawWireSphere(patrolGroup[1], 10f);
-        //Gizmos.DrawWireCube(transform.position + searchCubePos, searchCubeRange * 2f);
-        //Gizmos.DrawWireSphere(transform.position, searchRange);
+            Gizmos.DrawWireSphere(transform.position, tap.trackingDistance);           
+        }        
     }
 
     #endregion
@@ -950,21 +752,21 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         if (PlayerHandler.instance != null)
             PlayerHandler.instance.CurrentPlayer.wallcheck = false;
 
-        if (deadEffect != null)
+        if (mae != null)
         {
             if (TryGetComponent<RagdolEnemy>(out RagdolEnemy enemy))
             {
                 if (enemy.isRagdoll)
                 {
-                    enemy.RagdolDeadEffect(deadEffect);
+                    enemy.RagdolDeadEffect(mae.deadEffect);
                 }
                 else
                 {
-                    Instantiate(deadEffect, transform.position, Quaternion.identity);
+                    Instantiate(mae.deadEffect, transform.position, Quaternion.identity);
                 }
             }
             else
-            Instantiate(deadEffect, transform.position, Quaternion.identity);
+            Instantiate(mae.deadEffect, transform.position, Quaternion.identity);
         }
         if (transform.parent.gameObject.TryGetComponent<EnemyEnable>(out EnemyEnable enable))
         {

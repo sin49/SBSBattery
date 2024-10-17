@@ -476,33 +476,12 @@ MonoBehaviour:
   deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
     type: 3}
   animaor: {fileID: 6323000039058957824}
-  idleMat: {fileID: 2100000, guid: 1d86a5bbeab1a304a97b11ff604fc10f, type: 2}
-  backMat: {fileID: 0}
-  headMat: {fileID: 0}
-  hittedMat: {fileID: 2100000, guid: a77d85e72ad2b11458dc4da7d9750a8b, type: 2}
-  skinRenderer: {fileID: 0}
   moveEffect: {fileID: 0}
   environmentforce: {x: 0, y: 0, z: 0}
   isMove: 0
-  searchCubeRange: {x: 0, y: 0, z: 0}
-  searchCubePos: {x: 0, y: 0, z: 0}
-  rangeCollider: {fileID: 2195266663282867806}
-  rangeSize: {x: 1.1, y: 1.5, z: 3.5}
-  rangePos: {x: 0, y: 0, z: 1.5}
-  searchCollider: {fileID: 5745817881399713182}
-  searchColliderRange: {x: 6, y: 3, z: 9}
-  searchColliderPos: {x: 0, y: 0.64, z: 0.5}
-  searchPlayer: 0
-  trackingDistance: 10
-  disToPlayer: 0
-  PatrolTransform: []
-  patrolGroup: []
-  targetPatrol: {x: 2, y: 0, z: 0}
-  patrolWaitTime: 0
-  leftPatrolRange: 1
-  rightPatrolRange: 1
-  patrolDistance: 0.1
-  onPatrol: 0
+  tap: {fileID: 0}
+  searchCollider: {fileID: 7316893650683644280}
+  mae: {fileID: 0}
   yWidth: 2
   zWidth: 2
   wallRayHeight: 0.05
@@ -528,6 +507,7 @@ MonoBehaviour:
   reachCheck: 0
   attackRange: 0
   viewActive: 0
+  direction: {x: 0, y: 0, z: 0}
   flatObject: {fileID: 8061452907826408566}
   flatScaleY: 0.2
   flatTime: 0
@@ -789,6 +769,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childMat: {fileID: 3174838812486619613}
+  tap: {fileID: 0}
+  searchPlayer: 0
+  onPatrol: 0
 --- !u!1 &8061452907826408566
 GameObject:
   m_ObjectHideFlags: 0

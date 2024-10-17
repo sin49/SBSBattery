@@ -30,11 +30,11 @@ public class CursorInteractObject : MonoBehaviour
             enemy.onStun = true;
             if(enemy.animaor !=null)
             enemy.animaor.SetTrigger("Caught");
-            if (enemy.skinRenderer != null)
+            if (enemy.mae != null)
             {
-                Material[] materials = enemy.skinRenderer.materials;
-                materials[1] = enemy.hittedMat;
-                enemy.skinRenderer.materials = materials;
+                Material[] materials = enemy.mae.skinRenderer.materials;
+                materials[1] = enemy.mae.hittedMat;
+                enemy.mae.skinRenderer.materials = materials;
             }
         }
     }

@@ -17,7 +17,7 @@ public class EnemyMoveOutputEvent : OutputEvent
     {
         if (enemyPrefab != null & movePoint != null)
         {
-            enemyPrefab.targetPatrol = movePoint.position;
+            enemyPrefab.tap.targetPatrol = movePoint.position;
             enemyPrefab.tracking = true;
         }
     }

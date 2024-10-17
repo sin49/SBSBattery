@@ -21,12 +21,12 @@ public class flyingenemy : Enemy
     public override void PatrolTracking()
     {
         
-        testTarget = targetPatrol - transform.position;
+        testTarget = tap.targetPatrol - transform.position;
         enemymovepattern();
         if (soundplayer != null)
             soundplayer.PlayMoveSound();
         Debug.Log("TTMAg" + testTarget.magnitude);
-        if (testTarget.magnitude < patrolDistance)
+        if (testTarget.magnitude < tap.patrolDistance)
         {
             tracking = false;
             StartCoroutine(InitPatrolTarget());
@@ -42,11 +42,11 @@ public class flyingenemy : Enemy
 
         if (!callCheck)
         {
-            if (disToPlayer > trackingDistance /*|| f > 6*/)
+            if (tap.disToPlayer > tap.trackingDistance /*|| f > 6*/)
             {
-                searchPlayer = false;
+                searchCollider.searchPlayer = false;
                 target = null;
-                onPatrol = true;
+                searchCollider.onPatrol = true;
             }
         }
     }

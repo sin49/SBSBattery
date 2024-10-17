@@ -31,10 +31,10 @@ public class RangeEnemy : Enemy
 
     public override void StartEmmissionHitMat()
     {
-        Material[] materials = skinRenderer.materials;
+        Material[] materials = mae.skinRenderer.materials;
         materials[0] = emmissionBackMat;
         materials[1] = emmissionHittedMat;
-        skinRenderer.materials = materials;
+        mae.skinRenderer.materials = materials;
         if (skinHead != null)
             skinHead.material = emmissionHeadMat;
     }
@@ -43,13 +43,13 @@ public class RangeEnemy : Enemy
     {
         base.EndEmmissionHitMat();
         if (skinHead != null)
-            skinHead.material = headMat;
+            skinHead.material = mae.headMat;
     }
 
     public override void EndHitMat()
     {
         base.EndHitMat();
         if (skinHead != null)
-            skinHead.material = backMat;
+            skinHead.material = mae.backMat;
     }
 }

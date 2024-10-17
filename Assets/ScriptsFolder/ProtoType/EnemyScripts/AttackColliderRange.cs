@@ -38,10 +38,10 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
     {
         enemy = transform.parent.GetComponent<Enemy>();
         rangeCollider = GetComponent<BoxCollider>();
-        if (enemy.rangeCollider != null)
+        if (enemy.tap.rangeCollider != null)
         {
-            enemy.rangePos = rangeCollider.center;
-            enemy.rangeSize = rangeCollider.size;
+            enemy.tap.rangePos = rangeCollider.center;
+            enemy.tap.rangeSize = rangeCollider.size;
         }
 
         if (childMat == null && transform.childCount != 0)
@@ -59,8 +59,8 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
     {
         if (rangeCollider != null)
         {
-            rangeCollider.center = enemy.rangePos;
-            rangeCollider.size = enemy.rangeSize;
+            rangeCollider.center = enemy.tap.rangePos;
+            rangeCollider.size = enemy.tap.rangeSize;
 
             if (childMat != null)
             {
