@@ -6,7 +6,6 @@ using UnityEngine.Rendering;
 [ExecuteAlways]
 public class AttackColliderRange : MonoBehaviour, colliderDisplayer
 {
-    public Enemy enemy;
     BoxCollider rangeCollider;
     public MeshRenderer childMat;
 
@@ -36,13 +35,13 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
 
     private void Awake()
     {
-        enemy = transform.parent.GetComponent<Enemy>();
+        //enemy = transform.parent.GetComponent<Enemy>();
         rangeCollider = GetComponent<BoxCollider>();
-        if (enemy.tap.rangeCollider != null)
-        {
-            enemy.tap.rangePos = rangeCollider.center;
-            enemy.tap.rangeSize = rangeCollider.size;
-        }
+        //if (enemy.tap.rangeCollider != null)
+        //{
+        //    enemy.tap.rangePos = rangeCollider.center;
+        //    enemy.tap.rangeSize = rangeCollider.size;
+        //}
 
         if (childMat == null && transform.childCount != 0)
         {
@@ -59,8 +58,8 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
     {
         if (rangeCollider != null)
         {
-            rangeCollider.center = enemy.tap.rangePos;
-            rangeCollider.size = enemy.tap.rangeSize;
+            //rangeCollider.center = enemy.tap.rangePos;
+            //rangeCollider.size = enemy.tap.rangeSize;
 
             if (childMat != null)
             {
@@ -84,7 +83,7 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
         //ebug.Log($"트리거 감지 중 {other.gameObject}");   
         if (other.CompareTag("Player") /*&&enemy.target!=null*/ && onStun && onAttack)
         {
-            if (wallCheck)
+            if (!wallCheck)
             {
                 //Vector3 point = other.transform.position - enemy.transform.position;
                 //point.y = 0;
@@ -99,10 +98,10 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
                     enemy.transform.rotation = Quaternion.Euler(0, -90, 0);
                 }*/
 
-                enemy.onAttack = true;
+                onAttack = true;
             }
 
-            if (wallCheck && onStun)            
+            if (!wallCheck && onStun)            
                 attackRange = true;
         }
     }

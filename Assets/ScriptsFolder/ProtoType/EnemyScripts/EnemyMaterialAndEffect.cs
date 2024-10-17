@@ -20,7 +20,11 @@ public class EnemyMaterialAndEffect : MonoBehaviour
     public Material emmissionHittedMat;
     [Header("일반몹만 사용")]public Renderer skinHead; //  일반 몬스터와 전구몬스터만 씀
 
-    //몬스터 머티리얼 부분
+    [Header("몹마다 다른 것 같아서 배열을 사용할까 생각중")]
+    public Material[] originMat;
+    public Material[] emmissionMat;
+    public Material[] endEmmissionMat;
+    // 몬스터 머티리얼 부분(모델링 상태)
     // 3개 => 전구몬스터(몸통, 전구유리, 필라멘트)
     // 2개 / 1개(==스킨 렌더러 2개)  => 일반몬스터(얼굴,등), (머리 막대기)
     // 2개 => 점프 몬스터(몸통, 얼굴 투명관)

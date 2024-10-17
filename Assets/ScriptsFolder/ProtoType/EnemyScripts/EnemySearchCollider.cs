@@ -7,8 +7,6 @@ public class EnemySearchCollider : MonoBehaviour, colliderDisplayer
 {
     BoxCollider searchCollider;
     public MeshRenderer childMat;
-    public EnemyTrackingAndPatrol tap;
-
     public bool searchPlayer, onPatrol;
 
     public void ActiveColliderDisplay()
@@ -47,10 +45,10 @@ public class EnemySearchCollider : MonoBehaviour, colliderDisplayer
 
     private void FixedUpdate()
     {
-        if (tap.searchCollider != null && searchCollider != null)
+        if (/*tap.searchCollider != null &&*/ searchCollider != null)
         {
-            searchCollider.center = tap.searchColliderPos;
-            searchCollider.size = tap.searchColliderRange;
+            //searchCollider.center = tap.searchColliderPos;
+            //searchCollider.size = tap.searchColliderRange;
             if (childMat != null)
             {
                 childMat.transform.localPosition = searchCollider.center;
@@ -72,7 +70,7 @@ public class EnemySearchCollider : MonoBehaviour, colliderDisplayer
         if (other.CompareTag("Player"))
         {
             //enemy.target = other.transform;
-            if (wallCheck)
+            if (!wallCheck)
             {
                 searchPlayer = true;
                 onPatrol = false;

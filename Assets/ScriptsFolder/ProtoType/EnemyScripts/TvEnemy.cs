@@ -70,7 +70,7 @@ public class TvEnemy : Enemy
         {
             if (tracking && activeTv)
             {
-                if (!activeAttack && !checkTv && !onAttack)
+                if (!activeAttack && !checkTv && !acr.onAttack)
                 {
                     testTarget = target.position - transform.position;
                     testTarget.y = 0;

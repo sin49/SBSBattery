@@ -14,7 +14,7 @@ public class RollingEnemy : Enemy
         {
             if (tracking)
             {
-                if (!activeAttack && !onAttack)
+                if (!activeAttack && !acr.onAttack)
                 {
                     RollingMove();
                 }

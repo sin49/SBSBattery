@@ -54,7 +54,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
     public bool rotCheck;
     
-    public bool onAttack; // 공격 활성화 여부 (공격 범위 내에 플레이어를 인식했을 때 true 변환)
+    //public bool onAttack; // 공격 활성화 여부 (공격 범위 내에 플레이어를 인식했을 때 true 변환)
     
     [HideInInspector] public bool activeAttack; // 공격 가능한 상태인지 체크
 
@@ -151,7 +151,11 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
         }
 
-
+        if (searchCollider.searchPlayer)
+        {
+            if (PlayerHandler.instance.CurrentPlayer != null)
+                target = PlayerHandler.instance.CurrentPlayer.transform;
+        }
     }
 
     protected virtual void MoveAnimationPlay()
@@ -174,7 +178,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
             if (movepattern == EnemyMovePattern.stop)
             {
-                if (tracking && !onAttack && !acr.attackRange && searchCollider.searchPlayer)
+                if (tracking && !acr.onAttack && !acr.attackRange && searchCollider.searchPlayer)
                 {
                     isMove = true;
                 }
@@ -316,11 +320,29 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public void WallCheckResult()
     {
         if (forwardCheck || upCheck || forwardCheck && upCheck)
-            wallCheck = true;
+        {
+            YesWallCheck();
+        }
         else
-            wallCheck = false;
+        {
+            NoWallCheck();
+        }
     }
    
+    public void YesWallCheck()
+    {
+        wallCheck = true;
+        searchCollider.wallCheck = true;
+        acr.wallCheck = true;
+    }
+
+    public void NoWallCheck()
+    {
+        wallCheck = false;
+        searchCollider.wallCheck = false;
+        acr.wallCheck = false;
+    }
+
     public Vector3 direction;//목적지
     //public bool 행동여부;//
  
@@ -462,7 +484,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         onFlat = true;
         flatObject.transform.localScale = flatScale;
         flatTime = flat;
-        attackRange = false;
+        acr.attackRange = false;
         Debug.Log(flat);
 
         if (mae != null && mae.skinRenderer != null)
@@ -527,7 +549,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
             if (tracking)
             {
-                if (!activeAttack && !onAttack)
+                if (!activeAttack && !acr.onAttack)
                 {
                     if (movepattern == EnemyMovePattern.patrol)
                     {
@@ -786,7 +808,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     // 공격 준비시간
     public void ReadyAttackTime()
     {
-        if (onAttack && !die)
+        if (acr.onAttack && !die)
         {
             if(!activeAttack)
             {
@@ -819,7 +841,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     // 공격 초기화
     public void InitAttackCoolTime()
     {        
-        onAttack = false;
+        acr.onAttack = false;        
         activeAttack = false;
         attackTimer = eStat.initattackCoolTime;
     }
