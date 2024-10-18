@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class MeleeEnemy : Enemy
 {
-    [Header("이미션 머티리얼")]
-    public Material emmissionHittedMat;
-    public Material emmissionHeadMat;
-    public Material emmissionBackMat;
-    public Renderer skinHead;
-
     public override void Attack()
     {
         attackCollider.SetActive(true);
@@ -19,25 +13,25 @@ public class MeleeEnemy : Enemy
 
     public override void StartEmmissionHitMat()
     {
-        Material[] materials = skinRenderer.materials;
-        materials[0] = emmissionBackMat;
-        materials[1] = emmissionHittedMat;
-        skinRenderer.materials = materials;
-        if (skinHead != null)
-            skinHead.material = emmissionHeadMat;
+        Material[] materials = mae.skinRenderer.materials;
+        materials[0] = mae.emmissionBackMat;
+        materials[1] = mae.emmissionHittedMat;
+        mae.skinRenderer.materials = materials;
+        if (mae.skinHead != null)
+            mae.skinHead.material = mae.emmissionHeadMat;
     }
 
     public override void EndEmmissionHitMat()
     {
         base.EndEmmissionHitMat();
-        if (skinHead != null)
-            skinHead.material = headMat;
+        if (mae.skinHead != null)
+            mae.skinHead.material = mae.headMat;
     }
 
     public override void EndHitMat()
     {
         base.EndHitMat();
-        if (skinHead != null)
-            skinHead.material = backMat;
+        if (mae.skinHead != null)
+            mae.skinHead.material = mae.backMat;
     }
 }

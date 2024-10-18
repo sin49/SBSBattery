@@ -194,6 +194,70 @@ CharacterJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!1 &1349830751346761537
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5159262177003516189}
+  - component: {fileID: 2700615749513845943}
+  m_Layer: 9
+  m_Name: TrackingAndPatrol
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5159262177003516189
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349830751346761537}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 119241573391277033}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2700615749513845943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349830751346761537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af7fc425e385fea40bd278dc84bf8422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rangeCollider: {fileID: 0}
+  rangeSize: {x: 0, y: 0, z: 0}
+  rangePos: {x: 0, y: 0, z: 0}
+  searchCollider: {fileID: 7733405150144490626}
+  searchColliderRange: {x: 0, y: 0, z: 0}
+  searchColliderPos: {x: 0, y: 0, z: 0}
+  trackingDistance: 0
+  disToPlayer: 0
+  PatrolTransform: []
+  patrolGroup: []
+  targetPatrol: {x: 0, y: 0, z: 0}
+  patrolWaitTime: 0
+  leftPatrolRange: 0
+  rightPatrolRange: 0
+  patrolDistance: 0
+  leftPatrol: {x: 0, y: 0, z: 0}
+  rightPatrol: {x: 0, y: 0, z: 0}
+  yWidth: 0
+  zWidth: 0
+  center: {x: 0, y: 0, z: 0}
 --- !u!1 &1726754294216908194
 GameObject:
   m_ObjectHideFlags: 0
@@ -490,6 +554,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 0}
   damage: 0
+  onStun: 0
 --- !u!1 &2295099088195065677
 GameObject:
   m_ObjectHideFlags: 0
@@ -898,6 +963,8 @@ Transform:
   - {fileID: 8551754196611104211}
   - {fileID: 1968643125236862386}
   - {fileID: 7837756481480482018}
+  - {fileID: 2301304045309662722}
+  - {fileID: 5159262177003516189}
   m_Father: {fileID: 6513247298425961137}
   m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
 --- !u!114 &233439120728915618
@@ -918,45 +985,18 @@ MonoBehaviour:
   eStat: {fileID: 3905273058084709805}
   patrolType: 1
   attackCollider: {fileID: 6339559483058744432}
-  deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
-    type: 3}
   animaor: {fileID: 1288513263675201111}
-  idleMat: {fileID: 2100000, guid: 4b8ab30b4ae461840808684804b17d30, type: 2}
-  backMat: {fileID: 2100000, guid: d721e29a874550c43aa40f7b9328c2e6, type: 2}
-  headMat: {fileID: 2100000, guid: 02f51f3869a1ab84ea7a204a77f588ec, type: 2}
-  hittedMat: {fileID: 0}
-  skinRenderer: {fileID: 733190138019894174}
-  moveEffect: {fileID: 0}
   environmentforce: {x: 0, y: 0, z: 0}
   isMove: 0
-  searchCubeRange: {x: 3, y: 0.45, z: 0.7}
-  searchCubePos: {x: 0, y: 0, z: 0}
-  rangeCollider: {fileID: 0}
-  rangeSize: {x: 0, y: 0, z: 0}
-  rangePos: {x: 0, y: 0, z: 0}
-  searchCollider: {fileID: 7733405150144490626}
-  searchColliderRange: {x: 2, y: 1.5, z: 3.5}
-  searchColliderPos: {x: 0, y: 0.25, z: 0.5}
-  searchPlayer: 0
-  trackingDistance: 4
-  disToPlayer: 0
-  PatrolTransform: []
-  patrolGroup: []
-  targetPatrol: {x: 1.6, y: 0, z: 0}
-  patrolWaitTime: 1
-  leftPatrolRange: 0.8
-  rightPatrolRange: 0.8
-  patrolDistance: 0.1
-  onPatrol: 0
-  yWidth: 3
-  zWidth: 3
+  tap: {fileID: 2700615749513845943}
+  searchCollider: {fileID: 8935664843919685242}
+  mae: {fileID: 4257949603525631324}
+  acr: {fileID: 676926750611931586}
+  reachAttack: {fileID: 4189451210452894303}
   wallRayHeight: 0.3
   wallRayLength: 3.5
   wallRayUpLength: 3
-  forwardWall: {fileID: 0}
-  upWall: {fileID: 0}
-  disToWall: 9.861542
-  wallCheck: 1
+  wallCheck: 0
   attackTimer: 0
   attackDelay: 0
   actionhandler: {fileID: 0}
@@ -969,22 +1009,17 @@ MonoBehaviour:
   tracking: 0
   testTarget: {x: 0, y: 0, z: 0}
   rotationSpeed: 4
-  onStun: 0
   reachCheck: 0
   attackRange: 0
   viewActive: 0
+  direction: {x: 0, y: 0, z: 0}
   flatObject: {fileID: 3873799719395846869}
   flatScaleY: 0.2
   flatTime: 0
   timer: 0
   onFlat: 0
-  rotLevel: 85
-  testAngle: 0
   explosion: {fileID: 0}
   lightCheck: 1
-  emmissionHittedMat: {fileID: 2100000, guid: abde3b6801201ee4c8dd254867aa031e, type: 2}
-  emmissionHeadMat: {fileID: 2100000, guid: 2c03e6d8abfe1df42b411d91be48ef18, type: 2}
-  emmissionBackMat: {fileID: 2100000, guid: 9c803368896f75c42800af8ccb3677bb, type: 2}
 --- !u!136 &517424950950997279
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1035,12 +1070,9 @@ MonoBehaviour:
   attackDelay: 0
   canMove: 1
   canAttack: 1
-  eState: 0
   dropGroup:
     parts: {fileID: 0}
     partValue: 0
-  onInvincible: 0
-  invincibleTimer: 0
 --- !u!54 &4020459854504847964
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1135,8 +1167,8 @@ Transform:
   m_GameObject: {fileID: 3014271931756536153}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.25, z: 0.5}
-  m_LocalScale: {x: 2, y: 1.5, z: 3.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1968643125236862386}
@@ -1455,6 +1487,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 0}
   childMat: {fileID: 0}
+  onAttack: 0
+  onStun: 0
+  wallCheck: 0
 --- !u!65 &2229308352875611634
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2913,8 +2948,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 1.5, z: 3.5}
-  m_Center: {x: 0, y: 0.25, z: 0.5}
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8935664843919685242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2928,6 +2963,65 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childMat: {fileID: 5258537224090779894}
+  tap: {fileID: 0}
+  searchPlayer: 0
+  onPatrol: 0
+  wallCheck: 0
+--- !u!1 &8075227518126710238
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2301304045309662722}
+  - component: {fileID: 4257949603525631324}
+  m_Layer: 9
+  m_Name: MaterialAndEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2301304045309662722
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8075227518126710238}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 119241573391277033}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4257949603525631324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8075227518126710238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77994e88889845f48b2a57586d8ed81e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idleMat: {fileID: 2100000, guid: 05135b17c4cac7343bee0728f103732c, type: 2}
+  backMat: {fileID: 0}
+  headMat: {fileID: 2100000, guid: 5a5acbb0f5c7fe74e9ae123451e699b3, type: 2}
+  hittedMat: {fileID: 2100000, guid: 05135b17c4cac7343bee0728f103732c, type: 2}
+  skinRenderer: {fileID: 0}
+  deadEffect: {fileID: 0}
+  moveEffect: {fileID: 0}
+  emmissionBackMat: {fileID: 2100000, guid: 9c803368896f75c42800af8ccb3677bb, type: 2}
+  emmissionHeadMat: {fileID: 2100000, guid: 2c03e6d8abfe1df42b411d91be48ef18, type: 2}
+  emmissionHittedMat: {fileID: 2100000, guid: abde3b6801201ee4c8dd254867aa031e, type: 2}
+  skinHead: {fileID: 0}
 --- !u!1 &8309665532623593237
 GameObject:
   m_ObjectHideFlags: 0

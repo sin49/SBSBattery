@@ -5,9 +5,9 @@ using UnityEngine;
 [ExecuteAlways]
 public class EnemySearchCollider : MonoBehaviour, colliderDisplayer
 {
-    Enemy enemy;
     BoxCollider searchCollider;
     public MeshRenderer childMat;
+    public bool searchPlayer, onPatrol;
 
     public void ActiveColliderDisplay()
     {
@@ -31,7 +31,6 @@ public class EnemySearchCollider : MonoBehaviour, colliderDisplayer
 
     private void Awake()
     {
-        enemy = GetComponentInParent<Enemy>();
         searchCollider = GetComponent<BoxCollider>();        
         if (childMat == null && transform.childCount != 0)
         {
@@ -46,10 +45,10 @@ public class EnemySearchCollider : MonoBehaviour, colliderDisplayer
 
     private void FixedUpdate()
     {
-        if (enemy.searchCollider != null && searchCollider != null)
+        if (/*tap.searchCollider != null &&*/ searchCollider != null)
         {
-            searchCollider.center = enemy.searchColliderPos;
-            searchCollider.size = enemy.searchColliderRange;
+            //searchCollider.center = tap.searchColliderPos;
+            //searchCollider.size = tap.searchColliderRange;
             if (childMat != null)
             {
                 childMat.transform.localPosition = searchCollider.center;
@@ -65,21 +64,21 @@ public class EnemySearchCollider : MonoBehaviour, colliderDisplayer
             childMat.sharedMaterials[0].color = CharColliderColor.instance.searchRange;
         }
     }
-
+    public bool wallCheck;
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            enemy.target = other.transform;
-            if (!enemy.wallCheck)
+            //enemy.target = other.transform;
+            if (!wallCheck)
             {
-                enemy.searchPlayer = true;
-                enemy.onPatrol = false;
+                searchPlayer = true;
+                onPatrol = false;
             }
             else
             {
-                enemy.searchPlayer = false;
-                enemy.onPatrol = true;
+                searchPlayer = false;
+                onPatrol = true;
             }            
         }
     }

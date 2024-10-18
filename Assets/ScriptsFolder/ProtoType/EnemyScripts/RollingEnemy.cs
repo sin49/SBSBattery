@@ -10,17 +10,17 @@ public class RollingEnemy : Enemy
 
     public override void Move()
     {
-        if (eStat.eState != EnemyState.dead)
+        if (!die)
         {
-            if (tracking)
+            if (tap.tracking)
             {
-                if (!activeAttack && !onAttack)
+                if (!activeAttack && !mae.attackColliderRange.onAttack)
                 {
                     RollingMove();
                 }
             }
 
-            RollingPatrol();
+            //RollingPatrol();
         }
     }
 
@@ -31,28 +31,28 @@ public class RollingEnemy : Enemy
         soundplayer.PlayMoveSound();
     }
 
-    public void RollingPatrol()
-    {
-        Collider[] colliders = Physics.OverlapBox(transform.position + searchCubePos, searchCubeRange);
+    //public void RollingPatrol()
+    //{
+    //    Collider[] colliders = Physics.OverlapBox(transform.position + searchCubePos, searchCubeRange);
 
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            if (colliders[i].CompareTag("Player"))
-            {
-                target = colliders[i].transform;
-                checkPlayer = true;
-                tracking = true;
-            }
-        }
-    }
+    //    for (int i = 0; i < colliders.Length; i++)
+    //    {
+    //        if (colliders[i].CompareTag("Player"))
+    //        {
+    //            target = colliders[i].transform;
+    //            checkPlayer = true;
+    //            tracking = true;
+    //        }
+    //    }
+    //}
 
     public override void Damaged(float damage)
     {
         base.Damaged(damage);
-        eStat.hp -= damage;
-        if (eStat.hp <= 0)
+        eStat.initMaxHP -= damage;
+        if (eStat.initMaxHP <= 0)
         {
-            eStat.hp = 0;
+            eStat.initMaxHP = 0;
 
             Dead();
         }

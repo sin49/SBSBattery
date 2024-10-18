@@ -17,6 +17,10 @@ public class TvEnemy : Enemy
 
     bool isRotate;
 
+    public Transform target;
+    bool tracking;
+    public Vector3 testTarget;
+
     protected override void Awake()
     {
         base.Awake();        
@@ -66,16 +70,16 @@ public class TvEnemy : Enemy
 
     public override void Move()
     {
-        if (eStat.eState != EnemyState.dead || eStat.eState != EnemyState.hitted)
+        if (!die || !hitted)
         {
             if (tracking && activeTv)
             {
-                if (!activeAttack && !checkTv && !onAttack)
+                if (!activeAttack && !checkTv && !mae.attackColliderRange.onAttack)
                 {
                     testTarget = target.position - transform.position;
                     testTarget.y = 0;
 
-                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), eStat.rotationSpeed * Time.deltaTime);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), 2.0f * Time.deltaTime);
 
                     if (Quaternion.Angle(transform.rotation, Quaternion.LookRotation(testTarget)) < 0.8f)
                     {

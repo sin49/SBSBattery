@@ -3,15 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ReachAttack : MonoBehaviour
-{
-    public Enemy enemy;
+{    
     public float damage;
-
-    private void Start()
-    {
-        enemy = transform.parent.GetComponent<Enemy>();
-        damage = enemy.eStat.atk;
-    }
 
     public void SetDamage(float value)
     {
@@ -25,15 +18,15 @@ public class ReachAttack : MonoBehaviour
             other.GetComponent<Player>().Damaged(damage);
         }
     }*/
+    public bool onStun;
 
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player") && !PlayerHandler.instance.CurrentPlayer.onInvincible)
         {
-            if (!enemy.onStun)
+            if (!onStun)
             {
                 other.GetComponent<Player>().Damaged(damage);
-                enemy.reachCheck = true;
             }
         }
     }

@@ -562,6 +562,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9cd343a7acff642b48f0103aade916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1310717227977888041
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5819993784227525810}
+  m_Layer: 9
+  m_Name: EnemyStatus
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5819993784227525810
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310717227977888041}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 562378922244030336}
+  - {fileID: 7980100144063536230}
+  m_Father: {fileID: 6248263193908544099}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1403772824634724427
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,6 +757,67 @@ CharacterJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!1 &1657886026672130344
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7980100144063536230}
+  - component: {fileID: 6525882660683060561}
+  m_Layer: 9
+  m_Name: MaterialAndEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7980100144063536230
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657886026672130344}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5819993784227525810}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6525882660683060561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657886026672130344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77994e88889845f48b2a57586d8ed81e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackColliderRange: {fileID: 3094345857143373661}
+  searchCollider: {fileID: 229974071491600694}
+  idleMat: {fileID: 2100000, guid: 1c515456b96e2b244809cbaa151bcc0c, type: 2}
+  backMat: {fileID: 0}
+  headMat: {fileID: 0}
+  hittedMat: {fileID: 2100000, guid: 68aa62768728c9a42b4466438664f462, type: 2}
+  skinRenderer: {fileID: 0}
+  deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
+    type: 3}
+  moveEffect: {fileID: 0}
+  emmissionBackMat: {fileID: 0}
+  emmissionHeadMat: {fileID: 0}
+  emmissionHittedMat: {fileID: 0}
+  skinHead: {fileID: 0}
+  originMat: []
+  emmissionMat: []
+  endEmmissionMat: []
 --- !u!1 &1906366522468217231
 GameObject:
   m_ObjectHideFlags: 0
@@ -1430,6 +1524,70 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2349849162635336488}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4037336943117070997
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 562378922244030336}
+  - component: {fileID: 3823224255344580435}
+  m_Layer: 9
+  m_Name: TrackingAndPatrol
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &562378922244030336
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4037336943117070997}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5819993784227525810}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3823224255344580435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4037336943117070997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af7fc425e385fea40bd278dc84bf8422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rangeCollider: {fileID: 8454400615268258424}
+  rangeSize: {x: 0, y: 0, z: 0}
+  rangePos: {x: 0, y: 0, z: 0}
+  searchCollider: {fileID: 7775642389530890800}
+  searchColliderRange: {x: 0, y: 0, z: 0}
+  searchColliderPos: {x: 0, y: 0, z: 0}
+  trackingDistance: 0
+  disToPlayer: 0
+  PatrolTransform: []
+  patrolGroup: []
+  targetPatrol: {x: 0, y: 1, z: 0}
+  patrolWaitTime: 0
+  leftPatrolRange: 0
+  rightPatrolRange: 0
+  patrolDistance: 0
+  leftPatrol: {x: 0, y: 0, z: 0}
+  rightPatrol: {x: 0, y: 0, z: 0}
+  yWidth: 3
+  zWidth: 3
+  center: {x: 0, y: 1, z: 0}
 --- !u!1 &4177752030227899728
 GameObject:
   m_ObjectHideFlags: 0
@@ -2542,8 +2700,8 @@ Transform:
   m_GameObject: {fileID: 7072131579394656445}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 0.55, y: 1, z: 2.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4249020135298567383}
@@ -2935,8 +3093,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 6, y: 3, z: 9}
-  m_Center: {x: 0, y: 1, z: 0.5}
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &229974071491600694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2950,6 +3108,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childMat: {fileID: 7111033441443271234}
+  searchPlayer: 0
+  onPatrol: 0
+  wallCheck: 0
 --- !u!1 &7936890930953658195
 GameObject:
   m_ObjectHideFlags: 0
@@ -2992,6 +3153,7 @@ Transform:
   - {fileID: 4249020135298567383}
   - {fileID: 2087152660105114164}
   - {fileID: 7144094099410898771}
+  - {fileID: 5819993784227525810}
   m_Father: {fileID: 597446989917729714}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!135 &7706961479488324395
@@ -3033,68 +3195,35 @@ MonoBehaviour:
   eStat: {fileID: 696479488360981710}
   patrolType: 1
   attackCollider: {fileID: 0}
-  deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
-    type: 3}
   animaor: {fileID: 1398957846223111419}
-  idleMat: {fileID: 2100000, guid: 39619de40a5fa6c4ea8964cb9f495cb0, type: 2}
-  backMat: {fileID: 0}
-  headMat: {fileID: 0}
-  hittedMat: {fileID: 2100000, guid: 68aa62768728c9a42b4466438664f462, type: 2}
-  skinRenderer: {fileID: 5509012045196930935}
-  moveEffect: {fileID: 0}
   environmentforce: {x: 0, y: 0, z: 0}
   isMove: 0
-  searchCubeRange: {x: 0, y: 0, z: 0}
-  searchCubePos: {x: 0, y: 0, z: 0}
-  rangeCollider: {fileID: 8454400615268258424}
-  rangeSize: {x: 0.55, y: 1, z: 2.5}
-  rangePos: {x: 0, y: 0, z: 1}
-  searchCollider: {fileID: 7775642389530890800}
-  searchColliderRange: {x: 6, y: 3, z: 9}
-  searchColliderPos: {x: 0, y: 1, z: 0.5}
-  searchPlayer: 0
-  trackingDistance: 10
-  disToPlayer: 0
-  PatrolTransform: []
-  patrolGroup: []
-  targetPatrol: {x: 4, y: 1, z: 0}
-  patrolWaitTime: 1
-  leftPatrolRange: 2
-  rightPatrolRange: 2
-  patrolDistance: 0.1
-  onPatrol: 1
-  yWidth: 3
-  zWidth: 3
+  tap: {fileID: 3823224255344580435}
+  searchCollider: {fileID: 229974071491600694}
+  mae: {fileID: 6525882660683060561}
+  acr: {fileID: 3094345857143373661}
+  reachAttack: {fileID: 0}
   wallRayHeight: 0
   wallRayLength: 0
   wallRayUpLength: 0
-  forwardWall: {fileID: 0}
-  upWall: {fileID: 0}
-  disToWall: 0
   wallCheck: 0
   attackTimer: 0
   attackDelay: 0
   actionhandler: {fileID: 0}
-  callCheck: 0
   rotCheck: 0
-  onAttack: 0
   activeAttack: 0
-  checkPlayer: 0
   target: {fileID: 0}
   tracking: 0
   testTarget: {x: 0, y: 0, z: 0}
   rotationSpeed: 0
-  onStun: 0
-  reachCheck: 0
   attackRange: 0
   viewActive: 0
+  direction: {x: 0, y: 0, z: 0}
   flatObject: {fileID: 3118036604779978058}
   flatScaleY: 0.4
   flatTime: 0
   timer: 0
   onFlat: 0
-  rotLevel: 0
-  testAngle: 0
   breathinittime: 0.9
   breathtime: 1.55
   breathspreadmaxtime: 1.25
@@ -3164,12 +3293,9 @@ MonoBehaviour:
   attackDelay: 0.5
   canMove: 0
   canAttack: 0
-  eState: 0
   dropGroup:
     parts: {fileID: 0}
     partValue: 0
-  onInvincible: 0
-  invincibleTimer: 0
 --- !u!114 &3803152008239785716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3397,8 +3523,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c8e1a25490c2d40a4b57a08ff80e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 470020728077926901}
   childMat: {fileID: 657856157463213917}
+  onAttack: 0
+  onStun: 0
+  wallCheck: 0
+  attackRange: 0
 --- !u!65 &2098708879523002716
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3418,8 +3547,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.55, y: 1, z: 2.5}
-  m_Center: {x: 0, y: 0, z: 1}
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8494046934823731225
 GameObject:
   m_ObjectHideFlags: 0
@@ -3510,8 +3639,8 @@ Transform:
   m_GameObject: {fileID: 8935683813039487540}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0.5}
-  m_LocalScale: {x: 6, y: 3, z: 9}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3737836693357024176}

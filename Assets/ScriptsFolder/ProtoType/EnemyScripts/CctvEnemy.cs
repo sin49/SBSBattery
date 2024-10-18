@@ -27,34 +27,34 @@ public class CctvEnemy : Enemy
         endWait = true;
     }
 
-    public void EnemyCall()
-    {
+    //public void EnemyCall()
+    //{
         
-        Collider[] colliders = Physics.OverlapBox(transform.position + searchCubePos, searchCubeRange);        
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            if (colliders[i].CompareTag("Enemy"))
-            {
-                Debug.Log($"호출적군 감지{colliders[i].gameObject}");
-                Enemy enemy = colliders[i].GetComponent<Enemy>();
-                enemy.onPatrol = false;
-                enemy.callCheck = true;
-                enemy.tracking = true;
-                enemy.target = target; 
-                enemy.searchPlayer = true;
-            }                  
-        }
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(transform.position + searchCubePos, searchCubeRange * 2f);
-        //Gizmos.DrawWireSphere(transform.position, searchRange);
-    }
+    //    Collider[] colliders = Physics.OverlapBox(transform.position + searchCubePos, searchCubeRange);        
+    //    for (int i = 0; i < colliders.Length; i++)
+    //    {
+    //        if (colliders[i].CompareTag("Enemy"))
+    //        {
+    //            Debug.Log($"호출적군 감지{colliders[i].gameObject}");
+    //            Enemy enemy = colliders[i].GetComponent<Enemy>();
+    //            enemy.onPatrol = false;
+    //            enemy.callCheck = true;
+    //            enemy.tracking = true;
+    //            enemy.target = target; 
+    //            enemy.searchPlayer = true;
+    //        }                  
+    //    }
+    //}
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.blue;
+    //    Gizmos.DrawWireCube(transform.position + searchCubePos, searchCubeRange * 2f);
+    //    //Gizmos.DrawWireSphere(transform.position, searchRange);
+    //}
 
     public override void Move()
     {
-        if (eStat.eState != EnemyState.dead || eStat.eState != EnemyState.hitted)
+        if (!die || !hitted)
         {
 
             /*if (tracking)
@@ -66,14 +66,14 @@ public class CctvEnemy : Enemy
             }*/
 
             
-            if (!tracking)
+            if (!tap.tracking)
                 CctvPatrol();
         }
     }
 
     public void TrackingPlayer()
     {
-        cctvNeck.target = target;
+        cctvNeck.target = tap.target;
     }
 
     void CctvPatrol()
@@ -84,8 +84,8 @@ public class CctvEnemy : Enemy
             {
                 pointElement = 0;
             }
-            target = patrolPoint[pointElement++];
-            cctvNeck.target = target;
+            tap.target = patrolPoint[pointElement++];
+            cctvNeck.target = tap.target;
             pointCheck = false;
             endWait = false;
         }

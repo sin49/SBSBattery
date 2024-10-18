@@ -55,11 +55,11 @@ public class fireenemy : Enemy
 
     IEnumerator WhileBreath()
     {
-        skinRenderer.material = hittedMat;
+        mae.skinRenderer.material = mae.hittedMat;
 
         yield return new WaitForSeconds(0.2f);
 
-        skinRenderer.material = idleMat;
+        mae.skinRenderer.material = mae.idleMat;
     }
 
     public override void Attack()
@@ -181,12 +181,12 @@ public class fireenemy : Enemy
 
     public override void StartEmmissionHitMat()
     {
-        skinRenderer.material = hittedMat;
+        mae.skinRenderer.material = mae.hittedMat;
     }
 
     public override void EndEmmissionHitMat()
     {
-        skinRenderer.material = idleMat;
+        mae.skinRenderer.material = mae.idleMat;
     }
 
 

@@ -12,15 +12,13 @@ public class jumpenemy : Enemy
     [Header("점프 후 딜레이")]
     public float jumpdelay=1;
    
-    bool oncorutine;
-    [Header("얼굴 부분 이미션 머티리얼")]
-    public Material emmissionHeadMat;
+    bool oncorutine;    
 
     protected override void MoveAnimationPlay()
     {
         
     }
-    public override void enemymovepattern()
+    /*public override void enemymovepattern()
     {
        
         if (onground&&!oncorutine)
@@ -35,7 +33,7 @@ public class jumpenemy : Enemy
     }
     public override void Move()
     {
-        if (eStat.eState != EnemyState.dead || eStat.eState != EnemyState.hitted)
+        if (!die || !hitted)
         {
 
             if (tracking)
@@ -43,18 +41,18 @@ public class jumpenemy : Enemy
 
                 if (movepattern == EnemyMovePattern.patrol)
                 {
-                    if (patrolType == PatrolType.movePatrol && onPatrol)
+                    if (patrolType == PatrolType.movePatrol && mae.searchCollider.onPatrol)
                     {
 
                         PatrolTracking();
                     }
                 }
-                if (searchPlayer)
+                if (mae.searchCollider.searchPlayer)
                     TrackingMove();
 
             }
         }
-    }
+    }*/
     IEnumerator jumpmove()
     {
         //    if (activeAttack)
@@ -105,20 +103,20 @@ public class jumpenemy : Enemy
     //0번째: 바디, 1번째: 투명 유리
     public override void StartEmmissionHitMat()
     {
-        Material[] materials = skinRenderer.materials;
-        materials[0] = hittedMat;
-        materials[1] = emmissionHeadMat;
+        Material[] materials = mae.skinRenderer.materials;
+        materials[0] = mae.emmissionBackMat; // 몸통
+        materials[1] = mae.emmissionHeadMat; // 얼굴 반투명유리
 
-        skinRenderer.materials = materials;
+        mae.skinRenderer.materials = materials;
     }
 
     public override void EndEmmissionHitMat()
     {
-        Material[] materials = skinRenderer.materials;
-        materials[0] = idleMat;
-        materials[1] = headMat;
+        Material[] materials = mae.skinRenderer.materials;
+        materials[0] = mae.idleMat;
+        materials[1] = mae.headMat;
 
-        skinRenderer.materials = materials;
+        mae.skinRenderer.materials = materials;
     }
 
     public override void EndHitMat()

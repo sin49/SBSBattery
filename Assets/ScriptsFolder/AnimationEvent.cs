@@ -59,7 +59,7 @@ public class AnimationEvent : MonoBehaviour
         if (enemy != null)
         {
             CursorInteractObject cursorInteract;
-            if (enemy.skinRenderer != null)
+            if (enemy.mae.skinRenderer != null)
             {
                 if (TryGetComponent<CursorInteractObject>(out cursorInteract))
                 {
@@ -68,9 +68,9 @@ public class AnimationEvent : MonoBehaviour
                 }
                 else
                 {
-                    Material[] materials = enemy.skinRenderer.materials;
-                    materials[1] = enemy.idleMat;
-                    enemy.skinRenderer.materials = materials;
+                    Material[] materials = enemy.mae.skinRenderer.materials;
+                    materials[1] = enemy.mae.idleMat;
+                    enemy.mae.skinRenderer.materials = materials;
                 }
             }
             enemy.activeAttack = false;

@@ -10,11 +10,6 @@ public class Drop
 
 public class EnemyStat : CharacterStat
 {
-    [Header("적 상태변화")]
-    public EnemyState eState;
     [Header("드랍 아이템 임의로 작성(사용할지 모름)")]
     public Drop dropGroup; // 사망 시, 드랍할 재화에 대한 클래스 변수
-    [Header("적 무적관련 변수")]
-    public bool onInvincible;
-    public float invincibleTimer;
 }

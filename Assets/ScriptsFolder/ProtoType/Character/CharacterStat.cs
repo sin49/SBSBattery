@@ -25,11 +25,10 @@ public class CharacterStat : MonoBehaviour
     public float MoveSpeedBonus; 
     public float hpMax { get { return initMaxHP + HPBonus; } }
     [Header("#기본적인 스탯")]
-    public float hp; // 현재 체력
     public float atk; // 공격력
     public float moveSpeed { get { return initMoveSpeed + MoveSpeedBonus; } }
-    [Header("캐릭터 회전 속도")]
-    public float rotationSpeed; // 캐릭터의 방향 전환 속도
+    //[Header("캐릭터 회전 속도")]
+    //public float rotationSpeed; // 캐릭터의 방향 전환 속도
     [HideInInspector]
     public float attackSpeed;
     [HideInInspector]

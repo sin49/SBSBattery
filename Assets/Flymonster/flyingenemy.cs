@@ -4,60 +4,57 @@ using UnityEngine;
 
 public class flyingenemy : Enemy
 {
-    public override void enemymovepattern()
-    {
-        transform.LookAt( testTarget+transform.position);
-        transform.Translate(Vector3.forward
-            * eStat.moveSpeed * Time.deltaTime);
-    }
-    public override void PatrolChange()
-    {
-    
-    }
-    public override bool SetRotation()
-    {
-        return true;
-    }
-    public override void PatrolTracking()
-    {
-        
-        testTarget = targetPatrol - transform.position;
-        enemymovepattern();
-        if (soundplayer != null)
-            soundplayer.PlayMoveSound();
-        Debug.Log("TTMAg" + testTarget.magnitude);
-        if (testTarget.magnitude < patrolDistance)
-        {
-            tracking = false;
-            StartCoroutine(InitPatrolTarget());
-        }
-    }
-    public override void TrackingMove()
-    {
-        testTarget = target.position - transform.position;
-        enemymovepattern();
-            if (soundplayer != null)
-                soundplayer.PlayMoveSound();
-   
+    //public override void enemymovepattern()
+    //{
+    //    transform.LookAt(testTarget + transform.position);
+    //    transform.Translate(Vector3.forward
+    //        * eStat.moveSpeed * Time.deltaTime);
+    //}
+    //public override void PatrolChange()
+    //{
 
-        if (!callCheck)
-        {
-            if (disToPlayer > trackingDistance /*|| f > 6*/)
-            {
-                searchPlayer = false;
-                target = null;
-                onPatrol = true;
-            }
-        }
-    }
-    public override void Attack()
-    {
-        TrackingMove();
-    }
-    public override void Damaged(float damage)
-    {
-        rb.isKinematic = false;
-        base.Damaged(damage);
-        rb.isKinematic = true;
-    }
+    //}
+    //public override bool SetRotation()
+    //{
+    //    return true;
+    //}
+    //public override void PatrolTracking()
+    //{
+
+    //    testTarget = tap.targetPatrol - transform.position;
+    //    enemymovepattern();
+    //    if (soundplayer != null)
+    //        soundplayer.PlayMoveSound();
+    //    Debug.Log("TTMAg" + testTarget.magnitude);
+    //    if (testTarget.magnitude < tap.patrolDistance)
+    //    {
+    //        tracking = false;
+    //        StartCoroutine(tap.InitPatrolTarget());
+    //    }
+    //}
+    //public override void TrackingMove()
+    //{
+    //    testTarget = target.position - transform.position;
+    //    enemymovepattern();
+    //    if (soundplayer != null)
+    //        soundplayer.PlayMoveSound();
+
+
+    //    if (tap.disToPlayer > tap.trackingDistance /*|| f > 6*/)
+    //    {
+    //        mae.searchCollider.searchPlayer = false;
+    //        target = null;
+    //        mae.searchCollider.onPatrol = true;
+    //    }
+    //}
+    //public override void Attack()
+    //{
+    //    TrackingMove();
+    //}
+    //public override void Damaged(float damage)
+    //{
+    //    rb.isKinematic = false;
+    //    base.Damaged(damage);
+    //    rb.isKinematic = true;
+    //}
 }
