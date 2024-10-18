@@ -74,7 +74,7 @@ public class TvEnemy : Enemy
         {
             if (tracking && activeTv)
             {
-                if (!activeAttack && !checkTv && !mae.attackColliderRange.onAttack)
+                if (!activeAttack && !checkTv )
                 {
                     testTarget = target.position - transform.position;
                     testTarget.y = 0;

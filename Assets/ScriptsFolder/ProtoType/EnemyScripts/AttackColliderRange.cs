@@ -77,13 +77,14 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
         }
     }
 
-    public bool onAttack, onStun, wallCheck, attackRange;
+    public Enemy enemy;
+    public EnemyTrackingAndPatrol tap;
     private void OnTriggerStay(Collider other)
     {
         //ebug.Log($"트리거 감지 중 {other.gameObject}");   
-        if (other.CompareTag("Player") /*&&enemy.target!=null*/ && !onStun && !onAttack)
+        if (other.CompareTag("Player") /*&&enemy.target!=null*/ && !enemy.onStun && !enemy.activeAttack)
         {
-            if (!wallCheck)
+            if (!tap.wallCheck && !enemy.onStun)
             {
                 //Vector3 point = other.transform.position - enemy.transform.position;
                 //point.y = 0;
@@ -98,19 +99,18 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
                     enemy.transform.rotation = Quaternion.Euler(0, -90, 0);
                 }*/
 
-                onAttack = true;
+                enemy.activeAttack = true;
             }
 
-            if (!wallCheck && !onStun)            
-                attackRange = true;
+           
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") /*&& enemy.target != null*/ && !onStun)
+        if (other.CompareTag("Player")  )
         {
-            attackRange = false;
+            enemy.activeAttack = false;
         }
     }
 }

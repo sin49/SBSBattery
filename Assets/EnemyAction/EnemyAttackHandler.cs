@@ -25,7 +25,7 @@ public class EnemyAttackHandler : MonoBehaviour
     public void invokemainaction()
     {
         Debug.Log($"적{gameObject.name} 액션 호출");
-        mainaction.Invoke(e.InitAttackCoolTime,e.tap.target);
+        mainaction.Invoke(e.InitAttackCoolTime,PlayerHandler.instance.CurrentPlayer.transform);
     }
    
 

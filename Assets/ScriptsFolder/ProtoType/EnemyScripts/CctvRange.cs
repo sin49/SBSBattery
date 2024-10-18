@@ -30,7 +30,7 @@ public class CctvRange : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             cctvE.tap.tracking = true;
-            cctvE.tap.target = other.transform;
+            //cctvE.tap.target = other.transform;
             cctvE.TrackingPlayer();
             if (ct != null)
             {
@@ -46,7 +46,7 @@ public class CctvRange : MonoBehaviour
     {
         yield return new WaitForSeconds(cctvE.callTime);
 
-        if (cctvE.eStat.initMaxHP > 0)
+        if (cctvE.eStat.hp > 0)
         {
             //cctvE.EnemyCall();
         }

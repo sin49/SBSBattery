@@ -29,26 +29,26 @@ public class Enemy_Action_rush : EnemyAction
 
 
         yield return new WaitForSeconds(rushinitdelay);
-        PlayAttackSound();
+        //PlayAttackSound();
         float timer = 0;
         while (timer < rushtime)
         {
-            attackCollider.SetActive(true);
-            rb.MovePosition(transform.position + transform.forward * Time.deltaTime * rushspeed);
+           // attackCollider.SetActive(true);
+           // rb.MovePosition(transform.position + transform.forward * Time.deltaTime * rushspeed);
             timer += Time.deltaTime;
             yield return null;
         }
-        attackCollider.SetActive(false);
-        rb.velocity = Vector3.zero;
+       // attackCollider.SetActive(false);
+      //  rb.velocity = Vector3.zero;
         yield return new WaitForSeconds(rushcooltime);
         onrush = false;
-        activeAttack = false;
-        InitAttackCoolTime();
+        //activeAttack = false;
+        //InitAttackCoolTime();
     }
     public void stoprush()
     {
         StopAllCoroutines();
-        InitAttackCoolTime();
+        //InitAttackCoolTime();
         StartCoroutine(stoprushcorutine());
     }
     IEnumerator stoprushcorutine()
@@ -56,7 +56,7 @@ public class Enemy_Action_rush : EnemyAction
         onrush = true;
         yield return new WaitForSeconds(rushcooltime);
         onrush = false;
-        activeAttack = false;
+        //activeAttack = false;
     }
 
 }

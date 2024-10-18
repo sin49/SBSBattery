@@ -24,6 +24,7 @@ public class CharacterStat : MonoBehaviour
     [HideInInspector]
     public float MoveSpeedBonus; 
     public float hpMax { get { return initMaxHP + HPBonus; } }
+    public float hp;
     [Header("#기본적인 스탯")]
     public float atk; // 공격력
     public float moveSpeed { get { return initMoveSpeed + MoveSpeedBonus; } }
@@ -45,4 +46,8 @@ public class CharacterStat : MonoBehaviour
     public bool canMove; // 이동 가능 여부 체크
     [HideInInspector]
     public bool canAttack; // 공격 가능 여부 체크
+    private void Awake()
+    {
+        hp = hpMax;
+    }
 }

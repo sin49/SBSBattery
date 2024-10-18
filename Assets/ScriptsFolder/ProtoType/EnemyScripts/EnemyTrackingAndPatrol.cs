@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +18,11 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     [Tooltip("탐색 범위")] public Vector3 searchColliderRange;
     [Tooltip("탐색 위치")] public Vector3 searchColliderPos;
 
-    public Transform target; // 추적할 타겟
+
+    public EnemySearchCollider searchCollider_;
+    public AttackColliderRange attackColliderRange;
+
+    //public Transform target; // 추적할 타겟
     public bool tracking; // 추적 활성화 체크
     public Vector3 testTarget; // 타겟을 바라보는 시점을 테스트하기 위한 임시 변수
 
@@ -54,10 +59,41 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     float disToWall;
     public bool wallCheck;
     bool forwardCheck, upCheck;
+    public PatrolType patrolType;
+    public void InitPatrolPoint()
+    {
+
+        SetPoint();
+    }
+    public Vector3 GetTarget()
+    {
+
+        if (PlayerDetected)
+        {
+            TrackingMove();
+        }
+        else
+        {
+         return   PatrolTracking();
+        }
+
+        return testTarget;
+        //LookAt을 박아버리니까 위 방향으로 바라보고 통통튀는 현상때문에 LookRotation박았습니다.
+        
+    }
 
     private void Awake()
     {
+    
         InitPatrolPoint();
+        if (patrolType == PatrolType.movePatrol)
+        {
+            //InitPatrolPoint();
+            if (!PlayerDetected)
+                StartCoroutine(InitPatrolTarget());
+        }
+
+
     }
 
     private void Update()
@@ -67,13 +103,13 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
             rangeCollider.GetComponent<BoxCollider>().center = rangePos;
             rangeCollider.GetComponent<BoxCollider>().size = rangeSize;
         }
+       
+    }
+    private void FixedUpdate()
+    {
+        
     }
 
-    public void InitPatrolPoint()
-    {
-        mae.searchCollider.onPatrol = true;
-        SetPoint();
-    }
 
     public void SetPoint()
     {
@@ -82,24 +118,7 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
 
         leftPatrol = firstPoint;
         rightPatrol = secondPoint;
-        //if (PatrolTransform.Length == 0)
-        //{
-        //    patrolGroup = new Vector3[2];
-        //    patrolGroup[0] = new(transform.position.x - leftPatrolRange, transform.position.y, transform.position.z);
-        //    patrolGroup[1] = new(transform.position.x + rightPatrolRange, transform.position.y, transform.position.z);
-        //    leftPatrol = patrolGroup[0];
-        //    rightPatrol = patrolGroup[1];
-        //}
-        //else
-        //{
-        //    patrolGroup = new Vector3[PatrolTransform.Length];
-        //    for (int n = 0; n < PatrolTransform.Length; n++)
-        //    {
-        //        patrolGroup[n] = PatrolTransform[n].position;
-        //    }
-        //    leftPatrol = patrolGroup[0];
-        //    rightPatrol = patrolGroup[1];
-        //}
+       
     }
 
     private void OnDrawGizmos()
@@ -206,10 +225,10 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
                         else
                         {
                             isWall = true;
-                            if (mae.searchCollider.searchPlayer && !mae.searchCollider.onPatrol)
+                            if (PlayerDetected)
                             {
-                                mae.searchCollider.searchPlayer = false;
-                                mae.searchCollider.onPatrol = true;
+                                PlayerDetected = false;
+                      
                             }
                         }
                     }
@@ -240,19 +259,34 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     public void YesWallCheck()
     {
         wallCheck = true;
-        mae.searchCollider.wallCheck = true;
-        mae.attackColliderRange.wallCheck = true;
+
     }
 
     public void NoWallCheck()
     {
         wallCheck = false;
-        mae.searchCollider.wallCheck = false;
-        mae.attackColliderRange.wallCheck = false;
+
     }
     #endregion
     #region 추격
-    public virtual void TrackingMove()
+
+   public bool PlayerDetected;
+
+    public void TrackingMove_()
+    {
+        Debug.Log("플레이어 추격");
+        testTarget = PlayerHandler.instance.CurrentPlayer.transform.position - transform.position;
+        testTarget.y = 0;
+        disToPlayer = testTarget.magnitude;
+
+       
+        if (disToPlayer > trackingDistance /*|| f > 6*/)
+        {
+            PlayerDetected = false;
+
+        }
+    }
+    public virtual Vector3 TrackingMove()
     {
         Debug.Log("플레이어 추격");
         testTarget = PlayerHandler.instance.CurrentPlayer.transform.position - transform.position;
@@ -269,31 +303,25 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
 
         if (disToPlayer > trackingDistance /*|| f > 6*/)
         {
-            mae.searchCollider.searchPlayer = false;
-            target = null;
-            mae.searchCollider.onPatrol = true;
+            PlayerDetected = false;
+            
         }
+        return testTarget;
     }
 
-    public virtual void PatrolTracking()
+    public virtual Vector3 PatrolTracking()
     {
         Debug.Log("정찰 포인트 추격");
-        testTarget = targetPatrol - transform.position;
+       Vector3 testTarget = targetPatrol - transform.position;
         testTarget.y = 0;
 
-        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), eStat.rotationSpeed * Time.deltaTime);
-
-        //if (SetRotation())
-        //{
-
-        //    //enemymovepattern();
-        //    //PlayMoveSound();
-        //}
+       
         if (testTarget.magnitude < patrolDistance)
         {
             tracking = false;
             StartCoroutine(InitPatrolTarget());
         }
+        return testTarget;
 
     }
 

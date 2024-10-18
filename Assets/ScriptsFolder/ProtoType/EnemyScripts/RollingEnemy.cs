@@ -14,7 +14,7 @@ public class RollingEnemy : Enemy
         {
             if (tap.tracking)
             {
-                if (!activeAttack && !mae.attackColliderRange.onAttack)
+                if (!activeAttack )
                 {
                     RollingMove();
                 }
@@ -49,10 +49,10 @@ public class RollingEnemy : Enemy
     public override void Damaged(float damage)
     {
         base.Damaged(damage);
-        eStat.initMaxHP -= damage;
-        if (eStat.initMaxHP <= 0)
+        eStat.hp -= damage;
+        if (eStat.hp <= 0)
         {
-            eStat.initMaxHP = 0;
+            eStat.hp = 0;
 
             Dead();
         }

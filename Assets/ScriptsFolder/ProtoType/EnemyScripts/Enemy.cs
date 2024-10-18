@@ -11,13 +11,13 @@ public interface DamagedByPAttack
 
 public class Enemy: Character,DamagedByPAttack,environmentObject
 {
-
+  
     public GameObject EnemyHitCol2D;
 
     public Color testcolor;
     public EnemyMovePattern movepattern;
     public EnemyStat eStat;
-    public PatrolType patrolType;
+ 
     //public Rigidbody enemyRb; // 적 리지드바디
     public GameObject attackCollider; // 적의 공격 콜라이더 오브젝트        
     bool posRetry;
@@ -48,7 +48,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
     [Header("기절상태")]
     /*[HideInInspector]*/
-    bool onStun;
+  public  bool onStun;
     protected bool die, hitted;
     
     private void OnEnable()
@@ -63,14 +63,12 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         if (attackCollider != null)
             attackCollider.SetActive(false);
         eStat = GetComponent<EnemyStat>();
-        
+        if(tap.attackColliderRange!=null)
+        tap.attackColliderRange.enemy = this;
+        tap.attackColliderRange.tap = tap;
+        if (tap.searchCollider_ != null)
+            tap.searchCollider_.tap = tap;
 
-        if (patrolType == PatrolType.movePatrol)
-        {
-            //InitPatrolPoint();
-            if(mae.searchCollider.onPatrol)
-                StartCoroutine(tap.InitPatrolTarget());
-        }
         actionhandler = GetComponent<EnemyAttackHandler>();
         if (actionhandler != null)
             actionhandler.e = this;
@@ -126,11 +124,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
         }
 
-        if (mae.searchCollider.searchPlayer)
-        {
-            if (PlayerHandler.instance.CurrentPlayer != null)
-                tap.target = PlayerHandler.instance.CurrentPlayer.transform;
-        }
+       
     }
 
     protected virtual void MoveAnimationPlay()
@@ -140,20 +134,27 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             animaor.SetBool("isMove", isMove);
         }
     }
-
+    bool CanAttack;
     private void FixedUpdate()
     {
         /*if (searchPlayer)
             DistanceToPlayer();*/
 
-        if (!onStun)
+        if (die || hitted)
+            return;
+            if (!onStun)
         {
-            if (!mae.attackColliderRange.attackRange)
+
+
+            //if (!mae.attackColliderRange.attackRange)
+            if(CanAttack)
                 Move();
 
+
+            //ismove=move 에니메이션 관련 변수 -> move쪽으로 옮기기
             if (movepattern == EnemyMovePattern.stop)
             {
-                if (tap.tracking && !mae.attackColliderRange.onAttack && !mae.attackColliderRange.attackRange && mae.searchCollider.searchPlayer)
+                if (tap.tracking && !activeAttack  && tap.PlayerDetected)
                 {
                     isMove = true;
                 }
@@ -164,7 +165,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             }
             else
             {
-                if (tap.tracking && !mae.attackColliderRange.onAttack && !mae.attackColliderRange.attackRange)
+                if (tap.tracking && !activeAttack)
                 {
                     isMove = true;
                 }
@@ -221,34 +222,25 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     #region 피격함수
     public virtual void HittedRotate()
     {
-        if (tap.target != null) 
-        {
-            if (PlayerHandler.instance.CurrentPlayer != null && tap.target.gameObject == PlayerHandler.instance.CurrentPlayer.gameObject)
-            {
-                tap.target = PlayerHandler.instance.CurrentPlayer.transform;
 
-                Vector3 pos = tap.target.position - transform.position;
+            if (PlayerHandler.instance.CurrentPlayer != null)
+            {
+               Vector3 target = PlayerHandler.instance.CurrentPlayer.transform.position;
+
+                Vector3 pos = target - transform.position;
                 pos.y = 0;
                 transform.rotation = Quaternion.LookRotation(pos);
             }
-        }
-        else
-        {
-            tap.target = PlayerHandler.instance.CurrentPlayer.transform;
-
-            Vector3 pos = tap.target.position - transform.position;
-            pos.y = 0;
-            transform.rotation = Quaternion.LookRotation(pos);
-        }
+  
         rb.AddForce(-transform.forward * 3f, ForceMode.Impulse);
     }
     public override void Damaged(float damage)
     {
         base.Damaged(damage);
-        eStat.initMaxHP -= damage;
-        if (eStat.initMaxHP <= 0)
+        eStat.hp -= damage;
+        if (eStat.hp <= 0)
         {
-            eStat.initMaxHP = 0;
+            eStat.hp = 0;
 
             Dead();
         }
@@ -362,7 +354,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         onFlat = true;
         flatObject.transform.localScale = flatScale;
         flatTime = flat;
-        mae.attackColliderRange.attackRange = false;
+
         Debug.Log(flat);
 
         if (mae != null && mae.skinRenderer != null)
@@ -393,7 +385,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public void StartStun() // 납작해지게 하는 다리미 내려찍기에 맞았을 때 호출되는 함수
     {
         onStun = true;
-        mae.attackColliderRange.onStun = true;
+     
         if(reachAttack!=null)
         reachAttack.onStun = false;
     }
@@ -401,7 +393,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public void EndStun()
     {
         onStun = false;
-        mae.attackColliderRange.onStun = false;
+   
         if(reachAttack!=null)
         reachAttack.onStun = false;
     }
@@ -419,43 +411,31 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     #endregion
     protected bool onmove;
     #region 이동함수
-  
+
     // 그래서 기존에 있던 함수를 수정만 했습니다
+
+
+    public Vector3 MoveDirection;
+
+
     public override void Move()
     {
-        if (movepattern == EnemyMovePattern.patrol)
-        {
-            if (!die || !hitted)
-            {
-                if (tap.tracking)
+        //if (movepattern == EnemyMovePattern.patrol)
+        //{여기를 시스템화를 위한 밑작업으로 빼두기
+
+         
+                if ( !activeAttack )
                 {
-                    if (!activeAttack && !mae.attackColliderRange.onAttack)
-                    {
-                        if (patrolType == PatrolType.movePatrol)
-                        {
-                            DecideTracking();
-                            enemymovepattern();
-                        }
-                    }
+            Vector3 target = tap.GetTarget();
+                    transform.rotation = Quaternion.LookRotation(target);
+                    enemymovepattern();
+                        
                 }              
-            }
-        }     
+            
+        //}     
     }
 
-    public void DecideTracking()
-    {
-
-        if (mae.searchCollider.searchPlayer)
-        {
-            tap.TrackingMove();
-        }
-        else if(mae.searchCollider.onPatrol)
-        {
-            tap.PatrolTracking();
-        }
-        //LookAt을 박아버리니까 위 방향으로 바라보고 통통튀는 현상때문에 LookRotation박았습니다.
-        transform.rotation = Quaternion.LookRotation(tap.testTarget);
-    }
+ 
 
     protected virtual void PlayMoveSound()
     {
@@ -469,18 +449,13 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             rb.MovePosition(environmentforce + transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
     }
 
-    #region 정찰
+    #region DrawGizomo
     //정찰 포인트 그리는 건에 대해서는 
     //큐브에서 스피어 처리로 변경했습니다
     private void OnDrawGizmos()
     {
-        if (!eStat)
-        {
-            eStat = GetComponent<EnemyStat>();
-        }
+       
 
-        if (patrolType == PatrolType.movePatrol)
-        {
             if (tap.firstPoint != Vector3.zero && tap.secondPoint != Vector3.zero)
             {
                 if (CharColliderColor.instance != null)
@@ -515,7 +490,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             else
                 Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, tap.trackingDistance);
-        }
+        
 
 /*        if (patrolType == PatrolType.movePatrol)
         {
@@ -615,7 +590,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     // 공격 준비시간
     public void ReadyAttackTime()
     {
-        if (mae.attackColliderRange.onAttack && !die)
+        if (activeAttack && !die)
         {
             if(!activeAttack)
             {
@@ -648,7 +623,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     // 공격 초기화
     public void InitAttackCoolTime()
     {        
-        mae.attackColliderRange.onAttack = false;        
+     
         activeAttack = false;
         attackTimer = eStat.initattackCoolTime;
     }

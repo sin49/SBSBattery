@@ -7,7 +7,7 @@ public class EnemySearchCollider : MonoBehaviour, colliderDisplayer
 {
     BoxCollider searchCollider;
     public MeshRenderer childMat;
-    public bool searchPlayer, onPatrol;
+    public EnemyTrackingAndPatrol tap;
 
     public void ActiveColliderDisplay()
     {
@@ -64,21 +64,21 @@ public class EnemySearchCollider : MonoBehaviour, colliderDisplayer
             childMat.sharedMaterials[0].color = CharColliderColor.instance.searchRange;
         }
     }
-    public bool wallCheck;
+
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             //enemy.target = other.transform;
-            if (!wallCheck)
+            if (!tap. wallCheck)
             {
-                searchPlayer = true;
-                onPatrol = false;
+                tap.PlayerDetected = true;
+
             }
             else
             {
-                searchPlayer = false;
-                onPatrol = true;
+                tap.PlayerDetected = false;
+
             }            
         }
     }

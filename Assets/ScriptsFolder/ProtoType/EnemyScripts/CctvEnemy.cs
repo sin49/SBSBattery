@@ -73,7 +73,7 @@ public class CctvEnemy : Enemy
 
     public void TrackingPlayer()
     {
-        cctvNeck.target = tap.target;
+        cctvNeck.target = PlayerHandler.instance.CurrentPlayer.transform;
     }
 
     void CctvPatrol()
@@ -84,12 +84,12 @@ public class CctvEnemy : Enemy
             {
                 pointElement = 0;
             }
-            tap.target = patrolPoint[pointElement++];
-            cctvNeck.target = tap.target;
+
             pointCheck = false;
             endWait = false;
         }
-
+            //tap.target = patrolPoint[pointElement++];
+            //cctvNeck.target = tap.target;
         /*if (!pointCheck)
         {
             testTarget = target.position - cctvHead.transform.position;

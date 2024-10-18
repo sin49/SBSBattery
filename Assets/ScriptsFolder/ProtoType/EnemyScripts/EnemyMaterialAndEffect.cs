@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EnemyMaterialAndEffect : MonoBehaviour
 {
-    public AttackColliderRange attackColliderRange;
-    public EnemySearchCollider searchCollider;
+   
+
 
     [Header("기본 머티리얼")]
     public Material idleMat;
