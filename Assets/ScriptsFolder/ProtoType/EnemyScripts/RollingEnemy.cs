@@ -49,10 +49,10 @@ public class RollingEnemy : Enemy
     public override void Damaged(float damage)
     {
         base.Damaged(damage);
-        eStat.hp -= damage;
-        if (eStat.hp <= 0)
+        eStat.initMaxHP -= damage;
+        if (eStat.initMaxHP <= 0)
         {
-            eStat.hp = 0;
+            eStat.initMaxHP = 0;
 
             Dead();
         }

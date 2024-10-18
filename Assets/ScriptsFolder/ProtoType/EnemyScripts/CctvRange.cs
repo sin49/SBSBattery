@@ -46,7 +46,7 @@ public class CctvRange : MonoBehaviour
     {
         yield return new WaitForSeconds(cctvE.callTime);
 
-        if (cctvE.eStat.hp > 0)
+        if (cctvE.eStat.initMaxHP > 0)
         {
             //cctvE.EnemyCall();
         }
