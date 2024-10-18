@@ -29,8 +29,8 @@ public class CctvRange : MonoBehaviour
         //Debug.Log("°Å¸²");
         if (other.CompareTag("Player"))
         {
-            cctvE.tracking = true;
-            cctvE.target = other.transform;
+            cctvE.tap.tracking = true;
+            cctvE.tap.target = other.transform;
             cctvE.TrackingPlayer();
             if (ct != null)
             {
@@ -69,7 +69,7 @@ public class CctvRange : MonoBehaviour
     IEnumerator StopTrackingTime()
     {
         yield return new WaitForSeconds(cctvE.stopTime);
-        cctvE.tracking = false;
+        cctvE.tap.tracking = false;
         cctvE.endWait = true;
         cctvE.pointCheck = true;
     }

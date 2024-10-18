@@ -10,7 +10,7 @@ public class BulbEnemy : Enemy
 
     private void Update()
     {
-        if (!wallCheck)
+        if (!mae.attackColliderRange.wallCheck && !mae.searchCollider.wallCheck)
         {
             ReadyAttackTime();
         }

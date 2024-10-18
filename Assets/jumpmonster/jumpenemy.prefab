@@ -1,5 +1,38 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &56062484271375484
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8751882509965634993}
+  m_Layer: 9
+  m_Name: EnemyStatus
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8751882509965634993
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56062484271375484}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1722227347812799948}
+  - {fileID: 8448577237878369493}
+  m_Father: {fileID: 7804507524740888204}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &114291701040999242
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,12 +230,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 128378721193019863}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7804507524740888204}
+  m_Father: {fileID: 8751882509965634993}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1913346259159127900
 MonoBehaviour:
@@ -235,6 +268,7 @@ MonoBehaviour:
   rightPatrol: {x: 0, y: 0, z: 0}
   yWidth: 0
   zWidth: 0
+  center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &318482198817513620
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,12 +512,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1105638697789756242}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7804507524740888204}
+  m_Father: {fileID: 8751882509965634993}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6384790011460838483
 MonoBehaviour:
@@ -497,6 +531,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77994e88889845f48b2a57586d8ed81e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackColliderRange: {fileID: 4510892194653210080}
+  searchCollider: {fileID: 6259014503651476495}
   idleMat: {fileID: 2100000, guid: a32e892b47d953e4dac2e7824cec1404, type: 2}
   backMat: {fileID: 0}
   headMat: {fileID: 2100000, guid: c124b0578c5be5d4fa6cb1884e3a28b6, type: 2}
@@ -505,10 +541,13 @@ MonoBehaviour:
   deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
     type: 3}
   moveEffect: {fileID: 0}
-  emmissionbackMat: {fileID: 0}
-  emmissionheadMat: {fileID: 2100000, guid: 5368ce538abe957498d33ab678bdabc8, type: 2}
-  emmissionhittedMat: {fileID: 2100000, guid: 65c06fb54d4ce7243bae71545fcc0116, type: 2}
+  emmissionBackMat: {fileID: 0}
+  emmissionHeadMat: {fileID: 0}
+  emmissionHittedMat: {fileID: 0}
   skinHead: {fileID: 0}
+  originMat: []
+  emmissionMat: []
+  endEmmissionMat: []
 --- !u!1 &1683629089037269133
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,8 +675,7 @@ Transform:
   - {fileID: 3310779002993671319}
   - {fileID: 3816802894367593732}
   - {fileID: 7721169529317520566}
-  - {fileID: 8448577237878369493}
-  - {fileID: 1722227347812799948}
+  - {fileID: 8751882509965634993}
   m_Father: {fileID: 306610176100484830}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &946626319138551496
@@ -658,38 +696,27 @@ MonoBehaviour:
   eStat: {fileID: 4206946721582284119}
   patrolType: 1
   attackCollider: {fileID: 0}
-  deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
-    type: 3}
   animaor: {fileID: 531371356096370578}
-  moveEffect: {fileID: 0}
   environmentforce: {x: 0, y: 0, z: 0}
   isMove: 0
   tap: {fileID: 1913346259159127900}
   searchCollider: {fileID: 6259014503651476495}
   mae: {fileID: 6384790011460838483}
-  yWidth: 3
-  zWidth: 3
+  acr: {fileID: 4510892194653210080}
+  reachAttack: {fileID: 0}
   wallRayHeight: 0.3
   wallRayLength: 3.5
   wallRayUpLength: 3.5
-  forwardWall: {fileID: 0}
-  upWall: {fileID: 0}
-  disToWall: 0
   wallCheck: 0
   attackTimer: 0
   attackDelay: 0
   actionhandler: {fileID: 0}
-  callCheck: 0
   rotCheck: 0
-  onAttack: 0
   activeAttack: 0
-  checkPlayer: 0
   target: {fileID: 0}
   tracking: 0
   testTarget: {x: 0, y: 0, z: 0}
   rotationSpeed: 0
-  onStun: 0
-  reachCheck: 0
   attackRange: 0
   viewActive: 0
   direction: {x: 0, y: 0, z: 0}
@@ -698,11 +725,8 @@ MonoBehaviour:
   flatTime: 0
   timer: 0
   onFlat: 0
-  rotLevel: 0
-  testAngle: 0
   jumpforce: 10
   jumpdelay: 1.65
-  emmissionHeadMat: {fileID: 2100000, guid: 5368ce538abe957498d33ab678bdabc8, type: 2}
 --- !u!114 &4206946721582284119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -730,12 +754,9 @@ MonoBehaviour:
   attackDelay: 0
   canMove: 0
   canAttack: 0
-  eState: 0
   dropGroup:
     parts: {fileID: 0}
     partValue: 0
-  onInvincible: 0
-  invincibleTimer: 0
 --- !u!65 &1544045533779379944
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1290,13 +1311,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4957776089457073330}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0c8e1a25490c2d40a4b57a08ff80e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 946626319138551496}
   childMat: {fileID: 3197171151876126634}
+  onAttack: 0
+  onStun: 0
+  wallCheck: 0
+  attackRange: 0
 --- !u!65 &3881094143454133136
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1851,9 +1875,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childMat: {fileID: 5658360971409915617}
-  tap: {fileID: 0}
   searchPlayer: 0
   onPatrol: 0
+  wallCheck: 0
 --- !u!1 &8031997704422219300
 GameObject:
   m_ObjectHideFlags: 0

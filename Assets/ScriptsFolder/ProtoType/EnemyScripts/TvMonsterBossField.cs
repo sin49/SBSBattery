@@ -23,34 +23,34 @@ public class TvMonsterBossField : Enemy
     {
         base.Move();
 
-        distance = Vector3.Distance(transform.position, target.position);
-        if (distance < distanceValue)
-        {            
-            tracking = false;
-            target = null;
-            gameObject.SetActive(false);
-            hsl.monsterCount++;
-            hsl.CheckMonsterCount();
-        }
+        //distance = Vector3.Distance(transform.position, target.position);
+        //if (distance < distanceValue)
+        //{            
+        //    tracking = false;
+        //    target = null;
+        //    gameObject.SetActive(false);
+        //    hsl.monsterCount++;
+        //    hsl.CheckMonsterCount();
+        //}
     }
 
     public void SetHandle(HandleSpotlight handleSpotLight)
     {
         hsl = handleSpotLight;
-        target = hsl.moveTarget.transform;
-        if (target != null)
-        {
-            tracking = true;
-        }
+        //target = hsl.moveTarget.transform;
+        //if (target != null)
+        //{
+        //    tracking = true;
+        //}
     }
 
     public void SetHandle(BossHandle bossHandle)
     {
         bh = bossHandle;
-        target = hsl.moveTarget.transform;
-        if (target != null)
-        {
-            tracking = true;
-        }
+        //target = hsl.moveTarget.transform;
+        //if (target != null)
+        //{
+        //    tracking = true;
+        //}
     }
 }

@@ -562,6 +562,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9cd343a7acff642b48f0103aade916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1310717227977888041
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5819993784227525810}
+  m_Layer: 9
+  m_Name: EnemyStatus
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5819993784227525810
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310717227977888041}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 562378922244030336}
+  - {fileID: 7980100144063536230}
+  m_Father: {fileID: 6248263193908544099}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1403772824634724427
 GameObject:
   m_ObjectHideFlags: 0
@@ -749,12 +782,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1657886026672130344}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6248263193908544099}
+  m_Father: {fileID: 5819993784227525810}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6525882660683060561
 MonoBehaviour:
@@ -768,6 +801,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77994e88889845f48b2a57586d8ed81e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackColliderRange: {fileID: 3094345857143373661}
+  searchCollider: {fileID: 229974071491600694}
   idleMat: {fileID: 2100000, guid: 1c515456b96e2b244809cbaa151bcc0c, type: 2}
   backMat: {fileID: 0}
   headMat: {fileID: 0}
@@ -780,6 +815,9 @@ MonoBehaviour:
   emmissionHeadMat: {fileID: 0}
   emmissionHittedMat: {fileID: 0}
   skinHead: {fileID: 0}
+  originMat: []
+  emmissionMat: []
+  endEmmissionMat: []
 --- !u!1 &1906366522468217231
 GameObject:
   m_ObjectHideFlags: 0
@@ -1511,12 +1549,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4037336943117070997}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6248263193908544099}
+  m_Father: {fileID: 5819993784227525810}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3823224255344580435
 MonoBehaviour:
@@ -3070,7 +3108,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childMat: {fileID: 7111033441443271234}
-  tap: {fileID: 0}
   searchPlayer: 0
   onPatrol: 0
   wallCheck: 0
@@ -3116,8 +3153,7 @@ Transform:
   - {fileID: 4249020135298567383}
   - {fileID: 2087152660105114164}
   - {fileID: 7144094099410898771}
-  - {fileID: 7980100144063536230}
-  - {fileID: 562378922244030336}
+  - {fileID: 5819993784227525810}
   m_Father: {fileID: 597446989917729714}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!135 &7706961479488324395
@@ -3174,16 +3210,12 @@ MonoBehaviour:
   attackTimer: 0
   attackDelay: 0
   actionhandler: {fileID: 0}
-  callCheck: 0
   rotCheck: 0
-  onAttack: 0
   activeAttack: 0
-  checkPlayer: 0
   target: {fileID: 0}
   tracking: 0
   testTarget: {x: 0, y: 0, z: 0}
   rotationSpeed: 0
-  reachCheck: 0
   attackRange: 0
   viewActive: 0
   direction: {x: 0, y: 0, z: 0}
@@ -3491,11 +3523,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c8e1a25490c2d40a4b57a08ff80e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 470020728077926901}
   childMat: {fileID: 657856157463213917}
   onAttack: 0
   onStun: 0
   wallCheck: 0
+  attackRange: 0
 --- !u!65 &2098708879523002716
 BoxCollider:
   m_ObjectHideFlags: 0

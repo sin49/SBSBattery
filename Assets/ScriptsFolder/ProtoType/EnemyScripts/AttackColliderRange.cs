@@ -101,7 +101,7 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
                 onAttack = true;
             }
 
-            if (!wallCheck && onStun)            
+            if (!wallCheck && !onStun)            
                 attackRange = true;
         }
     }

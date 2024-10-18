@@ -12,9 +12,9 @@ public class RollingEnemy : Enemy
     {
         if (!die)
         {
-            if (tracking)
+            if (tap.tracking)
             {
-                if (!activeAttack && !acr.onAttack)
+                if (!activeAttack && !mae.attackColliderRange.onAttack)
                 {
                     RollingMove();
                 }

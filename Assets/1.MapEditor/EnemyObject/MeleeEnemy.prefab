@@ -455,12 +455,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1050565587117188323}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4932922018843922339}
+  m_Father: {fileID: 4583165588567418818}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2960088906172574130
 MonoBehaviour:
@@ -474,6 +474,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77994e88889845f48b2a57586d8ed81e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackColliderRange: {fileID: 2937360031623099487}
+  searchCollider: {fileID: 4554639551137100570}
   idleMat: {fileID: 2100000, guid: 7fd566f8380a235468d394405518a4b9, type: 2}
   backMat: {fileID: 2100000, guid: 9c97c06c72f3fe64cb60c7eaeba194e8, type: 2}
   headMat: {fileID: 2100000, guid: 9c97c06c72f3fe64cb60c7eaeba194e8, type: 2}
@@ -486,6 +488,9 @@ MonoBehaviour:
   emmissionHeadMat: {fileID: 2100000, guid: 964fab2fdaf4ca248bb3a17ea54e2d28, type: 2}
   emmissionHittedMat: {fileID: 2100000, guid: 98447d4f92961f44c91ab9e504c84f43, type: 2}
   skinHead: {fileID: 8575492306198351625}
+  originMat: []
+  emmissionMat: []
+  endEmmissionMat: []
 --- !u!1 &1156272559141001971
 GameObject:
   m_ObjectHideFlags: 0
@@ -1767,11 +1772,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c8e1a25490c2d40a4b57a08ff80e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 8357529297946861037}
   childMat: {fileID: 3827246484387067793}
   onAttack: 0
   onStun: 0
   wallCheck: 0
+  attackRange: 0
 --- !u!65 &3623799458026887797
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2113,12 +2118,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4298245893491162122}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4932922018843922339}
+  m_Father: {fileID: 4583165588567418818}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3904509428237187305
 MonoBehaviour:
@@ -2132,16 +2137,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af7fc425e385fea40bd278dc84bf8422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mae: {fileID: 2960088906172574130}
   rangeCollider: {fileID: 3681817933639915115}
   rangeSize: {x: 0, y: 0, z: 0}
   rangePos: {x: 0, y: 0, z: 0}
   searchCollider: {fileID: 6137782046602912412}
   searchColliderRange: {x: 0, y: 0, z: 0}
   searchColliderPos: {x: 0, y: 0, z: 0}
+  target: {fileID: 0}
+  tracking: 0
+  testTarget: {x: 0, y: 0, z: 0}
   trackingDistance: 0
   disToPlayer: 0
-  PatrolTransform: []
-  patrolGroup: []
+  firstPoint: {x: 0, y: 0, z: 0}
+  secondPoint: {x: 0, y: 0, z: 0}
   targetPatrol: {x: 0, y: 0, z: 0}
   patrolWaitTime: 0
   leftPatrolRange: 0
@@ -2152,6 +2161,43 @@ MonoBehaviour:
   yWidth: 0
   zWidth: 0
   center: {x: 0, y: 0, z: 0}
+  wallRayHeight: 0
+  wallRayLength: 0
+  wallRayUpLength: 0
+  wallCheck: 0
+--- !u!1 &4603672121430995988
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4583165588567418818}
+  m_Layer: 9
+  m_Name: EnemyStatus
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4583165588567418818
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4603672121430995988}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8217011977586283142}
+  - {fileID: 7849132985006679678}
+  m_Father: {fileID: 4932922018843922339}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4626354165801913931
 GameObject:
   m_ObjectHideFlags: 0
@@ -2283,7 +2329,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad5c99af03d1ff9438716be847afbfa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
   damage: 0
   onStun: 0
 --- !u!1 &4982990986549760528
@@ -2662,8 +2707,7 @@ Transform:
   - {fileID: 4056746804504027684}
   - {fileID: 6695227901757261625}
   - {fileID: 3978588500716103331}
-  - {fileID: 8217011977586283142}
-  - {fileID: 7849132985006679678}
+  - {fileID: 4583165588567418818}
   m_Father: {fileID: 1450748851887952676}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!135 &4782575805838505450
@@ -2736,27 +2780,17 @@ MonoBehaviour:
   environmentforce: {x: 0, y: 0, z: 0}
   isMove: 0
   tap: {fileID: 3904509428237187305}
-  searchCollider: {fileID: 4554639551137100570}
   mae: {fileID: 2960088906172574130}
-  acr: {fileID: 2937360031623099487}
   reachAttack: {fileID: 5720393083719718969}
-  wallRayHeight: 0.3
-  wallRayLength: 3.5
-  wallRayUpLength: 3.5
-  wallCheck: 0
   attackTimer: 0
   attackDelay: 0.1
   actionhandler: {fileID: 0}
-  callCheck: 0
   rotCheck: 0
-  onAttack: 0
   activeAttack: 0
-  checkPlayer: 0
   target: {fileID: 0}
   tracking: 0
   testTarget: {x: 0, y: 0, z: 0}
   rotationSpeed: 8
-  reachCheck: 0
   attackRange: 0
   viewActive: 0
   direction: {x: 0, y: 0, z: 0}
@@ -2765,10 +2799,6 @@ MonoBehaviour:
   flatTime: 0
   timer: 0
   onFlat: 0
-  emmissionHittedMat: {fileID: 2100000, guid: 98447d4f92961f44c91ab9e504c84f43, type: 2}
-  emmissionHeadMat: {fileID: 2100000, guid: 964fab2fdaf4ca248bb3a17ea54e2d28, type: 2}
-  emmissionBackMat: {fileID: 2100000, guid: 964fab2fdaf4ca248bb3a17ea54e2d28, type: 2}
-  skinHead: {fileID: 8575492306198351625}
 --- !u!114 &6399371868865806208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2989,7 +3019,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childMat: {fileID: 3692971729834942315}
-  tap: {fileID: 0}
   searchPlayer: 0
   onPatrol: 0
   wallCheck: 0

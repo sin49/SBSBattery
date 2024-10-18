@@ -18,7 +18,7 @@ public class jumpenemy : Enemy
     {
         
     }
-    public override void enemymovepattern()
+    /*public override void enemymovepattern()
     {
        
         if (onground&&!oncorutine)
@@ -41,18 +41,18 @@ public class jumpenemy : Enemy
 
                 if (movepattern == EnemyMovePattern.patrol)
                 {
-                    if (patrolType == PatrolType.movePatrol && searchCollider.onPatrol)
+                    if (patrolType == PatrolType.movePatrol && mae.searchCollider.onPatrol)
                     {
 
                         PatrolTracking();
                     }
                 }
-                if (searchCollider.searchPlayer)
+                if (mae.searchCollider.searchPlayer)
                     TrackingMove();
 
             }
         }
-    }
+    }*/
     IEnumerator jumpmove()
     {
         //    if (activeAttack)
