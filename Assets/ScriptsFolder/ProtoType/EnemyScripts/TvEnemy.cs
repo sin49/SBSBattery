@@ -79,7 +79,7 @@ public class TvEnemy : Enemy
                     testTarget = target.position - transform.position;
                     testTarget.y = 0;
 
-                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), eStat.rotationSpeed * Time.deltaTime);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), 2.0f * Time.deltaTime);
 
                     if (Quaternion.Angle(transform.rotation, Quaternion.LookRotation(testTarget)) < 0.8f)
                     {
