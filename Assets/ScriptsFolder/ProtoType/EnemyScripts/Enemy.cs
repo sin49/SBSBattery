@@ -44,19 +44,13 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     
     //public bool onAttack; // 공격 활성화 여부 (공격 범위 내에 플레이어를 인식했을 때 true 변환)
     
-    [HideInInspector] public bool activeAttack; // 공격 가능한 상태인지 체크
-            
-    [HideInInspector]
-    public float rotationSpeed; // 자연스러운 회전을 찾기 위한 테스트 
+    [HideInInspector] public bool activeAttack; // 공격 가능한 상태인지 체크            
 
     [Header("기절상태")]
     /*[HideInInspector]*/
     bool onStun;
-    bool complete;
-    public bool attackRange;
-
-    public bool viewActive;
     protected bool die, hitted;
+    
     private void OnEnable()
     {
         //StartCoroutine(InitPatrolTarget());

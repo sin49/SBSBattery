@@ -81,7 +81,7 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
     private void OnTriggerStay(Collider other)
     {
         //ebug.Log($"트리거 감지 중 {other.gameObject}");   
-        if (other.CompareTag("Player") /*&&enemy.target!=null*/ && onStun && onAttack)
+        if (other.CompareTag("Player") /*&&enemy.target!=null*/ && !onStun && !onAttack)
         {
             if (!wallCheck)
             {
@@ -108,7 +108,7 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") /*&& enemy.target != null*/ && onStun)
+        if (other.CompareTag("Player") /*&& enemy.target != null*/ && !onStun)
         {
             attackRange = false;
         }
