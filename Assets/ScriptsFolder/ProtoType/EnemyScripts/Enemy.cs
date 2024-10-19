@@ -150,32 +150,6 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             //if (!mae.attackColliderRange.attackRange)
             if (!CanAttack)
                 Move();
-
-
-            //ismove=move 에니메이션 관련 변수 -> move쪽으로 옮기기
-            if (movepattern == EnemyMovePattern.stop)
-            {
-                if (tap.tracking && !activeAttack  && tap.PlayerDetected)
-                {
-                    isMove = true;
-                }
-                else
-                {
-                    isMove = false;
-                }
-            }
-            else
-            {
-                if (tap.tracking && !activeAttack)
-                {
-                    isMove = true;
-                }
-                else
-                {
-                    isMove = false;
-                }
-            }
-            MoveAnimationPlay();
         }
         tap.ForwardWallRayCheck();
         tap.UpWallRayCheck();
@@ -425,14 +399,39 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         //{여기를 시스템화를 위한 밑작업으로 빼두기
 
          
-                if ( !activeAttack )
+                if ( !activeAttack && tap.tracking)
                 {
             Vector3 target = tap.GetTarget();
                     transform.rotation = Quaternion.LookRotation(target);
                     enemymovepattern();
                         
-                }              
-            
+                }
+
+        //ismove = move 에니메이션 관련 변수->move쪽으로 옮기기
+        if (movepattern == EnemyMovePattern.stop)
+        {
+            if (tap.tracking && !activeAttack && tap.PlayerDetected)
+            {
+                isMove = true;
+            }
+            else
+            {
+                isMove = false;
+            }
+        }
+        else
+        {
+            if (tap.tracking && !activeAttack)
+            {
+                isMove = true;
+            }
+            else
+            {
+                isMove = false;
+            }
+        }
+        MoveAnimationPlay();
+
         //}     
     }
 
@@ -591,16 +590,16 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     // 공격 준비시간
     public void ReadyAttackTime()
     {
-        if (activeAttack && !die)
-        {
+        if (activeAttack && !die && !CanAttack)
+        {            
             if (attackTimer > 0)
             {
                 attackTimer -= Time.deltaTime;
             }
             else
             {
+                CanAttack = true;
                 activeAttack = false;
-                attackTimer = eStat.initattackCoolTime;
                 Attack();
             }
         }        
@@ -615,13 +614,12 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     {
         yield return new WaitForSeconds(eStat.attackDelay);
         InitAttackCoolTime();
-
     }
 
     // 공격 초기화
     public void InitAttackCoolTime()
-    {             
-        activeAttack = false;
+    {
+        CanAttack = false;
         attackTimer = eStat.initattackCoolTime;        
     }
 

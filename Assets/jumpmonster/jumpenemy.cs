@@ -37,14 +37,37 @@ public class jumpenemy : Enemy
         //{여기를 시스템화를 위한 밑작업으로 빼두기
 
 
-        if (!activeAttack)
+        if (!activeAttack && tap.tracking)
         {
             Vector3 target = tap.GetTarget();
             transform.rotation = Quaternion.LookRotation(target);
             enemymovepattern();
 
         }
-
+        //ismove = move 에니메이션 관련 변수->move쪽으로 옮기기
+        if (movepattern == EnemyMovePattern.stop)
+        {
+            if (tap.tracking && !activeAttack && tap.PlayerDetected)
+            {
+                isMove = true;
+            }
+            else
+            {
+                isMove = false;
+            }
+        }
+        else
+        {
+            if (tap.tracking && !activeAttack)
+            {
+                isMove = true;
+            }
+            else
+            {
+                isMove = false;
+            }
+        }
+        MoveAnimationPlay();
         //}     
         //if (!die || !hitted)
         //{

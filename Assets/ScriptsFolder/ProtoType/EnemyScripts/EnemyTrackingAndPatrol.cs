@@ -319,11 +319,7 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
        
         if (testTarget.magnitude < patrolDistance)
         {
-            if (tracking)
-            {
-                tracking = false;
-                StartCoroutine(InitPatrolTarget());
-            }
+            StartCoroutine(InitPatrolTarget());
         }
         return testTarget;
 
@@ -333,6 +329,8 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     // PatrolChange()랑 SetPatrolTarget()은 제외 시키고 요약하여 두 벡터만 정확하게 선언하여 사용중입니다.
     public IEnumerator InitPatrolTarget()
     {
+        tracking = false;
+
         yield return new WaitForSeconds(patrolWaitTime);
 
         if (targetPatrol == firstPoint)

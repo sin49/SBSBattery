@@ -108,7 +108,7 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
 
     //private void OnTriggerExit(Collider other)
     //{
-    //    if (other.CompareTag("Player")  )
+    //    if (other.CompareTag("Player"))
     //    {
     //        enemy.activeAttack = false;
     //    }
