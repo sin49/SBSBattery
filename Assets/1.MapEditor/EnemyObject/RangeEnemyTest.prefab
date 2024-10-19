@@ -340,7 +340,6 @@ MonoBehaviour:
   testcolor: {r: 0, g: 0, b: 0, a: 0}
   movepattern: 1
   eStat: {fileID: 8609980832286711736}
-  patrolType: 1
   attackCollider: {fileID: 3865532210530730079}
   animaor: {fileID: 4057833397682292702}
   environmentforce: {x: 0, y: 0, z: 0}
@@ -353,15 +352,14 @@ MonoBehaviour:
   actionhandler: {fileID: 0}
   rotCheck: 0
   activeAttack: 0
-  rotationSpeed: 3
-  attackRange: 0
-  viewActive: 0
+  onStun: 0
   direction: {x: 0, y: 0, z: 0}
   flatObject: {fileID: 5761212257197023095}
   flatScaleY: 0.3
   flatTime: 0
   timer: 0
   onFlat: 0
+  MoveDirection: {x: 0, y: 0, z: 0}
   rangePrefab: {fileID: 6779815533108054730, guid: 97bc6e6f9f22fe742841b1cae458a0a6,
     type: 3}
   fire: {fileID: 4139484337864543759}
@@ -385,7 +383,6 @@ MonoBehaviour:
   MoveSpeedBonus: 0
   hp: 2
   atk: 1
-  rotationSpeed: 60
   attackSpeed: 0
   attackCoolTimebonus: 0
   initattackCoolTime: 1
@@ -871,16 +868,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1719816305384670078}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0c8e1a25490c2d40a4b57a08ff80e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   childMat: {fileID: 7687136675993815159}
-  onAttack: 0
-  onStun: 0
-  wallCheck: 0
-  attackRange: 0
+  enemy: {fileID: 7785685032937681645}
+  tap: {fileID: 3738638907998072025}
 --- !u!65 &2468396748455698361
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1142,8 +1137,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77994e88889845f48b2a57586d8ed81e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackColliderRange: {fileID: 2597715478896487610}
-  searchCollider: {fileID: 2202838001302264467}
   idleMat: {fileID: 2100000, guid: 7fd566f8380a235468d394405518a4b9, type: 2}
   backMat: {fileID: 2100000, guid: 9c97c06c72f3fe64cb60c7eaeba194e8, type: 2}
   headMat: {fileID: 2100000, guid: 9c97c06c72f3fe64cb60c7eaeba194e8, type: 2}
@@ -1354,9 +1347,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childMat: {fileID: 9034433454263000106}
-  searchPlayer: 0
-  onPatrol: 0
-  wallCheck: 0
+  tap: {fileID: 0}
 --- !u!1 &3422422235226122341
 GameObject:
   m_ObjectHideFlags: 0
@@ -3486,7 +3477,8 @@ MonoBehaviour:
   searchCollider: {fileID: 3419566179637107403}
   searchColliderRange: {x: 0, y: 0, z: 0}
   searchColliderPos: {x: 0, y: 0, z: 0}
-  target: {fileID: 0}
+  searchCollider_: {fileID: 2202838001302264467}
+  attackColliderRange: {fileID: 2597715478896487610}
   tracking: 0
   testTarget: {x: 0, y: 0, z: 0}
   trackingDistance: 0
@@ -3494,10 +3486,10 @@ MonoBehaviour:
   firstPoint: {x: 0, y: 0, z: 0}
   secondPoint: {x: 0, y: 0, z: 0}
   targetPatrol: {x: 0, y: 0.5, z: 0}
-  patrolWaitTime: 0
+  patrolWaitTime: 1
   leftPatrolRange: 0
   rightPatrolRange: 0
-  patrolDistance: 0
+  patrolDistance: 0.1
   leftPatrol: {x: 0, y: 0, z: 0}
   rightPatrol: {x: 0, y: 0, z: 0}
   yWidth: 0
@@ -3507,6 +3499,8 @@ MonoBehaviour:
   wallRayLength: 0
   wallRayUpLength: 0
   wallCheck: 0
+  patrolType: 1
+  PlayerDetected: 0
 --- !u!1 &8931937134772179971
 GameObject:
   m_ObjectHideFlags: 0

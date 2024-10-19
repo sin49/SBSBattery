@@ -60,6 +60,7 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     public bool wallCheck;
     bool forwardCheck, upCheck;
     public PatrolType patrolType;
+     
     public void InitPatrolPoint()
     {
 
@@ -318,8 +319,11 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
        
         if (testTarget.magnitude < patrolDistance)
         {
-            tracking = false;
-            StartCoroutine(InitPatrolTarget());
+            if (tracking)
+            {
+                tracking = false;
+                StartCoroutine(InitPatrolTarget());
+            }
         }
         return testTarget;
 

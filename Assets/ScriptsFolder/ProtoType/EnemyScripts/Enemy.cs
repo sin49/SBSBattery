@@ -135,6 +135,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         }
     }
     bool CanAttack;
+    
     private void FixedUpdate()
     {
         /*if (searchPlayer)
@@ -147,7 +148,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
 
             //if (!mae.attackColliderRange.attackRange)
-            if(CanAttack)
+            if (!CanAttack)
                 Move();
 
 
@@ -592,19 +593,16 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     {
         if (activeAttack && !die)
         {
-            if(!activeAttack)
+            if (attackTimer > 0)
             {
-                if (attackTimer > 0)
-                {
-                    attackTimer -= Time.deltaTime;
-                }
-                else
-                {
-                    activeAttack = true;
-                    attackTimer = eStat.initattackCoolTime;
-                    Attack();
-                }
-            }           
+                attackTimer -= Time.deltaTime;
+            }
+            else
+            {
+                activeAttack = false;
+                attackTimer = eStat.initattackCoolTime;
+                Attack();
+            }
         }        
     }
 
@@ -622,10 +620,9 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
     // 공격 초기화
     public void InitAttackCoolTime()
-    {        
-     
+    {             
         activeAttack = false;
-        attackTimer = eStat.initattackCoolTime;
+        attackTimer = eStat.initattackCoolTime;        
     }
 
     public void AddEnviromentPower(Vector3 power)

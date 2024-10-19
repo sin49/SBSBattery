@@ -18,7 +18,7 @@ public class jumpenemy : Enemy
     {
         
     }
-    /*public override void enemymovepattern()
+    public override void enemymovepattern()
     {
        
         if (onground&&!oncorutine)
@@ -29,39 +29,52 @@ public class jumpenemy : Enemy
     public override void Attack()
     {
         Debug.Log("공격 중");
-        TrackingMove();
+        enemymovepattern();
     }
     public override void Move()
     {
-        if (!die || !hitted)
+        //if (movepattern == EnemyMovePattern.patrol)
+        //{여기를 시스템화를 위한 밑작업으로 빼두기
+
+
+        if (!activeAttack)
         {
+            Vector3 target = tap.GetTarget();
+            transform.rotation = Quaternion.LookRotation(target);
+            enemymovepattern();
 
-            if (tracking)
-            {
-
-                if (movepattern == EnemyMovePattern.patrol)
-                {
-                    if (patrolType == PatrolType.movePatrol && mae.searchCollider.onPatrol)
-                    {
-
-                        PatrolTracking();
-                    }
-                }
-                if (mae.searchCollider.searchPlayer)
-                    TrackingMove();
-
-            }
         }
-    }*/
+
+        //}     
+        //if (!die || !hitted)
+        //{
+
+        //    if (tracking)
+        //    {
+
+        //        if (movepattern == EnemyMovePattern.patrol)
+        //        {
+        //            if (patrolType == PatrolType.movePatrol && mae.searchCollider.onPatrol)
+        //            {
+
+        //                PatrolTracking();
+        //            }
+        //        }
+        //        if (mae.searchCollider.searchPlayer)
+        //            TrackingMove();
+
+        //    }
+        //}
+    }
     IEnumerator jumpmove()
     {
-        //    if (activeAttack)
-        //    {
-        //        activeAttack = false;
-        //        oncorutine = false;
-        //        yield return new WaitForSeconds(jumpdelay);
-        //        yield break;
-        //    }
+        //if (activeAttack)
+        //{
+        //    activeAttack = false;
+        //    oncorutine = false;
+        //    yield return new WaitForSeconds(jumpdelay);
+        //    yield break;
+        //}
         oncorutine = true;
         animaor.SetTrigger("jump");
         yield return new WaitForSeconds(0.07f);

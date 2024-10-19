@@ -474,8 +474,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77994e88889845f48b2a57586d8ed81e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackColliderRange: {fileID: 2937360031623099487}
-  searchCollider: {fileID: 4554639551137100570}
   idleMat: {fileID: 2100000, guid: 7fd566f8380a235468d394405518a4b9, type: 2}
   backMat: {fileID: 2100000, guid: 9c97c06c72f3fe64cb60c7eaeba194e8, type: 2}
   headMat: {fileID: 2100000, guid: 9c97c06c72f3fe64cb60c7eaeba194e8, type: 2}
@@ -488,9 +486,6 @@ MonoBehaviour:
   emmissionHeadMat: {fileID: 2100000, guid: 964fab2fdaf4ca248bb3a17ea54e2d28, type: 2}
   emmissionHittedMat: {fileID: 2100000, guid: 98447d4f92961f44c91ab9e504c84f43, type: 2}
   skinHead: {fileID: 8575492306198351625}
-  originMat: []
-  emmissionMat: []
-  endEmmissionMat: []
 --- !u!1 &1156272559141001971
 GameObject:
   m_ObjectHideFlags: 0
@@ -1767,16 +1762,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3681817933639915115}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0c8e1a25490c2d40a4b57a08ff80e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   childMat: {fileID: 3827246484387067793}
-  onAttack: 0
-  onStun: 0
-  wallCheck: 0
-  attackRange: 0
+  enemy: {fileID: 8357529297946861037}
+  tap: {fileID: 3904509428237187305}
 --- !u!65 &3623799458026887797
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2144,7 +2137,8 @@ MonoBehaviour:
   searchCollider: {fileID: 6137782046602912412}
   searchColliderRange: {x: 0, y: 0, z: 0}
   searchColliderPos: {x: 0, y: 0, z: 0}
-  target: {fileID: 0}
+  searchCollider_: {fileID: 4554639551137100570}
+  attackColliderRange: {fileID: 2937360031623099487}
   tracking: 0
   testTarget: {x: 0, y: 0, z: 0}
   trackingDistance: 0
@@ -2152,7 +2146,7 @@ MonoBehaviour:
   firstPoint: {x: 0, y: 0, z: 0}
   secondPoint: {x: 0, y: 0, z: 0}
   targetPatrol: {x: 0, y: 0, z: 0}
-  patrolWaitTime: 0
+  patrolWaitTime: 1
   leftPatrolRange: 0
   rightPatrolRange: 0
   patrolDistance: 0
@@ -2165,6 +2159,8 @@ MonoBehaviour:
   wallRayLength: 0
   wallRayUpLength: 0
   wallCheck: 0
+  patrolType: 1
+  PlayerDetected: 0
 --- !u!1 &4603672121430995988
 GameObject:
   m_ObjectHideFlags: 0
@@ -2774,7 +2770,6 @@ MonoBehaviour:
   testcolor: {r: 0, g: 0, b: 0, a: 0}
   movepattern: 1
   eStat: {fileID: 6399371868865806208}
-  patrolType: 1
   attackCollider: {fileID: 40720322756340349}
   animaor: {fileID: 7885196055474843490}
   environmentforce: {x: 0, y: 0, z: 0}
@@ -2787,18 +2782,14 @@ MonoBehaviour:
   actionhandler: {fileID: 0}
   rotCheck: 0
   activeAttack: 0
-  target: {fileID: 0}
-  tracking: 0
-  testTarget: {x: 0, y: 0, z: 0}
-  rotationSpeed: 8
-  attackRange: 0
-  viewActive: 0
+  onStun: 0
   direction: {x: 0, y: 0, z: 0}
   flatObject: {fileID: 1414284240570580552}
   flatScaleY: 0.3
   flatTime: 0
   timer: 0
   onFlat: 0
+  MoveDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &6399371868865806208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2819,7 +2810,6 @@ MonoBehaviour:
   MoveSpeedBonus: 0
   hp: 2
   atk: 1
-  rotationSpeed: 60
   attackSpeed: 0
   attackCoolTimebonus: 0
   initattackCoolTime: 1
@@ -3019,9 +3009,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childMat: {fileID: 3692971729834942315}
-  searchPlayer: 0
-  onPatrol: 0
-  wallCheck: 0
+  tap: {fileID: 0}
 --- !u!1 &6449383165514389504
 GameObject:
   m_ObjectHideFlags: 0
