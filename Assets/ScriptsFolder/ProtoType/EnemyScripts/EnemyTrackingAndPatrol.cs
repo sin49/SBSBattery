@@ -53,12 +53,13 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     [Tooltip("벽 체크 Ray의 높이")] public float wallRayHeight;
     [Tooltip("정면 Ray 길이")] public float wallRayLength;
     [Tooltip("위쪽 Ray 길이")] public float wallRayUpLength;
-
+    [Tooltip("뒤쪽 Ray 길이")] public float wallRayBackLength;
     Collider forwardWall;
     Collider upWall;
+    Collider backWall;
     float disToWall;
     public bool wallCheck;
-    bool forwardCheck, upCheck;
+    bool forwardCheck, upCheck, backCheck;
     public PatrolType patrolType;
      
     public void InitPatrolPoint()
@@ -243,6 +244,54 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
         }
 
         upCheck = isWall;
+    }
+
+    public void BackWallRayCheck()
+    {
+        bool isWall = false;
+        upWall = null;
+        Debug.DrawRay(transform.position + Vector3.up * wallRayHeight, -transform.forward * wallRayBackLength, Color.magenta, 0.02f);
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position + Vector3.up * wallRayHeight, -transform.forward, out hit, wallRayBackLength, LayerMask.GetMask("Platform")))
+        {
+            if (hit.collider.CompareTag("Ground"))
+            {
+                backWall = hit.collider;
+                isWall = true;
+                //Debug.Log("Up탐지");
+            }
+
+            if (backWall != null)
+            {
+                if (PlayerHandler.instance != null)
+                {
+                    if (PlayerHandler.instance.CurrentPlayer != null)
+                    {
+                        if (transform.position.y < upWall.transform.position.y)
+                        {
+                            //Debug.Log("플레이어는 천장에 있지 않음");
+                            isWall = false; //플레이어 y축이 위쪽 바닥의 y축 보다 값이 작으면 false
+                        }
+                        else
+                        {
+                            isWall = true;
+                            if (PlayerDetected)
+                            {
+                                PlayerDetected = false;
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (backWall == null)
+        {
+            isWall = false;
+        }
+
+        backCheck = isWall;
     }
 
     public void WallCheckResult()

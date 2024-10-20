@@ -27,4 +27,19 @@ public class EnemyMaterialAndEffect : MonoBehaviour
     // 2개 / 1개(==스킨 렌더러 2개)  => 일반몬스터(얼굴,등), (머리 막대기)
     // 2개 => 점프 몬스터(몸통, 얼굴 투명관)
     // 1개 => 돌진 몬스터, 불 몬스터
+
+    public void StartEmmissionHitMat()
+    {
+
+    }
+
+    public void EndEmmissionHitMat()
+    {
+
+    }
+
+    public void EndHitMat()
+    {
+
+    }
 }
