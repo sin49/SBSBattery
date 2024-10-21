@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAction_Throwing : EnemyAction
+public class EnemyAction_Throwing : NormalEnemyAction
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public override void Invoke(Transform target = null)
     {
-        
+        Transform fire = e.attackCollider.transform;
+        if (PoolingManager.instance != null)
+            PoolingManager.instance.GetPoolObject("EnemyBullet", fire.transform);
+
+        DisableActionMethod();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   
+
 }

@@ -55,7 +55,7 @@ public abstract class Character: MonoBehaviour
         deadevent?.Invoke();//사망 이벤트 실행
     }
 
-    protected Rigidbody rb;
+    public Rigidbody rb;
     protected virtual void Awake()
     {
         rb= GetComponent<Rigidbody>();

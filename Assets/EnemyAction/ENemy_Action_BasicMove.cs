@@ -2,17 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ENemy_Action_BasicMove : MonoBehaviour
+public class ENemy_Action_BasicMove : NormalEnemyAction
 {
-    // Start is called before the first frame update
-    void Start()
+    
+    public override void Invoke(Transform target = null)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+       if(e.rb!=null)
+            e.rb.MovePosition(e.environmentforce + transform.position + transform.forward * Time.deltaTime * e.eStat.moveSpeed);
     }
 }

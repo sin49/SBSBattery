@@ -26,5 +26,6 @@ public class EnemyActionRush : EnemyAction
         }
         rb.velocity = Vector3.zero;
         yield return new WaitForSeconds(rushcooltime);
+        DisableActionMethod();
     }
 }

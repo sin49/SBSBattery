@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Action_rush : EnemyAction
+public class Enemy_Action_rush : NormalEnemyAction
 {
     [Header("돌진 사전 딜레이")]
     public float rushinitdelay;
@@ -17,15 +17,22 @@ public class Enemy_Action_rush : EnemyAction
     [Header("플레이어 밀려날 때 잠깐 조작 못하게 해야 함 그 시간임")]
     public float Playerstuntime = 0.25f;
     bool onrush;
+    public override void register(Enemy e)
+    {
+        base.register(e);
+
+    }
+    
     public override void Invoke(Transform target = null)
     {
-        base.Invoke(target);
+        if(!onrush&&e!=null)
+            StartCoroutine(rush(target));
     }
-    IEnumerator rush()
+    IEnumerator rush(Transform target)
     {
         Debug.Log("돌진!");
         onrush = true;
-        //this.transform.LookAt(new Vector3( target.position.x,this.transform.position.y,target.position.z));
+        this.transform.LookAt(new Vector3(target.position.x, this.transform.position.y, target.position.z));
 
 
         yield return new WaitForSeconds(rushinitdelay);
@@ -33,17 +40,17 @@ public class Enemy_Action_rush : EnemyAction
         float timer = 0;
         while (timer < rushtime)
         {
-           // attackCollider.SetActive(true);
-           // rb.MovePosition(transform.position + transform.forward * Time.deltaTime * rushspeed);
+            e. attackCollider.SetActive(true);
+           e.  rb.MovePosition(transform.position + transform.forward * Time.deltaTime * rushspeed);
             timer += Time.deltaTime;
             yield return null;
         }
-       // attackCollider.SetActive(false);
-      //  rb.velocity = Vector3.zero;
+     e.   attackCollider.SetActive(false);
+    e.    rb.velocity = Vector3.zero;
         yield return new WaitForSeconds(rushcooltime);
         onrush = false;
-        //activeAttack = false;
-        //InitAttackCoolTime();
+     e.   activeAttack = false;
+     e.   InitAttackCoolTime();
     }
     public void stoprush()
     {
@@ -51,12 +58,18 @@ public class Enemy_Action_rush : EnemyAction
         //InitAttackCoolTime();
         StartCoroutine(stoprushcorutine());
     }
+    public override void StopAction()
+    {
+        base.StopAction();
+        stoprush();
+    }
     IEnumerator stoprushcorutine()
     {
         onrush = true;
         yield return new WaitForSeconds(rushcooltime);
         onrush = false;
-        //activeAttack = false;
+        e.activeAttack = false;
+
     }
 
 }
