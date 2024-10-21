@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class EnemyTrackingAndPatrol : MonoBehaviour
@@ -9,25 +10,41 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     public EnemyMaterialAndEffect mae;
 
     [Header("#공격 활성화 콜라이더 큐브 조정#")]
-    [Tooltip("활성화 콜라이더")] public GameObject rangeCollider; // 공격 범위 콜라이더 오브젝트
-    [Tooltip("활성화 범위")] public Vector3 rangeSize;
-    [Tooltip("활성화 위치")] public Vector3 rangePos;
+    [Header("활성화 콜라이더")] public GameObject rangeCollider; // 공격 범위 콜라이더 오브젝트
+
+    [Header("활성화 범위")]
+    [Range(0, 10)] public float rangeSizeX;
+    [Range(0, 10)] public float rangeSizeY;
+    [Range(0, 10)] public float rangeSizeZ;
+
+    [Header("활성화 위치")]
+    [Range(0, 30)] public float rangePosX;
+    [Range(0, 30)] public float rangePosY; 
+    [Range(0, 30)] public float rangePosZ;
 
     [Header("#플레이어 탐색 큐브 조정(콜라이더)#")]
-    [Tooltip("탐색 콜라이더")] public GameObject searchCollider; // 탐지 범위 콜라이더
-    [Tooltip("탐색 범위")] public Vector3 searchColliderRange;
-    [Tooltip("탐색 위치")] public Vector3 searchColliderPos;
+    [Header("탐색 콜라이더")] public GameObject searchCollider; // 탐지 범위 콜라이더
+
+    [Header("탐색 범위")]
+    [Range(0, 10)] public float searchSizeX;
+    [Range(0, 10)] public float searchSizeY;
+    [Range(0, 10)] public float searchSizeZ;
+
+    [Header("탐색 위치")]
+    [Range(0, 30)] public float searchPosX;
+    [Range(0, 30)] public float searchPosY;
+    [Range(0, 30)] public float searchPosZ;
 
 
-    public EnemySearchCollider searchCollider_;
-    public AttackColliderRange attackColliderRange;
+    [Header("탐색콜라이더")]public EnemySearchCollider searchCollider_;
+    [Header("공격 활성화 콜라이더")]public AttackColliderRange attackColliderRange;
 
     //public Transform target; // 추적할 타겟
     public bool tracking; // 추적 활성화 체크
     public Vector3 testTarget; // 타겟을 바라보는 시점을 테스트하기 위한 임시 변수
 
     [Header("#추격 범위#")]
-    [Tooltip("탐색 후 추격 유지 범위")] public float trackingDistance;
+    [Header("탐색 후 추격 유지 범위")] public float trackingDistance;
     [Tooltip("설정 X")] public float disToPlayer;
 
     [Header("#정찰 이동관련(정찰 그룹, 정찰목표값, 정찰 대기시간)#")]
@@ -35,31 +52,33 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     public Vector3 firstPoint;
     public Vector3 secondPoint;
     [Header("스크립트 상에서 값이 결정됨")] public Vector3 targetPatrol; // 정찰 목표지점-> patrolGroup에서 지정
-    [Tooltip("정찰 대기시간")] public float patrolWaitTime; // 정찰 대기시간
+    [Tooltip("정찰 대기시간")]
+    [Range(0, 1)]public float patrolWaitTime; // 정찰 대기시간
 
     [Header("#정찰 범위 관련#")]
-    [Tooltip("왼쪽 정찰 범위")] public float leftPatrolRange; // 좌측 정찰 범위
-    [Tooltip("오른쪽 정찰 범위")] public float rightPatrolRange; // 우측 정찰 범위
-    [Header("정찰 거리(설정 안해도됨)")] public float patrolDistance; // 정찰 거리
+    [Header("왼쪽 정찰 범위")] 
+    [Range(0, 5)]public float leftPatrolRange; // 좌측 정찰 범위
+    [Header("오른쪽 정찰 범위")]
+    [Range(0, 5)] public float rightPatrolRange; // 우측 정찰 범위
+    [Header("정찰 거리(설정 안해도됨)")]
+    [Range(0, 5)] public float patrolDistance; // 정찰 거리
 
-    [HideInInspector] public Vector3 leftPatrol, rightPatrol;
-
-    [Header("#그려질 정찰 큐브 사이즈 결정#")]
-    [Tooltip("붉은색 높이")] public float yWidth;
-    [Tooltip("붉은색 z축 넓이")] public float zWidth;
+    [HideInInspector] public Vector3 leftPatrol, rightPatrol;    
     [HideInInspector] public Vector3 center;
 
     [Header("벽 체크 레이캐스트")]
-    [Tooltip("벽 체크 Ray의 높이")] public float wallRayHeight;
-    [Tooltip("정면 Ray 길이")] public float wallRayLength;
-    [Tooltip("위쪽 Ray 길이")] public float wallRayUpLength;
-
+    [Header("벽 체크 Ray의 높이")] public float wallRayHeight;
+    [Header("정면 Ray 길이")] public float wallRayLength;
+    [Header("위쪽 Ray 길이")] public float wallRayUpLength;
+    [Header("뒤쪽 Ray 길이")] public float wallRayBackLength;
     Collider forwardWall;
     Collider upWall;
+    Collider backWall;
     float disToWall;
-    public bool wallCheck;
-    bool forwardCheck, upCheck;
-    public PatrolType patrolType;
+    [HideInInspector] public bool wallCheck;
+    bool forwardCheck, upCheck, backCheck;
+    [Header("몬스터 정찰타입")]public PatrolType patrolType;
+     
     public void InitPatrolPoint()
     {
 
@@ -100,8 +119,8 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     {
         if (rangeCollider != null)
         {
-            rangeCollider.GetComponent<BoxCollider>().center = rangePos;
-            rangeCollider.GetComponent<BoxCollider>().size = rangeSize;
+            rangeCollider.GetComponent<BoxCollider>().center = new(rangePosX, rangePosY, rangePosZ);
+            rangeCollider.GetComponent<BoxCollider>().size = new(rangeSizeX, rangeSizeY, rangeSizeZ);
         }
        
     }
@@ -126,26 +145,26 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
 
         if (searchCollider != null)
         {
-            searchCollider.GetComponent<BoxCollider>().size = searchColliderRange;
-            searchCollider.GetComponent<BoxCollider>().center = searchColliderPos;
+            searchCollider.GetComponent<BoxCollider>().size = new(searchSizeX, searchSizeY, searchSizeZ);
+            searchCollider.GetComponent<BoxCollider>().center = new(searchPosX, searchPosY, searchPosZ);
 
             if (searchCollider.transform.childCount != 0)
             {
-                searchCollider.transform.GetChild(0).localScale = searchColliderRange;
-                searchCollider.transform.GetChild(0).localPosition = searchColliderPos;
+                searchCollider.transform.GetChild(0).localScale = new(searchSizeX, searchSizeY, searchSizeZ);
+                searchCollider.transform.GetChild(0).localPosition = new(searchPosX, searchPosY, searchPosZ);
             }
         }
 
 
         if (rangeCollider != null)
         {
-            rangeCollider.GetComponent<BoxCollider>().size = rangeSize;
-            rangeCollider.GetComponent<BoxCollider>().center = rangePos;
+            rangeCollider.GetComponent<BoxCollider>().size = new(rangeSizeX, rangeSizeY, rangeSizeZ);
+            rangeCollider.GetComponent<BoxCollider>().center = new(rangePosX, rangePosY, rangePosZ);
 
             if (rangeCollider.transform.childCount != 0)
             {
-                rangeCollider.transform.GetChild(0).localScale = rangeSize;
-                rangeCollider.transform.GetChild(0).localPosition = rangePos;
+                rangeCollider.transform.GetChild(0).localScale = new(rangeSizeX, rangeSizeY, rangeSizeZ);
+                rangeCollider.transform.GetChild(0).localPosition = new(rangePosX, rangePosY, rangePosZ);
             }
 
         }
@@ -244,6 +263,54 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
         upCheck = isWall;
     }
 
+    public void BackWallRayCheck()
+    {
+        bool isWall = false;
+        upWall = null;
+        Debug.DrawRay(transform.position + Vector3.up * wallRayHeight, -transform.forward * wallRayBackLength, Color.magenta, 0.02f);
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position + Vector3.up * wallRayHeight, -transform.forward, out hit, wallRayBackLength, LayerMask.GetMask("Platform")))
+        {
+            if (hit.collider.CompareTag("Ground"))
+            {
+                backWall = hit.collider;
+                isWall = true;
+                //Debug.Log("Up탐지");
+            }
+
+            if (backWall != null)
+            {
+                if (PlayerHandler.instance != null)
+                {
+                    if (PlayerHandler.instance.CurrentPlayer != null)
+                    {
+                        if (transform.position.y < upWall.transform.position.y)
+                        {
+                            //Debug.Log("플레이어는 천장에 있지 않음");
+                            isWall = false; //플레이어 y축이 위쪽 바닥의 y축 보다 값이 작으면 false
+                        }
+                        else
+                        {
+                            isWall = true;
+                            if (PlayerDetected)
+                            {
+                                PlayerDetected = false;
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (backWall == null)
+        {
+            isWall = false;
+        }
+
+        backCheck = isWall;
+    }
+
     public void WallCheckResult()
     {
         if (forwardCheck || upCheck || forwardCheck && upCheck)
@@ -270,7 +337,7 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     #endregion
     #region 추격
 
-   public bool PlayerDetected;
+    [HideInInspector]public bool PlayerDetected;
 
     public void TrackingMove_()
     {
@@ -318,7 +385,6 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
        
         if (testTarget.magnitude < patrolDistance)
         {
-            tracking = false;
             StartCoroutine(InitPatrolTarget());
         }
         return testTarget;
@@ -329,6 +395,8 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     // PatrolChange()랑 SetPatrolTarget()은 제외 시키고 요약하여 두 벡터만 정확하게 선언하여 사용중입니다.
     public IEnumerator InitPatrolTarget()
     {
+        tracking = false;
+
         yield return new WaitForSeconds(patrolWaitTime);
 
         if (targetPatrol == firstPoint)

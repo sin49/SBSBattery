@@ -46,20 +46,4 @@ public class BulbEnemy : Enemy
     {
         
     }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Player player;
-            if (collision.gameObject.TryGetComponent<Player>(out player))
-            {
-                if (!player.onInvincible)
-                {
-                    player.Damaged(eStat.atk);
-                    Dead();
-                }
-            }
-        }
-    }
 }

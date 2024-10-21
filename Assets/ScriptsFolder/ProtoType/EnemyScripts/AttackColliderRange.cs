@@ -6,8 +6,8 @@ using UnityEngine.Rendering;
 [ExecuteAlways]
 public class AttackColliderRange : MonoBehaviour, colliderDisplayer
 {
-    BoxCollider rangeCollider;
-    public MeshRenderer childMat;
+    [Header("공격 활성화 범위(박스 콜라이더)")]BoxCollider rangeCollider;
+    [Header("테스트용 메쉬(시각적으로 테스트 용도)")]public MeshRenderer childMat;
 
     public void registerColliderDIsplay()
     {
@@ -77,8 +77,8 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
         }
     }
 
-    public Enemy enemy;
-    public EnemyTrackingAndPatrol tap;
+    [Header("적 스크립트")]public Enemy enemy;
+    [Header("추적/탐색 스크립트")]public EnemyTrackingAndPatrol tap;
     private void OnTriggerStay(Collider other)
     {
         //ebug.Log($"트리거 감지 중 {other.gameObject}");   
@@ -106,11 +106,11 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player")  )
-        {
-            enemy.activeAttack = false;
-        }
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        enemy.activeAttack = false;
+    //    }
+    //}
 }
