@@ -337,7 +337,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyHitCol2D: {fileID: 1210163580785034653}
-  testcolor: {r: 0, g: 0, b: 0, a: 0}
   movepattern: 1
   eStat: {fileID: 8609980832286711736}
   attackCollider: {fileID: 3865532210530730079}
@@ -348,9 +347,7 @@ MonoBehaviour:
   mae: {fileID: 6587660186071680179}
   reachAttack: {fileID: 4450020406108248886}
   attackTimer: 0
-  attackDelay: 1
   actionhandler: {fileID: 0}
-  rotCheck: 0
   activeAttack: 0
   onStun: 0
   direction: {x: 0, y: 0, z: 0}
@@ -895,7 +892,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2394138119772494340
 GameObject:
@@ -1142,13 +1139,12 @@ MonoBehaviour:
   headMat: {fileID: 2100000, guid: 9c97c06c72f3fe64cb60c7eaeba194e8, type: 2}
   hittedMat: {fileID: 2100000, guid: f7b3a12ef30f40544b225d4665485f28, type: 2}
   skinRenderer: {fileID: 4160507923508913721}
-  deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
-    type: 3}
-  moveEffect: {fileID: 0}
   emmissionBackMat: {fileID: 2100000, guid: 964fab2fdaf4ca248bb3a17ea54e2d28, type: 2}
   emmissionHeadMat: {fileID: 2100000, guid: 964fab2fdaf4ca248bb3a17ea54e2d28, type: 2}
   emmissionHittedMat: {fileID: 2100000, guid: 98447d4f92961f44c91ab9e504c84f43, type: 2}
   skinHead: {fileID: 9102567360689395729}
+  deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
+    type: 3}
 --- !u!1 &2930554798314414579
 GameObject:
   m_ObjectHideFlags: 0
@@ -1332,7 +1328,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2202838001302264467
 MonoBehaviour:
@@ -1508,7 +1504,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3416854067524108187}
@@ -3472,10 +3468,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mae: {fileID: 6587660186071680179}
   rangeCollider: {fileID: 1719816305384670078}
-  rangeSize: {x: 0, y: 0, z: 0}
+  rangeSize: {x: 1, y: 1, z: 1}
   rangePos: {x: 0, y: 0, z: 0}
   searchCollider: {fileID: 3419566179637107403}
-  searchColliderRange: {x: 0, y: 0, z: 0}
+  searchColliderRange: {x: 2, y: 2, z: 2}
   searchColliderPos: {x: 0, y: 0, z: 0}
   searchCollider_: {fileID: 2202838001302264467}
   attackColliderRange: {fileID: 2597715478896487610}
@@ -3498,6 +3494,7 @@ MonoBehaviour:
   wallRayHeight: 0
   wallRayLength: 0
   wallRayUpLength: 0
+  wallRayBackLength: 0
   wallCheck: 0
   patrolType: 1
   PlayerDetected: 0
@@ -3628,7 +3625,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8801285598001996633}

@@ -22,11 +22,10 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     bool posRetry;
     [Header("적 애니메이션 관련")]
     public Animator animaor;
-    
-       
-    public Vector3 environmentforce;
-    [HideInInspector]
-    public bool isMove;
+
+
+    [HideInInspector] public Vector3 environmentforce;
+    [HideInInspector] public bool isMove;
 
     [Header("추적/탐색 관련 스크립트")]public EnemyTrackingAndPatrol tap;    
     [Header("기본/피격 머티리얼 관련 스크립트")]public EnemyMaterialAndEffect mae;

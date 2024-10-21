@@ -479,13 +479,12 @@ MonoBehaviour:
   headMat: {fileID: 2100000, guid: 9c97c06c72f3fe64cb60c7eaeba194e8, type: 2}
   hittedMat: {fileID: 2100000, guid: 86d5f0fd65522d44a87114dc315c0405, type: 2}
   skinRenderer: {fileID: 6410052035194555435}
-  deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
-    type: 3}
-  moveEffect: {fileID: 0}
   emmissionBackMat: {fileID: 2100000, guid: 964fab2fdaf4ca248bb3a17ea54e2d28, type: 2}
   emmissionHeadMat: {fileID: 2100000, guid: 964fab2fdaf4ca248bb3a17ea54e2d28, type: 2}
   emmissionHittedMat: {fileID: 2100000, guid: 98447d4f92961f44c91ab9e504c84f43, type: 2}
   skinHead: {fileID: 8575492306198351625}
+  deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
+    type: 3}
 --- !u!1 &1156272559141001971
 GameObject:
   m_ObjectHideFlags: 0
@@ -2158,6 +2157,7 @@ MonoBehaviour:
   wallRayHeight: 0
   wallRayLength: 0
   wallRayUpLength: 0
+  wallRayBackLength: 0
   wallCheck: 0
   patrolType: 1
   PlayerDetected: 0
@@ -2767,7 +2767,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyHitCol2D: {fileID: 3027465547958485918}
-  testcolor: {r: 0, g: 0, b: 0, a: 0}
   movepattern: 1
   eStat: {fileID: 6399371868865806208}
   attackCollider: {fileID: 40720322756340349}
@@ -2778,9 +2777,7 @@ MonoBehaviour:
   mae: {fileID: 2960088906172574130}
   reachAttack: {fileID: 5720393083719718969}
   attackTimer: 0
-  attackDelay: 0.1
   actionhandler: {fileID: 0}
-  rotCheck: 0
   activeAttack: 0
   onStun: 0
   direction: {x: 0, y: 0, z: 0}
