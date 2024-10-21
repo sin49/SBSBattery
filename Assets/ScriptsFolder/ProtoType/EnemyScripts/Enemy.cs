@@ -12,14 +12,13 @@ public interface DamagedByPAttack
 public class Enemy: Character,DamagedByPAttack,environmentObject
 {
   
-    public GameObject EnemyHitCol2D;
+    [Header("몬스터가 피격당하는 2D 콜라이더")]public GameObject EnemyHitCol2D;
 
-    public Color testcolor;
-    public EnemyMovePattern movepattern;
+    [Header("몬스터의 이동패턴")] public EnemyMovePattern movepattern;
     public EnemyStat eStat;
  
     //public Rigidbody enemyRb; // 적 리지드바디
-    public GameObject attackCollider; // 적의 공격 콜라이더 오브젝트        
+    [Header("몬스터 근접 공격 콜라이더")]public GameObject attackCollider; // 적의 공격 콜라이더 오브젝트        
     bool posRetry;
     [Header("적 애니메이션 관련")]
     public Animator animaor;
@@ -29,26 +28,18 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     [HideInInspector]
     public bool isMove;
 
-    public EnemyTrackingAndPatrol tap;    
-    public EnemyMaterialAndEffect mae;
-    public ReachAttack reachAttack;
+    [Header("추적/탐색 관련 스크립트")]public EnemyTrackingAndPatrol tap;    
+    [Header("기본/피격 머티리얼 관련 스크립트")]public EnemyMaterialAndEffect mae;
+    [Header("몬스터 접촉 데미지 스크립트")]public ReachAttack reachAttack;
 
     
-    public float attackTimer; // 공격 대기시간
+    [HideInInspector]public float attackTimer; // 공격 대기시간
     //public float attackInitCoolTime; // 공격 대기시간 초기화 변수
-    [HideInInspector]
-    public float attackDelay; // 공격 후 딜레이
-   public EnemyAttackHandler actionhandler;
-
-    public bool rotCheck;
-    
-    //public bool onAttack; // 공격 활성화 여부 (공격 범위 내에 플레이어를 인식했을 때 true 변환)
-    
+    [Header("몬스터 공격 핸들러?")]public EnemyAttackHandler actionhandler;     
     [HideInInspector] public bool activeAttack; // 공격 가능한 상태인지 체크            
 
     [Header("기절상태")]
-    /*[HideInInspector]*/
-  public  bool onStun;
+    [HideInInspector]public  bool onStun;
     protected bool die, hitted;
     
     private void OnEnable()

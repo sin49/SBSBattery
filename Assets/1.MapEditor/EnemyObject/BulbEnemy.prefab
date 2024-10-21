@@ -238,16 +238,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af7fc425e385fea40bd278dc84bf8422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mae: {fileID: 4257949603525631324}
   rangeCollider: {fileID: 0}
   rangeSize: {x: 0, y: 0, z: 0}
   rangePos: {x: 0, y: 0, z: 0}
   searchCollider: {fileID: 7733405150144490626}
   searchColliderRange: {x: 0, y: 0, z: 0}
   searchColliderPos: {x: 0, y: 0, z: 0}
+  searchCollider_: {fileID: 0}
+  attackColliderRange: {fileID: 0}
+  tracking: 0
+  testTarget: {x: 0, y: 0, z: 0}
   trackingDistance: 0
   disToPlayer: 0
-  PatrolTransform: []
-  patrolGroup: []
+  firstPoint: {x: 0, y: 0, z: 0}
+  secondPoint: {x: 0, y: 0, z: 0}
   targetPatrol: {x: 0, y: 0, z: 0}
   patrolWaitTime: 0
   leftPatrolRange: 0
@@ -258,6 +263,13 @@ MonoBehaviour:
   yWidth: 0
   zWidth: 0
   center: {x: 0, y: 0, z: 0}
+  wallRayHeight: 0
+  wallRayLength: 0
+  wallRayUpLength: 0
+  wallRayBackLength: 0
+  wallCheck: 0
+  patrolType: 0
+  PlayerDetected: 0
 --- !u!1 &1726754294216908194
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,7 +564,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad5c99af03d1ff9438716be847afbfa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
   damage: 0
   onStun: 0
 --- !u!1 &2295099088195065677
@@ -979,45 +990,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd8a32078c572f4489e5f2b7a98b9092, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyHitCol2D: {fileID: 0}
-  testcolor: {r: 0, g: 0, b: 0, a: 0}
+  EnemyHitCol2D: {fileID: 7863548806375813538}
   movepattern: 1
   eStat: {fileID: 3905273058084709805}
-  patrolType: 1
   attackCollider: {fileID: 6339559483058744432}
   animaor: {fileID: 1288513263675201111}
   environmentforce: {x: 0, y: 0, z: 0}
   isMove: 0
   tap: {fileID: 2700615749513845943}
-  searchCollider: {fileID: 8935664843919685242}
   mae: {fileID: 4257949603525631324}
-  acr: {fileID: 676926750611931586}
   reachAttack: {fileID: 4189451210452894303}
-  wallRayHeight: 0.3
-  wallRayLength: 3.5
-  wallRayUpLength: 3
-  wallCheck: 0
   attackTimer: 0
-  attackDelay: 0
   actionhandler: {fileID: 0}
-  callCheck: 0
-  rotCheck: 0
-  onAttack: 0
   activeAttack: 0
-  checkPlayer: 0
-  target: {fileID: 0}
-  tracking: 0
-  testTarget: {x: 0, y: 0, z: 0}
-  rotationSpeed: 4
-  reachCheck: 0
-  attackRange: 0
-  viewActive: 0
+  onStun: 0
   direction: {x: 0, y: 0, z: 0}
   flatObject: {fileID: 3873799719395846869}
   flatScaleY: 0.2
   flatTime: 0
   timer: 0
   onFlat: 0
+  MoveDirection: {x: 0, y: 0, z: 0}
   explosion: {fileID: 0}
   lightCheck: 1
 --- !u!136 &517424950950997279
@@ -1063,7 +1056,6 @@ MonoBehaviour:
   MoveSpeedBonus: 0
   hp: 1
   atk: 1
-  rotationSpeed: 4
   attackSpeed: 0
   attackCoolTimebonus: 0
   initattackCoolTime: 5
@@ -1485,11 +1477,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c8e1a25490c2d40a4b57a08ff80e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
   childMat: {fileID: 0}
-  onAttack: 0
-  onStun: 0
-  wallCheck: 0
+  enemy: {fileID: 0}
+  tap: {fileID: 0}
 --- !u!65 &2229308352875611634
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2964,9 +2954,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   childMat: {fileID: 5258537224090779894}
   tap: {fileID: 0}
-  searchPlayer: 0
-  onPatrol: 0
-  wallCheck: 0
 --- !u!1 &8075227518126710238
 GameObject:
   m_ObjectHideFlags: 0
@@ -3015,9 +3002,9 @@ MonoBehaviour:
   backMat: {fileID: 0}
   headMat: {fileID: 2100000, guid: 5a5acbb0f5c7fe74e9ae123451e699b3, type: 2}
   hittedMat: {fileID: 2100000, guid: 05135b17c4cac7343bee0728f103732c, type: 2}
-  skinRenderer: {fileID: 0}
-  deadEffect: {fileID: 0}
-  moveEffect: {fileID: 0}
+  skinRenderer: {fileID: 733190138019894174}
+  deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
+    type: 3}
   emmissionBackMat: {fileID: 2100000, guid: 9c803368896f75c42800af8ccb3677bb, type: 2}
   emmissionHeadMat: {fileID: 2100000, guid: 2c03e6d8abfe1df42b411d91be48ef18, type: 2}
   emmissionHittedMat: {fileID: 2100000, guid: abde3b6801201ee4c8dd254867aa031e, type: 2}
@@ -3144,6 +3131,12 @@ PrefabInstance:
 --- !u!4 &7837756481480482018 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8316542031268641024, guid: 06d656e7dc263014bbf1d2d20701160e,
+    type: 3}
+  m_PrefabInstance: {fileID: 2283051320727807458}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7863548806375813538 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8255072748780229696, guid: 06d656e7dc263014bbf1d2d20701160e,
     type: 3}
   m_PrefabInstance: {fileID: 2283051320727807458}
   m_PrefabAsset: {fileID: 0}
