@@ -251,11 +251,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mae: {fileID: 6384790011460838483}
   rangeCollider: {fileID: 4957776089457073330}
-  rangeSize: {x: 0, y: 0, z: 0}
-  rangePos: {x: 0, y: 0, z: 0}
+  rangeSizeX: 0
+  rangeSizeY: 0
+  rangeSizeZ: 0
+  rangePosX: 0
+  rangePosY: 0
+  rangePosZ: 0
   searchCollider: {fileID: 7331376634481754982}
-  searchColliderRange: {x: 0, y: 0, z: 0}
-  searchColliderPos: {x: 0, y: 0, z: 0}
+  searchSizeX: 0
+  searchSizeY: 0
+  searchSizeZ: 0
+  searchPosX: 0
+  searchPosY: 0
+  searchPosZ: 0
   searchCollider_: {fileID: 6259014503651476495}
   attackColliderRange: {fileID: 4510892194653210080}
   tracking: 0
@@ -271,8 +279,6 @@ MonoBehaviour:
   patrolDistance: 0
   leftPatrol: {x: 0, y: 0, z: 0}
   rightPatrol: {x: 0, y: 0, z: 0}
-  yWidth: 0
-  zWidth: 0
   center: {x: 0, y: 0.5, z: 0}
   wallRayHeight: 0
   wallRayLength: 0
@@ -548,13 +554,12 @@ MonoBehaviour:
   headMat: {fileID: 2100000, guid: c124b0578c5be5d4fa6cb1884e3a28b6, type: 2}
   hittedMat: {fileID: 2100000, guid: c124b0578c5be5d4fa6cb1884e3a28b6, type: 2}
   skinRenderer: {fileID: 6573095464620160442}
-  deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
-    type: 3}
-  moveEffect: {fileID: 0}
-  emmissionBackMat: {fileID: 0}
-  emmissionHeadMat: {fileID: 0}
+  emmissionBackMat: {fileID: 2100000, guid: 65c06fb54d4ce7243bae71545fcc0116, type: 2}
+  emmissionHeadMat: {fileID: 2100000, guid: 5368ce538abe957498d33ab678bdabc8, type: 2}
   emmissionHittedMat: {fileID: 0}
   skinHead: {fileID: 0}
+  deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
+    type: 3}
 --- !u!1 &1683629089037269133
 GameObject:
   m_ObjectHideFlags: 0
