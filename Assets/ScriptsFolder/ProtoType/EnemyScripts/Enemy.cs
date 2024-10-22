@@ -195,7 +195,14 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         
     }
     private void Start()
-    {                
+    {        
+        if (eStat.movepattern == EnemyMovePattern.patrol)
+        {
+            //InitPatrolPoint();
+            if (!tap.PlayerDetected)
+                StartCoroutine(tap.InitPatrolTarget());
+        }
+
         attackTimer = eStat.initattackCoolTime;
         if(!CreateBySpawner)
         getstatusfromtable();
@@ -736,6 +743,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     // 공격 초기화
     public void InitAttackCoolTime()
     {
+        Debug.Log("공격 초기화시킴");
         CanAttack = false;
         attackTimer = eStat.initattackCoolTime;        
     }

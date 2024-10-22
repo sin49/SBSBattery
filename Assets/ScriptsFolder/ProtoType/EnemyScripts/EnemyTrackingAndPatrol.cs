@@ -77,7 +77,6 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     float disToWall;
     [HideInInspector] public bool wallCheck;
     bool forwardCheck, upCheck, backCheck;
-    [Header("몬스터 정찰타입")]public PatrolType patrolType;
      
     public void InitPatrolPoint()
     {
@@ -102,17 +101,8 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     }
 
     private void Awake()
-    {
-    
-        InitPatrolPoint();
-        if (patrolType == PatrolType.movePatrol)
-        {
-            //InitPatrolPoint();
-            if (!PlayerDetected)
-                StartCoroutine(InitPatrolTarget());
-        }
-
-
+    {    
+        InitPatrolPoint();       
     }
 
     private void Update()
@@ -337,7 +327,7 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     #endregion
     #region 추격
 
-    [HideInInspector]public bool PlayerDetected;
+    public bool PlayerDetected;
 
     public void TrackingMove_()
     {

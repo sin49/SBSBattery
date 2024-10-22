@@ -73,12 +73,11 @@ public class EnemySearchCollider : MonoBehaviour, colliderDisplayer
             if (!tap. wallCheck)
             {
                 tap.PlayerDetected = true;
-
+                tap.tracking = true;
             }
             else
             {
                 tap.PlayerDetected = false;
-
             }            
         }
     }

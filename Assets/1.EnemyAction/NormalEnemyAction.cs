@@ -10,6 +10,7 @@ public class NormalEnemyAction : EnemyAction
     public virtual void register(Enemy e)
     {
         this.e = e;
+        //registerActionHandler(e.DelayTime);
         registerActionHandler(e.InitAttackCoolTime);
     }
 }
