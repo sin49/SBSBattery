@@ -15,7 +15,7 @@ public class NormalEnemyAction : EnemyAction
     {
         base.Invoke(target);
         registerActionHandler(e.DelayTime);
-        registerActionHandler(e.InitAttackCoolTime);
+        //registerActionHandler(e.InitAttackCoolTime);
     }
 }
 
