@@ -40,6 +40,7 @@ public class EnemyAction_breath : NormalEnemyAction
 
     public override void Invoke(Transform target = null)
     {
+        base.Invoke(target);
         StartCoroutine(breathattackInvoke());
     }
   

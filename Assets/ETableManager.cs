@@ -29,13 +29,14 @@ public class enemyattacktest
 
    
 }
-
+[ExecuteAlways]
 public class ETableManager : MonoBehaviour
 {
     public static ETableManager instance;
     public TextAsset EnemyStatCsV;
     public TextAsset EnemyActionCsv;
-
+    public List<GameObject> Enemies = new List<GameObject>();
+    public List<GameObject> AttackCollider = new List<GameObject>();
     public List<enemystattest> enemystats = new List<enemystattest>();
     public List<enemyattacktest> enemyattacks = new List<enemyattacktest>();
 
@@ -47,10 +48,16 @@ public class ETableManager : MonoBehaviour
     }
     public enemystattest returnenemydata(int prioritynumber)
     {
-        enemystattest estat= enemystats[prioritynumber];
+       
+        if (prioritynumber < enemystats.Count)
+        {
+            enemystattest estat = enemystats[prioritynumber];
 
 
-        return estat;
+            return estat;
+        }
+        else
+            return null;
     }
     void loadEnemyStatcsv()
     {
@@ -140,13 +147,6 @@ public class ETableManager : MonoBehaviour
         }
       
 
-        //enemy 스크립트에서 사용할 번호(식별키)를 따고 그걸 기반해서 적 스탯+
-        //이동 방식+공격 방식 가져와서 적용 enemy awake에 넣기
-
-        //변경 ->커스텀에디터를 이용해 식별키를 넣고 숫자 바꾸면 바꿔지게
-        //저장-> 커에로 저장 버튼 만들기
-        //이동 버튼 메터리얼,탐색,능력치,공격 으로 이동하는 버튼 만들기
-        //하위 저장) 능력치, 공격은 csv 저장 나머지는 만든다면 스크립터블 오브젝트로
-
+      
     }
 }
