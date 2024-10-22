@@ -38,8 +38,10 @@ public class Enemy_Action_rush : NormalEnemyAction
    
         //PlayAttackSound();
         float timer = 0;
+ 
         while (timer < rushtime)
         {
+            
             e. attackCollider.SetActive(true);
            e.  rb.MovePosition(transform.position + transform.forward * Time.deltaTime * rushspeed);
             timer += Time.deltaTime;
