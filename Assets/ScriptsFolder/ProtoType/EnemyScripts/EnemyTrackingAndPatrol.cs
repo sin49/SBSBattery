@@ -60,17 +60,17 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     [Range(0, 5)]public float leftPatrolRange; // 좌측 정찰 범위
     [Header("오른쪽 정찰 범위")]
     [Range(0, 5)] public float rightPatrolRange; // 우측 정찰 범위
-    [Header("정찰 거리(설정 안해도됨)")]
+    [Header("정찰 거리(최소 0.1)")]
     [Range(0, 5)] public float patrolDistance; // 정찰 거리
 
     [HideInInspector] public Vector3 leftPatrol, rightPatrol;    
     [HideInInspector] public Vector3 center;
 
     [Header("벽 체크 레이캐스트")]
-    [Header("벽 체크 Ray의 높이")] public float wallRayHeight;
-    [Header("정면 Ray 길이")] public float wallRayLength;
-    [Header("위쪽 Ray 길이")] public float wallRayUpLength;
-    [Header("뒤쪽 Ray 길이")] public float wallRayBackLength;
+    [Header("벽 체크 Ray의 높이")] [Range(0,10)] public float wallRayHeight;
+    [Header("정면 Ray 길이")] [Range(0, 10)] public float wallRayLength;
+    [Header("위쪽 Ray 길이")] [Range(0, 10)] public float wallRayUpLength;
+    [Header("뒤쪽 Ray 길이")] [Range(0, 10)] public float wallRayBackLength;
     Collider forwardWall;
     Collider upWall;
     Collider backWall;

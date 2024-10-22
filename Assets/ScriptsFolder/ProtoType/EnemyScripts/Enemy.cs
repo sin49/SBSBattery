@@ -152,7 +152,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
             }
 
-           
+           if(AttackAction != null)
             AttackAction.register(this);
             if (moveActionTransform == null)
             {
@@ -684,7 +684,9 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         if(animaor != null)
             animaor.Play("EnemyAttack");
         PlayAttackSound();
+        if(AttackAction != null)
         AttackAction.Invoke(PlayerHandler.instance.CurrentPlayer.transform);
+        DelayTime();
     }
 
     // 공격 준비시간
