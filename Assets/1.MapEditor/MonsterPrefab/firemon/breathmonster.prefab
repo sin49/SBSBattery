@@ -1241,6 +1241,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7544375684527975108}
+  - component: {fileID: 3423927702214911545}
   m_Layer: 0
   m_Name: breath
   m_TagString: Untagged
@@ -1266,6 +1267,30 @@ Transform:
   - {fileID: 624999978159983569}
   m_Father: {fileID: 6248263193908544099}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+--- !u!114 &3423927702214911545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3159223299123585952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90520e21c8d0f1e4fa5b0d77aa899985, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireeffects:
+  - {fileID: 7130452270214112874}
+  - {fileID: 4713605173966620746}
+  - {fileID: 3853914146313659540}
+  fireLight: {fileID: 7305299169907649952}
+  breathsize: {x: 0.8, y: 0.8, z: 1.8}
+  breathinitsize: {x: 0.5, y: 0.5, z: 1}
+  breathtime: 0
+  breathspreadmaxtime: 0
+  breathendtime: 0
+  breathsmallcollider: {fileID: 7101187577649241765}
+  breathcollider: {fileID: 1808206081199309711}
 --- !u!1 &3255305293903324326
 GameObject:
   m_ObjectHideFlags: 0
@@ -3226,8 +3251,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a39c090f715b32349a7866e32a928749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  PriorityNumber: 0
   EnemyHitCol2D: {fileID: 7116049961817154067}
-  movepattern: 0
   eStat: {fileID: 696479488360981710}
   attackCollider: {fileID: 0}
   animaor: {fileID: 1398957846223111419}
@@ -3237,7 +3263,8 @@ MonoBehaviour:
   mae: {fileID: 6525882660683060561}
   reachAttack: {fileID: 0}
   attackTimer: 0
-  actionhandler: {fileID: 0}
+  MoveAction: {fileID: 0}
+  AttackAction: {fileID: 0}
   activeAttack: 0
   onStun: 0
   direction: {x: 0, y: 0, z: 0}
@@ -3273,6 +3300,9 @@ MonoBehaviour:
   attackDelay: 0.5
   canMove: 0
   canAttack: 0
+  movepattern: 0
+  movetype: 0
+  attacktype: 0
   dropGroup:
     parts: {fileID: 0}
     partValue: 0
@@ -4031,6 +4061,30 @@ PrefabInstance:
 --- !u!4 &624999978159983569 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3145757224310805211, guid: 53fc6dbd3a259a74890cf3eab2229ece,
+    type: 3}
+  m_PrefabInstance: {fileID: 2525265588573460746}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &3853914146313659540 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1616882233569754526, guid: 53fc6dbd3a259a74890cf3eab2229ece,
+    type: 3}
+  m_PrefabInstance: {fileID: 2525265588573460746}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &4713605173966620746 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7089120199408423232, guid: 53fc6dbd3a259a74890cf3eab2229ece,
+    type: 3}
+  m_PrefabInstance: {fileID: 2525265588573460746}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &7130452270214112874 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4755800261602918240, guid: 53fc6dbd3a259a74890cf3eab2229ece,
+    type: 3}
+  m_PrefabInstance: {fileID: 2525265588573460746}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &7305299169907649952 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 5073913352455812266, guid: 53fc6dbd3a259a74890cf3eab2229ece,
     type: 3}
   m_PrefabInstance: {fileID: 2525265588573460746}
   m_PrefabAsset: {fileID: 0}
