@@ -241,7 +241,7 @@ GameObject:
   - component: {fileID: 4837966539757772508}
   - component: {fileID: 7792607416128088631}
   - component: {fileID: 3196236616345248045}
-  - component: {fileID: 7785685032937681645}
+  - component: {fileID: 1914055568324030308}
   - component: {fileID: 8609980832286711736}
   - component: {fileID: 695645740759359966}
   - component: {fileID: 201469090384494127}
@@ -324,7 +324,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &7785685032937681645
+--- !u!114 &1914055568324030308
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -333,13 +333,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 554185978777377664}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fc923cf0503caf44bb5443de2c56279, type: 3}
+  m_Script: {fileID: 11500000, guid: a39c090f715b32349a7866e32a928749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyHitCol2D: {fileID: 1210163580785034653}
-  movepattern: 1
+  movepattern: 0
   eStat: {fileID: 8609980832286711736}
-  attackCollider: {fileID: 3865532210530730079}
+  attackCollider: {fileID: 0}
   animaor: {fileID: 4057833397682292702}
   environmentforce: {x: 0, y: 0, z: 0}
   isMove: 0
@@ -357,9 +357,6 @@ MonoBehaviour:
   timer: 0
   onFlat: 0
   MoveDirection: {x: 0, y: 0, z: 0}
-  rangePrefab: {fileID: 6779815533108054730, guid: 97bc6e6f9f22fe742841b1cae458a0a6,
-    type: 3}
-  fire: {fileID: 4139484337864543759}
 --- !u!114 &8609980832286711736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -871,7 +868,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childMat: {fileID: 7687136675993815159}
-  enemy: {fileID: 7785685032937681645}
+  enemy: {fileID: 1914055568324030308}
   tap: {fileID: 3738638907998072025}
 --- !u!65 &2468396748455698361
 BoxCollider:
@@ -892,7 +889,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0, y: 0, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2394138119772494340
 GameObject:
@@ -1328,7 +1325,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 2, z: 2}
+  m_Size: {x: 0, y: 0, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2202838001302264467
 MonoBehaviour:
@@ -1343,7 +1340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childMat: {fileID: 9034433454263000106}
-  tap: {fileID: 0}
+  tap: {fileID: 3738638907998072025}
 --- !u!1 &3422422235226122341
 GameObject:
   m_ObjectHideFlags: 0
@@ -1504,7 +1501,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3416854067524108187}
@@ -3468,11 +3465,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mae: {fileID: 6587660186071680179}
   rangeCollider: {fileID: 1719816305384670078}
-  rangeSize: {x: 1, y: 1, z: 1}
-  rangePos: {x: 0, y: 0, z: 0}
+  rangeSizeX: 0
+  rangeSizeY: 0
+  rangeSizeZ: 0
+  rangePosX: 0
+  rangePosY: 0
+  rangePosZ: 0
   searchCollider: {fileID: 3419566179637107403}
-  searchColliderRange: {x: 2, y: 2, z: 2}
-  searchColliderPos: {x: 0, y: 0, z: 0}
+  searchSizeX: 0
+  searchSizeY: 0
+  searchSizeZ: 0
+  searchPosX: 0
+  searchPosY: 0
+  searchPosZ: 0
   searchCollider_: {fileID: 2202838001302264467}
   attackColliderRange: {fileID: 2597715478896487610}
   tracking: 0
@@ -3488,8 +3493,6 @@ MonoBehaviour:
   patrolDistance: 0.1
   leftPatrol: {x: 0, y: 0, z: 0}
   rightPatrol: {x: 0, y: 0, z: 0}
-  yWidth: 0
-  zWidth: 0
   center: {x: 0, y: 0.5, z: 0}
   wallRayHeight: 0
   wallRayLength: 0
@@ -3625,7 +3628,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8801285598001996633}

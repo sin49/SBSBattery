@@ -1767,7 +1767,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childMat: {fileID: 3827246484387067793}
-  enemy: {fileID: 8357529297946861037}
+  enemy: {fileID: 4391504076975937068}
   tap: {fileID: 3904509428237187305}
 --- !u!65 &3623799458026887797
 BoxCollider:
@@ -2131,11 +2131,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mae: {fileID: 2960088906172574130}
   rangeCollider: {fileID: 3681817933639915115}
-  rangeSize: {x: 0, y: 0, z: 0}
-  rangePos: {x: 0, y: 0, z: 0}
+  rangeSizeX: 0
+  rangeSizeY: 0
+  rangeSizeZ: 0
+  rangePosX: 0
+  rangePosY: 0
+  rangePosZ: 0
   searchCollider: {fileID: 6137782046602912412}
-  searchColliderRange: {x: 0, y: 0, z: 0}
-  searchColliderPos: {x: 0, y: 0, z: 0}
+  searchSizeX: 0
+  searchSizeY: 0
+  searchSizeZ: 0
+  searchPosX: 0
+  searchPosY: 0
+  searchPosZ: 0
   searchCollider_: {fileID: 4554639551137100570}
   attackColliderRange: {fileID: 2937360031623099487}
   tracking: 0
@@ -2151,8 +2159,6 @@ MonoBehaviour:
   patrolDistance: 0
   leftPatrol: {x: 0, y: 0, z: 0}
   rightPatrol: {x: 0, y: 0, z: 0}
-  yWidth: 0
-  zWidth: 0
   center: {x: 0, y: 0, z: 0}
   wallRayHeight: 0
   wallRayLength: 0
@@ -2671,7 +2677,7 @@ GameObject:
   - component: {fileID: 4932922018843922339}
   - component: {fileID: 4782575805838505450}
   - component: {fileID: 6694907696969450301}
-  - component: {fileID: 8357529297946861037}
+  - component: {fileID: 4391504076975937068}
   - component: {fileID: 6399371868865806208}
   - component: {fileID: 1858868127160554967}
   - component: {fileID: 2471286748963982914}
@@ -2754,7 +2760,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &8357529297946861037
+--- !u!114 &4391504076975937068
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2763,7 +2769,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6112917439365667862}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4981e4ac21ac1e4c87802ce1b5d2ba5, type: 3}
+  m_Script: {fileID: 11500000, guid: a39c090f715b32349a7866e32a928749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyHitCol2D: {fileID: 3027465547958485918}
@@ -2870,7 +2876,7 @@ MonoBehaviour:
   MoveClip: {fileID: 0}
   MoveVolume: 0
   HittedClip: {fileID: 8300000, guid: 96df13765d923c945a17d9dd6a59b968, type: 3}
-  HittedVolume: 0.5
+  HittedVolume: 0.066
   AttackClip: {fileID: 8300000, guid: 25c5897575b078c4ba66ca5ffa7908c5, type: 3}
   AttackVolume: 0.5
 --- !u!1 &6123200293737223417
@@ -3006,7 +3012,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childMat: {fileID: 3692971729834942315}
-  tap: {fileID: 0}
+  tap: {fileID: 3904509428237187305}
 --- !u!1 &6449383165514389504
 GameObject:
   m_ObjectHideFlags: 0
