@@ -30,12 +30,17 @@ public class EnemyAction_breath : NormalEnemyAction
         breathattack.registerbreathendevent(DisableActionMethod);
     }
 
-
+    IEnumerator breathattackInvoke()
+    {
+        if (!breathattack.gameObject.activeSelf)
+            breathattack.gameObject.SetActive(true);
+        yield return new WaitForSeconds(breathtime+breathendtime);
+        DisableActionMethod();
+    }
 
     public override void Invoke(Transform target = null)
     {
-        if(!breathattack.gameObject.activeSelf)
-      breathattack.gameObject.SetActive(true);
+        StartCoroutine(breathattackInvoke());
     }
   
    
