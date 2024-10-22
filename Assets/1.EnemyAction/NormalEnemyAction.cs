@@ -10,7 +10,13 @@ public class NormalEnemyAction : EnemyAction
     public virtual void register(Enemy e)
     {
         this.e = e;
-        //registerActionHandler(e.DelayTime);
+    }
+    public override void Invoke(Transform target = null)
+    {
+        base.Invoke(target);
+        registerActionHandler(e.DelayTime);
         registerActionHandler(e.InitAttackCoolTime);
     }
 }
+
+

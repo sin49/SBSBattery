@@ -25,6 +25,7 @@ public class Enemy_Action_rush : NormalEnemyAction
     
     public override void Invoke(Transform target = null)
     {
+        base.Invoke();
         if(!onrush&&e!=null)
             StartCoroutine(rush(target));
     }
