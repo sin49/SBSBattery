@@ -504,14 +504,26 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         //if (movepattern == EnemyMovePattern.patrol)
         //{여기를 시스템화를 위한 밑작업으로 빼두기
 
-         
-                if ( !activeAttack && tap.tracking)
-                {
-            Vector3 target = tap.GetTarget();
-                    transform.rotation = Quaternion.LookRotation(target);
-            //enemymovepattern();
-            MoveAction.Invoke();
-                }
+        if (eStat.movepattern == EnemyMovePattern.patrol)
+        {
+            if (!activeAttack && tap.tracking)
+            {
+                Vector3 target = tap.GetTarget();
+                transform.rotation = Quaternion.LookRotation(target);
+                //enemymovepattern();
+                MoveAction.Invoke();
+            }
+        }
+        else
+        {
+            if (!activeAttack && tap.tracking&&tap.PlayerDetected)
+            {
+                Vector3 target = tap.GetTarget();
+                transform.rotation = Quaternion.LookRotation(target);
+                //enemymovepattern();
+                MoveAction.Invoke();
+            }
+        }
 
         //ismove = move 에니메이션 관련 변수->move쪽으로 옮기기
         //if (eStat. movepattern == EnemyMovePattern.stop)
