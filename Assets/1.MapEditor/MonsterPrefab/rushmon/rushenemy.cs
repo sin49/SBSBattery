@@ -63,8 +63,7 @@ public class rushenemy : Enemy
      
         if (animaor != null)
             animaor.Play("EnemyAttack");
-        if (actionhandler != null)
-            actionhandler.invokemainaction();
+      
         StartCoroutine(rush());
     }
 

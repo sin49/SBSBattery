@@ -1,8 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum EnemyMovePattern { stop,patrol}
+public enum EnemyMoveType {none,basic,jump }
+
+public enum EnemyAttackType { none,melee,range,breath,rush}
 public interface DamagedByPAttack
 {
     public void Damaged(float f);
@@ -11,14 +15,19 @@ public interface DamagedByPAttack
 
 public class Enemy: Character,DamagedByPAttack,environmentObject
 {
-  
+    [Header("식별번호")] public int PriorityNumber;
+
+
+
+
     [Header("몬스터가 피격당하는 2D 콜라이더")]public GameObject EnemyHitCol2D;
 
-    [Header("몬스터의 이동패턴")] public EnemyMovePattern movepattern;
+   
     public EnemyStat eStat;
  
     //public Rigidbody enemyRb; // 적 리지드바디
-    [Header("몬스터 근접 공격 콜라이더")]public GameObject attackCollider; // 적의 공격 콜라이더 오브젝트        
+    [Header("몬스터 공격 콜라이더(원거리일 경우 위치로 발사)")]public GameObject attackCollider; // 적의 공격 콜라이더 오브젝트        
+  
     bool posRetry;
     [Header("적 애니메이션 관련")]
     public Animator animaor;
@@ -33,8 +42,13 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
     
     [HideInInspector]public float attackTimer; // 공격 대기시간
-    //public float attackInitCoolTime; // 공격 대기시간 초기화 변수
-    [Header("몬스터 공격 핸들러?")]public EnemyAttackHandler actionhandler;     
+                                               //public float attackInitCoolTime; // 공격 대기시간 초기화 변수
+                                               //[Header("몬스터 공격 핸들러?")]public EnemyAttackHandler actionhandler;    
+    
+    public NormalEnemyAction MoveAction;
+    public NormalEnemyAction AttackAction;
+
+
     [HideInInspector] public bool activeAttack; // 공격 가능한 상태인지 체크            
 
     [Header("기절상태")]
@@ -44,6 +58,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     private void OnEnable()
     {
         //StartCoroutine(InitPatrolTarget());
+        initializeEnemy();
     }
 
     protected override void Awake()
@@ -59,9 +74,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         if (tap.searchCollider_ != null)
             tap.searchCollider_.tap = tap;
 
-        actionhandler = GetComponent<EnemyAttackHandler>();
-        if (actionhandler != null)
-            actionhandler.e = this;
+       
 
         if (flatObject != null)
         {
@@ -69,20 +82,103 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             flatScale = new(flatObject.transform.localScale.x, flatScaleY, flatObject.transform.localScale.z);
         }
 
-        if (reachAttack != null)
-            reachAttack.SetDamage(eStat.atk);
+
     }
+
+    public void TestAttack()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            base.Attack();
+            if (animaor != null)
+                animaor.Play("EnemyAttack");
+            PlayAttackSound();
+            AttackAction.Invoke(this.gameObject.transform);
+        }
+    }
+
 
     //public void InitPatrolPoint()
     //{
     //    mae.searchCollider.onPatrol = true;
     //    tap.SetPoint(transform);
     //}    
+    public void getstatusfromtable()
+    {
+        if(ETableManager.instance != null)
+        {
+            var datas = ETableManager.instance.returnenemydata(PriorityNumber);
+            enemystattest s = datas;
 
+            switch (s.attackstateID)
+            {
+                case 1:
+                    AttackAction = gameObject.AddComponent<EnemyAction_Swing>();
+                    break;
+                case 2:
+                    AttackAction = gameObject.AddComponent<EnemyAction_Throwing>();
+                    break;
+                case 3:
+                  var obj=  gameObject.AddComponent<Enemy_Action_rush>();
+                    var data = ETableManager.instance.enemyattacks[3];
+                    obj.rushtime = data.SpecialVaule[0];
+                    obj.rushspeed = data.SpecialVaule[1];
+                    obj.PlayerForce = data.SpecialVaule[2];
+                    AttackAction = obj;
+                    break;
+                case 4:
+                    var obj2 = gameObject.AddComponent<EnemyAction_breath>();
+                    var data2 = ETableManager.instance.enemyattacks[4];
+                    obj2.breathtime = data2.SpecialVaule[0];
+                    obj2.breathspreadmaxtime = data2.SpecialVaule[1];
+                    obj2.breathendtime = data2.SpecialVaule[2];
+                    AttackAction = obj2;
+                    break;
+              default:
+                    
+                    break;
+
+            }
+
+           
+            AttackAction.register(this);
+            switch (s.movestateid)
+            {
+                case 0:
+                    MoveAction = null;
+                    MoveAction.register(this);
+                    break;
+                case 1:
+                    MoveAction =gameObject.AddComponent<ENemy_Action_BasicMove>  ();
+                    MoveAction.register(this);
+                    break;
+                case 2:
+                    MoveAction = gameObject.AddComponent<EnemyAction_jumpMove>();
+                    MoveAction.register(this);
+                    break;
+                   
+            }
+            eStat.initMaxHP = s.hp;eStat.initMoveSpeed = s.movespeed;
+            eStat.initattackCoolTime = s.initattackdelay;
+            eStat.attackDelay = s.afterattackdelay;
+        }
+
+    }
+   void initializeEnemy()
+    {
+        eStat.hp = eStat.hpMax;
+        die = false;
+        hitted = false;
+        activeAttack = false;
+        
+    }
     private void Start()
     {                
         attackTimer = eStat.initattackCoolTime;
+        getstatusfromtable();
 
+        if (reachAttack != null)
+            reachAttack.SetDamage(eStat.atk);
         /*if (onStun)
         {         
             StartCoroutine(WaitStunTime());
@@ -91,6 +187,8 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
     private void Update()
     {
+
+        TestAttack();
         if (!onStun)
         {
 
@@ -116,7 +214,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
        
     }
-
+    
     protected virtual void MoveAnimationPlay()
     {
         if (animaor != null)
@@ -169,12 +267,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public Vector3 direction;//목적지
     //public bool 행동여부;//
  
-    //여기 부분들에 대해서 생각이 도저히 안나서 작업을 못했습니다..
-    //정말 죄송합니다
-    void move()
-    {
-     
-    }
+    
 
     public void EnemyAI()
     {
@@ -377,7 +470,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     protected bool onmove;
     #region 이동함수
 
-    // 그래서 기존에 있던 함수를 수정만 했습니다
+   
 
 
     public Vector3 MoveDirection;
@@ -393,24 +486,24 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 {
             Vector3 target = tap.GetTarget();
                     transform.rotation = Quaternion.LookRotation(target);
-                    enemymovepattern();
-                        
+            //enemymovepattern();
+            MoveAction.Invoke();
                 }
 
         //ismove = move 에니메이션 관련 변수->move쪽으로 옮기기
-        if (movepattern == EnemyMovePattern.stop)
-        {
-            if (tap.tracking && !activeAttack && tap.PlayerDetected)
-            {
-                isMove = true;
-            }
-            else
-            {
-                isMove = false;
-            }
-        }
-        else
-        {
+        //if (eStat. movepattern == EnemyMovePattern.stop)
+        //{
+        //    if (tap.tracking && !activeAttack && tap.PlayerDetected)
+        //    {
+        //        isMove = true;
+        //    }
+        //    else
+        //    {
+        //        isMove = false;
+        //    }
+        //}
+        //else
+        //{
             if (tap.tracking && !activeAttack)
             {
                 isMove = true;
@@ -419,7 +512,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             {
                 isMove = false;
             }
-        }
+        //}
         MoveAnimationPlay();
 
         //}     
@@ -573,8 +666,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         if(animaor != null)
             animaor.Play("EnemyAttack");
         PlayAttackSound();
-        if (actionhandler!=null)
-        actionhandler.invokemainaction();
+        AttackAction.Invoke(PlayerHandler.instance.CurrentPlayer.transform);
     }
 
     // 공격 준비시간

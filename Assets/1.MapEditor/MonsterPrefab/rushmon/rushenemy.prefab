@@ -49,13 +49,12 @@ MonoBehaviour:
   headMat: {fileID: 0}
   hittedMat: {fileID: 2100000, guid: a77d85e72ad2b11458dc4da7d9750a8b, type: 2}
   skinRenderer: {fileID: 0}
-  deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
-    type: 3}
-  moveEffect: {fileID: 0}
   emmissionBackMat: {fileID: 0}
   emmissionHeadMat: {fileID: 0}
   emmissionHittedMat: {fileID: 0}
   skinHead: {fileID: 0}
+  deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
+    type: 3}
 --- !u!1 &1102287819955780269
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,8 +168,8 @@ Transform:
   m_GameObject: {fileID: 1741321454705649645}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.5}
-  m_LocalScale: {x: 1.1, y: 1.5, z: 3.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8057407559719295135}
@@ -293,7 +292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childMat: {fileID: 4424658947668637396}
-  enemy: {fileID: 8023798901921499807}
+  enemy: {fileID: 0}
   tap: {fileID: 3146861722801290292}
 --- !u!65 &7325178584783550038
 BoxCollider:
@@ -314,8 +313,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.1, y: 1.5, z: 3.5}
-  m_Center: {x: 0, y: 0, z: 1.5}
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2498678109142458358
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,8 +343,8 @@ Transform:
   m_GameObject: {fileID: 2498678109142458358}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.64, z: 0.5}
-  m_LocalScale: {x: 6, y: 3, z: 9}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 953216015405559126}
@@ -432,10 +431,10 @@ GameObject:
   - component: {fileID: 1465228322146178488}
   - component: {fileID: 577841422324525459}
   - component: {fileID: 8218610904138003582}
-  - component: {fileID: 8023798901921499807}
   - component: {fileID: 7117216850232695014}
   - component: {fileID: 9149323171540186625}
   - component: {fileID: 3562448844713796740}
+  - component: {fileID: 2433477071565342210}
   m_Layer: 9
   m_Name: rushenemy
   m_TagString: Enemy
@@ -513,48 +512,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &8023798901921499807
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3516212576354844996}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84103317445cc7043b69d425eca078e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnemyHitCol2D: {fileID: 204189673636078276}
-  testcolor: {r: 0, g: 0, b: 0, a: 0}
-  movepattern: 1
-  eStat: {fileID: 7117216850232695014}
-  attackCollider: {fileID: 1562527046486725782}
-  animaor: {fileID: 6323000039058957824}
-  environmentforce: {x: 0, y: 0, z: 0}
-  isMove: 0
-  tap: {fileID: 3146861722801290292}
-  mae: {fileID: 4803346699339831310}
-  reachAttack: {fileID: 0}
-  attackTimer: 0
-  attackDelay: 0
-  actionhandler: {fileID: 0}
-  rotCheck: 0
-  activeAttack: 0
-  onStun: 0
-  direction: {x: 0, y: 0, z: 0}
-  flatObject: {fileID: 8061452907826408566}
-  flatScaleY: 0.2
-  flatTime: 0
-  timer: 0
-  onFlat: 0
-  MoveDirection: {x: 0, y: 0, z: 0}
-  rushinitdelay: 1
-  rushtime: 1.25
-  rushspeed: 7
-  rushcooltime: 0.5
-  PlayerForce: 8.25
-  Playerstuntime: 0.25
 --- !u!114 &7117216850232695014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -581,6 +538,9 @@ MonoBehaviour:
   attackDelay: 1
   canMove: 0
   canAttack: 0
+  movepattern: 0
+  movetype: 0
+  attacktype: 0
   dropGroup:
     parts: {fileID: 1484204634486695996, guid: 757caba741c6ccc40886737a7e2215df, type: 3}
     partValue: 1
@@ -617,6 +577,41 @@ MonoBehaviour:
   HittedVolume: 0.5
   AttackClip: {fileID: 8300000, guid: ae2734b8a8890134ab5c67bc8155b19e, type: 3}
   AttackVolume: 0.3
+--- !u!114 &2433477071565342210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3516212576354844996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a39c090f715b32349a7866e32a928749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  PriorityNumber: 0
+  EnemyHitCol2D: {fileID: 0}
+  eStat: {fileID: 0}
+  attackCollider: {fileID: 0}
+  animaor: {fileID: 0}
+  environmentforce: {x: 0, y: 0, z: 0}
+  isMove: 0
+  tap: {fileID: 0}
+  mae: {fileID: 0}
+  reachAttack: {fileID: 0}
+  attackTimer: 0
+  MoveAction: {fileID: 0}
+  AttackAction: {fileID: 0}
+  activeAttack: 0
+  onStun: 0
+  direction: {x: 0, y: 0, z: 0}
+  flatObject: {fileID: 0}
+  flatScaleY: 0
+  flatTime: 0
+  timer: 0
+  onFlat: 0
+  MoveDirection: {x: 0, y: 0, z: 0}
 --- !u!1 &4140271214009441137
 GameObject:
   m_ObjectHideFlags: 0
@@ -731,6 +726,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rushenemy_: {fileID: 0}
+  damage: 0
+  playerforce: 0
 --- !u!1 &5745817881399713182
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,8 +781,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 6, y: 3, z: 9}
-  m_Center: {x: 0, y: 0.64, z: 0.5}
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7316893650683644280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -846,11 +843,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mae: {fileID: 0}
   rangeCollider: {fileID: 2195266663282867806}
-  rangeSize: {x: 1.1, y: 1.5, z: 3.5}
-  rangePos: {x: 0, y: 0, z: 1.5}
+  rangeSizeX: 0
+  rangeSizeY: 0
+  rangeSizeZ: 0
+  rangePosX: 0
+  rangePosY: 0
+  rangePosZ: 0
   searchCollider: {fileID: 5745817881399713182}
-  searchColliderRange: {x: 6, y: 3, z: 9}
-  searchColliderPos: {x: 0, y: 0.64, z: 0.5}
+  searchSizeX: 0
+  searchSizeY: 0
+  searchSizeZ: 0
+  searchPosX: 0
+  searchPosY: 0
+  searchPosZ: 0
   searchCollider_: {fileID: 7316893650683644280}
   attackColliderRange: {fileID: 7527426053221945539}
   tracking: 0
@@ -866,12 +871,11 @@ MonoBehaviour:
   patrolDistance: 0.1
   leftPatrol: {x: 0, y: 0, z: 0}
   rightPatrol: {x: 0, y: 0, z: 0}
-  yWidth: 2
-  zWidth: 2
   center: {x: 0, y: 0, z: 0}
   wallRayHeight: 0
   wallRayLength: 0
   wallRayUpLength: 0
+  wallRayBackLength: 0
   wallCheck: 0
   patrolType: 0
   PlayerDetected: 0
@@ -1028,12 +1032,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 06d656e7dc263014bbf1d2d20701160e, type: 3}
---- !u!1 &204189673636078276 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8255072748780229696, guid: 06d656e7dc263014bbf1d2d20701160e,
-    type: 3}
-  m_PrefabInstance: {fileID: 8095930067670808196}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &229911638335246212 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8316542031268641024, guid: 06d656e7dc263014bbf1d2d20701160e,

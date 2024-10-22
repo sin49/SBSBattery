@@ -15,10 +15,15 @@ public class EnemyAction_Swing : NormalEnemyAction
         e.attackCollider.gameObject.SetActive(false);
         DisableActionMethod();
     }
-
-    public override void Invoke(Action ActionENd, Transform target = null)
+    public override void Invoke(Transform target = null)
     {
-        base.Invoke(ActionENd, target);
-        StartCoroutine(MeleeAttack(0.25f));
+        base.Invoke(target);
+        IEnumerator cor = MeleeAttack(0.25f);
+        StartCoroutine(cor);
     }
+    //public override void Invoke(Action ActionENd, Transform target = null)
+    //{
+    //    base.Invoke(ActionENd, target);
+    //    StartCoroutine(MeleeAttack(0.25f));
+    //}
 }

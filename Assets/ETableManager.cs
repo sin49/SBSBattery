@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System;
+using UnityEngine.UIElements;
+[Serializable]
 public class enemystattest {
     public int id;
     public string name;
@@ -12,17 +15,19 @@ public class enemystattest {
     public int attackstateID;
 
     public int searchstateID;
+    public int movestateid;
+    public float initattackdelay;
+    public float afterattackdelay;
 }
+[Serializable]
 public class enemyattacktest
 {
     public int attackid;
     public int attacktype;
     public string attackname;
-    public int attack;
-    public float initattackdelay;
-    public float afterattackdelay;
-    public float attackspeed;
-    public List<float> attackComponentList = new List<float>();
+    public List<float> SpecialVaule = new List<float>();
+
+   
 }
 
 public class ETableManager : MonoBehaviour
@@ -30,13 +35,22 @@ public class ETableManager : MonoBehaviour
     public static ETableManager instance;
     public TextAsset EnemyStatCsV;
     public TextAsset EnemyActionCsv;
-    public int StatColumns;
-    List<enemystattest> enemystats = new List<enemystattest>();
-    List<enemyattacktest> enemyattacks = new List<enemyattacktest>();
+
+    public List<enemystattest> enemystats = new List<enemystattest>();
+    public List<enemyattacktest> enemyattacks = new List<enemyattacktest>();
+
     private void Awake()
     {
         if (instance == null)
             instance = this;
+        loadEnemyStatcsv();
+    }
+    public enemystattest returnenemydata(int prioritynumber)
+    {
+        enemystattest estat= enemystats[prioritynumber];
+
+
+        return estat;
     }
     void loadEnemyStatcsv()
     {
@@ -61,8 +75,7 @@ public class ETableManager : MonoBehaviour
 
                 string[] vaules = line.Split(',');
 
-                if (vaules.Length == StatColumns)
-                {
+             
                     enemystattest Estat = new enemystattest();
                     Estat.id = int.Parse(vaules[0]);
                     Estat.name = vaules[1];
@@ -71,9 +84,11 @@ public class ETableManager : MonoBehaviour
 
                     Estat.attackstateID = int.Parse(vaules[4]);
                     Estat.searchstateID = int.Parse(vaules[5]);
-
+                    Estat.movestateid = int.Parse(vaules[6]);
+                    Estat.initattackdelay = float.Parse(vaules[7]);
+                    Estat.afterattackdelay = float.Parse(vaules[8]);
                     enemystats.Add(Estat);
-                }
+                
             }
         }
         firstlinereturn = true;
@@ -94,29 +109,44 @@ public class ETableManager : MonoBehaviour
 
                 string[] vaules = line.Split(',');
 
-                if (vaules.Length == StatColumns)
-                {
+          
                     enemyattacktest EAttack = new enemyattacktest();
                     EAttack.attackid = int.Parse(vaules[0]);
-                    EAttack.attacktype = int.Parse(vaules[1]);
+                    EAttack.attacktype = int.Parse(vaules[2]);
+                 
+
                     //여기서 id를 읽어서 컴포넌트에 추가로 들어가는거 까지 해야함?
-                    EAttack.attackname = vaules[2];
-                    EAttack.attack = int.Parse(vaules[3]);
-                    EAttack.initattackdelay = float.Parse(vaules[4]);
-                    EAttack.afterattackdelay = float.Parse(vaules[5]);
+                    EAttack.attackname = vaules[1];
+                    //EAttack.damage = int.Parse(vaules[3]);
+        
                     //적 어택 id읽은 다음 거기에 맞춰서 list에 얼만큼 추가할지가 들어가야 할듯?
-                    switch (EAttack.attacktype) { }
+                    switch (EAttack.attacktype) {
+
+                    case 3:
+                        case 4:
+                          for(int n = 3; n < 6; n++)
+                        {
+                            EAttack.SpecialVaule.Add(float.Parse(vaules[n]));
+                        }
+                            break;
+                        default:
+                            break;
+                    }
 
 
                     enemyattacks.Add(EAttack);
-                }
+                
             }
         }
+      
 
+        //enemy 스크립트에서 사용할 번호(식별키)를 따고 그걸 기반해서 적 스탯+
+        //이동 방식+공격 방식 가져와서 적용 enemy awake에 넣기
 
-        void Update()
-        {
+        //변경 ->커스텀에디터를 이용해 식별키를 넣고 숫자 바꾸면 바꿔지게
+        //저장-> 커에로 저장 버튼 만들기
+        //이동 버튼 메터리얼,탐색,능력치,공격 으로 이동하는 버튼 만들기
+        //하위 저장) 능력치, 공격은 csv 저장 나머지는 만든다면 스크립터블 오브젝트로
 
-        }
     }
 }

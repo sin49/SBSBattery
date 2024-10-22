@@ -45,28 +45,28 @@ public class jumpenemy : Enemy
 
         }
         //ismove = move 에니메이션 관련 변수->move쪽으로 옮기기
-        if (movepattern == EnemyMovePattern.stop)
-        {
-            if (tap.tracking && !activeAttack && tap.PlayerDetected)
-            {
-                isMove = true;
-            }
-            else
-            {
-                isMove = false;
-            }
-        }
-        else
-        {
-            if (tap.tracking && !activeAttack)
-            {
-                isMove = true;
-            }
-            else
-            {
-                isMove = false;
-            }
-        }
+        //if (movepattern == EnemyMovePattern.stop)
+        //{
+        //    if (tap.tracking && !activeAttack && tap.PlayerDetected)
+        //    {
+        //        isMove = true;
+        //    }
+        //    else
+        //    {
+        //        isMove = false;
+        //    }
+        //}
+        //else
+        //{
+        //    if (tap.tracking && !activeAttack)
+        //    {
+        //        isMove = true;
+        //    }
+        //    else
+        //    {
+        //        isMove = false;
+        //    }
+        //}
         MoveAnimationPlay();
         //}     
         //if (!die || !hitted)

@@ -23,7 +23,7 @@ public abstract class EnemyAction : MonoBehaviour
     public virtual void Invoke( Transform target = null)//행동 실행
     {
         ActionStartHandler?.Invoke();
-        StartCoroutine(DisableAction(ActionLifeTIme));
+        //StartCoroutine(DisableAction(ActionLifeTIme));
     }
     public virtual void StopAction()
     {

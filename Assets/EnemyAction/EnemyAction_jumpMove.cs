@@ -22,7 +22,7 @@ public class EnemyAction_jumpMove : NormalEnemyAction
       e.  animaor.SetTrigger("jump");
         yield return new WaitForSeconds(0.07f);
 
-        e.rb.AddForce(Vector3.up * jumpforce +e. eStat.moveSpeed * transform.forward, ForceMode.Impulse);
+        e.rb.AddForce(Vector3.up * jumpforce +e. eStat.moveSpeed * e.transform.forward, ForceMode.Impulse);
         yield return new WaitForSeconds(1.08f);
 
         yield return new WaitForSeconds(jumpdelay);

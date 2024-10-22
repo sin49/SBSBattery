@@ -68,8 +68,8 @@ public class fireenemy : Enemy
 
         if (animaor != null)
             animaor.Play("EnemyAttack");
-        if (actionhandler != null)
-            actionhandler.invokemainaction();
+        //if (actionhandler != null)
+        //    actionhandler.invokemainaction();
         StopAllCoroutines();
         initializebreath();
         if (oncorutine)
