@@ -655,7 +655,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7804507524740888204}
-  - component: {fileID: 946626319138551496}
+  - component: {fileID: 4099165367414114228}
   - component: {fileID: 4206946721582284119}
   - component: {fileID: 1544045533779379944}
   - component: {fileID: 6855656812718746746}
@@ -690,7 +690,7 @@ Transform:
   - {fileID: 8751882509965634993}
   m_Father: {fileID: 306610176100484830}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &946626319138551496
+--- !u!114 &4099165367414114228
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -699,11 +699,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1972193016513458267}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 545f02329cc73f54dadb52a2b27a7ae7, type: 3}
+  m_Script: {fileID: 11500000, guid: a39c090f715b32349a7866e32a928749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyHitCol2D: {fileID: 7692914251947088374}
-  movepattern: 1
+  movepattern: 0
   eStat: {fileID: 4206946721582284119}
   attackCollider: {fileID: 0}
   animaor: {fileID: 531371356096370578}
@@ -723,8 +723,6 @@ MonoBehaviour:
   timer: 0
   onFlat: 0
   MoveDirection: {x: 0, y: 0, z: 0}
-  jumpforce: 10
-  jumpdelay: 1.65
 --- !u!114 &4206946721582284119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1314,7 +1312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childMat: {fileID: 3197171151876126634}
-  enemy: {fileID: 946626319138551496}
+  enemy: {fileID: 4099165367414114228}
   tap: {fileID: 1913346259159127900}
 --- !u!65 &3881094143454133136
 BoxCollider:
