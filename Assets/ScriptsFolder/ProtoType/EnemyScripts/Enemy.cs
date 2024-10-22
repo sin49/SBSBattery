@@ -33,6 +33,8 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public Animator animaor;
 
 
+    
+
     [HideInInspector] public Vector3 environmentforce;
     [HideInInspector] public bool isMove;
 
@@ -103,23 +105,30 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     //    mae.searchCollider.onPatrol = true;
     //    tap.SetPoint(transform);
     //}    
+    Transform attackActionTransform;
+    Transform moveActionTransform;
     public void getstatusfromtable()
     {
         if(ETableManager.instance != null)
         {
             var datas = ETableManager.instance.returnenemydata(PriorityNumber);
             enemystattest s = datas;
-
+            if (attackActionTransform == null)
+            {
+                var AttackActT = Instantiate(new GameObject(), this.transform).transform;
+                AttackActT.name = "AttackAction";
+                attackActionTransform = AttackActT.transform;
+            }
             switch (s.attackstateID)
             {
                 case 1:
-                    AttackAction = gameObject.AddComponent<EnemyAction_Swing>();
+                    AttackAction = attackActionTransform.AddComponent<EnemyAction_Swing>();
                     break;
                 case 2:
-                    AttackAction = gameObject.AddComponent<EnemyAction_Throwing>();
+                    AttackAction = attackActionTransform.AddComponent<EnemyAction_Throwing>();
                     break;
                 case 3:
-                  var obj=  gameObject.AddComponent<Enemy_Action_rush>();
+                  var obj= attackActionTransform.AddComponent<Enemy_Action_rush>();
                     var data = ETableManager.instance.enemyattacks[3];
                     obj.rushtime = data.SpecialVaule[0];
                     obj.rushspeed = data.SpecialVaule[1];
@@ -127,12 +136,15 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                     AttackAction = obj;
                     break;
                 case 4:
-                    var obj2 = gameObject.AddComponent<EnemyAction_breath>();
+                    var obj2 = attackActionTransform.AddComponent<EnemyAction_breath>();
                     var data2 = ETableManager.instance.enemyattacks[4];
                     obj2.breathtime = data2.SpecialVaule[0];
                     obj2.breathspreadmaxtime = data2.SpecialVaule[1];
                     obj2.breathendtime = data2.SpecialVaule[2];
                     AttackAction = obj2;
+                    break;
+                case 5:
+                    AttackAction = attackActionTransform.AddComponent<EnemyAttack_Explosion>();
                     break;
               default:
                     
@@ -142,6 +154,12 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
            
             AttackAction.register(this);
+            if (moveActionTransform == null)
+            {
+                var moveactionT = Instantiate(new GameObject(), this.transform).transform;
+                moveactionT.name = "MoveAction";
+                moveActionTransform = moveactionT.transform;
+            }
             switch (s.movestateid)
             {
                 case 0:
@@ -149,11 +167,11 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                     MoveAction.register(this);
                     break;
                 case 1:
-                    MoveAction =gameObject.AddComponent<ENemy_Action_BasicMove>  ();
+                    MoveAction = moveActionTransform.AddComponent<ENemy_Action_BasicMove>  ();
                     MoveAction.register(this);
                     break;
                 case 2:
-                    MoveAction = gameObject.AddComponent<EnemyAction_jumpMove>();
+                    MoveAction = moveActionTransform.AddComponent<EnemyAction_jumpMove>();
                     MoveAction.register(this);
                     break;
                    

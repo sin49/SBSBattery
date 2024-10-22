@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class rushattackcollider : MonoBehaviour
 {
-    public Enemy rushenemy_;
+
     public float damage;
     public event Action rushendevent;
     public float playerforce;
@@ -13,14 +13,11 @@ public class rushattackcollider : MonoBehaviour
     {
         rushendevent += a;
     }
-    private void Awake()
-    {
-        rushenemy_=transform.parent.GetComponent<rushenemy>();
-    }
+ 
     IEnumerator playerforced(Player p)
     {
         PlayerHandler.instance.CantHandle = true;
-        p.playerRb.AddForce(rushenemy_.transform.forward * playerforce, ForceMode.Impulse);
+        p.playerRb.AddForce(this.transform.forward * playerforce, ForceMode.Impulse);
         yield return new WaitForSeconds(0.25f);
         PlayerHandler.instance.CantHandle = false;
     }
