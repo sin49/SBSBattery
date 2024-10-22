@@ -17,7 +17,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 {
     [Header("식별번호")] public int PriorityNumber;
 
-
+    public bool CreateBySpawner;
 
 
     [Header("몬스터가 피격당하는 2D 콜라이더")]public GameObject EnemyHitCol2D;
@@ -107,78 +107,82 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     //}    
     Transform attackActionTransform;
     Transform moveActionTransform;
+ public void   LoadDataFromStatusDatas(enemystattest s)
+    {
+        if (attackActionTransform == null)
+        {
+            var AttackActT = Instantiate(new GameObject(), this.transform).transform;
+            AttackActT.name = "AttackAction";
+            attackActionTransform = AttackActT.transform;
+        }
+        switch (s.attackstateID)
+        {
+            case 1:
+                AttackAction = attackActionTransform.AddComponent<EnemyAction_Swing>();
+                break;
+            case 2:
+                AttackAction = attackActionTransform.AddComponent<EnemyAction_Throwing>();
+                break;
+            case 3:
+                var obj = attackActionTransform.AddComponent<Enemy_Action_rush>();
+                var data = ETableManager.instance.enemyattacks[3];
+                obj.rushtime = data.SpecialVaule[0];
+                obj.rushspeed = data.SpecialVaule[1];
+                obj.PlayerForce = data.SpecialVaule[2];
+                AttackAction = obj;
+                break;
+            case 4:
+                var obj2 = attackActionTransform.AddComponent<EnemyAction_breath>();
+                var data2 = ETableManager.instance.enemyattacks[4];
+                obj2.breathtime = data2.SpecialVaule[0];
+                obj2.breathspreadmaxtime = data2.SpecialVaule[1];
+                obj2.breathendtime = data2.SpecialVaule[2];
+                AttackAction = obj2;
+                break;
+            case 5:
+                AttackAction = attackActionTransform.AddComponent<EnemyAttack_Explosion>();
+                break;
+            default:
+
+                break;
+
+        }
+
+
+        AttackAction.register(this);
+        if (moveActionTransform == null)
+        {
+            var moveactionT = Instantiate(new GameObject(), this.transform).transform;
+            moveactionT.name = "MoveAction";
+            moveActionTransform = moveactionT.transform;
+        }
+        switch (s.movestateid)
+        {
+            case 0:
+                MoveAction = null;
+                MoveAction.register(this);
+                break;
+            case 1:
+                MoveAction = moveActionTransform.AddComponent<ENemy_Action_BasicMove>();
+                MoveAction.register(this);
+                break;
+            case 2:
+                MoveAction = moveActionTransform.AddComponent<EnemyAction_jumpMove>();
+                MoveAction.register(this);
+                break;
+
+        }
+        eStat.initMaxHP = s.hp; eStat.initMoveSpeed = s.movespeed;
+        eStat.initattackCoolTime = s.initattackdelay;
+        eStat.attackDelay = s.afterattackdelay;
+    }
     public void getstatusfromtable()
     {
         if(ETableManager.instance != null)
         {
             var datas = ETableManager.instance.returnenemydata(PriorityNumber);
             enemystattest s = datas;
-            if (attackActionTransform == null)
-            {
-                var AttackActT = Instantiate(new GameObject(), this.transform).transform;
-                AttackActT.name = "AttackAction";
-                attackActionTransform = AttackActT.transform;
-            }
-            switch (s.attackstateID)
-            {
-                case 1:
-                    AttackAction = attackActionTransform.AddComponent<EnemyAction_Swing>();
-                    break;
-                case 2:
-                    AttackAction = attackActionTransform.AddComponent<EnemyAction_Throwing>();
-                    break;
-                case 3:
-                  var obj= attackActionTransform.AddComponent<Enemy_Action_rush>();
-                    var data = ETableManager.instance.enemyattacks[3];
-                    obj.rushtime = data.SpecialVaule[0];
-                    obj.rushspeed = data.SpecialVaule[1];
-                    obj.PlayerForce = data.SpecialVaule[2];
-                    AttackAction = obj;
-                    break;
-                case 4:
-                    var obj2 = attackActionTransform.AddComponent<EnemyAction_breath>();
-                    var data2 = ETableManager.instance.enemyattacks[4];
-                    obj2.breathtime = data2.SpecialVaule[0];
-                    obj2.breathspreadmaxtime = data2.SpecialVaule[1];
-                    obj2.breathendtime = data2.SpecialVaule[2];
-                    AttackAction = obj2;
-                    break;
-                case 5:
-                    AttackAction = attackActionTransform.AddComponent<EnemyAttack_Explosion>();
-                    break;
-              default:
-                    
-                    break;
-
-            }
-
-           if(AttackAction != null)
-            AttackAction.register(this);
-            if (moveActionTransform == null)
-            {
-                var moveactionT = Instantiate(new GameObject(), this.transform).transform;
-                moveactionT.name = "MoveAction";
-                moveActionTransform = moveactionT.transform;
-            }
-            switch (s.movestateid)
-            {
-                case 0:
-                    MoveAction = null;
-                    MoveAction.register(this);
-                    break;
-                case 1:
-                    MoveAction = moveActionTransform.AddComponent<ENemy_Action_BasicMove>  ();
-                    MoveAction.register(this);
-                    break;
-                case 2:
-                    MoveAction = moveActionTransform.AddComponent<EnemyAction_jumpMove>();
-                    MoveAction.register(this);
-                    break;
-                   
-            }
-            eStat.initMaxHP = s.hp;eStat.initMoveSpeed = s.movespeed;
-            eStat.initattackCoolTime = s.initattackdelay;
-            eStat.attackDelay = s.afterattackdelay;
+            LoadDataFromStatusDatas(s);
         }
 
     }
@@ -193,6 +197,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     private void Start()
     {                
         attackTimer = eStat.initattackCoolTime;
+        if(!CreateBySpawner)
         getstatusfromtable();
 
         if (reachAttack != null)
@@ -684,9 +689,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         if(animaor != null)
             animaor.Play("EnemyAttack");
         PlayAttackSound();
-        if(AttackAction != null)
         AttackAction.Invoke(PlayerHandler.instance.CurrentPlayer.transform);
-        DelayTime();
     }
 
     // 공격 준비시간
