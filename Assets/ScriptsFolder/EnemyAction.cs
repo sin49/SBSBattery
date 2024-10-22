@@ -45,7 +45,7 @@ public abstract class EnemyAction : MonoBehaviour
 
         StartCoroutine(DisableAction(ActionLifeTIme));
     }
-    protected void DisableActionMethod()
+    protected virtual void DisableActionMethod()
     {
         ActionEndHandler?.Invoke();
         ActionEndHandler = null;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
+public enum enemymodedlnumber {defaultform,breathform,jumpform,rushform,bulbform }
 
 public class EnemySpawner : MonoBehaviour
 {
