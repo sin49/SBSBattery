@@ -105,7 +105,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     //}    
     public void getstatusfromtable()
     {
-        if(ETableManager.instance != null)
+        if (ETableManager.instance != null)
         {
             var datas = ETableManager.instance.returnenemydata(PriorityNumber);
             enemystattest s = datas;
@@ -119,7 +119,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                     AttackAction = gameObject.AddComponent<EnemyAction_Throwing>();
                     break;
                 case 3:
-                  var obj=  gameObject.AddComponent<Enemy_Action_rush>();
+                    var obj = gameObject.AddComponent<Enemy_Action_rush>();
                     var data = ETableManager.instance.enemyattacks[3];
                     obj.rushtime = data.SpecialVaule[0];
                     obj.rushspeed = data.SpecialVaule[1];
@@ -134,13 +134,13 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                     obj2.breathendtime = data2.SpecialVaule[2];
                     AttackAction = obj2;
                     break;
-              default:
-                    
+                default:
+
                     break;
 
             }
 
-           
+
             AttackAction.register(this);
             switch (s.movestateid)
             {
@@ -149,16 +149,16 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                     MoveAction.register(this);
                     break;
                 case 1:
-                    MoveAction =gameObject.AddComponent<ENemy_Action_BasicMove>  ();
+                    MoveAction = gameObject.AddComponent<ENemy_Action_BasicMove>();
                     MoveAction.register(this);
                     break;
                 case 2:
                     MoveAction = gameObject.AddComponent<EnemyAction_jumpMove>();
                     MoveAction.register(this);
                     break;
-                   
+
             }
-            eStat.initMaxHP = s.hp;eStat.initMoveSpeed = s.movespeed;
+            eStat.initMaxHP = s.hp; eStat.initMoveSpeed = s.movespeed;
             eStat.initattackCoolTime = s.initattackdelay;
             eStat.attackDelay = s.afterattackdelay;
         }
@@ -369,25 +369,27 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     //materialAndPatrol에서 각 몬스터에 맞게 처리하는 함수 생각중입니다.
     public virtual void StartEmmissionHitMat()
     {
-        
+        mae.StartEmmissionHitMat();
     }
 
     public virtual void EndEmmissionHitMat()
     {
-        Material[] materials = mae.skinRenderer.materials;
-        materials[0] = mae.backMat;
-        materials[1] = mae.hittedMat;
-        mae.skinRenderer.materials = materials;
+        //Material[] materials = mae.skinRenderer.materials;
+        //materials[0] = mae.backMat;
+        //materials[1] = mae.hittedMat;
+        //mae.skinRenderer.materials = materials;
+        mae.EndEmmissionHitMat();
     }
 
     public virtual void EndHitMat()
     {
-        Material[] materials = mae.skinRenderer.materials;
-        materials[0] = mae.backMat;
-        materials[1] = mae.idleMat;
-        mae.skinRenderer.materials = materials;
+        //Material[] materials = mae.skinRenderer.materials;
+        //materials[0] = mae.backMat;
+        //materials[1] = mae.idleMat;
+        //mae.skinRenderer.materials = materials;
 
-        Debug.Log("기본 머테리얼로 복귀");
+        //Debug.Log("기본 머테리얼로 복귀");
+        mae.EndHitMat();
     }
 
     #endregion
@@ -667,6 +669,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             animaor.Play("EnemyAttack");
         PlayAttackSound();
         AttackAction.Invoke(PlayerHandler.instance.CurrentPlayer.transform);
+        DelayTime();
     }
 
     // 공격 준비시간

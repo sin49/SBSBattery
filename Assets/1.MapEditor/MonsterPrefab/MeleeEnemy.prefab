@@ -2772,8 +2772,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a39c090f715b32349a7866e32a928749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  PriorityNumber: 0
   EnemyHitCol2D: {fileID: 3027465547958485918}
-  movepattern: 1
   eStat: {fileID: 6399371868865806208}
   attackCollider: {fileID: 40720322756340349}
   animaor: {fileID: 7885196055474843490}
@@ -2783,7 +2784,8 @@ MonoBehaviour:
   mae: {fileID: 2960088906172574130}
   reachAttack: {fileID: 5720393083719718969}
   attackTimer: 0
-  actionhandler: {fileID: 0}
+  MoveAction: {fileID: 0}
+  AttackAction: {fileID: 0}
   activeAttack: 0
   onStun: 0
   direction: {x: 0, y: 0, z: 0}
@@ -2812,13 +2814,16 @@ MonoBehaviour:
   HPBonus: 0
   MoveSpeedBonus: 0
   hp: 2
-  atk: 1
+  atk: 10
   attackSpeed: 0
   attackCoolTimebonus: 0
-  initattackCoolTime: 1
-  attackDelay: 1
+  initattackCoolTime: 0
+  attackDelay: 0
   canMove: 1
   canAttack: 1
+  movepattern: 0
+  movetype: 0
+  attacktype: 0
   dropGroup:
     parts: {fileID: 0}
     partValue: 0

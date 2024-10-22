@@ -29,6 +29,7 @@ public class EnemyMaterialAndEffect : MonoBehaviour
 
     public void StartEmmissionHitMat()
     {
+        //if(emmissionBackMat !=null)
 
     }
 

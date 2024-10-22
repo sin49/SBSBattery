@@ -240,11 +240,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mae: {fileID: 4257949603525631324}
   rangeCollider: {fileID: 0}
-  rangeSize: {x: 0, y: 0, z: 0}
-  rangePos: {x: 0, y: 0, z: 0}
+  rangeSizeX: 0
+  rangeSizeY: 0
+  rangeSizeZ: 0
+  rangePosX: 0
+  rangePosY: 0
+  rangePosZ: 0
   searchCollider: {fileID: 7733405150144490626}
-  searchColliderRange: {x: 0, y: 0, z: 0}
-  searchColliderPos: {x: 0, y: 0, z: 0}
+  searchSizeX: 0
+  searchSizeY: 0
+  searchSizeZ: 0
+  searchPosX: 0
+  searchPosY: 0
+  searchPosZ: 0
   searchCollider_: {fileID: 0}
   attackColliderRange: {fileID: 0}
   tracking: 0
@@ -260,8 +268,6 @@ MonoBehaviour:
   patrolDistance: 0
   leftPatrol: {x: 0, y: 0, z: 0}
   rightPatrol: {x: 0, y: 0, z: 0}
-  yWidth: 0
-  zWidth: 0
   center: {x: 0, y: 0, z: 0}
   wallRayHeight: 0
   wallRayLength: 0
@@ -943,6 +949,7 @@ GameObject:
   m_Component:
   - component: {fileID: 119241573391277033}
   - component: {fileID: 233439120728915618}
+  - component: {fileID: 6776083900253267662}
   - component: {fileID: 517424950950997279}
   - component: {fileID: 3905273058084709805}
   - component: {fileID: 4020459854504847964}
@@ -990,8 +997,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd8a32078c572f4489e5f2b7a98b9092, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  PriorityNumber: 0
   EnemyHitCol2D: {fileID: 7863548806375813538}
-  movepattern: 1
   eStat: {fileID: 3905273058084709805}
   attackCollider: {fileID: 6339559483058744432}
   animaor: {fileID: 1288513263675201111}
@@ -1001,7 +1009,8 @@ MonoBehaviour:
   mae: {fileID: 4257949603525631324}
   reachAttack: {fileID: 4189451210452894303}
   attackTimer: 0
-  actionhandler: {fileID: 0}
+  MoveAction: {fileID: 0}
+  AttackAction: {fileID: 0}
   activeAttack: 0
   onStun: 0
   direction: {x: 0, y: 0, z: 0}
@@ -1013,6 +1022,41 @@ MonoBehaviour:
   MoveDirection: {x: 0, y: 0, z: 0}
   explosion: {fileID: 0}
   lightCheck: 1
+--- !u!114 &6776083900253267662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2993856921889617396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a39c090f715b32349a7866e32a928749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  PriorityNumber: 0
+  EnemyHitCol2D: {fileID: 0}
+  eStat: {fileID: 0}
+  attackCollider: {fileID: 0}
+  animaor: {fileID: 1288513263675201111}
+  environmentforce: {x: 0, y: 0, z: 0}
+  isMove: 0
+  tap: {fileID: 0}
+  mae: {fileID: 0}
+  reachAttack: {fileID: 0}
+  attackTimer: 0
+  MoveAction: {fileID: 0}
+  AttackAction: {fileID: 0}
+  activeAttack: 0
+  onStun: 0
+  direction: {x: 0, y: 0, z: 0}
+  flatObject: {fileID: 0}
+  flatScaleY: 0
+  flatTime: 0
+  timer: 0
+  onFlat: 0
+  MoveDirection: {x: 0, y: 0, z: 0}
 --- !u!136 &517424950950997279
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1062,6 +1106,9 @@ MonoBehaviour:
   attackDelay: 0
   canMove: 1
   canAttack: 1
+  movepattern: 0
+  movetype: 0
+  attacktype: 0
   dropGroup:
     parts: {fileID: 0}
     partValue: 0
@@ -3003,12 +3050,12 @@ MonoBehaviour:
   headMat: {fileID: 2100000, guid: 5a5acbb0f5c7fe74e9ae123451e699b3, type: 2}
   hittedMat: {fileID: 2100000, guid: 05135b17c4cac7343bee0728f103732c, type: 2}
   skinRenderer: {fileID: 733190138019894174}
-  deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
-    type: 3}
   emmissionBackMat: {fileID: 2100000, guid: 9c803368896f75c42800af8ccb3677bb, type: 2}
   emmissionHeadMat: {fileID: 2100000, guid: 2c03e6d8abfe1df42b411d91be48ef18, type: 2}
   emmissionHittedMat: {fileID: 2100000, guid: abde3b6801201ee4c8dd254867aa031e, type: 2}
   skinHead: {fileID: 0}
+  deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
+    type: 3}
 --- !u!1 &8309665532623593237
 GameObject:
   m_ObjectHideFlags: 0
