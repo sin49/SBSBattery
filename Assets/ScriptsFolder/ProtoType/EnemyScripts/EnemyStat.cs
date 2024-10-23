@@ -15,6 +15,7 @@ public class EnemyStat : CharacterStat
     [Header("몬스터의 이동 방식")] public EnemyMoveType movetype;
     [Header(("몬스터의 공격 방식"))] public EnemyAttackType attacktype;
     [Header("드랍 아이템 임의로 작성(사용할지 모름)")]
+    [Header("몬스터 공격판정 활성화 대기시간")]public float attackReadyTime;
     public Drop dropGroup; // 사망 시, 드랍할 재화에 대한 클래스 변수
 
 }

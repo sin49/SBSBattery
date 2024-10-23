@@ -36,7 +36,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     
 
     [HideInInspector] public Vector3 environmentforce;
-    [HideInInspector] public bool isMove;
+  public bool isMove;
 
     [Header("추적/탐색 관련 스크립트")]public EnemyTrackingAndPatrol tap;    
     [Header("기본/피격 머티리얼 관련 스크립트")]public EnemyMaterialAndEffect mae;
@@ -148,7 +148,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
         }
 
-
+        if(AttackAction !=null)
         AttackAction.register(this);
         if (moveActionTransform == null)
         {
@@ -156,8 +156,9 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             moveactionT.name = "MoveAction";
             moveActionTransform = moveactionT.transform;
         }
+        Debug.Log($"{gameObject}, {s.movestateid}");
         switch (s.movestateid)
-        {
+        {            
             case 0:
                 MoveAction = null;
                 MoveAction.register(this);
@@ -173,7 +174,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
         }
         eStat.initMaxHP = s.hp; eStat.initMoveSpeed = s.movespeed;
-        eStat.initattackCoolTime = s.initattackdelay;
+        eStat.attackReadyTime = s.initattackdelay;
         eStat.attackDelay = s.afterattackdelay;
     }
     public void getstatusfromtable()
@@ -195,7 +196,14 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         
     }
     private void Start()
-    {                
+    {        
+        if (eStat.movepattern == EnemyMovePattern.patrol)
+        {
+            //InitPatrolPoint();
+            if (!tap.PlayerDetected)
+                StartCoroutine(tap.InitPatrolTarget());
+        }
+
         attackTimer = eStat.initattackCoolTime;
         if(!CreateBySpawner)
         getstatusfromtable();
@@ -318,6 +326,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public override void Damaged(float damage)
     {
         base.Damaged(damage);
+        StopCoroutine(corutine);
         eStat.hp -= damage;
         if (eStat.hp <= 0)
         {
@@ -348,7 +357,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             {
                 animaor.SetTrigger("isHitted");
                 activeAttack = true;
-                attackTimer = eStat.initattackCoolTime;
+                //attackTimer = eStat.initattackCoolTime;
             }
             //InitAttackCoolTime();                
             StartCoroutine("HittedEnd");
@@ -385,6 +394,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         }
 
         activeAttack = false;
+        CanAttack = false;
     }
 
     //머티리얼 관련해서 현재는 가상함수처리하여 각 몬스터마다
@@ -392,25 +402,27 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     //materialAndPatrol에서 각 몬스터에 맞게 처리하는 함수 생각중입니다.
     public virtual void StartEmmissionHitMat()
     {
-        
+        mae.StartEmmissionHitMat();
     }
 
     public virtual void EndEmmissionHitMat()
     {
-        Material[] materials = mae.skinRenderer.materials;
-        materials[0] = mae.backMat;
-        materials[1] = mae.hittedMat;
-        mae.skinRenderer.materials = materials;
+        mae.EndEmmissionHitMat();
+        //Material[] materials = mae.skinRenderer.materials;
+        //materials[0] = mae.backMat;
+        //materials[1] = mae.hittedMat;
+        //mae.skinRenderer.materials = materials;
     }
 
     public virtual void EndHitMat()
     {
-        Material[] materials = mae.skinRenderer.materials;
-        materials[0] = mae.backMat;
-        materials[1] = mae.idleMat;
-        mae.skinRenderer.materials = materials;
+        mae.EndHitMat();
+        //Material[] materials = mae.skinRenderer.materials;
+        //materials[0] = mae.backMat;
+        //materials[1] = mae.idleMat;
+        //mae.skinRenderer.materials = materials;
 
-        Debug.Log("기본 머테리얼로 복귀");
+        //Debug.Log("기본 머테리얼로 복귀");
     }
 
     #endregion
@@ -695,31 +707,49 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         if (soundplayer != null)
             soundplayer.PlayAttackAudio();
     }
+
+    IEnumerator corutine;
+
     public override void Attack()
     {
         base.Attack();
-        if(animaor != null)
+        isMove = false;
+        MoveAnimationPlay();
+        if (animaor != null)
             animaor.Play("EnemyAttack");
         PlayAttackSound();
+        corutine = attackActionInvoke();
+        StartCoroutine(corutine);
+    }
+
+    IEnumerator attackActionInvoke()
+    {
+        yield return new WaitForSeconds(eStat.attackReadyTime);
         AttackAction.Invoke(PlayerHandler.instance.CurrentPlayer.transform);
     }
 
     // 공격 준비시간
     public void ReadyAttackTime()
     {
-        if (activeAttack && !die && !CanAttack)
-        {            
-            if (attackTimer > 0)
-            {
-                attackTimer -= Time.deltaTime;
-            }
-            else
-            {
-                CanAttack = true;
-                activeAttack = false;
-                Attack();
-            }
-        }        
+        if (activeAttack && !CanAttack)
+        {
+            CanAttack = true;
+            activeAttack = false;
+            Attack();
+        }
+        //if (activeAttack && !die && !CanAttack)
+        //{
+        //    if (attackTimer > 0)
+        //    {
+        //        attackTimer -= Time.deltaTime;
+        //    }
+        //    else
+        //    {
+        //        CanAttack = true;
+        //        activeAttack = false;
+        //        Attack();
+        //    }
+        //}
     }
 
     public void DelayTime()
@@ -729,13 +759,16 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
     IEnumerator WaitDelay()
     {
+         
         yield return new WaitForSeconds(eStat.attackDelay);
         InitAttackCoolTime();
+        
     }
 
     // 공격 초기화
     public void InitAttackCoolTime()
     {
+        Debug.Log("공격 초기화시킴");
         CanAttack = false;
         attackTimer = eStat.initattackCoolTime;        
     }

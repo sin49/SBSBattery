@@ -737,11 +737,11 @@ MonoBehaviour:
   idleMat: {fileID: 2100000, guid: 1c515456b96e2b244809cbaa151bcc0c, type: 2}
   backMat: {fileID: 0}
   headMat: {fileID: 0}
-  hittedMat: {fileID: 2100000, guid: 68aa62768728c9a42b4466438664f462, type: 2}
-  skinRenderer: {fileID: 0}
+  hittedMat: {fileID: 2100000, guid: 1c515456b96e2b244809cbaa151bcc0c, type: 2}
+  skinRenderer: {fileID: 5509012045196930935}
   emmissionBackMat: {fileID: 0}
   emmissionHeadMat: {fileID: 0}
-  emmissionHittedMat: {fileID: 0}
+  emmissionHittedMat: {fileID: 2100000, guid: 68aa62768728c9a42b4466438664f462, type: 2}
   skinHead: {fileID: 0}
   deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
     type: 3}
@@ -1488,7 +1488,7 @@ MonoBehaviour:
   patrolWaitTime: 0
   leftPatrolRange: 0
   rightPatrolRange: 0
-  patrolDistance: 0
+  patrolDistance: 0.1
   leftPatrol: {x: 0, y: 0, z: 0}
   rightPatrol: {x: 0, y: 0, z: 0}
   center: {x: 0, y: 1, z: 0}
@@ -1497,7 +1497,6 @@ MonoBehaviour:
   wallRayUpLength: 0
   wallRayBackLength: 0
   wallCheck: 0
-  patrolType: 1
   PlayerDetected: 0
 --- !u!1 &4177752030227899728
 GameObject:
@@ -2893,7 +2892,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
-  PriorityNumber: 0
+  PriorityNumber: 4
+  CreateBySpawner: 0
   EnemyHitCol2D: {fileID: 7116049961817154067}
   eStat: {fileID: 696479488360981710}
   attackCollider: {fileID: 326155698769949021}
@@ -2944,6 +2944,7 @@ MonoBehaviour:
   movepattern: 0
   movetype: 0
   attacktype: 0
+  attackReadyTime: 0
   dropGroup:
     parts: {fileID: 0}
     partValue: 0

@@ -44,8 +44,8 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     public Vector3 testTarget; // 타겟을 바라보는 시점을 테스트하기 위한 임시 변수
 
     [Header("#추격 범위#")]
-    [Header("탐색 후 추격 유지 범위")] public float trackingDistance;
-    [Tooltip("설정 X")] public float disToPlayer;
+    [Header("탐색 후 추격 유지 범위")] [Range(0, 10)] public float trackingDistance;
+    [Tooltip("설정 X")] [HideInInspector]public float disToPlayer;
 
     [Header("#정찰 이동관련(정찰 그룹, 정찰목표값, 정찰 대기시간)#")]
     //[Header("스크립트 상에서 값을 임의 결정하게 되어있음")]public Vector3[] patrolGroup; // 0번째: 왼쪽, 1번째: 오른쪽
@@ -60,24 +60,23 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     [Range(0, 5)]public float leftPatrolRange; // 좌측 정찰 범위
     [Header("오른쪽 정찰 범위")]
     [Range(0, 5)] public float rightPatrolRange; // 우측 정찰 범위
-    [Header("정찰 거리(설정 안해도됨)")]
+    [Header("정찰 거리(최소 0.1)")]
     [Range(0, 5)] public float patrolDistance; // 정찰 거리
 
     [HideInInspector] public Vector3 leftPatrol, rightPatrol;    
     [HideInInspector] public Vector3 center;
 
     [Header("벽 체크 레이캐스트")]
-    [Header("벽 체크 Ray의 높이")] public float wallRayHeight;
-    [Header("정면 Ray 길이")] public float wallRayLength;
-    [Header("위쪽 Ray 길이")] public float wallRayUpLength;
-    [Header("뒤쪽 Ray 길이")] public float wallRayBackLength;
+    [Header("벽 체크 Ray의 높이")] [Range(0,10)] public float wallRayHeight;
+    [Header("정면 Ray 길이")] [Range(0, 10)] public float wallRayLength;
+    [Header("위쪽 Ray 길이")] [Range(0, 10)] public float wallRayUpLength;
+    [Header("뒤쪽 Ray 길이")] [Range(0, 10)] public float wallRayBackLength;
     Collider forwardWall;
     Collider upWall;
     Collider backWall;
     float disToWall;
     [HideInInspector] public bool wallCheck;
     bool forwardCheck, upCheck, backCheck;
-    [Header("몬스터 정찰타입")]public PatrolType patrolType;
      
     public void InitPatrolPoint()
     {
@@ -102,17 +101,8 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     }
 
     private void Awake()
-    {
-    
-        InitPatrolPoint();
-        if (patrolType == PatrolType.movePatrol)
-        {
-            //InitPatrolPoint();
-            if (!PlayerDetected)
-                StartCoroutine(InitPatrolTarget());
-        }
-
-
+    {    
+        InitPatrolPoint();       
     }
 
     private void Update()
@@ -337,7 +327,7 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     #endregion
     #region 추격
 
-    [HideInInspector]public bool PlayerDetected;
+    public bool PlayerDetected;
 
     public void TrackingMove_()
     {

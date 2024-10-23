@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemyMaterialAndEffect : MonoBehaviour
@@ -15,7 +16,7 @@ public class EnemyMaterialAndEffect : MonoBehaviour
     [Header("±âº»¸÷, Àü±¸¸÷")]public Renderer skinRenderer;
 
     [Header("Emmission ¸ÓÆ¼¸®¾ó(ÇÇ°Ý ½Ã ´Ù¸¥ »ö±ò ==> ºÓÀº ¸ÓÆ¼¸®¾ó)")] 
-    [Header("±âº»¸÷ ¾ó±¼, Àü±¸¸÷ ÇÊ¶ó¸àÆ®")]public Material emmissionBackMat;
+    [Header("±âº»¸÷ ¾ó±¼, Á¡ÇÁ¸÷ ¹Ùµð, Àü±¸¸÷ ÇÊ¶ó¸àÆ®")]public Material emmissionBackMat;
     [Header("±âº»¸÷ ¹Ùµð, Àü±¸¸÷ À¯¸®")]public Material emmissionHeadMat;
     [Header("±âº»¸÷ º£ÀÌ½º, Àü±¸¸÷ ¹Ùµð")]public Material emmissionHittedMat;
     [Header("ÀÏ¹Ý¸÷¸¸ »ç¿ë")]public Renderer skinHead; //  ÀÏ¹Ý ¸ó½ºÅÍ¸¸ ¾¸
@@ -29,16 +30,86 @@ public class EnemyMaterialAndEffect : MonoBehaviour
 
     public void StartEmmissionHitMat()
     {
+        //if(emmissionBackMat !=null)
+        Material[] materials = skinRenderer.materials;
+        switch (materials.Length)
+        {
+            case 1:
+                materials[0] = emmissionHittedMat;
+                skinRenderer.materials = materials;
+                break;
+            case 2:
+                materials[0] = emmissionBackMat;
+                materials[1] = emmissionHittedMat;
+                skinRenderer.materials = materials;
+                break;
+            case 3:
+                materials[0] = emmissionBackMat;
+                materials[1] = emmissionHeadMat;
+                materials[2] = emmissionHittedMat;
+                skinRenderer.materials = materials;
+                break;
+            default:
+                break;
+        }
 
+        if (skinHead != null)
+            skinHead.material = emmissionBackMat;
     }
 
     public void EndEmmissionHitMat()
     {
+        Material[] materials = skinRenderer.materials;
+        switch (materials.Length)
+        {
+            case 1:
+                materials[0] = hittedMat;
+                skinRenderer.materials = materials;
+                break;
+            case 2:
+                materials[0] = backMat;
+                materials[1] = hittedMat;
+                skinRenderer.materials = materials;
+                break;
+            case 3:
+                materials[0] = backMat;
+                materials[1] = headMat;
+                materials[2] = hittedMat;
+                skinRenderer.materials = materials;
+                break;
+            default:
+                break;
+        }
 
+        if (skinHead != null)
+            skinHead.material = backMat;
     }
 
     public void EndHitMat()
     {
+        Material[] materials = skinRenderer.materials;
+        switch (materials.Length)
+        {
+            case 1:
+                materials[0] = idleMat;
+                skinRenderer.materials = materials;
+                break;
+            case 2:
+                materials[0] = idleMat;
+                materials[1] = backMat;
+                skinRenderer.materials = materials;
+                break;
+            case 3:
+                materials[0] = idleMat;
+                materials[1] = headMat;
+                materials[2] = backMat;
+                skinRenderer.materials = materials;
+                break;
+            default:
+                break;
+        }
 
+        if (skinHead != null)
+            skinHead.material = backMat;
     }
 }

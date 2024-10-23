@@ -27,13 +27,15 @@ public class EnemyAction_breath : NormalEnemyAction
     {
         base.register(e);
         breathattack = e.attackCollider.GetComponent<firebreathattack>();
+        breathattack.breathtime = breathtime;
+        breathattack.breathspreadmaxtime = breathspreadmaxtime;
+        breathattack.breathendtime = breathendtime;
         breathattack.registerbreathendevent(DisableActionMethod);
     }
 
     IEnumerator breathattackInvoke()
     {
-        if (!breathattack.gameObject.activeSelf)
-            breathattack.gameObject.SetActive(true);
+        breathattack.gameObject.SetActive(true);
         yield return new WaitForSeconds(breathtime+breathendtime);
         DisableActionMethod();
     }
