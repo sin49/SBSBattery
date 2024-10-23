@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.UIElements;
 
 public enum enemymodedlnumber {defaultform,breathform,jumpform,rushform,bulbform }
 
@@ -16,8 +17,17 @@ public class EnemySpawner : MonoBehaviour
  
     public int enemyattacknumber;
     public int enemymovenumber;
-    public int enemypatorlnumber;
-    private enemystattest enemyData;
+    public int enemypatorolnumber;
+
+    public enemystattest enemyData;
+
+
+    public List<GameObject> EnemyModelList= new List<GameObject>();
+    public List<GameObject> AttackCOlliderList = new List<GameObject>();
+
+
+    public int id;
+
     // CSV에서 데이터를 불러오는 메서드
     private void LoadEnemyDataFromCSV(int statusId)
     {
@@ -43,10 +53,10 @@ public class EnemySpawner : MonoBehaviour
         }
     }
     // CSV 파일에 저장하는 메서드 (존재하지 않는 경우 추가)
-    private void SaveEnemyData()
+    public void SaveEnemyData()
     {
-        var tableManager = ETableManager.instance;
-        if (tableManager != null && enemyData != null)
+
+        if ( enemyData != null)
         {
             string csvFilePath = Application.dataPath + "/1.CSVDATA/EnemyStatData.csv";
 
@@ -103,10 +113,13 @@ public class EnemySpawner : MonoBehaviour
             Debug.LogError("No enemy data available to save.");
         }
     }
-
+    private void Awake()
+    {
+        LoadEnemyDataFromCSV(0);
+    }
     public void CreateEnemy()
     {
-        GameObject model = ETableManager.instance.Enemies[ENemyModelNumber];
+        GameObject model = EnemyModelList[ENemyModelNumber];
         Enemy e = model.transform.GetChild(0).GetComponent<Enemy>();
 
             enemystattest enemystattest = ETableManager.instance.returnenemydata(enemystatusNumber);
@@ -116,8 +129,10 @@ public class EnemySpawner : MonoBehaviour
 
        
         e.CreateBySpawner = true;
-        e.eStat.movepattern = (EnemyMovePattern)enemypatorlnumber;
+        e.eStat.movepattern = (EnemyMovePattern)enemypatorolnumber;
         Instantiate(model, this.transform.position, this.transform.rotation);
+
+
 
     }
 }

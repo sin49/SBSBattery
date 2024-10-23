@@ -6,32 +6,30 @@ using System.IO;
 [CustomEditor(typeof(EnemySpawner))]
 public class EnemySpawnerEditor : Editor
 {
-    SerializedProperty id;
-    SerializedProperty enemyModelNumber;
-    SerializedProperty enemyStatusNumber;
-    SerializedProperty attackColliderNumber;
-    SerializedProperty enemyAttackNumber;
-    SerializedProperty enemyMoveNumber;
-    SerializedProperty enemyPatrolNumber;
+ EnemySpawner m_EnemySpawner;
 
     // CSV에서 불러온 데이터를 저장할 객체
 
     private void OnEnable()
     {
-       
+       m_EnemySpawner = (EnemySpawner)target;
     }
 
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-        //serializedObject.Update();
-
-    
-
-        //serializedObject.ApplyModifiedProperties();
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("저장"))
+        {
+            m_EnemySpawner. SaveEnemyData();
+        }
+        if (GUILayout.Button("생성"))
+        {
+            m_EnemySpawner.CreateEnemy();
+        }
+        GUILayout.EndHorizontal();
     }
-
-   
-
-   
 }
+   
+
+   
