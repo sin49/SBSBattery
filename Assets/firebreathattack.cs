@@ -45,18 +45,18 @@ public class firebreathattack : MonoBehaviour
     private void Awake()
     {
         initializebreath();
-        BreathEndEvent += () => { this.gameObject.SetActive(false); };
+        registerbreathendevent(() => { this.gameObject.SetActive(false); });
     }
     private void OnEnable()
     {
-        breathattack();
+        BreathAttack();
     }
     public void BreathAttack()
     {
         initializebreath();
-        StartCoroutine(breathattack());
+        StartCoroutine(breathattackCorutine());
     }
-    IEnumerator breathattack()
+    IEnumerator breathattackCorutine()
     {
         
         //스테이터스 만들 때 브레스 지속시간 넣기
@@ -107,12 +107,8 @@ public class firebreathattack : MonoBehaviour
             yield return null;
 
         }
-        //breathcollider.gameObject.SetActive(false);
+        breathcollider.gameObject.SetActive(false);
         fireLight.gameObject.SetActive(false);
-        //foreach (var a in fireeffects)
-        //{
-        //    a.Stop();
-        //}
 
 
         BreathEndEvent.Invoke();
