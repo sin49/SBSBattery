@@ -38,7 +38,7 @@ public class Enemy_Action_rush : NormalEnemyAction
         onrush = true;
         e.transform.LookAt(new Vector3(targetpos.x, targetpos.y, targetpos.z));
 
-
+  
    
         //PlayAttackSound();
         float timer = 0;
@@ -47,7 +47,7 @@ public class Enemy_Action_rush : NormalEnemyAction
         {
             
             e. attackCollider.SetActive(true);
-           e.  rb.MovePosition(transform.position + transform.forward * Time.deltaTime * rushspeed);
+           e.  rb.MovePosition(e.transform.position + e.transform.forward * Time.deltaTime * rushspeed);
             timer += Time.deltaTime;
             yield return null;
         }
