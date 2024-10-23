@@ -36,7 +36,7 @@ public class Enemy_Action_rush : NormalEnemyAction
         Vector3 targetpos= target.position;
         Debug.Log("µ¹Áø!");
         onrush = true;
-        e.transform.LookAt(new Vector3(targetpos.x, targetpos.y, targetpos.z));
+        //e.transform.LookAt(new Vector3(targetpos.x, targetpos.y, targetpos.z));
 
   
    
@@ -56,7 +56,7 @@ public class Enemy_Action_rush : NormalEnemyAction
 
         onrush = false;
      e.   activeAttack = false;
-     e.   InitAttackCoolTime();
+    
     }
     public void stoprush()
     {
