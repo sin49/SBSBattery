@@ -55,15 +55,14 @@ public class Enemy_Action_rush : NormalEnemyAction
     e.    rb.velocity = Vector3.zero;
 
         onrush = false;
-     
-    
+        DisableActionMethod();
     }
     public void stoprush()
     {
         StopAllCoroutines();
         //InitAttackCoolTime();
         onrush = false;
-        
+ 
     }
     public override void StopAction()
     {
