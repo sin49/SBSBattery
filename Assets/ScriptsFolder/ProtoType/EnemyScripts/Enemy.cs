@@ -161,7 +161,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         {            
             case 0:
                 MoveAction = null;
-                MoveAction.register(this);
+          
                 break;
             case 1:
                 MoveAction = moveActionTransform.AddComponent<ENemy_Action_BasicMove>();

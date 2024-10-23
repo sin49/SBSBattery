@@ -14,6 +14,8 @@ public class Enemy_Action_rush : NormalEnemyAction
     public float PlayerForce = 3;
    
     bool onrush;
+
+    
   
     public override void register(Enemy e)
     {
@@ -31,9 +33,10 @@ public class Enemy_Action_rush : NormalEnemyAction
     }
     IEnumerator rush(Transform target)
     {
+        Vector3 targetpos= target.position;
         Debug.Log("µ¹Áø!");
         onrush = true;
-        this.transform.LookAt(new Vector3(target.position.x, this.transform.position.y, target.position.z));
+        e.transform.LookAt(new Vector3(targetpos.x, targetpos.y, targetpos.z));
 
 
    

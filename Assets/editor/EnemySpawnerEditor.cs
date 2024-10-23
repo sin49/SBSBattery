@@ -18,10 +18,16 @@ public class EnemySpawnerEditor : Editor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
+        GUILayout.BeginHorizontal();
         if (GUILayout.Button("저장"))
         {
             m_EnemySpawner. SaveEnemyData();
         }
+        if (GUILayout.Button("생성"))
+        {
+            m_EnemySpawner.CreateEnemy();
+        }
+        GUILayout.EndHorizontal();
     }
 }
    
