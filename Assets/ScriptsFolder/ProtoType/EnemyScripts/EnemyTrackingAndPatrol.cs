@@ -44,8 +44,8 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     public Vector3 testTarget; // 타겟을 바라보는 시점을 테스트하기 위한 임시 변수
 
     [Header("#추격 범위#")]
-    [Header("탐색 후 추격 유지 범위")] public float trackingDistance;
-    [Tooltip("설정 X")] public float disToPlayer;
+    [Header("탐색 후 추격 유지 범위")] [Range(0, 10)] public float trackingDistance;
+    [Tooltip("설정 X")] [HideInInspector]public float disToPlayer;
 
     [Header("#정찰 이동관련(정찰 그룹, 정찰목표값, 정찰 대기시간)#")]
     //[Header("스크립트 상에서 값을 임의 결정하게 되어있음")]public Vector3[] patrolGroup; // 0번째: 왼쪽, 1번째: 오른쪽

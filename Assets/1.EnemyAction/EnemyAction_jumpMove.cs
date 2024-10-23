@@ -8,6 +8,13 @@ public class EnemyAction_jumpMove : NormalEnemyAction
     bool oncorutine;
     public float jumpforce;
     public float jumpdelay;
+
+    private void Awake()
+    {
+        jumpforce = 5;
+        jumpdelay = 0.2f;
+    }
+
     public override void Invoke(Transform target = null)
     {
         base.Invoke(target);

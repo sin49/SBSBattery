@@ -148,7 +148,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
         }
 
-
+        if(AttackAction !=null)
         AttackAction.register(this);
         if (moveActionTransform == null)
         {
@@ -156,8 +156,9 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             moveactionT.name = "MoveAction";
             moveActionTransform = moveactionT.transform;
         }
+        Debug.Log($"{gameObject}, {s.movestateid}");
         switch (s.movestateid)
-        {
+        {            
             case 0:
                 MoveAction = null;
                 MoveAction.register(this);
@@ -399,25 +400,27 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     //materialAndPatrol에서 각 몬스터에 맞게 처리하는 함수 생각중입니다.
     public virtual void StartEmmissionHitMat()
     {
-        
+        mae.StartEmmissionHitMat();
     }
 
     public virtual void EndEmmissionHitMat()
     {
-        Material[] materials = mae.skinRenderer.materials;
-        materials[0] = mae.backMat;
-        materials[1] = mae.hittedMat;
-        mae.skinRenderer.materials = materials;
+        mae.EndEmmissionHitMat();
+        //Material[] materials = mae.skinRenderer.materials;
+        //materials[0] = mae.backMat;
+        //materials[1] = mae.hittedMat;
+        //mae.skinRenderer.materials = materials;
     }
 
     public virtual void EndHitMat()
     {
-        Material[] materials = mae.skinRenderer.materials;
-        materials[0] = mae.backMat;
-        materials[1] = mae.idleMat;
-        mae.skinRenderer.materials = materials;
+        mae.EndHitMat();
+        //Material[] materials = mae.skinRenderer.materials;
+        //materials[0] = mae.backMat;
+        //materials[1] = mae.idleMat;
+        //mae.skinRenderer.materials = materials;
 
-        Debug.Log("기본 머테리얼로 복귀");
+        //Debug.Log("기본 머테리얼로 복귀");
     }
 
     #endregion
