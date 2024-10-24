@@ -173,9 +173,12 @@ public class EnemySpawner : MonoBehaviour
     }
     private void Awake()
     {
-        if (!isloaded)
-            LoadEnemyDataFromCSV(id);
-        CreateEnemy();
+        if (CreateEnemyOnAawake)
+        {
+            if (!isloaded)
+                LoadEnemyDataFromCSV(id);
+            CreateEnemy();
+        }
     }
     public void CreateEnemy()
     {
