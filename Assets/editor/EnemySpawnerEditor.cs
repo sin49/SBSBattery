@@ -26,6 +26,9 @@ public class EnemySpawnerEditor : Editor
    
     public override void OnInspectorGUI()
     {
+        EditorGUILayout.PropertyField(serializedObject.FindProperty
+("CreateEnemyOnAawake"), new GUIContent("awkae에서 적 생성시킬지 여부"));
+
 
         EditorGUILayout.PropertyField(serializedObject.FindProperty
 ("id"), new GUIContent("식별 코드"));
@@ -37,7 +40,9 @@ public class EnemySpawnerEditor : Editor
 
         EditorGUILayout.LabelField("적 능력치");
 
-       
+        EditorGUILayout.PropertyField(e_Stat.FindPropertyRelative
+("id"), new GUIContent("능력치 식별 코드"));
+
         EditorGUILayout.PropertyField(e_Stat.FindPropertyRelative
             ("name"),new GUIContent("이름"));
     

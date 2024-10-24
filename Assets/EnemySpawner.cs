@@ -32,8 +32,8 @@ public class EnemySpawner : MonoBehaviour
 
  
     public int enemyattacknumber;
- 
 
+    public bool CreateEnemyOnAawake;
 
     public enemystattest enemyData;
 
@@ -173,7 +173,9 @@ public class EnemySpawner : MonoBehaviour
     }
     private void Awake()
     {
-        LoadEnemyDataFromCSV(0);
+        if (!isloaded)
+            LoadEnemyDataFromCSV(id);
+        CreateEnemy();
     }
     public void CreateEnemy()
     {
