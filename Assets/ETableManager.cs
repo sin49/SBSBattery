@@ -4,21 +4,7 @@ using UnityEngine;
 using System.IO;
 using System;
 using UnityEngine.UIElements;
-[Serializable]
-public class enemystattest {
-    public int id;
-    public string name;
-    public float hp;
-    public float movespeed;
 
-
-    public int attackstateID;
-
-    public int searchstateID;
-    public int movestateid;
-    public float initattackdelay;
-    public float afterattackdelay;
-}
 [Serializable]
 public class enemyattacktest
 {
@@ -90,8 +76,8 @@ public class ETableManager : MonoBehaviour
                     Estat.movespeed = float.Parse(vaules[3]);
 
                     Estat.attackstateID = int.Parse(vaules[4]);
-                    Estat.searchstateID = int.Parse(vaules[5]);
-                    Estat.movestateid = int.Parse(vaules[6]);
+                    Estat.searchstateID = (EnemyMovePattern)int.Parse(vaules[5]);
+                    Estat.movestateid =(EnemyMoveType) int.Parse(vaules[6]);
                     Estat.initattackdelay = float.Parse(vaules[7]);
                     Estat.afterattackdelay = float.Parse(vaules[8]);
                     enemystats.Add(Estat);

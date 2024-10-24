@@ -4,55 +4,113 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEngine.UIElements;
+using System;
 
 public enum enemymodedlnumber {defaultform,breathform,jumpform,rushform,bulbform }
+[Serializable]
+public class enemystattest
+{
+    public int id;
+    public string name;
+    public float hp;
+    public float movespeed;
 
+
+    public int attackstateID;
+
+    public EnemyMovePattern searchstateID;
+    public EnemyMoveType movestateid;
+    public float initattackdelay;
+    public float afterattackdelay;
+}
 public class EnemySpawner : MonoBehaviour
 {
 
 
     public int  ENemyModelNumber;
     public int enemystatusNumber;
-    public int AttackColliderNumber;
+
  
     public int enemyattacknumber;
-    public int enemymovenumber;
-    public int enemypatorolnumber;
+ 
+
 
     public enemystattest enemyData;
+
+    public TextAsset EStatCSV;
+
+    public bool isloaded;
+
+    public bool Zip;
 
 
     public List<GameObject> EnemyModelList= new List<GameObject>();
     public List<GameObject> AttackCOlliderList = new List<GameObject>();
 
+    List<enemystattest> enemystattest_=new List<enemystattest>();
 
     public int id;
-
-    // CSV에서 데이터를 불러오는 메서드
-    private void LoadEnemyDataFromCSV(int statusId)
+    void loadEnemyStatcsv()
     {
-        var tableManager = ETableManager.instance;
-        if (tableManager != null)
+        if (isloaded) return;
+        StringReader reader;
+        bool firstlinereturn = true;
+        if (EStatCSV != null)
         {
-            enemyData = tableManager.returnenemydata(statusId);
 
-            if (enemyData != null)
+
+            reader = new StringReader(EStatCSV.text);
+
+            while (true)
             {
-                Debug.Log($"Loaded enemy data for ID {statusId} from CSV.");
+                string line = reader.ReadLine();
+                if (line == null) break;
+
+                if (firstlinereturn)
+                {
+                    firstlinereturn = false;
+                    continue;
+                }
+
+                string[] vaules = line.Split(',');
+
+
+                enemystattest Estat = new enemystattest();
+                Estat.id = int.Parse(vaules[0]);
+                Estat.name = vaules[1];
+                Estat.hp = float.Parse(vaules[2]);
+                Estat.movespeed = float.Parse(vaules[3]);
+
+                Estat.attackstateID = int.Parse(vaules[4]);
+                Estat.searchstateID = (EnemyMovePattern)int.Parse(vaules[5]);
+            Estat.movestateid = (EnemyMoveType)int.Parse(vaules[6]);
+                Estat.initattackdelay = float.Parse(vaules[7]);
+                Estat.afterattackdelay = float.Parse(vaules[8]);
+                enemystattest_.Add(Estat);
             }
-            else
-            {
-                Debug.LogWarning("ID not found. Preparing for new entry creation.");
-                enemyData = new enemystattest(); // 새 데이터를 위한 준비
-                enemyData.id = statusId;
-            }
+            isloaded = true;
         }
         else
         {
-            Debug.LogError("ETableManager instance not found.");
+            Debug.Log("No Data...");
         }
+
+
+
+
     }
-    // CSV 파일에 저장하는 메서드 (존재하지 않는 경우 추가)
+
+    public void LoadEnemyDataFromCSV(int statusId)
+    {
+        
+      if(!isloaded)
+        {
+            loadEnemyStatcsv();
+        }
+
+        enemyData = enemystattest_[statusId];
+    }
+   
     public void SaveEnemyData()
     {
 
@@ -120,17 +178,21 @@ public class EnemySpawner : MonoBehaviour
     public void CreateEnemy()
     {
         GameObject model = EnemyModelList[ENemyModelNumber];
-        Enemy e = model.transform.GetChild(0).GetComponent<Enemy>();
+        Enemy e = Instantiate(model, this.transform.position, this.transform.rotation).transform.GetChild(0).GetComponent<Enemy>();
 
-            enemystattest enemystattest = ETableManager.instance.returnenemydata(enemystatusNumber);
+            enemystattest enemystattest = enemyData;
             enemystattest.attackstateID = enemyattacknumber;
-            enemystattest.movestateid = enemymovenumber;
+        Vector3 v = AttackCOlliderList[enemyattacknumber].transform.position;
+        GameObject attackcollider = Instantiate(AttackCOlliderList[enemyattacknumber], e.transform);
+        attackcollider.transform.localPosition = v;
+        e.attackCollider = attackcollider;
+        //enemystattest.movestateid = enemymovenumber;
             e.LoadDataFromStatusDatas(enemystattest);
 
        
         e.CreateBySpawner = true;
-        e.eStat.movepattern = (EnemyMovePattern)enemypatorolnumber;
-        Instantiate(model, this.transform.position, this.transform.rotation);
+
+       ;
 
 
 
