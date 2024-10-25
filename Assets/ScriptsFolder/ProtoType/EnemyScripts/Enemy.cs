@@ -107,7 +107,9 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     //}    
     //Transform attackActionTransform;
     //Transform moveActionTransform;
- public void   LoadDataFromStatusDatas(enemystattest s)
+
+    
+ public void   LoadDataFromStatusDatas(enemystattest s,enemyattacktest eattack=null)
     {
         //if (attackActionTransform == null)
         //{
@@ -115,6 +117,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         //    AttackActT.name = "AttackAction";
         //    attackActionTransform = AttackActT.transform;
         //}
+        enemyattacktest atktest;
         switch (s.attackstateID)
         {
             case 1:
@@ -128,19 +131,40 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             case 3:
                 eStat.attacktype = EnemyAttackType.rush;
                 var obj = transform.AddComponent<Enemy_Action_rush>();
-                var data = ETableManager.instance.enemyattacks[3];
-                obj.rushtime = data.SpecialVaule[0];
-                obj.rushspeed = data.SpecialVaule[1];
-                obj.PlayerForce = data.SpecialVaule[2];
+              
+                if (eattack == null)
+                {
+                    atktest = ETableManager.instance.enemyattacks[3];
+
+                }
+                else
+                {
+                    atktest = eattack;
+                }
+                obj.rushtime = atktest.SpecialVaule[0];
+                obj.rushspeed = atktest.SpecialVaule[1];
+                obj.PlayerForce = atktest.SpecialVaule[2];
+
                 AttackAction = obj;
                 break;
             case 4:
                 eStat.attacktype = EnemyAttackType.breath;
+
                 var obj2 = transform.AddComponent<EnemyAction_breath>();
-                var data2 = ETableManager.instance.enemyattacks[4];
-                obj2.breathtime = data2.SpecialVaule[0];
-                obj2.breathspreadmaxtime = data2.SpecialVaule[1];
-                obj2.breathendtime = data2.SpecialVaule[2];
+
+                if (eattack == null)
+                {
+                    atktest = ETableManager.instance.enemyattacks[4];
+
+                }
+                else
+                {
+                    atktest = eattack;
+                }
+                obj2.breathtime = atktest.SpecialVaule[0];
+                obj2.breathspreadmaxtime = atktest.SpecialVaule[1];
+                obj2.breathendtime = atktest.SpecialVaule[2];
+
                 AttackAction = obj2;
                 break;
             case 5:

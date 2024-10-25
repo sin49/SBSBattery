@@ -39,9 +39,70 @@ public class EnemySpawner : MonoBehaviour
 
     public TextAsset EStatCSV;
 
+    public TextAsset EAttackCSV;
+
+
     public bool isloaded;
 
     public bool Zip;
+
+    public List<enemyattacktest> enemyattacks = new List<enemyattacktest>();
+    enemyattacktest returnenemyattacktest(int n)
+    {
+        loadEnemyAttackCSV();
+        return enemyattacks[n];
+    }
+    void loadEnemyAttackCSV()
+    {
+        if (EAttackCSV != null)
+        {
+            bool firstlinereturn = true;
+            StringReader reader = new StringReader(EAttackCSV.text);
+
+            while (true)
+            {
+                string line = reader.ReadLine();
+                if (line == null) break;
+
+                if (firstlinereturn)
+                {
+                    firstlinereturn = false;
+                    continue;
+                }
+
+                string[] vaules = line.Split(',');
+
+
+                enemyattacktest EAttack = new enemyattacktest();
+                EAttack.attackid = int.Parse(vaules[0]);
+                EAttack.attacktype = int.Parse(vaules[2]);
+
+
+                //여기서 id를 읽어서 컴포넌트에 추가로 들어가는거 까지 해야함?
+                EAttack.attackname = vaules[1];
+                //EAttack.damage = int.Parse(vaules[3]);
+
+                //적 어택 id읽은 다음 거기에 맞춰서 list에 얼만큼 추가할지가 들어가야 할듯?
+                switch (EAttack.attacktype)
+                {
+
+                    case 3:
+                    case 4:
+                        for (int n = 3; n < 6; n++)
+                        {
+                            EAttack.SpecialVaule.Add(float.Parse(vaules[n]));
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+
+                enemyattacks.Add(EAttack);
+
+            }
+        }
+    }
 
 
     public List<GameObject> EnemyModelList= new List<GameObject>();
@@ -193,7 +254,9 @@ public class EnemySpawner : MonoBehaviour
         attackcollider.transform.localPosition = v;
         e.attackCollider = attackcollider;
         //enemystattest.movestateid = enemymovenumber;
-            e.LoadDataFromStatusDatas(enemystattest);
+       
+        
+        e.LoadDataFromStatusDatas(enemystattest,returnenemyattacktest(enemyattacknumber));
 
        
         e.CreateBySpawner = true;
