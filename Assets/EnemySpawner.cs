@@ -187,6 +187,7 @@ public class EnemySpawner : MonoBehaviour
 
             enemystattest enemystattest = enemyData;
             enemystattest.attackstateID = enemyattacknumber;
+       
         Vector3 v = AttackCOlliderList[enemyattacknumber].transform.position;
         GameObject attackcollider = Instantiate(AttackCOlliderList[enemyattacknumber], e.transform);
         attackcollider.transform.localPosition = v;
@@ -197,7 +198,7 @@ public class EnemySpawner : MonoBehaviour
        
         e.CreateBySpawner = true;
 
-       ;
+    
 
 
 

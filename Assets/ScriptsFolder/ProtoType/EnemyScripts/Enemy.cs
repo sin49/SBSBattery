@@ -6,7 +6,7 @@ using UnityEngine;
 public enum EnemyMovePattern { stop,patrol}
 public enum EnemyMoveType {none,basic,jump }
 
-public enum EnemyAttackType { none,melee,range,breath,rush}
+public enum EnemyAttackType { none,melee,range,breath,rush,explosion}
 public interface DamagedByPAttack
 {
     public void Damaged(float f);
@@ -118,12 +118,15 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         switch (s.attackstateID)
         {
             case 1:
+                eStat.attacktype = EnemyAttackType.melee;
                 AttackAction = transform.AddComponent<EnemyAction_Swing>();
                 break;
             case 2:
+                eStat.attacktype = EnemyAttackType.range;
                 AttackAction = transform.AddComponent<EnemyAction_Throwing>();
                 break;
             case 3:
+                eStat.attacktype = EnemyAttackType.rush;
                 var obj = transform.AddComponent<Enemy_Action_rush>();
                 var data = ETableManager.instance.enemyattacks[3];
                 obj.rushtime = data.SpecialVaule[0];
@@ -132,6 +135,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 AttackAction = obj;
                 break;
             case 4:
+                eStat.attacktype = EnemyAttackType.breath;
                 var obj2 = transform.AddComponent<EnemyAction_breath>();
                 var data2 = ETableManager.instance.enemyattacks[4];
                 obj2.breathtime = data2.SpecialVaule[0];
@@ -140,6 +144,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 AttackAction = obj2;
                 break;
             case 5:
+                eStat.attacktype = EnemyAttackType.explosion;
                 AttackAction = transform.AddComponent<EnemyAttack_Explosion>();
                 break;
             default:
@@ -164,15 +169,18 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
           
                 break;
             case EnemyMoveType.basic:
+                eStat.movetype = EnemyMoveType.basic;
                 MoveAction = transform.AddComponent<ENemy_Action_BasicMove>();
                 MoveAction.register(this);
                 break;
             case EnemyMoveType.jump:
+                eStat.movetype = EnemyMoveType.jump;
                 MoveAction = transform.AddComponent<EnemyAction_jumpMove>();
                 MoveAction.register(this);
                 break;
 
         }
+        eStat.movepattern = s.searchstateID;
         eStat.initMaxHP = s.hp; eStat.initMoveSpeed = s.movespeed;
         eStat.attackReadyTime = s.initattackdelay;
         eStat.attackDelay = s.afterattackdelay;
