@@ -2029,14 +2029,14 @@ MonoBehaviour:
   attackColliderRange: {fileID: 2937360031623099487}
   tracking: 0
   testTarget: {x: 0, y: 0, z: 0}
-  trackingDistance: 0
+  trackingDistance: 5
   disToPlayer: 0
   firstPoint: {x: 0, y: 0, z: 0}
   secondPoint: {x: 0, y: 0, z: 0}
   targetPatrol: {x: 0, y: 0, z: 0}
   patrolWaitTime: 1
-  leftPatrolRange: 0
-  rightPatrolRange: 0
+  leftPatrolRange: 2
+  rightPatrolRange: 2
   patrolDistance: 0.1
   leftPatrol: {x: 0, y: 0, z: 0}
   rightPatrol: {x: 0, y: 0, z: 0}
@@ -2046,7 +2046,6 @@ MonoBehaviour:
   wallRayUpLength: 0
   wallRayBackLength: 0
   wallCheck: 0
-  patrolType: 1
   PlayerDetected: 0
 --- !u!1 &4603672121430995988
 GameObject:
@@ -2655,6 +2654,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
   PriorityNumber: 0
+  CreateBySpawner: 0
   EnemyHitCol2D: {fileID: 3027465547958485918}
   eStat: {fileID: 6399371868865806208}
   attackCollider: {fileID: 40720322756340349}
@@ -2705,6 +2705,7 @@ MonoBehaviour:
   movepattern: 0
   movetype: 0
   attacktype: 0
+  attackReadyTime: 0
   dropGroup:
     parts: {fileID: 0}
     partValue: 0
