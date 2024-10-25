@@ -80,7 +80,7 @@ public class EnemySpawnerEditor : Editor
             bool attacktoggle = EditorGUILayout.Toggle(m_EnemySpawner.AttackCOlliderList[i].name, m_EnemySpawner.enemyattacknumber == i);
             if (attacktoggle)
             {
-                m_EnemySpawner.enemyattacknumber = i+1;
+                m_EnemySpawner.enemyattacknumber = i;
                 m_EnemySpawner.enemyData.attackstateID = i;
             }
         }
