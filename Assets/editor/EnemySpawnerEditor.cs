@@ -114,6 +114,7 @@ public class EnemySpawnerEditor : Editor
             EditorGUILayout.PropertyField(serializedObject.FindProperty("AttackCOlliderList"));
 
             EditorGUILayout.PropertyField(serializedObject.FindProperty("EStatCSV"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("EAttackCSV"));
         }
 
         serializedObject.ApplyModifiedProperties();
