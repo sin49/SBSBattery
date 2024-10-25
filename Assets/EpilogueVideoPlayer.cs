@@ -26,6 +26,13 @@ public class EpilogueVideoPlayer : MonoBehaviour
 
     private void Update()
     {
-        //if(videoPlayer.time)
+        if (videoPlayer.time > 2)
+        {
+            skipButton.SetActive(true);
+            if (skipButton.activeSelf && Input.GetKeyDown(KeyCode.C))
+            {
+                OnVideoEnd(videoPlayer);
+            }
+        }
     }
 }
