@@ -137,6 +137,7 @@ public class EnemySpawner : MonoBehaviour
 
 
                 enemystattest Estat = new enemystattest();
+ 
                 Estat.id = int.Parse(vaules[0]);
                 Estat.name = vaules[1];
                 Estat.hp = float.Parse(vaules[2]);
@@ -193,9 +194,9 @@ public class EnemySpawner : MonoBehaviour
                     values[1] = enemyData.name;
                     values[2] = enemyData.hp.ToString();
                     values[3] = enemyData.movespeed.ToString();
-                    values[4] = enemyData.attackstateID.ToString();
-                    values[5] = enemyData.searchstateID.ToString();
-                    values[6] = enemyData.movestateid.ToString();
+                    values[4] = ((int)enemyData.attackstateID).ToString();
+                    values[5] = ((int)enemyData.searchstateID).ToString();
+                    values[6] = ((int)enemyData.movestateid).ToString();
                     values[7] = enemyData.initattackdelay.ToString();
                     values[8] = enemyData.afterattackdelay.ToString();
 
