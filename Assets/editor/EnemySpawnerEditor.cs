@@ -77,10 +77,10 @@ public class EnemySpawnerEditor : Editor
         EditorGUILayout.LabelField("적 공격 방식");
         for (int i = 0; i < m_EnemySpawner.AttackCOlliderList.Count; i++)
         {
-            bool attacktoggle = EditorGUILayout.Toggle(m_EnemySpawner.AttackCOlliderList[i].name, m_EnemySpawner.ENemyModelNumber == i);
+            bool attacktoggle = EditorGUILayout.Toggle(m_EnemySpawner.AttackCOlliderList[i].name, m_EnemySpawner.enemyattacknumber == i);
             if (attacktoggle)
             {
-                m_EnemySpawner.enemyattacknumber = i;
+                m_EnemySpawner.enemyattacknumber = i+1;
                 m_EnemySpawner.enemyData.attackstateID = i;
             }
         }
