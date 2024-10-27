@@ -459,13 +459,14 @@ public class PlayerHandler : MonoBehaviour
 
 
     }
+    [HideInInspector] public bool attackTuto, jumpTuto, moveTuto, downTuto, interactTuto, downAttackTuto, dimensionTuto;
     void KeysettingCharactermove()
     {
-        if (!CurrentPlayer.downAttack)
+        if (!CurrentPlayer.downAttack && moveTuto)
         {
             CurrentPlayer.Move();
         }
-        if (Input.GetKeyDown(KeySettingManager.instance.DimensionChangeKeycode) && !Changing && !DImensionChangeDisturb)
+        if (Input.GetKeyDown(KeySettingManager.instance.DimensionChangeKeycode) && !Changing && !DImensionChangeDisturb && dimensionTuto)
         {
 
             StartCoroutine(ChangeDimension());

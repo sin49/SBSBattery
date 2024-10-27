@@ -480,7 +480,7 @@ public class Player : Character,environmentObject
         //groundraycheck();
         JumpKeyInput();
         AttackNotHold();
-        if (!downAttack)
+        if (!downAttack && PlayerHandler.instance.attackTuto)
             Attack();
 
     
@@ -1326,7 +1326,7 @@ public class Player : Character,environmentObject
 
     public void Jump()
     {
-        if (cantmove) return;
+        if (cantmove && !PlayerHandler.instance.jumpTuto) return;
 
         if (PlayerHandler.instance.ladderInteract)
         {
