@@ -15,7 +15,7 @@ public class enemyattacktest
 
    
 }
-[ExecuteAlways]
+
 public class ETableManager : MonoBehaviour
 {
     public static ETableManager instance;
