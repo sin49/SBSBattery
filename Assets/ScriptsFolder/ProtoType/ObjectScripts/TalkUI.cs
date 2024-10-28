@@ -67,38 +67,38 @@ public class TalkUI : MonoBehaviour
         }
     }
 
-    public void TutorialMiddleImage(string s)
-    {
-        Debug.Log("중간 이미지 적용");
-        switch (s)
-        {
-            case "없음":
-                break;
-            case "이동":
-                SetCurrentMiddleImage(moveTutorial);
-                break;
-            case "점프":
-                SetCurrentMiddleImage(jumpTutorial);
-                break;
-            case "내려가기":
-                SetCurrentMiddleImage(downTutorial);
-                break;
-            case "공격":
-                SetCurrentMiddleImage(attackTutorial);
-                break;
-            case "상호작용":
-                SetCurrentMiddleImage(interactTutorial);
-                break;
-            case "시점전환":
-                SetCurrentMiddleImage(dimensionTutorial);
-                break;
-            case "숨김":
-                currentMiddle.SetActive(false);
-                break;
-            default:
-                break;
-        }
-    }
+    //public void TutorialMiddleImage(string s)
+    //{
+    //    Debug.Log("중간 이미지 적용");
+    //    switch (s)
+    //    {
+    //        case "없음":
+    //            break;
+    //        case "이동":
+    //            SetCurrentMiddleImage(moveTutorial);
+    //            break;
+    //        case "점프":
+    //            SetCurrentMiddleImage(jumpTutorial);
+    //            break;
+    //        case "내려가기":
+    //            SetCurrentMiddleImage(downTutorial);
+    //            break;
+    //        case "공격":
+    //            SetCurrentMiddleImage(attackTutorial);
+    //            break;
+    //        case "상호작용":
+    //            SetCurrentMiddleImage(interactTutorial);
+    //            break;
+    //        case "시점전환":
+    //            SetCurrentMiddleImage(dimensionTutorial);
+    //            break;
+    //        case "숨김":
+    //            currentMiddle.SetActive(false);
+    //            break;
+    //        default:
+    //            break;
+    //    }
+    //}
 
     public void SetCurrentMiddleImage(GameObject obj)
     {

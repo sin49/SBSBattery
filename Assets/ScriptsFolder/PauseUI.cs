@@ -78,6 +78,8 @@ public class PauseUI : MonoBehaviour
     //}
     private void Update()
     {
+        if (!GameManager.instance.tutorialEnd) return;
+
         if(Input.GetKeyDown(KeyCode.Escape) && pauseInteract)
             PauseUiActive();
 

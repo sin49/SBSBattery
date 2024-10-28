@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InteractTutorial : MonoBehaviour
@@ -17,12 +18,13 @@ public class InteractTutorial : MonoBehaviour
     [Header("대사(문자열)")] public List<string> talkTexts = new List<string>();
     [Header("표정(문자열)")] public List<string> iconString = new List<string>();
     [Header("튜토리얼 이미지(문자열)")] public List<string> middleText = new List<string>();
-    int checkIndex;
+    [Header("튜토리얼 이미지")] public GameObject imageTutorial;
 
     [Header("현재 튜토리얼")] public string currentTutorial;
 
-    int talkIndex;
-    bool interact, end;
+    public int checkIndex;
+    public int talkIndex;
+    public bool interact, end;
 
     // Start is called before the first frame update
     //void Start()
@@ -32,13 +34,14 @@ public class InteractTutorial : MonoBehaviour
 
     private void Awake()
     {
+        imageTutorial.SetActive(false);
         TutorialReadCSV();
     }
 
     public void TutorialReadCSV()
     {
         checkIndex = startindex;
-
+        //Debug.Log($"initcheckindex{checkIndex}");
         StringReader CSVreader;
         bool firstPass = true;
         if (tutorialCSV != null)
@@ -63,18 +66,21 @@ public class InteractTutorial : MonoBehaviour
                 string icon, text, middle;
                 if (!string.IsNullOrEmpty(value[0]))
                 {
-                    index = int.Parse(value[0]);
-                    text = value[1];
-                    icon = value[2];
-                    middle = value[3];
+                    index = int.Parse(value[0]); // 번호
+                    //Debug.Log($"current{index}");
+                    text = value[1]; // 대본
+                    icon = value[2]; // 배터리 이미지
+                    middle = value[3]; // 튜토리얼 이미지(선택사항)
                     if (checkIndex == index && checkIndex <= endindex)
                     {
+                        Debug.Log("인덱스 번호 일치함");
                         iconString.Add(icon);
                         talkTexts.Add(text);
                         middleText.Add(middle);
-                    }
+                        checkIndex++;
+                    }                    
                 }
-                checkIndex++;
+                //Debug.Log($"plusCheckIndex{checkIndex}");
             }
         }
     }
@@ -84,7 +90,7 @@ public class InteractTutorial : MonoBehaviour
     {
         if (interact)
         {
-            if (Input.GetKeyDown(KeyCode.X))
+            if (Input.GetKeyDown(KeyCode.X) && !end)
             {
                 talkIndex++;
                 if (talkIndex < talkTexts.Count)
@@ -99,6 +105,8 @@ public class InteractTutorial : MonoBehaviour
                     TalkUI.instance.gameObject.SetActive(false);
                     GetCharacterKey();
                     //CharacterHandler.instance.moveRestric = false;
+                    GameManager.instance.tutoInteract = false;
+                    PlayerHandler.instance.CurrentPlayer.cantmove = false;
                     end = true;
                 }
             }
@@ -111,8 +119,10 @@ public class InteractTutorial : MonoBehaviour
         {
             //CharacterHandler.instance.moveRestric = true;
             interact = true;
-            InitTextUI();
+            GameManager.instance.tutoInteract = true;
+            PlayerHandler.instance.CurrentPlayer.cantmove = true;
             TalkUI.instance.gameObject.SetActive(true);
+            InitTextUI();
         }
     }
 
@@ -125,7 +135,8 @@ public class InteractTutorial : MonoBehaviour
     public void CheckImageText()
     {
         TalkUI.instance.CharacterImage(iconString[talkIndex]);
-        TalkUI.instance.TutorialMiddleImage(middleText[talkIndex]);
+        CheckMiddleImage();
+        //TalkUI.instance.TutorialMiddleImage(middleText[talkIndex]);
         TalkUI.instance.Text(talkTexts[talkIndex]);
     }
 
@@ -134,25 +145,54 @@ public class InteractTutorial : MonoBehaviour
         switch (currentTutorial)
         {
             case "이동":
-                PlayerHandler.instance.moveTuto = true;
+                GameManager.instance.moveTuto = true;
+                PlayerPrefs.SetInt("MoveTuto", 1);
                 break;
             case "점프":
-                PlayerHandler.instance.jumpTuto = true;
+                GameManager.instance.jumpTuto = true;
+                PlayerPrefs.SetInt("JumpTuto", 1);
                 break;
             case "내려가기":
-                PlayerHandler.instance.downTuto = true;
+                GameManager.instance.downTuto = true;
+                PlayerPrefs.SetInt("DownTuto", 1);
                 break;
             case "공격":
-                PlayerHandler.instance.attackTuto = true;
+                GameManager.instance.attackTuto = true;
+                PlayerPrefs.SetInt("AttackTuto", 1);
                 break;
             case "상호작용":
-                PlayerHandler.instance.interactTuto = true;
+                GameManager.instance.interactTuto = true;
+                PlayerPrefs.SetInt("InteractTuto", 1);
                 break;
             case "내려찍기":
-                PlayerHandler.instance.downAttackTuto = true;
+                GameManager.instance.downAttackTuto = true;
+                PlayerPrefs.SetInt("DownAttackTuto", 1);
                 break;
             case "시점전환":
-                PlayerHandler.instance.dimensionTuto = true;
+                GameManager.instance.dimensionTuto = true;
+                PlayerPrefs.SetInt("DimensionTuto", 1);
+                break;
+            case "체크포인트":
+                GameManager.instance.tutorialEnd = true;
+                PlayerPrefs.SetInt("TutorialEnd", 1);
+                break;
+            default:
+                break;
+        }
+        imageTutorial.SetActive(false);
+    }
+
+    public void CheckMiddleImage()
+    {
+        switch (middleText[talkIndex])
+        {
+            case "있음":
+                imageTutorial.SetActive(true);
+                break;
+            case "없음":
+                break;
+            case "숨김":
+                imageTutorial.SetActive(true);
                 break;
             default:
                 break;
