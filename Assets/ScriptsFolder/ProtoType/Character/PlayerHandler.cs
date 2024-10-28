@@ -459,13 +459,15 @@ public class PlayerHandler : MonoBehaviour
 
 
     }
+    
     void KeysettingCharactermove()
     {
-        if (!CurrentPlayer.downAttack)
+        if (GameManager.instance.tutoInteract) return;
+        if (!CurrentPlayer.downAttack && GameManager.instance.moveTuto)
         {
             CurrentPlayer.Move();
         }
-        if (Input.GetKeyDown(KeySettingManager.instance.DimensionChangeKeycode) && !Changing && !DImensionChangeDisturb)
+        if (Input.GetKeyDown(KeySettingManager.instance.DimensionChangeKeycode) && !Changing && !DImensionChangeDisturb && GameManager.instance.dimensionTuto)
         {
 
             StartCoroutine(ChangeDimension());

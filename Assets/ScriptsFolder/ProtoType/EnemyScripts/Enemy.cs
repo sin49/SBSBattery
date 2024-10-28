@@ -358,7 +358,8 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public override void Damaged(float damage)
     {
         base.Damaged(damage);
-        StopCoroutine(corutine);
+        if (corutine != null)
+            StopCoroutine(corutine);
         eStat.hp -= damage;
         if (eStat.hp <= 0)
         {
@@ -376,8 +377,9 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     }
 
     public void HittedAttackEvent()
-    {
-        StopCoroutine("HittedEnd");
+    {        
+        corutine = HittedEnd();
+        //StopCoroutine("HittedEnd");
         if (!onStun)
         {
             rb.velocity = Vector3.zero;
@@ -392,7 +394,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 //attackTimer = eStat.initattackCoolTime;
             }
             //InitAttackCoolTime();                
-            StartCoroutine("HittedEnd");
+            StartCoroutine(corutine);
         }
     }
 

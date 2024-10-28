@@ -453,6 +453,12 @@ public class Player : Character,environmentObject
     public float jumpanimtimer;
     private void FixedUpdate()
     {
+        if (cantmove)
+        {
+            isRun = false;
+        }
+
+
         transform.rotation = Quaternion.Euler(EMergenctRotation);
         shadowmake();
         InteractivePlatformrayCheck();
@@ -480,7 +486,7 @@ public class Player : Character,environmentObject
         //groundraycheck();
         JumpKeyInput();
         AttackNotHold();
-        if (!downAttack)
+        if (!downAttack && GameManager.instance.attackTuto)
             Attack();
 
     
@@ -1122,6 +1128,7 @@ public class Player : Character,environmentObject
 
     public virtual void DownAttack()
     {
+        if (GameManager.instance.tutoInteract || !GameManager.instance.downAttackTuto) return;
         if (!downAttack)
         {
             Debug.Log("³»·ÁÂï±â");
@@ -1326,7 +1333,7 @@ public class Player : Character,environmentObject
 
     public void Jump()
     {
-        if (cantmove) return;
+        if (cantmove && !GameManager.instance.jumpTuto) return;
 
         if (PlayerHandler.instance.ladderInteract)
         {
@@ -1364,6 +1371,9 @@ IEnumerator jumpForceLimitCorutine()
     {
         if (downAttack)
             return;
+
+        if (GameManager.instance.tutoInteract || !GameManager.instance.jumpTuto) return;
+
         if (jumpBufferTimer > 0)
         {
            

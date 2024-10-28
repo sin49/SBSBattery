@@ -14,7 +14,7 @@ public class EnemyAttack_Explosion : NormalEnemyAction
     public override void Invoke(Transform target = null)
     {
         base.Invoke(target);
-      var obj=  Instantiate(explosionobj, e.transform.position, Quaternion.identity);
+      var obj=  Instantiate(explosionobj, e.transform.position+ (Vector3.up*0.25f), Quaternion.identity);
         Vector3 objscale = obj.transform.localScale;
         objscale *= 2.5f;
         obj.transform.localScale = objscale;

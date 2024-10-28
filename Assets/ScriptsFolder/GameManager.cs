@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
         LoadingEffect.gameObject.SetActive(false);
         // currentscenename을 로딩 전에 설정합니다.
         currentscenename = SceneManager.GetActiveScene().name;
+        LoadTutorialKey();
+
     }
 
     public string loadingscenename = "LoadingTest";
@@ -40,6 +42,40 @@ public class GameManager : MonoBehaviour
 
     public bool pauseActive;
 
+    public bool attackTuto, jumpTuto, moveTuto, downTuto, interactTuto, downAttackTuto, dimensionTuto;
+    public bool tutoInteract, tutorialEnd;
+
+    public void DeleteTutorialKey()
+    {
+        if(PlayerPrefs.HasKey("AttackTuto"))PlayerPrefs.DeleteKey("AttackTuto");
+        if (PlayerPrefs.HasKey("JumpTuto")) PlayerPrefs.DeleteKey("JumpTuto");
+        if (PlayerPrefs.HasKey("MoveTuto")) PlayerPrefs.DeleteKey("MoveTuto");
+        if (PlayerPrefs.HasKey("DownTuto")) PlayerPrefs.DeleteKey("DownTuto");
+        if (PlayerPrefs.HasKey("InteractTuto")) PlayerPrefs.DeleteKey("InteractTuto");
+        if (PlayerPrefs.HasKey("DownAttackTuto")) PlayerPrefs.DeleteKey("DownAttackTuto");
+        if (PlayerPrefs.HasKey("DimensionTuto")) PlayerPrefs.DeleteKey("DimensionTuto");
+        if (PlayerPrefs.HasKey("TutorialEnd")) PlayerPrefs.DeleteKey("TutorialEnd");
+    }
+
+    public void LoadTutorialKey()
+    {
+        if (currentscenename == "KJS_JYH_Tutorial") DeleteTutorialKey();
+        else
+        {
+            attackTuto = true; jumpTuto = true; moveTuto = true;
+            downTuto = true; interactTuto = true; downAttackTuto = true;
+            dimensionTuto = true; tutorialEnd = true;
+        }
+
+        if (PlayerPrefs.HasKey("AttackTuto")) attackTuto = true;
+        if (PlayerPrefs.HasKey("JumpTuto")) jumpTuto = true;
+        if (PlayerPrefs.HasKey("MoveTuto")) moveTuto = true;
+        if (PlayerPrefs.HasKey("DownTuto")) downTuto = true;
+        if (PlayerPrefs.HasKey("InteractTuto")) interactTuto = true;
+        if (PlayerPrefs.HasKey("DownAttackTuto")) downAttackTuto = true;
+        if (PlayerPrefs.HasKey("DimensionTuto")) dimensionTuto = true;
+        if (PlayerPrefs.HasKey("TutorialEnd")) tutorialEnd = true;
+    }
 
     public void DeleteSaveSetting()
     {
@@ -49,7 +85,7 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.DeleteKey("CheckPointIndex");
         PlayerPrefs.DeleteKey("LastestStageName");
         DeleteInventoryData();
-       
+        DeleteTutorialKey();
     }
     public void DeleteInventoryData()
     {

@@ -24,7 +24,7 @@ public class PlayerSpawnManager : MonoBehaviour
     public bool IgnoreSavedCheckPoint;
     public void ChangeCheckPoint(CheckPoint ChkPoint)
     {
-        if (LastestCheckPointID >= ChkPoint.index)
+        if (LastestCheckPointID > ChkPoint.index)
             return;
 
         LastestCheckPointID = ChkPoint.index;
