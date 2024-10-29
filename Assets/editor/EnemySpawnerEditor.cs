@@ -2,6 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
+using Codice.Client.GameUI.Update;
 
 [CustomEditor(typeof(EnemySpawner))]
 public class EnemySpawnerEditor : Editor
@@ -81,8 +82,11 @@ public class EnemySpawnerEditor : Editor
             bool attacktoggle = EditorGUILayout.Toggle(m_EnemySpawner.AttackCOlliderList[i].name, m_EnemySpawner.enemyattacknumber == i);
             if (attacktoggle)
             {
-                m_EnemySpawner.enemyattacknumber = i;
-                m_EnemySpawner.enemyData.attackstateID = i;
+                if (!m_EnemySpawner.updatedata)
+                {
+                    m_EnemySpawner.enemyattacknumber = i;
+                    m_EnemySpawner.enemyData.attackstateID = i;
+                }
             }
         }
 

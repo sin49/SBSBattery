@@ -46,7 +46,7 @@ public class EnemySpawner : MonoBehaviour
 
 
     public bool Zip;
-
+    public bool updatedata;
     public List<enemyattacktest> enemyattacks = new List<enemyattacktest>();
     public List<enemySearchTEst> enemysearchs = new List<enemySearchTEst>();
     enemyattacktest returnenemyattacktest(int n)
@@ -168,7 +168,7 @@ public class EnemySpawner : MonoBehaviour
     public int id;
     void loadEnemyStatcsv()
     {
-        
+        updatedata = true;
         StringReader reader;
         bool firstlinereturn = true;
         bool secondlinereturn = true;
@@ -205,7 +205,7 @@ public class EnemySpawner : MonoBehaviour
                 Estat.movespeed = float.Parse(vaules[3]);
 
                 Estat.attackstateID = int.Parse(vaules[4]);
-                enemyattacknumber = int.Parse(vaules[4]);
+                
                 Estat.searchstateID = int.Parse(vaules[5]);
             Estat.movestateid = int.Parse(vaules[6]);
                 Estat.initattackdelay = float.Parse(vaules[7]);
@@ -220,7 +220,7 @@ public class EnemySpawner : MonoBehaviour
             Debug.Log("No Data...");
         }
 
-
+        updatedata = false;
 
 
     }
@@ -233,6 +233,9 @@ public class EnemySpawner : MonoBehaviour
 
 
         enemyData = enemystattest_[statusId];
+        updatedata = true;
+        enemyattacknumber = enemyData.attackstateID;
+        updatedata = false;
     }
    
     public void SaveEnemyData()
