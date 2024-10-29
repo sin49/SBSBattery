@@ -1293,8 +1293,8 @@ public class Player : Character,environmentObject
     {
         PlayerStat.instance.pState = PlayerState.dead;
         PlayerHandler.instance.InvokePlayerDeathEvent();
-    
-            GameManager.instance.LoadingSceneWithKariEffect(SceneManager.GetActiveScene().name);
+
+        GameManager.instance.ActiveGameOver();
     }
     #endregion
 

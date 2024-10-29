@@ -56,14 +56,12 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.HasKey("DimensionTuto")) PlayerPrefs.DeleteKey("DimensionTuto");
         if (PlayerPrefs.HasKey("TutorialEnd")) PlayerPrefs.DeleteKey("TutorialEnd");
     }
-    private void Update()
+
+    public void ActiveGameOver()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            LoadingEffect.gameover = true;
-            LoadingEffect.gameObject.SetActive(true);
-           LoadingEffect. GAmeOverPostProcessing();
-        }
+        LoadingEffect.gameover = true;
+        LoadingEffect.gameObject.SetActive(true);
+        LoadingEffect.GAmeOverPostProcessing();
     }
     public void LoadTutorialKey()
     {
@@ -183,7 +181,7 @@ public class GameManager : MonoBehaviour
         }
         if (        PlayerInventory.instance != null)
              PlayerInventory.instance.SaveInventoryData();
-   
+        LoadingEffect.gameover = false;
             LoadingEffect.EffectEnd += LoadingScene;
         LoadingEffect.LoadSceneName = scenename;
         LoadingEffect.gameObject.SetActive(true);

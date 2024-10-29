@@ -26,7 +26,7 @@ public class GameOverUI : UIInteract
 
     public void InitDeactive()
     {
-        gameObject.SetActive(false);
+
         for (int i = 0; i < uiList.Count; i++)
         {
             uiList[i].SetActive(false);
@@ -49,13 +49,13 @@ public class GameOverUI : UIInteract
     IEnumerator activeGameOverUI()
     {
         index = 0;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSecondsRealtime(0.1f);
 
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("ActiveGameOver"))
         {
             while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
             {
-                yield return null;
+                yield return new WaitForSecondsRealtime(Time.unscaledDeltaTime);
             }
 
             yield return new WaitForSecondsRealtime(activeTimer);
@@ -100,7 +100,9 @@ public class GameOverUI : UIInteract
                         Time.timeScale = 1;
                         GameManager.instance.LoadingSceneWithKariEffect(GameManager.instance.LoadLastestStage());
                         break;
-                    case 1:                        
+                    case 1:
+                        Time.timeScale = 1;
+                        GameManager.instance.LoadingSceneWithKariEffect("CheckTitleTest");
                         break;
                 }
             }

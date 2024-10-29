@@ -26,7 +26,7 @@ public class LoadingEffectKari : MonoBehaviour
     public event Action<string> EffectEnd;
     Image image_;
     public GameObject loadingImage;
-
+    public GameObject GaveOVerUI;
     private void Awake()
     {
         image_ = GetComponent<Image>();
@@ -90,14 +90,50 @@ public class LoadingEffectKari : MonoBehaviour
             yield return new WaitForSecondsRealtime(Time.unscaledDeltaTime);
         }
         image_.color= new Color(0, 0, 0, 1);
+        Debug.Log("UI활성화");
         vignette.intensity.value = 0;
         colorAdjustments.saturation.overrideState = false;
         //게임 오버 UI 활성화
-
+        GaveOVerUI.gameObject.SetActive(true);
     }
     void loadingVigintteoff()
     {
-        if (LoadingComplete)
+
+        if (!FadeOff)
+        {
+            PlayerHandler.instance.CurrentCamera.gameObject.SetActive(true);
+            gameovercamera.gameObject.SetActive(false);
+            gameovercamera2.gameObject.SetActive(false);
+           
+            if (intensity < 1)
+                intensity += intensityspeed * Time.unscaledDeltaTime;
+
+            if (PlayerHandler.instance != null && PlayerHandler.instance.CurrentPlayer)
+            {
+                vignette.center.value = PlayerHandler.instance.CurrentCamera.WorldToViewportPoint(PlayerHandler.instance.CurrentPlayer.transform.position);
+            }
+            else
+            {
+                vignette.center.value = new Vector2(0.5f, 0.5f);
+            }
+            vignette.intensity.value = intensity;
+            if (intensity >= 1)
+            {
+                alpha += Effectspeed * Time.unscaledDeltaTime;
+                image_.color = new Color(0, 0, 0, alpha);
+            }
+            if (alpha >= 1)
+            {
+                if (loadingImage != null)
+                    loadingImage.SetActive(true);
+                FadeOff = true;
+                EffectEnd?.Invoke(LoadSceneName);
+                //this.gameObject.SetActive(false);
+            }
+            GaveOVerUI.SetActive(false);
+        }
+
+        else   if (LoadingComplete)
         {
             if (loadingImage != null)
                 loadingImage.SetActive(false);
@@ -131,38 +167,7 @@ public class LoadingEffectKari : MonoBehaviour
             }
         }
     }
-    void LoadingVigintteOn()
-    {
-        if (!FadeOff)
-        {
 
-            if (intensity < 1)
-                intensity += intensityspeed * Time.unscaledDeltaTime;
-
-            if (PlayerHandler.instance != null && PlayerHandler.instance.CurrentPlayer)
-            {
-                vignette.center.value = PlayerHandler.instance.CurrentCamera.WorldToViewportPoint(PlayerHandler.instance.CurrentPlayer.transform.position);
-            }
-            else
-            {
-                vignette.center.value = new Vector2(0.5f, 0.5f);
-            }
-            vignette.intensity.value = intensity;
-            if (intensity >= 1)
-            {
-                alpha += Effectspeed * Time.unscaledDeltaTime;
-                image_.color = new Color(0, 0, 0, alpha);
-            }
-            if (alpha >= 1)
-            {
-                if (loadingImage != null)
-                    loadingImage.SetActive(true);
-                FadeOff = true;
-                EffectEnd?.Invoke(LoadSceneName);
-                //this.gameObject.SetActive(false);
-            }
-        }
-    }
     private void OnDisable()
     {
         EffectEnd = null;
@@ -176,7 +181,7 @@ public class LoadingEffectKari : MonoBehaviour
        
         if (!gameover)
         {
-            LoadingVigintteOn();
+      
             loadingVigintteoff();
         }
     }
