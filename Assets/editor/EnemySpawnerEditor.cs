@@ -63,6 +63,8 @@ public class EnemySpawnerEditor : Editor
  ("searchstateID"), new GUIContent("정찰 여부"));
 
         EditorGUILayout.PropertyField(e_Stat.FindPropertyRelative
+ ("enemyserachid"), new GUIContent("정찰 번호"));
+        EditorGUILayout.PropertyField(e_Stat.FindPropertyRelative
  ("movestateid"), new GUIContent("적 이동 패턴"));
 
         EditorGUILayout.LabelField("적 사용 모델링");
