@@ -106,8 +106,8 @@ public class EnemyMaterialAndEffect : MonoBehaviour
                 skinRenderer.materials = materials;
                 break;
             case 2:
-                materials[0] = idleMat;
-                materials[1] = backMat;
+                materials[0] = backMat;
+                materials[1] = idleMat;
                 skinRenderer.materials = materials;
                 break;
             case 3:
