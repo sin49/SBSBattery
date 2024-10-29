@@ -451,7 +451,7 @@ public class Player : Character,environmentObject
         }
     }
     public float jumpanimtimer;
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if (cantmove)
         {
@@ -1331,7 +1331,7 @@ public class Player : Character,environmentObject
         }
     }
 
-    public void Jump()
+    public virtual void Jump()
     {
         if (cantmove && !GameManager.instance.jumpTuto) return;
 

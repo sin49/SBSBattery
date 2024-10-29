@@ -6,13 +6,13 @@ public class RemoteLaser : PlayerAttack
     public float rangeSpeed;
     public GameObject hitEffect;
     public ParticleSystem saveEffect;
-    public float laserTime = 5;
+    public float laserTime ;
     
     // Start is called before the first frame update
   
     private void Start()
     {
-        damage = PlayerStat.instance.atk;
+        //damage = PlayerStat.instance.atk;
     }
   
     // Update is called once per frame
@@ -24,14 +24,19 @@ public class RemoteLaser : PlayerAttack
         else
             DestroyLaser();        
     }
+    public void setLaser(float laserlifetime,float damage)
+    {
+        laserTime = laserlifetime;
+       this. damage = damage;
+    }
     void DestroyLaser()
     {
-        if (PoolingManager.instance != null)
-        {
-            laserTime = 5;
-            PoolingManager.instance.ReturnPoolObject(this.gameObject);
-        }
-        else
+        //if (PoolingManager.instance != null)
+        //{
+
+        //    PoolingManager.instance.ReturnPoolObject(this.gameObject);
+        //}
+        //else
             Destroy(gameObject);
     }
     public override void DamageCollider(Collider other)

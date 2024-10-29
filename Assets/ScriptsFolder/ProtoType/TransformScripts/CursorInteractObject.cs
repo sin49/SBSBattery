@@ -30,6 +30,10 @@ public class CursorInteractObject : MonoBehaviour
             enemy.StartStun();
             if(enemy.animaor !=null)
             enemy.animaor.SetTrigger("Caught");
+
+            enemy.TurnOffCharacterShadow();
+
+
             if (enemy.mae != null)
             {
                 Material[] materials = enemy.mae.skinRenderer.materials;

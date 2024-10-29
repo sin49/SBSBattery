@@ -20,6 +20,8 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public bool CreateBySpawner;
 
 
+    Color WhiteColor = new Vector4(0.7f, 0.7f, 0.7f, 1);
+
     [Header("몬스터가 피격당하는 2D 콜라이더")]public GameObject EnemyHitCol2D;
 
    
@@ -32,8 +34,73 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     [Header("적 애니메이션 관련")]
     public Animator animaor;
 
+    IEnumerator blinkcorutine;
+    public GameObject CharacterShadow;
+    public void TurnOffCharacterShadow()
+    {
+        if(CharacterShadow!=null)
+            CharacterShadow.SetActive(false);   
+    }
+    public void TurnOnCharacterShadow()
+    {
+        if (CharacterShadow != null)
+            CharacterShadow.SetActive(true);
+    }
+    public IEnumerator ChangeWhiteEmissionOnce()
+    {
+     
+        float blinktime = 0.12f;
+        Debug.Log("반짝이기 한번");
+        foreach(var a in mae.materials)
+        {
+            a.SetColor("_Emissive_Color", WhiteColor);
+        }
+        yield return new WaitForSeconds(blinktime);
 
-    
+        foreach (var a in mae.materials)
+        {
+            a.SetColor("_Emissive_Color", new Vector4(0,0,0,1));
+        }
+    }
+    public IEnumerator ChangeWhiteEmissionloop()
+    {
+
+        float blinktime =0.1f;
+        float timer = eStat.attackReadyTime;
+        Debug.Log("반짝이기 여러번");
+        while (timer > 0)
+        {
+            foreach (var a in mae.materials)
+            {
+                Debug.Log("반짝이기");
+                a.SetColor("_Emissive_Color", WhiteColor);
+            }
+            yield return new WaitForSeconds(blinktime);
+
+            foreach (var a in mae.materials)
+            {
+                Debug.Log("돌아오기");
+                a.SetColor("_Emissive_Color", new Vector4(0, 0, 0, 1));
+            }
+            yield return new WaitForSeconds(blinktime);
+            timer += blinktime*2;
+            if (blinktime > 0.05)
+                blinktime /= 2;
+        }
+        foreach (var a in mae.materials)
+        {
+            a.SetColor("_Emissive_Color", new Vector4(0, 0, 0, 1));
+        }
+    }
+    void stopBlinkCorutine()
+    {
+        if(blinkcorutine != null) 
+        StopCoroutine(blinkcorutine);
+        foreach (var a in mae.materials)
+        {
+            a.SetColor("_Emissive_Color", new Vector4(0, 0, 0, 1));
+        }
+    }
 
     [HideInInspector] public Vector3 environmentforce;
   public bool isMove;
@@ -67,6 +134,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     {
 
         base.Awake();
+        stopBlinkCorutine();
         if (attackCollider != null)
             attackCollider.SetActive(false);
         eStat = GetComponent<EnemyStat>();
@@ -361,6 +429,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         if (corutine != null)
             StopCoroutine(corutine);
         eStat.hp -= damage;
+        stopBlinkCorutine();
         if (eStat.hp <= 0)
         {
             eStat.hp = 0;
@@ -743,7 +812,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     }
 
     IEnumerator corutine;
-
+   public bool blinkLoop;
     public override void Attack()
     {
         base.Attack();
@@ -752,6 +821,13 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         if (animaor != null)
             animaor.Play("EnemyAttack");
         PlayAttackSound();
+        if (!blinkLoop)
+            blinkcorutine = ChangeWhiteEmissionOnce();
+        else
+        {
+            blinkcorutine = ChangeWhiteEmissionloop();
+        }    
+        StartCoroutine(blinkcorutine);
         corutine = attackActionInvoke();
         StartCoroutine(corutine);
     }

@@ -6,10 +6,12 @@ using UnityEngine;
 public class EnemyAttack_Explosion : NormalEnemyAction
 {
     GameObject explosionobj;
+    public Enemy Enemy_;
     public override void register(Enemy e)
     {
         base.register(e);
         explosionobj = e.attackCollider;
+        e.blinkLoop = true;
     }
     public override void Invoke(Transform target = null)
     {

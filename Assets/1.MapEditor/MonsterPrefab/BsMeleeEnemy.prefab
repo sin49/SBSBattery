@@ -888,6 +888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f0ab5f608448bc478c0ee5c67499f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
   target: {fileID: 0}
   animator: {fileID: 4969869436731051251}
   idleMat: {fileID: 2100000, guid: e05bcd830f8909d4aa73cfc0fd455522, type: 2}
@@ -931,6 +932,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveClip: {fileID: 0}
   MoveVolume: 0
+  HittedClip: {fileID: 0}
+  HittedVolume: 0
   AttackClip: {fileID: 0}
   AttackVolume: 0
 --- !u!1 &3608025985864248766
@@ -1523,6 +1526,7 @@ Transform:
   - {fileID: 2418105943684837136}
   - {fileID: 7985547099648455553}
   - {fileID: 5239267470079827222}
+  - {fileID: 211359702674480969}
   m_Father: {fileID: 8787708085112650342}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4969869436731051251
@@ -1541,7 +1545,10 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'Bip001 Neck'\n\tTransform 'Bip001 Spine'\n\tTransform
+    'Bip001 Neck'\n\tTransform 'Bip001 Spine'\n\tFrom animation clip 'EnemyStandC'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -1967,3 +1974,77 @@ Transform:
   - {fileID: 2319224912258382996}
   m_Father: {fileID: 4012620795818359931}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &5343114377530665891
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1066839878995605471}
+    m_Modifications:
+    - target: {fileID: 5244556872257762538, guid: 26b56a549d179de4a91972dd62c655df,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5244556872257762538, guid: 26b56a549d179de4a91972dd62c655df,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.182
+      objectReference: {fileID: 0}
+    - target: {fileID: 5244556872257762538, guid: 26b56a549d179de4a91972dd62c655df,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.117
+      objectReference: {fileID: 0}
+    - target: {fileID: 5244556872257762538, guid: 26b56a549d179de4a91972dd62c655df,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5244556872257762538, guid: 26b56a549d179de4a91972dd62c655df,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5244556872257762538, guid: 26b56a549d179de4a91972dd62c655df,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5244556872257762538, guid: 26b56a549d179de4a91972dd62c655df,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5244556872257762538, guid: 26b56a549d179de4a91972dd62c655df,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5244556872257762538, guid: 26b56a549d179de4a91972dd62c655df,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5244556872257762538, guid: 26b56a549d179de4a91972dd62c655df,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7771369791178963008, guid: 26b56a549d179de4a91972dd62c655df,
+        type: 3}
+      propertyPath: m_Name
+      value: Blackcircle 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 26b56a549d179de4a91972dd62c655df, type: 3}
+--- !u!4 &211359702674480969 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5244556872257762538, guid: 26b56a549d179de4a91972dd62c655df,
+    type: 3}
+  m_PrefabInstance: {fileID: 5343114377530665891}
+  m_PrefabAsset: {fileID: 0}

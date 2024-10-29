@@ -63,7 +63,7 @@ public class RagdolEnemy : MonoBehaviour
     public void RagdollOn()
     {
         isRagdoll = true;
-
+        
         foreach (Collider c in c)
         {
             c.enabled = true;

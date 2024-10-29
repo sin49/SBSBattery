@@ -41,8 +41,17 @@ public class RemoteTransform : Player
     public bool Charging;
 
     [Header("빔 관련 변수")]
-    public GameObject laserPrefab; // 빔 스킬 프리팹
+    public GameObject laserPrefab;
+    public GameObject LIghtlaserPrefab;
+    public GameObject MaxlaserPrefab;
     public GameObject laserEffect; // 빔 이펙트 오브젝트
+
+    public float lasermaxlifetime=5;
+    public float laserminlifetime=0.6f;
+    float laserlifetimeupspeed;
+    public float lasermaxchargetime =2.5f;
+    float laserchargettime;
+
     public GameObject HitPoint;
     //[Header("체인 라이트닝 변수")]
     //public List<GameObject> enemies; 
@@ -76,6 +85,8 @@ public class RemoteTransform : Player
     }
     private void Update()
     {
+        laserlifetimeupspeed = (lasermaxlifetime - laserminlifetime) / lasermaxchargetime;
+
         BaseBufferTimer();
    
         //for문 사용했으니 최적화 필요함
@@ -91,6 +102,22 @@ public class RemoteTransform : Player
         {
             chargingBufferTimer -= Time.deltaTime;
         }*/
+    }
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+        if (laserchargemode && laserchargettime < lasermaxchargetime)
+        {
+            laserchargettime += Time.deltaTime;
+            if (laserchargettime > lasermaxchargetime)
+                laserchargettime = lasermaxchargetime;
+        }
+        if (!Input.GetKey(KeySettingManager.instance.AttackKeycode) && laserchargemode)
+        {
+            laserchargemode = false;
+            AttackKeyUp();
+        }
+            
     }
     private void OnDisable()
     {
@@ -171,22 +198,14 @@ public class RemoteTransform : Player
 
         //}
     }
-
-    public override void Attack()
+    public void AttackKeyUp()
     {
-        /*if (attackBufferTimer > 0 && canAttack)
-        {
-   
-            AttackEvents();
-            StartCoroutine(LaserAttack());
-        }*/
-        if (PlayerHandler.instance.onAttack && attackInputValue < 1)
-        {
-            if (attackBufferTimer > 0 && !dontAttack)
-            {
-                if (PlayerStat.instance.attackType == AttackType.melee && !downAttack)
+       
+                if ( !downAttack)
                 {
-                    attackBufferTimer = 0;
+  
+            lasermaterialchangecorutine = null;
+            attackBufferTimer = 0;
                     attackInputValue = 1;
 
                     dontAttack = true;
@@ -195,15 +214,108 @@ public class RemoteTransform : Player
                     AttackEvents();
                     Laser();
                 }
-            }
-        }
+          
+     
     }
+  
+    public override void Move()
+    {
+        if(!laserchargemode)
+        base.Move();
+    }
+    public override void Jump()
+    {
+        if (!laserchargemode)
+            base.Jump();
+    }
+    public override void Attack()
+    {
+
+        if (PlayerHandler.instance.onAttack && attackInputValue < 1)
+        {
+        if (attackBufferTimer > 0 && !dontAttack)
+        {
+            laserchargemode = true;
+                Humonoidanimator.Play("idle");
+                lasermaterialchangecorutine = laserchargematerialchange();
+                StartCoroutine(lasermaterialchangecorutine);
+             
+        }
+     }
+        
+        
+    }
+    bool laserchargemode;
     public void Laser()
     {
-        if (PoolingManager.instance != null)
-            PoolingManager.instance.GetPoolObject("Laser", firePoint);
+        //if (PoolingManager.instance != null)
+        //    PoolingManager.instance.GetPoolObject("Laser", firePoint);
+        //else
+        RemoteLaser laser_=null;
+        float laserlifetime=laserminlifetime+laserlifetimeupspeed*
+            laserchargettime;
+        float laserdamage=1;
+        if (laserchargettime < lasermaxchargetime / 4)
+            laser_ = LIghtlaserPrefab.GetComponent<RemoteLaser>();
+        else if (laserchargettime >= lasermaxchargetime)
+        {
+            laser_ = MaxlaserPrefab.GetComponent<RemoteLaser>();
+            laserdamage = 3;
+        }
         else
-            Instantiate(laserPrefab, HitPoint.transform.position, HitPoint.transform.rotation);
+            laser_ = laserPrefab.GetComponent<RemoteLaser>();
+
+        laser_.setLaser(laserlifetime, laserdamage);
+        laserchargettime = 0;
+            Instantiate(laser_.gameObject, firePoint.transform.position, HitPoint.transform.rotation);
+    }
+    public Color LaserChargeColor;
+    IEnumerator lasermaterialchangecorutine;
+    IEnumerator laserchargematerialchange()
+    {
+
+        bool whitechecker = false;
+        float blinkdelay = 0.1f;
+        while (laserchargemode)
+        {
+            if (laserchargettime<lasermaxchargetime)
+            {
+                if (whitechecker)
+                {
+                    chrmat.SetColor("_Emissive_Color", new Vector4(0, 0, 0, 1));
+                }
+                else
+                {
+                    chrmat.SetColor("_Emissive_Color", LaserChargeColor);//emission 건들기
+                }
+                whitechecker = !whitechecker;
+                blinkdelay = (lasermaxchargetime - laserchargettime) / 8;
+                if (blinkdelay > 0.15f)
+                    blinkdelay = 0.15f;
+                yield return new WaitForSeconds(blinkdelay);
+            }
+            else
+            {
+                chrmat.SetColor("_Emissive_Color", LaserChargeColor);
+                yield return null;
+            }
+            
+        }
+
+        chrmat.SetColor("_Emissive_Color", new Vector4(0, 0, 0, 1));
+    }
+
+    public override void Damaged(float damage)
+    {
+        
+        base.Damaged(damage);
+        if(!onInvincible)
+        {
+            laserchargemode = false;
+            laserchargettime = 0;
+          
+            lasermaterialchangecorutine = null;
+        }    
     }
     IEnumerator LaserAttack()
     {

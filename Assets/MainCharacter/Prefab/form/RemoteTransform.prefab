@@ -1076,6 +1076,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9a731f3179db4489ca90d0dc00ce3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  EMergenctRotation: {x: 0, y: 0, z: 0}
   Moveinput_: 0
   playerRb: {fileID: 6342793269400318276}
   capsuleCollider: {fileID: 5071744322922531240}
@@ -1166,8 +1168,16 @@ MonoBehaviour:
   Charging: 0
   laserPrefab: {fileID: 8906621709063784198, guid: c95aa4697be2c7341959ffcec170d214,
     type: 3}
+  LIghtlaserPrefab: {fileID: 8906621709063784198, guid: bb2a4f1b176f02341bb7f6ecfb78d325,
+    type: 3}
+  MaxlaserPrefab: {fileID: 8906621709063784198, guid: 81611abd66f17694080e42d605c7b3fa,
+    type: 3}
   laserEffect: {fileID: 0}
+  lasermaxlifetime: 0.8
+  laserminlifetime: 0.05
+  lasermaxchargetime: 2.5
   HitPoint: {fileID: 2897978697362484570}
+  LaserChargeColor: {r: 0.64779866, g: 0.64779866, b: 0.64779866, a: 0}
   ACtiveGameObject: {fileID: 0}
 --- !u!120 &6275850010516100579
 LineRenderer:
@@ -1694,11 +1704,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f27719067382d648bbe1062250b5158, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  attackTime: 0
   hitEffect: {fileID: 5024009746357069194, guid: ec3f674830402cc45bce805cf6493db7,
     type: 3}
-  saveEffect: {fileID: 0}
+  hosueiron: {fileID: 0}
+  downattack: {fileID: 0}
 --- !u!1 &5842136583463138488
 GameObject:
   m_ObjectHideFlags: 0
