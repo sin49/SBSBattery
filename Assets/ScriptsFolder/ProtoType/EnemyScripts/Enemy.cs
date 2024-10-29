@@ -254,7 +254,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         //    moveActionTransform = moveactionT.transform;
         //}
     
-        switch (s.movestateid)
+        switch ((EnemyMoveType)s.movestateid)
         {            
             case EnemyMoveType.none:
                 MoveAction = null;
@@ -272,7 +272,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 break;
 
         }
-        eStat.movepattern = s.searchstateID;
+        eStat.movepattern = (EnemyMovePattern)s.movestateid;
         eStat.initMaxHP = s.hp; eStat.initMoveSpeed = s.movespeed;
         eStat.attackReadyTime = s.initattackdelay;
         eStat.attackDelay = s.afterattackdelay;

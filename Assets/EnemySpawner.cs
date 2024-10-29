@@ -5,6 +5,7 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.UIElements;
 using System;
+using UnityEditor;
 
 public enum enemymodedlnumber {defaultform,breathform,jumpform,rushform,bulbform }
 [Serializable]
@@ -18,8 +19,8 @@ public class enemystattest
 
     public int attackstateID;
 
-    public EnemyMovePattern searchstateID;
-    public EnemyMoveType movestateid;
+    public int searchstateID;
+    public int movestateid;
     public float initattackdelay;
     public float afterattackdelay;
 }
@@ -42,7 +43,6 @@ public class EnemySpawner : MonoBehaviour
     public TextAsset EAttackCSV;
 
 
-    public bool isloaded;
 
     public bool Zip;
 
@@ -113,7 +113,7 @@ public class EnemySpawner : MonoBehaviour
     public int id;
     void loadEnemyStatcsv()
     {
-        if (isloaded) return;
+        
         StringReader reader;
         bool firstlinereturn = true;
         bool secondlinereturn = true;
@@ -150,13 +150,13 @@ public class EnemySpawner : MonoBehaviour
                 Estat.movespeed = float.Parse(vaules[3]);
 
                 Estat.attackstateID = int.Parse(vaules[4]);
-                Estat.searchstateID = (EnemyMovePattern)int.Parse(vaules[5]);
-            Estat.movestateid = (EnemyMoveType)int.Parse(vaules[6]);
+                Estat.searchstateID = int.Parse(vaules[5]);
+            Estat.movestateid = int.Parse(vaules[6]);
                 Estat.initattackdelay = float.Parse(vaules[7]);
                 Estat.afterattackdelay = float.Parse(vaules[8]);
                 enemystattest_.Add(Estat);
             }
-            isloaded = true;
+ 
         }
         else
         {
@@ -171,10 +171,9 @@ public class EnemySpawner : MonoBehaviour
     public void LoadEnemyDataFromCSV(int statusId)
     {
         
-      if(!isloaded)
-        {
+     
             loadEnemyStatcsv();
-        }
+
 
         enemyData = enemystattest_[statusId];
     }
@@ -233,6 +232,7 @@ public class EnemySpawner : MonoBehaviour
 
             // CSV 파일을 다시 저장
             File.WriteAllLines(csvFilePath, lines);
+            AssetDatabase.Refresh();
             Debug.Log($"Enemy data for ID {enemyData.id} has been successfully saved to CSV.");
         }
         else
@@ -244,7 +244,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (CreateEnemyOnAawake)
         {
-            if (!isloaded)
+            
                 LoadEnemyDataFromCSV(id);
             CreateEnemy();
         }
