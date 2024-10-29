@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyTrackingDAta : MonoBehaviour
+public class EnemyTrackingDAta : ScriptableObject
 {
+    public string tapname;
+
     [Header("활성화 범위")]
     [Range(0, 10)] public float rangeSizeX;
     [Range(0, 10)] public float rangeSizeY;

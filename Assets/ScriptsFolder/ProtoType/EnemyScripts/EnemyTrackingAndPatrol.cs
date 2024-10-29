@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class EnemyTrackingAndPatrol : MonoBehaviour
 {
@@ -82,58 +82,15 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
 
     public EnemyTrackingDAta trackingdata;
     public string dataname;
-
-    public void savedata()
-    {
-        trackingdata=new EnemyTrackingDAta();
-        trackingdata.rangeSizeX = rangeSizeX;
-        rangeSizeY = rangeSizeY;
-        rangeSizeZ = rangeSizeZ;
-        rangePosX = rangePosX;
-        rangePosY = rangePosY;
-        rangePosZ = rangePosZ;
-        searchPosX = searchPosX;
-        searchPosY = searchPosY;
-        searchPosZ = searchPosZ;
-        searchSizeX = searchSizeX;
-        searchSizeY = searchSizeY;
-        searchSizeZ = searchSizeZ;
-        trackingDistance = trackingDistance;
-
-    }
-   public void loaddata()
-    {
-        rangeSizeX = trackingdata.rangeSizeX;
-        rangeSizeY= trackingdata.rangeSizeY;
-        rangeSizeZ = trackingdata.rangeSizeZ;
-        rangePosX = trackingdata.rangePosX;
-        rangePosY = trackingdata.rangePosY;
-        rangePosZ = trackingdata.rangePosZ;
-        searchPosX = trackingdata.searchPosX;
-        searchPosY= trackingdata.searchPosY;
-        searchPosZ = trackingdata.searchPosZ;
-        searchSizeX = trackingdata.searchSizeX;
-        searchSizeY = trackingdata.searchSizeY;
-        searchSizeZ = trackingdata.searchSizeZ;
-        trackingDistance = trackingdata.trackingDistance;
-        patrolWaitTime = trackingdata.patrolWaitTime;
-        leftPatrolRange = trackingdata.leftPatrolRange;
-        rightPatrolRange = trackingdata.rightPatrolRange;
-        patrolDistance = trackingdata.patrolDistance;
-        wallRayHeight = trackingdata.wallRayHeight;
-        wallRayLength = trackingdata.wallRayLength;
-        wallRayUpLength = trackingdata.wallRayUpLength;
-        wallRayBackLength = trackingdata.wallRayBackLength;
-    }
+    
+   
 
     public void InitPatrolPoint()
     {
-
         SetPoint();
     }
     public Vector3 GetTarget()
     {
-
         if (PlayerDetected)
         {
             TrackingMove();
@@ -142,10 +99,8 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
         {
          return   PatrolTracking();
         }
-
         return testTarget;
         //LookAt을 박아버리니까 위 방향으로 바라보고 통통튀는 현상때문에 LookRotation박았습니다.
-        
     }
 
     private void Awake()
@@ -160,11 +115,6 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
             rangeCollider.GetComponent<BoxCollider>().center = new(rangePosX, rangePosY, rangePosZ);
             rangeCollider.GetComponent<BoxCollider>().size = new(rangeSizeX, rangeSizeY, rangeSizeZ);
         }
-       
-    }
-    private void FixedUpdate()
-    {
-        
     }
 
 

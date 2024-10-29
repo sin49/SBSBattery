@@ -21,13 +21,13 @@ public class EnemyMaterialAndEffect : MonoBehaviour
     [Header("기본몹 바디, 전구몹 유리")]public Material emmissionHeadMat;
     [Header("기본몹 베이스, 전구몹 바디")]public Material emmissionHittedMat;
     [Header("일반몹만 사용")]public Renderer skinHead; //  일반 몬스터만 씀
-    public List<Material> materials = new List<Material>();
+
     // 몬스터 머티리얼 부분(모델링 상태)
     // 3개 => 전구몬스터(몸통, 전구유리, 필라멘트)
     // 2개 / 1개(==스킨 렌더러 2개)  => 일반몬스터(얼굴,등), (머리 막대기)
     // 2개 => 점프 몬스터(몸통, 얼굴 투명관)
     // 1개 => 돌진 몬스터, 불 몬스터
-
+    public List<Material> materials = new List<Material>();
     [Header("사망이펙트")] public ParticleSystem deadEffect;
     private void Awake()
     {
