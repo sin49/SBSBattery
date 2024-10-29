@@ -65,7 +65,7 @@ public class TestSettingUI : UIInteract
                 }
             }            
 
-            if (Input.GetKeyDown(KeyCode.C))
+            if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter))
             {
                 ChoiceInteractUI();
             }

@@ -8,6 +8,7 @@ public class TalkUI : MonoBehaviour
 {
     public static TalkUI instance;
     public TextMeshProUGUI talkText;
+    public float textSpeed;
 
     [Header("좌측 이미지")] public Image left;
     [Header("우측 이미지")] public Image right;

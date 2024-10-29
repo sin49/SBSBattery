@@ -90,7 +90,7 @@ public class InteractTutorial : MonoBehaviour
     {
         if (interact)
         {
-            if (Input.GetKeyDown(KeyCode.X) && !end)
+            if (Input.GetKeyDown(KeySettingManager.instance.AttackKeycode) && !end && !textPlaying)
             {
                 talkIndex++;
                 if (talkIndex < talkTexts.Count)
@@ -110,6 +110,11 @@ public class InteractTutorial : MonoBehaviour
                     end = true;
                 }
             }
+
+            if (Input.GetKeyDown(KeySettingManager.instance.AttackKeycode) && !end && textPlaying)
+            {
+                textSkip = true;
+            }
         }
     }
 
@@ -119,12 +124,36 @@ public class InteractTutorial : MonoBehaviour
         {
             //CharacterHandler.instance.moveRestric = true;
             interact = true;
+            //Time.timeScale = 0;
             GameManager.instance.tutoInteract = true;
             PlayerHandler.instance.CurrentPlayer.cantmove = true;
             TalkUI.instance.gameObject.SetActive(true);
             InitTextUI();
         }
     }
+
+    public bool textSkip, textPlaying;
+
+    //IEnumerator TextAnim()
+    //{
+    //    TalkUI.instance.talkText.text = "";
+    //    for (int n = 0; n < talkTexts[talkIndex].Length; n++)
+    //    {
+
+    //        if (textSkip)
+    //        {
+    //            TalkUI.instance.talkText.text = talkTexts[talkIndex];
+    //            textSkip = false;
+    //            break;
+    //        }
+    //        else
+    //        {
+    //            TalkUI.instance.talkText.text += talkTexts[talkIndex][n];
+    //            yield return new WaitForSecondsRealtime(1 / TalkUI.instance.textSpeed); ;
+    //        }
+    //    }
+    //    textPlaying = false;
+    //}
 
     public void InitTextUI()
     {
@@ -138,6 +167,7 @@ public class InteractTutorial : MonoBehaviour
         CheckMiddleImage();
         //TalkUI.instance.TutorialMiddleImage(middleText[talkIndex]);
         TalkUI.instance.Text(talkTexts[talkIndex]);
+        //StartCoroutine(TextAnim());
     }
 
     public void GetCharacterKey()
