@@ -21,7 +21,7 @@ public class TvEnemy : MonoBehaviour
     public Transform target;
     bool tracking;
     public Vector3 testTarget;
-   float movespeed=0.25f;
+   float movespeed=2f;
     protected  void Awake()
     {
         rb = this.GetComponent<Rigidbody>();

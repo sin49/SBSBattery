@@ -10,6 +10,11 @@ public class EnemyAction_breath : NormalEnemyAction
 {
 
     firebreathattack breathattack;
+    public override void cancel()
+    {
+        breathattack.gameObject.SetActive(false);
+        DisableActionMethod();
+    }
 
     [Header("브레스 최대 범위")]
     public Vector3 breathsize;

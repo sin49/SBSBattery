@@ -50,27 +50,34 @@ public class LoadingEffectKari : MonoBehaviour
     }
     IEnumerator gameovercorutine()
     {
-        PlayerHandler.instance.isDie = true;
-        vignette.center.value = PlayerHandler.instance.CurrentCamera.WorldToViewportPoint(PlayerHandler.instance.CurrentPlayer.transform.position);
-        gameovercamera.transform.position = PlayerHandler.instance.CurrentCamera.transform.position;
-        gameovercamera2.transform.position = gameovercamera.transform.position;
-        gameovercamera.transform.rotation = PlayerHandler.instance.CurrentCamera.transform.rotation;
-        gameovercamera2.transform.position = gameovercamera.transform.position;
-        gameovercamera2.farClipPlane=PlayerHandler.instance.CurrentCamera.farClipPlane;
-        GameObject.Find("BackGroundAudioPlayer").GetComponent<BackGroundAudioPlayer>().AudioStop();
-        if (PlayerHandler.instance.CurrentCamera.orthographic) {
-            gameovercamera.orthographic = true;
-            gameovercamera2.orthographic = true;
+        if (PlayerHandler.instance != null)
+        {
+            PlayerHandler.instance.isDie = true;
+            vignette.center.value = PlayerHandler.instance.CurrentCamera.WorldToViewportPoint(PlayerHandler.instance.CurrentPlayer.transform.position);
+            gameovercamera.transform.position = PlayerHandler.instance.CurrentCamera.transform.position;
+            gameovercamera2.transform.position = gameovercamera.transform.position;
+            gameovercamera.transform.rotation = PlayerHandler.instance.CurrentCamera.transform.rotation;
+            gameovercamera2.transform.position = gameovercamera.transform.position;
+            gameovercamera2.farClipPlane = PlayerHandler.instance.CurrentCamera.farClipPlane;
+            GameObject.Find("BackGroundAudioPlayer").GetComponent<BackGroundAudioPlayer>().AudioStop();
+            if (PlayerHandler.instance.CurrentCamera.orthographic)
+            {
+                gameovercamera.orthographic = true;
+                gameovercamera2.orthographic = true;
+            }
+
+            PlayerHandler.instance.CurrentPlayer.DieANimationPlay();
         }
-     
-        PlayerHandler.instance.CurrentPlayer.DieANimationPlay();
         yield return null;
         Time.timeScale = 0;
      
         colorAdjustments.saturation.overrideState = true;
         colorAdjustments.saturation.value = -100;
-        PlayerHandler.instance.CurrentCamera.cullingMask &= ~(1 << 16);
-        PlayerHandler.instance.CurrentCamera.gameObject.SetActive(false);
+        if (PlayerHandler.instance != null)
+        {
+            PlayerHandler.instance.CurrentCamera.cullingMask &= ~(1 << 16);
+            PlayerHandler.instance.CurrentCamera.gameObject.SetActive(false);
+        }
         gameovercamera.gameObject.SetActive(true);
         gameovercamera2.gameObject.SetActive(true);
    
@@ -101,6 +108,7 @@ public class LoadingEffectKari : MonoBehaviour
 
         if (!FadeOff)
         {
+            if(PlayerHandler.instance!=null)
             PlayerHandler.instance.CurrentCamera.gameObject.SetActive(true);
             gameovercamera.gameObject.SetActive(false);
             gameovercamera2.gameObject.SetActive(false);

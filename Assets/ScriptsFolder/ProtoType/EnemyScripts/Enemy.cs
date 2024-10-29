@@ -809,14 +809,17 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     #endregion
 
     #region 공격함수
-
+    public void cancelattakc()
+    {
+        AttackAction.cancel();
+    }
     public virtual void PlayAttackSound()
     {
         if (soundplayer != null)
             soundplayer.PlayAttackAudio();
     }
 
-    IEnumerator corutine;
+   public IEnumerator corutine;
    public bool blinkLoop;
     public override void Attack()
     {
