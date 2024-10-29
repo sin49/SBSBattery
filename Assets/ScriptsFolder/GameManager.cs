@@ -56,7 +56,15 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.HasKey("DimensionTuto")) PlayerPrefs.DeleteKey("DimensionTuto");
         if (PlayerPrefs.HasKey("TutorialEnd")) PlayerPrefs.DeleteKey("TutorialEnd");
     }
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            LoadingEffect.gameover = true;
+            LoadingEffect.gameObject.SetActive(true);
+           LoadingEffect. GAmeOverPostProcessing();
+        }
+    }
     public void LoadTutorialKey()
     {
         if (currentscenename == "KJS_JYH_Tutorial") DeleteTutorialKey();
