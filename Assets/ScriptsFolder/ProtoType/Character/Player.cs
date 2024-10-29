@@ -423,13 +423,7 @@ public class Player : Character,environmentObject
     public void HittedTest()
     {
 
-        if (Humonoidanimator != null)
-        {
-            Humonoidanimator.SetTrigger("Damaged");
-        }
-
-        if (HittedEffect != null)
-            HittedEffect.gameObject.SetActive(true);
+        Damaged(1);
 
     }
     bool groundraychecker()
@@ -1266,7 +1260,13 @@ public class Player : Character,environmentObject
         chrmat.SetColor("_Emissive_Color", new Vector4(0, 0, 0, 1));
         onInvincible = false;
     }
+    public void DieANimationPlay()
+    {
 
+        Debug.Log("사망에니메이션 재생");
+        Humonoidanimator.updateMode = AnimatorUpdateMode.UnscaledTime;
+        Humonoidanimator.Play("Die");
+    }
     IEnumerator WaitEndDamaged()
     {
         if (Humonoidanimator != null)

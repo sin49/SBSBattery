@@ -21,6 +21,7 @@ public class PlayerHandler : MonoBehaviour
     {
         changedimentiosnsfxEvent += a;
     }
+    public bool isDie;
     public void InvokePlayerDeathEvent()
     {
 

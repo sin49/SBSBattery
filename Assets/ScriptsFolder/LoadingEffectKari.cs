@@ -50,18 +50,21 @@ public class LoadingEffectKari : MonoBehaviour
     }
     IEnumerator gameovercorutine()
     {
+        PlayerHandler.instance.isDie = true;
         vignette.center.value = PlayerHandler.instance.CurrentCamera.WorldToViewportPoint(PlayerHandler.instance.CurrentPlayer.transform.position);
         gameovercamera.transform.position = PlayerHandler.instance.CurrentCamera.transform.position;
         gameovercamera2.transform.position = gameovercamera.transform.position;
         gameovercamera.transform.rotation = PlayerHandler.instance.CurrentCamera.transform.rotation;
         gameovercamera2.transform.position = gameovercamera.transform.position;
         gameovercamera2.farClipPlane=PlayerHandler.instance.CurrentCamera.farClipPlane;
+        GameObject.Find("BackGroundAudioPlayer").GetComponent<BackGroundAudioPlayer>().AudioStop();
         if (PlayerHandler.instance.CurrentCamera.orthographic) {
             gameovercamera.orthographic = true;
             gameovercamera2.orthographic = true;
         }
-    
-         yield return null;
+     
+        PlayerHandler.instance.CurrentPlayer.DieANimationPlay();
+        yield return null;
         Time.timeScale = 0;
      
         colorAdjustments.saturation.overrideState = true;
@@ -70,17 +73,21 @@ public class LoadingEffectKari : MonoBehaviour
         PlayerHandler.instance.CurrentCamera.gameObject.SetActive(false);
         gameovercamera.gameObject.SetActive(true);
         gameovercamera2.gameObject.SetActive(true);
+   
         while (intensity < 1)
         {
             vignette.intensity.value = intensity;
-            intensity += 0.1f * Time.unscaledDeltaTime;
+            intensity += intensityspeed * Time.unscaledDeltaTime;
             yield return new WaitForSecondsRealtime(Time.unscaledDeltaTime);
         }
+        yield return new WaitForSecondsRealtime(1.5f);
         vignette.intensity.value = 1;
+        alpha = 0;
         while (alpha < 1)
         {
-            alpha += 0.1f * Time.unscaledDeltaTime;
+            alpha += Effectspeed * Time.unscaledDeltaTime;
             image_.color = new Color(0, 0, 0, alpha);
+            yield return new WaitForSecondsRealtime(Time.unscaledDeltaTime);
         }
         image_.color= new Color(0, 0, 0, 1);
         vignette.intensity.value = 0;
