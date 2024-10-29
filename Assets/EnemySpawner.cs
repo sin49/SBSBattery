@@ -150,6 +150,7 @@ public class EnemySpawner : MonoBehaviour
                 Estat.movespeed = float.Parse(vaules[3]);
 
                 Estat.attackstateID = int.Parse(vaules[4]);
+                enemyattacknumber = int.Parse(vaules[4]);
                 Estat.searchstateID = int.Parse(vaules[5]);
             Estat.movestateid = int.Parse(vaules[6]);
                 Estat.initattackdelay = float.Parse(vaules[7]);
