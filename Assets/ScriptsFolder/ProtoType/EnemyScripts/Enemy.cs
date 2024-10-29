@@ -177,7 +177,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     //Transform moveActionTransform;
 
     
- public void   LoadDataFromStatusDatas(enemystattest s, enemySearchTEst se, enemyattacktest eattack=null
+ public void   LoadDataFromStatusDatas(enemystattest s, enemySearchTEst se=null, enemyattacktest eattack=null
      )
     {
         //if (attackActionTransform == null)
