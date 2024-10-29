@@ -11,19 +11,22 @@ public class LoadingEffectKari : MonoBehaviour
 {
     public float EffectTime = 0.5f;
     public float IntesityTime = 0.5f;
+    public Camera gameovercamera;
+    public Camera gameovercamera2;
     public Volume volume;
     UnityEngine.Rendering.Universal.Vignette vignette;
+    UnityEngine.Rendering.Universal.ColorAdjustments colorAdjustments;
     float Effectspeed;
     float intensityspeed;
     public bool FadeOff;
     public bool LoadingComplete;
-
+    public bool gameover;
     public string LoadSceneName;
     float alpha;
     public event Action<string> EffectEnd;
     Image image_;
     public GameObject loadingImage;
-
+    public GameObject GaveOVerUI;
     private void Awake()
     {
         image_ = GetComponent<Image>();
@@ -34,23 +37,77 @@ public class LoadingEffectKari : MonoBehaviour
             vignette.smoothness.overrideState = false;
             vignette.rounded.value = true;
         }
+        if (volume.profile.TryGet(out colorAdjustments))
+        {
+        colorAdjustments.saturation.overrideState = false;
+            colorAdjustments.saturation.value = 0;
+        }
     }
-    private void OnDisable()
+
+  public  void GAmeOverPostProcessing()
     {
-        EffectEnd = null;
+        StartCoroutine(gameovercorutine());
     }
-    float intensity;
-    // Update is called once per frame
-    void Update()
+    IEnumerator gameovercorutine()
     {
-        Effectspeed = 1 / EffectTime;
-        intensityspeed = 1 / IntesityTime;
+        PlayerHandler.instance.isDie = true;
+        vignette.center.value = PlayerHandler.instance.CurrentCamera.WorldToViewportPoint(PlayerHandler.instance.CurrentPlayer.transform.position);
+        gameovercamera.transform.position = PlayerHandler.instance.CurrentCamera.transform.position;
+        gameovercamera2.transform.position = gameovercamera.transform.position;
+        gameovercamera.transform.rotation = PlayerHandler.instance.CurrentCamera.transform.rotation;
+        gameovercamera2.transform.position = gameovercamera.transform.position;
+        gameovercamera2.farClipPlane=PlayerHandler.instance.CurrentCamera.farClipPlane;
+        GameObject.Find("BackGroundAudioPlayer").GetComponent<BackGroundAudioPlayer>().AudioStop();
+        if (PlayerHandler.instance.CurrentCamera.orthographic) {
+            gameovercamera.orthographic = true;
+            gameovercamera2.orthographic = true;
+        }
+     
+        PlayerHandler.instance.CurrentPlayer.DieANimationPlay();
+        yield return null;
+        Time.timeScale = 0;
+     
+        colorAdjustments.saturation.overrideState = true;
+        colorAdjustments.saturation.value = -100;
+        PlayerHandler.instance.CurrentCamera.cullingMask &= ~(1 << 16);
+        PlayerHandler.instance.CurrentCamera.gameObject.SetActive(false);
+        gameovercamera.gameObject.SetActive(true);
+        gameovercamera2.gameObject.SetActive(true);
+   
+        while (intensity < 1)
+        {
+            vignette.intensity.value = intensity;
+            intensity += intensityspeed * Time.unscaledDeltaTime;
+            yield return new WaitForSecondsRealtime(Time.unscaledDeltaTime);
+        }
+        yield return new WaitForSecondsRealtime(1.5f);
+        vignette.intensity.value = 1;
+        alpha = 0;
+        while (alpha < 1)
+        {
+            alpha += Effectspeed * Time.unscaledDeltaTime;
+            image_.color = new Color(0, 0, 0, alpha);
+            yield return new WaitForSecondsRealtime(Time.unscaledDeltaTime);
+        }
+        image_.color= new Color(0, 0, 0, 1);
+        Debug.Log("UI활성화");
+        vignette.intensity.value = 0;
+        colorAdjustments.saturation.overrideState = false;
+        //게임 오버 UI 활성화
+        GaveOVerUI.gameObject.SetActive(true);
+    }
+    void loadingVigintteoff()
+    {
+
         if (!FadeOff)
         {
-            
+            PlayerHandler.instance.CurrentCamera.gameObject.SetActive(true);
+            gameovercamera.gameObject.SetActive(false);
+            gameovercamera2.gameObject.SetActive(false);
+           
             if (intensity < 1)
                 intensity += intensityspeed * Time.unscaledDeltaTime;
-            
+
             if (PlayerHandler.instance != null && PlayerHandler.instance.CurrentPlayer)
             {
                 vignette.center.value = PlayerHandler.instance.CurrentCamera.WorldToViewportPoint(PlayerHandler.instance.CurrentPlayer.transform.position);
@@ -67,14 +124,16 @@ public class LoadingEffectKari : MonoBehaviour
             }
             if (alpha >= 1)
             {
-                if(loadingImage != null)
-                loadingImage.SetActive(true);
+                if (loadingImage != null)
+                    loadingImage.SetActive(true);
                 FadeOff = true;
                 EffectEnd?.Invoke(LoadSceneName);
                 //this.gameObject.SetActive(false);
             }
+            GaveOVerUI.SetActive(false);
         }
-        else if(LoadingComplete)
+
+        else   if (LoadingComplete)
         {
             if (loadingImage != null)
                 loadingImage.SetActive(false);
@@ -97,7 +156,7 @@ public class LoadingEffectKari : MonoBehaviour
             {
                 intensity -= intensityspeed * Time.unscaledDeltaTime;
 
-             
+
                 vignette.intensity.value = intensity;
             }
             if (intensity <= 0)
@@ -106,6 +165,24 @@ public class LoadingEffectKari : MonoBehaviour
                 LoadingComplete = false;
                 this.gameObject.SetActive(false);
             }
+        }
+    }
+
+    private void OnDisable()
+    {
+        EffectEnd = null;
+    }
+    float intensity;
+    // Update is called once per frame
+    void Update()
+    {
+        Effectspeed = 1 / EffectTime;
+        intensityspeed = 1 / IntesityTime;
+       
+        if (!gameover)
+        {
+      
+            loadingVigintteoff();
         }
     }
 }

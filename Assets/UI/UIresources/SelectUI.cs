@@ -62,7 +62,7 @@ public class SelectUI : MonoBehaviour
     public void ActiveUI(int index = 0)
     {
         pauseui.pauseInteract = false;
-        tokenText.text = PlayerInventory.instance.TokenValue.ToString();
+        //tokenText.text = PlayerInventory.instance.TokenValue.ToString();
         OnHandle = true;                
         this.index = index;
         ShowPauseUI();

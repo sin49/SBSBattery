@@ -57,6 +57,12 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.HasKey("TutorialEnd")) PlayerPrefs.DeleteKey("TutorialEnd");
     }
 
+    public void ActiveGameOver()
+    {
+        LoadingEffect.gameover = true;
+        LoadingEffect.gameObject.SetActive(true);
+        LoadingEffect.GAmeOverPostProcessing();
+    }
     public void LoadTutorialKey()
     {
         if (currentscenename == "KJS_JYH_Tutorial") DeleteTutorialKey();
@@ -175,7 +181,7 @@ public class GameManager : MonoBehaviour
         }
         if (        PlayerInventory.instance != null)
              PlayerInventory.instance.SaveInventoryData();
-   
+        LoadingEffect.gameover = false;
             LoadingEffect.EffectEnd += LoadingScene;
         LoadingEffect.LoadSceneName = scenename;
         LoadingEffect.gameObject.SetActive(true);
