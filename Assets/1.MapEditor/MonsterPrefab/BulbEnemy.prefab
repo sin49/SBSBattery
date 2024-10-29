@@ -247,24 +247,24 @@ MonoBehaviour:
   rangePosY: 0
   rangePosZ: 0
   searchCollider: {fileID: 7733405150144490626}
-  searchSizeX: 0
-  searchSizeY: 0
-  searchSizeZ: 0
+  searchSizeX: 2
+  searchSizeY: 1.5
+  searchSizeZ: 3.5
   searchPosX: 0
-  searchPosY: 0
-  searchPosZ: 0
+  searchPosY: 0.25
+  searchPosZ: 0.5
   searchCollider_: {fileID: 8935664843919685242}
   attackColliderRange: {fileID: 676926750611931586}
   tracking: 0
   testTarget: {x: 0, y: 0, z: 0}
-  trackingDistance: 0
+  trackingDistance: 4
   disToPlayer: 0
   firstPoint: {x: 0, y: 0, z: 0}
   secondPoint: {x: 0, y: 0, z: 0}
   targetPatrol: {x: 0, y: 0, z: 0}
   patrolWaitTime: 1
-  leftPatrolRange: 0
-  rightPatrolRange: 0
+  leftPatrolRange: 0.8
+  rightPatrolRange: 0.8
   patrolDistance: 0.1
   leftPatrol: {x: 0, y: 0, z: 0}
   rightPatrol: {x: 0, y: 0, z: 0}
@@ -274,7 +274,6 @@ MonoBehaviour:
   wallRayUpLength: 0
   wallRayBackLength: 0
   wallCheck: 0
-  patrolType: 0
   PlayerDetected: 0
 --- !u!1 &1726754294216908194
 GameObject:
@@ -928,10 +927,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
   PriorityNumber: 5
+  CreateBySpawner: 0
   EnemyHitCol2D: {fileID: 7863548806375813538}
   eStat: {fileID: 3905273058084709805}
   attackCollider: {fileID: 4977072867083018190}
   animaor: {fileID: 1288513263675201111}
+  CharacterShadow: {fileID: 0}
   environmentforce: {x: 0, y: 0, z: 0}
   isMove: 0
   tap: {fileID: 2700615749513845943}
@@ -949,6 +950,7 @@ MonoBehaviour:
   timer: 0
   onFlat: 0
   MoveDirection: {x: 0, y: 0, z: 0}
+  blinkLoop: 0
 --- !u!136 &517424950950997279
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1001,6 +1003,7 @@ MonoBehaviour:
   movepattern: 0
   movetype: 0
   attacktype: 0
+  attackReadyTime: 0
   dropGroup:
     parts: {fileID: 0}
     partValue: 0
@@ -1098,8 +1101,8 @@ Transform:
   m_GameObject: {fileID: 3014271931756536153}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0.5}
+  m_LocalScale: {x: 2, y: 1.5, z: 3.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1968643125236862386}
@@ -2878,8 +2881,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0, y: 0, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2, y: 1.5, z: 3.5}
+  m_Center: {x: 0, y: 0.25, z: 0.5}
 --- !u!114 &8935664843919685242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2947,6 +2950,7 @@ MonoBehaviour:
   emmissionHeadMat: {fileID: 2100000, guid: 2c03e6d8abfe1df42b411d91be48ef18, type: 2}
   emmissionHittedMat: {fileID: 2100000, guid: abde3b6801201ee4c8dd254867aa031e, type: 2}
   skinHead: {fileID: 0}
+  materials: []
   deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
     type: 3}
 --- !u!1 &8309665532623593237
