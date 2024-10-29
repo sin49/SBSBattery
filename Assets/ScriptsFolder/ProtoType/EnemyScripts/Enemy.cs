@@ -177,7 +177,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     //Transform moveActionTransform;
 
     
- public void   LoadDataFromStatusDatas(enemystattest s, enemySearchTEst se=null, enemyattacktest eattack=null
+ public void   LoadDataFromStatusDatas(enemystattest s,  enemyattacktest eattack=null
      )
     {
         //if (attackActionTransform == null)
@@ -284,8 +284,8 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         {
             var datas = ETableManager.instance.returnenemydata(PriorityNumber);
             enemystattest s = datas;
-            var searchdatas = ETableManager.instance.returnenemysearchdata(datas.searchstateID);
-            LoadDataFromStatusDatas(s, searchdatas);
+           
+            LoadDataFromStatusDatas(s);
         }
 
     }

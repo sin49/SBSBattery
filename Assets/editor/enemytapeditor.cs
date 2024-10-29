@@ -1,18 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
-
-public class enemytapeditor : MonoBehaviour
+[CustomEditor(typeof(EnemyTrackingAndPatrol))]
+public class enemytapeditor : Editor
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void OnInspectorGUI()
     {
-        
-    }
+        base.OnInspectorGUI();
+        if (GUILayout.Button("¿˙¿Â"))
+        {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        }
     }
 }
