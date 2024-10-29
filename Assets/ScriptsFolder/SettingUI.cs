@@ -136,7 +136,7 @@ public class SettingUI : MonoBehaviour
                 UpdateUI();
             }
         }
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
         {
             SelectButton();
         }
