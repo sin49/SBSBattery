@@ -184,13 +184,14 @@ public class EnemySpawner : MonoBehaviour
 
         if ( enemyData != null)
         {
-            string csvFilePath = Application.dataPath + "/1.CSVDATA/EnemyStatData.csv";
+            string filename = EStatCSV.name;
+           
+            string csvFilePath = Application.dataPath + $"/1.CSVDATA/EnemyStatData.csv";
 
-            // CSV 파일에서 모든 줄을 읽음
             List<string> lines = new List<string>(File.ReadAllLines(csvFilePath));
 
             bool idExists = false;
-            for (int i = 1; i < lines.Count; i++)
+            for (int i = 2; i < lines.Count; i++)
             {
                 string[] values = lines[i].Split(',');
 
