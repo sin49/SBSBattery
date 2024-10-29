@@ -19,7 +19,7 @@ public class enemystattest
 
     public int attackstateID;
    
-    public int enemyserachid;
+
     public int searchstateID;
     public int movestateid;
     public float initattackdelay;
@@ -63,6 +63,8 @@ public class EnemySpawner : MonoBehaviour
     {
         if (EnemySerachCsv != null)
         {
+            
+            enemysearchs.Clear();
             StringReader reader = new StringReader(EnemySerachCsv.text);
             bool firstlinereturn = true;
             bool secondlinereturn = true;
@@ -108,6 +110,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (EAttackCSV != null)
         {
+            enemyattacks.Clear();
             bool firstlinereturn = true;
             StringReader reader = new StringReader(EAttackCSV.text);
 
@@ -172,7 +175,7 @@ public class EnemySpawner : MonoBehaviour
         if (EStatCSV != null)
         {
 
-
+            enemystattest_.Clear();
             reader = new StringReader(EStatCSV.text);
 
             while (true)
@@ -207,7 +210,7 @@ public class EnemySpawner : MonoBehaviour
             Estat.movestateid = int.Parse(vaules[6]);
                 Estat.initattackdelay = float.Parse(vaules[7]);
                 Estat.afterattackdelay = float.Parse(vaules[8]);
-                Estat.enemyserachid = int.Parse(vaules[9]);
+             
                 enemystattest_.Add(Estat);
             }
  
@@ -259,7 +262,7 @@ public class EnemySpawner : MonoBehaviour
                     values[6] = ((int)enemyData.movestateid).ToString();
                     values[7] = enemyData.initattackdelay.ToString();
                     values[8] = enemyData.afterattackdelay.ToString();
-                    values[9]=enemyData.enemyserachid.ToString();
+                  
                     lines[i] = string.Join(",", values);
                     idExists = true;
                     break;

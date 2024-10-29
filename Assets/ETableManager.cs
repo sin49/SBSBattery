@@ -49,6 +49,19 @@ public class ETableManager : MonoBehaviour
             instance = this;
         loadEnemyStatcsv();
     }
+    public enemySearchTEst returnenemysearchdata(int prioritynumber)
+    {
+
+        if (prioritynumber < enemystats.Count)
+        {
+            enemySearchTEst estat = enemysearchs[prioritynumber];
+
+
+            return estat;
+        }
+        else
+            return null;
+    }
     public enemystattest returnenemydata(int prioritynumber)
     {
        
@@ -103,7 +116,7 @@ public class ETableManager : MonoBehaviour
                     Estat.movestateid = int.Parse(vaules[6]);
                     Estat.initattackdelay = float.Parse(vaules[7]);
                     Estat.afterattackdelay = float.Parse(vaules[8]);
-                Estat.enemyserachid=int.Parse(vaules[9]);
+               
                     enemystats.Add(Estat);
                 
             }

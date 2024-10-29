@@ -284,7 +284,8 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         {
             var datas = ETableManager.instance.returnenemydata(PriorityNumber);
             enemystattest s = datas;
-            LoadDataFromStatusDatas(s);
+            var searchdatas = ETableManager.instance.returnenemysearchdata(datas.searchstateID);
+            LoadDataFromStatusDatas(s, searchdatas);
         }
 
     }
