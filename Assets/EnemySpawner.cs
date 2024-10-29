@@ -48,64 +48,13 @@ public class EnemySpawner : MonoBehaviour
     public bool Zip;
     public bool updatedata;
     public List<enemyattacktest> enemyattacks = new List<enemyattacktest>();
-    public List<enemySearchTEst> enemysearchs = new List<enemySearchTEst>();
+
     enemyattacktest returnenemyattacktest(int n)
     {
         loadEnemyAttackCSV();
         return enemyattacks[n];
     }
-    enemySearchTEst returnenemysearchtest(int n)
-    {
-        loadenemysearchcsv();
-        return enemysearchs[n];
-    }
-    void loadenemysearchcsv()
-    {
-        if (EnemySerachCsv != null)
-        {
-            
-            enemysearchs.Clear();
-            StringReader reader = new StringReader(EnemySerachCsv.text);
-            bool firstlinereturn = true;
-            bool secondlinereturn = true;
-            while (true)
-            {
-                string line = reader.ReadLine();
-                if (line == null) break;
-
-                if (firstlinereturn)
-                {
-                    firstlinereturn = false;
-                    continue;
-                }
-                if (secondlinereturn)
-                {
-                    secondlinereturn = false;
-                    continue;
-                }
-                string[] vaules = line.Split(',');
-
-                enemySearchTEst Esearch = new enemySearchTEst();
-                Esearch.searchid = int.Parse(vaules[0]);
-                Esearch.name = int.Parse(vaules[2]);
-                Esearch.activeX = int.Parse(vaules[3]);
-                Esearch.activeY = int.Parse(vaules[4]);
-                Esearch.activeZ = int.Parse(vaules[5]);
-                Esearch.activeoffsetX = int.Parse(vaules[6]);
-                Esearch.activeoffsetY = int.Parse(vaules[7]);
-                Esearch.activeoffsetZ = int.Parse(vaules[8]);
-                Esearch.searchX = int.Parse(vaules[9]);
-                Esearch.searchY = int.Parse(vaules[10]);
-                Esearch.searchZ = int.Parse(vaules[11]);
-                Esearch.searchoffsetX = int.Parse(vaules[12]);
-                Esearch.searchoffsetY = int.Parse(vaules[13]);
-                Esearch.searchoffsetZ = int.Parse(vaules[14]);
-
-                enemysearchs.Add(Esearch);
-
-            }
-        }
-    }
+  
     void loadEnemyAttackCSV()
     {
         if (EAttackCSV != null)
@@ -162,7 +111,7 @@ public class EnemySpawner : MonoBehaviour
 
     public List<GameObject> EnemyModelList= new List<GameObject>();
     public List<GameObject> AttackCOlliderList = new List<GameObject>();
-    public List<enemySearchTEst> searchTEsts = new List<enemySearchTEst>();
+  
     List<enemystattest> enemystattest_=new List<enemystattest>();
 
     public int id;
@@ -325,7 +274,7 @@ public class EnemySpawner : MonoBehaviour
        
         
         e.LoadDataFromStatusDatas(enemystattest
-            ,returnenemysearchtest(enemystattest.searchstateID), returnenemyattacktest(enemyattacknumber));
+            , returnenemyattacktest(enemyattacknumber));
 
        
         e.CreateBySpawner = true;

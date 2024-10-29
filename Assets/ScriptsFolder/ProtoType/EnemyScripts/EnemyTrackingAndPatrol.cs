@@ -7,6 +7,8 @@ using UnityEngine;
 public class EnemyTrackingAndPatrol : MonoBehaviour
 {
 
+
+
     public EnemyMaterialAndEffect mae;
 
     [Header("#공격 활성화 콜라이더 큐브 조정#")]
@@ -61,7 +63,7 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     [Header("오른쪽 정찰 범위")]
     [Range(0, 5)] public float rightPatrolRange; // 우측 정찰 범위
     [Header("정찰 거리(최소 0.1)")]
-    [Range(0, 5)] public float patrolDistance; // 정찰 거리
+    [Range(0.1f, 5)] public float patrolDistance; // 정찰 거리
 
     [HideInInspector] public Vector3 leftPatrol, rightPatrol;    
     [HideInInspector] public Vector3 center;
@@ -77,7 +79,53 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     float disToWall;
     [HideInInspector] public bool wallCheck;
     bool forwardCheck, upCheck, backCheck;
-     
+
+    public EnemyTrackingDAta trackingdata;
+    public string dataname;
+
+    public void savedata()
+    {
+        trackingdata=new EnemyTrackingDAta();
+        trackingdata.rangeSizeX = rangeSizeX;
+        rangeSizeY = rangeSizeY;
+        rangeSizeZ = rangeSizeZ;
+        rangePosX = rangePosX;
+        rangePosY = rangePosY;
+        rangePosZ = rangePosZ;
+        searchPosX = searchPosX;
+        searchPosY = searchPosY;
+        searchPosZ = searchPosZ;
+        searchSizeX = searchSizeX;
+        searchSizeY = searchSizeY;
+        searchSizeZ = searchSizeZ;
+        trackingDistance = trackingDistance;
+
+    }
+   public void loaddata()
+    {
+        rangeSizeX = trackingdata.rangeSizeX;
+        rangeSizeY= trackingdata.rangeSizeY;
+        rangeSizeZ = trackingdata.rangeSizeZ;
+        rangePosX = trackingdata.rangePosX;
+        rangePosY = trackingdata.rangePosY;
+        rangePosZ = trackingdata.rangePosZ;
+        searchPosX = trackingdata.searchPosX;
+        searchPosY= trackingdata.searchPosY;
+        searchPosZ = trackingdata.searchPosZ;
+        searchSizeX = trackingdata.searchSizeX;
+        searchSizeY = trackingdata.searchSizeY;
+        searchSizeZ = trackingdata.searchSizeZ;
+        trackingDistance = trackingdata.trackingDistance;
+        patrolWaitTime = trackingdata.patrolWaitTime;
+        leftPatrolRange = trackingdata.leftPatrolRange;
+        rightPatrolRange = trackingdata.rightPatrolRange;
+        patrolDistance = trackingdata.patrolDistance;
+        wallRayHeight = trackingdata.wallRayHeight;
+        wallRayLength = trackingdata.wallRayLength;
+        wallRayUpLength = trackingdata.wallRayUpLength;
+        wallRayBackLength = trackingdata.wallRayBackLength;
+    }
+
     public void InitPatrolPoint()
     {
 
