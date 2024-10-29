@@ -15,9 +15,9 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     [Header("활성화 콜라이더")] public GameObject rangeCollider; // 공격 범위 콜라이더 오브젝트
 
     [Header("활성화 범위")]
-    [Range(0, 10)] public float rangeSizeX;
-    [Range(0, 10)] public float rangeSizeY;
-    [Range(0, 10)] public float rangeSizeZ;
+    [Range(0, 50)] public float rangeSizeX;
+    [Range(0, 50)] public float rangeSizeY;
+    [Range(0, 50)] public float rangeSizeZ;
 
     [Header("활성화 위치")]
     [Range(0, 30)] public float rangePosX;
@@ -28,9 +28,9 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     [Header("탐색 콜라이더")] public GameObject searchCollider; // 탐지 범위 콜라이더
 
     [Header("탐색 범위")]
-    [Range(0, 10)] public float searchSizeX;
-    [Range(0, 10)] public float searchSizeY;
-    [Range(0, 10)] public float searchSizeZ;
+    [Range(0, 50)] public float searchSizeX;
+    [Range(0, 50)] public float searchSizeY;
+    [Range(0, 50)] public float searchSizeZ;
 
     [Header("탐색 위치")]
     [Range(0, 30)] public float searchPosX;
@@ -59,9 +59,9 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
 
     [Header("#정찰 범위 관련#")]
     [Header("왼쪽 정찰 범위")] 
-    [Range(0, 5)]public float leftPatrolRange; // 좌측 정찰 범위
+    [Range(0, 10)]public float leftPatrolRange; // 좌측 정찰 범위
     [Header("오른쪽 정찰 범위")]
-    [Range(0, 5)] public float rightPatrolRange; // 우측 정찰 범위
+    [Range(0, 10)] public float rightPatrolRange; // 우측 정찰 범위
     [Header("정찰 거리(최소 0.1)")]
     [Range(0.1f, 5)] public float patrolDistance; // 정찰 거리
 
