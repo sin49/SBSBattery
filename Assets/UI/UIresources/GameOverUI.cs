@@ -49,7 +49,7 @@ public class GameOverUI : UIInteract
     IEnumerator activeGameOverUI()
     {
         index = 0;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSecondsRealtime(0.1f);
 
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("ActiveGameOver"))
         {
