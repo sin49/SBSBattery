@@ -49,6 +49,7 @@ public class ETableManager : MonoBehaviour
     {
         StringReader reader;
         bool firstlinereturn = true;
+        bool secondlinereturn = true;
         if (EnemyStatCsV != null)
         {
 
@@ -63,6 +64,11 @@ public class ETableManager : MonoBehaviour
                 if (firstlinereturn)
                 {
                     firstlinereturn = false;
+                    continue;
+                }
+                if (secondlinereturn)
+                {
+                    secondlinereturn = false;
                     continue;
                 }
 

@@ -116,6 +116,7 @@ public class EnemySpawner : MonoBehaviour
         if (isloaded) return;
         StringReader reader;
         bool firstlinereturn = true;
+        bool secondlinereturn = true;
         if (EStatCSV != null)
         {
 
@@ -130,6 +131,11 @@ public class EnemySpawner : MonoBehaviour
                 if (firstlinereturn)
                 {
                     firstlinereturn = false;
+                    continue;
+                }
+                if (secondlinereturn)
+                {
+                    secondlinereturn = false;
                     continue;
                 }
 
