@@ -122,7 +122,7 @@ public class TitleScreen : UIInteract
             changehub(LastIndex, index);
           
         }
-        else if (Input.GetKeyDown(KeyCode.X)|| Input.GetKeyDown(KeyCode.C))
+        else if (Input.GetKeyDown(KeyCode.X)|| Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
         {
             ButtionSoundEffectPlayer_.PlayActiveAudio();
             titletexts[index].ButtonActive();

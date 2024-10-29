@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.Editor;
 
 public class InteractTutorial : MonoBehaviour
 {
@@ -90,7 +91,7 @@ public class InteractTutorial : MonoBehaviour
     {
         if (interact)
         {
-            if (Input.GetKeyDown(KeySettingManager.instance.AttackKeycode) && !end && !textPlaying)
+            if ((Input.GetKeyDown(KeySettingManager.instance.AttackKeycode) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && !end && !textPlaying)
             {
                 talkIndex++;
                 if (talkIndex < talkTexts.Count)
@@ -111,10 +112,10 @@ public class InteractTutorial : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeySettingManager.instance.AttackKeycode) && !end && textPlaying)
-            {
-                textSkip = true;
-            }
+            //if ((Input.GetKeyDown(KeySettingManager.instance.AttackKeycode) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)) && !end && textPlaying)
+            //{
+            //    textSkip = true;
+            //}
         }
     }
 

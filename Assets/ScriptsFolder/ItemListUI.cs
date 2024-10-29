@@ -226,7 +226,8 @@ public class ItemListUI : MonoBehaviour
         //    }
         //}
 
-        if (Input.GetKeyDown(KeySettingManager.instance.UIactiveKeycode) || Input.GetKeyDown(KeySettingManager.instance.UIactiveKeycode))
+        if (Input.GetKeyDown(KeySettingManager.instance.UIactiveKeycode) || Input.GetKeyDown(KeySettingManager.instance.UIactiveKeycode)
+            ||Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
         {
             swapUI();
         }
