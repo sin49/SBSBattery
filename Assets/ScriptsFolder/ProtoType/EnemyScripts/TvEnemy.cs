@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum TvColor { white, red, blue}
 
-public class TvEnemy : Enemy
+public class TvEnemy : MonoBehaviour
 {
     public TvColor tvColor = TvColor.white;
 
@@ -21,17 +21,22 @@ public class TvEnemy : Enemy
     bool tracking;
     public Vector3 testTarget;
 
-    protected override void Awake()
+    public Rigidbody rb;
+    public Animator animaor;
+
+    public float moveSpeed;
+
+    private void Awake()
     {
-        base.Awake();        
+        rb = GetComponent<Rigidbody>();     
     }
 
-    /*private void FixedUpdate()
+    private void FixedUpdate()
     {
         Move();
 
-        TrackingCheck();
-    }*/
+        //TrackingCheck();
+    }
     #region CCTV¿Ãµø
     public void TrackingCheck()
     {
@@ -68,13 +73,12 @@ public class TvEnemy : Enemy
         }
     }
 
-    public override void Move()
+    public void Move()
     {
-        if (!die || !hitted)
-        {
+        
             if (tracking && activeTv)
             {
-                if (!activeAttack && !checkTv )
+                if (!checkTv )
                 {
                     testTarget = target.position - transform.position;
                     testTarget.y = 0;
@@ -84,9 +88,9 @@ public class TvEnemy : Enemy
                     if (Quaternion.Angle(transform.rotation, Quaternion.LookRotation(testTarget)) < 0.8f)
                     {
                         isRotate = false;
-                        rb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
-                 if(soundplayer!=null)
-                        soundplayer.PlayMoveSound();
+                        rb.MovePosition(transform.position + transform.forward * Time.deltaTime * moveSpeed);
+                 //if(soundplayer!=null)
+                 //       soundplayer.PlayMoveSound();
                     }
                     else
                     {
@@ -95,25 +99,25 @@ public class TvEnemy : Enemy
                     animaor.SetBool("isRotate", isRotate);
                 }
             }
-        }
+        
         TrackingCheck();
     }
     #endregion
-    public override void Attack()
-    {
-        return;
-    }
+    //public override void Attack()
+    //{
+    //    return;
+    //}
 
     /*public override void Dead()
     {
         return;
     }*/
 
-    public override void Damaged(float damage)
-    {
-        base.Damaged(damage);
-        return;
-    }
+    //public override void Damaged(float damage)
+    //{
+    //    base.Damaged(damage);
+    //    return;
+    //}
 
     //private void OnTriggerStay(Collider other)
     //{
