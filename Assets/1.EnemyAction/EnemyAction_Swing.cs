@@ -9,11 +9,18 @@ public class EnemyAction_Swing : NormalEnemyAction
     public float damage;
     IEnumerator MeleeAttack( float timer)
     {
-
+        e.PlayAttackSound();
         e.attackCollider.gameObject.SetActive(true);
+
         yield return new WaitForSeconds(timer);
         e.attackCollider.gameObject.SetActive(false);
         DisableActionMethod();
+    }
+    Enemy e;
+    public override void register(Enemy e)
+    {
+        base.register(e);
+        this.e = e;
     }
     public override void Invoke(Transform target = null)
     {

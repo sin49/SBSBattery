@@ -42,7 +42,7 @@ public class Enemy_Action_rush : NormalEnemyAction
    
         //PlayAttackSound();
         float timer = 0;
- 
+        e.PlayAttackSound();
         while (timer < rushtime)
         {
             

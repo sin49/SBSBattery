@@ -6,6 +6,7 @@ public class ParticleCallbackDisableParent : MonoBehaviour
 {
     private void OnParticleSystemStopped()
     {
+        if(transform.parent != null)
         this.transform.parent.gameObject.SetActive(false);
     }
 }

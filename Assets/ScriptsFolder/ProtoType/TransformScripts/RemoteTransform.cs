@@ -210,7 +210,7 @@ public class RemoteTransform : Player
 
                     dontAttack = true;
                     dontMoveTimer = PlayerStat.instance.attackDelay;
-                    dontAttackTimer = PlayerStat.instance.initattackCoolTime;
+                    dontAttackTimer = PlayerStat.instance.initattackCoolTime*2;
                     AttackEvents();
                     Laser();
                 }
@@ -245,6 +245,7 @@ public class RemoteTransform : Player
         
         
     }
+  
     bool laserchargemode;
     public void Laser()
     {
@@ -268,12 +269,13 @@ public class RemoteTransform : Player
         laser_.setLaser(laserlifetime, laserdamage);
         laserchargettime = 0;
             Instantiate(laser_.gameObject, firePoint.transform.position, HitPoint.transform.rotation);
+ 
     }
     public Color LaserChargeColor;
     IEnumerator lasermaterialchangecorutine;
     IEnumerator laserchargematerialchange()
     {
-
+        PlayerHandler.instance.onAttack = true;
         bool whitechecker = false;
         float blinkdelay = 0.1f;
         while (laserchargemode)
@@ -315,7 +317,8 @@ public class RemoteTransform : Player
             laserchargettime = 0;
           
             lasermaterialchangecorutine = null;
-        }    
+        }
+        PlayerHandler.instance.onAttack = false;
     }
     IEnumerator LaserAttack()
     {
@@ -324,7 +327,7 @@ public class RemoteTransform : Player
             PoolingManager.instance.GetPoolObject("Laser", firePoint);
         else
             Instantiate(laserPrefab, HitPoint.transform.position, HitPoint.transform.rotation);
-        yield return new WaitForSeconds(PlayerStat.instance.attackDelay);
+        yield return new WaitForSeconds(PlayerStat.instance.attackDelay*2);
 
         canAttack = true;
     }
