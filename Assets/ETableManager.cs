@@ -12,25 +12,55 @@ public class enemyattacktest
     public int attacktype;
     public string attackname;
     public List<float> SpecialVaule = new List<float>();
-
+   
    
 }
-
+public class enemySearchTEst
+{
+    public int searchid;
+    public int name;
+    public int activeX;
+    public int activeY;
+    public int activeZ;
+    public int activeoffsetX;
+    public int activeoffsetY;
+    public int activeoffsetZ;
+    public int searchoffsetX;
+    public int searchoffsetY;
+    public int searchoffsetZ;
+    public int searchX;
+    public int searchY;
+    public int searchZ;
+}
 public class ETableManager : MonoBehaviour
 {
     public static ETableManager instance;
     public TextAsset EnemyStatCsV;
     public TextAsset EnemyActionCsv;
+    public TextAsset EnemySerachCsv;
     public List<GameObject> Enemies = new List<GameObject>();
     public List<GameObject> AttackCollider = new List<GameObject>();
     public List<enemystattest> enemystats = new List<enemystattest>();
     public List<enemyattacktest> enemyattacks = new List<enemyattacktest>();
-
+    public List<enemySearchTEst> enemysearchs = new List<enemySearchTEst>();
     private void Awake()
     {
         if (instance == null)
             instance = this;
         loadEnemyStatcsv();
+    }
+    public enemySearchTEst returnenemysearchdata(int prioritynumber)
+    {
+
+        if (prioritynumber < enemystats.Count)
+        {
+            enemySearchTEst estat = enemysearchs[prioritynumber];
+
+
+            return estat;
+        }
+        else
+            return null;
     }
     public enemystattest returnenemydata(int prioritynumber)
     {
@@ -86,11 +116,13 @@ public class ETableManager : MonoBehaviour
                     Estat.movestateid = int.Parse(vaules[6]);
                     Estat.initattackdelay = float.Parse(vaules[7]);
                     Estat.afterattackdelay = float.Parse(vaules[8]);
+               
                     enemystats.Add(Estat);
                 
             }
         }
         firstlinereturn = true;
+     secondlinereturn = true;
         if (EnemyActionCsv != null)
         {
             reader = new StringReader(EnemyActionCsv.text);
@@ -105,7 +137,11 @@ public class ETableManager : MonoBehaviour
                     firstlinereturn = false;
                     continue;
                 }
-
+                if (secondlinereturn)
+                {
+                    secondlinereturn = false;
+                    continue;
+                }
                 string[] vaules = line.Split(',');
 
           
@@ -137,8 +173,49 @@ public class ETableManager : MonoBehaviour
                 
             }
         }
-      
+        firstlinereturn = true;
+        secondlinereturn = true;
+        if (EnemySerachCsv != null)
+        {
+            reader = new StringReader(EnemySerachCsv.text);
 
-      
+            while (true)
+            {
+                string line = reader.ReadLine();
+                if (line == null) break;
+
+                if (firstlinereturn)
+                {
+                    firstlinereturn = false;
+                    continue;
+                }
+                if (secondlinereturn)
+                {
+                    secondlinereturn = false;
+                    continue;
+                }
+                string[] vaules = line.Split(',');
+
+                enemySearchTEst Esearch = new enemySearchTEst();
+                Esearch.searchid = int.Parse(vaules[0]);
+                Esearch.name = int.Parse(vaules[2]);
+                Esearch.activeX = int.Parse(vaules[3]);
+                Esearch.activeY = int.Parse(vaules[4]);
+                Esearch.activeZ = int.Parse(vaules[5]);
+                Esearch.activeoffsetX = int.Parse(vaules[6]);
+                Esearch.activeoffsetY = int.Parse(vaules[7]);
+                Esearch.activeoffsetZ = int.Parse(vaules[8]);
+                Esearch.searchX = int.Parse(vaules[9]);
+                Esearch.searchY = int.Parse(vaules[10]);
+                Esearch.searchZ = int.Parse(vaules[11]);
+                Esearch.searchoffsetX = int.Parse(vaules[12]);
+                Esearch.searchoffsetY = int.Parse(vaules[13]);
+                Esearch.searchoffsetZ = int.Parse(vaules[14]);
+
+                enemysearchs.Add(Esearch);
+
+            }
+        }
+
     }
 }
