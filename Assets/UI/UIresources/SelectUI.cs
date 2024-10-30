@@ -167,6 +167,7 @@ public class SelectUI : MonoBehaviour
     }
     public void setindex(int n)
     {
+        if (buttonselected) return;
         beforeIndex = index;
         index = n;
         UpdateUI();

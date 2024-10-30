@@ -190,6 +190,7 @@ public class PauseGraphicSetting : UIInteract
                 break;
             case 2:
                 Debug.Log("해상도 및 화면모드 저장하는 기능 구현해야함");
+                CurrentSettingExit();
                 break;
             case 3:
                 CurrentSettingExit();
@@ -227,6 +228,7 @@ public class PauseGraphicSetting : UIInteract
     {
         if (index > graphicList.Count - 3)
         {
+            Debug.Log("버튼 만짐");
             if (!onButton)
             {
                 onButton = true;
@@ -238,6 +240,7 @@ public class PauseGraphicSetting : UIInteract
         }
         else
         {
+            Debug.Log("이건 화살표 그건데?");
             if (onButton)
             {
                 onButton = false;
