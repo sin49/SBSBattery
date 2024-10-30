@@ -14350,12 +14350,12 @@ MonoBehaviour:
   switchingstate: 0
   CameraRange2D: {fileID: 1488342695}
   CameraRange3D: {fileID: 2103153444}
-  transistionDuration: 0.4
+  transistionDuration: 0.8
   cameraScreenChangeOption: 1
   ColliderDisplay: {fileID: 443036604}
   CameraRangeDisplay2D: {fileID: 641991972}
   CameraRangeDisplay3D: {fileID: 151409960}
-  noorthochange: 0
+  noorthochange: 1
 --- !u!65 &443036603
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34623,6 +34623,11 @@ PrefabInstance:
       objectReference: {fileID: 151409959}
     - target: {fileID: 2545905713560603523, guid: 9703119aa7ce83f499add0639d75aca8,
         type: 3}
+      propertyPath: noorthochange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2545905713560603523, guid: 9703119aa7ce83f499add0639d75aca8,
+        type: 3}
       propertyPath: switchingstate
       value: 1
       objectReference: {fileID: 0}
@@ -34640,6 +34645,11 @@ PrefabInstance:
         type: 3}
       propertyPath: PlayerMoveState3D
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2545905713560603523, guid: 9703119aa7ce83f499add0639d75aca8,
+        type: 3}
+      propertyPath: transistionDuration
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 2545905713560603523, guid: 9703119aa7ce83f499add0639d75aca8,
         type: 3}
