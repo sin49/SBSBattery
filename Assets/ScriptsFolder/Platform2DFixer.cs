@@ -12,7 +12,7 @@ public class Platform2DFixer : MonoBehaviour
     }
     public void FixPlatform()
     {
-        if (!ChangeComplete&&oncollide&& !(
+        if (!ChangeComplete&&oncollide&&!PlayerHandler.instance.Changing&& !(
               (int)PlayerStat.instance.MoveState >= 4)&&!PlayerHandler.instance.CantHandle&&!PlayerHandler.instance.CurrentPlayer.cantmove)
         {
 
