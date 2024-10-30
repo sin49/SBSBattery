@@ -135,7 +135,7 @@ public class TestRecheckUI : UIInteract
                 UpdateUI();
             }
         }
-        if (Input.GetKeyDown(KeyCode.C) && reCheckActive)
+        if ((Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)) && reCheckActive)
         {
             if (ok)
                 OkButtonInput();

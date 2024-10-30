@@ -278,7 +278,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4388818573772789296}
-  m_Father: {fileID: 1465228322146178488}
+  m_Father: {fileID: 8385243022307567584}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7527426053221945539
 MonoBehaviour:
@@ -458,8 +458,6 @@ Transform:
   m_Children:
   - {fileID: 103201835892213227}
   - {fileID: 6640067990614207690}
-  - {fileID: 8057407559719295135}
-  - {fileID: 953216015405559126}
   - {fileID: 6622886580592240822}
   - {fileID: 229911638335246212}
   - {fileID: 1364177019907803960}
@@ -697,7 +695,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6693190033528089266}
-  m_Father: {fileID: 1465228322146178488}
+  m_Father: {fileID: 8385243022307567584}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &5663853591353245365
 BoxCollider:
@@ -763,7 +761,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 953216015405559126}
+  - {fileID: 8057407559719295135}
   m_Father: {fileID: 1364177019907803960}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3146861722801290292
@@ -814,6 +814,8 @@ MonoBehaviour:
   wallRayUpLength: 0
   wallRayBackLength: 0
   wallCheck: 0
+  trackingdata: {fileID: 0}
+  dataname: 
   PlayerDetected: 0
 --- !u!1 &7436922872881556891
 GameObject:

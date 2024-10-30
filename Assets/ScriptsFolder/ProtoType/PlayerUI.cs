@@ -9,9 +9,11 @@ public class PlayerUI: MonoBehaviour
 {
     public TextMeshProUGUI PlayerFormText;
     public Image Hpbar;
-    public Sprite Empty;
-    public Sprite Fill;
+    //public Sprite Empty;
+    //public Sprite Fill;
+    List<bool> damaged=new List<bool>();
     public Transform HPbartransform;
+    List<Animator> HPBARANimator=new List<Animator>();
     List<Image> HPbarList=new List<Image>();
     public List<Sprite> formList = new List<Sprite>();
     public Image currentFormImage;
@@ -51,12 +53,23 @@ public class PlayerUI: MonoBehaviour
             
              
                var a=     Instantiate(Hpbar.gameObject, HPbartransform).GetComponent<Image>();
+   
                 HPbarList.Add(a);
+                HPBARANimator.Add(a.gameObject.GetComponent<Animator>());
+                damaged.Add(false);
             }
+
             if (n < hp)
-                HPbarList[n].sprite = Fill;
+            {
+
+                damaged[n] = false;
+                HPBARANimator[n].SetBool("damaged", damaged[n]);
+            }
             else
-                HPbarList[n].sprite = Empty;
+            {
+                damaged[n] = true;
+                HPBARANimator[n].SetBool("damaged", damaged[n]);
+            }
         }
     }
     private void Start()
@@ -69,6 +82,8 @@ public class PlayerUI: MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PlayerHandler.instance.isDie)
+            this.gameObject.SetActive(false);
         FormUIUpdate();
         HPUIUpdate();
     }

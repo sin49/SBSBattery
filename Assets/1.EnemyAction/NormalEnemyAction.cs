@@ -11,6 +11,10 @@ public class NormalEnemyAction : EnemyAction
     {
         this.e = e;
     }
+    public virtual void cancel()
+    {
+
+    }
     public override void Invoke(Transform target = null)
     {
         base.Invoke(target);

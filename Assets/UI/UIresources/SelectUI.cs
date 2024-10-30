@@ -62,7 +62,7 @@ public class SelectUI : MonoBehaviour
     public void ActiveUI(int index = 0)
     {
         pauseui.pauseInteract = false;
-        tokenText.text = PlayerInventory.instance.TokenValue.ToString();
+        //tokenText.text = PlayerInventory.instance.TokenValue.ToString();
         OnHandle = true;                
         this.index = index;
         ShowPauseUI();
@@ -212,7 +212,7 @@ public class SelectUI : MonoBehaviour
                     UpdateUI();
                 }
             }
-            if (Input.GetKeyDown(KeyCode.C))
+            if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
             {
                 SelectButton();
             }

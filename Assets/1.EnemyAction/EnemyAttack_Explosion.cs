@@ -12,10 +12,13 @@ public class EnemyAttack_Explosion : NormalEnemyAction
         base.register(e);
         explosionobj = e.attackCollider;
         e.blinkLoop = true;
+        Enemy_ = e; 
     }
     public override void Invoke(Transform target = null)
     {
         base.Invoke(target);
+       
+        Enemy_.PlayAttackSound();
       var obj=  Instantiate(explosionobj, e.transform.position+ (Vector3.up*0.25f), Quaternion.identity);
         Vector3 objscale = obj.transform.localScale;
         objscale *= 2.5f;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum TvColor { white, red, blue}
 
-public class TvEnemy : Enemy
+public class TvEnemy : MonoBehaviour
 {
     public TvColor tvColor = TvColor.white;
 
@@ -14,16 +14,24 @@ public class TvEnemy : Enemy
     [Header("#티비 인식 및 이동 정지를 위한 광선 변수")]
     public float rayRange; // 레이캐스트 길이 조절
     public float rayHeight; // 레이캐스트 높이 조절
-
+    public Rigidbody rb;
     bool isRotate;
-
+    public CharacterSoundPlayer soundplayer;
+    public Animator animaor;
     public Transform target;
     bool tracking;
     public Vector3 testTarget;
-
-    protected override void Awake()
+   float movespeed=2f;
+    protected  void Awake()
     {
-        base.Awake();        
+        rb = this.GetComponent<Rigidbody>();
+        soundplayer = this.GetComponent<CharacterSoundPlayer>();
+        animaor = transform.GetChild(0).GetComponent<Animator>();
+    }
+    private void FixedUpdate()
+    {
+        if (target != null)
+            Move();
     }
 
     /*private void FixedUpdate()
@@ -68,23 +76,22 @@ public class TvEnemy : Enemy
         }
     }
 
-    public override void Move()
+    public void Move()
     {
-        if (!die || !hitted)
-        {
+      
             if (tracking && activeTv)
             {
-                if (!activeAttack && !checkTv )
+                if (  !checkTv )
                 {
                     testTarget = target.position - transform.position;
                     testTarget.y = 0;
 
-                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), 4.0f * Time.deltaTime);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), 8.0f * Time.deltaTime);
 
                     if (Quaternion.Angle(transform.rotation, Quaternion.LookRotation(testTarget)) < 0.8f)
                     {
                         isRotate = false;
-                        rb.MovePosition(transform.position + transform.forward * Time.deltaTime * eStat.moveSpeed);
+                        rb.MovePosition(transform.position + transform.forward * Time.deltaTime* movespeed);
                  if(soundplayer!=null)
                         soundplayer.PlayMoveSound();
                     }
@@ -95,25 +102,18 @@ public class TvEnemy : Enemy
                     animaor.SetBool("isRotate", isRotate);
                 }
             }
-        }
+        
         TrackingCheck();
     }
     #endregion
-    public override void Attack()
-    {
-        return;
-    }
+   
 
     /*public override void Dead()
     {
         return;
     }*/
 
-    public override void Damaged(float damage)
-    {
-        base.Damaged(damage);
-        return;
-    }
+ 
 
     //private void OnTriggerStay(Collider other)
     //{
