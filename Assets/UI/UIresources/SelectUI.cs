@@ -90,7 +90,7 @@ public class SelectUI : MonoBehaviour
     {
         buttonselected = false;
     }
-    void SelectButton()
+    public void SelectButton()
     {
         if (buttonselected)
             return;
@@ -165,7 +165,12 @@ public class SelectUI : MonoBehaviour
         }
         //SelectedUI.transform.position = ButtonList[index].transform.position;
     }
-
+    public void setindex(int n)
+    {
+        beforeIndex = index;
+        index = n;
+        UpdateUI();
+    }
     private void OnDisable()
     {
         OnHandle = false;
