@@ -68,9 +68,12 @@ public class GameManager : MonoBehaviour
         if (currentscenename == "KJS_JYH_Tutorial") DeleteTutorialKey();
         else
         {
-            attackTuto = true; jumpTuto = true; moveTuto = true;
-            downTuto = true; interactTuto = true; downAttackTuto = true;
-            dimensionTuto = true; tutorialEnd = true;
+            if(currentscenename != "CheckTitleTest")
+            {
+                attackTuto = true; jumpTuto = true; moveTuto = true;
+                downTuto = true; interactTuto = true; downAttackTuto = true;
+                dimensionTuto = true; tutorialEnd = true;
+            }
         }
 
         if (PlayerPrefs.HasKey("AttackTuto")) attackTuto = true;

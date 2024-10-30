@@ -23,7 +23,7 @@ public class TitleScreen : UIInteract
     public TitleSceneAudio settingAudio;
 
     public TestRecheckUI recheckUI;
-
+    public int LastIndex;
     public void StartNewGame()
     {
         Debug.Log(startscenename);
@@ -93,7 +93,7 @@ public class TitleScreen : UIInteract
 
     public void handletitle()
     {
-        int LastIndex;
+        //int LastIndex;
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             LastIndex = index;
@@ -124,11 +124,25 @@ public class TitleScreen : UIInteract
         }
         else if (Input.GetKeyDown(KeyCode.X)|| Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
         {
-            ButtionSoundEffectPlayer_.PlayActiveAudio();
-            titletexts[index].ButtonActive();
+            SelectButton();
         }
 
     }
+
+    public void SelectButton()
+    {
+        if (!PlayerPrefs.HasKey("LastestStageName") && index == 1) return;
+        ButtionSoundEffectPlayer_.PlayActiveAudio();
+        titletexts[index].ButtonActive();
+    }
+    public void SetIndex(int n)
+    {        
+        ButtionSoundEffectPlayer_.PlaySelectAudio();
+        LastIndex = index;
+        index = n;
+        changehub(LastIndex, index);
+    }
+
     public void changehub(int before,int after)
     {
         /*titletexts[before].DeActiveImageHub();

@@ -40,8 +40,11 @@ public class LoadingEffectKari : MonoBehaviour
         }
         if (volume.profile.TryGet(out colorAdjustments))
         {
-        colorAdjustments.saturation.overrideState = false;
-            colorAdjustments.saturation.value = 0;
+            if (colorAdjustments != null)
+            {
+                colorAdjustments.saturation.overrideState = false;
+                colorAdjustments.saturation.value = 0;
+            }
         }
     }
 
@@ -72,8 +75,11 @@ public class LoadingEffectKari : MonoBehaviour
         yield return null;
         Time.timeScale = 0;
      
-        colorAdjustments.saturation.overrideState = true;
-        colorAdjustments.saturation.value = -100;
+        if (colorAdjustments != null)
+        {
+            colorAdjustments.saturation.overrideState = true;
+            colorAdjustments.saturation.value = -100;
+        }            
         if (PlayerHandler.instance != null)
         {
             PlayerHandler.instance.CurrentCamera.cullingMask &= ~(1 << 16);
@@ -100,6 +106,7 @@ public class LoadingEffectKari : MonoBehaviour
         image_.color= new Color(0, 0, 0, 1);
         Debug.Log("UI활성화");
         vignette.intensity.value = 0;
+        if(colorAdjustments !=null)
         colorAdjustments.saturation.overrideState = false;
         //게임 오버 UI 활성화
         GaveOVerUI.gameObject.SetActive(true);
