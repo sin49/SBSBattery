@@ -33,15 +33,20 @@ public class EventTrigger : MonoBehaviour,colliderDisplayer
     {
         if (other.CompareTag("Player"))
         {
-            foreach (var a in starthandlers)
+            if (!actived)
             {
-                a.startevent();
+                foreach (var a in starthandlers)
+                {
+                    if (!a.evenactive)
+                        a.startevent();
+                }
+                foreach (var a in stophandlers)
+                {
+                    if (a.evenactive)
+                        a.stopevent();
+                }
+                actived = true;
             }
-            foreach (var a in stophandlers)
-            {
-                a.stopevent();
-            }
-            actived = true;
         }
     }
 }

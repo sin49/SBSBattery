@@ -195,6 +195,7 @@ public class EnemySpawner : MonoBehaviour
             
                 LoadEnemyDataFromCSV(id);
             CreateEnemy();
+            this.gameObject.SetActive(false);
         }
     }
     public void CreateEnemy()

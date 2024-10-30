@@ -37,6 +37,8 @@ public class TalkUI : MonoBehaviour
     {
         if (instance == null)
             instance = this;
+
+        gameObject.SetActive(false);
     }
 
     #region ¥Î»≠ UI
