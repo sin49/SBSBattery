@@ -34,7 +34,8 @@ public class LoadingEffectKari : MonoBehaviour
         {
             // Vignette 초기 설정
             vignette.intensity.value = 0f;
-            vignette.smoothness.overrideState = false;
+            vignette.smoothness.overrideState = true;
+            vignette.smoothness.value = 0.15f;
             vignette.rounded.value = true;
         }
         if (volume.profile.TryGet(out colorAdjustments))
@@ -57,7 +58,7 @@ public class LoadingEffectKari : MonoBehaviour
             gameovercamera.transform.position = PlayerHandler.instance.CurrentCamera.transform.position;
             gameovercamera2.transform.position = gameovercamera.transform.position;
             gameovercamera.transform.rotation = PlayerHandler.instance.CurrentCamera.transform.rotation;
-            gameovercamera2.transform.position = gameovercamera.transform.position;
+            gameovercamera2.transform.rotation = gameovercamera.transform.rotation;
             gameovercamera2.farClipPlane = PlayerHandler.instance.CurrentCamera.farClipPlane;
             GameObject.Find("BackGroundAudioPlayer").GetComponent<BackGroundAudioPlayer>().AudioStop();
             if (PlayerHandler.instance.CurrentCamera.orthographic)
