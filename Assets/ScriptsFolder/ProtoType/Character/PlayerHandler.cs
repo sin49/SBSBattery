@@ -12,7 +12,7 @@ using UnityEngine.UIElements;
 public class PlayerHandler : MonoBehaviour
 {
     public GameObject playerblackcircle;
-
+    public GameObject Light2D;
     public bool ladderCheck;
     public bool ladderInteract;
     public event Action PlayerDeathEvent;
@@ -327,7 +327,17 @@ public class PlayerHandler : MonoBehaviour
         {
             inputTimer -= Time.deltaTime;
         }
-
+        if (Light2D != null)
+        {
+            if ((int)PlayerStat.instance.MoveState < 4)
+            {
+                Light2D.gameObject.SetActive(true);
+            }
+            else
+            {
+                Light2D.gameObject.SetActive(false);
+            }
+        }
         if (doubleUpInput || doubleDownInput)
             onAttack = false;
         else

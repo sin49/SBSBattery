@@ -10,6 +10,11 @@ public class EnemyAction_breath : NormalEnemyAction
 {
 
     firebreathattack breathattack;
+    public override void cancel()
+    {
+        breathattack.gameObject.SetActive(false);
+        DisableActionMethod();
+    }
 
     [Header("브레스 최대 범위")]
     public Vector3 breathsize;
@@ -22,7 +27,7 @@ public class EnemyAction_breath : NormalEnemyAction
     public float breathspreadmaxtime;
     [Header("브레스 범위가 사라지는 시간")]
     public float breathendtime;
-
+    Enemy e;
     public override void register(Enemy e)
     {
         base.register(e);
@@ -31,10 +36,12 @@ public class EnemyAction_breath : NormalEnemyAction
         breathattack.breathspreadmaxtime = breathspreadmaxtime;
         breathattack.breathendtime = breathendtime;
         breathattack.registerbreathendevent(DisableActionMethod);
+        this.e = e;
     }
 
     IEnumerator breathattackInvoke()
     {
+        e.PlayAttackSound();
         breathattack.gameObject.SetActive(true);
         yield return new WaitForSeconds(breathtime+breathendtime);
         DisableActionMethod();

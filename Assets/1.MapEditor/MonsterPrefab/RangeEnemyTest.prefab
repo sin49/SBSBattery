@@ -295,7 +295,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.32714024
-  m_Center: {x: 0, y: 0.53, z: -0}
+  m_Center: {x: 0, y: 0.5, z: -0}
 --- !u!54 &3196236616345248045
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -897,8 +897,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.1, y: 1.5, z: 3.5}
-  m_Center: {x: 0, y: 0, z: 1.5}
+  m_Size: {x: 0.6, y: 0.99, z: 0.9}
+  m_Center: {x: 0, y: 0.43, z: 0.78}
 --- !u!1 &2394138119772494340
 GameObject:
   m_ObjectHideFlags: 0
@@ -1334,8 +1334,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.2, y: 0.52, z: 3}
-  m_Center: {x: 6, y: 2, z: 9}
+  m_Size: {x: 4.3, y: 2, z: 5.4}
+  m_Center: {x: 0, y: 1, z: 0.5}
 --- !u!114 &2202838001302264467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1509,8 +1509,8 @@ Transform:
   m_GameObject: {fileID: 3594609386018484902}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: 2, z: 9}
-  m_LocalScale: {x: 0.2, y: 0.52, z: 3}
+  m_LocalPosition: {x: 0, y: 1, z: 0.5}
+  m_LocalScale: {x: 4.3, y: 2, z: 5.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3416854067524108187}
@@ -3445,24 +3445,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mae: {fileID: 6587660186071680179}
   rangeCollider: {fileID: 1719816305384670078}
-  rangeSizeX: 1.1
-  rangeSizeY: 1.5
-  rangeSizeZ: 3.5
+  rangeSizeX: 0.6
+  rangeSizeY: 0.99
+  rangeSizeZ: 0.9
   rangePosX: 0
-  rangePosY: 0
-  rangePosZ: 1.5
+  rangePosY: 0.43
+  rangePosZ: 0.78
   searchCollider: {fileID: 3419566179637107403}
-  searchSizeX: 0.2
-  searchSizeY: 0.52
-  searchSizeZ: 3
-  searchPosX: 6
-  searchPosY: 2
-  searchPosZ: 9
+  searchSizeX: 4.3
+  searchSizeY: 2
+  searchSizeZ: 5.4
+  searchPosX: 0
+  searchPosY: 1
+  searchPosZ: 0.5
   searchCollider_: {fileID: 2202838001302264467}
   attackColliderRange: {fileID: 2597715478896487610}
   tracking: 0
   testTarget: {x: 0, y: 0, z: 0}
-  trackingDistance: 10
+  trackingDistance: 7.5
   disToPlayer: 0
   firstPoint: {x: 0, y: 0, z: 0}
   secondPoint: {x: 0, y: 0, z: 0}
@@ -3474,13 +3474,13 @@ MonoBehaviour:
   leftPatrol: {x: 0, y: 0, z: 0}
   rightPatrol: {x: 0, y: 0, z: 0}
   center: {x: 0, y: 0.5, z: 0}
-  wallRayHeight: 0
-  wallRayLength: 0
-  wallRayUpLength: 0
+  wallRayHeight: 0.5
+  wallRayLength: 3
+  wallRayUpLength: 3
   wallRayBackLength: 0
-  wallCheck: 0
-  trackingdata: {fileID: 0}
-  dataname: 
+  wallCheck: 1
+  trackingdata: {fileID: 11400000, guid: 2ff8ed2b68e2a0c4291fb9d4af8ad364, type: 2}
+  dataname: meleeTap
   PlayerDetected: 0
 --- !u!1 &8931937134772179971
 GameObject:
@@ -3608,8 +3608,8 @@ Transform:
   m_GameObject: {fileID: 9161033037936441632}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.5}
-  m_LocalScale: {x: 1.1, y: 1.5, z: 3.5}
+  m_LocalPosition: {x: 0, y: 0.43, z: 0.78}
+  m_LocalScale: {x: 0.6, y: 0.99, z: 0.9}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8801285598001996633}

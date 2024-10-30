@@ -51,7 +51,7 @@ public class DisturbDimensionChangeField : MonoBehaviour, colliderDisplayer
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
 
         if (other.CompareTag("Player"))

@@ -220,16 +220,18 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 eStat.attacktype = EnemyAttackType.breath;
 
                 var obj2 = transform.AddComponent<EnemyAction_breath>();
-
+                Debug.Log("eattack체크");
                 if (eattack == null)
                 {
                     atktest = ETableManager.instance.enemyattacks[4];
-
+                    Debug.Log("Etable탐색");
                 }
                 else
                 {
                     atktest = eattack;
+                    Debug.Log("eattack 추가");
                 }
+                Debug.Log("specialvaule값 체크" + atktest.SpecialVaule.Count);
                 obj2.breathtime = atktest.SpecialVaule[0];
                 obj2.breathspreadmaxtime = atktest.SpecialVaule[1];
                 obj2.breathendtime = atktest.SpecialVaule[2];
@@ -628,7 +630,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 Vector3 target = tap.GetTarget();
                 transform.rotation = Quaternion.LookRotation(target);
                 //enemymovepattern();
-                MoveAction.Invoke();
+                MoveAction?.Invoke();
             }
         }
         else
@@ -638,7 +640,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 Vector3 target = tap.GetTarget();
                 transform.rotation = Quaternion.LookRotation(target);
                 //enemymovepattern();
-                MoveAction.Invoke();
+                MoveAction?.Invoke();
             }
         }
 
@@ -689,7 +691,8 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     //큐브에서 스피어 처리로 변경했습니다
     private void OnDrawGizmos()
     {
-       
+        if (tap != null)
+        {
 
             if (tap.firstPoint != Vector3.zero && tap.secondPoint != Vector3.zero)
             {
@@ -725,50 +728,50 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             else
                 Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, tap.trackingDistance);
-        
 
-/*        if (patrolType == PatrolType.movePatrol)
-        {
-            if (tap.patrolGroup.Length >= 2)
-            {
-                tap.center = (tap.firstPoint + tap.secondPoint) / 2; //s
-                float xPoint = tap.patrolGroup[1].x - tap.patrolGroup[0].x;
-                Vector3 size = new(xPoint, tap.yWidth, tap.zWidth);
-                if (CharColliderColor.instance != null)
-                    Gizmos.color = CharColliderColor.instance.patrolRange;
-                else
-                    Gizmos.color = Color.red;
-                Gizmos.DrawWireCube(tap.center, size);
-            }
-            else
-            {
-                Vector3 p1 = transform.position;
-                Vector3 p2 = transform.position;
-                p1.x = p1.x - tap.leftPatrolRange * 2;
-                p2.x = p2.x + tap.rightPatrolRange * 2;
-                tap.center = (p1 + p2) / 2;
-                float xPoint = p2.x - p1.x;
-                Vector3 size = new(xPoint, tap.yWidth, tap.zWidth);
 
-                if (CharColliderColor.instance != null)
-                    Gizmos.color = CharColliderColor.instance.patrolRange;
-                else
-                    Gizmos.color = Color.red;
-                Gizmos.DrawWireCube(tap.center, size);
-                tap.targetPatrol = p2;
+            /*        if (patrolType == PatrolType.movePatrol)
+                    {
+                        if (tap.patrolGroup.Length >= 2)
+                        {
+                            tap.center = (tap.firstPoint + tap.secondPoint) / 2; //s
+                            float xPoint = tap.patrolGroup[1].x - tap.patrolGroup[0].x;
+                            Vector3 size = new(xPoint, tap.yWidth, tap.zWidth);
+                            if (CharColliderColor.instance != null)
+                                Gizmos.color = CharColliderColor.instance.patrolRange;
+                            else
+                                Gizmos.color = Color.red;
+                            Gizmos.DrawWireCube(tap.center, size);
+                        }
+                        else
+                        {
+                            Vector3 p1 = transform.position;
+                            Vector3 p2 = transform.position;
+                            p1.x = p1.x - tap.leftPatrolRange * 2;
+                            p2.x = p2.x + tap.rightPatrolRange * 2;
+                            tap.center = (p1 + p2) / 2;
+                            float xPoint = p2.x - p1.x;
+                            Vector3 size = new(xPoint, tap.yWidth, tap.zWidth);
 
-                tap.ForwardWallRayCheck();
-                tap.UpWallRayCheck();
-                tap.WallCheckResult();
-            }
-            if (CharColliderColor.instance != null)
-                Gizmos.color = CharColliderColor.instance.trackingRange;
-            else
-                Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(transform.position, tap.trackingDistance);
-        }*/
+                            if (CharColliderColor.instance != null)
+                                Gizmos.color = CharColliderColor.instance.patrolRange;
+                            else
+                                Gizmos.color = Color.red;
+                            Gizmos.DrawWireCube(tap.center, size);
+                            tap.targetPatrol = p2;
+
+                            tap.ForwardWallRayCheck();
+                            tap.UpWallRayCheck();
+                            tap.WallCheckResult();
+                        }
+                        if (CharColliderColor.instance != null)
+                            Gizmos.color = CharColliderColor.instance.trackingRange;
+                        else
+                            Gizmos.color = Color.yellow;
+                        Gizmos.DrawWireSphere(transform.position, tap.trackingDistance);
+                    }*/
+        }
     }
-
     #endregion
 
     #endregion
@@ -806,14 +809,17 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     #endregion
 
     #region 공격함수
-
-    protected virtual void PlayAttackSound()
+    public void cancelattakc()
+    {
+        AttackAction.cancel();
+    }
+    public virtual void PlayAttackSound()
     {
         if (soundplayer != null)
             soundplayer.PlayAttackAudio();
     }
 
-    IEnumerator corutine;
+   public IEnumerator corutine;
    public bool blinkLoop;
     public override void Attack()
     {
@@ -822,7 +828,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         MoveAnimationPlay();
         if (animaor != null)
             animaor.Play("EnemyAttack");
-        PlayAttackSound();
+        //PlayAttackSound();
         if (!blinkLoop)
             blinkcorutine = ChangeWhiteEmissionOnce();
         else
@@ -837,7 +843,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     IEnumerator attackActionInvoke()
     {
         yield return new WaitForSeconds(eStat.attackReadyTime);
-        AttackAction.Invoke(PlayerHandler.instance.CurrentPlayer.transform);
+        AttackAction?.Invoke(PlayerHandler.instance.CurrentPlayer.transform);
     }
 
     // 공격 준비시간

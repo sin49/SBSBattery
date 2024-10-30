@@ -82,17 +82,14 @@ public class MouseFormCursor : MonoBehaviour
                     cursorInteract.gameObject.layer = LayerMask.NameToLayer("DontMoveIgnore");
                 }
                 Debug.Log(other.gameObject);
-                if (other.TryGetComponent<fireenemy>(out fireenemy fire))
+                Enemy fire;
+                if (other.TryGetComponent<Enemy>(out fire))
                 {
                     Debug.Log("불몬 잡았나?");
-                    ParticleSystem[] breath = fire.fireeffects;
-                    foreach (ParticleSystem a in breath)
-                    {
-                        a.gameObject.SetActive(false);
-                    }
-
-                    fire.breathsmallcollider.gameObject.SetActive(false);
-                    fire.breathcollider.gameObject.SetActive(false);
+                    fire.StopCoroutine(fire.corutine);
+                    fire.cancelattakc();
+                    fire.corutine = null;
+                   
                     Debug.Log("불몬 화염방사 취소되나?");
                 }
                 else

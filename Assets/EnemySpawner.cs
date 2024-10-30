@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using UnityEngine.UIElements;
+
 using System;
-using UnityEditor;
+
 
 public enum enemymodedlnumber {defaultform,breathform,jumpform,rushform,bulbform }
 [Serializable]
@@ -187,68 +187,7 @@ public class EnemySpawner : MonoBehaviour
         updatedata = false;
     }
    
-    public void SaveEnemyData()
-    {
-
-        if ( enemyData != null)
-        {
-            string filename = EStatCSV.name;
-           
-            string csvFilePath = Application.dataPath + $"/1.CSVDATA/EnemyStatData.csv";
-
-            List<string> lines = new List<string>(File.ReadAllLines(csvFilePath));
-
-            bool idExists = false;
-            for (int i = 2; i < lines.Count; i++)
-            {
-                string[] values = lines[i].Split(',');
-
-                if (int.Parse(values[0]) == enemyData.id) // id가 일치하는 데이터를 찾음
-                {
-                    // 데이터 업데이트
-                    values[1] = enemyData.name;
-                    values[2] = enemyData.hp.ToString();
-                    values[3] = enemyData.movespeed.ToString();
-                    values[4] = ((int)enemyData.attackstateID).ToString();
-                    values[5] = ((int)enemyData.searchstateID).ToString();
-                    values[6] = ((int)enemyData.movestateid).ToString();
-                    values[7] = enemyData.initattackdelay.ToString();
-                    values[8] = enemyData.afterattackdelay.ToString();
-                  
-                    lines[i] = string.Join(",", values);
-                    idExists = true;
-                    break;
-                }
-            }
-
-            if (!idExists)
-            {
-                // ID가 없을 경우 새로운 데이터를 추가
-                string newLine = string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8}",
-                    enemyData.id,
-                    enemyData.name,
-                    enemyData.hp,
-                    enemyData.movespeed,
-                    enemyData.attackstateID,
-                    enemyData.searchstateID,
-                    enemyData.movestateid,
-                    enemyData.initattackdelay,
-                    enemyData.afterattackdelay);
-
-                lines.Add(newLine);
-                Debug.Log($"New enemy data with ID {enemyData.id} has been added to CSV.");
-            }
-
-            // CSV 파일을 다시 저장
-            File.WriteAllLines(csvFilePath, lines);
-            AssetDatabase.Refresh();
-            Debug.Log($"Enemy data for ID {enemyData.id} has been successfully saved to CSV.");
-        }
-        else
-        {
-            Debug.LogError("No enemy data available to save.");
-        }
-    }
+   
     private void Awake()
     {
         if (CreateEnemyOnAawake)
@@ -256,6 +195,7 @@ public class EnemySpawner : MonoBehaviour
             
                 LoadEnemyDataFromCSV(id);
             CreateEnemy();
+            this.gameObject.SetActive(false);
         }
     }
     public void CreateEnemy()
