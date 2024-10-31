@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
         // currentscenename을 로딩 전에 설정합니다.
         currentscenename = SceneManager.GetActiveScene().name;
         LoadTutorialKey();
-
+        
     }
 
     public string loadingscenename = "LoadingTest";
