@@ -27,9 +27,8 @@ public class LoadingEffectKari : MonoBehaviour
     Image image_;
     public GameObject loadingImage;
     public GameObject GaveOVerUI;
-    private void Awake()
+    void initsetting()
     {
-        image_ = GetComponent<Image>();
         if (volume.profile.TryGet(out vignette))
         {
             // Vignette 초기 설정
@@ -46,6 +45,12 @@ public class LoadingEffectKari : MonoBehaviour
                 colorAdjustments.saturation.value = 0;
             }
         }
+        image_.color = new Color(0, 0, 0, 0);
+    }
+    private void Awake()
+    {
+        image_ = GetComponent<Image>();
+        initsetting();
     }
 
   public  void GAmeOverPostProcessing()
@@ -56,6 +61,9 @@ public class LoadingEffectKari : MonoBehaviour
     {
         if (PlayerHandler.instance != null)
         {
+            FadeOff = false;
+            LoadingComplete = false;
+            initsetting();
             PlayerHandler.instance.isDie = true;
             vignette.center.value = PlayerHandler.instance.CurrentCamera.WorldToViewportPoint(PlayerHandler.instance.CurrentPlayer.transform.position);
             gameovercamera.transform.position = PlayerHandler.instance.CurrentCamera.transform.position;

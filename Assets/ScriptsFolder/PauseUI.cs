@@ -78,7 +78,7 @@ public class PauseUI : MonoBehaviour
     //}
     private void Update()
     {
-        if (!GameManager.instance.tutorialEnd) return;
+        if (GameManager.instance.tutoInteract) return;
 
         if(Input.GetKeyDown(KeyCode.Escape) && pauseInteract&&!PlayerHandler.instance.isDie)
             PauseUiActive();

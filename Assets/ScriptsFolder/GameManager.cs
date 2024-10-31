@@ -65,10 +65,13 @@ public class GameManager : MonoBehaviour
     }
     public void LoadTutorialKey()
     {
-        if (currentscenename == "KJS_JYH_Tutorial") DeleteTutorialKey();
+        if (currentscenename == "KJS_JYH_Tutorial")
+        {
+            DeleteTutorialKey();
+        }
         else
         {
-            if(currentscenename != "CheckTitleTest")
+            if (currentscenename != "CheckTitleTest")
             {
                 attackTuto = true; jumpTuto = true; moveTuto = true;
                 downTuto = true; interactTuto = true; downAttackTuto = true;
@@ -153,11 +156,17 @@ public class GameManager : MonoBehaviour
     public LoadingEffectKari LoadingEffect;
  
     
-
+    //
     public void LoadingEffectToAction(Action<string> act)
     {
 
         StartCoroutine(LoadingEffectActionCorutine(MinimumLoadingTime, act));
+    }
+    public void LoadingEffectToAction(Action act)
+    {
+        Action<string> actS = new Action<string>((s) => { act.Invoke(); });
+
+        StartCoroutine(LoadingEffectActionCorutine(MinimumLoadingTime, actS));
     }
     IEnumerator LoadingEffectActionCorutine(float timer, Action<string> act)
     {

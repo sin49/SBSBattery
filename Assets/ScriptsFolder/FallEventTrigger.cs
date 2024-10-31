@@ -8,7 +8,7 @@ public class FallEventTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerHandler.instance.PlayerFallOut();
+            PlayerHandler.instance.PlayerFallEventInvoke();
         }
     }
 }
