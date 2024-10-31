@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if (currentscenename != "CheckTitleTest")
+            if (currentscenename != "CheckTitleTest" && currentscenename != "Epilogue")
             {
                 attackTuto = true; jumpTuto = true; moveTuto = true;
                 downTuto = true; interactTuto = true; downAttackTuto = true;
