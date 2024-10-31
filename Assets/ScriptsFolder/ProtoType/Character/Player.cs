@@ -1067,6 +1067,23 @@ public class Player : Character,environmentObject
         if (SoundPlayer != null)
             SoundPlayer.PlayAttackAudio();
     }
+    public virtual void attackAction()
+    {
+        attackBufferTimer = 0;
+        attackInputValue = 1;
+
+
+        if (onGround)
+            playerRb.velocity = Vector3.zero;
+        dontAttack = true;
+        dontMoveTimer = PlayerStat.instance.attackDelay;
+        dontAttackTimer = PlayerStat.instance.initattackCoolTime;
+        attackGround = true;
+
+
+
+        StartCoroutine(TestMeleeAttack());
+    }
     public override void Attack()
     {
         if (cantmove) return;
@@ -1074,22 +1091,9 @@ public class Player : Character,environmentObject
         {
             if (attackBufferTimer > 0 /*&& canAttack*/ && !dontAttack)
             {
-                if (PlayerStat.instance.attackType == AttackType.melee /*&& canAttack*/ && !downAttack)
+                if (!downAttack)
                 {
-                    attackBufferTimer = 0;
-                    attackInputValue = 1;
-
-
-                    if(onGround)
-                        playerRb.velocity = Vector3.zero;
-                    dontAttack = true;
-                    dontMoveTimer = PlayerStat.instance.attackDelay;
-                    dontAttackTimer = PlayerStat.instance.initattackCoolTime;
-                    attackGround = true;
-
-
-
-                    StartCoroutine(TestMeleeAttack());
+                    attackAction();
                 }
             }
         }
@@ -1119,15 +1123,18 @@ public class Player : Character,environmentObject
     #region 내려찍기
 
     //public float DownAttackForce;
-
+    public virtual void DownAttackAction()
+    {
+        Debug.Log("내려찍기");
+        downAttack = true;
+        StartCoroutine(GoDownAttack());
+    }
     public virtual void DownAttack()
     {
         if (GameManager.instance.tutoInteract || !GameManager.instance.downAttackTuto) return;
         if (!downAttack)
         {
-            Debug.Log("내려찍기");
-            downAttack = true;
-            StartCoroutine(GoDownAttack());
+            DownAttackAction();
         }
     }
 
@@ -1162,15 +1169,12 @@ public class Player : Character,environmentObject
     #endregion
 
     #region 특수공격
-    public event Action skillhandler;
+   
 
-    public void registerskilleventhandler(Action a)
-    {
-        skillhandler += a;
-    }
+   
     public virtual void Skill1()
     {
-        skillhandler?.Invoke();
+    
     }
     public virtual void Skill2()
     {

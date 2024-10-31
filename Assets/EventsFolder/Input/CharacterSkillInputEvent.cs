@@ -5,7 +5,7 @@ using UnityEngine;
 [Serializable]
 public class CharacterSkillInputEvent : InputEvent
 {
-public  bool tf;
+    public  bool tf;
     [Header("지금은 플레이어만 있음")]
     public int index = 1;
 
