@@ -14,11 +14,11 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
     //AudioSource BackGrouundAudioSource;
     HashSet<SEPlayer> SEAudioSources = new HashSet<SEPlayer>();
- public   void setAudiogroupSettingBG(AudioSource a)
+    public void setAudiogroupSettingBG(AudioSource a)
     {
         a.outputAudioMixerGroup = BG;
     }
-   public void setAudiogroupSettingSE(AudioSource a)
+    public void setAudiogroupSettingSE(AudioSource a)
     {
         a.outputAudioMixerGroup = SE;
     }
@@ -26,12 +26,13 @@ public class AudioManager : MonoBehaviour
     {
         instance = this;
 
-        if (PlayerPrefs.HasKey("LastestMasterVolume"))
-            MasterVolume = PlayerPrefs.GetFloat("LastestMasterVolume");
-        if (PlayerPrefs.HasKey("LastestBgmVolume"))
-            BGVolume = PlayerPrefs.GetFloat("LastestBgmVolume");
-        if (PlayerPrefs.HasKey("LastestSeVolume"))
-            SEVolume = PlayerPrefs.GetFloat("LastestSeVolume");
+        InitVolume();
+        //if (PlayerPrefs.HasKey("LastestMasterVolume"))
+        //    MasterVolume = PlayerPrefs.GetFloat("LastestMasterVolume");
+        //if (PlayerPrefs.HasKey("LastestBgmVolume"))
+        //    BGVolume = PlayerPrefs.GetFloat("LastestBgmVolume");
+        //if (PlayerPrefs.HasKey("LastestSeVolume"))
+        //    SEVolume = PlayerPrefs.GetFloat("LastestSeVolume");
     }
     [Header("백그라운드 오디오 볼륨"), Range(0, 1)]
     public float BGVolume;
@@ -39,13 +40,27 @@ public class AudioManager : MonoBehaviour
     public float SEVolume;
     [Header("마스터 오디오 볼륨"), Range(0, 1)]
     public float MasterVolume;
+
+    public void InitVolume()
+    {
+        if (PlayerPrefs.HasKey("LastestMasterVolume"))
+            MasterVolume = PlayerPrefs.GetFloat("LastestMasterVolume");
+        if (PlayerPrefs.HasKey("LastestBgmVolume"))
+            BGVolume = PlayerPrefs.GetFloat("LastestBgmVolume");
+        if (PlayerPrefs.HasKey("LastestSeVolume"))
+            SEVolume = PlayerPrefs.GetFloat("LastestSeVolume");
+    }
+
     void UpdateMixerSetting()
     {
-        
+        Debug.Log($"볼륨 값 {MasterVolume},{BGVolume},{SEVolume}");
         if (MasterVolume>0)
         defaultMIxergroup.SetFloat("MasterVolume",Mathf.Log10( MasterVolume)*20);
         else
+        {
+            Debug.Log("그대로 놔둘거임?");
             defaultMIxergroup.SetFloat("MasterVolume", -80);
+        }
         if(BGVolume>0)
         defaultMIxergroup.SetFloat("BGVolume", Mathf.Log10(BGVolume) * 20);
         else

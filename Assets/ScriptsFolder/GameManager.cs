@@ -55,6 +55,11 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.HasKey("DownAttackTuto")) PlayerPrefs.DeleteKey("DownAttackTuto");
         if (PlayerPrefs.HasKey("DimensionTuto")) PlayerPrefs.DeleteKey("DimensionTuto");
         if (PlayerPrefs.HasKey("TutorialEnd")) PlayerPrefs.DeleteKey("TutorialEnd");
+
+        attackTuto = false; jumpTuto = false; moveTuto = false;
+        downTuto = false; interactTuto = false; downAttackTuto = false;
+        dimensionTuto = false; tutoInteract = false; downTuto = false;
+        tutorialEnd = false;
     }
 
     public void ActiveGameOver()
@@ -65,6 +70,7 @@ public class GameManager : MonoBehaviour
     }
     public void LoadTutorialKey()
     {
+
         if (currentscenename == "KJS_JYH_Tutorial")
         {
             DeleteTutorialKey();

@@ -28,7 +28,7 @@ public class EpilogueVideoPlayer : MonoBehaviour
             timer = 0;
             gauge.fillAmount = 0;
         }
-       
+        DeleteTutorialKey();
     }
 
     void OnVideoEnd(VideoPlayer vp)
@@ -81,5 +81,22 @@ public class EpilogueVideoPlayer : MonoBehaviour
         videoPlayer.Stop();
         OnVideoEnd(videoPlayer);
         skipButton.SetActive(false);
+    }
+
+    public void DeleteTutorialKey()
+    {
+        if (PlayerPrefs.HasKey("AttackTuto")) PlayerPrefs.DeleteKey("AttackTuto");
+        if (PlayerPrefs.HasKey("JumpTuto")) PlayerPrefs.DeleteKey("JumpTuto");
+        if (PlayerPrefs.HasKey("MoveTuto")) PlayerPrefs.DeleteKey("MoveTuto");
+        if (PlayerPrefs.HasKey("DownTuto")) PlayerPrefs.DeleteKey("DownTuto");
+        if (PlayerPrefs.HasKey("InteractTuto")) PlayerPrefs.DeleteKey("InteractTuto");
+        if (PlayerPrefs.HasKey("DownAttackTuto")) PlayerPrefs.DeleteKey("DownAttackTuto");
+        if (PlayerPrefs.HasKey("DimensionTuto")) PlayerPrefs.DeleteKey("DimensionTuto");
+        if (PlayerPrefs.HasKey("TutorialEnd")) PlayerPrefs.DeleteKey("TutorialEnd");
+
+        GameManager.instance.attackTuto = false; GameManager.instance.jumpTuto = false; GameManager.instance.moveTuto = false;
+        GameManager.instance.downTuto = false; GameManager.instance.interactTuto = false; GameManager.instance.downAttackTuto = false;
+        GameManager.instance.dimensionTuto = false; GameManager.instance.tutoInteract = false; GameManager.instance.downTuto = false;
+        GameManager.instance.tutorialEnd = false;
     }
 }
