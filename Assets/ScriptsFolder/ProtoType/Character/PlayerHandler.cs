@@ -487,7 +487,7 @@ public class PlayerHandler : MonoBehaviour
         }
         if (Input.GetKeyDown(KeySettingManager.instance.DimensionChangeKeycode) && !Changing && !DImensionChangeDisturb && GameManager.instance.dimensionTuto)
         {
-
+            if (ladderCheck || ladderInteract) return;
             StartCoroutine(ChangeDimension());
             //Dimensionchangeevent?.Invoke();
 

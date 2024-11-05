@@ -728,7 +728,7 @@ public class Player : Character,environmentObject
             {
                 checker = true;
             }
-            Debug.Log(transform.position.z + "|" + t.position.z);
+            //Debug.Log(transform.position.z + "|" + t.position.z);
             yield return null;
         }
         isRun = false;

@@ -79,16 +79,18 @@ public class PlayerXChangePortal : InteractiveObject
         PlayerHandler.instance.CantHandle = true;
     
         yield return new WaitForSeconds(waitingopendoortime);//도착한 텔레포터 닫힌 문 보여주는 시간
-     
+        Debug.Log("닫힌 문 보임");
+
         closed= false;
         soundEffectListPlayer.PlayAudio(2);
         yield return new WaitForSeconds(playermovewaitingtime);//텔레포터 열기 까지 대기시간
-
-
+        Debug.Log("포탈 열림");
+        PlayerHandler.instance.CurrentPlayer.ChrRenderer.enabled = true;
         if (EndZtoX)
             yield return StartCoroutine(PlayerHandler.instance.CurrentPlayer.moveportalanimationZX(teleporterdestination));
         else
             yield return StartCoroutine(PlayerHandler.instance.CurrentPlayer.moveportalanimation(teleporterdestination));
+        Debug.Log("포탈에서 플레이어 나옴");
         PlayerHandler.instance.CantHandle = false;
         PlayerHandler.instance.CurrentPlayer.cantmove = false;
        
@@ -112,8 +114,12 @@ public class PlayerXChangePortal : InteractiveObject
         closed = true;
         soundEffectListPlayer.PlayAudio(1);
         Destination.closed = true;
-     
+
+        Debug.Log("포탈 닫힘");
+        PlayerHandler.instance.CurrentPlayer.ChrRenderer.enabled = false;
         yield return new WaitForSeconds(WaitingLoadingTIme);//s어두워지기 전 딜레이
+
+        Debug.Log("어두워짐");
         if (!HasLoadingEffect)
             MovePosition();
         else

@@ -54,7 +54,7 @@ public class AudioManager : MonoBehaviour
 
     void UpdateMixerSetting()
     {
-        Debug.Log($"º¼·ý °ª {MasterVolume},{BGVolume},{SEVolume}");
+        //Debug.Log($"º¼·ý °ª {MasterVolume},{BGVolume},{SEVolume}");
         if (MasterVolume>0)
         defaultMIxergroup.SetFloat("MasterVolume",Mathf.Log10( MasterVolume)*20);
         else
