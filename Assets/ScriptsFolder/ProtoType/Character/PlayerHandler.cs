@@ -137,8 +137,15 @@ public class PlayerHandler : MonoBehaviour
     {
         PlayerFallEvent += action;
     }
+    bool playerfallong;
+    public void PlayerFallEventInvoke()
+    {
+        playerfallong = true;
+        GameManager.instance.LoadingEffectToAction(PlayerFallOut);
+    }
     public void PlayerFallOut()
     {
+        playerfallong = false;
         if (PlayerStat.instance.hp > 1)
         {
             playerjumpaccept();
@@ -170,8 +177,8 @@ public class PlayerHandler : MonoBehaviour
         //    CurrentPower -= Time.deltaTime;
 
         //}
-        if (CurrentPlayer != null && CharacterAutoFallEvent && CurrentPlayer.transform.position.y < -Mathf.Abs(characterFallLimit) + -5)
-            PlayerFallOut();
+        if (CurrentPlayer != null && CharacterAutoFallEvent && CurrentPlayer.transform.position.y < -Mathf.Abs(characterFallLimit) + -5&&!playerfallong)
+            PlayerFallEventInvoke();
 
 
         
@@ -480,7 +487,7 @@ public class PlayerHandler : MonoBehaviour
         }
         if (Input.GetKeyDown(KeySettingManager.instance.DimensionChangeKeycode) && !Changing && !DImensionChangeDisturb && GameManager.instance.dimensionTuto)
         {
-
+            if (ladderCheck || ladderInteract) return;
             StartCoroutine(ChangeDimension());
             //Dimensionchangeevent?.Invoke();
 

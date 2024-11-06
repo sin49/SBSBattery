@@ -34,7 +34,7 @@ public class ItemListUI : MonoBehaviour
     public Image formInfo;
     public List<Sprite> characterFormUI;
 
-    void swapUI()
+    public void swapUI()
     {
         if (settingUi != null)
             settingUi.ActiveUI();

@@ -91,6 +91,23 @@ public class TestRecheckUI : UIInteract
         DeactiveButton();
         ActiveButton();
     }
+
+    public void SetIndex(int n)
+    {       
+        beforeIndex = index;
+        index = n;
+        switch(index)
+        {
+            case 0:
+                ok = true;
+                break;
+            case 1:
+                ok = false;
+                break;
+        }    
+        UpdateUI();
+    }
+
     void OkButtonInput()
     {
         if (SceneManager.GetActiveScene().name != "CheckTitleTest" && SceneManager.GetActiveScene().name != "TitleTest")
@@ -137,13 +154,19 @@ public class TestRecheckUI : UIInteract
         }
         if ((Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)) && reCheckActive)
         {
-            if (ok)
-                OkButtonInput();
-            else
-                CancelButtonInput();
+            CheckOK();
         }
 
     }
+
+    public void CheckOK()
+    {
+        if (ok)
+            OkButtonInput();
+        else
+            CancelButtonInput();
+    }
+
     private void OnDisable()
     {
         reCheckActive = false;

@@ -72,7 +72,7 @@ public class GameOverUI : UIInteract
     {
         if (onHandle)
         {
-            if (Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetKeyDown(KeyCode.RightArrow))
             {
                 if (index < buttonList.Count - 1)
                 {
@@ -82,7 +82,7 @@ public class GameOverUI : UIInteract
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 if (index > 0)
                 {
@@ -94,18 +94,23 @@ public class GameOverUI : UIInteract
 
             if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
             {
-                switch (index)
-                {
-                    case 0:
-                        Time.timeScale = 1;
-                        GameManager.instance.LoadingSceneWithKariEffect(GameManager.instance.LoadLastestStage());
-                        break;
-                    case 1:
-                        Time.timeScale = 1;
-                        GameManager.instance.LoadingSceneWithKariEffect("CheckTitleTest");
-                        break;
-                }
+                ChoiceGameOverButton();
             }
+        }
+    }
+
+    public void ChoiceGameOverButton()
+    {
+        switch (index)
+        {
+            case 0:
+                Time.timeScale = 1;
+                GameManager.instance.LoadingSceneWithKariEffect(GameManager.instance.LoadLastestStage());
+                break;
+            case 1:
+                Time.timeScale = 1;
+                GameManager.instance.LoadingSceneWithKariEffect("CheckTitleTest");
+                break;
         }
     }
 
@@ -118,5 +123,12 @@ public class GameOverUI : UIInteract
             fontList[index].color = activeFontColor;
             fontList[beforeIndex].color = deactiveFontColor;
         }
+    }
+
+    public void SetIndex(int n)
+    {
+        beforeIndex = index;
+        index = n;
+        UpdateUI();
     }
 }

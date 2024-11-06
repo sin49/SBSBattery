@@ -775,7 +775,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     #endregion
 
     #endregion
-
+    [Header("»ç¸Á ÀÌÆåÆ® À§Ä¡")]public Vector3 deadEffectPos = new(0, 1, 0);
     #region »ç¸ÁÇÔ¼ö
     public override void Dead()
     {
@@ -794,7 +794,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 }
                 else
                 {
-                    Instantiate(mae.deadEffect, transform.position, Quaternion.identity);
+                    Instantiate(mae.deadEffect, transform.position + deadEffectPos, Quaternion.identity);
                 }
             }
             else

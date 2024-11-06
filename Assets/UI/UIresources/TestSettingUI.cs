@@ -155,6 +155,13 @@ public class TestSettingUI : UIInteract
         ActiveButton();
     }
 
+    public void setIndex(int n)
+    {
+        beforeIndex = index;
+        index = n;
+        UpdateUI();
+    }
+
     public void InitButtonUI()
     {
         beforeIndex = index;

@@ -55,6 +55,11 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.HasKey("DownAttackTuto")) PlayerPrefs.DeleteKey("DownAttackTuto");
         if (PlayerPrefs.HasKey("DimensionTuto")) PlayerPrefs.DeleteKey("DimensionTuto");
         if (PlayerPrefs.HasKey("TutorialEnd")) PlayerPrefs.DeleteKey("TutorialEnd");
+
+        attackTuto = false; jumpTuto = false; moveTuto = false;
+        downTuto = false; interactTuto = false; downAttackTuto = false;
+        dimensionTuto = false; tutoInteract = false; downTuto = false;
+        tutorialEnd = false;
     }
 
     public void ActiveGameOver()
@@ -65,12 +70,19 @@ public class GameManager : MonoBehaviour
     }
     public void LoadTutorialKey()
     {
-        if (currentscenename == "KJS_JYH_Tutorial") DeleteTutorialKey();
+
+        if (currentscenename == "KJS_JYH_Tutorial")
+        {
+            DeleteTutorialKey();
+        }
         else
         {
-            attackTuto = true; jumpTuto = true; moveTuto = true;
-            downTuto = true; interactTuto = true; downAttackTuto = true;
-            dimensionTuto = true; tutorialEnd = true;
+            if (currentscenename != "CheckTitleTest" && currentscenename != "Epilogue")
+            {
+                attackTuto = true; jumpTuto = true; moveTuto = true;
+                downTuto = true; interactTuto = true; downAttackTuto = true;
+                dimensionTuto = true; tutorialEnd = true;
+            }
         }
 
         if (PlayerPrefs.HasKey("AttackTuto")) attackTuto = true;
@@ -150,11 +162,17 @@ public class GameManager : MonoBehaviour
     public LoadingEffectKari LoadingEffect;
  
     
-
+    //
     public void LoadingEffectToAction(Action<string> act)
     {
 
         StartCoroutine(LoadingEffectActionCorutine(MinimumLoadingTime, act));
+    }
+    public void LoadingEffectToAction(Action act)
+    {
+        Action<string> actS = new Action<string>((s) => { act.Invoke(); });
+
+        StartCoroutine(LoadingEffectActionCorutine(MinimumLoadingTime, actS));
     }
     IEnumerator LoadingEffectActionCorutine(float timer, Action<string> act)
     {

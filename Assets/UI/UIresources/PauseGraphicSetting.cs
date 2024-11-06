@@ -170,27 +170,41 @@ public class PauseGraphicSetting : UIInteract
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.C))
+            if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
             {
-                switch (index)
-                {
-                    case 0:
-                        Debug.Log("해상도 적용 기능 구현해야함");
-                        break;
-                    case 1:
-                        Debug.Log("화면모드 적용 기능 구현해야함");
-                        break;
-                    case 2:
-                        Debug.Log("해상도 및 화면모드 저장하는 기능 구현해야함");
-                        break;
-                    case 3:
-                        CurrentSettingExit();
-                        break;
-                }
+                SelectSetting();
             }
 
         }        
     }
+
+    public void SelectSetting()
+    {
+        switch (index)
+        {
+            case 0:
+                Debug.Log("해상도 적용 기능 구현해야함");
+                break;
+            case 1:
+                Debug.Log("화면모드 적용 기능 구현해야함");
+                break;
+            case 2:
+                Debug.Log("해상도 및 화면모드 저장하는 기능 구현해야함");
+                CurrentSettingExit();
+                break;
+            case 3:
+                CurrentSettingExit();
+                break;
+        }
+    }
+
+    public void SetIndex(int n)
+    {
+        beforeIndex = index;
+        index = n;
+        UpdateUI();
+    }
+
     //현재 화면에서 나감
     public void CurrentSettingExit()
     {
@@ -214,6 +228,7 @@ public class PauseGraphicSetting : UIInteract
     {
         if (index > graphicList.Count - 3)
         {
+            Debug.Log("버튼 만짐");
             if (!onButton)
             {
                 onButton = true;
@@ -225,6 +240,7 @@ public class PauseGraphicSetting : UIInteract
         }
         else
         {
+            Debug.Log("이건 화살표 그건데?");
             if (onButton)
             {
                 onButton = false;

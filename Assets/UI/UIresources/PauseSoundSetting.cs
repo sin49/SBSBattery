@@ -95,20 +95,32 @@ public class PauseSoundSetting : UIInteract
 
         if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
         {
-            switch (index)
-            {
-                case 0:
-                case 1:
-                case 2:
-                    break;
-                case 3:
-                    SaveSoundValue();
-                    break;
-                case 4:
-                    SettingCancel();
-                    break;
-            }
+            SelectSetting();
         }
+    }
+
+    public void SelectSetting()
+    {
+        switch (index)
+        {
+            case 0:
+            case 1:
+            case 2:
+                break;
+            case 3:
+                SaveSoundValue();
+                break;
+            case 4:
+                SettingCancel();
+                break;
+        }
+    }
+
+    public void SetIndex(int n)
+    {
+        beforeIndex = index;
+        index = n;
+        UpdateUI();
     }
 
     //사운드 설정 초기화(활성화시)
