@@ -11,7 +11,7 @@ Material:
   m_Shader: {fileID: -6465566751694194690, guid: 8936be0d03302704c9f3680a179e8f00,
     type: 3}
   m_Parent: {fileID: 2100000, guid: 9c8d2a92b3694d5469daa138e96d135e, type: 2}
-  m_ModifiedSerializedProperties: 2
+  m_ModifiedSerializedProperties: 30
   m_ValidKeywords:
   - _DISABLE_SSR_TRANSPARENT
   - _ENABLE_FOG_ON_TRANSPARENT
@@ -20,10 +20,9 @@ Material:
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
   stringTagMap:
     MotionVector: User
-    RenderType: Transparent
   disabledShaderPasses:
   - TransparentDepthPrepass
   - TransparentDepthPostpass
@@ -36,11 +35,12 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - FogDensity: 0.005
+    - FogDensity: 0.018
     - FogNoise: 0.1
     - FogSpeed: 0.1
+    - _QueueControl: 1
     m_Colors:
-    - FogColor: {r: 0.18903525, g: 0.4436898, b: 0.6792453, a: 1}
+    - FogColor: {r: 0.30980396, g: 0.7006505, b: 0.7647059, a: 0.4627451}
   m_BuildTextureStacks: []
 --- !u!114 &2318692630630118192
 MonoBehaviour:
