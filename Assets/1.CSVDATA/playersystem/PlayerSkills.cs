@@ -5,4 +5,6 @@ using UnityEngine;
 public abstract class PlayerSkills : ScriptableObject
 {
     public abstract void Invoke();
+
+    public abstract void initEvent();
 }

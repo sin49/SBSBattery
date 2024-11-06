@@ -27,6 +27,9 @@ public class LoadingEffectKari : MonoBehaviour
     Image image_;
     public GameObject loadingImage;
     public GameObject GaveOVerUI;
+
+    public float DElayTime=0.1f;
+    float dealyTime_;
     private void Awake()
     {
         image_ = GetComponent<Image>();
@@ -103,6 +106,7 @@ public class LoadingEffectKari : MonoBehaviour
         colorAdjustments.saturation.overrideState = false;
         //게임 오버 UI 활성화
         GaveOVerUI.gameObject.SetActive(true);
+       
     }
     void loadingVigintteoff()
     {
@@ -140,6 +144,7 @@ public class LoadingEffectKari : MonoBehaviour
                 //this.gameObject.SetActive(false);
             }
             GaveOVerUI.SetActive(false);
+            dealyTime_ = DElayTime;
         }
 
         else   if (LoadingComplete)
@@ -159,9 +164,13 @@ public class LoadingEffectKari : MonoBehaviour
                 alpha -= Effectspeed * Time.unscaledDeltaTime;
 
                 image_.color = new Color(0, 0, 0, alpha);
+                vignette.intensity.value = 1;
             }
-            else
-            if (alpha <= 0)
+            else if (alpha <= 0&&dealyTime_>0)
+            {
+                dealyTime_-=Time.unscaledDeltaTime;
+            }
+            else if (alpha <= 0&&dealyTime_<=0)
             {
                 intensity -= intensityspeed * Time.unscaledDeltaTime;
 

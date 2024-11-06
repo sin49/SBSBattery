@@ -10,6 +10,8 @@ public class PauseSoundSetting : UIInteract
 
     public GameObject screw;
 
+
+
     public List<GameObject> interactList = new List<GameObject>();
     public List<GameObject> volumeSlider = new List<GameObject>();
 
@@ -284,8 +286,18 @@ public class PauseSoundSetting : UIInteract
             case 0:
                 if(masterSlider < 1)
                 masterSlider += volumeValue;
-                AudioManager.instance.MasterVolume = masterSlider;
+             
+              
                 volumeSlider[index].transform.localScale = new(masterSlider, 1, 1);
+                if (AudioManager.instance != null)
+                {
+                    AudioManager.instance.SetMasterVolume(masterSlider);
+
+                }
+                else
+                {
+                    Debug.Log("Cant find Manager");
+                }
                 break;
             case 1:
                 if(bgmSlider < 1)

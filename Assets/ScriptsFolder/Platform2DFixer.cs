@@ -35,8 +35,8 @@ public class Platform2DFixer : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-
-
+            // 이 부분을 추가했음 뭔가 이상한 문제 생기면 지우샘
+            if(PlayerHandler.instance.CurrentPlayer.transform.position.y>this.transform.position.y)
             oncollide = true;
                 FixPlatform();
         

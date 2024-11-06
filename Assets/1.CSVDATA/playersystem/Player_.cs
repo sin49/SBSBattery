@@ -11,10 +11,27 @@ public class Player_ : Player
 
     public PlayerSkills SpKeyEvent;
 
+    public bool Onattack_;
+    
+    protected override void Start()
+    {
+        base.Start();
+        if (AttackEvent != null)
+            AttackEvent.initEvent();
+    }
+   
     public override void attackAction()
     {
-        AttackEvent?.Invoke();
+        if(Onattack_)
+        StartCoroutine(attackkeyeventinvoke());
+    }
 
+    IEnumerator attackkeyeventinvoke()
+    {
+        Onattack_ = true;
+        AttackEvent?.Invoke();
+        yield return new WaitForSeconds(PlayerStat.instance.attackDelay);
+        Onattack_ = false;
     }
     public override void DownAttackAction()
     {

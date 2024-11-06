@@ -327,13 +327,16 @@ public class PlayerHandler : MonoBehaviour
         {
             inputTimer -= Time.deltaTime;
         }
-        if ((int)PlayerStat.instance.MoveState < 4)
+        if (Light2D != null)
         {
-            Light2D.gameObject.SetActive(true);
-        }
-        else
-        {
-            Light2D.gameObject.SetActive(false);
+            if ((int)PlayerStat.instance.MoveState < 4)
+            {
+                Light2D.gameObject.SetActive(true);
+            }
+            else
+            {
+                Light2D.gameObject.SetActive(false);
+            }
         }
         if (doubleUpInput || doubleDownInput)
             onAttack = false;

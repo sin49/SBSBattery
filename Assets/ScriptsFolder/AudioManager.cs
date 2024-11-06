@@ -24,6 +24,7 @@ public class AudioManager : MonoBehaviour
     }
     private void Awake()
     {
+        if(instance==null)
         instance = this;
 
         if (PlayerPrefs.HasKey("LastestMasterVolume"))
@@ -39,6 +40,14 @@ public class AudioManager : MonoBehaviour
     public float SEVolume;
     [Header("마스터 오디오 볼륨"), Range(0, 1)]
     public float MasterVolume;
+
+
+    public void SetMasterVolume(float f)
+    {
+        MasterVolume = f;
+        Debug.Log("Set Master Volume:"+f);
+        PlayerPrefs.SetFloat("LastestMasterVolume", f);
+    }
     void UpdateMixerSetting()
     {
         

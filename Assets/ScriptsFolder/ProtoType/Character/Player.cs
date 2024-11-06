@@ -17,6 +17,13 @@ public enum directionZ { back = -1, none = 0, forward = 1 }
 public class Player : Character,environmentObject
 {
 
+    public Transform Effects;
+
+    public Transform AttackColliders;
+
+    public GameObject AttackEffect;
+    public GameObject Attackcollider;
+
     public Vector3 EMergenctRotation;
 
     public MoveInput Moveinput_;
@@ -569,13 +576,16 @@ public class Player : Character,environmentObject
     }
     public ParticleSystem RunEffect;
     public GameObject HittedEffect;
-    public GameObject AttackEffect;
+
     public GameObject LandingEffect;
     public GameObject JumpEffect;
 
     Vector3 translateFix;
 
-
+    public virtual void registerskilleventhandler(Action a)
+    {
+        Debug.Log("스킬 핸들러 쓰느지 체크 용");
+    }
 
     #region 추상화 오버라이드 함수
     public void rotatebymovestate()
@@ -1059,9 +1069,9 @@ public class Player : Character,environmentObject
         else
             attackLimitInput = true;
     }
-    protected void AttackEvents()
+    public void AttackEvents()
     {
-        canAttack = false;
+
         if (Humonoidanimator != null)
             Humonoidanimator.Play("Attack", 0, 0f);
         if (SoundPlayer != null)
@@ -1080,7 +1090,7 @@ public class Player : Character,environmentObject
         dontAttackTimer = PlayerStat.instance.initattackCoolTime;
         attackGround = true;
 
-
+        canAttack = false;
 
         StartCoroutine(TestMeleeAttack());
     }
@@ -1143,7 +1153,7 @@ public class Player : Character,environmentObject
         playerRb.velocity = Vector3.zero;
         playerRb.AddForce(transform.up * 2f, ForceMode.VelocityChange);
     }
-
+   
     IEnumerator GoDownAttack()
     {
         playerRb.useGravity = false;
