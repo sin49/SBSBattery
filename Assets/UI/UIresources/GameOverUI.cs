@@ -8,11 +8,11 @@ public class GameOverUI : UIInteract
 {
     public List<GameObject> uiList = new List<GameObject>();
 
-    public List<Image> buttonList = new List<Image>();    
+    public List<Image> buttonList = new List<Image>();
 
     public Sprite deactiveButton, activeButton;
-   
-    [Range(0,3)] public float activeTimer;
+
+    [Range(0, 3)] public float activeTimer;
 
     public bool onHandle;
     int index, beforeIndex;
@@ -59,7 +59,7 @@ public class GameOverUI : UIInteract
             }
 
             yield return new WaitForSecondsRealtime(activeTimer);
-            
+
             buttonList[index].sprite = activeButton;
             fontList[index].color = activeFontColor;
 
@@ -72,7 +72,7 @@ public class GameOverUI : UIInteract
     {
         if (onHandle)
         {
-            if (Input.GetKeyDown(KeyCode.RightArrow))
+            if (Input.GetKeyDown(KeyCode.DownArrow))
             {
                 if (index < buttonList.Count - 1)
                 {
@@ -82,7 +82,7 @@ public class GameOverUI : UIInteract
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 if (index > 0)
                 {
@@ -94,23 +94,18 @@ public class GameOverUI : UIInteract
 
             if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
             {
-                ChoiceGameOverButton();
+                switch (index)
+                {
+                    case 0:
+                        Time.timeScale = 1;
+                        GameManager.instance.LoadLastCheckPoint();
+                        break;
+                    case 1:
+                        Time.timeScale = 1;
+                        GameManager.instance.LoadingSceneWithKariEffect("CheckTitleTest");
+                        break;
+                }
             }
-        }
-    }
-
-    public void ChoiceGameOverButton()
-    {
-        switch (index)
-        {
-            case 0:
-                Time.timeScale = 1;
-                GameManager.instance.LoadingSceneWithKariEffect(GameManager.instance.LoadLastestStage());
-                break;
-            case 1:
-                Time.timeScale = 1;
-                GameManager.instance.LoadingSceneWithKariEffect("CheckTitleTest");
-                break;
         }
     }
 
@@ -123,12 +118,5 @@ public class GameOverUI : UIInteract
             fontList[index].color = activeFontColor;
             fontList[beforeIndex].color = deactiveFontColor;
         }
-    }
-
-    public void SetIndex(int n)
-    {
-        beforeIndex = index;
-        index = n;
-        UpdateUI();
     }
 }

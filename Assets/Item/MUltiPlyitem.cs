@@ -33,10 +33,10 @@ public class MUltiPlyitem : item
 
         ItemEffect(number);
     }
-  public  float ReturnItemPower(int number)
+    public float ReturnItemPower(int number)
     {
         if (number <= 0) return 0;
-       return InitItemPower + ItemPower * number;
+        return InitItemPower + ItemPower * number;
     }
 
 }

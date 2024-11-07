@@ -143,7 +143,7 @@ public class PlayerHandler : MonoBehaviour
         playerfallong = true;
         GameManager.instance.LoadingEffectToAction(PlayerFallOut);
     }
-    public void PlayerFallOut()
+    public void PlayerFallOut(string none =null)
     {
         playerfallong = false;
         if (PlayerStat.instance.hp > 1)

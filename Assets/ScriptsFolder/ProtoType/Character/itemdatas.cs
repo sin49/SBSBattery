@@ -28,7 +28,7 @@ public class InvetorySaveData
 [Serializable]
 public class EssentialitemData
 {
-    public EssentialitemData(Essentialitem e)
+    public EssentialitemData(item e)
     {
         itemname = e.itemname;
         itemdescription = e.itemdescription;

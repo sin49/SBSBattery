@@ -22,7 +22,7 @@ public class SelectUI : MonoBehaviour
     bool buttonselected;
 
     public List<GameObject> ButtonList = new List<GameObject>();
-    public List<TextMeshProUGUI> fontList= new List<TextMeshProUGUI>();
+    public List<TextMeshProUGUI> fontList = new List<TextMeshProUGUI>();
 
     //void initlizeUI()
     //{
@@ -50,7 +50,7 @@ public class SelectUI : MonoBehaviour
 
 
     void swapUI()
-    {        
+    {
         ; OnHandle = false;
         itemlistui.gameObject.SetActive(true);
         itemlistui.ActiveItemListUI();
@@ -63,10 +63,10 @@ public class SelectUI : MonoBehaviour
     {
         pauseui.pauseInteract = false;
         //tokenText.text = PlayerInventory.instance.TokenValue.ToString();
-        OnHandle = true;                
+        OnHandle = true;
         this.index = index;
         ShowPauseUI();
-        
+
         //UpdateUI();
     }
 
@@ -90,7 +90,7 @@ public class SelectUI : MonoBehaviour
     {
         buttonselected = false;
     }
-    public void SelectButton()
+    void SelectButton()
     {
         if (buttonselected)
             return;
@@ -101,7 +101,7 @@ public class SelectUI : MonoBehaviour
                 break;
             case 1:
                 Time.timeScale = 1;
-                GameManager.instance.LoadingSceneWithKariEffect(GameManager.instance.LoadLastestStage());
+                GameManager.instance.LoadLastCheckPoint();
                 break;
             case 2:
                 swapUI();
@@ -165,13 +165,7 @@ public class SelectUI : MonoBehaviour
         }
         //SelectedUI.transform.position = ButtonList[index].transform.position;
     }
-    public void setindex(int n)
-    {
-        if (buttonselected) return;
-        beforeIndex = index;
-        index = n;
-        UpdateUI();
-    }
+
     private void OnDisable()
     {
         OnHandle = false;
@@ -297,7 +291,7 @@ public class SelectUI : MonoBehaviour
     public void InteractUI()
     {
         ButtonList[index].GetComponent<Image>().color = choiceColor;
-        ButtonList[index].transform.localScale = choiceScale;        
+        ButtonList[index].transform.localScale = choiceScale;
     }
 
     public void DeInteractUI()

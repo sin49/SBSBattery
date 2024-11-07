@@ -5,7 +5,7 @@ using UnityEngine;
 public class MultipleItemObject : ItemObject
 {
     public UpgradeStatus status;
-    MUltiPlyitem obj;
+    public MUltiPlyitem obj;
     public override void GetITemData(item data)
     {
         obj = data as MUltiPlyitem;
@@ -13,8 +13,9 @@ public class MultipleItemObject : ItemObject
 
     protected override void ItemPickUp()
     {
-        PlayerInventory.instance.AddMultiplyItem(status);
+        if (!PlayerInventory.instance.EssentialItems.ContainsKey(obj.itemcode))
+            PlayerInventory.instance.AddMultiplyItem(obj);
     }
 
-   
+
 }

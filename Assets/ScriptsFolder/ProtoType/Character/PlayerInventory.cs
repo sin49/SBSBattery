@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using UnityEngine;
 public class PlayerInventory : MonoBehaviour
 {
     public static PlayerInventory instance;
-    Dictionary<string, Essentialitem> EssentialItems = new Dictionary<string, Essentialitem>();
+    public Dictionary<string, item> EssentialItems = new Dictionary<string, item>();
     public Dictionary<string, instantitem> instants = new Dictionary<string, instantitem>();
     event Action itemGetAction;
 
@@ -32,10 +33,10 @@ public class PlayerInventory : MonoBehaviour
     {
         itemGetAction += a;
     }
-    public List<Essentialitem> returnEssentialItems()
+    public List<item> returnEssentialItems()
     {
-        List<Essentialitem> list = new List<Essentialitem>();
-        foreach (KeyValuePair<string, Essentialitem> kvp in EssentialItems)
+        List<item> list = new List<item>();
+        foreach (KeyValuePair<string, item> kvp in EssentialItems)
         {
             list.Add(kvp.Value);
         }
@@ -63,7 +64,7 @@ public class PlayerInventory : MonoBehaviour
     {
         InvetorySaveData saveData = new InvetorySaveData();
         saveData.essentialitems.Clear();
-        foreach (KeyValuePair<string, Essentialitem> kvp in EssentialItems)
+        foreach (KeyValuePair<string, item> kvp in EssentialItems)
         {
             EssentialitemData e = new EssentialitemData(kvp.Value);
             saveData.essentialitems.Add(e);
@@ -181,16 +182,17 @@ public class PlayerInventory : MonoBehaviour
         itemui.activeUI(i);
 
     }
-    public void AddMultiplyItem(UpgradeStatus s)
+    public void AddMultiplyItem(MUltiPlyitem s)
     {
-        if (MultiplyitemDict.ContainsKey(s))
+        if (MultiplyitemDict.ContainsKey(s.upgradeStatus))
         {
-            MultiplyitemNumberDict[s]++;
-            MultiplyitemDict[s].GetItem(MultiplyitemNumberDict[s]);
-
-            //SaveInventoryData();
+            MultiplyitemNumberDict[s.upgradeStatus]++;
+            MultiplyitemDict[s.upgradeStatus].GetItem(MultiplyitemNumberDict[s.upgradeStatus]);
+            if (!EssentialItems.ContainsKey(s.itemcode))
+                EssentialItems.Add(s.itemcode, s);
+            SaveInventoryData();
             itemGetAction?.Invoke();
-            itemui.activeUI(MultiplyitemDict[s]);
+            itemui.activeUI(MultiplyitemDict[s.upgradeStatus]);
         }
     }
 

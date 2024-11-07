@@ -23,22 +23,22 @@ public class TitleScreen : UIInteract
     public TitleSceneAudio settingAudio;
 
     public TestRecheckUI recheckUI;
-    public int LastIndex;
+
     public void StartNewGame()
     {
         Debug.Log(startscenename);
         GameManager.instance.DeleteSaveSetting();
         GameManager.instance.LoadingSceneWithKariEffect(startscenename);
-   
+
     }
     public void ContinueGame()
     {
 
-        Debug.Log("작동 시도"+ GameManager.instance.LoadLastestStage());
 
-        GameManager.instance.LoadingSceneWithKariEffect(GameManager.instance.LoadLastestStage());
 
-      
+        GameManager.instance.LoadLastCheckPoint();
+
+
     }
     public void Setting()
     {
@@ -93,7 +93,7 @@ public class TitleScreen : UIInteract
 
     public void handletitle()
     {
-        //int LastIndex;
+        int LastIndex;
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             LastIndex = index;
@@ -106,7 +106,7 @@ public class TitleScreen : UIInteract
             if (index >= titletexts.Count)
                 index = titletexts.Count - 1;
             changehub(LastIndex, index);
-          
+
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
@@ -120,30 +120,16 @@ public class TitleScreen : UIInteract
             if (index < 0)
                 index = 0;
             changehub(LastIndex, index);
-          
+
         }
-        else if (Input.GetKeyDown(KeyCode.X)|| Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+        else if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
         {
-            SelectButton();
+            ButtionSoundEffectPlayer_.PlayActiveAudio();
+            titletexts[index].ButtonActive();
         }
 
     }
-
-    public void SelectButton()
-    {
-        if (!PlayerPrefs.HasKey("LastestStageName") && index == 1) return;
-        ButtionSoundEffectPlayer_.PlayActiveAudio();
-        titletexts[index].ButtonActive();
-    }
-    public void SetIndex(int n)
-    {        
-        ButtionSoundEffectPlayer_.PlaySelectAudio();
-        LastIndex = index;
-        index = n;
-        changehub(LastIndex, index);
-    }
-
-    public void changehub(int before,int after)
+    public void changehub(int before, int after)
     {
         /*titletexts[before].DeActiveImageHub();
         titletexts[after].ActiveImageHub();*/
@@ -163,7 +149,7 @@ public class TitleScreen : UIInteract
         if (PlayerPrefs.HasKey("LastestStageName"))
             index = 1;
         else
-        index = 0;
+            index = 0;
         titletexts[index].ActiveImageHub();
         titletexts[0].ButtonEffect += StartNewGame;
         titletexts[1].ButtonEffect += ContinueGame;
@@ -181,8 +167,8 @@ public class TitleScreen : UIInteract
     private void Start()
     {
         InitText();
-        
-       
+
+
     }
     // Update is called once per frame
     void Update()

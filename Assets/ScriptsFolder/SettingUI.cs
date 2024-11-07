@@ -14,11 +14,11 @@ public class SettingUI : MonoBehaviour
 
     int index;
 
-   
+
     bool buttonselected;
 
-    public List<GameObject> ButtonList=new List<GameObject>();
-  
+    public List<GameObject> ButtonList = new List<GameObject>();
+
     //void initlizeUI()
     //{
     //    index = 0;
@@ -28,20 +28,20 @@ public class SettingUI : MonoBehaviour
     void swapUI()
     {
         itemlistui.ActiveItemListUI();
-        ;OnHandle = false;
+        ; OnHandle = false;
         UpdateUI();
     }
-    public void ActiveUI(int index=0)
+    public void ActiveUI(int index = 0)
     {
-        
+
         OnHandle = true;
         this.index = index;
         UpdateUI();
     }
-   
+
     //public void DeactiveUI()
     //{
-       
+
     //    initlizeUI();
     //    //pauseui.ReturnPauseUI();
     //}
@@ -69,7 +69,7 @@ public class SettingUI : MonoBehaviour
                 break;
             case 1:
                 Time.timeScale = 1;
-                GameManager.instance.LoadingSceneWithKariEffect(GameManager.instance.LoadLastestStage());
+                GameManager.instance.LoadLastCheckPoint();
                 break;
             case 2:
                 Debug.Log("안 만듬");
@@ -81,13 +81,13 @@ public class SettingUI : MonoBehaviour
             case 4://재확인 시키기
                 recheckui.ActiveUI("게임을 종료합니다.", ExitEvent, ButtonselectedDisable);
                 buttonselected = true;
-            
+
                 break;
         }
     }
-  void UpdateUI()
+    void UpdateUI()
     {
-  
+
         if (OnHandle)
             SelectedUI.SetActive(true);
         else
@@ -96,7 +96,7 @@ public class SettingUI : MonoBehaviour
 
 
     }
-    
+
     private void OnDisable()
     {
         OnHandle = false;
@@ -113,9 +113,9 @@ public class SettingUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!OnHandle||buttonselected)
+        if (!OnHandle || buttonselected)
             return;
-        
+
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             if (index > 0)
