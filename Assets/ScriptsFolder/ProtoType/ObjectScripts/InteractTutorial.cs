@@ -61,7 +61,7 @@ public class InteractTutorial : MonoBehaviour
                 }
 
                 string[] value = read.Split(",");
-                Debug.Log(value.Length);
+                //Debug.Log(value.Length);
                 int index;
                 string icon, text, middle;
                 if (!string.IsNullOrEmpty(value[0]))

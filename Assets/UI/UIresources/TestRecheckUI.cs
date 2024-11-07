@@ -39,7 +39,7 @@ public class TestRecheckUI : UIInteract
         this.OKEvent += OKEvent;
         this.CancelEvent += CancelEvent;
         gameObject.SetActive(true);
-        Debug.Log("UI 활성화");
+        //Debug.Log("UI 활성화");
     }
     void initializeUI()
     {
@@ -186,7 +186,7 @@ public class TestRecheckUI : UIInteract
                 selectui.RecheckBackSetting();
             }
         }
-        Debug.Log("UI 비활성화");
+        //Debug.Log("UI 비활성화");
     }
     // Update is called once per frame
     void Update()

@@ -47,7 +47,10 @@ public class PlayerSpawnManager : MonoBehaviour
     public CheckPoint LoadCheckPoint()
     {
         if (GameManager.instance.LoadCheckpointindex < ChkPointsDic.Count)
+        {
+            Debug.Log("ChkPointsDic확인중");
             CurrentCheckPoint = ChkPointsDic[GameManager.instance.LoadCheckpointindex];
+        }
         else
             Debug.Log("LoadFailed");
         return CurrentCheckPoint;
@@ -124,6 +127,7 @@ public class PlayerSpawnManager : MonoBehaviour
             if (Checkpoints[n] == null)
                 continue;
             ChkPointsDic.Add(Checkpoints[n].index, Checkpoints[n]);
+            //Debug.Log($"CHkPointsDis 사이즈 :{ChkPointsDic.Count}");
         }
 
 

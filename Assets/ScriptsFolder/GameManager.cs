@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
 
     public void GetCheckpointData(int n)
     {
+        Debug.Log("GetCheckpointData실행");
         var data = CheckTableManager.instance.ReturnCheckCSVData(n);
         LoadCheckpointindex = data.index;
         LoadCheckpointSceneName = data.scenename;
@@ -60,11 +61,13 @@ public class GameManager : MonoBehaviour
     }
     public void loadscenebycheckpoint(int n)
     {
+        Debug.Log("loadscenebycheckpoint실행");
         GetCheckpointData(n);
         LoadingSceneWithKariEffect(LoadCheckpointSceneName);
     }
     public void LoadLastCheckPoint()
     {
+        Debug.Log("LoadLastCheckPoint실행");
         GetCheckpointData(PlayerPrefs.GetInt("CheckPointIndex"));
         LoadingSceneWithKariEffect(LoadCheckpointSceneName);
     }
