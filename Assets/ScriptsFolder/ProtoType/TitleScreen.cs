@@ -28,14 +28,12 @@ public class TitleScreen : UIInteract
     {
         Debug.Log(startscenename);
         GameManager.instance.DeleteSaveSetting();
+        GameManager.instance.saveCheckPointIndexKey(0);
         GameManager.instance.LoadingSceneWithKariEffect(startscenename);
 
     }
     public void ContinueGame()
     {
-
-
-
         GameManager.instance.LoadLastCheckPoint();
 
 
