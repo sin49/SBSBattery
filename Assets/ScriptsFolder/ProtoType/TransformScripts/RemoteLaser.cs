@@ -10,14 +10,7 @@ public class RemoteLaser : PlayerAttack
     public float laserTime ;
     public bool Active;
     // Start is called before the first frame update
-    private void Awake()
-    {
-        Debug.Log("饭捞历 积己 凳");
-    }
-    private void OnDestroy()
-    {
-        Debug.Log("饭捞历 颇鲍 凳");
-    }
+
     private void Start()
     {
        
