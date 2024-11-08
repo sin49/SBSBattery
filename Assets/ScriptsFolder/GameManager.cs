@@ -59,10 +59,12 @@ public class GameManager : MonoBehaviour
         LoadCheckpointSceneName = data.scenename;
         loadcheckpointTransformType = data.PlayerTransformtype;
     }
+
     public void loadscenebycheckpoint(int n)
     {
         Debug.Log("loadscenebycheckpoint½ÇÇà");
         GetCheckpointData(n);
+
         LoadingSceneWithKariEffect(LoadCheckpointSceneName);
     }
     public void LoadLastCheckPoint()
@@ -145,6 +147,7 @@ public class GameManager : MonoBehaviour
 
     public void saveCheckPointIndexKey(int index)
     {
+        if(LoadCheckpointindex<index)
         PlayerPrefs.SetInt("CheckPointIndex", index);
     }
 
