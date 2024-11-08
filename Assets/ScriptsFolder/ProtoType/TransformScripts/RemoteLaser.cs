@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class RemoteLaser : PlayerAttack
@@ -7,16 +8,29 @@ public class RemoteLaser : PlayerAttack
     public GameObject hitEffect;
     public ParticleSystem saveEffect;
     public float laserTime ;
-    
+    public bool Active;
     // Start is called before the first frame update
-  
+    private void Awake()
+    {
+        Debug.Log("·¹ÀÌÀú »ý¼º µÊ");
+    }
+    private void OnDestroy()
+    {
+        Debug.Log("·¹ÀÌÀú ÆÄ±« µÊ");
+    }
     private void Start()
     {
+       
         //damage = PlayerStat.instance.atk;
     }
     protected override void Update()
     {
         
+    }
+    IEnumerator laseractive()
+    {
+        yield return new WaitForSeconds(0.1f);
+        Active = true;
     }
     // Update is called once per frame
     private void FixedUpdate()
@@ -40,7 +54,8 @@ public class RemoteLaser : PlayerAttack
         //    PoolingManager.instance.ReturnPoolObject(this.gameObject);
         //}
         //else
-            Destroy(gameObject);
+        Debug.Log("ÆÄ±«½Ãµµ");
+        Destroy(gameObject);
     }
     public override void DamageCollider(Collider other)
     {
@@ -59,7 +74,7 @@ public class RemoteLaser : PlayerAttack
     {
         base.OnTriggerEnter(other);
 
-        if (other.CompareTag("Ground"))
+        if (other.CompareTag("Ground")&& Active)
         {
             DestroyLaser();
         }

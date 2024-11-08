@@ -259,6 +259,7 @@ public class RemoteTransform : Player
         //if (PoolingManager.instance != null)
         //    PoolingManager.instance.GetPoolObject("Laser", firePoint);
         //else
+     
         RemoteLaser laser_=null;
         float laserlifetime=laserminlifetime+laserlifetimeupspeed*
             laserchargettime;
@@ -275,7 +276,7 @@ public class RemoteTransform : Player
 
         laser_.setLaser(laserlifetime, laserdamage);
         laserchargettime = 0;
-            Instantiate(laser_.gameObject, firePoint.transform.position, HitPoint.transform.rotation);
+            Instantiate(laser_.gameObject, firePoint.transform.position, firePoint.transform.rotation);
  
     }
     public Color LaserChargeColor;
