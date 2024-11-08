@@ -94,6 +94,7 @@ public class PlayerInventory : MonoBehaviour
     public void LoadInventoryData()
     {
         string filePath = Path.Combine(Application.persistentDataPath, "InventorySave.json");
+        Debug.Log(filePath);
         EssentialItems.Clear();
         MultiplyitemNumberDict.Clear();
         for (int n = 0; n < MultiplyItems.Length; n++)

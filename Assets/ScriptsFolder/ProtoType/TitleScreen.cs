@@ -99,7 +99,7 @@ public class TitleScreen : UIInteract
             LastIndex = index;
             index++;
             ButtionSoundEffectPlayer_.PlaySelectAudio();
-            if (!PlayerPrefs.HasKey("LastestStageName") && index == 1)
+            if (!PlayerPrefs.HasKey("CheckPointIndex") && index == 1)
             {
                 Debug.Log("저장된 데이터가 없음");
                 index++;
@@ -114,7 +114,7 @@ public class TitleScreen : UIInteract
             LastIndex = index;
             index--;
             ButtionSoundEffectPlayer_.PlaySelectAudio();
-            if (!PlayerPrefs.HasKey("LastestStageName") && index == 1)
+            if (!PlayerPrefs.HasKey("CheckPointIndex") && index == 1)
             {
                 Debug.Log("저장된 데이터가 없음");
                 index--;
@@ -148,7 +148,7 @@ public class TitleScreen : UIInteract
     }
     public void InitText()
     {
-        if (PlayerPrefs.HasKey("LastestStageName"))
+        if (PlayerPrefs.HasKey("CheckPointIndex"))
             index = 1;
         else
             index = 0;
