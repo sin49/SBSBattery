@@ -42,6 +42,7 @@ public class RemoteTransform : Player
 
     [Header("ºö °ü·Ã º¯¼ö")]
     public GameObject laserPrefab;
+    public float Chargingmovespeed;
     public GameObject LIghtlaserPrefab;
     public GameObject MaxlaserPrefab;
     public GameObject laserEffect; // ºö ÀÌÆåÆ® ¿ÀºêÁ§Æ®
@@ -222,6 +223,12 @@ public class RemoteTransform : Player
     {
         if(!laserchargemode)
         base.Move();
+        else
+        {
+            PlayerStat.instance.MoveSpeedBonus += -Chargingmovespeed;
+            base.Move();
+            PlayerStat.instance.MoveSpeedBonus += Chargingmovespeed;
+        }
     }
     public override void Jump()
     {
