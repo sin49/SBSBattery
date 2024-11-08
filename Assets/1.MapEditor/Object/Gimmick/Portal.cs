@@ -11,6 +11,7 @@ public class Portal : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             //GameManager.instance.LoadingScene(SceneName);
+        GameManager.instance. saveCheckPointIndexKey(SceneIndex);
             GameManager.instance.loadscenebycheckpoint(SceneIndex);
         }
     }
