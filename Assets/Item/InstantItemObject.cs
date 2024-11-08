@@ -10,7 +10,7 @@ public class InstantItemObject : ItemObject
         instantitem = data as instantitem;
     }
 
-    protected override void ItemPickUp()
+    protected override void ItemPickUp(string s)
     {
   PlayerInventory.instance.instants.Add(instantitem.ItemCode,instantitem);
     }

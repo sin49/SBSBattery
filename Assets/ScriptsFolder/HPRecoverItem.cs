@@ -16,7 +16,7 @@ public class HPRecoverItem : ItemObject
     {
     
     }
-    protected override void ItemPickUp()
+    protected override void ItemPickUp(string s)
     {
         PlayerStat.instance.RecoverHP(HPRecoverPoint);
         Instantiate(HealEffect, PlayerHandler.instance.CurrentPlayer.transform.position,
@@ -29,7 +29,7 @@ public class HPRecoverItem : ItemObject
         {
           
             base.getitem();
-            ItemPickUp();
+            ItemPickUp("");
         }
     }
 
