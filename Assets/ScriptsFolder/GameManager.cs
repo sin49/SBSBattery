@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadTutorialKey()
     {
-        if (currentscenename == "KJS_JYH_Tutorial") DeleteTutorialKey();
+        if (currentscenename == "KJS_LDJ_Tutorial") DeleteTutorialKey();
         else
         {
             attackTuto = true; jumpTuto = true; moveTuto = true;

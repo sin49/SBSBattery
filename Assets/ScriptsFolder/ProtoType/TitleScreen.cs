@@ -101,6 +101,7 @@ public class TitleScreen : UIInteract
             ButtionSoundEffectPlayer_.PlaySelectAudio();
             if (!PlayerPrefs.HasKey("LastestStageName") && index == 1)
             {
+                Debug.Log("저장된 데이터가 없음");
                 index++;
             }
             if (index >= titletexts.Count)
@@ -115,6 +116,7 @@ public class TitleScreen : UIInteract
             ButtionSoundEffectPlayer_.PlaySelectAudio();
             if (!PlayerPrefs.HasKey("LastestStageName") && index == 1)
             {
+                Debug.Log("저장된 데이터가 없음");
                 index--;
             }
             if (index < 0)
