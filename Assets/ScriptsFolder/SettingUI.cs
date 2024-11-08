@@ -69,7 +69,7 @@ public class SettingUI : MonoBehaviour
                 break;
             case 1:
                 Time.timeScale = 1;
-                GameManager.instance.LoadingSceneWithKariEffect(GameManager.instance.LoadLastestStage());
+                GameManager.instance.LoadLastCheckPoint();
                 break;
             case 2:
                 Debug.Log("¾È ¸¸µë");

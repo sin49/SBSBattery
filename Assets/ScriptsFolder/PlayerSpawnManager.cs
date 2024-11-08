@@ -36,26 +36,20 @@ public class PlayerSpawnManager : MonoBehaviour
             SaveEffect.gameObject.SetActive(true);
 
             GameManager.instance.saveCheckPointIndexKey(ChkPoint.index);
-            GameManager.instance.SaveCurrentStage(SceneManager.GetActiveScene().name);
+           
             GameManager.instance.SavePlayerStatus();
             PlayerInventory.instance.SaveInventoryData();
   
         //Debug.Log($"Playerprefs chkpointindex{GameManager.instance.LoadCheckPointIndexKey()} LastestStage{GameManager.instance.LoadLastestStage()}");
 
     }
-    public CheckPoint GetCurrentCheckpoint()
-    {
-        if (GameManager.instance.LoadCheckPointIndexKey()< Checkpoints.Length)
-            return Checkpoints[GameManager.instance.LoadCheckPointIndexKey()];
-        else
-            return Checkpoints[0];
-    }
+
     public CheckPoint LoadCheckPoint()
     {
-       if( GameManager.instance.LoadCheckPointIndexKey()< ChkPointsDic.Count)
-        CurrentCheckPoint = ChkPointsDic[GameManager.instance.LoadCheckPointIndexKey()];
+        if (GameManager.instance.LoadCheckpointindex < ChkPointsDic.Count)
+            CurrentCheckPoint = ChkPointsDic[GameManager.instance.LoadCheckpointindex];
         else
-            CurrentCheckPoint= ChkPointsDic[0];
+            Debug.Log("LoadFailed");
         return CurrentCheckPoint;
     }
     //public void Respawn()
@@ -80,7 +74,7 @@ public class PlayerSpawnManager : MonoBehaviour
        
       
       
-                DefaultForm = formlist.playerformlist[GameManager.instance.LOadPlayerTransformtype()];
+                DefaultForm = formlist.playerformlist[GameManager.instance.loadcheckpointTransformType];
           
        
                 
@@ -128,8 +122,7 @@ public class PlayerSpawnManager : MonoBehaviour
         {
             if (Checkpoints[n] == null)
                 continue;
-            ChkPointsDic.Add(n, Checkpoints[n]);
-            Checkpoints[n].index = n;
+            ChkPointsDic.Add(Checkpoints[n].index, Checkpoints[n]);
         }
       
       
@@ -147,12 +140,12 @@ public class PlayerSpawnManager : MonoBehaviour
             
       
 
-        PlayerHandler.instance.CurrentType = (TransformType)GameManager.instance.LOadPlayerTransformtype();
-        if(GameManager.instance.LOadPlayerTransformtype()!=0)
+        PlayerHandler.instance.CurrentType = (TransformType)GameManager.instance.loadcheckpointTransformType;
+        if(GameManager.instance.loadcheckpointTransformType != 0)
         PlayerHandler.instance.LastTransformPlace = formlist.
-            PlayerFormObject[GameManager.instance.LOadPlayerTransformtype()];
+            PlayerFormObject[GameManager.instance.loadcheckpointTransformType];
 
-        FindCheckpoint(GameManager.instance.LoadCheckPointIndexKey());
+        FindCheckpoint(GameManager.instance.LoadCheckpointindex);
         Spawn();
     }
 }

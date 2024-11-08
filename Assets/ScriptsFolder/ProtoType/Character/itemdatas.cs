@@ -7,6 +7,8 @@ using UnityEngine;
 public class InvetorySaveData
 {
     public List<EssentialitemData> essentialitems = new List<EssentialitemData>();
+ 
+    
     public List<UpgradeStatus> Upgradesstatus = new List<UpgradeStatus>();
     public List<int> Multiplys = new List<int>();
     public InvetorySaveData()
@@ -28,7 +30,7 @@ public class InvetorySaveData
 [Serializable]
 public class EssentialitemData
 {
-    public EssentialitemData(Essentialitem e)
+    public EssentialitemData(item e)
     {
         itemname = e.itemname;
         itemdescription = e.itemdescription;

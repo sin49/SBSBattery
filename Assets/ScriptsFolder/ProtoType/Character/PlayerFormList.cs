@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-[ExecuteInEditMode]
+
 public class PlayerFormList : MonoBehaviour
 {
     public List<GameObject> playerformlist = new List<GameObject>();

@@ -1,9 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+public class CheckPointData
+{
+    public int index;
+    public int PlayerTransformtype;
+    public string scenename;
+}
 public class CheckPoint : MonoBehaviour
 {
+    [Header("번호")]
+    public int index;
+    [Header("변신 폼(0번 기본 1번 리모컨 2번 다리미 3번 마우스)")]
+    public int transformtype;
+
     [Header("0번 세이브 시작 사운드")]
     public ParticleSystem ChkPointParticle;
     public SoundEffectListPlayer soundplayer;
@@ -19,7 +29,7 @@ public class CheckPoint : MonoBehaviour
         lightObj.SetActive(false);
         _renderer.material = defaultmaterial;
     }
-    public int index;
+
     public void DeactiveCheckpoint()
     {
         _renderer.material = defaultmaterial;

@@ -6,7 +6,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Essetial Intem", menuName = "Custom/new Essetial Item")]
 public class Essentialitem : item
 {
-    
-    public string itemcode;
+
 }
 

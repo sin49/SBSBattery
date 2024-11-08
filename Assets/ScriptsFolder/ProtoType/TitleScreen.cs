@@ -34,9 +34,9 @@ public class TitleScreen : UIInteract
     public void ContinueGame()
     {
 
-        Debug.Log("작동 시도"+ GameManager.instance.LoadLastestStage());
 
-        GameManager.instance.LoadingSceneWithKariEffect(GameManager.instance.LoadLastestStage());
+
+        GameManager.instance.LoadLastCheckPoint();
 
       
     }

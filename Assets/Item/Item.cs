@@ -6,7 +6,7 @@ public enum UpgradeStatus{Energy,MoveSpeed }
 [Serializable]
 public class item : ScriptableObject
 {
-
+    public string itemcode;
     public string itemname;
     public string itemdescription;
 }
