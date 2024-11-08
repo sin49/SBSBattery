@@ -12,9 +12,13 @@ public class EssentialItemObject : ItemObject
        item=data as Essentialitem;
     }
 
-    protected override void ItemPickUp()
+    protected override void ItemPickUp(string s)
     {
-        PlayerInventory.instance.ADDEssentialItem(item);
+        if (!PlayerInventory.instance.itemdatas.ContainsKey(itemindex))
+        {
+            item.itemcode = s;
+            PlayerInventory.instance.ADDEssentialItem(item);
+        }
     }
 
 }

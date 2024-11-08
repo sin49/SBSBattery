@@ -7,12 +7,13 @@ public abstract class ItemObject : MonoBehaviour
 {
 
     public abstract void GetITemData(item data);
+    public string itemindex;
     public GameObject GetItemEffect;
     bool itemactive;
     [Header("리스트 0번: 아이템 먹었을 때 나는 소리")]
     public SoundEffectListPlayer soundEffectListPlayer;
     public float timer = 1.5f;
-    protected abstract void ItemPickUp();
+    protected abstract void ItemPickUp(string s);
 
     private void Awake()
     {
@@ -38,7 +39,7 @@ public abstract class ItemObject : MonoBehaviour
         if (!itemactive)
         {
             getItemSoundPlay();
-            ItemPickUp();
+            ItemPickUp(itemindex);
             createitemeffect();
             this.GetComponent<Renderer>().enabled = false;
             StartCoroutine(itemDeactivecorutine());

@@ -11,10 +11,13 @@ public class MultipleItemObject : ItemObject
         obj = data as MUltiPlyitem;
     }
 
-    protected override void ItemPickUp()
+    protected override void ItemPickUp(string s)
     {
-        if (!PlayerInventory.instance.itemdatas.ContainsKey(obj.itemcode))
+        if (!PlayerInventory.instance.itemdatas.ContainsKey(itemindex))
+        {
+            obj.itemcode = s;
             PlayerInventory.instance.AddMultiplyItem(obj);
+        }
     }
 
 
