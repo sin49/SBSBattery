@@ -13,7 +13,7 @@ public class MultipleItemObject : ItemObject
 
     protected override void ItemPickUp()
     {
-        if (!PlayerInventory.instance.EssentialItems.ContainsKey(obj.itemcode))
+        if (!PlayerInventory.instance.itemdatas.ContainsKey(obj.itemcode))
             PlayerInventory.instance.AddMultiplyItem(obj);
     }
 

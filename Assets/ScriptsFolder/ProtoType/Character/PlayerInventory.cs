@@ -11,7 +11,7 @@ using UnityEngine;
 public class PlayerInventory : MonoBehaviour
 {
     public static PlayerInventory instance;
-    public Dictionary<string, item> EssentialItems = new Dictionary<string, item>();
+    public Dictionary<string, item> itemdatas = new Dictionary<string, item>();
     public Dictionary<string, instantitem> instants = new Dictionary<string, instantitem>();
     event Action itemGetAction;
 
@@ -36,7 +36,7 @@ public class PlayerInventory : MonoBehaviour
     public List<item> returnEssentialItems()
     {
         List<item> list = new List<item>();
-        foreach (KeyValuePair<string, item> kvp in EssentialItems)
+        foreach (KeyValuePair<string, item> kvp in itemdatas)
         {
             list.Add(kvp.Value);
         }
@@ -64,7 +64,7 @@ public class PlayerInventory : MonoBehaviour
     {
         InvetorySaveData saveData = new InvetorySaveData();
         saveData.essentialitems.Clear();
-        foreach (KeyValuePair<string, item> kvp in EssentialItems)
+        foreach (KeyValuePair<string, item> kvp in itemdatas)
         {
             EssentialitemData e = new EssentialitemData(kvp.Value);
             saveData.essentialitems.Add(e);
@@ -95,7 +95,7 @@ public class PlayerInventory : MonoBehaviour
     {
         string filePath = Path.Combine(Application.persistentDataPath, "InventorySave.json");
         Debug.Log(filePath);
-        EssentialItems.Clear();
+        itemdatas.Clear();
         MultiplyitemNumberDict.Clear();
         for (int n = 0; n < MultiplyItems.Length; n++)
         {
@@ -113,11 +113,11 @@ public class PlayerInventory : MonoBehaviour
 
             foreach (EssentialitemData e in savedata.essentialitems)
             {
-                Essentialitem Eitem = ScriptableObject.CreateInstance<Essentialitem>();
+                item Eitem = ScriptableObject.CreateInstance<item>();
                 Eitem.itemname = e.itemname;
                 Eitem.itemdescription = e.itemdescription;
                 Eitem.itemcode = e.itemcode;
-                EssentialItems.Add(Eitem.itemcode, Eitem);
+                itemdatas.Add(Eitem.itemcode, Eitem);
             }
 
             for (int n = 0; n < savedata.Upgradesstatus.Count; n++)
@@ -148,7 +148,7 @@ public class PlayerInventory : MonoBehaviour
     }
     public bool checkessesntialitem(string itemcode)
     {
-        if (EssentialItems.ContainsKey(itemcode))
+        if (itemdatas.ContainsKey(itemcode))
             return true;
         else
             return false;
@@ -156,7 +156,7 @@ public class PlayerInventory : MonoBehaviour
     public List<string> returnitemkeys()
     {
         List<string> strings = new List<string>();
-        foreach (string s in EssentialItems.Keys)
+        foreach (string s in itemdatas.Keys)
         {
             strings.Add(s);
         }
@@ -176,8 +176,8 @@ public class PlayerInventory : MonoBehaviour
     public void ADDEssentialItem(Essentialitem i)
     {
         TokenValue++;
-        if (!EssentialItems.ContainsKey(i.itemcode))
-            EssentialItems.Add(i.itemcode, i);
+        if (!itemdatas.ContainsKey(i.itemcode))
+            itemdatas.Add(i.itemcode, i);
         SaveInventoryData();
         itemGetAction?.Invoke();
         itemui.activeUI(i);
@@ -189,8 +189,8 @@ public class PlayerInventory : MonoBehaviour
         {
             MultiplyitemNumberDict[s.upgradeStatus]++;
             MultiplyitemDict[s.upgradeStatus].GetItem(MultiplyitemNumberDict[s.upgradeStatus]);
-            if (!EssentialItems.ContainsKey(s.itemcode))
-                EssentialItems.Add(s.itemcode, s);
+            if (!itemdatas.ContainsKey(s.itemcode))
+                itemdatas.Add(s.itemcode, s);
             SaveInventoryData();
             itemGetAction?.Invoke();
             itemui.activeUI(MultiplyitemDict[s.upgradeStatus]);
