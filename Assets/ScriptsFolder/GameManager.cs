@@ -151,7 +151,10 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("CheckPointIndex", index);
     }
 
-
+    public void SaveCheckPoint(int index)
+    {
+        CheckPointManager.instance.SaveCheckPointData(index);
+    }
 
     public void LoadingScene(string scenename)
     {

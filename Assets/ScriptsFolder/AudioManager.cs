@@ -59,7 +59,6 @@ public class AudioManager : MonoBehaviour
         defaultMIxergroup.SetFloat("MasterVolume",Mathf.Log10( MasterVolume)*20);
         else
         {
-            Debug.Log("그대로 놔둘거임?");
             defaultMIxergroup.SetFloat("MasterVolume", -80);
         }
         if(BGVolume>0)
