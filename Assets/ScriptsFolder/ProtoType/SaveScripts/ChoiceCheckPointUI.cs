@@ -25,7 +25,6 @@ public class ChoiceCheckPointUI : MonoBehaviour
 
     private void OnEnable()
     {
-        onHandle = true;
         InitCheckPointButton();
     }
 
@@ -33,6 +32,7 @@ public class ChoiceCheckPointUI : MonoBehaviour
     {
         onHandle = false;
         checkLists.Clear();
+        buttonList.Clear();
     }
 
     public void InitCheckPointButton()
@@ -48,8 +48,10 @@ public class ChoiceCheckPointUI : MonoBehaviour
             buttonList.Add(checkLists[i].GetComponent<Image>());
         }
 
-        buttonList[beforeIndex].sprite = deactiveButton;
         buttonList[index].sprite = activeButton;
+        currentIndex = checkLists[index].checkStageIndex;
+
+        onHandle = true;
     }
 
     // Update is called once per frame
@@ -73,9 +75,9 @@ public class ChoiceCheckPointUI : MonoBehaviour
             {
                 beforeIndex = index;
                 index++;
+                ButtonInteractCheck();
                 UpdateUI();
             }
-            beforeIndex = index;
         }
 
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space))
@@ -90,10 +92,17 @@ public class ChoiceCheckPointUI : MonoBehaviour
 
     }
 
+    public void ButtonInteractCheck()
+    {
+        if (!buttonList[index].GetComponent<Button>().interactable)
+            index--;
+    }
+
     public void UpdateUI()
     {
         checkLists[beforeIndex].GetComponent<Image>().sprite = deactiveButton;
         checkLists[index].GetComponent<Image>().sprite = activeButton;
+        currentIndex = checkLists[index].checkStageIndex;
     }
 
     public void SelectCheckPoint()
@@ -106,6 +115,10 @@ public class ChoiceCheckPointUI : MonoBehaviour
     public void CheckListExit()
     {
         onHandle = false;
+
+        checkLists[index].GetComponent<Image>().sprite = deactiveButton;
+        beforeIndex = index = 0;
+
         checkPointUI.ReturnFromChoiceUI();
         currentStageButton.SetActive(false);
         gameObject.SetActive(false);

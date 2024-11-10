@@ -146,6 +146,9 @@ public class TestSettingUI : UIInteract
 
             uiSelect.uiGroup.SetActive(true);
             uiSelect.PauseBackSetting();
+
+            uiSelect.coinPanel.SetActive(true);
+            uiSelect.pauseIconPanel.SetActive(true);
         }
     }
 

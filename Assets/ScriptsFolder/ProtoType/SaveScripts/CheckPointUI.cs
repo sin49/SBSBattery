@@ -79,7 +79,6 @@ public class CheckPointUI : UIInteract
                 ButtonInteractCheck();
                 UpdateUI();
             }
-            beforeIndex = index;
         }
 
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.C))
@@ -173,7 +172,11 @@ public class CheckPointUI : UIInteract
         else
         {
             selectUI.OnHandle = true;
+            selectUI.uiGroup.SetActive(true);
             selectUI.PauseBackSetting();
+
+            selectUI.coinPanel.SetActive(true);
+            selectUI.pauseIconPanel.SetActive(true);
         }
     }
 

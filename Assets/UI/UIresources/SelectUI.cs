@@ -24,6 +24,8 @@ public class SelectUI : MonoBehaviour
     public List<GameObject> ButtonList = new List<GameObject>();
     public List<TextMeshProUGUI> fontList = new List<TextMeshProUGUI>();
 
+    [Header("코인관련 UI")] public GameObject coinPanel;
+    [Header("일시정지 UI")] public GameObject pauseIconPanel;
     //void initlizeUI()
     //{
     //    index = 0;
@@ -103,6 +105,7 @@ public class SelectUI : MonoBehaviour
             case 1:
                 //Time.timeScale = 1;
                 //GameManager.instance.LoadLastCheckPoint();
+                Debug.Log("체크포인트 선택하기");
                 StartCheckPointUI();
                 break;
             case 2:
@@ -111,6 +114,8 @@ public class SelectUI : MonoBehaviour
                 break;
             case 3:
                 ShowSettingUI();
+                coinPanel.SetActive(false);
+                pauseIconPanel.SetActive(false);
                 pauseui.pauseInteract = false;
                 break;
             case 4://재확인 시키기
@@ -312,7 +317,11 @@ public class SelectUI : MonoBehaviour
 
     public void StartCheckPointUI()
     {
+        OnHandle = false;
         pauseui.pauseInteract = false;
+        coinPanel.SetActive(false);
+        pauseIconPanel.SetActive(false);
+        uiAnimator.Play("PauseChangeSetting");
         StartCoroutine(ShowCheckPointUi());
     }
 
