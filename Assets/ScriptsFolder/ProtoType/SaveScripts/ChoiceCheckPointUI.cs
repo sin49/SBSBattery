@@ -16,12 +16,40 @@ public class ChoiceCheckPointUI : MonoBehaviour
 
     public int stageCount;
 
+    public GameObject currentStageButton;
     public List<CheckList> checkLists = new List<CheckList>();
     public Sprite activeButton, deactiveButton;
     int index, beforeIndex;
+
+    List<Image> buttonList = new List<Image>();
+
     private void OnEnable()
     {
         onHandle = true;
+        InitCheckPointButton();
+    }
+
+    private void OnDisable()
+    {
+        onHandle = false;
+        checkLists.Clear();
+    }
+
+    public void InitCheckPointButton()
+    {
+        //currentStageButton.SetActive(true);
+        for (int i = 0; i < currentStageButton.transform.childCount; i++)
+        {
+            checkLists.Add(currentStageButton.transform.GetChild(i).GetComponent<CheckList>());
+        }
+        
+        for (int i = 0; i < checkLists.Count; i++)
+        {
+            buttonList.Add(checkLists[i].GetComponent<Image>());
+        }
+
+        buttonList[beforeIndex].sprite = deactiveButton;
+        buttonList[index].sprite = activeButton;
     }
 
     // Update is called once per frame
@@ -41,7 +69,7 @@ public class ChoiceCheckPointUI : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            if (index < stageCount - 1)
+            if (index < checkLists.Count - 1)
             {
                 beforeIndex = index;
                 index++;
@@ -52,12 +80,12 @@ public class ChoiceCheckPointUI : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space))
         {
-
+            SelectCheckPoint();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-
+            CheckListExit();
         }
 
     }
@@ -70,12 +98,16 @@ public class ChoiceCheckPointUI : MonoBehaviour
 
     public void SelectCheckPoint()
     {
+        onHandle = false;
+        Time.timeScale = 1;
         GameManager.instance.LoadChoiceCheckPoint(currentIndex);
     }
 
     public void CheckListExit()
     {
+        onHandle = false;
         checkPointUI.ReturnFromChoiceUI();
+        currentStageButton.SetActive(false);
         gameObject.SetActive(false);
     }
 }

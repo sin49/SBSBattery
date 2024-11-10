@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using Unity.VisualScripting;
 using UnityEditor.PackageManager.Requests;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CheckPointUI : UIInteract
@@ -13,13 +14,23 @@ public class CheckPointUI : UIInteract
     public List<Image> checkList = new List<Image>();
     public List<GameObject> choiceList = new List<GameObject>();
 
-    public GameObject buttonPanel;
+    [Header("스테이지 선택")]public GameObject buttonPanel;
+    [Header("체크포인트 선택")] public GameObject checkPointPanel;
 
     int index, beforeIndex;
 
     public bool onHandle;
 
     public Sprite activeButton, deactiveButton;
+
+    [Header("이건 타이틀 한정이라 그 외 씬에서는 넣는거 금지\n(애초에 타이틀에서만 해당 오브젝트가 있을거임)")]
+    public TitleScreen title;
+    [Header("일시정지 UI에서 추가")]
+    public SelectUI selectUI;
+    //private void Awake()
+    //{
+    //    gameObject.SetActive(false);
+    //}
 
     private void OnEnable()
     {
@@ -41,13 +52,7 @@ public class CheckPointUI : UIInteract
         fontList[beforeIndex].color = deactiveFontColor;
 
         checkList[index].sprite = activeButton;
-        fontList[beforeIndex].color = deactiveFontColor;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+        fontList[index].color = activeFontColor;
     }
 
     // Update is called once per frame
@@ -61,7 +66,6 @@ public class CheckPointUI : UIInteract
             {
                 beforeIndex = index;
                 index--;
-                UpButtonCheck();
                 UpdateUI();
             }
         }
@@ -72,7 +76,7 @@ public class CheckPointUI : UIInteract
             {
                 beforeIndex = index;
                 index++;
-                DownButtonCheck();
+                ButtonInteractCheck();
                 UpdateUI();
             }
             beforeIndex = index;
@@ -83,25 +87,17 @@ public class CheckPointUI : UIInteract
             SelectButton();
         }
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            CheckListExit();
+        }
+
     }
 
-    public void UpButtonCheck()
+    public void ButtonInteractCheck()
     {
-        while (true)
-        {
-            if (buttonList[index].interactable) return;
+        if (!buttonList[index].interactable)
             index--;
-        }
-
-    }
-
-    public void DownButtonCheck()
-    {
-        while (true)
-        {
-            if (buttonList[index].interactable) return;
-            index++;
-        }
     }
 
     // 마우스 클릭 구현 시 사용
@@ -121,40 +117,64 @@ public class CheckPointUI : UIInteract
     public void SelectButton()
     {
         onHandle = false;
-        switch (index)
+
+        if (index < 3)
         {
-            case 0:
-                ActiveChoiceListUI();
-                break;
-            case 1:
-                ActiveChoiceListUI();
-                break;
-            case 2:
-                ActiveChoiceListUI();
-                break;
-            case 3:
-                ActiveChoiceListUI();
-                break;
-            case 4:
-                ActiveChoiceListUI();
-                break;
-            case 5:                
-                CheckListExit();
-                break;
-            default:
-                break;
+            ActiveChoiceListUI();
         }
+        else
+        {
+            CheckListExit();
+        }
+
+        //switch (index)
+        //{
+        //    case 0:
+        //        ActiveChoiceListUI();
+        //        break;
+        //    case 1:
+        //        ActiveChoiceListUI();
+        //        break;
+        //    case 2:
+        //        ActiveChoiceListUI();
+        //        break;
+        //    case 3:
+        //        ActiveChoiceListUI();
+        //        break;
+        //    case 4:
+        //        ActiveChoiceListUI();
+        //        break;
+        //    case 5:                
+        //        CheckListExit();
+        //        break;
+        //    default:
+        //        break;
+        //}
     }
 
     public void ActiveChoiceListUI()
     {
-        choiceList[index].SetActive(true);
+        onHandle = false;
         buttonPanel.SetActive(false);
+        checkPointPanel.GetComponent<ChoiceCheckPointUI>().currentStageButton = choiceList[index];
+        checkPointPanel.SetActive(true);
+        choiceList[index].SetActive(true);
     }
 
     public void CheckListExit()
     {
+        onHandle = false;
         gameObject.SetActive(false);
+
+        if (SceneManager.GetActiveScene().name == "CheckTitleTest")
+        {
+            title.onHandle = true;
+        }
+        else
+        {
+            selectUI.OnHandle = true;
+            selectUI.PauseBackSetting();
+        }
     }
 
     public void ReturnFromChoiceUI()

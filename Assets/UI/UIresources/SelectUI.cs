@@ -33,6 +33,7 @@ public class SelectUI : MonoBehaviour
 
     public GameObject uiGroup;
     public GameObject settingUI;
+    public GameObject checkPointUI;
 
     public Animator uiAnimator;
     public Animator screwAnimator;
@@ -100,8 +101,9 @@ public class SelectUI : MonoBehaviour
                 ResumeGame();
                 break;
             case 1:
-                Time.timeScale = 1;
-                GameManager.instance.LoadLastCheckPoint();
+                //Time.timeScale = 1;
+                //GameManager.instance.LoadLastCheckPoint();
+                StartCheckPointUI();
                 break;
             case 2:
                 swapUI();
@@ -308,7 +310,29 @@ public class SelectUI : MonoBehaviour
         StartCoroutine(StartSettingUi());
     }
 
+    public void StartCheckPointUI()
+    {
+        pauseui.pauseInteract = false;
+        StartCoroutine(ShowCheckPointUi());
+    }
 
+    IEnumerator ShowCheckPointUi()
+    {
+        Debug.Log("사운드/해상도 선택 UI 들어옴");
+        yield return new WaitForSecondsRealtime(0.1f);
+
+        if (uiAnimator.GetCurrentAnimatorStateInfo(0).IsName("PauseChangeSetting"))
+        {
+            while (uiAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+            {
+                Debug.Log(uiAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+                yield return null;
+            }
+
+            uiGroup.SetActive(false);
+            checkPointUI.SetActive(true);
+        }
+    }
 
     IEnumerator StartSettingUi()
     {

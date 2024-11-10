@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
     public void LoadChoiceCheckPoint(int n)
     {
         Debug.Log("선택한 체크포인트로 이동");
-        GetCheckpointData(PlayerPrefs.GetInt("CheckPointIndex"));
+        GetCheckpointData(n);
         LoadingSceneWithKariEffect(LoadCheckpointSceneName);
     }
 
