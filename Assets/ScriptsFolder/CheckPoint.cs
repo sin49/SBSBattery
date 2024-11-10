@@ -54,14 +54,17 @@ public class CheckPoint : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-
-            if (PlayerSpawnManager.Instance.CurrentCheckPoint != this)
-            {
-                PlayerSpawnManager.Instance.ChangeCheckPoint(this);
-                if (soundplayer != null)
-                    soundplayer.PlayAudio(0);
-                Debug.Log($"체크포인트{index}에 닿음");
-            }
+            PlayerSpawnManager.Instance.ChangeCheckPoint(this);
+            if (soundplayer != null)
+                soundplayer.PlayAudio(0);
+            Debug.Log($"체크포인트{index}에 닿음");
+            //if (PlayerSpawnManager.Instance.CurrentCheckPoint != this)
+            //{
+            //    PlayerSpawnManager.Instance.ChangeCheckPoint(this);
+            //    if (soundplayer != null)
+            //        soundplayer.PlayAudio(0);
+            //    Debug.Log($"체크포인트{index}에 닿음");
+            //}
         }
     }
 }

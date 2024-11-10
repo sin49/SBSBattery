@@ -11,6 +11,9 @@ public class CheckPointUI : UIInteract
 {
     public List<Button> buttonList = new List<Button>();
     public List<Image> checkList = new List<Image>();
+    public List<GameObject> choiceList = new List<GameObject>();
+
+    public GameObject buttonPanel;
 
     int index, beforeIndex;
 
@@ -23,15 +26,22 @@ public class CheckPointUI : UIInteract
         InitSaveUI();
     }
 
+    private void OnDisable()
+    {
+        onHandle = false;
+        buttonPanel.SetActive(false);
+    }
+
     public void InitSaveUI()
     {
+        onHandle = true;
+        buttonPanel.SetActive(true);
+
         checkList[beforeIndex].sprite = deactiveButton;
         fontList[beforeIndex].color = deactiveFontColor;
 
         checkList[index].sprite = activeButton;
         fontList[beforeIndex].color = deactiveFontColor;
-
-
     }
 
     // Start is called before the first frame update
@@ -51,6 +61,7 @@ public class CheckPointUI : UIInteract
             {
                 beforeIndex = index;
                 index--;
+                UpButtonCheck();
                 UpdateUI();
             }
         }
@@ -61,6 +72,7 @@ public class CheckPointUI : UIInteract
             {
                 beforeIndex = index;
                 index++;
+                DownButtonCheck();
                 UpdateUI();
             }
             beforeIndex = index;
@@ -71,6 +83,25 @@ public class CheckPointUI : UIInteract
             SelectButton();
         }
 
+    }
+
+    public void UpButtonCheck()
+    {
+        while (true)
+        {
+            if (buttonList[index].interactable) return;
+            index--;
+        }
+
+    }
+
+    public void DownButtonCheck()
+    {
+        while (true)
+        {
+            if (buttonList[index].interactable) return;
+            index++;
+        }
     }
 
     // 마우스 클릭 구현 시 사용
@@ -93,15 +124,19 @@ public class CheckPointUI : UIInteract
         switch (index)
         {
             case 0:
-                
+                ActiveChoiceListUI();
                 break;
             case 1:
+                ActiveChoiceListUI();
                 break;
             case 2:
+                ActiveChoiceListUI();
                 break;
             case 3:
+                ActiveChoiceListUI();
                 break;
             case 4:
+                ActiveChoiceListUI();
                 break;
             case 5:                
                 CheckListExit();
@@ -111,8 +146,21 @@ public class CheckPointUI : UIInteract
         }
     }
 
+    public void ActiveChoiceListUI()
+    {
+        choiceList[index].SetActive(true);
+        buttonPanel.SetActive(false);
+    }
+
     public void CheckListExit()
     {
         gameObject.SetActive(false);
+    }
+
+    public void ReturnFromChoiceUI()
+    {
+        onHandle = true;
+        buttonPanel.SetActive(true);
+        UpdateUI();
     }
 }

@@ -55,7 +55,7 @@ public class CheckPointManager : MonoBehaviour
         sp.points = checkPoints;
 
         string json = JsonUtility.ToJson(sp);
-        string filePath = Path.Combine(Application.persistentDataPath, "InventorySave.json");
+        string filePath = Path.Combine(Application.persistentDataPath, "CheckPointData.json");
 
         File.WriteAllText(filePath, json);
     }

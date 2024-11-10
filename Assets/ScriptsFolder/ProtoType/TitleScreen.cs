@@ -24,6 +24,7 @@ public class TitleScreen : UIInteract
 
     public TestRecheckUI recheckUI;
 
+    [Header("체크포인트 UI")]public GameObject checkPointUI;
     public void StartNewGame()
     {
         Debug.Log(startscenename);
@@ -34,7 +35,7 @@ public class TitleScreen : UIInteract
     }
     public void ContinueGame()
     {
-        GameManager.instance.LoadLastCheckPoint();
+        //GameManager.instance.LoadLastCheckPoint();
 
 
     }

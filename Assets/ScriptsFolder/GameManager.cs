@@ -74,6 +74,12 @@ public class GameManager : MonoBehaviour
         LoadingSceneWithKariEffect(LoadCheckpointSceneName);
     }
 
+    public void LoadChoiceCheckPoint(int n)
+    {
+        Debug.Log("선택한 체크포인트로 이동");
+        GetCheckpointData(PlayerPrefs.GetInt("CheckPointIndex"));
+        LoadingSceneWithKariEffect(LoadCheckpointSceneName);
+    }
 
     public void DeleteTutorialKey()
     {
@@ -124,6 +130,7 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.DeleteKey("LastestStageName");
         DeleteInventoryData();
         DeleteTutorialKey();
+        DeleteCheckPointData();
     }
     public void DeleteInventoryData()
     {
@@ -147,13 +154,21 @@ public class GameManager : MonoBehaviour
 
     public void saveCheckPointIndexKey(int index)
     {
-        if(LoadCheckpointindex<index)
-        PlayerPrefs.SetInt("CheckPointIndex", index);
+        if (LoadCheckpointindex <= index)
+        {
+            PlayerPrefs.SetInt("CheckPointIndex", index);
+            if (CheckPointManager.instance != null)
+                CheckPointManager.instance.SaveCheckPointData(index);
+        }
     }
 
-    public void SaveCheckPoint(int index)
+    public void DeleteCheckPointData()
     {
-        CheckPointManager.instance.SaveCheckPointData(index);
+        string path = Path.Combine(Application.persistentDataPath, "CheckPointData.json");
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }        
     }
 
     public void LoadingScene(string scenename)
