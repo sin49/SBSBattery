@@ -5,7 +5,7 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -50,6 +50,9 @@ public class GameManager : MonoBehaviour
     public int LoadCheckpointindex;
     public string LoadCheckpointSceneName;
     public int loadcheckpointTransformType;
+
+    [Header("다리미 돌진 지속시간 표시 UI")]
+    public Image ironRushIcon;
 
     public void GetCheckpointData(int n)
     {

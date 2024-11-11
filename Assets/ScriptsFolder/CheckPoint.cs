@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 public class CheckPointData
 {
@@ -54,6 +55,13 @@ public class CheckPoint : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            if (CheckPointManager.instance != null)
+            {
+                if (SearchCheckPointIndex())
+                    return;
+            }
+
+
             PlayerSpawnManager.Instance.ChangeCheckPoint(this);
             if (soundplayer != null)
                 soundplayer.PlayAudio(0);
@@ -66,5 +74,24 @@ public class CheckPoint : MonoBehaviour
             //    Debug.Log($"체크포인트{index}에 닿음");
             //}
         }
+    }
+
+    public bool SearchCheckPointIndex()
+    {
+        bool check = false;
+        if (CheckPointManager.instance != null)
+        {
+            CheckPointManager cm = CheckPointManager.instance;
+            for (int i = 0; i < cm.checkPoints.Count; i++)
+            {
+                if (index == cm.checkPoints[i])
+                {
+                    check = true;
+                    return check;
+                }
+            }
+        }
+
+        return check;
     }
 }
