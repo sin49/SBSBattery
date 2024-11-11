@@ -118,7 +118,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public NormalEnemyAction AttackAction;
 
 
-    [HideInInspector] public bool activeAttack; // 공격 가능한 상태인지 체크            
+     public bool activeAttack; // 공격 가능한 상태인지 체크            
 
     [Header("기절상태")]
     [HideInInspector]public  bool onStun;

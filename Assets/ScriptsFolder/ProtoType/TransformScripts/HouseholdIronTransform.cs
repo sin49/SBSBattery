@@ -520,7 +520,7 @@ public class HouseholdIronTransform : Player
                 rushTimer -= Time.deltaTime;
                 //if (GameManager.instance != null)
                 //{
-                //    GameManager.instance.ironRushIcon.fillAmount = rushTimer / 7;
+                //    GameManager.instance.ironRushIcon.fillAmount = rushTimer / rushTimeMax;
                 //}
             }
             else
