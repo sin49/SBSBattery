@@ -221,7 +221,7 @@ public class RemoteTransform : Player
   
     public override void Move()
     {
-        //if(!laserchargemode)
+        if(!laserchargemode)
         base.Move();
         else
         {
