@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
     public int loadcheckpointTransformType;
 
     [Header("다리미 돌진 지속시간 표시 UI")]
+    public GameObject ironUIobject;
     public Image ironRushIcon;
 
     public void GetCheckpointData(int n)

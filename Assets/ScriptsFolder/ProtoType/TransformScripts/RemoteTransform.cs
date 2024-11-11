@@ -220,12 +220,12 @@ public class RemoteTransform : Player
   
     public override void Move()
     {
-        if(!laserchargemode)
+        //if(!laserchargemode)
         base.Move();
     }
     public override void Jump()
     {
-        if (!laserchargemode)
+        //if (!laserchargemode)
             base.Jump();
     }
     public override void Attack()
