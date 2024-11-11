@@ -42,6 +42,7 @@ public class RemoteTransform : Player
 
     [Header("ºö °ü·Ã º¯¼ö")]
     public GameObject laserPrefab;
+    public float Chargingmovespeed;
     public GameObject LIghtlaserPrefab;
     public GameObject MaxlaserPrefab;
     public GameObject laserEffect; // ºö ÀÌÆåÆ® ¿ÀºêÁ§Æ®
@@ -222,6 +223,12 @@ public class RemoteTransform : Player
     {
         //if(!laserchargemode)
         base.Move();
+        else
+        {
+            PlayerStat.instance.MoveSpeedBonus += -Chargingmovespeed;
+            base.Move();
+            PlayerStat.instance.MoveSpeedBonus += Chargingmovespeed;
+        }
     }
     public override void Jump()
     {
@@ -252,6 +259,7 @@ public class RemoteTransform : Player
         //if (PoolingManager.instance != null)
         //    PoolingManager.instance.GetPoolObject("Laser", firePoint);
         //else
+     
         RemoteLaser laser_=null;
         float laserlifetime=laserminlifetime+laserlifetimeupspeed*
             laserchargettime;
@@ -268,7 +276,7 @@ public class RemoteTransform : Player
 
         laser_.setLaser(laserlifetime, laserdamage);
         laserchargettime = 0;
-            Instantiate(laser_.gameObject, firePoint.transform.position, HitPoint.transform.rotation);
+            Instantiate(laser_.gameObject, firePoint.transform.position, firePoint.transform.rotation);
  
     }
     public Color LaserChargeColor;
