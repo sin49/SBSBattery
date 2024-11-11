@@ -244,7 +244,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 AttackAction = transform.AddComponent<EnemyAttack_Explosion>();
                 break;
             default:
-                Debug.Log("공격이 없어서 비활성화"+gameObject.name);
+  
                 tap.rangeCollider.SetActive(false);
                 break;
 
