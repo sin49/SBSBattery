@@ -108,7 +108,7 @@ public class Player : Character,environmentObject
     void groundCheckEvnet()
     {
         onGround = true;
-        d_col.DeactiveCollider();
+        //d_col.DeactiveCollider();
       
         if (downAttack)
         {
