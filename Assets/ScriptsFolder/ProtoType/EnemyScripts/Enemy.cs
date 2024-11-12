@@ -203,6 +203,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 break;
             case 3:
                 eStat.attacktype = EnemyAttackType.rush;
+
                 var obj = transform.AddComponent<Enemy_Action_rush>();
               
                 if (eattack == null)
@@ -247,7 +248,8 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 AttackAction = transform.AddComponent<EnemyAttack_Explosion>();
                 break;
             default:
-
+  
+                tap.rangeCollider.SetActive(false);
                 break;
 
         }
@@ -662,14 +664,14 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         //}
         //else
         //{
-            if (tap.tracking && !activeAttack)
-            {
-                isMove = true;
-            }
-            else
-            {
-                isMove = false;
-            }
+        if (tap.tracking && !activeAttack)
+        {
+            isMove = true;
+        }
+        else
+        {
+            isMove = false;
+        }
         //}
         MoveAnimationPlay();
 

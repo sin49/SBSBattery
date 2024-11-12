@@ -61,6 +61,7 @@ public class Enemy_Action_rush : NormalEnemyAction
     {
         StopAllCoroutines();
         //InitAttackCoolTime();
+        DisableActionMethod();
         onrush = false;
  
     }
