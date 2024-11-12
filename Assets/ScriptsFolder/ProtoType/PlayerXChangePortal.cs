@@ -102,7 +102,7 @@ public class PlayerXChangePortal : InteractiveObject
         PlayerHandler.instance.CurrentPlayer.cantmove = true;
 
         closed = false;
-
+        PlayerHandler.instance.CurrentPlayer.playerRb.velocity = Vector3.zero;
         PlayerHandler.instance.CantHandle = true;
         if(StartZtoX)
             yield return StartCoroutine(PlayerHandler.instance.CurrentPlayer.moveportalanimationZX(teleportertransform));

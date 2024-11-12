@@ -66,6 +66,11 @@ public class HouseholdIronTransform : Player
         base.Awake();
         InitTimer();
         soundPlayer = this.GetComponent<HouseHoldFormSoundPlayer>();
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.ironUIobject.SetActive(true);
+            GameManager.instance.ironRushIcon.fillAmount = 0;
+        }
     }
    
    protected override void Start()
@@ -518,14 +523,16 @@ public class HouseholdIronTransform : Player
             if (rushTimer > 0)
             {
                 rushTimer -= Time.deltaTime;
-                //if (GameManager.instance != null)
-                //{
-                //    GameManager.instance.ironRushIcon.fillAmount = rushTimer / rushTimeMax;
-                //}
+                if (GameManager.instance != null)
+                {
+                    GameManager.instance.ironRushIcon.fillAmount = rushTimer / rushTimeMax;
+                }
             }
             else
             {
                 RushEnd();
+                DeactiveRushIcon();
+
             }
 
             //돌진 공격 주기?
@@ -551,6 +558,23 @@ public class HouseholdIronTransform : Player
                 rushCoolTimer = rushCoolTimeMax;
             }
         }
+    }
+    public void ActiveRushIcon()
+    {
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.ironRushIcon.gameObject.SetActive(true);            
+        }
+    }
+
+    public void DeactiveRushIcon()
+    {
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.ironRushIcon.gameObject.SetActive(false);
+            GameManager.instance.ironRushIcon.fillAmount = 1;
+        }
+
     }
 
     public override void Damaged(float damage)
@@ -614,6 +638,7 @@ public class HouseholdIronTransform : Player
                     else
                     {
                         RushEnd();
+                        DeactiveRushIcon();
                     }
                 }
             }
@@ -643,6 +668,7 @@ public class HouseholdIronTransform : Player
                 yield return null;
             }
             SecondFormActive();
+            ActiveRushIcon();
             if (!ironDashEffect.gameObject.activeSelf)
             {
                 ironDashEffect.gameObject.SetActive(true);

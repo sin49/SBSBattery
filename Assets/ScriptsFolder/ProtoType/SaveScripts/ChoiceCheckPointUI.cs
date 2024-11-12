@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.Layouts;
 using UnityEngine.UI;
 
-public class ChoiceCheckPointUI : MonoBehaviour
+public class ChoiceCheckPointUI : UIInteract
 {
     public CheckPointUI checkPointUI;
 
@@ -33,15 +35,14 @@ public class ChoiceCheckPointUI : MonoBehaviour
         onHandle = false;
         checkLists.Clear();
         buttonList.Clear();
+        fontList.Clear();
     }
 
     public void InitCheckPointButton()
     {
         //currentStageButton.SetActive(true);
-        for (int i = 0; i < currentStageButton.transform.childCount; i++)
-        {
-            checkLists.Add(currentStageButton.transform.GetChild(i).GetComponent<CheckList>());
-        }
+        checkLists = currentStageButton.GetComponentsInChildren<CheckList>().ToList();
+        fontList = currentStageButton.GetComponentsInChildren<TextMeshProUGUI>().ToList();
         
         for (int i = 0; i < checkLists.Count; i++)
         {
@@ -101,7 +102,9 @@ public class ChoiceCheckPointUI : MonoBehaviour
     public void UpdateUI()
     {
         checkLists[beforeIndex].GetComponent<Image>().sprite = deactiveButton;
+        fontList[beforeIndex].color = deactiveFontColor;
         checkLists[index].GetComponent<Image>().sprite = activeButton;
+        fontList[index].color = activeFontColor;
         currentIndex = checkLists[index].checkStageIndex;
     }
 
@@ -117,6 +120,7 @@ public class ChoiceCheckPointUI : MonoBehaviour
         onHandle = false;
 
         checkLists[index].GetComponent<Image>().sprite = deactiveButton;
+        
         beforeIndex = index = 0;
 
         checkPointUI.ReturnFromChoiceUI();

@@ -240,6 +240,12 @@ public class PlayerHandler : MonoBehaviour
     {
         if (CurrentPlayer != null)
             lastDirection = PlayerStat.instance.direction;
+        if (CurrentType == TransformType.ironform)
+        {
+            if(GameManager.instance !=null)
+                GameManager.instance.ironUIobject.SetActive(false);
+        }
+
         transformed(TransformType.Default);
         if (LastTransformPlace != null)
         {
