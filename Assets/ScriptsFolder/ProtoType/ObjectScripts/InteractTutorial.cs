@@ -36,6 +36,7 @@ public class InteractTutorial : MonoBehaviour
     {
         imageTutorial.SetActive(false);
         TutorialReadCSV();
+        SaveCheck();
     }
 
     public void TutorialReadCSV()
@@ -227,5 +228,47 @@ public class InteractTutorial : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public bool SaveCheck()
+    {
+        switch (currentTutorial)
+        {
+            case "이동":
+                if (PlayerPrefs.HasKey("MoveTuto"))
+                    interact = true;
+                break;
+            case "점프":
+                if (PlayerPrefs.HasKey("JumpTuto"))
+                    interact = true;
+                break;
+            case "내려가기":
+                if (PlayerPrefs.HasKey("DownTuto"))
+                    interact = true;
+                break;
+            case "공격":
+                if (PlayerPrefs.HasKey("AttackTuto"))
+                    interact = true;
+                break;
+            case "상호작용":
+                if (PlayerPrefs.HasKey("InteractTuto"))
+                    interact = true;
+                break;
+            case "내려찍기":
+                if (PlayerPrefs.HasKey("DownAttackTuto"))
+                    interact = true;
+                break;
+            case "시점전환":
+                if (PlayerPrefs.HasKey("DimensionTuto"))
+                    interact = true;
+                break;
+            case "체크포인트":
+                if (PlayerPrefs.HasKey("TutorialEnd"))
+                    interact = true;
+                break;
+            default:
+                break;
+        }
+        return interact;
     }
 }

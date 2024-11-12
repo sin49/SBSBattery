@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
         // currentscenename을 로딩 전에 설정합니다.
         //??뭐지 이코드 이거 정상 작동함?
         currentscenename = SceneManager.GetActiveScene().name;
-        LoadTutorialKey();
+        //LoadTutorialKey();
 
     }
 
@@ -107,13 +107,13 @@ public class GameManager : MonoBehaviour
 
     public void LoadTutorialKey()
     {
-        if (currentscenename == "Tutorial") DeleteTutorialKey();
-        else
-        {
-            attackTuto = true; jumpTuto = true; moveTuto = true;
-            downTuto = true; interactTuto = true; downAttackTuto = true;
-            dimensionTuto = true; tutorialEnd = true;
-        }
+        //if (currentscenename == "Tutorial") DeleteTutorialKey();
+        //else
+        //{
+        //    attackTuto = true; jumpTuto = true; moveTuto = true;
+        //    downTuto = true; interactTuto = true; downAttackTuto = true;
+        //    dimensionTuto = true; tutorialEnd = true;
+        //}
 
         if (PlayerPrefs.HasKey("AttackTuto")) attackTuto = true;
         if (PlayerPrefs.HasKey("JumpTuto")) jumpTuto = true;
