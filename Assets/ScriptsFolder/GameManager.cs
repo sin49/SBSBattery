@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadTutorialKey()
     {
-        if (currentscenename == "") DeleteTutorialKey();
+        if (currentscenename == "Tutorial") DeleteTutorialKey();
         else
         {
             attackTuto = true; jumpTuto = true; moveTuto = true;
