@@ -52,6 +52,7 @@ public class DownAttackCollider : MeleeCollider
                     Debug.Log("Æ®·£½ºÆû¿ÀºêÁ§Æ® Å½Áö");
                     transformPlace.transformStart(PlayerHandler.instance.CurrentPlayer.gameObject);
                     PlayerHandler.instance.CurrentPlayer.onTransform = true;
+                    DeactiveCollider();
                 }
                 else
                 {
@@ -66,6 +67,8 @@ public class DownAttackCollider : MeleeCollider
                     {
                         return;
                     }
+                    else
+                        DeactiveCollider();
 
                 }
             }

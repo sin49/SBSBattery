@@ -106,7 +106,7 @@ public class PlayerInventory : MonoBehaviour
         }
         if (File.Exists(filePath))
         {
-
+            //Debug.Log("파일 발견");
 
             InvetorySaveData savedata = LoadData();
 
@@ -117,6 +117,7 @@ public class PlayerInventory : MonoBehaviour
                 Eitem.itemname = e.itemname;
                 Eitem.itemdescription = e.itemdescription;
                 Eitem.itemcode = e.itemcode;
+                //Debug.Log($"아이템 이름:{Eitem.itemname}, 아이템 설명:{Eitem.itemdescription}, 아이템 코드:{Eitem.itemcode}");
                 itemdatas.Add(Eitem.itemcode, Eitem);
             }
 

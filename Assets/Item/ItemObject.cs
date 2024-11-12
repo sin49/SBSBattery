@@ -17,7 +17,7 @@ public abstract class ItemObject : MonoBehaviour
 
     private void Awake()
     {
-        soundEffectListPlayer = GetComponent<SoundEffectListPlayer>();
+        soundEffectListPlayer = GetComponent<SoundEffectListPlayer>();        
     }
 
     public void createitemeffect()

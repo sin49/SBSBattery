@@ -25,7 +25,7 @@ public class InteractTutorial : MonoBehaviour
     public int checkIndex;
     public int talkIndex;
     public bool interact, end;
-
+    
     // Start is called before the first frame update
     //void Start()
     //{
@@ -121,6 +121,8 @@ public class InteractTutorial : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (SaveCheck()) return;
+
         if (other.CompareTag("Player") && !interact)
         {
             //CharacterHandler.instance.moveRestric = true;
@@ -203,6 +205,10 @@ public class InteractTutorial : MonoBehaviour
                 GameManager.instance.dimensionTuto = true;
                 PlayerPrefs.SetInt("DimensionTuto", 1);
                 break;
+            case "아이템":
+                GameManager.instance.itemTuto = true;
+                PlayerPrefs.SetInt("ItemTuto", 1);
+                break;
             case "체크포인트":
                 GameManager.instance.tutorialEnd = true;
                 PlayerPrefs.SetInt("TutorialEnd", 1);
@@ -236,39 +242,70 @@ public class InteractTutorial : MonoBehaviour
         {
             case "이동":
                 if (PlayerPrefs.HasKey("MoveTuto"))
-                    interact = true;
+                {
+                    GameManager.instance.moveTuto = true;
+                    textPlaying = true;
+                }
                 break;
             case "점프":
                 if (PlayerPrefs.HasKey("JumpTuto"))
-                    interact = true;
+                {
+                    GameManager.instance.jumpTuto = true;
+                    textPlaying = true;
+                }
                 break;
             case "내려가기":
                 if (PlayerPrefs.HasKey("DownTuto"))
-                    interact = true;
+                {
+                    GameManager.instance.downTuto = true;
+                    textPlaying = true;
+                }
                 break;
             case "공격":
                 if (PlayerPrefs.HasKey("AttackTuto"))
-                    interact = true;
+                {
+                    GameManager.instance.attackTuto = true;
+                    textPlaying = true;
+                }
                 break;
             case "상호작용":
                 if (PlayerPrefs.HasKey("InteractTuto"))
-                    interact = true;
+                {
+                    GameManager.instance.interactTuto = true;
+                    textPlaying = true;
+                }
                 break;
             case "내려찍기":
                 if (PlayerPrefs.HasKey("DownAttackTuto"))
-                    interact = true;
+                {
+                    GameManager.instance.downAttackTuto = true;
+                    textPlaying = true;
+                }
                 break;
             case "시점전환":
                 if (PlayerPrefs.HasKey("DimensionTuto"))
-                    interact = true;
+                {
+                    GameManager.instance.dimensionTuto = true;
+                    textPlaying = true;
+                }
+                break;
+            case "아이템":
+                if (PlayerPrefs.HasKey("ItemTuto"))
+                {
+                    GameManager.instance.itemTuto = true;
+                    textPlaying = true;
+                }
                 break;
             case "체크포인트":
                 if (PlayerPrefs.HasKey("TutorialEnd"))
-                    interact = true;
+                {
+                    GameManager.instance.tutorialEnd = true;
+                    textPlaying = true;
+                }
                 break;
             default:
                 break;
         }
-        return interact;
+        return textPlaying;
     }
 }
