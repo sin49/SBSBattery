@@ -1,9 +1,4 @@
-using Autodesk.Fbx;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using Unity.VisualScripting;
-using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -117,14 +112,15 @@ public class CheckPointUI : UIInteract
     {
         onHandle = false;
 
-        if (index < 3)
-        {
-            ActiveChoiceListUI();
-        }
-        else
-        {
-            CheckListExit();
-        }
+        ActiveChoiceListUI();
+        //if (index <= 3)
+        //{
+        //    ActiveChoiceListUI();
+        //}
+        //else
+        //{
+        //    CheckListExit();
+        //}
 
         //switch (index)
         //{

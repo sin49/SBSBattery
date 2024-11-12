@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -51,8 +52,23 @@ public class PlayerSpawnManager : MonoBehaviour
             CurrentCheckPoint = ChkPointsDic[GameManager.instance.LoadCheckpointindex];
         }
         else
-            Debug.Log("LoadFailed");
+        {
+            Debug.Log($"LoadFailed, {CurrentCheckPoint}");
+            CurrentCheckPoint = ForceCheckpointIndex();
+        }
         return CurrentCheckPoint;
+    }
+
+    public CheckPoint ForceCheckpointIndex()
+    {
+        for (int i = 0; i < Checkpoints.Length; i++)
+        {
+            if (GameManager.instance.LoadCheckpointindex == Checkpoints[i].index)
+            {
+                return Checkpoints[i];
+            }
+        }
+        return Checkpoints[0];
     }
     //public void Respawn()
     //{
@@ -127,7 +143,7 @@ public class PlayerSpawnManager : MonoBehaviour
                 continue;
             ChkPointsDic.Add(Checkpoints[n].index, Checkpoints[n]);
             //Debug.Log($"{ChkPointsDic[n].index}, {ChkPointsDic[n]}");
-            //Debug.Log($"CHkPointsDis 사이즈 :{ChkPointsDic.Count}");
+            Debug.Log($"CHkPointsDis 사이즈 :{ChkPointsDic.Count}");
         }        
 
         //PlayerSpawn이 아니라 0번 체크포인트를 찿아서 스폰되도록

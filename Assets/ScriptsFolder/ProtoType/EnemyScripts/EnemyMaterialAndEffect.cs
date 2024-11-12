@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.HighDefinition.Attributes;
 
@@ -22,6 +23,11 @@ public class EnemyMaterialAndEffect : MonoBehaviour
     [Header("기본몹 베이스, 전구몹 바디")]public Material emmissionHittedMat;
     [Header("일반몹만 사용")]public Renderer skinHead; //  일반 몬스터만 씀
 
+
+    [Header("공격 이미션 1")]public Material emmissionFirst;
+    [Header("공격 이미션 2")]public Material emmissionSecond;
+    [Header("공격 이미션 3")]public Material emmissionThird;
+
     // 몬스터 머티리얼 부분(모델링 상태)
     // 3개 => 전구몬스터(몸통, 전구유리, 필라멘트)
     // 2개 / 1개(==스킨 렌더러 2개)  => 일반몬스터(얼굴,등), (머리 막대기)
@@ -29,6 +35,8 @@ public class EnemyMaterialAndEffect : MonoBehaviour
     // 1개 => 돌진 몬스터, 불 몬스터
     public List<Material> materials = new List<Material>();
     [Header("사망이펙트")] public ParticleSystem deadEffect;
+    
+    
     private void Awake()
     {
         if(idleMat!=null)
@@ -37,8 +45,8 @@ public class EnemyMaterialAndEffect : MonoBehaviour
             materials.Add (backMat);
         if(headMat!=null) materials.Add (headMat);
         if(hittedMat!=null)materials.Add (hittedMat);
-
     }
+    #region 피격 머티리얼
     public void StartEmmissionHitMat()
     {
         //if(emmissionBackMat !=null)
@@ -123,4 +131,68 @@ public class EnemyMaterialAndEffect : MonoBehaviour
         if (skinHead != null)
             skinHead.material = backMat;
     }
+    #endregion
+
+    #region 공격 머티리얼
+    public void EmmissionMaterial()
+    {
+        Material[] materials = skinRenderer.materials;
+
+        switch (materials.Length)
+        {
+            case 1:
+                materials[0] = emmissionFirst;
+                skinRenderer.materials = materials;
+                break;
+            case 2:
+                materials[0] = emmissionSecond;
+                materials[1] = emmissionFirst;
+                skinRenderer.materials = materials;
+                break;
+            case 3:
+                materials[0] = emmissionFirst;
+                materials[1] = emmissionSecond;
+                materials[2] = emmissionThird;
+                skinRenderer.materials = materials;
+                break;
+            default:
+                break;
+        }
+
+        if (skinHead != null)
+        {
+            if(emmissionThird != null)
+                skinHead.material = emmissionThird;
+        }
+            
+    }
+
+    public void OriginMaterial()
+    {
+        Material[] materials = skinRenderer.materials;
+        switch (materials.Length)
+        {
+            case 1:
+                materials[0] = idleMat;
+                skinRenderer.materials = materials;
+                break;
+            case 2:
+                materials[0] = backMat;
+                materials[1] = idleMat;
+                skinRenderer.materials = materials;
+                break;
+            case 3:
+                materials[0] = idleMat;
+                materials[1] = headMat;
+                materials[2] = backMat;
+                skinRenderer.materials = materials;
+                break;
+            default:
+                break;
+        }
+
+        if (skinHead != null)
+            skinHead.material = backMat;
+    }
+    #endregion
 }

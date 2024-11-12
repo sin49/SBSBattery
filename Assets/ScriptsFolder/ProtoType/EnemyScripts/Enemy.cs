@@ -51,16 +51,17 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
      
         float blinktime = 0.12f;
         Debug.Log("반짝이기 한번");
-        foreach(var a in mae.materials)
-        {
-            a.SetColor("_Emissive_Color", WhiteColor);
-        }
+        //foreach(var a in mae.materials)
+        //{
+        //    a.SetColor("_Emissive_Color", WhiteColor);
+        //}
+        mae.EmmissionMaterial();
         yield return new WaitForSeconds(blinktime);
-
-        foreach (var a in mae.materials)
-        {
-            a.SetColor("_Emissive_Color", new Vector4(0,0,0,1));
-        }
+        mae.OriginMaterial();
+        //foreach (var a in mae.materials)
+        //{
+        //    a.SetColor("_Emissive_Color", new Vector4(0,0,0,1));
+        //}
     }
     public IEnumerator ChangeWhiteEmissionloop()
     {
@@ -70,27 +71,30 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         Debug.Log("반짝이기 여러번");
         while (timer > 0)
         {
-            foreach (var a in mae.materials)
-            {
-                Debug.Log("반짝이기");
-                a.SetColor("_Emissive_Color", WhiteColor);
-            }
+            //foreach (var a in mae.materials)
+            //{
+            //    Debug.Log("반짝이기");
+            //    a.SetColor("_Emissive_Color", WhiteColor);
+            //}
+            mae.EmmissionMaterial();
             yield return new WaitForSeconds(blinktime);
 
-            foreach (var a in mae.materials)
-            {
-                Debug.Log("돌아오기");
-                a.SetColor("_Emissive_Color", new Vector4(0, 0, 0, 1));
-            }
+            //foreach (var a in mae.materials)
+            //{
+            //    Debug.Log("돌아오기");
+            //    a.SetColor("_Emissive_Color", new Vector4(0, 0, 0, 1));
+            //}
             yield return new WaitForSeconds(blinktime);
             timer += blinktime*2;
             if (blinktime > 0.05)
                 blinktime /= 2;
         }
-        foreach (var a in mae.materials)
-        {
-            a.SetColor("_Emissive_Color", new Vector4(0, 0, 0, 1));
-        }
+
+        mae.OriginMaterial();
+        //foreach (var a in mae.materials)
+        //{
+        //    a.SetColor("_Emissive_Color", new Vector4(0, 0, 0, 1));
+        //}
     }
     void stopBlinkCorutine()
     {
