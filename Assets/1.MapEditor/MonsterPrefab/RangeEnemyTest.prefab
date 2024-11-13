@@ -376,22 +376,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackType: 0
   characterState: 0
-  initMaxHP: 2
+  initMaxHP: 3
   initMoveSpeed: 2.4
   HPBonus: 0
   MoveSpeedBonus: 0
-  hp: 2
+  hp: 3
   atk: 1
   attackSpeed: 0
   attackCoolTimebonus: 0
-  initattackCoolTime: 1
-  attackDelay: 1
+  initattackCoolTime: 1.5
+  attackDelay: 1.15
   canMove: 1
   canAttack: 1
   movepattern: 0
   movetype: 0
-  attacktype: 0
-  attackReadyTime: 0
+  attacktype: 2
+  attackReadyTime: 0.65
   dropGroup:
     parts: {fileID: 0}
     partValue: 0
@@ -898,8 +898,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.2, y: 0.45, z: 2.2}
-  m_Center: {x: 0, y: 0.35, z: 1.35}
+  m_Size: {x: 0.1, y: 1, z: 3.3}
+  m_Center: {x: 0, y: 0.4, z: 1.7}
 --- !u!1 &2394138119772494340
 GameObject:
   m_ObjectHideFlags: 0
@@ -3449,12 +3449,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mae: {fileID: 6587660186071680179}
   rangeCollider: {fileID: 1719816305384670078}
-  rangeSizeX: 0.2
-  rangeSizeY: 0.45
-  rangeSizeZ: 2.2
+  rangeSizeX: 0.1
+  rangeSizeY: 1
+  rangeSizeZ: 3.3
   rangePosX: 0
-  rangePosY: 0.35
-  rangePosZ: 1.35
+  rangePosY: 0.4
+  rangePosZ: 1.7
   searchCollider: {fileID: 3419566179637107403}
   searchSizeX: 2.2
   searchSizeY: 0.8
@@ -3466,22 +3466,22 @@ MonoBehaviour:
   attackColliderRange: {fileID: 2597715478896487610}
   tracking: 0
   testTarget: {x: 0, y: 0, z: 0}
-  trackingDistance: 9.32
+  trackingDistance: 5
   disToPlayer: 0
   firstPoint: {x: 0, y: 0, z: 0}
   secondPoint: {x: 0, y: 0, z: 0}
   targetPatrol: {x: 0, y: 0.5, z: 0}
   patrolWaitTime: 1
-  leftPatrolRange: 1.2
-  rightPatrolRange: 1.2
+  leftPatrolRange: 1
+  rightPatrolRange: 1
   patrolDistance: 0.1
   leftPatrol: {x: 0, y: 0, z: 0}
   rightPatrol: {x: 0, y: 0, z: 0}
   center: {x: 0, y: 0.5, z: 0}
-  wallRayHeight: 0.5
-  wallRayLength: 3
-  wallRayUpLength: 3
-  wallRayBackLength: 0
+  wallRayHeight: 0.25
+  wallRayLength: 6
+  wallRayUpLength: 6
+  wallRayBackLength: 6
   wallCheck: 0
   trackingdata: {fileID: 11400000, guid: 2ff8ed2b68e2a0c4291fb9d4af8ad364, type: 2}
   dataname: meleeTap
@@ -3612,8 +3612,8 @@ Transform:
   m_GameObject: {fileID: 9161033037936441632}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.35, z: 1.35}
-  m_LocalScale: {x: 0.2, y: 0.45, z: 2.2}
+  m_LocalPosition: {x: 0, y: 0.4, z: 1.7}
+  m_LocalScale: {x: 0.1, y: 1, z: 3.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8801285598001996633}
