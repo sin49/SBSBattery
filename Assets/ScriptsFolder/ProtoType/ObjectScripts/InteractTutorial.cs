@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class InteractTutorial : MonoBehaviour
 {
@@ -34,9 +34,15 @@ public class InteractTutorial : MonoBehaviour
 
     private void Awake()
     {
+        if(imageTutorial !=null)
         imageTutorial.SetActive(false);
         TutorialReadCSV();
         SaveCheck();
+    }
+    private void Start()
+    {
+        if (SceneManager.GetActiveScene().name == "Stage1-6 1")
+            gameObject.SetActive(false);
     }
 
     public void TutorialReadCSV()
@@ -219,9 +225,13 @@ public class InteractTutorial : MonoBehaviour
                 GameManager.instance.transformTuto = true;
                 PlayerPrefs.SetInt("TransformTuto", 1);
                 break;
+            case "Å¬¸®¾î":
+                GameManager.instance.LoadingSceneWithKariEffect("CheckTitleTest");
+                break;
             default:
                 break;
         }
+        if(imageTutorial !=null)
         imageTutorial.SetActive(false);
     }
 

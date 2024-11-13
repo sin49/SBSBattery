@@ -48,7 +48,7 @@ public class SettingUI : MonoBehaviour
     void TitleBackEvent()
     {
         Time.timeScale = 1;
-        GameManager.instance.LoadingSceneWithKariEffect("TitleTest");
+        GameManager.instance.LoadingSceneWithKariEffect("CheckTitleTest");
     }
     void ExitEvent()
     {
