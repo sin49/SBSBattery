@@ -45,10 +45,12 @@ public abstract class ItemObject : MonoBehaviour
             StartCoroutine(itemDeactivecorutine());
         }
     }
+    public bool got;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !got)
         {
+            got = true;
             getitem();
 
 
