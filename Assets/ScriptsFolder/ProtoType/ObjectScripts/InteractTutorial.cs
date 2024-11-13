@@ -125,6 +125,8 @@ public class InteractTutorial : MonoBehaviour
 
         if (other.CompareTag("Player") && !interact)
         {
+            //if (PlayerHandler.instance != null && PlayerHandler.instance.CurrentType)
+
             //CharacterHandler.instance.moveRestric = true;
             interact = true;
             //Time.timeScale = 0;

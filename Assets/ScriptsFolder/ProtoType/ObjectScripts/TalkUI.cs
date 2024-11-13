@@ -54,16 +54,16 @@ public class TalkUI : MonoBehaviour
         switch (s)
         {
             case "기본":
-                left.sprite = normalBattery;
+                right.sprite = normalBattery;
                 break;
             case "신남":
-                left.sprite = happyBattery;
+                right.sprite = happyBattery;
                 break;
             case "화남":
-                left.sprite = angryBattery;
+                right.sprite = angryBattery;
                 break;
             case "의문":
-                left.sprite = curiousBattery;
+                right.sprite = curiousBattery;
                 break;
             default:
                 break;
