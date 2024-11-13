@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
@@ -105,7 +106,7 @@ public class PlayerInteract : MonoBehaviour
 
             if (other.TryGetComponent(out iDoor))
             {
-                if (PlayerInventory.instance.checkinstantitem(iDoor.Instantitem.itemcode))
+                if (iDoor.Instantitem.itemcode == GameManager.instance.Keycard)
                 {
                     PlayerHandler.instance.UnlockItemDoor();
                     Debug.Log("봉인해제");
@@ -122,6 +123,17 @@ public class PlayerInteract : MonoBehaviour
                 Debug.Log("면역");
             }
         }
+        
+        if (other.CompareTag("Item"))
+        {
+            InstantItemObject i;
+            if (other.TryGetComponent<InstantItemObject>(out i))
+            {
+                GameManager.instance.GetKeyCard(i.instantitem.itemcode);
+            }
+
+        }
     }
+
 
 }

@@ -272,6 +272,12 @@ public class GameManager : MonoBehaviour
     }
     public float MinimumLoadingTime;
 
+    public string Keycard;
+
+    public void GetKeyCard(string s)
+    {
+        Keycard = s;
+    }
 }
 // public void ReLoadingScene()
 // {
