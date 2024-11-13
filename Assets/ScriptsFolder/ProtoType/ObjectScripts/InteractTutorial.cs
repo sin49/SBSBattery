@@ -213,6 +213,10 @@ public class InteractTutorial : MonoBehaviour
                 GameManager.instance.tutorialEnd = true;
                 PlayerPrefs.SetInt("TutorialEnd", 1);
                 break;
+            case "변신":
+                GameManager.instance.transformTuto = true;
+                PlayerPrefs.SetInt("TransformTuto", 1);
+                break;
             default:
                 break;
         }
@@ -300,6 +304,13 @@ public class InteractTutorial : MonoBehaviour
                 if (PlayerPrefs.HasKey("TutorialEnd"))
                 {
                     GameManager.instance.tutorialEnd = true;
+                    textPlaying = true;
+                }
+                break;
+            case "변신":
+                if(PlayerPrefs.HasKey("TransformTuto"))
+                {
+                    GameManager.instance.transformTuto = true;
                     textPlaying = true;
                 }
                 break;

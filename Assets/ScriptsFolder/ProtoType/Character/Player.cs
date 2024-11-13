@@ -105,6 +105,7 @@ public class Player : Character,environmentObject
     public bool inputCheck;
     DownAttackCollider d_col;
 
+
     void groundCheckEvnet(RaycastHit hit)
     {
         onGround = true;
@@ -114,6 +115,8 @@ public class Player : Character,environmentObject
         if (downAttack)
         {
             downAttack = false;
+            //playerRb.velocity = Vector3.zero;
+            //Debug.Log("속도 제거");
             SoundPlayer.PlayDownAttackEndSound();
             if (LandingEffect != null)
                 LandingEffect.SetActive(true);
@@ -439,6 +442,7 @@ public class Player : Character,environmentObject
             {
 
                 playerRb.AddForce(Vector3.down * stairdownforce);
+                Debug.Log("groundraycheck 무브");
             }
 
 
@@ -845,6 +849,8 @@ public class Player : Character,environmentObject
     public float hori;
     public float Vert;
 
+    
+
     public override void Move()
     {
         if (cantmove) return;
@@ -937,15 +943,26 @@ public class Player : Character,environmentObject
         }
       
         if (!wallcheck)
-            playerRb.AddForce(Movevelocity, ForceMode.VelocityChange);
+        {
+            //playerRb.velocity = Vector3.zero;
+            if (Movevelocity != Vector3.zero)
+            {
+                playerRb.AddForce(Movevelocity, ForceMode.VelocityChange);
+                Debug.Log("!wallcheck 무브 일부 금지");
+            }
+        }
         else
         {
             if (!PlayerHandler.instance.ladderInteract)
-            {                         
+            {
                 playerRb.AddForce(EnvironmentPower, ForceMode.VelocityChange);
+                Debug.Log("!ladderinteract 무브");
             }
             else
+            {
                 playerRb.AddForce(Movevelocity, ForceMode.VelocityChange);
+                Debug.Log("ladderinteract 받는 무브");
+            }
         }
 
 
@@ -1103,12 +1120,14 @@ public class Player : Character,environmentObject
             if ((int)PlayerStat.instance.MoveState < 4 && directionz != directionZ.none && hori == 0)
             {
                 playerRb.AddForce(transform.GetChild(0).forward * 7, ForceMode.Impulse);
+                Debug.Log("어택무브1");
             }
             else if ((int)PlayerStat.instance.MoveState >= 4)
             {
                 if (direction != direction.none && Vert != 0 || directionz != directionZ.none && hori != 0)
                 {
                     playerRb.AddForce(transform.GetChild(0).forward * 7, ForceMode.Impulse);
+                    Debug.Log("어택무브2");
                 }
             }
         }
@@ -1136,6 +1155,7 @@ public class Player : Character,environmentObject
     {
         playerRb.velocity = Vector3.zero;
         playerRb.AddForce(transform.up * 2f, ForceMode.VelocityChange);
+        Debug.Log("부수는 플랫폼 무브");
     }
 
     IEnumerator GoDownAttack()
@@ -1149,6 +1169,7 @@ public class Player : Character,environmentObject
         }
         
         playerRb.AddForce(transform.up * 3f, ForceMode.Impulse);
+        Debug.Log("Go다운 어택");
         SoundPlayer.PlayInitDownAttackSound();
         yield return new WaitForSeconds(0.2f);
         playerRb.velocity = Vector3.zero;
@@ -1157,6 +1178,7 @@ public class Player : Character,environmentObject
         yield return new WaitForSeconds(PlayerStat.instance.downAttackFlyTime);
 
         playerRb.AddForce(Vector3.down * PlayerStat.instance.downForce);
+        Debug.Log("Go 다운 어택2");
         downAttackCollider.SetActive(true);
         playerRb.useGravity = true;
     }
@@ -1278,6 +1300,7 @@ public class Player : Character,environmentObject
         playerRb.velocity = Vector3.zero;
         PlayerHandler.instance.CantHandle = true;
         playerRb.AddForce(-transform.forward * 1.2f, ForceMode.Impulse);
+        Debug.Log("피격 때 포스");
         Time.timeScale = 0;
        chrmat.SetColor("_Emissive_Color", PlayerStat.instance.Hittedcolor);//emission 건들기
         yield return new WaitForSecondsRealtime(PlayerStat.instance.HittedStopTime);
@@ -1355,6 +1378,7 @@ public class Player : Character,environmentObject
             SoundPlayer.PlayJumpAudio();
         playerRb.velocity = Vector3.zero;
         playerRb.AddForce(Vector3.up * PlayerStat.instance.jumpForce, ForceMode.Impulse);
+        Debug.Log("점프 포스");
         jumpstopcorutine = jumpForceLimitCorutine();
         StartCoroutine(jumpstopcorutine);
         onGround = false;

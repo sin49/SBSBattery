@@ -43,7 +43,9 @@ public class GameManager : MonoBehaviour
 
     public bool pauseActive;
 
-    public bool attackTuto, jumpTuto, moveTuto, downTuto, interactTuto, downAttackTuto, dimensionTuto, itemTuto;
+    public bool attackTuto, jumpTuto, moveTuto, downTuto, 
+        interactTuto, downAttackTuto, 
+        dimensionTuto, itemTuto, transformTuto;
     public bool tutoInteract, tutorialEnd;
 
 
@@ -96,6 +98,7 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.HasKey("DimensionTuto")) PlayerPrefs.DeleteKey("DimensionTuto");
         if (PlayerPrefs.HasKey("TutorialEnd")) PlayerPrefs.DeleteKey("TutorialEnd");
         if (PlayerPrefs.HasKey("ItemTuto")) PlayerPrefs.DeleteKey("ItemTuto");
+        if (PlayerPrefs.HasKey("TransformTuto")) PlayerPrefs.DeleteKey("TransformTuto");
     }
 
     public void ActiveGameOver()
@@ -125,6 +128,7 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.HasKey("DimensionTuto")) dimensionTuto = true;
         if (PlayerPrefs.HasKey("TutorialEnd")) tutorialEnd = true;
         if (PlayerPrefs.HasKey("ItemTuto")) itemTuto = true;
+        if (PlayerPrefs.HasKey("TransformTuto")) transformTuto = true;
     }
 
     public void DeleteSaveSetting()

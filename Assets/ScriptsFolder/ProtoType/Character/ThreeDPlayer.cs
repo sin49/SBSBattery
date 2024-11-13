@@ -165,6 +165,7 @@ public class ThreeDPlayer : Character
             //addforce
             //YMove 
             playerRb.AddForce(Vector3.up * 16, ForceMode.Impulse);
+            Debug.Log("버려진 포스");
         }
     }
 

@@ -12,6 +12,7 @@ public class EnvironmentspeedChanger : MonoBehaviour
     {
         Vector3 force = conveyorDirection * conveyorSpeed;
         obj.AddEnviromentPower(force); // AddForce와 ForceMode를 사용
+        Debug.Log($"점프대 금지 {force}");
     }
     protected void OnTriggerStay(Collider other)
     {
@@ -20,7 +21,7 @@ public class EnvironmentspeedChanger : MonoBehaviour
             environmentObject player = other.GetComponent<environmentObject>(); // Rigidbody로 수정
             if (player != null)
             {
-
+                Debug.Log("점프대 접촉중");
                 changevector(player);
             }
         }
