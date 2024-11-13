@@ -10,6 +10,7 @@ public class EnemyAction_Swing : NormalEnemyAction
     IEnumerator MeleeAttack( float timer)
     {
         e.PlayAttackSound();
+        yield return new WaitForSeconds(timer);
         e.attackCollider.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(timer);
