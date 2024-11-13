@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-
+using TMPro;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 using UnityEngine.UIElements;
@@ -748,7 +748,15 @@ PlayerInventory.instance.checkessesntialitem("item01")*/)
     }
     #endregion
 
+    public void LockItemDoor()
+    {
+        ingameUIManger.interactText.text = GameManager.instance.lockDoor; 
+    }
 
+    public void UnlockItemDoor()
+    {
+        ingameUIManger.interactText.text = GameManager.instance.unlockDoor;
+    }
 }
 
 

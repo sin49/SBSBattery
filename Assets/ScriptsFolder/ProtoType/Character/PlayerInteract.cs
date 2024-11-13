@@ -97,4 +97,31 @@ public class PlayerInteract : MonoBehaviour
         
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("InteractiveObject"))
+        {
+            ItemInteractDoor iDoor;
+
+            if (other.TryGetComponent(out iDoor))
+            {
+                if (PlayerInventory.instance.checkinstantitem(iDoor.Instantitem.itemcode))
+                {
+                    PlayerHandler.instance.UnlockItemDoor();
+                    Debug.Log("봉인해제");
+                }
+                else
+                {
+                    PlayerHandler.instance.LockItemDoor();
+                    Debug.Log("속박");
+                }
+            }
+            else
+            {
+                PlayerHandler.instance.UnlockItemDoor();
+                Debug.Log("면역");
+            }
+        }
+    }
+
 }

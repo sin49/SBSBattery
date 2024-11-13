@@ -167,7 +167,6 @@ public class HouseholdIronTransform : Player
         }
         playerRb.velocity = Vector3.zero;
         playerRb.AddForce(transform.up * 30f);
-        Debug.Log("기본 속도");
 
         yield return new WaitForSeconds(ironFlyTime);
 
@@ -176,9 +175,7 @@ public class HouseholdIronTransform : Player
         playerRb.velocity = Vector3.zero;
         playerRb.AddForce(-transform.up * downAtkSpeed, ForceMode.Impulse);
         downAttackCollider.SetActive(true);
-        Debug.Log("다리미 찍기");
-        playerRb.velocity = Vector3.zero;
-        Debug.Log("속도 제거");
+        //Debug.Log("다리미 찍기");
     }
 
     public void StartFreeze()
@@ -776,7 +773,7 @@ public class HouseholdIronTransform : Player
         if (collision.gameObject.CompareTag("Ground"))
         {
             
-            Debug.Log($"콜리즌 네임{collision.gameObject.name} ,콜리즌 체크 -> 땅에 닿았다 >> 다리미 찍기 끝");
+            //Debug.Log($"콜리즌 네임{collision.gameObject.name} ,콜리즌 체크 -> 땅에 닿았다 >> 다리미 찍기 끝");
             if (ironDownAttack)
             {
                 source.GenerateImpulse();

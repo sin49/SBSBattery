@@ -69,8 +69,6 @@ public class DownAttackCollider : MeleeCollider
                     {
                         return;
                     }
-                    else
-                        Debug.Log("$@!#!");
                     //    DeactiveCollider();
 
                 }

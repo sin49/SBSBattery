@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
         currentscenename = SceneManager.GetActiveScene().name;
         //LoadTutorialKey();
 
+        lockDoor = "잠겨있음";
+        unlockDoor = "상호작용";
     }
 
     public string loadingscenename = "LoadingTest";
@@ -56,6 +58,9 @@ public class GameManager : MonoBehaviour
     [Header("다리미 돌진 지속시간 표시 UI")]
     public GameObject ironUIobject;
     public Image ironRushIcon;
+
+    [HideInInspector] public string lockDoor;
+    [HideInInspector] public string unlockDoor;
 
     public void GetCheckpointData(int n)
     {

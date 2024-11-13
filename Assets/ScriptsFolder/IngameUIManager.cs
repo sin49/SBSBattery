@@ -11,6 +11,8 @@ public class IngameUIManager : MonoBehaviour
     public GameObject InteractTargetUI;
     public GameObject StageNameObject;
     public TextMeshProUGUI StageNameText;
+
+    public TextMeshProUGUI interactText;
     private void Awake()
     {
         RemoteTargetUI.SetActive(false);
