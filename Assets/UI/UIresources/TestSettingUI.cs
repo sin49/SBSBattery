@@ -28,6 +28,7 @@ public class TestSettingUI : UIInteract
 
     public GameObject choice, sound, graphic;
 
+    [HideInInspector] public GameObject canvas;
     private void Awake()
     {
         gameObject.SetActive(false);

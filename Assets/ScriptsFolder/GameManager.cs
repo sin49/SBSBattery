@@ -66,6 +66,17 @@ public class GameManager : MonoBehaviour
         loadcheckpointTransformType = data.PlayerTransformtype;
     }
 
+    private void Update()
+    {
+        if (PlayerHandler.instance != null)
+        {
+            if (PlayerHandler.instance.CurrentType == TransformType.ironform)
+                ironUIobject.SetActive(true);
+            else
+                ironUIobject.SetActive(false);
+        }
+    }
+
     public void loadscenebycheckpoint(int n)
     {
         Debug.Log("loadscenebycheckpoint½ÇÇà");
