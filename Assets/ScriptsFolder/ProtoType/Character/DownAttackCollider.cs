@@ -15,6 +15,7 @@ public class DownAttackCollider : MeleeCollider
     }
     public void DeactiveCollider()
     {
+        Debug.Log("내려찍기 비활성화 실행");
         this.gameObject.SetActive(false);
     }
     protected override void OnTriggerEnter(Collider other)
@@ -46,13 +47,14 @@ public class DownAttackCollider : MeleeCollider
 
             if (other.CompareTag("Ground"))
             {
+                Debug.Log("그라운드");
                 TransformPlace transformPlace;
                 if (other.TryGetComponent<TransformPlace>(out transformPlace))
                 {
                     Debug.Log("트랜스폼오브젝트 탐지");
                     transformPlace.transformStart(PlayerHandler.instance.CurrentPlayer.gameObject);
                     PlayerHandler.instance.CurrentPlayer.onTransform = true;
-                    DeactiveCollider();
+                    //DeactiveCollider();
                 }
                 else
                 {
@@ -67,8 +69,8 @@ public class DownAttackCollider : MeleeCollider
                     {
                         return;
                     }
-                    else
-                        DeactiveCollider();
+                    //else
+                    //    DeactiveCollider();
 
                 }
             }

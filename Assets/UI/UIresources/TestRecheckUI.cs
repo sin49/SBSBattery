@@ -162,9 +162,31 @@ public class TestRecheckUI : UIInteract
     public void CheckOK()
     {
         if (ok)
+        {
             OkButtonInput();
+            ActiveSound();
+        }
         else
+        {
             CancelButtonInput();
+            DeactiveSound();
+        }
+    }
+
+    public void ActiveSound()
+    {
+        if (SceneManager.GetActiveScene().name != "CheckTitleTest")
+            selectui.pauseui.ButtonSoundEffectPlayer_.PlayActiveAudio();
+        else
+            title.ButtionSoundEffectPlayer_.PlayActiveAudio();
+    }
+
+    public void DeactiveSound()
+    {
+        if (SceneManager.GetActiveScene().name != "CheckTitleTest")
+            selectui.pauseui.ButtonSoundEffectPlayer_.PlayDeActiveAudio();
+        else
+            title.ButtionSoundEffectPlayer_.PlayDeActiveAudio();
     }
 
     private void OnDisable()

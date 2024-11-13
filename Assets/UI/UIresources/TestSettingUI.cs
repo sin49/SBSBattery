@@ -94,13 +94,25 @@ public class TestSettingUI : UIInteract
             case 0:
                 Debug.Log("소리 설정");
                 NextSelectSetting(sound);
+                if (SceneManager.GetActiveScene().name != "CheckTitleTest")
+                    uiSelect.pauseui.ButtonSoundEffectPlayer_.PlayActiveAudio();
+                else
+                    title.ButtionSoundEffectPlayer_.PlayActiveAudio();
                 break;
             case 1:
                 Debug.Log("그래픽 설정");
                 NextSelectSetting(graphic);
+                if (SceneManager.GetActiveScene().name != "CheckTitleTest")
+                    uiSelect.pauseui.ButtonSoundEffectPlayer_.PlayActiveAudio();
+                else
+                    title.ButtionSoundEffectPlayer_.PlayActiveAudio();
                 break;
             case 2:
                 SettingExit();
+                if (SceneManager.GetActiveScene().name != "CheckTitleTest")
+                    uiSelect.pauseui.ButtonSoundEffectPlayer_.PlayDeActiveAudio();
+                else
+                    title.ButtionSoundEffectPlayer_.PlayDeActiveAudio();
                 break;
             default:
                 Debug.Log("범위 초과함");
@@ -163,6 +175,10 @@ public class TestSettingUI : UIInteract
         beforeIndex = index;
         index = n;
         UpdateUI();
+        if (SceneManager.GetActiveScene().name != "CheckTitletest")
+            uiSelect.pauseui.ButtonSoundEffectPlayer_.PlaySelectAudio();
+        else
+            title.ButtionSoundEffectPlayer_.PlaySelectAudio();
     }
 
     public void InitButtonUI()

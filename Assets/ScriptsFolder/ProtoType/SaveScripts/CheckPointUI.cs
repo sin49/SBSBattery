@@ -62,6 +62,7 @@ public class CheckPointUI : UIInteract
                 beforeIndex = index;
                 index--;
                 UpdateUI();
+                SelectSound();
             }
         }
 
@@ -73,17 +74,20 @@ public class CheckPointUI : UIInteract
                 index++;
                 ButtonInteractCheck();
                 UpdateUI();
+                SelectSound();
             }
         }
 
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.C))
         {
             SelectButton();
+            ActiveSound();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             CheckListExit();
+            DeactiveSound();
         }
 
     }
@@ -181,5 +185,38 @@ public class CheckPointUI : UIInteract
         onHandle = true;
         buttonPanel.SetActive(true);
         UpdateUI();
+    }
+
+    public void SelectSound()
+    {
+        if (CheckTitleScene())
+            title.ButtionSoundEffectPlayer_.PlaySelectAudio();
+        else
+            selectUI.pauseui.ButtonSoundEffectPlayer_.PlaySelectAudio();
+    }
+
+    public void ActiveSound()
+    {
+        if (CheckTitleScene())
+            title.ButtionSoundEffectPlayer_.PlayActiveAudio();
+        else
+            selectUI.pauseui.ButtonSoundEffectPlayer_.PlayActiveAudio();
+    }
+
+    public void DeactiveSound()
+    {
+        if (CheckTitleScene())
+            title.ButtionSoundEffectPlayer_.PlayDeActiveAudio();
+        else
+            selectUI.pauseui.ButtonSoundEffectPlayer_.PlayDeActiveAudio();
+    }
+
+    public bool CheckTitleScene()
+    {
+        if (SceneManager.GetActiveScene().name == "CheckTitleTest")
+            return true;
+        else
+            return false;
+            
     }
 }

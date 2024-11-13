@@ -158,7 +158,7 @@ public class PlayerSpawnManager : MonoBehaviour
         PlayerInventory.instance.LoadInventoryData();
         PlayerStat.instance.hp = GameManager.instance.LoadPlayerHP();
 
-
+        GameManager.instance.LoadTutorialKey();
 
         PlayerHandler.instance.CurrentType = (TransformType)GameManager.instance.loadcheckpointTransformType;
         if (GameManager.instance.loadcheckpointTransformType != 0)

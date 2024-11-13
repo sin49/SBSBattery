@@ -105,11 +105,12 @@ public class Player : Character,environmentObject
     public bool inputCheck;
     DownAttackCollider d_col;
 
-    void groundCheckEvnet()
+    void groundCheckEvnet(RaycastHit hit)
     {
         onGround = true;
-        //d_col.DeactiveCollider();
-      
+        if(!hit.collider.TryGetComponent<BrokenPlatform>(out BrokenPlatform br))
+        d_col.DeactiveCollider();
+
         if (downAttack)
         {
             downAttack = false;
@@ -280,7 +281,7 @@ public class Player : Character,environmentObject
 
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject"))
                 {
-                    groundCheckEvnet();
+                    groundCheckEvnet(hit);
                     return;
                 }
 
@@ -292,7 +293,7 @@ public class Player : Character,environmentObject
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject"))
                 {
 
-                    groundCheckEvnet();
+                    groundCheckEvnet(hit);
                     return;
                 }
 
@@ -304,7 +305,7 @@ public class Player : Character,environmentObject
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject"))
                 {
 
-                    groundCheckEvnet();
+                    groundCheckEvnet(hit);
                     return;
                 }
 
@@ -316,7 +317,7 @@ public class Player : Character,environmentObject
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject"))
                 {
 
-                    groundCheckEvnet();
+                    groundCheckEvnet(hit);
                     return;
                 }
 

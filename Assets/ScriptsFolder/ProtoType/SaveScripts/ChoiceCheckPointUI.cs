@@ -67,6 +67,7 @@ public class ChoiceCheckPointUI : UIInteract
                 beforeIndex = index;
                 index--;
                 UpdateUI();
+                checkPointUI.SelectSound();
             }
         }
 
@@ -78,17 +79,20 @@ public class ChoiceCheckPointUI : UIInteract
                 index++;
                 ButtonInteractCheck();
                 UpdateUI();
+                checkPointUI.SelectSound();
             }
         }
 
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space))
         {
             SelectCheckPoint();
+            checkPointUI.ActiveSound();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             CheckListExit();
+            checkPointUI.DeactiveSound();
         }
 
     }

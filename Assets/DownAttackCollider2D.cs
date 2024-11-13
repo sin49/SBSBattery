@@ -49,12 +49,14 @@ public class DownAttackCollider2D : MonoBehaviour
 
                 if (other.CompareTag("Ground"))
                 {
+                    Debug.Log("2D 그라운드");
                     TransformPlace transformPlace;
                     if (other.TryGetComponent<TransformPlace>(out transformPlace))
                     {
                         Debug.Log("트랜스폼오브젝트 탐지");
                         transformPlace.transformStart(PlayerHandler.instance.CurrentPlayer.gameObject);
                         PlayerHandler.instance.CurrentPlayer.onTransform = true;
+                        //downattack.DeactiveCollider();
                     }
                     else
                     {
@@ -69,7 +71,8 @@ public class DownAttackCollider2D : MonoBehaviour
                         {
                             return;
                         }
-
+                        //else
+                        //    downattack.DeactiveCollider();
                     }
                 }
             }
