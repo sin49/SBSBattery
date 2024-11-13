@@ -173,7 +173,14 @@ public class BossTv : RemoteObject
         actions.Add(BossLaser2D);
         actions.Add(BossFall);
         animator =GetComponent<Animator>();
+        SearchTutorial();
     }
+
+    public void SearchTutorial()
+    {
+        clear = GameObject.Find("ClearGameObject");
+    }
+
     private void Start()
     {
         UI.gameObject.SetActive(false);
@@ -222,9 +229,19 @@ public class BossTv : RemoteObject
                 CanControl = true;
                 Active();
                 Debug.Log("¾²·¯¶ß¸²");
+                ClearCanvas();
             }
         }
     }
+
+    public GameObject clear;
+
+    public void ClearCanvas()
+    {
+        if (clear != null)
+            clear.transform.GetChild(0).gameObject.SetActive(true);
+    }
+
     IEnumerator phasechangeeventStack()
     {
         BossEnable = false;
