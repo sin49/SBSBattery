@@ -49,7 +49,10 @@ public class PlayerSpawnManager : MonoBehaviour
         if (GameManager.instance.LoadCheckpointindex < ChkPointsDic.Count)
         {
             Debug.Log("ChkPointsDic확인중");
-            CurrentCheckPoint = ChkPointsDic[GameManager.instance.LoadCheckpointindex];
+            if (ChkPointsDic.ContainsKey(GameManager.instance.LoadCheckpointindex))
+                CurrentCheckPoint = ChkPointsDic[GameManager.instance.LoadCheckpointindex];
+            else
+                CurrentCheckPoint = Checkpoints[0];
         }
         else
         {
@@ -113,7 +116,10 @@ public class PlayerSpawnManager : MonoBehaviour
         }
         else if (ChkPointsDic.Count > 0)
         {
-            CurrentCheckPoint = ChkPointsDic[0];
+            if (ChkPointsDic.ContainsKey(0))
+                CurrentCheckPoint = ChkPointsDic[0];
+            else
+                CurrentCheckPoint = Checkpoints[0];
             Debug.Log("체크포인트 사이즈 에러");
         }
         else
