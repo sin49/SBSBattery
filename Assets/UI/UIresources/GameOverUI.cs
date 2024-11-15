@@ -108,6 +108,7 @@ public class GameOverUI : UIInteract
 
     public void ChoiceGameOverButton()
     {
+        onHandle = false;
         switch (index)
         {
             case 0:

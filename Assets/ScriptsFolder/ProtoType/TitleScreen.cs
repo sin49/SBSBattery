@@ -33,6 +33,7 @@ public class TitleScreen : UIInteract
         GameManager.instance.DeleteSaveSetting();
         GameManager.instance.saveCheckPointIndexKey(0);
         GameManager.instance.LoadingSceneWithKariEffect(startscenename);
+        GameManager.instance.loadcheckpointTransformType = 0;
 
     }
     public void ContinueGame()

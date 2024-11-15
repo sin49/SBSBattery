@@ -162,14 +162,16 @@ public class PlayerSpawnManager : MonoBehaviour
 
 
         PlayerInventory.instance.LoadInventoryData();
+        Debug.Log($"1 Load{GameManager.instance.loadcheckpointTransformType}");
         PlayerStat.instance.hp = GameManager.instance.LoadPlayerHP();
-
+        Debug.Log($"2 Load{GameManager.instance.loadcheckpointTransformType}");
         GameManager.instance.LoadTutorialKey();
 
         PlayerHandler.instance.CurrentType = (TransformType)GameManager.instance.loadcheckpointTransformType;
         if (GameManager.instance.loadcheckpointTransformType != 0)
             PlayerHandler.instance.LastTransformPlace = formlist.
                 PlayerFormObject[GameManager.instance.loadcheckpointTransformType];
+        Debug.Log($"3 Load{GameManager.instance.loadcheckpointTransformType}");
 
         FindCheckpoint(GameManager.instance.LoadCheckpointindex);
         Spawn();
