@@ -109,8 +109,13 @@ public class Player : Character,environmentObject
     void groundCheckEvnet(RaycastHit hit)
     {
         onGround = true;
-        if(!hit.collider.TryGetComponent<BrokenPlatform>(out BrokenPlatform br))
-        d_col.DeactiveCollider();
+        if (!hit.collider.TryGetComponent<BrokenPlatform>(out BrokenPlatform br))
+        {
+            Debug.Log("부서지는 플랫폼이 아니라서 실행됨");
+            d_col.DeactiveCollider();
+        }
+        
+
 
         if (downAttack)
         {
@@ -146,7 +151,7 @@ public class Player : Character,environmentObject
     [Header("이동에 따른 값 변화 테스트")]
     public Vector3 velocityMove; // 벨로시티 이동 테스트
     public Vector3 rigidbodyPos; // 리지드바디 포지션 확인용
- public   float onstairforce = 4;
+    public float onstairforce = 4;
     public float stairdownforce = 60;
     public bool onstair;
 

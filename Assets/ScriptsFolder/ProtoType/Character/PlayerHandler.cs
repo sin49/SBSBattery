@@ -162,8 +162,11 @@ public class PlayerHandler : MonoBehaviour
         }
         else
         {
-            CurrentPlayer.DamagedIgnoreInvincible(1);
-            CurrentPlayer = null;
+            if (CurrentPlayer != null)
+            {
+                CurrentPlayer.DamagedIgnoreInvincible(1);
+                CurrentPlayer = null;
+            }
         }
 
 

@@ -14,6 +14,7 @@ public class DisableActiveObject : MonoBehaviour
 
     private void OnDisable()
     {
+        if(obj!=null)
         obj.SetActive(true);
     }
 }

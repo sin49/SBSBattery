@@ -80,6 +80,10 @@ public class GameManager : MonoBehaviour
             else
                 ironUIobject.SetActive(false);
         }
+        else
+        {
+            ironUIobject.SetActive(false);
+        }
     }
 
     public void loadscenebycheckpoint(int n)

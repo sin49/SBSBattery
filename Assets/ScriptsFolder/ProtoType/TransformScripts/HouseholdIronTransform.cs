@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class HouseholdIronTransform : Player
@@ -175,6 +176,8 @@ public class HouseholdIronTransform : Player
         playerRb.velocity = Vector3.zero;
         playerRb.AddForce(-transform.up * downAtkSpeed, ForceMode.Impulse);
         downAttackCollider.SetActive(true);
+        if (downAttackCollider.activeSelf)
+            Debug.Log("내려찍기가 활성화 되었습니다");
         //Debug.Log("다리미 찍기");
     }
 

@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+
+[Serializable]
 public class CheckPointData
 {
     public int index;
@@ -58,7 +61,10 @@ public class CheckPoint : MonoBehaviour
             if (CheckPointManager.instance != null)
             {
                 if (SearchCheckPointIndex())
+                {
+                    PlayerSpawnManager.Instance.ChangeCheckPoint(this);
                     return;
+                }
             }
 
 
