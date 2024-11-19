@@ -3841,16 +3841,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackType: 0
   characterState: 0
-  initMaxHP: 4
+  initMaxHP: 5
   initMoveSpeed: 4
   HPBonus: 0
   MoveSpeedBonus: 0
-  hp: 4
+  hp: 5
   atk: 1
   attackSpeed: 0
   attackCoolTimebonus: 0
   initattackCoolTime: 0.5
-  attackDelay: 0.25
+  attackDelay: 0.24
   canMove: 0
   canAttack: 0
   direction: 1
@@ -3860,21 +3860,21 @@ MonoBehaviour:
   doubleJump: 1
   ableJump: 1
   invincibleCoolTime: 2
-  attackForce: 2
+  attackForce: 5
   jumpForce: 0
   jumpheight: 2.15
   jumptime: 0.265
   jumpBufferTimeMax: 1
-  jumpkeyinputchecktimer: 0.15
+  jumpkeyinputchecktimer: 0.06
   jumpkeyinputcheckvalue: 0
-  downForce: 530
+  downForce: 500
   downAttackFlyTime: 0.36
   formInvincible: 0
-  InteractDelay: 0.5
+  InteractDelay: 1
   HittedStopTime: 0.3
   Hittedcolor: {r: 1, g: 0.08235294, b: 0.08235294, a: 0}
   invinciblecolor: {r: 1, g: 0.91698575, b: 0.6698113, a: 0}
-  blinkdelay: 0.2
+  blinkdelay: 0.3
   MoveState: 0
 --- !u!1 &6706454116074557437
 GameObject:
@@ -4152,7 +4152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterDieClip: {fileID: 8300000, guid: 9cf1e818361526e459204d5346ba9101, type: 3}
   CharacterDieVolume: 0.8
-  ChangeDimensionClip: {fileID: 8300000, guid: 8fb5e99fc9cb5d440a8e054d3d9a7f1f, type: 3}
+  ChangeDimensionClip: {fileID: 8300000, guid: 885bab525551d6547a819baecd582c2a, type: 3}
   ChangeDimensionVolume: 0.8
   GetItemClip: {fileID: 8300000, guid: 87b96f3ea67ff7b439427d35318a036f, type: 3}
   GetItemVolume: 0.8
@@ -5957,6 +5957,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3302266063641232086, guid: 4923c74ac6079bf4394050ed71afb738,
+        type: 3}
+      propertyPath: SelectClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 38fd21bca2b9bfc4da4b9093cf670ad5, type: 3}
+    - target: {fileID: 3302266063641232086, guid: 4923c74ac6079bf4394050ed71afb738,
+        type: 3}
+      propertyPath: DeActiveClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f3b121816d134f14b859202649edbb8e, type: 3}
     - target: {fileID: 3664212746457697162, guid: 4923c74ac6079bf4394050ed71afb738,
         type: 3}
       propertyPath: m_LocalPosition.x
