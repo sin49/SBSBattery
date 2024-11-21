@@ -78,10 +78,13 @@ public class PlayerInteract : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        
-            if (other.CompareTag("InteractiveObject"))
+
+        if (other.CompareTag("InteractiveObject"))
+        {
+            Ladder ladder;
+            InteractiveObject i;
+            if (!other.TryGetComponent<Ladder>(out ladder))
             {
-                InteractiveObject i;
                 if (!other.TryGetComponent<InteractiveObject>(out i))
                 {
 
@@ -89,13 +92,21 @@ public class PlayerInteract : MonoBehaviour
                 }
                 else
                 {
-      
+
                     PlayerHandler.instance.GetInteratObject(i);
                     //if (i.InteractOption != InteractOption.collider)
-                        PlayerHandler.instance.GetInteratObject(i);
+                    PlayerHandler.instance.GetInteratObject(i);
                 }
             }
-        
+            else
+            {
+                if (PlayerHandler.instance.ladderCheck)
+                    PlayerHandler.instance.GetInteratObject(ladder);
+            }
+
+
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)

@@ -176,7 +176,7 @@ public class TestSettingUI : UIInteract
         beforeIndex = index;
         index = n;
         UpdateUI();
-        if (SceneManager.GetActiveScene().name != "CheckTitletest")
+        if (SceneManager.GetActiveScene().name != "CheckTitleTest")
             uiSelect.pauseui.ButtonSoundEffectPlayer_.PlaySelectAudio();
         else
             title.ButtionSoundEffectPlayer_.PlaySelectAudio();
