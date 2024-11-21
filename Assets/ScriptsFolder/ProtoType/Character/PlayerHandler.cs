@@ -162,11 +162,12 @@ public class PlayerHandler : MonoBehaviour
         }
         else
         {
-            if (CurrentPlayer != null)
-            {
-                CurrentPlayer.DamagedIgnoreInvincible(1);
-                CurrentPlayer = null;
-            }
+            CurrentPlayer.DamagedIgnoreInvincible(1);
+            //if (CurrentPlayer != null)
+            //{
+            //    CurrentPlayer.DamagedIgnoreInvincible(1);
+            //    CurrentPlayer = null;
+            //}
         }
 
 
@@ -225,8 +226,8 @@ public class PlayerHandler : MonoBehaviour
         interactobject = null;
         transformevent?.Invoke();
         #region Type º¯°æ
-        if (CurrentType == type)
-            return;
+        //if (CurrentType == type)
+        //    return;
         CurrentType = type;
         #endregion
         CreateModelByCurrentType(eventhandler);

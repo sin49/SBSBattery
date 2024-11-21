@@ -45,5 +45,14 @@ public class PlayerAttack : MonoBehaviour
             DamageCollider(other);
 
         }
+
+        if (other.TryGetComponent<EnemyWrench>(out EnemyWrench wrench))
+        {
+            if (PoolingManager.instance != null)
+            {
+                PoolingManager.instance.ReturnPoolObject(other.gameObject);
+            }
+        }
+            
     }
 }

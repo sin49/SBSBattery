@@ -662,17 +662,24 @@ public class HouseholdIronTransform : Player
         Humonoidanimator.SetTrigger("RushStart");
         StartCoroutine(RushStartCheck());
     }
-
+    
     IEnumerator RushStartCheck()
     {
         yield return new WaitForSeconds(0.5f);
-
+        float timer=0;
         if (Humonoidanimator.GetCurrentAnimatorStateInfo(0).IsName("RushStart"))
         {
-            while (Humonoidanimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+            while (Humonoidanimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.75f)
             {
+                timer += Time.deltaTime;
+                Debug.Log(timer);
                 yield return null;
             }
+
+            Player player = PlayerHandler.instance.CurrentPlayer;
+            Destroy(Instantiate(player.changeEffect, player.transform.position, Quaternion.identity), 1.5f);
+            PlayerHandler.instance.CantHandle = false;
+
             SecondFormActive();
             ActiveRushIcon();
             if (!ironDashEffect.gameObject.activeSelf)
@@ -680,7 +687,6 @@ public class HouseholdIronTransform : Player
                 ironDashEffect.gameObject.SetActive(true);
             }
             ironDashEffect.Play();
-   ;
             onRush = true;
             rushEnd = false;
             ironAttack = true;
@@ -737,6 +743,7 @@ public class HouseholdIronTransform : Player
         soundPlayer.WallCollidePlay();
         ironDashEffect.Stop();
         SecondFormDeactive();
+        DeactiveRushIcon();
         onRush = false;
         rushEnd = true;
         rushTimer = rushTimeMax;
