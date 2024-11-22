@@ -360,7 +360,7 @@ public class PlayerHandler : MonoBehaviour
         else
             onAttack = true;
 
-        if (interactobject != null)
+        if (interactobject != null && !CurrentPlayer.downAttack)
         {
             if (ladderCheck)
             {
@@ -507,7 +507,7 @@ public class PlayerHandler : MonoBehaviour
             InteractTimer -= Time.deltaTime;
 
 
-        if (interactobject != null)
+        if (interactobject != null && !CurrentPlayer.downAttack)
         {
             if (Input.GetKeyDown(KeySettingManager.instance.InteractKeycode) && InteractTimer <= 0)
             {
