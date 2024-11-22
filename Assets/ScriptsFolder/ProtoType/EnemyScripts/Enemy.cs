@@ -514,7 +514,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         activeAttack = false;
         CanAttack = false;
 
-        if (stunTime <= 0)
+        if (stunTime > 0)
             yield return new WaitForSeconds(stunTime);
         else
             yield return new WaitForSeconds(0.8f);

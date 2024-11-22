@@ -1123,6 +1123,7 @@ public class Player : Character,environmentObject
                     playerRb.AddForce(transform.GetChild(0).forward * 7, ForceMode.Impulse);
                 }
             }
+            Debug.Log("전진하자");
         }
     }
 
@@ -1471,6 +1472,7 @@ IEnumerator jumpForceLimitCorutine()
     //애니메이션 없이 근접 공격
     IEnumerator TestMeleeAttack()
     {
+        Debug.Log("TestMeleeAttack코루틴 호출");
         AttackMove();
 
         meleeCollider.SetActive(true);
