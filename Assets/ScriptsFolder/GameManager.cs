@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadTutorialKey()
     {
-        if(SceneManager.GetActiveScene().name != "CheckTitleTest" || SceneManager.GetActiveScene().name != "Tutorial")
+        if(SceneManager.GetActiveScene().name != "CheckTitleTest" && SceneManager.GetActiveScene().name != "Tutorial")
         {
             attackTuto = true; jumpTuto = true; moveTuto = true;
             downTuto = true; interactTuto = true; downAttackTuto = true;
