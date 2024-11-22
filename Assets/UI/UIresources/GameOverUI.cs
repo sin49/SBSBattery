@@ -112,10 +112,12 @@ public class GameOverUI : UIInteract
         switch (index)
         {
             case 0:
+                Debug.Log("다시하기 실행");
                 Time.timeScale = 1;
                 GameManager.instance.LoadLastCheckPoint();
                 break;
             case 1:
+                Debug.Log("타이틀로 돌아가기 실행");
                 Time.timeScale = 1;
                 GameManager.instance.LoadingSceneWithKariEffect("CheckTitleTest");
                 break;

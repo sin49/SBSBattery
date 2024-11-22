@@ -85,71 +85,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2c2539763bdf3c4e8351a33233d35ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testcolor: {r: 0, g: 0, b: 0, a: 0}
-  movepattern: 1
-  eStat: {fileID: 724401123593733236}
-  patrolType: 0
-  attackCollider: {fileID: 2582524626774844617}
-  deadEffect: {fileID: 0}
-  animaor: {fileID: 7684863384237007504}
-  idleMat: {fileID: 0}
-  hittedMat: {fileID: 0}
-  skinRenderer: {fileID: 0}
-  moveEffect: {fileID: 0}
-  environmentforce: {x: 0, y: 0, z: 0}
-  isMove: 0
-  searchCubeRange: {x: 0, y: 0, z: 0}
-  searchCubePos: {x: 0, y: 0, z: 0}
-  rangeCollider: {fileID: 4932016523825285093}
-  rangeSize: {x: 0, y: 0, z: 0}
-  rangePos: {x: 0, y: 0, z: 0}
-  searchCollider: {fileID: 0}
-  searchColliderRange: {x: 0, y: 0, z: 0}
-  searchColliderPos: {x: 0, y: 0, z: 0}
-  searchPlayer: 0
-  trackingDistance: 0
-  disToPlayer: 0
-  PatrolTransform: []
-  patrolGroup: []
-  targetPatrol: {x: 0, y: 0, z: 0}
-  patrolWaitTime: 0
-  leftPatrolRange: 0
-  rightPatrolRange: 0
-  patrolDistance: 0
-  onPatrol: 0
-  yWidth: 0
-  zWidth: 0
-  wallRayHeight: 0
-  wallRayLength: 0
-  wallRayUpLength: 0
-  forwardWall: {fileID: 0}
-  upWall: {fileID: 0}
-  disToWall: 0
-  wallCheck: 0
-  attackTimer: 0
-  attackDelay: 0
-  actionhandler: {fileID: 0}
-  callCheck: 0
-  rotCheck: 0
-  onAttack: 0
-  activeAttack: 0
-  checkPlayer: 0
-  target: {fileID: 0}
-  tracking: 0
-  testTarget: {x: 0, y: 0, z: 0}
-  rotationSpeed: 3
-  onStun: 0
-  reachCheck: 0
-  attackRange: 0
-  flatObject: {fileID: 0}
-  flatTime: 0
-  rotLevel: 85
-  testAngle: 0
   tvColor: 2
   checkTv: 0
   activeTv: 0
   rayRange: 0.5
   rayHeight: 0.25
+  rb: {fileID: 0}
+  soundplayer: {fileID: 0}
+  animaor: {fileID: 7684863384237007504}
+  target: {fileID: 0}
+  testTarget: {x: 0, y: 0, z: 0}
+  distance: 0
 --- !u!65 &3806855424090343670
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -218,19 +164,19 @@ MonoBehaviour:
   MoveSpeedBonus: 0
   hp: 5
   atk: 1
-  rotationSpeed: 1
   attackSpeed: 0
   attackCoolTimebonus: 0
   initattackCoolTime: 0
   attackDelay: 0
   canMove: 0
   canAttack: 0
-  eState: 0
+  movepattern: 0
+  movetype: 0
+  attacktype: 0
+  attackReadyTime: 0
   dropGroup:
     parts: {fileID: 0}
     partValue: 0
-  onInvincible: 0
-  invincibleTimer: 0
 --- !u!114 &2503515395017984278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -820,8 +766,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c8e1a25490c2d40a4b57a08ff80e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
   childMat: {fileID: 0}
+  enemy: {fileID: 0}
+  tap: {fileID: 0}
 --- !u!65 &9199802104685863812
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1146,7 +1093,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 462a56cffb8af8941b7e313abedf3d9e, type: 2}
-  - {fileID: 2100000, guid: 8e067a37ff169eb4f9aa202d81234cbc, type: 2}
+  - {fileID: 2100000, guid: 8fd1908e3af395b458e8be0c385ec661, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

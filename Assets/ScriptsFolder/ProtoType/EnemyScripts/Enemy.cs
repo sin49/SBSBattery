@@ -433,6 +433,10 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
   
         rb.AddForce(-transform.forward * 3f, ForceMode.Impulse);
     }
+    
+    [Header("경직 시간")] 
+    [Range(0, 2)]public float stunTime;
+    
     public override void Damaged(float damage)
     {
         base.Damaged(damage);
@@ -449,14 +453,15 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         else
         {
           
-
+            if(eStat.attacktype != EnemyAttackType.rush)
             HittedRotate();
             HittedAttackEvent();
         }
     }
 
     public void HittedAttackEvent()
-    {        
+    {
+        hitted = true;
         corutine = HittedEnd();
         //StopCoroutine("HittedEnd");
         if (!onStun)
@@ -508,6 +513,12 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
         activeAttack = false;
         CanAttack = false;
+
+        if (stunTime <= 0)
+            yield return new WaitForSeconds(stunTime);
+        else
+            yield return new WaitForSeconds(0.8f);
+        hitted = false;
     }
 
     //머티리얼 관련해서 현재는 가상함수처리하여 각 몬스터마다
@@ -855,6 +866,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     // 공격 준비시간
     public void ReadyAttackTime()
     {
+        if (hitted) return;
         if (activeAttack && !CanAttack)
         {
             CanAttack = true;

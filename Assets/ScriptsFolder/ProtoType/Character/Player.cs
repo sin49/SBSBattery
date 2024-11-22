@@ -109,7 +109,8 @@ public class Player : Character,environmentObject
     void groundCheckEvnet(RaycastHit hit)
     {
         onGround = true;
-        if (!hit.collider.TryGetComponent<BrokenPlatform>(out BrokenPlatform br))
+        if (!hit.collider.TryGetComponent<BrokenPlatform>(out BrokenPlatform br)
+            && !hit.collider.TryGetComponent<TransformPlace>(out TransformPlace tp))
         {
             Debug.Log("부서지는 플랫폼이 아니라서 실행됨");
             d_col.DeactiveCollider();
@@ -496,7 +497,7 @@ public class Player : Character,environmentObject
 
 
 
-        if (Input.GetKeyDown(KeyCode.Tab)) { HittedTest(); }
+        //if (Input.GetKeyDown(KeyCode.Tab)) { HittedTest(); }
 
         //if (onGround && isJump && playerRb.velocity.y <= 0)
         //    jumpRaycastCheck();

@@ -8,6 +8,7 @@ public class FallEventTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("낙사 판정 실행");
             PlayerHandler.instance.PlayerFallEventInvoke();
         }
     }

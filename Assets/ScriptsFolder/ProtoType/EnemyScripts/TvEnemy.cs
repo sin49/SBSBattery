@@ -15,13 +15,14 @@ public class TvEnemy : MonoBehaviour
     public float rayRange; // 레이캐스트 길이 조절
     public float rayHeight; // 레이캐스트 높이 조절
     public Rigidbody rb;
-    bool isRotate;
+    bool isRotate, move;
     public CharacterSoundPlayer soundplayer;
     public Animator animaor;
     public Transform target;
     bool tracking;
     public Vector3 testTarget;
-   float movespeed=2f;
+    float movespeed=2f;
+    [Header("목표물과의 거리 계산")] public float distance;
     protected  void Awake()
     {
         rb = this.GetComponent<Rigidbody>();
@@ -31,7 +32,11 @@ public class TvEnemy : MonoBehaviour
     private void FixedUpdate()
     {
         if (target != null)
+        {
             Move();
+        }
+
+        animaor.SetBool("isMove", move);
     }
 
     /*private void FixedUpdate()
@@ -41,39 +46,73 @@ public class TvEnemy : MonoBehaviour
         TrackingCheck();
     }*/
     #region CCTV이동
+    float dis;
     public void TrackingCheck()
     {
         Debug.DrawRay(transform.position + Vector3.up * rayHeight, transform.forward * rayRange, Color.magenta, 0.1f);
 
-        RaycastHit[] hits = Physics.RaycastAll(transform.position + Vector3.up * rayHeight, transform.forward, rayRange);
+        Vector3 distance = target.position - transform.position;
 
-        for (int i = 0; i < hits.Length; i++)
+        dis = distance.magnitude;
+
+        if (dis <= this.distance)
         {
-            if (hits[i].collider.CompareTag("GameController"))
-            {
-                RemoteTV TV;
-                SignalTv sTV;
-                if (hits[i].collider != null &&
-                    hits[i].collider.TryGetComponent<RemoteTV>(out TV))
-                {                    
-                    if (TV.onActive)
-                    {
-                        checkTv = true;
-                        rb.constraints = RigidbodyConstraints.FreezePosition |
-                    RigidbodyConstraints.FreezeRotation;
-                        tracking = false;
-                    }
-                }
-                else if(hits[i].collider != null && hits[i].collider.TryGetComponent<SignalTv>(out sTV))
-                {
-                    if (sTV.done)
-                    {
-                        checkTv = true;
-                        tracking = false;
-                    }
-                }
-            }
+            checkTv = true;
+            tracking = false;
+            rb.constraints = RigidbodyConstraints.FreezePosition |
+                RigidbodyConstraints.FreezeRotation;
+            target = null;
+            move = false;
+            if (target == null)
+                Debug.Log("목표물에 도착해서 null로 변경된 상태임");
         }
+        else
+        {
+            if (!isRotate)
+                move = true;
+        }
+
+        //hits = Physics.RaycastAll(transform.position + Vector3.up * rayHeight, transform.forward, rayRange);        
+        //if (hits != null && hits.Length > 0)
+        //{
+        //    Debug.Log("콜라이더 받아오고 있음");
+        //    for (int i = 0; i < hits.Length; i++)
+        //    {
+        //        Debug.Log($"호출되고 있지? {hits[i].collider.tag}");
+        //        if (hits[i].collider.gameObject.CompareTag("GameController"))
+        //        {
+        //            Debug.Log("리모컨 상호작용 오브젝트 확인");
+        //            RemoteTV TV;
+        //            SignalTv sTV;
+        //            if (hits[i].collider != null &&
+        //                hits[i].collider.TryGetComponent<RemoteTV>(out TV))
+        //            {
+        //                Debug.Log("TV찾음");
+        //                if (TV.onActive)
+        //                {
+        //                    checkTv = true;
+        //                    rb.constraints = RigidbodyConstraints.FreezePosition |
+        //                RigidbodyConstraints.FreezeRotation;
+        //                    tracking = false;
+        //                    Debug.Log("활성화된 TV 찾음");
+        //                    target = null;
+        //                    if (target == null)
+        //                        Debug.Log("타겟이 null로 변경됨");
+        //                }
+        //            }
+        //            else if (hits[i].collider != null && hits[i].collider.TryGetComponent<SignalTv>(out sTV))
+        //            {
+        //                if (sTV.done)
+        //                {
+        //                    checkTv = true;
+        //                    tracking = false;
+        //                }
+        //            }
+        //            else
+        //                Debug.Log("뭔지 모르겠는데?");
+        //        }
+        //    }
+        //}
     }
 
     public void Move()
@@ -81,14 +120,14 @@ public class TvEnemy : MonoBehaviour
       
             if (tracking && activeTv)
             {
-                if (  !checkTv )
+                if (!checkTv)
                 {
                     testTarget = target.position - transform.position;
                     testTarget.y = 0;
 
                     transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(testTarget), 8.0f * Time.deltaTime);
 
-                    if (Quaternion.Angle(transform.rotation, Quaternion.LookRotation(testTarget)) < 0.8f)
+                    if (Quaternion.Angle(transform.rotation, Quaternion.LookRotation(testTarget)) < 0.01f)
                     {
                         isRotate = false;
                         rb.MovePosition(transform.position + transform.forward * Time.deltaTime* movespeed);
@@ -98,6 +137,7 @@ public class TvEnemy : MonoBehaviour
                     else
                     {
                         isRotate = true;
+                        move = false;
                     }
                     animaor.SetBool("isRotate", isRotate);
                 }
@@ -139,30 +179,42 @@ public class TvEnemy : MonoBehaviour
         {
             Debug.Log("TV 활성화 콜라이더 감지?");
             GameObject obj = other.transform.parent.gameObject;
-            if (obj.GetComponentInChildren<RemoteTV>() != null)
-            {
-                RemoteTV TV = obj.GetComponentInChildren<RemoteTV>();
-                if (TV.onActive && TV.tvColor == tvColor)
-                {
-                    target = other.transform;
-                    activeTv = true;
-                    tracking = true;
 
-                    /*rb.constraints = RigidbodyConstraints.FreezeRotation |
-                        RigidbodyConstraints.FreezePositionY;*/
-                }
-            }
-            else if (obj.GetComponentInChildren<SignalTv>() != null)
+            RemoteTV tv = obj.GetComponentInChildren<RemoteTV>();
+
+            if (tv.onActive && tv.tvColor == tvColor)
             {
-                SignalTv sTV = obj.GetComponentInChildren<SignalTv>();
-                if (sTV.done && sTV.tvColor == tvColor)
-                {
-                    target = sTV.gameObject.transform;
-                    activeTv = true;
-                    tracking = true;
-                }
-                Debug.Log($"인지한 오브젝트:{sTV.gameObject}");
+                target = tv.transform;
+                activeTv = true;
+                tracking = true;
+
+                Debug.Log("발견");
             }
+            //if (obj.GetComponentInChildren<RemoteTV>() != null)
+            //{
+            //    RemoteTV TV = obj.GetComponentInChildren<RemoteTV>();
+            //    if (TV.onActive && TV.tvColor == tvColor)
+            //    {
+            //        target = other.transform;
+            //        activeTv = true;
+            //        tracking = true;
+
+            //        /*rb.constraints = RigidbodyConstraints.FreezeRotation |
+            //            RigidbodyConstraints.FreezePositionY;*/
+            //        Debug.Log("발견");
+            //    }
+            //}
+            //else if (obj.GetComponentInChildren<SignalTv>() != null)
+            //{
+            //    SignalTv sTV = obj.GetComponentInChildren<SignalTv>();
+            //    if (sTV.done && sTV.tvColor == tvColor)
+            //    {
+            //        target = sTV.gameObject.transform;
+            //        activeTv = true;
+            //        tracking = true;
+            //    }
+            //    Debug.Log($"인지한 오브젝트:{sTV.gameObject}");
+            //}
 
         }
     }
