@@ -131,13 +131,14 @@ public class GameManager : MonoBehaviour
 
     public void LoadTutorialKey()
     {
-        //if (currentscenename == "Tutorial") DeleteTutorialKey();
-        //else
-        //{
-        //    attackTuto = true; jumpTuto = true; moveTuto = true;
-        //    downTuto = true; interactTuto = true; downAttackTuto = true;
-        //    dimensionTuto = true; tutorialEnd = true;
-        //}
+        if(SceneManager.GetActiveScene().name != "CheckTitleTest" || SceneManager.GetActiveScene().name != "Tutorial")
+        {
+            attackTuto = true; jumpTuto = true; moveTuto = true;
+            downTuto = true; interactTuto = true; downAttackTuto = true;
+            dimensionTuto = true; tutorialEnd = true;
+
+            return;
+        }
 
         if (PlayerPrefs.HasKey("AttackTuto")) attackTuto = true;
         if (PlayerPrefs.HasKey("JumpTuto")) jumpTuto = true;
