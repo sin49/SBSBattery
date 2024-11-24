@@ -46,6 +46,7 @@ public class RemoteTransform : Player
     public GameObject LIghtlaserPrefab;
     public GameObject MaxlaserPrefab;
     public GameObject laserEffect; // ∫ˆ ¿Ã∆Â∆Æ ø¿∫Í¡ß∆Æ
+    public GameObject dustEffect;
 
     public float lasermaxlifetime=5;
     public float laserminlifetime=0.6f;

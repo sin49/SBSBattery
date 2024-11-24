@@ -419,19 +419,21 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     }
 
     #region 피격함수
+    [Header("넉백 강도")]
+    [Range(0, 20f)]public float backForce;
     public virtual void HittedRotate()
     {
 
-            if (PlayerHandler.instance.CurrentPlayer != null)
-            {
-               Vector3 target = PlayerHandler.instance.CurrentPlayer.transform.position;
+        if (PlayerHandler.instance.CurrentPlayer != null)
+        {
+            Vector3 target = PlayerHandler.instance.CurrentPlayer.transform.position;
 
-                Vector3 pos = target - transform.position;
-                pos.y = 0;
-                transform.rotation = Quaternion.LookRotation(pos);
-            }
-  
-        rb.AddForce(-transform.forward * 3f, ForceMode.Impulse);
+            Vector3 pos = target - transform.position;
+            pos.y = 0;
+            transform.rotation = Quaternion.LookRotation(pos);
+        }
+
+        rb.AddForce(-transform.forward * backForce, ForceMode.Impulse);
     }
     
     [Header("경직 시간")] 
@@ -444,6 +446,15 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             StopCoroutine(corutine);
         eStat.hp -= damage;
         stopBlinkCorutine();
+        if (mae.hittedEffect != null)
+        {
+            mae.hittedEffect.gameObject.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("몬스터 피격 이펙트가 할당되지 않았습니다.");
+        }
+
         if (eStat.hp <= 0)
         {
             eStat.hp = 0;

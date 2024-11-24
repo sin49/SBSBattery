@@ -1107,20 +1107,20 @@ public class Player : Character,environmentObject
             }
         }
     }
-
+    [Header("공격 전진")] public float attackForce;
     void AttackMove()
     {
         if (!wallcheck)
         {
             if ((int)PlayerStat.instance.MoveState < 4 && directionz != directionZ.none && hori == 0)
             {
-                playerRb.AddForce(transform.GetChild(0).forward * 7, ForceMode.Impulse);
+                playerRb.AddForce(transform.GetChild(0).forward * attackForce, ForceMode.Impulse);
             }
             else if ((int)PlayerStat.instance.MoveState >= 4)
             {
                 if (direction != direction.none && Vert != 0 || directionz != directionZ.none && hori != 0)
                 {
-                    playerRb.AddForce(transform.GetChild(0).forward * 7, ForceMode.Impulse);
+                    playerRb.AddForce(transform.GetChild(0).forward * attackForce, ForceMode.Impulse);
                 }
             }
             Debug.Log("전진하자");
