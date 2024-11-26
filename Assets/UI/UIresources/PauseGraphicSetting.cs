@@ -189,13 +189,26 @@ public class PauseGraphicSetting : UIInteract
                 Debug.Log("화면모드 적용 기능 구현해야함");
                 break;
             case 2:
-                Debug.Log("해상도 및 화면모드 저장하는 기능 구현해야함");
-                CurrentSettingExit();
+                ChoiceScrrenMode();
                 break;
             case 3:
                 CurrentSettingExit();
                 break;
         }
+    }
+
+    public void ChoiceScrrenMode()
+    {
+        switch (screenIndex)
+        {
+            case 0:
+                GameManager.instance.ChangeWindowed();
+                break;
+            case 1:
+                GameManager.instance.ChangeFullscreen();
+                break;
+        }
+
     }
 
     public void SetIndex(int n)

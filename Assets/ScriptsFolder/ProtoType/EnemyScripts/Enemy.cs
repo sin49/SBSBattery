@@ -370,7 +370,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         /*if (searchPlayer)
             DistanceToPlayer();*/
 
-        if (die || hitted)
+        if (die || hitted || GameManager.instance.tutoInteract)
             return;
             if (!onStun)
         {
@@ -449,7 +449,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         stopBlinkCorutine();
         if (mae.hittedEffect != null)
         {
-            mae.hittedEffect.gameObject.SetActive(true);
+            Instantiate(mae.hittedEffect, transform.position, Quaternion.identity);
         }
         else
         {

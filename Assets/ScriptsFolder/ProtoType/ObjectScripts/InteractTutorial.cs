@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class InteractTutorial : MonoBehaviour
 {
@@ -37,7 +38,7 @@ public class InteractTutorial : MonoBehaviour
         if(imageTutorial !=null)
         imageTutorial.SetActive(false);
         TutorialReadCSV();
-        SaveCheck();
+        //SaveCheck();
     }
     private void Start()
     {
@@ -99,35 +100,39 @@ public class InteractTutorial : MonoBehaviour
         {
             if ((Input.GetKeyDown(KeySettingManager.instance.AttackKeycode) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && !end && !textPlaying)
             {
-                talkIndex++;
-                if (talkIndex < talkTexts.Count)
+                if (!textSkip && !textEnd)
                 {
-                    Debug.Log("다음 텍스트");
-                    CheckImageText();
+                    Debug.Log("스킵");
+                    textSkip = true;
                 }
-                else
+
+                if (textEnd)
                 {
-                    Debug.Log("상호작용 끝");
-                    if(TalkUI.instance != null)
-                    TalkUI.instance.gameObject.SetActive(false);
-                    GetCharacterKey();
-                    //CharacterHandler.instance.moveRestric = false;
-                    GameManager.instance.tutoInteract = false;
-                    PlayerHandler.instance.CurrentPlayer.cantmove = false;
-                    end = true;
+                    talkIndex++;
+                    if (talkIndex < talkTexts.Count)
+                    {
+                        Debug.Log("다음 텍스트");
+                        CheckImageText();
+                    }
+                    else
+                    {
+                        Debug.Log("상호작용 끝");
+                        if (TalkUI.instance != null)
+                            TalkUI.instance.gameObject.SetActive(false);
+                        GetCharacterKey();
+                        //CharacterHandler.instance.moveRestric = false;
+                        GameManager.instance.tutoInteract = false;
+                        PlayerHandler.instance.CurrentPlayer.cantmove = false;
+                        end = true;
+                    }
                 }
             }
-
-            //if ((Input.GetKeyDown(KeySettingManager.instance.AttackKeycode) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)) && !end && textPlaying)
-            //{
-            //    textSkip = true;
-            //}
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (SaveCheck()) return;
+        //if (SaveCheck()) return;
 
         if (other.CompareTag("Player") && !interact)
         {
@@ -143,28 +148,32 @@ public class InteractTutorial : MonoBehaviour
         }
     }
 
-    public bool textSkip, textPlaying;
+    public bool textSkip, textPlaying, textEnd;
 
-    //IEnumerator TextAnim()
-    //{
-    //    TalkUI.instance.talkText.text = "";
-    //    for (int n = 0; n < talkTexts[talkIndex].Length; n++)
-    //    {
+    IEnumerator TextAnim()
+    {
+        textEnd = false;
 
-    //        if (textSkip)
-    //        {
-    //            TalkUI.instance.talkText.text = talkTexts[talkIndex];
-    //            textSkip = false;
-    //            break;
-    //        }
-    //        else
-    //        {
-    //            TalkUI.instance.talkText.text += talkTexts[talkIndex][n];
-    //            yield return new WaitForSecondsRealtime(1 / TalkUI.instance.textSpeed); ;
-    //        }
-    //    }
-    //    textPlaying = false;
-    //}
+        TalkUI.instance.talkText.text = "";
+        for (int n = 0; n < talkTexts[talkIndex].Length; n++)
+        {
+
+            if (textSkip)
+            {
+                TalkUI.instance.talkText.text = talkTexts[talkIndex];
+                textSkip = false;
+                textEnd = true;
+                break;
+            }
+            else
+            {
+                TalkUI.instance.talkText.text += talkTexts[talkIndex][n];
+                yield return new WaitForSecondsRealtime(TalkUI.instance.textSpeed); ;
+            }
+        }
+        textPlaying = false;
+        textEnd = true;
+    }
 
     public void InitTextUI()
     {
@@ -178,7 +187,8 @@ public class InteractTutorial : MonoBehaviour
         CheckMiddleImage();
         //TalkUI.instance.TutorialMiddleImage(middleText[talkIndex]);
         TalkUI.instance.Text(talkTexts[talkIndex]);
-        //StartCoroutine(TextAnim());
+        TalkUI.instance.TextSoundPlay();
+        StartCoroutine(TextAnim());
     }
 
     public void GetCharacterKey()

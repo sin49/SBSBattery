@@ -283,6 +283,18 @@ public class GameManager : MonoBehaviour
     {
         Keycard = s;
     }
+
+    public FullScreenMode screenMode;
+
+    public void ChangeWindowed()
+    {
+        Screen.SetResolution(1024, 720, false);
+    }
+
+    public void ChangeFullscreen()
+    {
+        Screen.SetResolution(1920, 1080, true);
+    }
 }
 // public void ReLoadingScene()
 // {
