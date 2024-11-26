@@ -423,6 +423,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     [Range(0, 20f)]public float backForce;
     public virtual void HittedRotate()
     {
+        if (PlayerHandler.instance.CurrentType == TransformType.ironform) return;
 
         if (PlayerHandler.instance.CurrentPlayer != null)
         {
@@ -877,7 +878,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     // 공격 준비시간
     public void ReadyAttackTime()
     {
-        if (hitted) return;
+        if (hitted || GameManager.instance.tutoInteract) return;
         if (activeAttack && !CanAttack)
         {
             CanAttack = true;

@@ -347,13 +347,15 @@ MonoBehaviour:
   isMove: 0
   tap: {fileID: 3738638907998072025}
   mae: {fileID: 6587660186071680179}
-  reachAttack: {fileID: 4450020406108248886}
+  reachAttack: {fileID: 0}
   attackTimer: 0
   MoveAction: {fileID: 0}
   AttackAction: {fileID: 0}
   activeAttack: 0
   onStun: 0
   direction: {x: 0, y: 0, z: 0}
+  backForce: 0
+  stunTime: 0
   flatObject: {fileID: 5761212257197023095}
   flatScaleY: 0.3
   flatTime: 0
@@ -709,7 +711,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1259709413146841823}
   - component: {fileID: 1358406765119071028}
-  - component: {fileID: 4450020406108248886}
+  - component: {fileID: 8059328819052236369}
   m_Layer: 0
   m_Name: ReachAttack
   m_TagString: EnemyAttack
@@ -753,7 +755,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.3
   m_Center: {x: 0, y: 0.3, z: 0}
---- !u!114 &4450020406108248886
+--- !u!114 &8059328819052236369
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -762,11 +764,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1138554709005289887}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad5c99af03d1ff9438716be847afbfa4, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d9cd343a7acff642b48f0103aade916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  onStun: 0
 --- !u!1 &1196577064741294341
 GameObject:
   m_ObjectHideFlags: 0
@@ -1154,6 +1154,8 @@ MonoBehaviour:
   emmissionThird: {fileID: 2100000, guid: be3425dd2ea94f64fa8b6c4c6629a9ef, type: 2}
   materials: []
   deadEffect: {fileID: 253838525713540564, guid: b5ae662d1f8e88e43aa9d1b64a1aed16,
+    type: 3}
+  hittedEffect: {fileID: 7374270257298354224, guid: 473fd5de294468b4eafe582de4304c27,
     type: 3}
 --- !u!1 &2930554798314414579
 GameObject:
