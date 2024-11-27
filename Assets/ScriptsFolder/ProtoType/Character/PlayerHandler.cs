@@ -29,7 +29,7 @@ public class PlayerHandler : MonoBehaviour
         PlayerDeathEvent = null;
     }
     float Skill1InputTimer;
-    float Skill1InputCheck = 0.12f;
+    float Skill1InputCheck = 0.5f;
 
     public GameObject Fog;
 

@@ -33,11 +33,13 @@ public class TalkUI : MonoBehaviour
 
     GameObject currentMiddle;
 
+    [Header("텍스트 사운드 스크립트")] public TextSound ts;
+
     private void Awake()
     {
         if (instance == null)
             instance = this;
-
+        ts = GetComponent<TextSound>();
         gameObject.SetActive(false);
     }
 
@@ -107,6 +109,11 @@ public class TalkUI : MonoBehaviour
     {
         currentMiddle = obj;
         currentMiddle.SetActive(true);
+    }
+
+    public void TextSoundPlay()
+    {
+        ts.PlayTextAudio();
     }
     #endregion
 }

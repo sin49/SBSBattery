@@ -35,7 +35,7 @@ public class EnemyMaterialAndEffect : MonoBehaviour
     // 1개 => 돌진 몬스터, 불 몬스터
     public List<Material> materials = new List<Material>();
     [Header("사망이펙트")] public ParticleSystem deadEffect;
-    
+    [Header("피격이펙트")] public ParticleSystem hittedEffect;
     
     private void Awake()
     {

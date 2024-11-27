@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadTutorialKey()
     {
-        if(SceneManager.GetActiveScene().name != "CheckTitleTest" || SceneManager.GetActiveScene().name != "Tutorial")
+        if(SceneManager.GetActiveScene().name != "CheckTitleTest" && SceneManager.GetActiveScene().name != "Tutorial")
         {
             attackTuto = true; jumpTuto = true; moveTuto = true;
             downTuto = true; interactTuto = true; downAttackTuto = true;
@@ -282,6 +282,18 @@ public class GameManager : MonoBehaviour
     public void GetKeyCard(string s)
     {
         Keycard = s;
+    }
+
+    public FullScreenMode screenMode;
+
+    public void ChangeWindowed()
+    {
+        Screen.SetResolution(1024, 720, false);
+    }
+
+    public void ChangeFullscreen()
+    {
+        Screen.SetResolution(1920, 1080, true);
     }
 }
 // public void ReLoadingScene()

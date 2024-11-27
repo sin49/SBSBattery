@@ -370,7 +370,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         /*if (searchPlayer)
             DistanceToPlayer();*/
 
-        if (die || hitted)
+        if (die || hitted || GameManager.instance.tutoInteract)
             return;
             if (!onStun)
         {
@@ -419,19 +419,22 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     }
 
     #region 피격함수
+    [Header("넉백 강도")]
+    [Range(0, 20f)]public float backForce;
     public virtual void HittedRotate()
     {
+        if (PlayerHandler.instance.CurrentType == TransformType.ironform) return;
 
-            if (PlayerHandler.instance.CurrentPlayer != null)
-            {
-               Vector3 target = PlayerHandler.instance.CurrentPlayer.transform.position;
+        if (PlayerHandler.instance.CurrentPlayer != null)
+        {
+            Vector3 target = PlayerHandler.instance.CurrentPlayer.transform.position;
 
-                Vector3 pos = target - transform.position;
-                pos.y = 0;
-                transform.rotation = Quaternion.LookRotation(pos);
-            }
-  
-        rb.AddForce(-transform.forward * 3f, ForceMode.Impulse);
+            Vector3 pos = target - transform.position;
+            pos.y = 0;
+            transform.rotation = Quaternion.LookRotation(pos);
+        }
+
+        rb.AddForce(-transform.forward * backForce, ForceMode.Impulse);
     }
     
     [Header("경직 시간")] 
@@ -444,6 +447,15 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             StopCoroutine(corutine);
         eStat.hp -= damage;
         stopBlinkCorutine();
+        if (mae.hittedEffect != null)
+        {
+            Instantiate(mae.hittedEffect, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            Debug.Log("몬스터 피격 이펙트가 할당되지 않았습니다.");
+        }
+
         if (eStat.hp <= 0)
         {
             eStat.hp = 0;
@@ -514,7 +526,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         activeAttack = false;
         CanAttack = false;
 
-        if (stunTime <= 0)
+        if (stunTime > 0)
             yield return new WaitForSeconds(stunTime);
         else
             yield return new WaitForSeconds(0.8f);
@@ -866,7 +878,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     // 공격 준비시간
     public void ReadyAttackTime()
     {
-        if (hitted) return;
+        if (hitted || GameManager.instance.tutoInteract) return;
         if (activeAttack && !CanAttack)
         {
             CanAttack = true;

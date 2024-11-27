@@ -183,19 +183,52 @@ public class PauseGraphicSetting : UIInteract
         switch (index)
         {
             case 0:
-                Debug.Log("해상도 적용 기능 구현해야함");
+                Debug.Log("수직동기화 기능 구현해야함");
                 break;
             case 1:
                 Debug.Log("화면모드 적용 기능 구현해야함");
                 break;
             case 2:
-                Debug.Log("해상도 및 화면모드 저장하는 기능 구현해야함");
-                CurrentSettingExit();
+                SaveGraphicSetting();
                 break;
             case 3:
                 CurrentSettingExit();
                 break;
         }
+    }
+
+    public void SaveGraphicSetting()
+    {
+        ChoiceVSyncMode();
+        ChoiceScreenMode();
+    }
+
+    public void ChoiceVSyncMode()
+    {
+        switch (resolutionIndex)
+        {
+            case 0:
+                QualitySettings.vSyncCount = 0;
+                break;
+            case 1:
+                QualitySettings.vSyncCount = 1;
+                break;
+        }
+
+    }
+
+    public void ChoiceScreenMode()
+    {
+        switch (screenIndex)
+        {
+            case 0:
+                GameManager.instance.ChangeWindowed();
+                break;
+            case 1:
+                GameManager.instance.ChangeFullscreen();
+                break;
+        }
+
     }
 
     public void SetIndex(int n)
