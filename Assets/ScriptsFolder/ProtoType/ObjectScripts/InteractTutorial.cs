@@ -168,6 +168,7 @@ public class InteractTutorial : MonoBehaviour
             else
             {
                 TalkUI.instance.talkText.text += talkTexts[talkIndex][n];
+                TalkUI.instance.TextSoundPlay();
                 yield return new WaitForSecondsRealtime(TalkUI.instance.textSpeed); ;
             }
         }
@@ -187,7 +188,7 @@ public class InteractTutorial : MonoBehaviour
         CheckMiddleImage();
         //TalkUI.instance.TutorialMiddleImage(middleText[talkIndex]);
         TalkUI.instance.Text(talkTexts[talkIndex]);
-        TalkUI.instance.TextSoundPlay();
+        //TalkUI.instance.TextSoundPlay();
         StartCoroutine(TextAnim());
     }
 
