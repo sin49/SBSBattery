@@ -13,6 +13,8 @@ public class TextSound : SEPlayer
         base.Start();
         audiosource.clip = textClip;
         audiosource.volume = textVolume;
+        audiosource.pitch = 0.55f;
+        audiosource.playOnAwake = false;
     }
 
     public void PlayTextAudio()

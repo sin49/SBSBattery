@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public class TalkUI : MonoBehaviour
 {
@@ -41,6 +42,11 @@ public class TalkUI : MonoBehaviour
             instance = this;
         ts = GetComponent<TextSound>();
         gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        StartTalkAnimation();
     }
 
     #region 대화 UI
@@ -114,6 +120,44 @@ public class TalkUI : MonoBehaviour
     public void TextSoundPlay()
     {
         ts.PlayTextAudio();
+    }
+    #endregion
+
+    #region UI 애니메이션
+    [Header("대화창 애니메이터 할당")] public Animator textAnim;
+    Action textAction;
+
+    public void StartTalkAnimation()
+    {
+        talkText.text = "";
+        textAnim.Play("TalkStart");
+        StartCoroutine(AnimationCheck());
+    }
+
+    IEnumerator AnimationCheck()
+    {
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        if (textAnim.GetCurrentAnimatorStateInfo(0).IsName("TalkStart"))
+        {
+            while (textAnim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+            {
+                yield return null;
+            }
+
+            ResetAction();
+        }
+    }
+
+    public void RegisterTextAction(Action a)
+    {
+        textAction += a;
+    }
+
+    public void ResetAction()
+    {
+        textAction?.Invoke();
+        textAction = null;
     }
     #endregion
 }

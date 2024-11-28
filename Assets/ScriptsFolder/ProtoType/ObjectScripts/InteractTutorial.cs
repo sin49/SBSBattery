@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -98,7 +99,7 @@ public class InteractTutorial : MonoBehaviour
     {
         if (interact)
         {
-            if ((Input.GetKeyDown(KeySettingManager.instance.AttackKeycode) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && !end && !textPlaying)
+            if ((Input.GetKeyDown(KeySettingManager.instance.jumpKeycode) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) && !end && !textPlaying)
             {
                 if (!textSkip && !textEnd)
                 {
@@ -139,17 +140,19 @@ public class InteractTutorial : MonoBehaviour
             //if (PlayerHandler.instance != null && PlayerHandler.instance.CurrentType)
 
             //CharacterHandler.instance.moveRestric = true;
-            interact = true;
-            //Time.timeScale = 0;
             GameManager.instance.tutoInteract = true;
             PlayerHandler.instance.CurrentPlayer.cantmove = true;
+            RegisterAction();
             TalkUI.instance.gameObject.SetActive(true);
-            InitTextUI();
         }
     }
 
     public bool textSkip, textPlaying, textEnd;
-
+    
+    public void RegisterAction()
+    {
+        TalkUI.instance.RegisterTextAction(InitTextUI);
+    }
     IEnumerator TextAnim()
     {
         textEnd = false;
@@ -161,6 +164,8 @@ public class InteractTutorial : MonoBehaviour
             if (textSkip)
             {
                 TalkUI.instance.talkText.text = talkTexts[talkIndex];
+                string replace = TalkUI.instance.talkText.text.Replace("|", "\n");
+                TalkUI.instance.talkText.text = replace;
                 textSkip = false;
                 textEnd = true;
                 break;
@@ -168,7 +173,12 @@ public class InteractTutorial : MonoBehaviour
             else
             {
                 TalkUI.instance.talkText.text += talkTexts[talkIndex][n];
-                TalkUI.instance.TextSoundPlay();
+                if (TalkUI.instance.talkText.text.Contains("|"))
+                {
+                    string replace = TalkUI.instance.talkText.text.Replace("|", "\n");
+                    TalkUI.instance.talkText.text = replace;
+                }
+                //TalkUI.instance.TextSoundPlay();
                 yield return new WaitForSecondsRealtime(TalkUI.instance.textSpeed); ;
             }
         }
@@ -179,6 +189,7 @@ public class InteractTutorial : MonoBehaviour
     public void InitTextUI()
     {
         checkIndex = startindex;
+        interact = true;
         CheckImageText();
     }
 
@@ -188,7 +199,7 @@ public class InteractTutorial : MonoBehaviour
         CheckMiddleImage();
         //TalkUI.instance.TutorialMiddleImage(middleText[talkIndex]);
         TalkUI.instance.Text(talkTexts[talkIndex]);
-        //TalkUI.instance.TextSoundPlay();
+        TalkUI.instance.TextSoundPlay();
         StartCoroutine(TextAnim());
     }
 
