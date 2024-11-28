@@ -166,6 +166,7 @@ public class InteractTutorial : MonoBehaviour
                 TalkUI.instance.talkText.text = talkTexts[talkIndex];
                 string replace = TalkUI.instance.talkText.text.Replace("|", "\n");
                 TalkUI.instance.talkText.text = replace;
+                TalkUI.instance.TextSoundPlay();
                 textSkip = false;
                 textEnd = true;
                 break;

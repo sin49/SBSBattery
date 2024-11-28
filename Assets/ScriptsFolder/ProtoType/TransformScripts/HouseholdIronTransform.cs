@@ -823,6 +823,7 @@ public class HouseholdIronTransform : Player
             Humonoidanimator.transform.GetChild(i).gameObject.SetActive(true);
         }
         ironSecondForm.SetActive(false);
+        meleeCollider.SetActive(false);
     }
     #endregion
 
