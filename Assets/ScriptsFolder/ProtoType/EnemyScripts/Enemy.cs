@@ -381,6 +381,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 Move();
         }
         tap.ForwardWallRayCheck();
+        tap.BackWallRayCheck();
         tap.UpWallRayCheck();
         tap.WallCheckResult();
         if(environmentforce
@@ -658,6 +659,8 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             {
                 Vector3 target = tap.GetTarget();
                 transform.rotation = Quaternion.LookRotation(target);
+                if (tap.PatrolWallCheck() && !tap.PlayerDetected)
+                    StartCoroutine(tap.InitPatrolTarget());
                 //enemymovepattern();
                 MoveAction?.Invoke();
             }
@@ -748,6 +751,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 Gizmos.DrawWireSphere(p2, 0.3f);
 
                 tap.ForwardWallRayCheck();
+                tap.BackWallRayCheck();
                 tap.UpWallRayCheck();
                 tap.WallCheckResult();
             }

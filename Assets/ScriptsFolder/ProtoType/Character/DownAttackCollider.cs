@@ -54,7 +54,7 @@ public class DownAttackCollider : MeleeCollider
                     Debug.Log("트랜스폼오브젝트 탐지");
                     transformPlace.transformStart(PlayerHandler.instance.CurrentPlayer.gameObject);
                     //PlayerHandler.instance.CurrentPlayer.onTransform = true;
-                    //DeactiveCollider();
+                    DeactiveCollider();
                 }
                 else
                 {

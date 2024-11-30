@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -76,7 +74,7 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     Collider forwardWall;
     Collider upWall;
     Collider backWall;
-    float disToWall;
+    float disToWall, disToBackWall;
     [HideInInspector] public bool wallCheck;
     bool forwardCheck, upCheck, backCheck;
 
@@ -108,6 +106,11 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
         InitPatrolPoint();       
     }
 
+    private void OnEnable()
+    {
+        InitPatrolPoint();
+    }
+
     private void Update()
     {
         if (rangeCollider != null)
@@ -115,6 +118,8 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
             rangeCollider.GetComponent<BoxCollider>().center = new(rangePosX, rangePosY, rangePosZ);
             rangeCollider.GetComponent<BoxCollider>().size = new(rangeSizeX, rangeSizeY, rangeSizeZ);
         }
+
+        Debug.DrawRay(transform.position + transform.up * 1f, transform.forward * 1f, Color.red, 0.01f);
     }
 
 
@@ -125,7 +130,18 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
 
         leftPatrol = firstPoint;
         rightPatrol = secondPoint;
-       
+
+        int target = Random.Range(0, 1);
+
+        switch (target)
+        {
+            case 0:
+                targetPatrol = leftPatrol;
+                break;
+            case 1:
+                targetPatrol = rightPatrol;
+                break;
+        }
     }
 
     private void OnDrawGizmos()
@@ -185,10 +201,17 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
                         if (disToPlayer < disToWall)
                         {
                             isWall = false; // 플레이어와의 거리가 벽과의 거리보다 가까울 경우
+                            if (!PlayerDetected)
+                                PlayerDetected = true;
                         }
                         else
                         {
                             isWall = true;
+                            if (PlayerDetected)
+                            {
+                                Debug.Log("플레이어 추적 못하도록 한다?");
+                                PlayerDetected = false;
+                            }
                         }
                     }
                 }
@@ -228,14 +251,16 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
                         {
                             //Debug.Log("플레이어는 천장에 있지 않음");
                             isWall = false; //플레이어 y축이 위쪽 바닥의 y축 보다 값이 작으면 false
+                            if (!PlayerDetected)
+                                PlayerDetected = true;
                         }
                         else
                         {
                             isWall = true;
                             if (PlayerDetected)
                             {
+                                Debug.Log("플레이어 추적 못하도록 한다?");
                                 PlayerDetected = false;
-                      
                             }
                         }
                     }
@@ -254,7 +279,7 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     public void BackWallRayCheck()
     {
         bool isWall = false;
-        upWall = null;
+        backWall = null;
         Debug.DrawRay(transform.position + Vector3.up * wallRayHeight, -transform.forward * wallRayBackLength, Color.magenta, 0.02f);
         RaycastHit hit;
         if (Physics.Raycast(transform.position + Vector3.up * wallRayHeight, -transform.forward, out hit, wallRayBackLength, LayerMask.GetMask("Platform")))
@@ -268,22 +293,25 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
 
             if (backWall != null)
             {
+                Vector3 targetWall = backWall.transform.position - transform.position;
+                disToBackWall = targetWall.magnitude;
                 if (PlayerHandler.instance != null)
                 {
                     if (PlayerHandler.instance.CurrentPlayer != null)
                     {
-                        if (transform.position.y < upWall.transform.position.y)
+                        if (disToPlayer < disToBackWall)
                         {
-                            //Debug.Log("플레이어는 천장에 있지 않음");
-                            isWall = false; //플레이어 y축이 위쪽 바닥의 y축 보다 값이 작으면 false
+                            isWall = false;
+                            if (!PlayerDetected)
+                                PlayerDetected = true;
                         }
                         else
                         {
                             isWall = true;
                             if (PlayerDetected)
                             {
+                                Debug.Log("플레이어 추적 못하도록 한다?");
                                 PlayerDetected = false;
-
                             }
                         }
                     }
@@ -301,7 +329,7 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
 
     public void WallCheckResult()
     {
-        if (forwardCheck || upCheck || forwardCheck && upCheck)
+        if (forwardCheck || upCheck || backCheck ||forwardCheck && upCheck && backCheck)
         {
             YesWallCheck();
         }
@@ -358,22 +386,47 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
 
         if (disToPlayer > trackingDistance /*|| f > 6*/)
         {
+            Debug.Log("TrackingMove 미실행 하도록 해보자고");
             PlayerDetected = false;
             
         }
         return testTarget;
     }
+    bool wallChecking;
+    public bool PatrolWallCheck()
+    {
+        bool check = false;
+        RaycastHit ray;
+        if (Physics.Raycast(transform.position + transform.up * 1f, transform.forward, out ray, 1f, LayerMask.GetMask("Platform")))
+        {
+            Debug.Log($"이놈의 정체는 뭘까~~~요? >> {ray.collider}");
+            check = true;
+            wallChecking = true;
+            Debug.Log("정찰 이동 중 벽과 충돌함");
+        }
+        else
+        {
+            check = false;
+            wallChecking = false;
+            Debug.Log("정찰 벽 체크 없음");
+        }
 
+        return check;
+    }
+    [Header("목표와의 남은 거리")] public float resultDis;
     public virtual Vector3 PatrolTracking()
     {
         Debug.Log("정찰 포인트 추격");
        Vector3 testTarget = targetPatrol - transform.position;
         testTarget.y = 0;
-
+        resultDis = testTarget.magnitude;
        
         if (testTarget.magnitude < patrolDistance)
         {
-            StartCoroutine(InitPatrolTarget());
+            if (tracking)
+            {
+                StartCoroutine(InitPatrolTarget());
+            }
         }
         return testTarget;
 
@@ -383,6 +436,7 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     // PatrolChange()랑 SetPatrolTarget()은 제외 시키고 요약하여 두 벡터만 정확하게 선언하여 사용중입니다.
     public IEnumerator InitPatrolTarget()
     {
+        Debug.Log("정찰 포인트 재탐색합니다");
         tracking = false;
 
         yield return new WaitForSeconds(patrolWaitTime);
