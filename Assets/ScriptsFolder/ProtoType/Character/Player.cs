@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 
@@ -199,8 +201,6 @@ public class Player : Character,environmentObject
 
     void Update()
     {
-        
-
         if (jumpBufferTimer > 0)
         {
             jumpBufferTimer -= Time.deltaTime;
@@ -624,46 +624,46 @@ public class Player : Character,environmentObject
 
         //PlayerStat.instance.Trans3D
         //PlayerStat.instance.direction = direction;
-        if (hori == -1 && vert == 0) // Left
+        if ((hori == -1 && vert == 0) || ((hori >= -1 && hori < -0.85f) && (((vert >= 0 && vert < 0.25f) || vert <= 0 && vert > -0.25f)))) // Left
         {
             rotateVector = new Vector3(0, 180, 0);
 
-
+            Debug.Log("hori 음수 vert 0");
         }
-        else if (hori == 1 && vert == 0) // Right
+        else if ((hori == 1 && vert == 0) || ((hori <= 1 && hori > 0.85f) && (((vert >= 0 && vert < 0.25f) || vert <= 0 && vert > -0.25f)))) // Right
         {
             rotateVector = new Vector3(0, 0, 0);
-
+            Debug.Log("hori 양수 vert 0");
         }
-        else if (hori == 0 && vert == 1) // Up
+        else if ((hori == 0 && vert == 1) || ((vert <= 1 && vert > 0.85f) && ((hori >= 0 && hori < 0.25f) || (hori <=0 && hori >-0.25f)))) // Up
         {
             rotateVector = new Vector3(0, -90, 0);
-
+            Debug.Log("hori 0 vert 양수");
         }
-        else if (hori == 0 && vert == -1) // Down
+        else if ((hori == 0 && vert == -1) || ((vert >=-1 && vert < -0.85f) && ((hori >=0 && hori < 0.25f) || (hori <= 0 && hori > -0.25f)))) // Down
         {
             rotateVector = new Vector3(0, 90, 0);
-
+            Debug.Log("hori 0 vert 음수");
         }
-        else if (hori == -1 && vert == 1) // UpLeft
+        else if ((hori == -1 && vert == 1) || ((hori >= -1 && hori < -0.2f) && (vert <= 1 && vert >= 0.2f))) // UpLeft
         {
             rotateVector = new Vector3(0, -135, 0);
-
+            Debug.Log("hori 음수 vert 양수");
         }
-        else if (hori == 1 && vert == 1) // UpRight
+        else if ((hori == 1 && vert == 1) || ((hori > 0.2f && hori <= 1) && (vert > 0.2f && vert <= 1))) // UpRight
         {
             rotateVector = new Vector3(0, -45, 0);
-
+            Debug.Log("hori 양수 vert 양수");
         }
-        else if (hori == -1 && vert == -1) // DownLeft
+        else if ((hori == -1 && vert == -1) || ((hori >= -1 && hori < -0.2f ) && (vert >= -1 && hori < -0.2f))) // DownLeft
         {
             rotateVector = new Vector3(0, 135, 0);
-
+            Debug.Log("hori 음수 vert 음수");
         }
-        else if (hori == 1 && vert == -1) // DownRight
+        else if ((hori == 1 && vert == -1) || ((hori <= 1 && hori > 0.2f) && (vert >= -1f && vert <-0.2f))) // DownRight
         {
             rotateVector = new Vector3(0, 45, 0);
-
+            Debug.Log("hori 양수 vert 음수");
         }
         rotateVector += new Vector3(0, 90, 0);
 

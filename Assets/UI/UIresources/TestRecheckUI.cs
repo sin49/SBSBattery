@@ -128,10 +128,18 @@ public class TestRecheckUI : UIInteract
         else
             RecheckExitTitle();
     }
+
+    bool moved;
+    float moveValue;
+
     void handleUI()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        moveValue = Input.GetAxisRaw("Horizontal");
+
+        if ((Input.GetKeyDown(KeyCode.LeftArrow) || moveValue < 0) && !moved)
         {
+            moved = true;
+
             if (!ok)
                 ok = true;
             if (index > 0)
@@ -141,8 +149,14 @@ public class TestRecheckUI : UIInteract
                 UpdateUI();
             }
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+
+        if (Input.GetKeyUp(KeyCode.LeftArrow) || moveValue == 0)
+            moved = false;
+
+        if ((Input.GetKeyDown(KeyCode.RightArrow) || moveValue > 0) && !moved)
         {
+            moved = true;
+
             if (ok)
                 ok = false;
             if (index < buttonList.Count - 1)
@@ -152,7 +166,12 @@ public class TestRecheckUI : UIInteract
                 UpdateUI();
             }
         }
-        if ((Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)) && reCheckActive)
+
+        if (Input.GetKeyUp(KeyCode.RightArrow) || moveValue == 0)
+            moved = false;
+
+        if ((Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Return) 
+            || Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.Space)) && reCheckActive)
         {
             CheckOK();
         }

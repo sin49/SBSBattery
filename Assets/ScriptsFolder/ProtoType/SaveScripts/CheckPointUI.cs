@@ -49,14 +49,17 @@ public class CheckPointUI : UIInteract
         checkList[index].sprite = activeButton;
         fontList[index].color = activeFontColor;
     }
-
+    bool moved;
+    float moveValue;
     // Update is called once per frame
     void Update()
     {
         if (!onHandle) return;
 
-        if (Input.GetKeyUp(KeyCode.UpArrow))
+        moveValue = Input.GetAxisRaw("Vertical");
+        if ((Input.GetKeyUp(KeyCode.UpArrow) || moveValue > 0) && !moved)
         {
+            moved = true;
             if (index > 0)
             {
                 beforeIndex = index;
@@ -65,9 +68,12 @@ public class CheckPointUI : UIInteract
                 SelectSound();
             }
         }
+        if (Input.GetKeyUp(KeyCode.UpArrow) || moveValue == 0)
+            moved = false;
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if ((Input.GetKeyDown(KeyCode.DownArrow) || moveValue < 0) && !moved)
         {
+            moved = true;
             if (index < checkList.Count - 1)
             {
                 beforeIndex = index;
@@ -77,14 +83,17 @@ public class CheckPointUI : UIInteract
                 SelectSound();
             }
         }
+        if (Input.GetKeyUp(KeyCode.DownArrow) || moveValue == 0)
+            moved = false;
 
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space) 
+            || Input.GetKeyDown(KeyCode.Joystick1Button0)|| Input.GetKeyDown(KeyCode.C))
         {
             SelectButton();
             ActiveSound();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Joystick1Button1))
         {
             CheckListExit();
             DeactiveSound();

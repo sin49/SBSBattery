@@ -80,7 +80,7 @@ public class PauseUI : MonoBehaviour
     {
         if (GameManager.instance.tutoInteract) return;
 
-        if(Input.GetKeyDown(KeyCode.Escape) && pauseInteract&&!PlayerHandler.instance.isDie)
+        if((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeySettingManager.instance.PausePadCode)) && pauseInteract&&!PlayerHandler.instance.isDie)
             PauseUiActive();
 
         if (pauseActive)
@@ -90,11 +90,12 @@ public class PauseUI : MonoBehaviour
             {
                 ButtonSoundEffectPlayer_.PlaySelectAudio();
             }
-            if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)
+                || Input.GetKeyDown(KeyCode.Joystick1Button0))
             {
                 ButtonSoundEffectPlayer_.PlayActiveAudio();
             }
-            if (Input.GetKeyDown(KeyCode.X))
+            if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Joystick1Button1))
             {
                 ButtonSoundEffectPlayer_.PlayDeActiveAudio();
             }

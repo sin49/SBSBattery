@@ -66,7 +66,6 @@ public class SelectUI : MonoBehaviour
     {
         pauseui.pauseInteract = false;
         //tokenText.text = PlayerInventory.instance.TokenValue.ToString();
-        OnHandle = true;
         this.index = index;
         ShowPauseUI();
 
@@ -203,6 +202,8 @@ public class SelectUI : MonoBehaviour
         ////initlizeUI();
         ActiveUI();
     }
+    public bool moved;
+    float moveValue;
     // Update is called once per frame
     void Update()
     {
@@ -210,8 +211,11 @@ public class SelectUI : MonoBehaviour
             return;
         if (uiGroupActive && !settingActive)
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            moveValue = Input.GetAxisRaw("Vertical");
+
+            if ((Input.GetKeyDown(KeyCode.UpArrow) || moveValue > 0) && !moved)
             {
+                moved = true;
                 if (index > 0)
                 {
                     beforeIndex = index;
@@ -219,13 +223,17 @@ public class SelectUI : MonoBehaviour
                     UpdateUI();
                 }
             }
+
+            if (Input.GetKeyUp(KeyCode.UpArrow) || moveValue == 0)
+                moved = false;
+            
             /*if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 swapUI();
             }*/
-            if (Input.GetKeyDown(KeyCode.DownArrow))
+            if ((Input.GetKeyDown(KeyCode.DownArrow) || moveValue < 0) && !moved)
             {
-
+                moved = true;
                 if (index < ButtonList.Count - 1)
                 {
                     beforeIndex = index;
@@ -233,7 +241,12 @@ public class SelectUI : MonoBehaviour
                     UpdateUI();
                 }
             }
-            if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+
+            if (Input.GetKeyUp(KeyCode.DownArrow) || moveValue == 0)
+                moved = false;
+
+            if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space) 
+                || Input.GetKeyDown(KeyCode.Joystick1Button0)|| Input.GetKeyDown(KeyCode.Return))
             {
                 SelectButton();
             }
@@ -242,7 +255,7 @@ public class SelectUI : MonoBehaviour
         //{
         //    DeactiveUI();
         //}
-    }
+    }    
 
     #region 추가작업
     public void ShowPauseUI()
@@ -267,6 +280,7 @@ public class SelectUI : MonoBehaviour
             UpdateUI();
             SelectedUI.gameObject.SetActive(true);
             pauseui.pauseInteract = true;
+            OnHandle = true;
         }
     }
 

@@ -227,7 +227,8 @@ public class ItemListUI : MonoBehaviour
         //}
 
         if (Input.GetKeyDown(KeySettingManager.instance.UIactiveKeycode) || Input.GetKeyDown(KeySettingManager.instance.UIactiveKeycode)
-            ||Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+            ||Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)
+            || Input.GetKeyDown(KeyCode.Joystick1Button0))
         {
             swapUI();
         }

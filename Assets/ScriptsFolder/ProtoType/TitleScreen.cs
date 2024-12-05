@@ -92,12 +92,16 @@ public class TitleScreen : UIInteract
         titletexts[index].ImageHub.GetComponent<Image>().sprite = activeButton;
         fontList[index].color = activeFontColor;
     }
-
+    bool moved;
+    float moveValue;
     public void handletitle()
     {
+        moveValue = Input.GetAxisRaw("Vertical");
         //int LastIndex;
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if ((Input.GetKeyDown(KeyCode.DownArrow) || moveValue < 0) && !moved)
         {
+            moved = true;
+
             LastIndex = index;
             index++;
             ButtionSoundEffectPlayer_.PlaySelectAudio();
@@ -111,8 +115,10 @@ public class TitleScreen : UIInteract
             changehub(LastIndex, index);
 
         }
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        else if ((Input.GetKeyDown(KeyCode.UpArrow) || moveValue > 0) && !moved)
         {
+            moved = true;
+
             LastIndex = index;
             index--;
             ButtionSoundEffectPlayer_.PlaySelectAudio();
@@ -126,13 +132,19 @@ public class TitleScreen : UIInteract
             changehub(LastIndex, index);
 
         }
-        else if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+        else if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.C) 
+             || Input.GetKeyDown(KeyCode.Joystick1Button0)|| Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
         {
             //ButtionSoundEffectPlayer_.PlayActiveAudio();
             //titletexts[index].ButtonActive();
             SelectButton();
         }
 
+        if (Input.GetKeyUp(KeyCode.UpArrow) || moveValue == 0)
+            moved = false;
+
+        if (Input.GetKeyUp(KeyCode.DownArrow) || moveValue == 0)
+            moved = false;
     }
 
     public void SelectButton()

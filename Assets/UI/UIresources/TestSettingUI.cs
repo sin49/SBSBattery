@@ -38,16 +38,21 @@ public class TestSettingUI : UIInteract
     {        
         InitButtonUI();
     }
-
+    bool moved;
+    float movevalue;
     // Update is called once per frame
     void Update()
     {
+
         if (settingActive)
         {
+            movevalue = Input.GetAxisRaw("Vertical");
+
             if (!choiceSetting)
             {
-                if (Input.GetKeyDown(KeyCode.UpArrow))
+                if ((Input.GetKeyDown(KeyCode.UpArrow) || movevalue > 0) && !moved)
                 {
+                    moved = true;
                     if (index > 0)
                     {
                         beforeIndex = index;
@@ -55,8 +60,13 @@ public class TestSettingUI : UIInteract
                         UpdateUI();
                     }                    
                 }
-                if (Input.GetKeyDown(KeyCode.DownArrow))
+
+                if (Input.GetKeyUp(KeyCode.UpArrow) || movevalue ==0)
+                    moved = false;                  
+
+                if ((Input.GetKeyDown(KeyCode.DownArrow) || movevalue < 0) && !moved)
                 {
+                    moved = true;
                     if (index < buttonList.Count - 1)
                     {
                         beforeIndex = index;
@@ -64,14 +74,19 @@ public class TestSettingUI : UIInteract
                         UpdateUI();
                     }
                 }
-            }            
+            }
 
-            if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetKeyUp(KeyCode.DownArrow) || movevalue==0)
+                moved = false;
+
+
+            if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space) || 
+                Input.GetKeyDown(KeyCode.Joystick1Button0)|| Input.GetKeyDown(KeyCode.Return))
             {
                 ChoiceInteractUI();
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Joystick1Button1))
             {
                 SettingExit();
             }

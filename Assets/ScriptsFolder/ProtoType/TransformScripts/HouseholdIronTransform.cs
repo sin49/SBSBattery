@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
@@ -265,18 +266,18 @@ public class HouseholdIronTransform : Player
                 case PlayerMoveState.Xmove:
                     hori = Input.GetAxisRaw("Horizontal");
                     rushVert = 0;
-                    if (Input.GetKey(KeyCode.RightArrow))
+                    if (Input.GetKey(KeyCode.RightArrow) || hori >= 0.4f)
                         rushHori = 1;
-                    else if (Input.GetKey(KeyCode.LeftArrow))
+                    else if (Input.GetKey(KeyCode.LeftArrow) || hori < -0.4f)
                         rushHori = -1;
                     break;
                 case PlayerMoveState.XmoveReverse:
                     hori = -1 * Input.GetAxisRaw("Horizontal");
 
                     rushVert = 0;
-                    if (Input.GetKey(KeyCode.RightArrow))
+                    if (Input.GetKey(KeyCode.RightArrow) || hori < -0.4f)
                         rushHori = -1;
-                    else if (Input.GetKey(KeyCode.LeftArrow))
+                    else if (Input.GetKey(KeyCode.LeftArrow) || hori >= 0.4f)
                         rushHori = 1;
                     break;
 
@@ -832,19 +833,19 @@ public class HouseholdIronTransform : Player
     // XZ move 관련
     float XZmoveRushHorizontal()
     {
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow) || hori >= 0.4f)
         {
             rushHori = 1;
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) || hori < -0.4f)
         {
             rushHori = -1;
         }
 
-        if (!Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
+        if ((!Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow)) && hori == 0)
         {
-            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow))
+            if ((Input.GetKey(KeyCode.UpArrow) || Vert >= 0.4f) || (Input.GetKey(KeyCode.DownArrow) || Vert < -0.4f))
             {
                 rushHori = 0;
             }
@@ -855,19 +856,19 @@ public class HouseholdIronTransform : Player
 
     float XZmoveRushVertical()
     {
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.UpArrow) || Vert >= 0.4f)
         {
             rushVert = 1;
         }
 
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.DownArrow) || Vert < -0.4f)
         {
             rushVert = -1;
         }
 
-        if (!Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow))
+        if ((!Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow)) && Vert ==0)
         {
-            if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow))
+            if ((Input.GetKey(KeyCode.RightArrow) || hori >= 0.4f) || (Input.GetKey(KeyCode.LeftArrow) || hori < -0.4f))
             {
                 rushVert = 0;
             }
@@ -879,19 +880,19 @@ public class HouseholdIronTransform : Player
     // ZX move 관련
     public void ZXmoveRushHorizontal()
     {
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.UpArrow) || hori>= 0.4f)
         {
             rushHori = 1;
         }
 
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.DownArrow) || hori < -0.4f)
         {
             rushHori = -1;
         }
 
-        if (!Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow))
+        if ((!Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow) && hori == 0))
         {
-            if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow))
+            if ((Input.GetKey(KeyCode.RightArrow) || Vert >= 0.4f ) || (Input.GetKey(KeyCode.LeftArrow) || Vert < -0.4f))
             {
                 rushHori = 0;
             }
@@ -899,20 +900,22 @@ public class HouseholdIronTransform : Player
     }
 
     public void ZXmoveRushVertical()
-    {
-        if (Input.GetKey(KeyCode.RightArrow))
+    {        
+        
+
+        if (Input.GetKey(KeyCode.RightArrow) || Vert < -0.4f)
         {
             rushVert = -1;
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) || Vert >=0.4f)
         {
             rushVert = 1;
         }
 
-        if (!Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
+        if ((!Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow) && hori == 0))
         {
-            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow))
+            if ((Input.GetKey(KeyCode.UpArrow) || Vert >= 0.4f) || (Input.GetKey(KeyCode.DownArrow) || Vert< -0.4f))
             {
                 rushVert = 0;
             }
@@ -960,12 +963,12 @@ public class HouseholdIronTransform : Player
 
     public void ZmoveRushVert()
     {
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow) || Vert >= 0.4f)
         {
             rushVert = 1;
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) || Vert < -0.4f)
         {
             rushVert = -1;
         }

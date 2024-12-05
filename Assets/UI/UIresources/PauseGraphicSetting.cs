@@ -77,24 +77,41 @@ public class PauseGraphicSetting : UIInteract
         }
         graphicActive = true;
     }
-
+    bool moved, horiMoved;
+    float moveValue;
+    float horiValue;
     // Update is called once per frame
     void Update()
     {
         if (graphicActive)
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            moveValue = Input.GetAxisRaw("Vertical");
+            horiValue = Input.GetAxisRaw("Horizontal");
+
+            if ((Input.GetKeyDown(KeyCode.UpArrow) || moveValue > 0) && !moved)
             {
+                moved = true;
+
                 if (index > 0)
                 {
                     beforeIndex = index;
                     index--;
                     UpdateUI();
                 }
+                Debug.Log("µÎ ¹ø ³ª¿À³ª");
             }
 
-            if (Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetKeyUp(KeyCode.UpArrow) || moveValue == 0)
             {
+                Debug.Log("À§ÂÊ ¹æÇâÅ° ¶Ø¿¥");
+                moved = false;
+            }
+                
+
+            if ((Input.GetKeyDown(KeyCode.DownArrow) || moveValue < 0) && !moved)
+            {
+                moved = true;
+
                 if (onButton)
                     return;
                 if (index < graphicList.Count - 1)
@@ -105,8 +122,15 @@ public class PauseGraphicSetting : UIInteract
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            if (Input.GetKeyUp(KeyCode.DownArrow) || moveValue == 0)
             {
+                Debug.Log("¾Æ·¡ ¹æÇâÅ° ¶Ø¿¥");
+                moved = false;
+            }
+
+            if ((Input.GetKeyDown(KeyCode.LeftArrow) || horiValue < 0) && !horiMoved)
+            {
+                horiMoved = true;
                 if (!onButton)
                 {
                     switch (index)
@@ -138,8 +162,12 @@ public class PauseGraphicSetting : UIInteract
 
             }
 
-            if (Input.GetKeyDown(KeyCode.RightArrow))
+            if (Input.GetKeyUp(KeyCode.LeftArrow) || horiValue == 0)
+                horiMoved = false;
+
+            if ((Input.GetKeyDown(KeyCode.RightArrow) || horiValue > 0) && !horiMoved)
             {
+                horiMoved = true;
                 if (!onButton)
                 {
                     switch (index)
@@ -170,7 +198,11 @@ public class PauseGraphicSetting : UIInteract
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetKeyDown(KeyCode.RightArrow) || horiValue == 0)
+                horiMoved = false;
+
+            if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space) 
+                || Input.GetKeyDown(KeyCode.Joystick1Button0)|| Input.GetKeyDown(KeyCode.Return))
             {
                 SelectSetting();
             }

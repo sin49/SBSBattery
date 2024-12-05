@@ -33,11 +33,15 @@ public class PauseSoundSetting : UIInteract
     {
         InitSoundSetting();
     }
-
+    bool moved, horiMoved;
+    float moveValue, horiValue;
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        moveValue = Input.GetAxisRaw("Vertical");
+        horiValue = Input.GetAxisRaw("Horizontal");
+        if ((Input.GetKeyDown(KeyCode.DownArrow) || moveValue < 0) && !moved)
         {
+            moved = true;
             if (index < interactList.Count - 1)
             {
                 if (onButton)
@@ -49,8 +53,14 @@ public class PauseSoundSetting : UIInteract
                 UpdateUI();
             }
         }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {            
+
+        if (Input.GetKeyUp(KeyCode.DownArrow) || moveValue == 0)
+            moved = false;
+
+        if ((Input.GetKeyDown(KeyCode.UpArrow) || moveValue > 0) && !moved)
+        {
+            moved = true;
+
             if (index > 0)
             {
                 beforeIndex = index;
@@ -59,8 +69,12 @@ public class PauseSoundSetting : UIInteract
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyUp(KeyCode.UpArrow) || moveValue == 0)
+            moved = false;
+
+        if ((Input.GetKeyDown(KeyCode.LeftArrow) || horiValue < 0) && !horiMoved)
         {
+            horiMoved = true;
             if (onButton)
             {
                 if (index > interactList.Count-2)
@@ -76,8 +90,12 @@ public class PauseSoundSetting : UIInteract
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyUp(KeyCode.LeftArrow) || horiValue == 0)
+            horiMoved = false;
+
+        if ((Input.GetKeyDown(KeyCode.RightArrow) || horiValue > 0) && !horiMoved)
         {
+            horiMoved = true;
             if (onButton)
             {
                 if (index < interactList.Count - 1)
@@ -93,7 +111,11 @@ public class PauseSoundSetting : UIInteract
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyUp(KeyCode.RightArrow) && horiValue == 0)
+            horiMoved = false;
+
+        if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space) 
+            || Input.GetKeyDown(KeyCode.Joystick1Button0)|| Input.GetKeyDown(KeyCode.Return))
         {
             SelectSetting();
         }
