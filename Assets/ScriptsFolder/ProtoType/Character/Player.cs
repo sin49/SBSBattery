@@ -114,7 +114,7 @@ public class Player : Character,environmentObject
         if (!hit.collider.TryGetComponent<BrokenPlatform>(out BrokenPlatform br)
             && !hit.collider.TryGetComponent<TransformPlace>(out TransformPlace tp))
         {
-            Debug.Log("부서지는 플랫폼이 아니라서 실행됨");
+            Debug.Log($"부서지는 플랫폼이 아니라서 실행됨{hit.collider}");
             d_col.DeactiveCollider();
         }
         

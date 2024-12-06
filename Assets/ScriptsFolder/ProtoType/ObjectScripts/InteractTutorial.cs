@@ -132,15 +132,28 @@ public class InteractTutorial : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    //if (SaveCheck()) return;
+
+    //    if (other.CompareTag("Player") && !interact)
+    //    {
+    //        //if (PlayerHandler.instance != null && PlayerHandler.instance.CurrentType)
+
+    //        //CharacterHandler.instance.moveRestric = true;
+    //        interact = true;
+    //        GameManager.instance.tutoInteract = true;
+    //        PlayerHandler.instance.CurrentPlayer.cantmove = true;
+    //        RegisterAction();
+    //        TalkUI.instance.gameObject.SetActive(true);
+    //    }
+    //}
+
+    protected virtual void OnTriggerStay(Collider other)
     {
-        //if (SaveCheck()) return;
-
         if (other.CompareTag("Player") && !interact)
-        {
-            //if (PlayerHandler.instance != null && PlayerHandler.instance.CurrentType)
-
-            //CharacterHandler.instance.moveRestric = true;
+        {           
+            interact = true;
             GameManager.instance.tutoInteract = true;
             PlayerHandler.instance.CurrentPlayer.cantmove = true;
             RegisterAction();
@@ -190,8 +203,7 @@ public class InteractTutorial : MonoBehaviour
 
     public void InitTextUI()
     {
-        checkIndex = startindex;
-        interact = true;
+        checkIndex = startindex;        
         CheckImageText();
     }
 

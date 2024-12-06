@@ -18,7 +18,7 @@ public class TransformPlace: MonoBehaviour
     public virtual void transformStart(GameObject other)
     {
 
-        if (!GameManager.instance.transformTuto) return;
+        if (GameManager.instance.transformTuto) return;
 
             other.transform.position = this.transform.position;
             PlayerHandler.instance.LastTransformPlace = this;
