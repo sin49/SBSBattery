@@ -457,7 +457,7 @@ public class Player : Character,environmentObject
     public float jumpanimtimer;
     protected virtual void FixedUpdate()
     {
-        if (cantmove)
+        if (cantmove||PlayerHandler.instance.CantHandle                                                                                                                                                                                                                                                                                                                                                         )
         {
             isRun = false;
         }

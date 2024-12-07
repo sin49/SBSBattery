@@ -10,7 +10,7 @@ public class AudioManager : MonoBehaviour
     public AudioMixer defaultMIxergroup;
  public  AudioMixerGroup SE;
     public AudioMixerGroup BG;
-
+    
     public static AudioManager instance;
     //AudioSource BackGrouundAudioSource;
     HashSet<SEPlayer> SEAudioSources = new HashSet<SEPlayer>();

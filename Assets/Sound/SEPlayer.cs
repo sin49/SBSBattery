@@ -6,7 +6,11 @@ public class SEPlayer : MonoBehaviour
 {
    protected AudioSource audiosource;
     protected AudioType audiotype = AudioType.SE;
-
+    protected void MakeSeAudioClip(AudioClip clip,float volume)
+    {
+        GameObject clipobject = Instantiate(new GameObject());
+   var script=    clipobject.AddComponent<SEAudioClipScript>();
+    }
     protected void AddAudioSource(GameObject obj)
     {
         audiosource = obj.AddComponent<AudioSource>();

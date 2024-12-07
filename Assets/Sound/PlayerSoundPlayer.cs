@@ -42,11 +42,12 @@ public class PlayerSoundPlayer : CharacterSoundPlayer
     {
         if (LandClip != null)
         {
-            Debug.Log("착지 사운드 재생 시도");
-            audiosource.Stop();
-            audiosource.clip = LandClip;
-            audiosource.volume = LandVolume;
-            audiosource.Play();
+            MakeSeAudioClip(LandClip, LandVolume);
+            //Debug.Log("착지 사운드 재생 시도");
+            //audiosource.Stop();
+            //audiosource.clip = LandClip;
+            //audiosource.volume = LandVolume;
+            //audiosource.Play();
         }
     }
    
@@ -54,32 +55,35 @@ public class PlayerSoundPlayer : CharacterSoundPlayer
     {
         if (InitDownAttackClip != null)
         {
-            audiosource.Stop();
-            audiosource.clip = InitDownAttackClip;
-            audiosource.volume = InitDownAttackVolume;
-            audiosource.Play();
+            MakeSeAudioClip(InitDownAttackClip, InitDownAttackVolume);
+            //audiosource.Stop();
+            //audiosource.clip = InitDownAttackClip;
+            //audiosource.volume = InitDownAttackVolume;
+            //audiosource.Play();
         }
     }
     public void PlayInitTransformedSound()
     {
         if (InitTransformedClip != null)
         {
-            Debug.Log("변신시도  사운드");
-            audiosource.Stop();
-            audiosource.clip = InitTransformedClip;
-            audiosource.volume = InitTransformedVolume;
-            audiosource.Play();
+
+            MakeSeAudioClip(InitTransformedClip, InitTransformedVolume);
+            //audiosource.Stop();
+            //audiosource.clip = InitTransformedClip;
+            //audiosource.volume = InitTransformedVolume;
+            //audiosource.Play();
         }
     }
     public void PlayTransformedEndSound()
     {
         if (TransformedEndClip != null)
         {
-            Debug.Log("변신완료  사운드"+this.gameObject.name);
-            audiosource.Stop();
-            audiosource.clip = TransformedEndClip;
-            audiosource.volume = TransformedEndVolume;
-            audiosource.Play();
+            MakeSeAudioClip(TransformedEndClip, TransformedEndVolume);
+            //Debug.Log("변신완료  사운드"+this.gameObject.name);
+            //audiosource.Stop();
+            //audiosource.clip = TransformedEndClip;
+            //audiosource.volume = TransformedEndVolume;
+            //audiosource.Play();
         }
     }
     public void PlayDownAttackEndSound()
@@ -87,21 +91,23 @@ public class PlayerSoundPlayer : CharacterSoundPlayer
         
         if (DownAttackEndClip != null)
         {
-            Debug.Log("내려찍기 완료 사운드 출력시도");
-            audiosource.Stop();
-            audiosource.clip = DownAttackEndClip;
-            audiosource.volume = DownAttackEndVolume;
-            audiosource.Play();
+            MakeSeAudioClip(DownAttackEndClip, DownAttackEndVolume);
+            //Debug.Log("내려찍기 완료 사운드 출력시도");
+            //audiosource.Stop();
+            //audiosource.clip = DownAttackEndClip;
+            //audiosource.volume = DownAttackEndVolume;
+            //audiosource.Play();
         }
     }
     public void PlaySkillSound()
     {
         if (SkillClip != null)
         {
-            audiosource.Stop();
-            audiosource.clip = SkillClip;
-            audiosource.volume = SkillVolume;
-            audiosource.Play();
+            MakeSeAudioClip(SkillClip, SkillVolume);
+            //audiosource.Stop();
+            //audiosource.clip = SkillClip;
+            //audiosource.volume = SkillVolume;
+            //audiosource.Play();
         }
     }
 
@@ -111,10 +117,11 @@ public class PlayerSoundPlayer : CharacterSoundPlayer
   
     public void PlayJumpAudio()
     {
-        audiosource.Stop();
-        audiosource.clip = JumpClip;
-        audiosource.volume = JumpVolume;
-        audiosource.Play();
+        MakeSeAudioClip(JumpClip, JumpVolume);
+        //audiosource.Stop();
+        //audiosource.clip = JumpClip;
+        //audiosource.volume = JumpVolume;
+        //audiosource.Play();
     }
  
 }

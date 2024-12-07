@@ -21,10 +21,13 @@ public class CharacterSoundPlayer : SEPlayer
     {
         if (HittedClip != null)
         {
-            audiosource.Stop();
-            audiosource.clip = HittedClip;
-            audiosource.volume = HittedVolume;
-            audiosource.Play();
+            MakeSeAudioClip(HittedClip, HittedVolume);
+
+            //audiosource.Stop();
+            //audiosource.clip = HittedClip;
+            //audiosource.volume = HittedVolume;
+          
+            //audiosource.Play();
         }
     }
     public void PlayMoveSound()
@@ -41,10 +44,12 @@ public class CharacterSoundPlayer : SEPlayer
     {
         if (AttackClip != null)
         {
-            audiosource.Stop();
-            audiosource.clip = AttackClip;
-            audiosource.volume = AttackVolume;
-            audiosource.Play();
+            MakeSeAudioClip(AttackClip, AttackVolume);
+
+            //audiosource.Stop();
+            //audiosource.clip = AttackClip;
+            //audiosource.volume = AttackVolume;
+            //audiosource.Play();
         }
     }
 }
