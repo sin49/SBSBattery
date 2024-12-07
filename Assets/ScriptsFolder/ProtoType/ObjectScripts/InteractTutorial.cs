@@ -43,7 +43,7 @@ public class InteractTutorial : MonoBehaviour
     }
     private void Start()
     {
-        if (SceneManager.GetActiveScene().name == "Stage1-6 1")
+        if (SceneManager.GetActiveScene().name == "Stage1-6")
             gameObject.SetActive(false);
     }
 
