@@ -25,14 +25,16 @@ public class HouseHoldFormSoundPlayer : PlayerSoundPlayer
 
     public void WallCollidePlay()
     {
+      
         if (WallColClip == null)
             return;
-        audiosource.Stop();
-        audiosource.loop = false;
-        rushing = false;
-        audiosource.clip = WallColClip;
-        audiosource.volume = WallColVolume;
-        audiosource.Play();
+        MakeSeAudioClip(WallColClip, WallColVolume);
+        //audiosource.Stop();
+        //audiosource.loop = false;
+        //rushing = false;
+        //audiosource.clip = WallColClip;
+        //audiosource.volume = WallColVolume;
+        //audiosource.Play();
     }
 
     public void rushsoundend()
@@ -44,6 +46,7 @@ public class HouseHoldFormSoundPlayer : PlayerSoundPlayer
     {
         if (RushSTopClip == null)
             return;
+        //MakeSeAudioClip(RushSTopClip, rushingVolume);
         audiosource.Stop();
         audiosource.loop = false;
         audiosource.clip = RushSTopClip;

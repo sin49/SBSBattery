@@ -21,10 +21,11 @@ public class Boss1SOundManager : SEPlayer
     {
         if (HandSwerapStartclip != null)
         {
-            audiosource.Stop();
-            audiosource.clip = HandSwerapStartclip;
-            audiosource.volume = HandSwerapStartVolume;
-            audiosource.Play();
+            MakeSeAudioClip(HandSwerapStartclip, HandSwerapStartVolume);
+            //audiosource.Stop();
+            //audiosource.clip = HandSwerapStartclip;
+            //audiosource.volume = HandSwerapStartVolume;
+            //audiosource.Play();
         }
     }
     [Header("휩쓸기 사운드")]
@@ -35,10 +36,11 @@ public class Boss1SOundManager : SEPlayer
     {
         if (HandSwerapEndclip != null)
         {
-            audiosource.Stop();
-            audiosource.clip = HandSwerapEndclip;
-            audiosource.volume = HandSwerapEndVolume;
-            audiosource.Play();
+            MakeSeAudioClip(HandSwerapEndclip, HandSwerapEndVolume);
+            //audiosource.Stop();
+            //audiosource.clip = HandSwerapEndclip;
+            //audiosource.volume = HandSwerapEndVolume;
+            //audiosource.Play();
         }
     }
     [Header("레이저시작 사운드")]
@@ -49,11 +51,12 @@ public class Boss1SOundManager : SEPlayer
     {
         if (LazerStartclip != null)
         {
-            audiosource.Stop();
-            audiosource.loop = true;
-            audiosource.clip = LazerStartclip;
-            audiosource.volume = LazerStartVolume;
-            audiosource.Play();
+            MakeSeAudioClip(LazerStartclip, LazerStartVolume);
+            //audiosource.Stop();
+            //audiosource.loop = true;
+            //audiosource.clip = LazerStartclip;
+            //audiosource.volume = LazerStartVolume;
+            //audiosource.Play();
         }
     }
     public void LazerStartClipEnd()

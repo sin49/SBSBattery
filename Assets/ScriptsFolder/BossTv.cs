@@ -26,7 +26,13 @@ public class BossTv : RemoteObject
         else
             monitorrenderer.material = phase1mat;
     }
+    public void PlayPlayerIdle()
+    {
+        PlayerHandler.instance.CurrentPlayer.isMove = false;
+        PlayerHandler.instance.CurrentPlayer.Humonoidanimator.SetBool("run", false);
 
+        PlayerHandler.instance.CurrentPlayer.Humonoidanimator.Play("idle");
+    }
     IEnumerator monitornoise()
     {
       
@@ -116,7 +122,7 @@ public class BossTv : RemoteObject
     public void PlayerEnableCantHandle()
     {
         PlayerHandler.instance.CantHandle = true;
-   
+        PlayPlayerIdle();
     }
     public void PlayerDisableCantHandle()
     {
