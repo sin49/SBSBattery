@@ -24,7 +24,7 @@ public class SEAudioClipScript : MonoBehaviour
     private void Update()
     {
         if (StartPlating && !audiosource.isPlaying)//이거 비활성 +풀링써서 최적화해야됨
-            Destroy(this.gameObject);
+            SoundPoolingManager.instance.ReturnSoundPooling(this.gameObject, audiosource);
     }
     public void PlayAudioSource(AudioClip clip,float volume)
     {

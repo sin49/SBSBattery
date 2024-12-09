@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
 
 public class SEPlayer : MonoBehaviour
 {
@@ -8,8 +9,17 @@ public class SEPlayer : MonoBehaviour
     protected AudioType audiotype = AudioType.SE;
     protected void MakeSeAudioClip(AudioClip clip,float volume)
     {
-        GameObject clipobject = Instantiate(new GameObject());
-   var script=    clipobject.AddComponent<SEAudioClipScript>();
+        if (SoundPoolingManager.instance != null)
+        {
+            Debug.Log("사운드 풀링 매니저 있음");
+            SoundPoolingManager.instance.GetSoundPooling(clip, volume);
+        }
+        else
+        {
+            Debug.Log("사운드 풀링 매니저 없음");
+            GameObject clipobject = Instantiate(new GameObject());
+            var script = clipobject.AddComponent<SEAudioClipScript>();
+        }
     }
     protected void AddAudioSource(GameObject obj)
     {
