@@ -497,7 +497,7 @@ public class PlayerHandler : MonoBehaviour
         {
             CurrentPlayer.Move();
         }
-        if ((Input.GetKey(KeySettingManager.instance.DimensionChangeKeycode) || Input.GetAxisRaw("XboxRT")==1) && !Changing && !DImensionChangeDisturb && GameManager.instance.dimensionTuto)
+        if ((Input.GetKey(KeySettingManager.instance.DimensionChangeKeycode) || Input.GetAxisRaw("XboxRT")==1 || Input.GetAxisRaw("XboxLT") ==1) && !Changing && !DImensionChangeDisturb && GameManager.instance.dimensionTuto)
         {            
             if (ladderCheck || ladderInteract || inputDimension) return;
             inputDimension = true;
@@ -506,7 +506,7 @@ public class PlayerHandler : MonoBehaviour
 
         }
 
-        if (!Input.GetKey(KeySettingManager.instance.DimensionChangeKeycode) && Input.GetAxisRaw("XboxRT") < 1 && !Changing)
+        if (!Input.GetKey(KeySettingManager.instance.DimensionChangeKeycode) && Input.GetAxisRaw("XboxRT") < 1 && Input.GetAxisRaw("XboxLT") < 1 && !Changing)
             inputDimension = false;
 
         if (InteractTimer > 0)

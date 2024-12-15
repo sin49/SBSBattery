@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class KeyboardCustomizing : UIInteract
 {
-    public List<Image> imageList;
+    //public List<Image> imageList;
 
     public Color deactiveColor;
     public Color activeColor;
@@ -15,11 +15,15 @@ public class KeyboardCustomizing : UIInteract
     bool onHandle, ableSetting;
 
     public TestSettingUI settingUI;
-    
+
+    public Image keySelect;
+
     private void OnEnable()
     {
-        fontList[index].color = deactiveFontColor;
-
+        fontList[index].color = deactiveFontColor;//
+        keySelect.color = deactiveColor;
+        keySelect.transform.position = fontList[index].transform.position;
+        //keySelect.transform.SetParent(fontList[index].transform);
         if (KeySettingManager.instance != null)
             InitKeySettingText();
     }
@@ -39,15 +43,15 @@ public class KeyboardCustomizing : UIInteract
         fontList[3].text = KeySettingManager.instance.SkillKeycode.ToString();
         fontList[4].text = KeySettingManager.instance.DownAttackKeycode.ToString();
         fontList[5].text = KeySettingManager.instance.InteractKeycode.ToString();
-        fontList[6].text = KeySettingManager.instance.DeformKeycode.ToString();
 
         onHandle = true;
     }
-
+    bool moved;
+    float moveValue;
     // Update is called once per frame
     void Update()
     {
-        if (onHandle) return;
+        if (!onHandle) return;
 
         if (ableSetting)
         {
@@ -57,8 +61,9 @@ public class KeyboardCustomizing : UIInteract
 
         if (!ableSetting)
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            if ((Input.GetKeyDown(KeyCode.UpArrow) || moveValue > 0) && !moved)
             {
+                moved = true;
                 if (index > 0)
                 {
                     beforeIndex = index;
@@ -67,9 +72,13 @@ public class KeyboardCustomizing : UIInteract
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetKeyUp(KeyCode.UpArrow) || moveValue == 0)
+                moved = false;
+
+            if ((Input.GetKeyDown(KeyCode.DownArrow) || moveValue < 0) && !moved)
             {
-                if (index < imageList.Count - 1)
+                moved = true;
+                if (index < fontList.Count - 1)
                 {
                     beforeIndex = index;
                     index++;
@@ -77,15 +86,19 @@ public class KeyboardCustomizing : UIInteract
                 }
             }
 
+            if (Input.GetKeyUp(KeyCode.DownArrow) || moveValue == 0)
+                moved = false;
+
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 CheckSetting();
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Joystick1Button1))
             {
                 onHandle = false;
                 gameObject.SetActive(false);
+                settingUI.ShowChoiceScreen();
             }
 
         }        
@@ -93,15 +106,19 @@ public class KeyboardCustomizing : UIInteract
 
     public void UpdateUI()
     {
-        imageList[beforeIndex].color = deactiveColor;
-        imageList[index].color = activeColor;
+        //imageList[beforeIndex].color = deactiveColor;
+        //imageList[index].color = activeColor;
+        keySelect.transform.position = fontList[index].transform.position;
+        keySelect.transform.SetParent(fontList[index].transform);
     }
 
     public void CheckSetting()
     {
         ableSetting = true;
+        //fontList[index].color = activeFontColor;
+        //imageList[index].color = activeColor;
+        keySelect.color = activeColor;
         fontList[index].color = activeFontColor;
-        imageList[index].color = activeColor;
     }
 
     KeyCode currentKey = KeyCode.None;
@@ -127,7 +144,9 @@ public class KeyboardCustomizing : UIInteract
     public void ChangeKeyCode()
     {
         fontList[index].text = currentKey.ToString();
-        
+        keySelect.color = deactiveColor;
+        fontList[index].color = deactiveFontColor;
+        //keySelect.color = originColor;
         switch (index)
         {
             case 0:

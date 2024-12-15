@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -16,6 +17,7 @@ public class TestSettingUI : UIInteract
 
     public List<Image> buttonList = new List<Image>();
     int index, beforeIndex;
+    int rangeIndex, beforeRangeIndex;
 
     public Sprite activeButton;
     public Sprite deactiveButton;
@@ -26,9 +28,12 @@ public class TestSettingUI : UIInteract
 
     bool choiceSetting;
 
-    public GameObject choice, sound, graphic;
+    public GameObject choice, sound, graphic, keyCustom, padCustom;
 
     [HideInInspector] public GameObject canvas;
+
+    public List<string> textList = new List<string>();
+    public List<float> spacingList = new List<float>();
     private void Awake()
     {
         gameObject.SetActive(false);
@@ -36,8 +41,23 @@ public class TestSettingUI : UIInteract
 
     private void OnEnable()
     {        
+        for (int i = 0; i < buttonList.Count; i++)
+        {
+            fontList[i].text = textList[i];
+            fontList[i].characterSpacing = spacingList[i];
+        }
         InitButtonUI();
     }
+
+    private void OnDisable()
+    {
+        index = 0;
+        rangeIndex = 0;
+
+        beforeIndex = 0;
+        beforeRangeIndex = 0;
+    }
+
     bool moved;
     float movevalue;
     // Update is called once per frame
@@ -57,6 +77,9 @@ public class TestSettingUI : UIInteract
                     {
                         beforeIndex = index;
                         index--;
+
+                        beforeRangeIndex = rangeIndex;
+                        rangeIndex--;
                         UpdateUI();
                     }                    
                 }
@@ -67,10 +90,13 @@ public class TestSettingUI : UIInteract
                 if ((Input.GetKeyDown(KeyCode.DownArrow) || movevalue < 0) && !moved)
                 {
                     moved = true;
-                    if (index < buttonList.Count - 1)
+                    if (index < textList.Count - 1)
                     {
                         beforeIndex = index;
                         index++;
+
+                        beforeRangeIndex = rangeIndex;
+                        rangeIndex++;
                         UpdateUI();
                     }
                 }
@@ -124,6 +150,20 @@ public class TestSettingUI : UIInteract
                     title.ButtionSoundEffectPlayer_.PlayActiveAudio();
                 break;
             case 2:
+                NextSelectSetting(keyCustom);
+                if (SceneManager.GetActiveScene().name != "CheckTitleTest")
+                    uiSelect.pauseui.ButtonSoundEffectPlayer_.PlayActiveAudio();
+                else
+                    title.ButtionSoundEffectPlayer_.PlayActiveAudio();
+                break;
+            case 3:
+                NextSelectSetting(padCustom);
+                if (SceneManager.GetActiveScene() != null)
+                    uiSelect.pauseui.ButtonSoundEffectPlayer_.PlayActiveAudio();
+                else
+                    title.ButtionSoundEffectPlayer_.PlayActiveAudio();
+                break;
+            case 4:
                 SettingExit();
                 if (SceneManager.GetActiveScene().name != "CheckTitleTest")
                     uiSelect.pauseui.ButtonSoundEffectPlayer_.PlayDeActiveAudio();
@@ -138,6 +178,7 @@ public class TestSettingUI : UIInteract
 
     public void NextSelectSetting(GameObject selectSetting)
     {
+        settingActive = false;
         choiceSetting = true;
         choice.SetActive(false);
         selectSetting.SetActive(true);
@@ -145,6 +186,8 @@ public class TestSettingUI : UIInteract
 
     public void SettingExit()
     {
+        fontList[rangeIndex].color = deactiveFontColor;
+        buttonList[rangeIndex].sprite = deactiveButton;
         settingActive = false;
         if (SceneManager.GetActiveScene().name != "CheckTitleTest" && SceneManager.GetActiveScene().name != "TitleTest")
         {
@@ -182,6 +225,26 @@ public class TestSettingUI : UIInteract
 
     public void UpdateUI()
     {
+        int count = 0;
+        if (rangeIndex < 0)
+        {
+            rangeIndex = 0;            
+            while (count < buttonList.Count)
+            {
+                fontList[rangeIndex + count].text = textList[index + count];
+                count++;
+            }
+        }
+        else if (rangeIndex > buttonList.Count -1)
+        {
+            rangeIndex = buttonList.Count - 1;
+            while (count < buttonList.Count)
+            {
+                fontList[rangeIndex - count].text = textList[index - count];
+                count++;
+            }
+        }
+
         DeactiveButton();
         ActiveButton();
     }
@@ -232,13 +295,13 @@ public class TestSettingUI : UIInteract
 
     public void ActiveButton()
     {
-        buttonList[index].GetComponent<Image>().sprite = activeButton;
-        fontList[index].color = activeFontColor;
+        buttonList[rangeIndex].GetComponent<Image>().sprite = activeButton;
+        fontList[rangeIndex].color = activeFontColor;
     }
 
     public void DeactiveButton()
     {
-        buttonList[beforeIndex].GetComponent<Image>().sprite = deactiveButton;
-        fontList[beforeIndex].color = deactiveFontColor;
+        buttonList[beforeRangeIndex].GetComponent<Image>().sprite = deactiveButton;
+        fontList[beforeRangeIndex].color = deactiveFontColor;
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 [CustomEditor(typeof(KeySettingManager))]
@@ -21,7 +22,12 @@ public class KeysettingManagerEditor : Editor
         k.interactkeycode = (int)m_Instance.InteractKeycode;
         k.deformkeycode = (int)m_Instance.DeformKeycode;
 
-
+        k.attackpadcode = (int)m_Instance.AttackPadCode;
+        k.jumppadcode = (int) m_Instance.JumpPadCode;
+        k.dimensionchangepadcode = (int)m_Instance.dimensionPadCode;
+        k.skillpadcode = (int)m_Instance.SkillPadCode;
+        k.downattackpadcode = (int)m_Instance.DownAttackPadCode;
+        k.interactpadcode = (int)m_Instance.InteractPadCode;
 
         AssetDatabase.CreateAsset(k,$"Assets\\KeySetting\\{m_Instance.keysettingpresetname}.asset");
         AssetDatabase.SaveAssets();
@@ -36,6 +42,14 @@ public class KeysettingManagerEditor : Editor
         m_Instance.DownAttackKeycode =(KeyCode)kp.downattackkeycode;
         m_Instance.InteractKeycode =(KeyCode)kp.interactkeycode;
         m_Instance.DeformKeycode =(KeyCode)kp.deformkeycode;
+        m_Instance.keysettingpresetname = kp.name;
+
+        m_Instance.AttackPadCode = (KeyCode)kp.attackpadcode;
+        m_Instance.JumpPadCode = (KeyCode)kp.jumppadcode;
+        m_Instance.dimensionPadCode = (KeyCode)kp.jumppadcode;
+        m_Instance.SkillPadCode = (KeyCode)kp.skillpadcode;
+        m_Instance.DownAttackPadCode = (KeyCode)kp.downattackpadcode;
+        m_Instance.InteractPadCode = (KeyCode)kp.interactpadcode;
         m_Instance.keysettingpresetname = kp.name;
     }
     public override void OnInspectorGUI()
