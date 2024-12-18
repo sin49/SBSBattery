@@ -28,7 +28,7 @@ public class SoundPoolingManager : MonoBehaviour
 
     public void GetSoundPooling(AudioClip clip, float volume)
     {
-        Debug.Log("사운드 풀링 요청");
+        //Debug.Log("사운드 풀링 요청");
         for (int i = 0; i < sPool.Length; i++)
         {
             if (sPool[i].soundValue == clip)

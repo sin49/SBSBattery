@@ -285,47 +285,44 @@ public class Player : Character,environmentObject
             Debug.DrawRay(this.transform.position + Vector3.right * playersizeX + Vector3.forward * playersizeX
                 , Vector3.down * JumprayDistance, Color.red);
             Debug.DrawRay(this.transform.position - Vector3.right * playersizeX + Vector3.forward * playersizeX, Vector3.down * JumprayDistance, Color.red);
-            if (Physics.Raycast(this.transform.position + Vector3.right * playersizeX - Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance))
+            if (Physics.Raycast(this.transform.position + Vector3.right * playersizeX - Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance, ~LayerMask.GetMask("RaycastIgnore")))
             {
-
-                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject"))
-                {
+                Debug.Log($"레이오브젝트 : {hit.collider}");
+                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject") || hit.collider.CompareTag("PlayerRestrict"))
+                {                   
                     groundCheckEvnet(hit);
                     return;
                 }
 
 
             }
-            if (Physics.Raycast(this.transform.position - Vector3.right * playersizeX - Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance))
+            if (Physics.Raycast(this.transform.position - Vector3.right * playersizeX - Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance, ~LayerMask.GetMask("RaycastIgnore")))
             {
-
-                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject"))
-                {
-
+                Debug.Log($"레이오브젝트 : {hit.collider}");
+                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject") || hit.collider.CompareTag("PlayerRestrict"))
+                {                    
                     groundCheckEvnet(hit);
                     return;
                 }
 
 
             }
-            if (Physics.Raycast(this.transform.position + Vector3.right * playersizeX + Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance))
+            if (Physics.Raycast(this.transform.position + Vector3.right * playersizeX + Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance, ~LayerMask.GetMask("RaycastIgnore")))
             {
-
-                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject"))
-                {
-
+                Debug.Log($"레이오브젝트 : {hit.collider}");
+                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject") || hit.collider.CompareTag("PlayerRestrict"))
+                {                   
                     groundCheckEvnet(hit);
                     return;
                 }
 
 
             }
-            if (Physics.Raycast(this.transform.position - Vector3.right * playersizeX + Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance))
+            if (Physics.Raycast(this.transform.position - Vector3.right * playersizeX + Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance, ~LayerMask.GetMask("RaycastIgnore")))
             {
-
-                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject"))
+                Debug.Log($"레이오브젝트 : {hit.collider}");
+                if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject") || hit.collider.CompareTag("PlayerRestrict"))
                 {
-
                     groundCheckEvnet(hit);
                     return;
                 }
@@ -628,42 +625,42 @@ public class Player : Character,environmentObject
         {
             rotateVector = new Vector3(0, 180, 0);
 
-            Debug.Log("hori 음수 vert 0");
+            //Debug.Log("hori 음수 vert 0");
         }
         else if ((hori == 1 && vert == 0) || ((hori <= 1 && hori > 0.85f) && (((vert >= 0 && vert < 0.25f) || vert <= 0 && vert > -0.25f)))) // Right
         {
             rotateVector = new Vector3(0, 0, 0);
-            Debug.Log("hori 양수 vert 0");
+            //Debug.Log("hori 양수 vert 0");
         }
         else if ((hori == 0 && vert == 1) || ((vert <= 1 && vert > 0.85f) && ((hori >= 0 && hori < 0.25f) || (hori <=0 && hori >-0.25f)))) // Up
         {
             rotateVector = new Vector3(0, -90, 0);
-            Debug.Log("hori 0 vert 양수");
+            //Debug.Log("hori 0 vert 양수");
         }
         else if ((hori == 0 && vert == -1) || ((vert >=-1 && vert < -0.85f) && ((hori >=0 && hori < 0.25f) || (hori <= 0 && hori > -0.25f)))) // Down
         {
             rotateVector = new Vector3(0, 90, 0);
-            Debug.Log("hori 0 vert 음수");
+            //Debug.Log("hori 0 vert 음수");
         }
         else if ((hori == -1 && vert == 1) || ((hori >= -1 && hori < -0.2f) && (vert <= 1 && vert >= 0.2f))) // UpLeft
         {
             rotateVector = new Vector3(0, -135, 0);
-            Debug.Log("hori 음수 vert 양수");
+            //Debug.Log("hori 음수 vert 양수");
         }
         else if ((hori == 1 && vert == 1) || ((hori > 0.2f && hori <= 1) && (vert > 0.2f && vert <= 1))) // UpRight
         {
             rotateVector = new Vector3(0, -45, 0);
-            Debug.Log("hori 양수 vert 양수");
+            //Debug.Log("hori 양수 vert 양수");
         }
         else if ((hori == -1 && vert == -1) || ((hori >= -1 && hori < -0.2f ) && (vert >= -1 && hori < -0.2f))) // DownLeft
         {
             rotateVector = new Vector3(0, 135, 0);
-            Debug.Log("hori 음수 vert 음수");
+            //Debug.Log("hori 음수 vert 음수");
         }
         else if ((hori == 1 && vert == -1) || ((hori <= 1 && hori > 0.2f) && (vert >= -1f && vert <-0.2f))) // DownRight
         {
             rotateVector = new Vector3(0, 45, 0);
-            Debug.Log("hori 양수 vert 음수");
+            //Debug.Log("hori 양수 vert 음수");
         }
         rotateVector += new Vector3(0, 90, 0);
 
@@ -1551,7 +1548,7 @@ IEnumerator jumpForceLimitCorutine()
         #region 바닥 상호작용
         if (collision.gameObject.CompareTag("Ground") ||
 
-            collision.gameObject.CompareTag("Enemy") ||
+            /*collision.gameObject.CompareTag("Enemy") ||*/
             collision.gameObject.CompareTag("GameController") || collision.collider.CompareTag("CursorObject"))
         {
             onGround = false;

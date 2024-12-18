@@ -11,12 +11,12 @@ public class SEPlayer : MonoBehaviour
     {
         if (SoundPoolingManager.instance != null)
         {
-            Debug.Log("사운드 풀링 매니저 있음");
+            //Debug.Log("사운드 풀링 매니저 있음");
             SoundPoolingManager.instance.GetSoundPooling(clip, volume);
         }
         else
         {
-            Debug.Log("사운드 풀링 매니저 없음");
+            //Debug.Log("사운드 풀링 매니저 없음");
             GameObject clipobject = Instantiate(new GameObject());
             var script = clipobject.AddComponent<SEAudioClipScript>();
         }

@@ -209,4 +209,29 @@ public class KeySettingManager : MonoBehaviour
 
         return check;
     }
+
+    public bool InteractPad()
+    {
+        bool check = false;
+
+        if (interactRT)
+        {
+            tValue = Input.GetAxisRaw("XboxRT");
+            if (tValue == 1)
+                check = true;
+        }
+        else if (interactLT)
+        {
+            tValue = Input.GetAxisRaw("XboxLT");
+            if (tValue == 1)
+                check = true;
+        }
+        else
+        {
+            if (Input.GetKey(InteractPadCode))
+                check = true;
+        }
+
+        return check;
+    }
 }

@@ -876,7 +876,7 @@ GameObject:
   - component: {fileID: 165417100966872291}
   - component: {fileID: 3692971729834942315}
   - component: {fileID: 406552838971081004}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: SearchMat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1103,6 +1103,87 @@ CharacterJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!1 &2409411635764683565
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8456952135068732521}
+  - component: {fileID: 3128100441735977868}
+  - component: {fileID: 4978366020481121931}
+  m_Layer: 20
+  m_Name: PlayerRestrict
+  m_TagString: PlayerRestrict
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8456952135068732521
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2409411635764683565}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4932922018843922339}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!135 &3128100441735977868
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2409411635764683565}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.25
+  m_Center: {x: 0, y: 0.48, z: 0}
+--- !u!54 &4978366020481121931
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2409411635764683565}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2698608021632153844
 GameObject:
   m_ObjectHideFlags: 0
@@ -1618,7 +1699,7 @@ GameObject:
   - component: {fileID: 5329625773792054488}
   - component: {fileID: 2937360031623099487}
   - component: {fileID: 3623799458026887797}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: AttackRangeCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2057,6 +2138,7 @@ MonoBehaviour:
   trackingdata: {fileID: 11400000, guid: 999ade7599789a74aabc640c79c6c4ea, type: 2}
   dataname: Melee_1
   PlayerDetected: 0
+  resultDis: 0
 --- !u!1 &4603672121430995988
 GameObject:
   m_ObjectHideFlags: 0
@@ -2172,7 +2254,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4056746804504027684
 Transform:
   m_ObjectHideFlags: 0
@@ -2594,6 +2676,7 @@ Transform:
   - {fileID: 1774823535827091584}
   - {fileID: 4764222504615659733}
   - {fileID: 4056746804504027684}
+  - {fileID: 8456952135068732521}
   - {fileID: 3978588500716103331}
   - {fileID: 4583165588567418818}
   - {fileID: 8597545538178830793}
@@ -2854,7 +2937,7 @@ GameObject:
   - component: {fileID: 6695227901757261625}
   - component: {fileID: 9066370989960476869}
   - component: {fileID: 4554639551137100570}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: SearchCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3710,7 +3793,7 @@ GameObject:
   - component: {fileID: 2016115473857950162}
   - component: {fileID: 3827246484387067793}
   - component: {fileID: 3388507819421513723}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: AttackMat
   m_TagString: Untagged
   m_Icon: {fileID: 0}

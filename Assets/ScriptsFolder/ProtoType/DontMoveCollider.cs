@@ -18,7 +18,8 @@ public class DontMoveCollider : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {        
         if ((other.CompareTag("Ground")  )|| other.CompareTag("Enemy") ||
-         (   other.CompareTag("InteractivePlatform") && !PlayerHandler.instance.CurrentPlayer.CullingPlatform) || other.CompareTag("CursorObject"))
+         (   other.CompareTag("InteractivePlatform") && !PlayerHandler.instance.CurrentPlayer.CullingPlatform) 
+         || other.CompareTag("CursorObject") || other.CompareTag("PlayerRestrict"))
         {
             if ( PlayerHandler.instance.CurrentPlayer != null)
                  PlayerHandler.instance.CurrentPlayer.SetWallcheck(true);
@@ -39,7 +40,8 @@ public class DontMoveCollider : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if ((other.CompareTag("Ground")  )|| other.CompareTag("Enemy") ||
-            (other.CompareTag("InteractivePlatform") && !PlayerHandler.instance.CurrentPlayer.CullingPlatform) || other.CompareTag("CursorObject"))
+            (other.CompareTag("InteractivePlatform") && !PlayerHandler.instance.CurrentPlayer.CullingPlatform) 
+            || other.CompareTag("CursorObject") || other.CompareTag("PlayerRestrict"))
         {
             if (PlayerHandler.instance.CurrentPlayer != null)
                 PlayerHandler.instance.CurrentPlayer.SetWallcheck(false);

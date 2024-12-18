@@ -497,7 +497,7 @@ public class PlayerHandler : MonoBehaviour
         {
             CurrentPlayer.Move();
         }
-        if ((Input.GetKey(KeySettingManager.instance.DimensionChangeKeycode) || Input.GetAxisRaw("XboxRT")==1 || Input.GetAxisRaw("XboxLT") ==1) && !Changing && !DImensionChangeDisturb && GameManager.instance.dimensionTuto)
+        if ((Input.GetKey(KeySettingManager.instance.DimensionChangeKeycode) || KeySettingManager.instance.DimensionPad()) && !Changing && !DImensionChangeDisturb && GameManager.instance.dimensionTuto)
         {            
             if (ladderCheck || ladderInteract || inputDimension) return;
             inputDimension = true;
@@ -506,7 +506,7 @@ public class PlayerHandler : MonoBehaviour
 
         }
 
-        if (!Input.GetKey(KeySettingManager.instance.DimensionChangeKeycode) && Input.GetAxisRaw("XboxRT") < 1 && Input.GetAxisRaw("XboxLT") < 1 && !Changing)
+        if (!Input.GetKey(KeySettingManager.instance.DimensionChangeKeycode) && !KeySettingManager.instance.DimensionPad() && !Changing)
             inputDimension = false;
 
         if (InteractTimer > 0)
@@ -515,7 +515,7 @@ public class PlayerHandler : MonoBehaviour
 
         if (interactobject != null && !CurrentPlayer.downAttack)
         {
-            if ((Input.GetKey(KeySettingManager.instance.InteractKeycode) || Input.GetKey(KeySettingManager.instance.InteractPadCode)) && InteractTimer <= 0)
+            if ((Input.GetKey(KeySettingManager.instance.InteractKeycode) || KeySettingManager.instance.InteractPad()) && InteractTimer <= 0)
             {
                 if (!inputInteract)
                 {
@@ -530,14 +530,14 @@ public class PlayerHandler : MonoBehaviour
             }
         }
 
-        if (!Input.GetKey(KeySettingManager.instance.InteractKeycode) && !Input.GetKey(KeySettingManager.instance.InteractPadCode))
+        if (!Input.GetKey(KeySettingManager.instance.InteractKeycode) && !KeySettingManager.instance.InteractPad())
             inputInteract = false;
 
         if(!jumprestrict)
         if (CurrentPlayer.onInterarctive && (int)PlayerStat.instance.MoveState < 4)
         {
 
-            if ((Input.GetKey(KeySettingManager.instance.jumpKeycode) || Input.GetKey(KeySettingManager.instance.JumpPadCode)) && !Input.GetKey(KeyCode.DownArrow)
+            if ((Input.GetKey(KeySettingManager.instance.jumpKeycode) || KeySettingManager.instance.JumpPad()) && !Input.GetKey(KeyCode.DownArrow)
                  && !inputJump)
             {
                     inputJump = true;
@@ -558,7 +558,7 @@ public class PlayerHandler : MonoBehaviour
         }
         else
         {
-            if ((Input.GetKey(KeySettingManager.instance.jumpKeycode) || Input.GetKey(KeySettingManager.instance.JumpPadCode)) && !inputJump
+            if ((Input.GetKey(KeySettingManager.instance.jumpKeycode) || KeySettingManager.instance.JumpPad()) && !inputJump
                   )
             {
                     inputJump = true;
@@ -583,7 +583,7 @@ public class PlayerHandler : MonoBehaviour
         //    CurrentPlayer.jumphold();
         //}
 
-        if (!Input.GetKey(KeySettingManager.instance.jumpKeycode) && !Input.GetKey(KeySettingManager.instance.JumpPadCode))
+        if (!Input.GetKey(KeySettingManager.instance.jumpKeycode) && !KeySettingManager.instance.JumpPad())
             inputJump = false;
             
 
@@ -601,13 +601,13 @@ public class PlayerHandler : MonoBehaviour
 
 
 
-            if ((Input.GetKey(KeySettingManager.instance.DownAttackKeycode) || Input.GetKey(KeySettingManager.instance.DownAttackPadCode))&& !CurrentPlayer.onGround/*&&
+            if ((Input.GetKey(KeySettingManager.instance.DownAttackKeycode) || KeySettingManager.instance.DownAttackPad())&& !CurrentPlayer.onGround/*&&
                 PlayerInventory.instance.checkessesntialitem("item01")*/)
             {
                 CurrentPlayer.DownAttack();
             }
 
-            if (/*doubleUpInput &&*/ (Input.GetKey(KeySettingManager.instance.SkillKeycode) || Input.GetKey(KeySettingManager.instance.SkillPadCode))&& CurrentType != TransformType.Default)
+            if (/*doubleUpInput &&*/ (Input.GetKey(KeySettingManager.instance.SkillKeycode) || KeySettingManager.instance.SkillPad())&& CurrentType != TransformType.Default)
             {
                 if (!inputSkill)
                 {
@@ -617,9 +617,9 @@ public class PlayerHandler : MonoBehaviour
                     Skill1InputTimer = Skill1InputCheck;
                 }
             }
-            if ((!Input.GetKey(KeySettingManager.instance.SkillKeycode)) && !Input.GetKey(KeySettingManager.instance.SkillPadCode) && Skill1InputTimer <= 0)
+            if ((!Input.GetKey(KeySettingManager.instance.SkillKeycode)) && !KeySettingManager.instance.SkillPad() && Skill1InputTimer <= 0)
                 inputSkill = false;
-            if ((Input.GetKey(KeySettingManager.instance.AttackKeycode) || Input.GetKey(KeySettingManager.instance.AttackPadCode)) && Skill1InputTimer <= 0/* &&
+            if ((Input.GetKey(KeySettingManager.instance.AttackKeycode) || KeySettingManager.instance.AttackPad()) && Skill1InputTimer <= 0/* &&
 PlayerInventory.instance.checkessesntialitem("item01")*/)
             {
                 if (CurrentPlayer.attackInputValue < 1 && !CurrentPlayer.attackLimitInput)
