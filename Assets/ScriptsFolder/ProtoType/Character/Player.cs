@@ -1107,19 +1107,23 @@ public class Player : Character,environmentObject
     [Header("공격 전진")] public float attackForce;
     void AttackMove()
     {
+        Debug.Log("공격 중 이동되는 함수 호출됨");
         if (!wallcheck)
         {
-            if ((int)PlayerStat.instance.MoveState < 4 && directionz != directionZ.none && hori == 0)
+            playerRb.AddForce(transform.GetChild(0).forward * attackForce);
+            /*if ((int)PlayerStat.instance.MoveState < 4 && directionz != directionZ.none && hori == 0)
             {
+                Debug.Log("1차 불림");
                 playerRb.AddForce(transform.GetChild(0).forward * attackForce, ForceMode.Impulse);
             }
             else if ((int)PlayerStat.instance.MoveState >= 4)
             {
                 if (direction != direction.none && Vert != 0 || directionz != directionZ.none && hori != 0)
                 {
+                    Debug.Log("2차 불림");
                     playerRb.AddForce(transform.GetChild(0).forward * attackForce, ForceMode.Impulse);
                 }
-            }
+            }*/
             Debug.Log("전진하자");
         }
     }
@@ -1199,7 +1203,7 @@ public class Player : Character,environmentObject
     public void DamagedIgnoreInvincible(float damage)
     {
         onInvincible = true;
-
+        base.Damaged(damage);
         PlayerStat.instance.pState = PlayerState.hitted;
         HittedEffect.gameObject.SetActive(true);
         PlayerStat.instance.LoseHP(damage);
@@ -1227,7 +1231,8 @@ public class Player : Character,environmentObject
     
         PlayerStat.instance.pState = PlayerState.hitted;
         HittedEffect.gameObject.SetActive(true);
-        PlayerStat.instance.hp -= damage;
+        PlayerStat.instance.LoseHP(damage);
+        //PlayerStat.instance.hp -= damage;
         SoundPlayer.PlayHittedSound();
 
         if (PlayerStat.instance.hp <= 0)

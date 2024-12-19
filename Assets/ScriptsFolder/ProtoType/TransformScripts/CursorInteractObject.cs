@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class CursorInteractObject : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class CursorInteractObject : MonoBehaviour
         Enemy enemy;
         if (TryGetComponent<Enemy>(out enemy))
         {
+            Debug.Log("ÀâÈù Å¸°Ù Ã¼Å©Çß½À´Ï´Ù");
             enemy.StartStun();
             if(enemy.animaor !=null)
             enemy.animaor.SetTrigger("Caught");
@@ -37,8 +39,11 @@ public class CursorInteractObject : MonoBehaviour
             if (enemy.mae != null)
             {
                 Material[] materials = enemy.mae.skinRenderer.materials;
-                materials[1] = enemy.mae.hittedMat;
-                enemy.mae.skinRenderer.materials = materials;
+                if (materials.Length > 1)
+                {
+                    materials[1] = enemy.mae.hittedMat;
+                    enemy.mae.skinRenderer.materials = materials;
+                }
             }
         }
     }

@@ -270,6 +270,7 @@ Transform:
   - {fileID: 5530306674345178440}
   - {fileID: 4139484337864543759}
   - {fileID: 1259709413146841823}
+  - {fileID: 6911099623993247913}
   - {fileID: 1238207713605609693}
   - {fileID: 2122567492107828242}
   - {fileID: 8558005420062830301}
@@ -718,7 +719,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1259709413146841823
 Transform:
   m_ObjectHideFlags: 0
@@ -841,7 +842,7 @@ GameObject:
   - component: {fileID: 8801285598001996633}
   - component: {fileID: 2597715478896487610}
   - component: {fileID: 2468396748455698361}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: AttackRangeCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1106,7 +1107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1360686106540052986}
   - component: {fileID: 6587660186071680179}
-  m_Layer: 9
+  m_Layer: 21
   m_Name: MaterialAndEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1298,7 +1299,7 @@ GameObject:
   - component: {fileID: 3416854067524108187}
   - component: {fileID: 6524544776717200575}
   - component: {fileID: 2202838001302264467}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: SearchCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1499,7 +1500,7 @@ GameObject:
   - component: {fileID: 5459184393231736596}
   - component: {fileID: 9034433454263000106}
   - component: {fileID: 7531260204931009786}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: SearchMat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1968,6 +1969,87 @@ Transform:
   - {fileID: 3630510087373041734}
   m_Father: {fileID: 1294840753568409253}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4811744002923380155
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6911099623993247913}
+  - component: {fileID: 4051266303744130916}
+  - component: {fileID: 833683235795871463}
+  m_Layer: 20
+  m_Name: PlayerRestrict
+  m_TagString: PlayerRestrict
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6911099623993247913
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4811744002923380155}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4837966539757772508}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &4051266303744130916
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4811744002923380155}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.3
+  m_Center: {x: 0, y: 0.48, z: 0}
+--- !u!54 &833683235795871463
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4811744002923380155}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &4889796645408148537
 GameObject:
   m_ObjectHideFlags: 0
@@ -3413,7 +3495,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6570851617755672766}
   - component: {fileID: 3738638907998072025}
-  m_Layer: 9
+  m_Layer: 21
   m_Name: TrackingAndPatrol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3488,6 +3570,7 @@ MonoBehaviour:
   trackingdata: {fileID: 11400000, guid: 2ff8ed2b68e2a0c4291fb9d4af8ad364, type: 2}
   dataname: meleeTap
   PlayerDetected: 0
+  resultDis: 0
 --- !u!1 &8931937134772179971
 GameObject:
   m_ObjectHideFlags: 0
@@ -3598,7 +3681,7 @@ GameObject:
   - component: {fileID: 5376426248631767034}
   - component: {fileID: 7687136675993815159}
   - component: {fileID: 969907999408060388}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: AttackMat
   m_TagString: Untagged
   m_Icon: {fileID: 0}

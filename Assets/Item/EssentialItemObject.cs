@@ -32,11 +32,11 @@ public class EssentialItemObject : ItemObject
     {
         Debug.Log("Disable 실행");
         check = true;
-        foreach (KeyValuePair<string, item> kvp in PlayerInventory.instance.itemdatas)
-        {
-            Debug.Log("키값");
-            Debug.Log($"key:{kvp.Key}, value{kvp.Value}");
-        }
+        //foreach (KeyValuePair<string, item> kvp in PlayerInventory.instance.itemdatas)
+        //{
+        //    Debug.Log("키값");
+        //    Debug.Log($"key:{kvp.Key}, value{kvp.Value}");
+        //}
 
         if (PlayerInventory.instance.itemdatas.ContainsKey(itemindex))
             gameObject.SetActive(false);

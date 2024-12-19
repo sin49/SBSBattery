@@ -62,6 +62,7 @@ public class PlayerInventory : MonoBehaviour
     }
     public void SaveInventoryData()
     {
+        Debug.Log("SaveInvevtoryData »£√‚");
         InvetorySaveData saveData = new InvetorySaveData();
         saveData.essentialitems.Clear();
         foreach (KeyValuePair<string, item> kvp in itemdatas)

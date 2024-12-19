@@ -39,9 +39,11 @@ public class BasicCamera : MonoBehaviour
 
     void initializeCameraPosition()
     {
-        if(target!=null)
-        CurrentCamera.transform.position = target.position + camPos;
-     
+        Debug.Log("playerfallevent에 의해 호출됨");
+        if (target != null)
+            CurrentCamera.transform.position = target.position + camPos;
+
+
     }
     public void StartCameraShake()
     {

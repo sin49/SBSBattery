@@ -184,7 +184,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2087152660105114164
 Transform:
   m_ObjectHideFlags: 0
@@ -1508,6 +1508,7 @@ MonoBehaviour:
   trackingdata: {fileID: 0}
   dataname: 
   PlayerDetected: 0
+  resultDis: 0
 --- !u!1 &4177752030227899728
 GameObject:
   m_ObjectHideFlags: 0
@@ -1772,6 +1773,87 @@ CharacterJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!1 &4455350490150237845
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1874225285198787781}
+  - component: {fileID: 1744186635126613453}
+  - component: {fileID: 7356410096613968410}
+  m_Layer: 20
+  m_Name: PlayerRestrict
+  m_TagString: PlayerRestrict
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1874225285198787781
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4455350490150237845}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6248263193908544099}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1744186635126613453
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4455350490150237845}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.3
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &7356410096613968410
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4455350490150237845}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &4460796809790765822
 GameObject:
   m_ObjectHideFlags: 0
@@ -2371,7 +2453,7 @@ GameObject:
   - component: {fileID: 6668997325709247351}
   - component: {fileID: 657856157463213917}
   - component: {fileID: 2743242388583132773}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: AttackMat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2738,7 +2820,7 @@ GameObject:
   - component: {fileID: 3737836693357024176}
   - component: {fileID: 125365290569778628}
   - component: {fileID: 229974071491600694}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: SearchCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2834,6 +2916,7 @@ Transform:
   m_Children:
   - {fileID: 9179263764361926136}
   - {fileID: 2087152660105114164}
+  - {fileID: 1874225285198787781}
   - {fileID: 7144094099410898771}
   - {fileID: 5819993784227525810}
   - {fileID: 9109374713704275354}
@@ -3154,7 +3237,7 @@ GameObject:
   - component: {fileID: 4249020135298567383}
   - component: {fileID: 3094345857143373661}
   - component: {fileID: 2098708879523002716}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: AttackRangeCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3287,7 +3370,7 @@ GameObject:
   - component: {fileID: 3938460793037654338}
   - component: {fileID: 7111033441443271234}
   - component: {fileID: 4661441591906950947}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: SearchMat
   m_TagString: Untagged
   m_Icon: {fileID: 0}

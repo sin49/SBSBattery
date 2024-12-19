@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -66,6 +67,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GetCheckpointData실행");
         var data = CheckTableManager.instance.ReturnCheckCSVData(n);
+        Debug.Log($"scenename 값 {data.scenename} | index 값 {data.index}");
         LoadCheckpointindex = data.index;
         LoadCheckpointSceneName = data.scenename;
         loadcheckpointTransformType = data.PlayerTransformtype;
@@ -174,6 +176,7 @@ public class GameManager : MonoBehaviour
     }
     public void SavePlayerStatus()
     {
+        Debug.Log("SavePlayerStatus 호출됨");
         if (PlayerStat.instance != null && PlayerHandler.instance != null)
         {
             PlayerPrefs.SetFloat("PlayerHp", PlayerStat.instance.hp);
@@ -204,7 +207,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadingScene(string scenename)
     {
-
+        Debug.Log($"LoadingScene 호출{scenename}");
 
         StartCoroutine(LoadingTest(scenename));
     }
@@ -235,6 +238,7 @@ public class GameManager : MonoBehaviour
     }
     public void LoadingSceneWithKariEffect(string scenename)
     {
+        Debug.Log("로딩 씬으로 이동");
         if (PlayerHandler.instance != null)
         {
             PlayerHandler.instance.CurrentPlayer = null;
@@ -242,11 +246,11 @@ public class GameManager : MonoBehaviour
         }
         if (PlayerInventory.instance != null)
             PlayerInventory.instance.SaveInventoryData();
+        Debug.Log("인벤토리 데이터 저장한 후 실행되는 코드들");
         LoadingEffect.gameover = false;
         LoadingEffect.EffectEnd += LoadingScene;
         LoadingEffect.LoadSceneName = scenename;
         LoadingEffect.gameObject.SetActive(true);
-
     }
     public IEnumerator LoadingTest(string scenename)
     {

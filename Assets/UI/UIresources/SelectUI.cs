@@ -362,7 +362,7 @@ public class SelectUI : MonoBehaviour
         {
             while (uiAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
             {
-                Debug.Log(uiAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+                //Debug.Log(uiAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime);
                 yield return null;
             }
 

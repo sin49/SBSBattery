@@ -54,6 +54,7 @@ public class LoadingEffectKari : MonoBehaviour
     }
     IEnumerator gameovercorutine()
     {
+        Debug.Log("gamover 코루틴 실행");
         if (PlayerHandler.instance != null)
         {
             PlayerHandler.instance.isDie = true;
@@ -110,9 +111,10 @@ public class LoadingEffectKari : MonoBehaviour
     }
     void loadingVigintteoff()
     {
-
+        Debug.Log("loadingvigintteoff 호출됨");
         if (!FadeOff)
         {
+            Debug.Log("loadingvigintteoff 위 코드");
             if (PlayerHandler.instance != null)
                 PlayerHandler.instance.CurrentCamera.gameObject.SetActive(true);
             gameovercamera.gameObject.SetActive(false);
@@ -141,6 +143,14 @@ public class LoadingEffectKari : MonoBehaviour
                     loadingImage.SetActive(true);
                 FadeOff = true;
                 EffectEnd?.Invoke(LoadSceneName);
+                if (EffectEnd != null)
+                {
+                    Debug.Log("EffectEnd 이벤트 실행됨");
+                }
+                else
+                {
+                    Debug.Log("EffectEnd 이벤트 실행되지 않음");
+                }
                 //this.gameObject.SetActive(false);
             }
             GaveOVerUI.SetActive(false);
@@ -149,6 +159,7 @@ public class LoadingEffectKari : MonoBehaviour
 
         else if (LoadingComplete)
         {
+            Debug.Log("loadingvigintteoff 아래코드");
             if (loadingImage != null)
                 loadingImage.SetActive(false);
             if (PlayerHandler.instance != null && PlayerHandler.instance.CurrentPlayer)

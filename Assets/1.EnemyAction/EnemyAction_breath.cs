@@ -13,6 +13,7 @@ public class EnemyAction_breath : NormalEnemyAction
     public override void cancel()
     {
         breathattack.gameObject.SetActive(false);
+        if(cor != null)
         StopCoroutine(cor);
         DisableActionMethod();
     }

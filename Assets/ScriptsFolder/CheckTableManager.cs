@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CheckTableManager : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class CheckTableManager : MonoBehaviour
     }
     public CheckPointData ReturnCheckCSVData(int n)
     {
+        if (SceneManager.GetActiveScene().name == "Stage1-6" || n > checkpoints.Count - 1)
+            n--;
         return checkpoints[n];
     }
     private void Update()

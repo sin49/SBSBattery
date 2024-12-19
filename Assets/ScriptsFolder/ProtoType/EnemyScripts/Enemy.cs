@@ -477,6 +477,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         hitted = true;
         if (corutine != null)
             StopCoroutine(corutine);
+        if(corutine == null)
         corutine = HittedEnd();
         //StopCoroutine("HittedEnd");
         if (!onStun)

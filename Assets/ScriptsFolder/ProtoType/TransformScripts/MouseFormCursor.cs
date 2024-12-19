@@ -58,6 +58,7 @@ public class MouseFormCursor : MonoBehaviour
             CursorInteractObject cursorInteract;
             if (other.TryGetComponent<CursorInteractObject>(out cursorInteract))
             {
+                Debug.Log("물체가 잡혔습니다");
                 if (cursorInteract.CompareTag("CursorObject"))
                 {
                     cursorInteract.AddComponent<CursorInteractObjectCheck>();
@@ -78,10 +79,12 @@ public class MouseFormCursor : MonoBehaviour
 
                 if (cursorInteract.CompareTag("CursorObject"))
                 {
+                    Debug.Log("플랫폼 오브젝트입니다");
                     other.transform.rotation = Quaternion.identity;
                     cursorInteract.gameObject.layer = LayerMask.NameToLayer("DontMoveIgnore");
                 }
                 Debug.Log(other.gameObject);
+                Debug.Log("여기 꺼 나오나?");
                 Enemy fire;
                 if (other.TryGetComponent<Enemy>(out fire))
                 {

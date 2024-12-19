@@ -142,7 +142,10 @@ public class PlayerHandler : MonoBehaviour
     public void PlayerFallEventInvoke()
     {
         playerfallong = true;
-        GameManager.instance.LoadingEffectToAction(PlayerFallOut);
+        if (PlayerStat.instance.hp > 1)
+            GameManager.instance.LoadingEffectToAction(PlayerFallOut);
+        else
+            PlayerFallOut();
     }
     public void PlayerFallOut(string none =null)
     {
@@ -155,14 +158,16 @@ public class PlayerHandler : MonoBehaviour
             {
                 rb.velocity = Vector3.zero;
             }
-            CurrentPlayer.transform.position = PlayerSpawnManager.Instance.CurrentCheckPoint.transform.position;
             //if(!AlwaysInvincible)
+            CurrentPlayer.transform.position = PlayerSpawnManager.Instance.CurrentCheckPoint.transform.position;
             CurrentPlayer.DamagedIgnoreInvincible(1);
             PlayerFallEvent?.Invoke();
-
+            Debug.Log("체력 남은 상태로 playerfallout 호출");
         }
         else
         {
+            Debug.Log("체력이 없는 상태로 palyerfallout 호출");
+            playerfallong = false;
             CurrentPlayer.DamagedIgnoreInvincible(1);
             //if (CurrentPlayer != null)
             //{
