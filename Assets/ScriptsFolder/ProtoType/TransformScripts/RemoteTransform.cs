@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RemoteTransform : Player
@@ -31,7 +32,7 @@ public class RemoteTransform : Player
 
 
 
- public RemoteObject closestObject;
+ //public RemoteObject closestObject;
    [ HideInInspector]
     public bool IgnoreRemoteTrigger;
     GameObject activeEffectInstance;
@@ -69,14 +70,14 @@ public class RemoteTransform : Player
     public void GetClosestObjectIgnoreTrigger(RemoteObject obj)
     {
         IgnoreRemoteTrigger = true;
-        closestObject = obj;
-        ClosestObjectScript = closestObject.GetComponent<RemoteObject>();
+        PlayerHandler.instance.remoteobject = obj;
+        ClosestObjectScript = PlayerHandler.instance.remoteobject;
     }
     public void RemoveClosesObject()
     {
-        closestObject = null;
+        PlayerHandler.instance.remoteobject = null;
         ClosestObjectScript = null;
-        RemoteObjectEvent?.Invoke(null);
+        //RemoteObjectEvent?.Invoke(null);
 
     }
     protected override void Awake()
@@ -94,12 +95,12 @@ public class RemoteTransform : Player
         //for문 사용했으니 최적화 필요함
         if(!IgnoreRemoteTrigger)
             UpdateClosestRemoteObjectEffect();
-        if(ClosestObjectScript!=null)
+        if(ClosestObjectScript!=null&&!PlayerHandler.instance.calculateInteractobjectNRemoteObjectDistance())
             RemoteObjectEvent?.Invoke(ClosestObjectScript.HudTarget);
-        else
-        {
-            RemoteObjectEvent?.Invoke(null);
-        }
+        //else
+        //{
+        //    RemoteObjectEvent?.Invoke(null);
+        //}
         /*if (chargingBufferTimer > 0 && !Charging)
         {
             chargingBufferTimer -= Time.deltaTime;
@@ -123,16 +124,17 @@ public class RemoteTransform : Player
     }
     private void OnDisable()
     {
-        closestObject = null;
+        //closestObject = null;
         ClosestObjectScript = null;
+        PlayerHandler.instance.remoteobject = null;
         RemoteObjectEvent?.Invoke(null);
     }
     void UpdateClosestRemoteObjectEffect()
     {
         float closestdistance = float.MaxValue;
         RemoteObject newclosestobject = null;
-        if (closestObject != null && !remoteObj.Contains(closestObject))
-            closestObject = null;
+        if (PlayerHandler.instance.remoteobject != null && !remoteObj.Contains(PlayerHandler.instance.remoteobject))
+            PlayerHandler.instance.remoteobject = null;
         for(int n = 0; n < remoteObj.Count; n++)
         {
             if (remoteObj[n] == null)
@@ -155,30 +157,32 @@ public class RemoteTransform : Player
      
         if (closestdistance > minimumdistance)
         {
-            closestObject = null;
+            PlayerHandler.instance.remoteobject = null;
 
             return;
         }
-        if (newclosestobject != closestObject)
+        if (newclosestobject != PlayerHandler.instance.remoteobject)
         {
-            closestObject = newclosestobject;
-            ClosestObjectScript = closestObject.GetComponent<RemoteObject>();
+            PlayerHandler.instance.remoteobject = newclosestobject;
+            ClosestObjectScript = PlayerHandler.instance.remoteobject;
 
         }
        
     }
+  
     public override void Skill1()
     {
-     
-        //Charging = true;
-        if (closestObject != null)
+        if (!PlayerHandler.instance.calculateInteractobjectNRemoteObjectDistance())
+        {
+            //Charging = true;
+            if (PlayerHandler.instance.remoteobject != null)
             {
-            base.Skill1();
-            Humonoidanimator.Play("Charge");
-            SoundPlayer.PlaySkillSound();
+                base.Skill1();
+                Humonoidanimator.Play("Charge");
+                SoundPlayer.PlaySkillSound();
                 ActiveRemoteObject();
+            }
         }
-       
     
 
         //if (!Input.GetKey(KeyCode.UpArrow) && Charging
@@ -346,7 +350,7 @@ public class RemoteTransform : Player
 
         Gizmos.DrawWireSphere(this.transform.position, minimumdistance);
     }
-
+   
     #region 오버랩스피어 시도
 
     #endregion
@@ -358,15 +362,15 @@ public class RemoteTransform : Player
     public void ActiveRemoteObject()
     {
 
-        if (closestObject != null)
+        if (PlayerHandler.instance.remoteobject != null)
         {
-            RemoteObject o = closestObject.GetComponent<RemoteObject>();
-            o.Active();
+            
+            PlayerHandler.instance.remoteobject.Active();
 
             //closestObject = null;
-            if (!o.CanControl)
+            if (!PlayerHandler.instance.remoteobject.CanControl)
             {
-                closestObject = null;
+                PlayerHandler.instance.remoteobject = null;
                 ClosestObjectScript = null;
             }
         }

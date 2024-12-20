@@ -40,7 +40,7 @@ public class KeyboardCustomizing : UIInteract
         fontList[0].text = KeySettingManager.instance.AttackKeycode.ToString();
         fontList[1].text = KeySettingManager.instance.jumpKeycode.ToString();
         fontList[2].text = KeySettingManager.instance.DimensionChangeKeycode.ToString();
-        fontList[3].text = KeySettingManager.instance.SkillKeycode.ToString();
+        //fontList[3].text = KeySettingManager.instance.SkillKeycode.ToString();
         fontList[4].text = KeySettingManager.instance.DownAttackKeycode.ToString();
         fontList[5].text = KeySettingManager.instance.InteractKeycode.ToString();
 
@@ -158,9 +158,9 @@ public class KeyboardCustomizing : UIInteract
             case 2:
                 KeySettingManager.instance.DimensionChangeKeycode = currentKey;
                 break;
-            case 3:
-                KeySettingManager.instance.SkillKeycode = currentKey;
-                break;
+            //case 3:
+            //    KeySettingManager.instance.SkillKeycode = currentKey;
+            //    break;
             case 4:
                 KeySettingManager.instance.DownAttackKeycode = currentKey;
                 break;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class InteractiveObject : MonoBehaviour
+public abstract class InteractiveObject : MonoBehaviour,InteractiveObjectInterface
 {
     [Header("한 번만 상호작용")]
     public bool InteractOnce;
@@ -25,5 +25,19 @@ public abstract class InteractiveObject : MonoBehaviour
             CanInteract = false;
     }
 
+    public bool GetCanInteract()
+    {
+        return CanInteract;
     }
+
+    public virtual GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+
+    public virtual bool laddercheck()
+    {
+        return false;
+    }
+}
 public enum InteractOption {ray,collider }

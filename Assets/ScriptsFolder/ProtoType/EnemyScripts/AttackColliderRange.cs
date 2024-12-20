@@ -68,7 +68,20 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
             }
         }
     }
+    bool iswallcollide(Transform player)
+    {
+        Vector3 directiontoplayer = player.position - enemy.transform.position;
 
+        float distance = directiontoplayer.magnitude;
+
+        if(Physics.Raycast(enemy.transform.position,directiontoplayer.normalized,out RaycastHit hit, distance,7))
+        {
+            Debug.Log("벽 충돌");
+            return false;
+        }
+
+        return true;
+    }
     private void OnDrawGizmos()
     {
         if (CharColliderColor.instance != null && childMat != null)
@@ -84,7 +97,7 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
         //ebug.Log($"트리거 감지 중 {other.gameObject}");   
         if (other.CompareTag("Player") /*&&enemy.target!=null*/ && !enemy.onStun && !enemy.activeAttack)
         {
-            if (!tap.wallCheck && !enemy.onStun)
+            if (/*!tap.wallCheck &&*/ !enemy.onStun)
             {
                 //Vector3 point = other.transform.position - enemy.transform.position;
                 //point.y = 0;
@@ -98,8 +111,8 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
                 {
                     enemy.transform.rotation = Quaternion.Euler(0, -90, 0);
                 }*/
-
-                enemy.activeAttack = true;
+                if(iswallcollide(PlayerHandler.instance.CurrentPlayer.transform))
+                    enemy.activeAttack = true;
             }
 
            

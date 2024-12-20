@@ -78,7 +78,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             //}
             mae.EmmissionMaterial();
             yield return new WaitForSeconds(blinktime);
-
+            mae.OriginMaterial();
             //foreach (var a in mae.materials)
             //{
             //    Debug.Log("돌아오기");
@@ -501,6 +501,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     #region 피격 코루틴
     public IEnumerator HittedEnd()
     {
+        //mae.OriginMaterial();
         if (mae !=null)
         {
             StartEmmissionHitMat();

@@ -20,8 +20,8 @@ public class KeySettingManager : MonoBehaviour
     public KeyCode jumpKeycode = KeyCode.C;
     [Header("화면전환")]
     public KeyCode DimensionChangeKeycode = KeyCode.Space;
-    [Header("스킬")]
-    public KeyCode SkillKeycode = KeyCode.S;
+    //[Header("스킬")]
+    //public KeyCode SkillKeycode = KeyCode.S;
     [Header("내려찍기")]
     public KeyCode DownAttackKeycode = KeyCode.A;
 
