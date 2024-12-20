@@ -26,7 +26,7 @@ public class RemoteTransform : Player
 
 
 
-    public event Action<GameObject> RemoteObjectEvent;
+    //public event Action<GameObject> RemoteObjectEvent;
 
     public List<RemoteObject> remoteObj; // 탐지 범위에 저장될 상호작용 오브젝트 정보
 
@@ -95,8 +95,8 @@ public class RemoteTransform : Player
         //for문 사용했으니 최적화 필요함
         if(!IgnoreRemoteTrigger)
             UpdateClosestRemoteObjectEffect();
-        if(ClosestObjectScript!=null&&!PlayerHandler.instance.calculateInteractobjectNRemoteObjectDistance())
-            RemoteObjectEvent?.Invoke(ClosestObjectScript.HudTarget);
+        //if(ClosestObjectScript!=null&&!PlayerHandler.instance.calculateInteractobjectNRemoteObjectDistance())
+        //    RemoteObjectEvent?.Invoke(ClosestObjectScript.HudTarget);
         //else
         //{
         //    RemoteObjectEvent?.Invoke(null);
@@ -127,7 +127,7 @@ public class RemoteTransform : Player
         //closestObject = null;
         ClosestObjectScript = null;
         PlayerHandler.instance.remoteobject = null;
-        RemoteObjectEvent?.Invoke(null);
+        //RemoteObjectEvent?.Invoke(null);
     }
     void UpdateClosestRemoteObjectEffect()
     {

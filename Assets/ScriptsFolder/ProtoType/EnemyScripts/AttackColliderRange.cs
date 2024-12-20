@@ -97,7 +97,7 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
         //ebug.Log($"트리거 감지 중 {other.gameObject}");   
         if (other.CompareTag("Player") /*&&enemy.target!=null*/ && !enemy.onStun && !enemy.activeAttack)
         {
-            if (/*!tap.wallCheck &&*/ !enemy.onStun)
+            if (!tap.wallCheck && !enemy.onStun)
             {
                 //Vector3 point = other.transform.position - enemy.transform.position;
                 //point.y = 0;
@@ -111,7 +111,7 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
                 {
                     enemy.transform.rotation = Quaternion.Euler(0, -90, 0);
                 }*/
-                if(iswallcollide(PlayerHandler.instance.CurrentPlayer.transform))
+             
                     enemy.activeAttack = true;
             }
 

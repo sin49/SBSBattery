@@ -246,11 +246,11 @@ public class PlayerHandler : MonoBehaviour
     public void registerRemoteUI(GameObject obj)
     {
         RemoteTransform transform;
-        if (
-            obj.TryGetComponent<RemoteTransform>(out transform))
-        {
-            transform.RemoteObjectEvent += ingameUIManger.UpdateInteractUI;
-        }
+        //if (
+        //    obj.TryGetComponent<RemoteTransform>(out transform))
+        //{
+        //    transform.RemoteObjectEvent += ingameUIManger.UpdateInteractUI;
+        //}
     }
     public void transformed(TransformType type, Action eventhandler = null)
     {
@@ -392,17 +392,20 @@ public class PlayerHandler : MonoBehaviour
         else
             onAttack = true;
 
-        if (interactobject != null && !CurrentPlayer.downAttack)
+        if (interactobject != null && calculateInteractobjectNRemoteObjectDistance() && !CurrentPlayer.downAttack)
         {
-         if(calculateInteractobjectNRemoteObjectDistance())
+      
                 ingameUIManger.UpdateInteractUI(interactobject.GetGameObject());
             //ladder는 resultPoint를 gameobject반환값으로 하기
+        }else if (remoteobject != null && !calculateInteractobjectNRemoteObjectDistance())
+        {
+            ingameUIManger.updateinteractobjectForRemote(remoteobject.gameObject);
         }
         else
         {
             ingameUIManger.InteractTargetUI.SetActive(false);
         }
-
+        
         if (alwaysFuncActive && CurrentPlayer != null)
         {
             if (AlwaysInvincible)

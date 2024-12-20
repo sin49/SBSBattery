@@ -41,6 +41,21 @@ public class IngameUIManager : MonoBehaviour
             RemoteTargetUI.SetActive(false);
         }
     }
+    public void updateinteractobjectForRemote(GameObject target)
+    {
+        if (PlayerHandler.instance.CurrentCamera != null)
+        {
+            /*InteractTargetUI.SetActive(true);
+            InteractTargetUI.transform.position = PlayerHandler.instance.CurrentCamera.WorldToScreenPoint(
+                    target.transform.GetChild(0).position
+                );*/
+           
+                InteractTargetUI.transform.position = PlayerHandler.instance.CurrentCamera.WorldToScreenPoint(target.transform.position);
+
+            InteractTargetUI.SetActive(true);
+            //InteractTargetUI.transform.localScale = target.transform.localScale;
+        }
+    }
     public void UpdateInteractUI(GameObject target)
     {
         if (PlayerHandler.instance.CurrentCamera != null)

@@ -16,13 +16,14 @@ public class EnemySearchCollider : MonoBehaviour, colliderDisplayer
     }
     bool iswallcollide(Transform player)
     {
-        Vector3 directiontoplayer = player.position - tap.transform.position;
-
+        Vector3 directiontoplayer = player.position - tap.transform.position+Vector3.up;
+        Debug.Log(directiontoplayer);
         float distance = directiontoplayer.magnitude;
-
-        if (Physics.Raycast(tap.transform.position, directiontoplayer.normalized, out RaycastHit hit, distance, 7))
+        
+        if (Physics.Raycast(tap.transform.position, directiontoplayer.normalized, out RaycastHit hit, distance,1<< 7))
         {
-            Debug.Log("벽 충돌");
+            //Debug.Log("벽 충돌 out name:"+hit.collider.name);
+            
             return false;
         }
 
