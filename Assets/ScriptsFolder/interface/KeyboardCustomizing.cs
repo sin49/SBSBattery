@@ -134,9 +134,10 @@ public class KeyboardCustomizing : UIInteract
 
             if (Input.GetKeyDown(keyInput))
             {
-                ableSetting = false;
                 currentKey = keyInput;
                 ChangeKeyCode();
+                KeySettingManager.instance.SaveKeyData();
+                InitKeyText();
             }
         }
     }
@@ -174,5 +175,11 @@ public class KeyboardCustomizing : UIInteract
                 Debug.Log("인덱스 범위 초과");
                 break;
         }
+    }
+
+    public void InitKeyText()
+    {
+        fontList[index].text = currentKey.ToString();
+        keySelect.color = deactiveColor;
     }
 }

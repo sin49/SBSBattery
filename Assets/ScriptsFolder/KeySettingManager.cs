@@ -1,14 +1,66 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Editor;
 using UnityEngine.UI;
 
+[Serializable]
+public class DefaultKeyData
+{
+    public List<string> kName = new List<string>();
+    public List<int> kNumber = new List<int>();
+}
+
+[Serializable]
+public class KeySaveData
+{
+    public List<string> kName = new List<string>();
+    public List<int> kNumber = new List<int>();
+}
+
 public class KeySettingManager : MonoBehaviour
 {
     public static KeySettingManager instance;
+
+    public KeySaveData kSaveData = new KeySaveData();
+    public DefaultKeyData kDefaultData = new DefaultKeyData();
+    public PadSaveData pSaveData = new PadSaveData();
+    public PadDefaultData pDefaultData = new PadDefaultData();
+
+    public Dictionary<KeyCode, string> padCodeDic =
+        new Dictionary<KeyCode, string>()
+        {
+            {KeyCode.Joystick1Button0, "A" },
+            {KeyCode.Joystick1Button1, "B"},
+            {KeyCode.Joystick1Button2, "X" },
+            {KeyCode.Joystick1Button3, "Y"},
+            {KeyCode.Joystick1Button4, "LB"},
+            {KeyCode.Joystick1Button5, "RB" }
+        };
+
+    public Dictionary<string, string> padTriggerDic =
+        new Dictionary<string, string>()
+        {
+            {"XboxRT", "RT" },
+            {"XboxLT", "LT" }
+        };
+
+    public List<KeyCode> defaultKeyGroup = new List<KeyCode>();
+    public List<KeyCode> changeKeyGroup = new List<KeyCode>();
+
+    public List<KeyCode> defaultPadGroup = new List<KeyCode>();
+    public List<bool> defaultRT = new List<bool>();
+    public List<bool> defaultLT = new List<bool>();
+
+    public List<KeyCode> changePadGroup = new List<KeyCode>();
+    public List<bool> changeRT = new List<bool>();
+    public List<bool> changeLT = new List<bool>();
+
     [Header("프리셋")]
     public KeysettingPreset preset;
     [Header("프리셋 이름")]
@@ -65,6 +117,157 @@ public class KeySettingManager : MonoBehaviour
 
     float tValue;
 
+    string keyDefaultFile = "KeyDefaultData.json";
+    string keySaveFile = "KeySaveData.json";
+
+    string padDefaultFile = "PadDefaultData.json";
+    string padSaveFile = "PadSaveData.json";
+
+    #region 키보드 설정
+    public void SetDefaultKey()
+    {
+        defaultKeyGroup.Add(KeyCode.X); // attack
+        defaultKeyGroup.Add(KeyCode.Z); // jump
+        defaultKeyGroup.Add(KeyCode.C); // downattack
+        defaultKeyGroup.Add(KeyCode.F); // interact
+        defaultKeyGroup.Add(KeyCode.Space); // dimensionchange
+
+        if (kDefaultData.kName.Count != 0)
+        {
+            kDefaultData.kName.Clear();
+            kDefaultData.kNumber.Clear();
+        }
+
+        for (int i = 0; i < defaultKeyGroup.Count; i++)
+        {
+            kDefaultData.kName.Add(defaultKeyGroup[i].ToString());
+            kDefaultData.kNumber.Add((int)defaultKeyGroup[i]);
+        }
+
+        string jsonData = JsonUtility.ToJson(kDefaultData);
+        string savePath = Path.Combine(Application.persistentDataPath, keyDefaultFile);
+        File.WriteAllText(savePath, jsonData);
+    }
+
+    public void CheckKeyData()
+    {
+        string savePath = Path.Combine(Application.persistentDataPath, keySaveFile);
+        string defaultPath = Path.Combine(Application.persistentDataPath, keyDefaultFile);
+
+        if (File.Exists(savePath))
+        {
+            string saveFile = File.ReadAllText(savePath);
+            kSaveData = JsonUtility.FromJson<KeySaveData>(saveFile);
+            InitSaveKey(kSaveData);
+        }
+        else if(File.Exists(defaultPath))
+        {
+            string defaultFile = File.ReadAllText(defaultPath);
+            kDefaultData = JsonUtility.FromJson<DefaultKeyData>(defaultFile);
+            InitDefaultKey(kDefaultData);
+        }
+    }
+
+    public void InitDefaultKey(DefaultKeyData keydata)
+    {
+        AttackKeycode = (KeyCode)keydata.kNumber[0];
+        jumpKeycode = (KeyCode)keydata.kNumber[1];
+        DownAttackKeycode = (KeyCode)keydata.kNumber[2];
+        InteractKeycode = (KeyCode)keydata.kNumber[3];
+        DimensionChangeKeycode = (KeyCode)keydata.kNumber[4];
+    }
+
+    public void InitSaveKey(KeySaveData keydata)
+    {
+        AttackKeycode = (KeyCode)keydata.kNumber[0];
+        jumpKeycode = (KeyCode)keydata.kNumber[1];
+        DownAttackKeycode = (KeyCode)keydata.kNumber[2];
+        InteractKeycode = (KeyCode)keydata.kNumber[3];
+        DimensionChangeKeycode = (KeyCode)keydata.kNumber[4];
+    }
+
+    public void SaveKeyData()
+    {
+        if (kSaveData.kName.Count != 0)
+        {
+            kSaveData.kName.Clear();
+            kSaveData.kNumber.Clear();
+        }
+
+        ChangeKeySetting();
+
+        for (int i = 0; i < changeKeyGroup.Count; i++)
+        {
+            kSaveData.kName.Add(changeKeyGroup[i].ToString());
+            kSaveData.kNumber.Add((int)changeKeyGroup[i]);
+        }
+
+        string jsonData = JsonUtility.ToJson(kSaveData);
+        string savePath = Path.Combine(Application.persistentDataPath, keySaveFile);
+
+        File.WriteAllText(savePath, jsonData);
+    }
+
+    public void ChangeKeySetting()
+    {
+        if (changeKeyGroup.Count != 0)
+            changeKeyGroup.Clear();
+
+        changeKeyGroup.Add(AttackKeycode);
+        changeKeyGroup.Add(jumpKeycode);
+        changeKeyGroup.Add(DownAttackKeycode);
+        changeKeyGroup.Add(InteractKeycode);
+        changeKeyGroup.Add(DimensionChangeKeycode);
+    }
+    #endregion
+
+    #region 패드 설정
+    public void SetDefaultPad()
+    {
+        defaultPadGroup.Add(KeyCode.Joystick1Button2); // attack
+        defaultPadGroup.Add(KeyCode.Joystick1Button0); // jump
+        defaultPadGroup.Add(KeyCode.Joystick1Button1); // downattack
+        defaultPadGroup.Add(KeyCode.Joystick1Button3); // interact
+        defaultPadGroup.Add(KeyCode.Joystick1Button4); // dimensionchange
+
+        if (pDefaultData.pName.Count != 0)
+        {
+            pDefaultData.pName.Clear();
+            pDefaultData.pNumber.Clear();
+        }
+
+        defaultRT.Add(atkRT); defaultLT.Add(atkLT);
+        defaultRT.Add(jumpRT); defaultLT.Add(jumpLT);
+        defaultRT.Add(downAtkRT); defaultLT.Add(downAtkLT);
+        defaultRT.Add(interactRT); defaultLT.Add(interactLT);
+        defaultRT.Add(dimensionRT); defaultLT.Add(dimensionLT);
+
+        for (int i = 0; i < defaultPadGroup.Count; i++)
+        {
+            pDefaultData.pName.Add(defaultPadGroup[i].ToString());
+            pDefaultData.pNumber.Add((int)defaultPadGroup[i]);
+            pDefaultData.RT.Add(defaultRT[i]);
+            pDefaultData.LT.Add(defaultLT[i]);
+        }
+    }
+
+    public void CheckPadData()
+    {
+
+    }
+
+    public void InitDefaultPad()
+    {
+
+    }
+
+    public void InitSavePad()
+    {
+
+    }
+    #endregion
+
+    #region 패드입력
     public bool AttackPad()
     {
         bool check = false;
@@ -234,4 +437,5 @@ public class KeySettingManager : MonoBehaviour
 
         return check;
     }
+    #endregion
 }
