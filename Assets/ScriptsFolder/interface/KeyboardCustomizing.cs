@@ -39,10 +39,9 @@ public class KeyboardCustomizing : UIInteract
     {
         fontList[0].text = KeySettingManager.instance.AttackKeycode.ToString();
         fontList[1].text = KeySettingManager.instance.jumpKeycode.ToString();
-        fontList[2].text = KeySettingManager.instance.DimensionChangeKeycode.ToString();
-        fontList[3].text = KeySettingManager.instance.SkillKeycode.ToString();
-        fontList[4].text = KeySettingManager.instance.DownAttackKeycode.ToString();
-        fontList[5].text = KeySettingManager.instance.InteractKeycode.ToString();
+        fontList[2].text = KeySettingManager.instance.DownAttackKeycode.ToString();
+        fontList[3].text = KeySettingManager.instance.InteractKeycode.ToString();
+        fontList[4].text = KeySettingManager.instance.DimensionChangeKeycode.ToString();
 
         onHandle = true;
     }
@@ -52,6 +51,8 @@ public class KeyboardCustomizing : UIInteract
     void Update()
     {
         if (!onHandle) return;
+
+        moveValue = Input.GetAxisRaw("Vertical");
 
         if (ableSetting)
         {
@@ -134,6 +135,7 @@ public class KeyboardCustomizing : UIInteract
 
             if (Input.GetKeyDown(keyInput))
             {
+                ableSetting = false;
                 currentKey = keyInput;
                 ChangeKeyCode();
                 KeySettingManager.instance.SaveKeyData();
@@ -157,20 +159,14 @@ public class KeyboardCustomizing : UIInteract
                 KeySettingManager.instance.jumpKeycode = currentKey;
                 break;
             case 2:
-                KeySettingManager.instance.DimensionChangeKeycode = currentKey;
-                break;
-            case 3:
-                KeySettingManager.instance.SkillKeycode = currentKey;
-                break;
-            case 4:
                 KeySettingManager.instance.DownAttackKeycode = currentKey;
-                break;
-            case 5:
+                break;           
+            case 3:
                 KeySettingManager.instance.InteractKeycode = currentKey;
                 break;
-            case 6:
-                KeySettingManager.instance.DeformKeycode = currentKey;
-                break;
+            case 4:
+                KeySettingManager.instance.DimensionChangeKeycode = currentKey;
+                break;            
             default:
                 Debug.Log("인덱스 범위 초과");
                 break;

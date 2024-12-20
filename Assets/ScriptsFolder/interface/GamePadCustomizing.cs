@@ -1,6 +1,7 @@
 using Autodesk.Fbx;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -84,71 +85,42 @@ public class GamePadCustomizing : UIInteract
 
     public void PadCode()
     {
-        if (KeySettingManager.instance.atkRT)
+        if (KeySettingManager.instance.pSaveData.pName.Count != 0)
         {
-            fontList[0].text = "RT";
+            for (int i = 0; i < fontList.Count; i++)
+            {
+                fontList[index].text = PadCodeText(KeySettingManager.instance.changePadGroup[i]);
+                if (KeySettingManager.instance.changeRT[i])
+                {
+                    fontList[i].text = "RT";
+                    SetPadTrigger(i, true, false);
+                }
+                else if (KeySettingManager.instance.changeLT[i])
+                {
+                    fontList[i].text = "LT";
+                    SetPadTrigger(i, false, true);
+                }
+            }
         }
-        else if (KeySettingManager.instance.atkLT)
+        else if (KeySettingManager.instance.pDefaultData.pName.Count != 0)
         {
-            fontList[0].text = "LT";
+            for (int i = 0; i < fontList.Count; i++)
+            {
+                fontList[index].text = PadCodeText(KeySettingManager.instance.defaultPadGroup[i]);
+                if (KeySettingManager.instance.defaultRT[i])
+                {
+                    fontList[i].text = "RT";
+                    SetPadTrigger(i, true, false);
+                }
+                else if (KeySettingManager.instance.defaultLT[i])
+                {
+                    fontList[i].text = "LT";
+                    SetPadTrigger(i, false, true);
+                }
+            }
         }
-        else
-            fontList[0].text = PadCodeText(KeySettingManager.instance.AttackPadCode);
 
-        if (KeySettingManager.instance.jumpRT)
-        {
-            fontList[1].text = "RT";
-        }
-        else if(KeySettingManager.instance.jumpLT)
-        {
-            fontList[1].text = "LT";
-        }
-        else
-            fontList[1].text = PadCodeText(KeySettingManager.instance.JumpPadCode);
-
-        if(KeySettingManager.instance.dimensionRT)
-        {
-            fontList[2].text = "RT";
-        }   
-        else if(KeySettingManager.instance.dimensionLT)
-        {
-            fontList[2].text = "LT";
-        }
-        else
-        fontList[2].text = PadCodeText(KeySettingManager.instance.dimensionPadCode);
-
-        if(KeySettingManager.instance.skillRT)
-        {
-            fontList[3].text = "RT";
-        }
-        else if(KeySettingManager.instance.skillLT)
-        {
-            fontList[3].text = "LT";
-        }
-        else
-        fontList[3].text = PadCodeText(KeySettingManager.instance.SkillPadCode);
-        
-        if(KeySettingManager.instance.downAtkRT)
-        {
-            fontList[4].text = "RT";
-        }
-        else if(KeySettingManager.instance.downAtkLT)
-        {
-            fontList[4].text = "LT";
-        }
-        else
-        fontList[4].text = PadCodeText(KeySettingManager.instance.DownAttackPadCode);
-        
-        if(KeySettingManager.instance.interactRT)
-        {
-            fontList[5].text = "RT";
-        }
-        else if(KeySettingManager.instance.interactLT)
-        {
-            fontList[5].text = "LT";
-        }
-        else
-        fontList[5].text = PadCodeText(KeySettingManager.instance.InteractPadCode);
+        onHandle = true;
     }
 
     public string PadCodeText(KeyCode keycode)
@@ -157,8 +129,38 @@ public class GamePadCustomizing : UIInteract
         {
             return pName;
         }
+        else  Debug.Log($"{keycode.ToString()}의 입력이 제대로 이루어지지 않았습니다");
 
         return "NONE";
+    }
+
+    public void SetPadTrigger(int index, bool rt, bool lt)
+    {
+        switch (index)
+        {
+            case 0:
+                KeySettingManager.instance.atkRT = rt;
+                KeySettingManager.instance.atkLT = lt;
+                break;
+            case 1:
+                KeySettingManager.instance.jumpRT = rt;
+                KeySettingManager.instance.jumpLT = lt;
+                break;
+            case 2:
+                KeySettingManager.instance.downAtkRT = rt;
+                KeySettingManager.instance.downAtkLT = lt;
+                break;
+            case 3:
+                KeySettingManager.instance.interactRT = rt;
+                KeySettingManager.instance.interactLT = lt;
+                break;
+            case 4:
+                KeySettingManager.instance.dimensionRT = rt;
+                KeySettingManager.instance.dimensionLT = lt;
+                break;
+            default:
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -166,7 +168,7 @@ public class GamePadCustomizing : UIInteract
     {
         if (!onHandle) return;
 
-        moveValue = Input.GetAxisRaw("Horizontal");
+        moveValue = Input.GetAxisRaw("Vertical");
        
         if (ableChange)
         {
@@ -175,7 +177,7 @@ public class GamePadCustomizing : UIInteract
         }
         else
         {
-            if (moveValue < 0 && !moved)
+            if (moveValue > 0 && !moved)
             {
                 moved = true;
                 if (index > 0)
@@ -186,7 +188,7 @@ public class GamePadCustomizing : UIInteract
                 }
             }
 
-            if (moveValue > 0 && !moved)
+            if (moveValue < 0 && !moved)
             {
                 moved = true;
                 if (index < fontList.Count - 1)
@@ -242,7 +244,7 @@ public class GamePadCustomizing : UIInteract
                 {
                     ableChange = false;
                     SetPadByKeycode(keyInput);
-                    fontList[index].text = getKeyValue;
+                    fontList[index].text = KeySettingManager.instance.SetPadName(keyInput);
                     keySelect.color = deactiveColor;
                     keyInput = KeyCode.None;
                 }
@@ -358,8 +360,9 @@ public class GamePadCustomizing : UIInteract
                 break;
         }
 
-        rTrigger = false;
-        lTrigger = false;
+        KeySettingManager.instance.SavePadData();
+        keySelect.color = deactiveColor;
+        fontList[index].color = deactiveFontColor;
     }
 
     #region 패드 키입력 설정

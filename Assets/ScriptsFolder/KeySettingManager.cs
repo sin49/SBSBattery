@@ -108,6 +108,15 @@ public class KeySettingManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+
+        SetDefaultKey();
+        SetDefaultPad();
+    }
+
+    private void Start()
+    {
+        CheckKeyData();
+        CheckPadData();
     }
     private void Update()
     {
@@ -236,6 +245,8 @@ public class KeySettingManager : MonoBehaviour
             pDefaultData.pNumber.Clear();
         }
 
+        dimensionRT = true;
+
         defaultRT.Add(atkRT); defaultLT.Add(atkLT);
         defaultRT.Add(jumpRT); defaultLT.Add(jumpLT);
         defaultRT.Add(downAtkRT); defaultLT.Add(downAtkLT);
@@ -249,21 +260,102 @@ public class KeySettingManager : MonoBehaviour
             pDefaultData.RT.Add(defaultRT[i]);
             pDefaultData.LT.Add(defaultLT[i]);
         }
+
+        string jsonData = JsonUtility.ToJson(pDefaultData);
+        string savePath = Path.Combine(Application.persistentDataPath, padDefaultFile);
+
+        File.WriteAllText(savePath, jsonData);
     }
 
     public void CheckPadData()
     {
+        string savePath = Path.Combine(Application.persistentDataPath, padSaveFile);
+        string defaultPath = Path.Combine(Application.persistentDataPath, padDefaultFile);
+        if (File.Exists(savePath))
+        {
+            string jsonData = File.ReadAllText(savePath);
+            pSaveData = JsonUtility.FromJson<PadSaveData>(jsonData);
+
+            InitSavePad(pSaveData);
+        }
+        else
+        {
+            string jsonData = File.ReadAllText(defaultPath);
+            pDefaultData = JsonUtility.FromJson<PadDefaultData>(jsonData);
+
+            InitDefaultPad(pDefaultData);
+        }
+    }
+
+    public void InitDefaultPad(PadDefaultData padData)
+    {
+        AttackPadCode = (KeyCode)padData.pNumber[0];
+        JumpPadCode = (KeyCode)padData.pNumber[1];
+        DownAttackPadCode = (KeyCode)padData.pNumber[2];
+        InteractPadCode = (KeyCode)padData.pNumber[3];
+        dimensionPadCode = (KeyCode)padData.pNumber[4];
+
+        atkRT = padData.RT[0]; atkLT = padData.LT[0];
+        jumpRT = padData.RT[1]; jumpLT = padData.LT[1];
+        downAtkRT = padData.RT[2]; downAtkLT = padData.LT[2];
+        interactRT = padData.RT[3]; interactLT = padData.LT[3];
+        dimensionRT = padData.RT[4]; dimensionLT = padData.LT[4];
 
     }
 
-    public void InitDefaultPad()
+    public void InitSavePad(PadSaveData padData)
     {
+        AttackPadCode = (KeyCode)padData.pNumber[0];
+        JumpPadCode = (KeyCode)padData.pNumber[1];
+        DownAttackPadCode = (KeyCode)padData.pNumber[2];
+        InteractPadCode = (KeyCode)padData.pNumber[3];
+        dimensionPadCode = (KeyCode)padData.pNumber[4];
 
+        atkRT = padData.RT[0]; atkLT = padData.LT[0];
+        jumpRT = padData.RT[1]; jumpLT = padData.LT[1];
+        downAtkRT = padData.RT[2]; downAtkLT = padData.LT[2];
+        interactRT = padData.RT[3]; interactLT = padData.LT[3];
+        dimensionRT = padData.RT[4]; dimensionLT = padData.LT[4];
     }
 
-    public void InitSavePad()
+    public void SavePadData()
     {
+        if (pSaveData.pName.Count != 0)
+        {
+            pSaveData.pName.Clear();
+            pSaveData.pNumber.Clear();
+            pSaveData.RT.Clear();
+            pSaveData.LT.Clear();
+        }
 
+        if (changePadGroup.Count != 0)
+        {
+            changePadGroup.Clear();
+        }
+        else
+        {
+            Debug.Log("변경할 패드 그룹의 카운트 초과입니다");
+            return;
+        }
+
+        changePadGroup.Add(AttackPadCode);
+        changePadGroup.Add(JumpPadCode);
+        changePadGroup.Add(DownAttackPadCode);
+        changePadGroup.Add(InteractPadCode);
+        changePadGroup.Add(dimensionPadCode);
+
+        for (int i = 0; i < changePadGroup.Count; i++)
+        {
+            pSaveData.pName.Add(changePadGroup[i].ToString());
+            pSaveData.pNumber.Add((int)changePadGroup[i]);
+            pSaveData.RT.Add(changeRT[i]);
+            pSaveData.LT.Add(changeLT[i]);
+        }
+
+        string jsonData = JsonUtility.ToJson(pSaveData);
+        string savePath = Path.Combine(Application.persistentDataPath, jsonData);
+
+        File.WriteAllText(savePath, jsonData);
     }
     #endregion
 
@@ -438,4 +530,15 @@ public class KeySettingManager : MonoBehaviour
         return check;
     }
     #endregion
+
+    public string SetPadName(KeyCode padcode)
+    {
+        string t = "none";
+        if (padCodeDic.TryGetValue(padcode, out string padName))
+        {
+            t = padName;
+        }
+
+        return t;
+    }
 }

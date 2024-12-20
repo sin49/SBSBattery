@@ -158,7 +158,7 @@ public class TestSettingUI : UIInteract
                 break;
             case 3:
                 NextSelectSetting(padCustom);
-                if (SceneManager.GetActiveScene() != null)
+                if (SceneManager.GetActiveScene().name != "CheckTitleTest")
                     uiSelect.pauseui.ButtonSoundEffectPlayer_.PlayActiveAudio();
                 else
                     title.ButtionSoundEffectPlayer_.PlayActiveAudio();
@@ -287,9 +287,10 @@ public class TestSettingUI : UIInteract
     public void ShowChoiceScreen()
     {
         choice.SetActive(true);
-        buttonList[beforeIndex].sprite = deactiveButton;
-        buttonList[index].sprite = activeButton;
+        buttonList[beforeRangeIndex].sprite = deactiveButton;
+        buttonList[rangeIndex].sprite = activeButton;
         choiceSetting = false;
+        settingActive = true;
 
     }
 
