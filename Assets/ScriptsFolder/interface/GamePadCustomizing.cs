@@ -1,10 +1,29 @@
 using Autodesk.Fbx;
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.UI;
+
+[Serializable]
+public class PadDefaultData
+{
+    public List<string> pName = new List<string>();
+    public List<int> pNumber = new List<int>();
+    public List<bool> RT;
+    public List<bool> LT;
+}
+
+[Serializable]
+public class PadSaveData
+{
+    public List<string> pName = new List<string>();
+    public List<int> pNumber = new List<int>();
+    public List<bool> RT;
+    public List<bool> LT;
+}
 
 public class GamePadCustomizing : UIInteract
 {
@@ -212,23 +231,24 @@ public class GamePadCustomizing : UIInteract
 
     public void ChangePadSetting()
     {
-        foreach (var currentPad in System.Enum.GetValues(typeof(KeyCode)))
+        foreach (KeyCode currentPad in System.Enum.GetValues(typeof(KeyCode)))
         {
-            if (currentPad.GetType() == typeof(KeyCode))
+            if ((int)currentPad < 330) continue;
+
+            if (Input.GetKeyDown(currentPad))
             {
-                keyInput = (KeyCode)currentPad;
+                keyInput = currentPad;
                 if (ChangeXboxPadSetting(keyInput))
                 {
                     ableChange = false;
-                    SetPadByKeycode();
+                    SetPadByKeycode(keyInput);
                     fontList[index].text = getKeyValue;
                     keySelect.color = deactiveColor;
                     keyInput = KeyCode.None;
                 }
                 else
                 {
-                    Debug.Log("불필요한 입력입니다");
-                    keyInput = KeyCode.None;
+                    Debug.Log("존재하는 패드 입력이 아닙니다");
                     continue;
                 }
             }
@@ -261,27 +281,27 @@ public class GamePadCustomizing : UIInteract
             {"XboxLT", "LT"}
         };
 
-    public void SetPadByKeycode()
+    public void SetPadByKeycode(KeyCode padcode)
     {
         switch (index)
         {
             case 0:
-                AttackPad(keyInput);
+                AttackPad(padcode);
                 break;
             case 1:
-                JumpPad(keyInput);                
+                JumpPad(padcode);                
                 break;
             case 2:
-                DimensionPad(keyInput);
+                DimensionPad(padcode);
                 break;
             case 3:
-                SkillPad(keyInput);
+                SkillPad(padcode);
                 break;
             case 4:
-                DownAttackPad(keyInput);
+                DownAttackPad(padcode);
                 break;
             case 5:
-                InteractPad(keyInput);
+                InteractPad(padcode);
                 break;
             default:
                 break;
@@ -305,6 +325,8 @@ public class GamePadCustomizing : UIInteract
             lTrigger = true;
             rTrigger = false;
         }
+
+        CheckTrigger(axis);
 
         switch (index)
         {
@@ -394,5 +416,29 @@ public class GamePadCustomizing : UIInteract
         }
 
         return check;
+    }
+
+    public void CheckTrigger(string t)
+    {
+        switch (t)
+        {
+            case "RT":
+                ChangeTrigger(KeySettingManager.instance.changeRT);
+                break;
+            case "LT":
+                ChangeTrigger(KeySettingManager.instance.changeLT);
+                break;
+            default:
+                Debug.Log("패드 트리거 검사가 정상 실행되지 않았습니다");
+                break;
+        }
+    }
+
+    public void ChangeTrigger(List<bool> tGroup)
+    {
+        for (int i = 0; i < tGroup.Count; i++)
+        {
+            tGroup[i] = false;
+        }
     }
 }
