@@ -68,7 +68,20 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
             }
         }
     }
+    bool iswallcollide(Transform player)
+    {
+        Vector3 directiontoplayer = player.position - enemy.transform.position;
 
+        float distance = directiontoplayer.magnitude;
+
+        if(Physics.Raycast(enemy.transform.position,directiontoplayer.normalized,out RaycastHit hit, distance,7))
+        {
+            Debug.Log("º® Ãæµ¹");
+            return false;
+        }
+
+        return true;
+    }
     private void OnDrawGizmos()
     {
         if (CharColliderColor.instance != null && childMat != null)
@@ -98,8 +111,8 @@ public class AttackColliderRange : MonoBehaviour, colliderDisplayer
                 {
                     enemy.transform.rotation = Quaternion.Euler(0, -90, 0);
                 }*/
-
-                enemy.activeAttack = true;
+             
+                    enemy.activeAttack = true;
             }
 
            

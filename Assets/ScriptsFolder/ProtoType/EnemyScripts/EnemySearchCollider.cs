@@ -14,7 +14,21 @@ public class EnemySearchCollider : MonoBehaviour, colliderDisplayer
         if(childMat != null)
         childMat.enabled = true;
     }
+    bool iswallcollide(Transform player)
+    {
+        Vector3 directiontoplayer = player.position - tap.transform.position+Vector3.up;
+        Debug.Log(directiontoplayer);
+        float distance = directiontoplayer.magnitude;
+        
+        if (Physics.Raycast(tap.transform.position, directiontoplayer.normalized, out RaycastHit hit, distance,1<< 7))
+        {
+            //Debug.Log("º® Ãæµ¹ out name:"+hit.collider.name);
+            
+            return false;
+        }
 
+        return true;
+    }
     public void DeactiveColliderDisplay()
     {
         if(childMat != null)
@@ -69,11 +83,14 @@ public class EnemySearchCollider : MonoBehaviour, colliderDisplayer
     {
         if (other.CompareTag("Player"))
         {
-            //enemy.target = other.transform;
-            if (!tap. wallCheck)
+            if (iswallcollide(PlayerHandler.instance.CurrentPlayer.transform))
             {
-                tap.PlayerDetected = true;
-                tap.tracking = true;
+                //enemy.target = other.transform;
+                //if (!tap.wallCheck)
+                //{
+                    tap.PlayerDetected = true;
+                    tap.tracking = true;
+                //}
             }
             else
             {

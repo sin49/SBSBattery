@@ -56,6 +56,7 @@ public class PlayerHandler : MonoBehaviour
     public Camera CurrentCamera;
     #endregion
     InteractiveObject interactobject;
+   public RemoteObject remoteobject;
     float InteractTimer;
     [Header("항시 무적")]
     [Tooltip("무적 on/off기능")] public bool AlwaysInvincible;
@@ -65,6 +66,7 @@ public class PlayerHandler : MonoBehaviour
         if (i.CanInteract)
             interactobject = i;
     }
+
     public void InitInteratObject(InteractiveObject i)
     {
         if (interactobject != null && i == interactobject)
@@ -73,6 +75,29 @@ public class PlayerHandler : MonoBehaviour
     public InteractiveObject ReturnInteractObject()
     {
         return interactobject;
+    }
+    public bool calculateInteractobjectNRemoteObjectDistance()
+    {
+        if (interactobject != null && remoteobject != null)
+        {
+            float disinteract;
+            float DisRemote;
+            disinteract = (interactobject.transform.position - CurrentPlayer.transform.position).magnitude;
+            DisRemote = (remoteobject.transform.position - CurrentPlayer.transform.position).magnitude;
+            if (disinteract < DisRemote)
+                return true;
+            else
+                return false;
+        
+        }
+        else if (interactobject == null && remoteobject != null)
+        {
+            return false;
+        }
+        else
+        {
+            return true;//true=interactobject;
+        }
     }
     #region 플레이어 현재 위치,상태
 
@@ -221,11 +246,11 @@ public class PlayerHandler : MonoBehaviour
     public void registerRemoteUI(GameObject obj)
     {
         RemoteTransform transform;
-        if (
-            obj.TryGetComponent<RemoteTransform>(out transform))
-        {
-            transform.RemoteObjectEvent += ingameUIManger.UpdateRemoteTargetUI;
-        }
+        //if (
+        //    obj.TryGetComponent<RemoteTransform>(out transform))
+        //{
+        //    transform.RemoteObjectEvent += ingameUIManger.UpdateInteractUI;
+        //}
     }
     public void transformed(TransformType type, Action eventhandler = null)
     {
@@ -367,26 +392,20 @@ public class PlayerHandler : MonoBehaviour
         else
             onAttack = true;
 
-        if (interactobject != null && !CurrentPlayer.downAttack)
+        if (interactobject != null && calculateInteractobjectNRemoteObjectDistance() && !CurrentPlayer.downAttack)
         {
-            if (ladderCheck)
-            {
-                Ladder l=null;
-                if (interactobject.TryGetComponent<Ladder>(out l))
-                {
-                    if(l.resultPoint
-                        !=null)
-                    ingameUIManger.UpdateInteractUI(interactobject.GetComponent<Ladder>().resultPoint.gameObject);
-                }
-            }
-            else
-                ingameUIManger.UpdateInteractUI(interactobject.gameObject);
+      
+                ingameUIManger.UpdateInteractUI(interactobject.GetGameObject());
+            //ladder는 resultPoint를 gameobject반환값으로 하기
+        }else if (remoteobject != null && !calculateInteractobjectNRemoteObjectDistance())
+        {
+            ingameUIManger.updateinteractobjectForRemote(remoteobject.gameObject);
         }
         else
         {
             ingameUIManger.InteractTargetUI.SetActive(false);
         }
-
+        
         if (alwaysFuncActive && CurrentPlayer != null)
         {
             if (AlwaysInvincible)
@@ -518,7 +537,7 @@ public class PlayerHandler : MonoBehaviour
             InteractTimer -= Time.deltaTime;
 
 
-        if (interactobject != null && !CurrentPlayer.downAttack)
+        if (interactobject != null && !CurrentPlayer.downAttack&& calculateInteractobjectNRemoteObjectDistance())
         {
             if ((Input.GetKey(KeySettingManager.instance.InteractKeycode) || KeySettingManager.instance.InteractPad()) && InteractTimer <= 0)
             {
@@ -612,7 +631,7 @@ public class PlayerHandler : MonoBehaviour
                 CurrentPlayer.DownAttack();
             }
 
-            if (/*doubleUpInput &&*/ (Input.GetKey(KeySettingManager.instance.SkillKeycode) || KeySettingManager.instance.SkillPad())&& CurrentType != TransformType.Default)
+            if (/*doubleUpInput &&*/ (Input.GetKey(KeySettingManager.instance.InteractKeycode) || KeySettingManager.instance.SkillPad())&& CurrentType != TransformType.Default)
             {
                 if (!inputSkill)
                 {
@@ -622,7 +641,7 @@ public class PlayerHandler : MonoBehaviour
                     Skill1InputTimer = Skill1InputCheck;
                 }
             }
-            if ((!Input.GetKey(KeySettingManager.instance.SkillKeycode)) && !KeySettingManager.instance.SkillPad() && Skill1InputTimer <= 0)
+            if ((!Input.GetKey(KeySettingManager.instance.InteractKeycode)) && !KeySettingManager.instance.SkillPad() && Skill1InputTimer <= 0)
                 inputSkill = false;
             if ((Input.GetKey(KeySettingManager.instance.AttackKeycode) || KeySettingManager.instance.AttackPad()) && Skill1InputTimer <= 0/* &&
 PlayerInventory.instance.checkessesntialitem("item01")*/)

@@ -16,8 +16,15 @@ public class Ladder : InteractiveObject
     public Transform upStartPoint, downStartPoint;
     float posY;
 
+    public override GameObject GetGameObject()
+    {
+        return resultPoint.gameObject;
+    }
 
-
+    public override bool laddercheck()
+    {
+        return true;
+    }
     public void LadderActive()
     {
         if (PlayerHandler.instance != null && PlayerHandler.instance.CurrentPlayer != null)

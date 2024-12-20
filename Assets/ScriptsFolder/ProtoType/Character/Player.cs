@@ -287,7 +287,7 @@ public class Player : Character,environmentObject
             Debug.DrawRay(this.transform.position - Vector3.right * playersizeX + Vector3.forward * playersizeX, Vector3.down * JumprayDistance, Color.red);
             if (Physics.Raycast(this.transform.position + Vector3.right * playersizeX - Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance, ~LayerMask.GetMask("RaycastIgnore")))
             {
-                Debug.Log($"레이오브젝트 : {hit.collider}");
+                //Debug.Log($"레이오브젝트 : {hit.collider}");
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject") || hit.collider.CompareTag("PlayerRestrict"))
                 {                   
                     groundCheckEvnet(hit);
@@ -298,7 +298,7 @@ public class Player : Character,environmentObject
             }
             if (Physics.Raycast(this.transform.position - Vector3.right * playersizeX - Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance, ~LayerMask.GetMask("RaycastIgnore")))
             {
-                Debug.Log($"레이오브젝트 : {hit.collider}");
+                //Debug.Log($"레이오브젝트 : {hit.collider}");
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject") || hit.collider.CompareTag("PlayerRestrict"))
                 {                    
                     groundCheckEvnet(hit);

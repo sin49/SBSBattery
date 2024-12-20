@@ -17,7 +17,7 @@ public class KeysettingManagerEditor : Editor
         k.attackkeycode = (int)m_Instance.AttackKeycode;
         k.jumpkeycode = (int)m_Instance.jumpKeycode;
         k.dimensionchangekeycode = (int)m_Instance.DimensionChangeKeycode;
-        k.skillkeycode = (int)m_Instance.SkillKeycode;
+        //k.skillkeycode = (int)m_Instance.SkillKeycode;
         k.downattackkeycode = (int)m_Instance.DownAttackKeycode;
         k.interactkeycode = (int)m_Instance.InteractKeycode;
         k.deformkeycode = (int)m_Instance.DeformKeycode;
@@ -38,7 +38,7 @@ public class KeysettingManagerEditor : Editor
         m_Instance.AttackKeycode =(KeyCode) kp.attackkeycode;
         m_Instance.jumpKeycode = (KeyCode)kp.jumpkeycode;
         m_Instance.DimensionChangeKeycode =(KeyCode)kp.dimensionchangekeycode;
-        m_Instance.SkillKeycode =(KeyCode)kp.skillkeycode;
+        //m_Instance.SkillKeycode =(KeyCode)kp.skillkeycode;
         m_Instance.DownAttackKeycode =(KeyCode)kp.downattackkeycode;
         m_Instance.InteractKeycode =(KeyCode)kp.interactkeycode;
         m_Instance.DeformKeycode =(KeyCode)kp.deformkeycode;

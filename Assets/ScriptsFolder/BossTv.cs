@@ -291,7 +291,7 @@ public class BossTv : RemoteObject
         if (CanControl)
         {
             
-            if (PlayerHandler.instance.CurrentType == TransformType.remoteform && PlayerHandler.instance.CurrentPlayer.GetComponent<RemoteTransform>().closestObject != this.gameObject)
+            if (PlayerHandler.instance.CurrentType == TransformType.remoteform && PlayerHandler.instance.remoteobject != this.gameObject)
             {
                 animator.enabled = true;
                 animator.SetBool("canactive", CanControl);

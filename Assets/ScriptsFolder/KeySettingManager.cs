@@ -6,7 +6,7 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Editor;
+
 using UnityEngine.UI;
 
 [Serializable]

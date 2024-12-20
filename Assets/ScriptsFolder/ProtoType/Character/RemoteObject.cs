@@ -1,5 +1,15 @@
 using UnityEngine;
+public interface InteractiveObjectInterface
+{
+    public bool GetCanInteract();
 
+    public GameObject GetGameObject();
+
+    public void Active(direction d);
+
+
+    public bool laddercheck();
+}
 public abstract class RemoteObject : MonoBehaviour
 {
     [Header("0번 활성화 소리 1번 비활성화 소리")]
@@ -30,5 +40,6 @@ public abstract class RemoteObject : MonoBehaviour
             CanControl = false;
     }
 
-
+   
+  
 }
