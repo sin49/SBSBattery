@@ -345,6 +345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  attackTime: 0
   hitEffect: {fileID: 5024009746357069194, guid: ec3f674830402cc45bce805cf6493db7,
     type: 3}
   saveEffect: {fileID: 0}
@@ -1052,6 +1053,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9a731f3179db4489ca90d0dc00ce3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  EMergenctRotation: {x: 0, y: 0, z: 0}
+  Moveinput_: 0
   playerRb: {fileID: 2721062536692114604}
   capsuleCollider: {fileID: 8686286565664874215}
   SoundPlayer: {fileID: 0}
@@ -1065,17 +1069,18 @@ MonoBehaviour:
   Humonoidanimator: {fileID: 1425173963908620738}
   ChrRenderer: {fileID: 0}
   chrmat: {fileID: 0}
-  color: {r: 0, g: 0, b: 0, a: 0}
   jumpholdLevel: 0.85
-  jumpBufferTimeMax: 0.2
   jumpBufferTimer: 0
-  canjumpInput: 0
   jumpLimitInput: 0
   attackBufferTimeMax: 0.15
   attackBufferTimer: 0
   attackInputValue: 0
+  attackLimitInput: 0
   flyTimer: 0
   flyTime: 0
+  dontAttack: 0
+  dontAttackTimer: 0
+  dontMoveTimer: 0
   isJump: 0
   jumpAnim: 0
   isRun: 0
@@ -1096,10 +1101,16 @@ MonoBehaviour:
   isMove: 0
   canAttack: 0
   wallcheck: 0
+  cantmove: 0
+  doubleZinput: 0
   jumpkeyinputCheck: 0.15
   inputCheck: 0
+  restrictForce: 1
   velocityMove: {x: 0, y: 0, z: 0}
   rigidbodyPos: {x: 0, y: 0, z: 0}
+  onstairforce: 4
+  stairdownforce: 60
+  onstair: 0
   sizeX: 2
   sizeY: 2
   sizeFir: 0
@@ -1109,6 +1120,8 @@ MonoBehaviour:
   jumpInputValue: 0
   boxRaySize: {x: 0, y: 0, z: 0}
   distanceRay: 0
+  JumprayDistance: 0.28
+  jumpanimtimer: 0
   RunEffect: {fileID: 8908631264578808313}
   HittedEffect: {fileID: 7911526485466602651}
   AttackEffect: {fileID: 676002087169428122}
@@ -1117,17 +1130,36 @@ MonoBehaviour:
   Decelatate: 2
   hori: 0
   Vert: 0
+  horiPositive: 275
+  horinegative: 276
+  vertPositive: 273
+  vertNegative: 274
+  rotatetimedelay: 0
+  rotationVaule: {x: 0, y: 0, z: 0}
+  rotation3DVaule: {x: 0, y: 0, z: 0}
+  attackForce: 0
+  doublejumpeffect: {fileID: 0}
+  oninteractivetimer: 0
+  onInterarctive: 0
   DownAttackForce: 0
   CullingPlatform: 0
   handlerange: {fileID: 1079836473686256018}
   remoteObj: []
-  closestObject: {fileID: 0}
+  IgnoreRemoteTrigger: 0
   minimumdistance: 5
   Charging: 0
   laserPrefab: {fileID: 8906621709063784198, guid: c95aa4697be2c7341959ffcec170d214,
     type: 3}
+  Chargingmovespeed: 0
+  LIghtlaserPrefab: {fileID: 0}
+  MaxlaserPrefab: {fileID: 0}
   laserEffect: {fileID: 0}
+  dustEffect: {fileID: 0}
+  lasermaxlifetime: 5
+  laserminlifetime: 0.6
+  lasermaxchargetime: 2.5
   HitPoint: {fileID: 3781775065057465210}
+  LaserChargeColor: {r: 0, g: 0, b: 0, a: 0}
   ACtiveGameObject: {fileID: 0}
 --- !u!120 &7086418212037067646
 LineRenderer:
@@ -1257,10 +1289,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveClip: {fileID: 8300000, guid: 83315124d8bd65140b4035305992fb6b, type: 3}
   MoveVolume: 0
+  HittedClip: {fileID: 0}
+  HittedVolume: 0
   AttackClip: {fileID: 8300000, guid: 3d4be4a67a7d64045bb002a4229864a6, type: 3}
   AttackVolume: 0.6
   JumpClip: {fileID: 8300000, guid: 85ea7b8994df41b45ad65459747ef044, type: 3}
   JumpVolume: 0.4
+  InitDownAttackClip: {fileID: 0}
+  InitDownAttackVolume: 0
+  DownAttackEndClip: {fileID: 0}
+  DownAttackEndVolume: 0
+  InitTransformedClip: {fileID: 0}
+  InitTransformedVolume: 0
+  TransformedEndClip: {fileID: 0}
+  TransformedEndVolume: 0
   LandClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
   LandVolume: 0.2
   SkillClip: {fileID: 8300000, guid: 9ecec375ab1cce948bf45e6e5422d763, type: 3}
@@ -1623,6 +1665,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  attackTime: 0
   hitEffect: {fileID: 5024009746357069194, guid: ec3f674830402cc45bce805cf6493db7,
     type: 3}
   saveEffect: {fileID: 0}

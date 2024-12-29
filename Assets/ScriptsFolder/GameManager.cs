@@ -35,6 +35,9 @@ public class GameManager : MonoBehaviour
 
         lockDoor = "잠겨있음";
         unlockDoor = "상호작용";
+
+        InitMouseTimer();
+        mouseTimeMove = true;
     }
 
     public string loadingscenename = "LoadingTest";
@@ -86,6 +89,8 @@ public class GameManager : MonoBehaviour
         {
             ironUIobject.SetActive(false);
         }
+
+        CheckMouseActiveTime();
     }
 
     public void loadscenebycheckpoint(int n)
@@ -299,6 +304,49 @@ public class GameManager : MonoBehaviour
     {
         Screen.SetResolution(1920, 1080, true);
     }
+
+    #region 마우스 관련
+    float mouseTimer;
+    float mouseInitTime = 3.0f;
+
+    float mouseX, mouseY;
+    public void InitMouseTimer() // 마우스 타이머 초기화
+    {
+        mouseTimer = mouseInitTime;
+    }
+    [HideInInspector]public bool mouseTimeMove = true;
+    public void CheckMouseActiveTime()
+    {
+        mouseX = Input.GetAxisRaw("Mouse X");
+        mouseY = Input.GetAxisRaw("Mouse Y");
+
+        if (mouseTimeMove) // 일시정지 UI가 활성화 되지 않았을 때
+        {
+            if (mouseX == 0 && mouseY == 0)
+            {
+                if (mouseTimer > 0)
+                {
+                    mouseTimer -= Time.unscaledDeltaTime;
+                }
+                else
+                {
+                    Debug.Log("마우스 비활성화");
+                    Cursor.visible = false;
+                }
+            }
+            else
+            {
+                Debug.Log("마우스 움직임");
+                Cursor.visible = true;
+                InitMouseTimer();
+            }
+        }
+        else
+        {
+            InitMouseTimer();
+        }
+    }
+    #endregion
 }
 // public void ReLoadingScene()
 // {

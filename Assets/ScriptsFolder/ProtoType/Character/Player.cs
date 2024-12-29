@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Editor;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
@@ -107,7 +108,7 @@ public class Player : Character,environmentObject
     public bool inputCheck;
     DownAttackCollider d_col;
 
-
+    [Range(1,10)] public float restrictForce;
     void groundCheckEvnet(RaycastHit hit)
     {
         onGround = true;
@@ -118,7 +119,10 @@ public class Player : Character,environmentObject
             d_col.DeactiveCollider();
         }
         
-
+        if (hit.collider.CompareTag("PlayerRestrict"))
+        {
+            playerRb.AddForce(-transform.GetChild(0).forward * restrictForce, ForceMode.Impulse);
+        }
 
         if (downAttack)
         {
@@ -851,7 +855,11 @@ public class Player : Character,environmentObject
     public float hori;
     public float Vert;
 
-    
+    [Header("우 방향")]public KeyCode horiPositive = KeyCode.RightArrow;
+    [Header("좌 방향")]public KeyCode horinegative = KeyCode.LeftArrow;
+
+    [Header("위 방향")]public KeyCode vertPositive = KeyCode.UpArrow;
+    [Header("아래 방향")]public KeyCode vertNegative = KeyCode.DownArrow;
 
     public override void Move()
     {
@@ -860,44 +868,134 @@ public class Player : Character,environmentObject
         Vert = 0;
         if (PlayerHandler.instance.ladderInteract) {
 
-                  Vert = Input.GetAxisRaw("Vertical");
-          
-        
+            if (Input.GetKey(KeySettingManager.instance.upKeycode))
+            {
+                Vert = 1;
+            }
+            else if (Input.GetKey(KeySettingManager.instance.downKeycode))
+            {
+                Vert = -1;
+            }
+            else
+            {
+
+            }
         }
         else
         {
             switch (PlayerStat.instance.MoveState)
             {
                 case PlayerMoveState.Xmove:
-                    hori = Input.GetAxisRaw("Horizontal");
+                    if (Input.GetKey(KeySettingManager.instance.rightKeycode))
+                    {
+                        hori = 1;
+                        
+                    }
+                    else if (Input.GetKey(KeySettingManager.instance.leftKeycode))
+                    {
+                        hori = -1;
+                    }
+                    else
+                    {
+                        hori = Input.GetAxisRaw("Horizontal");
+                    }
 
                     break;
                 case PlayerMoveState.XmoveReverse:
+                    if (Input.GetKey(KeySettingManager.instance.upKeycode))
+                    {
+                        hori = -1;
+
+                    }
+                    else if (Input.GetKey(KeySettingManager.instance.downKeycode))
+                    {
+                        hori = 1;
+                    }
+                    else
                     hori = -1 * Input.GetAxisRaw("Horizontal");
                     break;
 
                 case PlayerMoveState.Zmove:
+                    if (Input.GetKey(KeySettingManager.instance.upKeycode))
+                        Vert = 1;
+                    else if (Input.GetKey(KeySettingManager.instance.downKeycode))
+                        Vert = -1;
+                    else
                     Vert = Input.GetAxisRaw("Horizontal");
                     break;
                 case PlayerMoveState.ZmoveReverse:
+                    if (Input.GetKey(KeySettingManager.instance.upKeycode))
+                        Vert = -1;
+                    else if (Input.GetKey(KeySettingManager.instance.downKeycode))
+                        Vert = 1;
                     Vert = -1 * Input.GetAxisRaw("Horizontal");
                     break;
                 case PlayerMoveState.XZMove3D:
+                    if (Input.GetKey(KeySettingManager.instance.rightKeycode))
+                        Vert = 1;
+                    else if (Input.GetKey(KeySettingManager.instance.leftKeycode))
+                        Vert = -1;
+                    else
                     Vert = Input.GetAxisRaw("Vertical");
+                    if (Input.GetKey(KeySettingManager.instance.upKeycode))
+                        hori = 1;
+                    else if (Input.GetKey(KeySettingManager.instance.downKeycode))
+                        hori = -1;
+                    else
                     hori = Input.GetAxisRaw("Horizontal");
 
                     break;
                 case PlayerMoveState.XZMove3DReverse:
+                    if (Input.GetKey(KeySettingManager.instance.rightKeycode))
+                        Vert = -1;
+                    else if (Input.GetKey(KeySettingManager.instance.leftKeycode))
+                        Vert = 1;
+                    else
                     Vert = -1 * Input.GetAxisRaw("Vertical");
+                    if (Input.GetKey(KeySettingManager.instance.upKeycode))
+                        hori = -1;
+                    else if (Input.GetKey(KeySettingManager.instance.downKeycode))
+                        hori = 1;
+                    else
                     hori = -1 * Input.GetAxisRaw("Horizontal");
 
                     break;
                 case PlayerMoveState.ZXMove3D:
-                    hori = Input.GetAxisRaw("Vertical");
-                    Vert = -1 * Input.GetAxisRaw("Horizontal");
+                    if (Input.GetKey(KeySettingManager.instance.rightKeycode))
+                    {
+                        Vert = -1;
+                    }
+                    else if (Input.GetKey(KeySettingManager.instance.leftKeycode))
+                    {
+                        Vert = 1;
+                    }
+                    else
+                    {
+                        Vert = -Input.GetAxisRaw("Horizontal");
+                    }
+                    if (Input.GetKey(KeySettingManager.instance.upKeycode))
+                    {
+                        hori = 1;
+                    }
+                    else if (Input.GetKey(KeySettingManager.instance.downKeycode))
+                    {
+                        hori = -1;
+                    }
+                    else
+                    {
+                        hori = 1 * Input.GetAxisRaw("Vertical");
+                    }
                     break;
                 case PlayerMoveState.ZXMove3DReverse:
+                    if (Input.GetKey(KeySettingManager.instance.rightKeycode))
+                        hori = -1;
+                    else if (Input.GetKey(KeySettingManager.instance.leftKeycode))
+                        hori = 1;
                     hori = -1 * Input.GetAxisRaw("Vertical");
+                    if (Input.GetKey(KeySettingManager.instance.upKeycode))
+                        Vert = 1;
+                    else if (Input.GetKey(KeySettingManager.instance.downKeycode))
+                        Vert = -1;
                     Vert = Input.GetAxisRaw("Horizontal");
                     break;
             }

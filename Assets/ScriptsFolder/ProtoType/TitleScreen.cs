@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -39,8 +40,16 @@ public class TitleScreen : UIInteract
     public void ContinueGame()
     {
         //GameManager.instance.LoadLastCheckPoint();
-        onHandle = false;
-        checkPointUI.gameObject.SetActive(true);
+        string findPath = Path.Combine(Application.persistentDataPath, "CheckPointData.json");
+        if (File.Exists(findPath))
+        {
+            onHandle = false;
+            checkPointUI.gameObject.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("파일이 존재하지 않습니다");
+        }
     }
     public void Setting()
     {

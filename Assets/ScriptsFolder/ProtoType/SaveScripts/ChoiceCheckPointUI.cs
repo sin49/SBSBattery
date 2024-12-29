@@ -125,6 +125,7 @@ public class ChoiceCheckPointUI : UIInteract
     {
         onHandle = false;
         Time.timeScale = 1;
+        GameManager.instance.mouseTimeMove = true;
         GameManager.instance.LoadChoiceCheckPoint(currentIndex);
     }
 

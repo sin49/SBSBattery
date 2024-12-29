@@ -552,6 +552,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  attackTime: 0
   hitEffect: {fileID: 5024009746357069194, guid: ec3f674830402cc45bce805cf6493db7,
     type: 3}
   saveEffect: {fileID: 0}
@@ -1513,6 +1514,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2aa03d4ee064b4091e03c1f9744edd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  EMergenctRotation: {x: 0, y: 0, z: 0}
   Moveinput_: 0
   playerRb: {fileID: 6901695374096955499}
   capsuleCollider: {fileID: 4215559778214712243}
@@ -1527,11 +1530,8 @@ MonoBehaviour:
   Humonoidanimator: {fileID: 1819769965876496499}
   ChrRenderer: {fileID: 8648626409416191209}
   chrmat: {fileID: 0}
-  color: {r: 0, g: 0, b: 0, a: 0}
   jumpholdLevel: 1
-  jumpBufferTimeMax: 0.1
   jumpBufferTimer: 0
-  canjumpInput: 0
   jumpLimitInput: 0
   attackBufferTimeMax: 0.1
   attackBufferTimer: 0
@@ -1564,8 +1564,10 @@ MonoBehaviour:
   canAttack: 0
   wallcheck: 0
   cantmove: 0
+  doubleZinput: 0
   jumpkeyinputCheck: 0.02
   inputCheck: 0
+  restrictForce: 1
   velocityMove: {x: 0, y: 0, z: 0}
   rigidbodyPos: {x: 0, y: 0, z: 0}
   onstairforce: 4
@@ -1591,6 +1593,14 @@ MonoBehaviour:
   Decelatate: 2
   hori: 0
   Vert: 0
+  horiPositive: 275
+  horinegative: 276
+  vertPositive: 273
+  vertNegative: 274
+  rotatetimedelay: 0
+  rotationVaule: {x: 0, y: 0, z: 0}
+  rotation3DVaule: {x: 0, y: 0, z: 0}
+  attackForce: 0
   doublejumpeffect: {fileID: 0}
   oninteractivetimer: 0
   onInterarctive: 0
@@ -1813,10 +1823,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveClip: {fileID: 8300000, guid: 83315124d8bd65140b4035305992fb6b, type: 3}
   MoveVolume: 0
+  HittedClip: {fileID: 0}
+  HittedVolume: 0
   AttackClip: {fileID: 8300000, guid: 25c5897575b078c4ba66ca5ffa7908c5, type: 3}
   AttackVolume: 0.8
   JumpClip: {fileID: 8300000, guid: 85ea7b8994df41b45ad65459747ef044, type: 3}
   JumpVolume: 0.8
+  InitDownAttackClip: {fileID: 0}
+  InitDownAttackVolume: 0
+  DownAttackEndClip: {fileID: 0}
+  DownAttackEndVolume: 0
+  InitTransformedClip: {fileID: 0}
+  InitTransformedVolume: 0
+  TransformedEndClip: {fileID: 0}
+  TransformedEndVolume: 0
   LandClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
   LandVolume: 0.5
   SkillClip: {fileID: 8300000, guid: 91f3ebe5a81045d4eb11aede57effef5, type: 3}
@@ -1941,6 +1961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  attackTime: 0
   hitEffect: {fileID: 6455099831139738100, guid: 6cae3c6bcfef1234aa8098b1226d219f,
     type: 3}
   saveEffect: {fileID: 0}

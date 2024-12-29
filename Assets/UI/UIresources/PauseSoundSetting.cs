@@ -11,7 +11,7 @@ public class PauseSoundSetting : UIInteract
     public GameObject screw;
 
     public List<GameObject> interactList = new List<GameObject>();
-    public List<GameObject> volumeSlider = new List<GameObject>();
+    public List<Slider> volumeSlider = new List<Slider>(); 
 
     public Sprite activeButton, deactivebutton;
     public Sprite activeVolume, deactiveVolume;
@@ -29,14 +29,21 @@ public class PauseSoundSetting : UIInteract
 
     Vector2 scale = new Vector2(0.7f, 0.7f);
 
+    [HideInInspector] public bool selected;
+
     private void OnEnable()
     {
         InitSoundSetting();
     }
     bool moved, horiMoved;
     float moveValue, horiValue;
+
+    [HideInInspector] public bool cantControl;
+
     private void Update()
     {
+        if (cantControl) return;
+
         moveValue = Input.GetAxisRaw("Vertical");
         horiValue = Input.GetAxisRaw("Horizontal");
         if ((Input.GetKeyDown(KeyCode.DownArrow) || moveValue < 0) && !moved)
@@ -140,9 +147,25 @@ public class PauseSoundSetting : UIInteract
 
     public void SetIndex(int n)
     {
+        if (selected) return;
+
         beforeIndex = index;
         index = n;
         UpdateUI();
+    }
+
+    public void ExitIndex(int n)
+    {
+        if (n > interactList.Count - 3)
+        {
+            screw.SetActive(false);
+            interactList[n].GetComponent<Image>().sprite = deactivebutton;
+            fontList[n].color = deactiveFontColor;
+        }
+        else
+        {
+            interactList[n].GetComponent<Image>().sprite = deactiveVolume;
+        }
     }
 
     //사운드 설정 초기화(활성화시)
@@ -207,9 +230,9 @@ public class PauseSoundSetting : UIInteract
 
     public void SetSlider()
     {
-        volumeSlider[0].transform.localScale = new(masterSlider, 1, 1);
-        volumeSlider[1].transform.localScale = new(bgmSlider, 1, 1);
-        volumeSlider[2].transform.localScale = new(seSlider, 1, 1);
+        volumeSlider[0].value = masterSlider;
+        volumeSlider[1].value = bgmSlider;
+        volumeSlider[2].value = seSlider;
     }
 
     public float originMaster, originBG, originSE;
@@ -319,19 +342,19 @@ public class PauseSoundSetting : UIInteract
                 if(masterSlider < 1)
                 masterSlider += volumeValue;
                 AudioManager.instance.MasterVolume = masterSlider;
-                volumeSlider[index].transform.localScale = new(masterSlider, 1, 1);
+                volumeSlider[index].value = masterSlider;
                 break;
             case 1:
                 if(bgmSlider < 1)
                 bgmSlider += volumeValue;
                 AudioManager.instance.BGVolume = bgmSlider;
-                volumeSlider[index].transform.localScale = new(bgmSlider, 1, 1);
+                volumeSlider[index].value = bgmSlider;
                 break;
             case 2:
                 if(seSlider < 1)
                 seSlider += volumeValue;
                 AudioManager.instance.SEVolume = seSlider;
-                volumeSlider[index].transform.localScale = new(seSlider, 1, 1);
+                volumeSlider[index].value = seSlider;
                 break;
         }
     }
@@ -344,19 +367,19 @@ public class PauseSoundSetting : UIInteract
                 if(masterSlider > 0)
                 masterSlider -= volumeValue;
                 AudioManager.instance.MasterVolume = masterSlider;
-                volumeSlider[index].transform.localScale = new(masterSlider, 1, 1);
+                volumeSlider[index].value = masterSlider;
                 break;
             case 1:
                 if(bgmSlider > 0)
                 bgmSlider -= volumeValue;
                 AudioManager.instance.BGVolume = bgmSlider;
-                volumeSlider[index].transform.localScale = new(bgmSlider, 1, 1);
+                volumeSlider[index].value = bgmSlider;
                 break;
             case 2:
                 if(seSlider > 0)
                 seSlider -= volumeValue;
                 AudioManager.instance.SEVolume = seSlider;
-                volumeSlider[index].transform.localScale = new(seSlider, 1, 1);
+                volumeSlider[index].value = seSlider;
                 break;
         }
     }
@@ -371,5 +394,27 @@ public class PauseSoundSetting : UIInteract
     {
         interactList[beforeIndex].GetComponent<Image>().sprite = deactivebutton;
         fontList[beforeIndex].color = deactiveFontColor;
+    }
+
+    public void UpdateVolumeByHandle(int n)
+    {
+        switch (n)
+        {
+            case 0:
+                Debug.Log("마스터");
+                masterSlider = volumeSlider[0].value;
+                AudioManager.instance.MasterVolume = masterSlider;
+                break;
+            case 1:
+                Debug.Log("브금");
+                bgmSlider = volumeSlider[1].value;
+                AudioManager.instance.BGVolume = bgmSlider;
+                break;
+            case 2:
+                Debug.Log("효과음");
+                seSlider = volumeSlider[2].value;
+                AudioManager.instance.SEVolume = seSlider;
+                break;
+        }
     }
 }

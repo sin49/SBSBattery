@@ -46,33 +46,39 @@ public class GamePadCustomizing : UIInteract
     public Dictionary<KeyCode, string> padKeyName =
         new Dictionary<KeyCode, string>()
         {
-            {KeyCode.Joystick1Button0, "A" },
-            {KeyCode.Joystick1Button1, "B"},
-            {KeyCode.Joystick1Button2, "X"},
-            {KeyCode.Joystick1Button3, "Y"},
-            {KeyCode.Joystick1Button5, "RB"},
-            {KeyCode.Joystick1Button7, "LB"},
+            {KeyCode.JoystickButton0, "A" },
+            {KeyCode.JoystickButton1, "B"},
+            {KeyCode.JoystickButton2, "X"},
+            {KeyCode.JoystickButton3, "Y"},
+            {KeyCode.JoystickButton4, "LB"},
+            {KeyCode.JoystickButton5, "RB"},
+            //{KeyCode.Joystick1Button0, "A" },
+            //{KeyCode.Joystick1Button1, "B"},
+            //{KeyCode.Joystick1Button2, "X"},
+            //{KeyCode.Joystick1Button3, "Y"},
+            //{KeyCode.Joystick1Button4, "LB"},
+            //{KeyCode.Joystick1Button5, "RB"}
         };
+
+    public CustomRecheckUI customRecheck;
 
     private void OnEnable()
     {
         if (KeySettingManager.instance != null)
         {
+            Debug.Log("패드 설정 호출");
             InitPadSetting();
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        if (KeySettingManager.instance != null)
+        else
         {
-            InitPadSetting();
+            Debug.Log("패드 설정 호출이 안됨");
         }
     }
 
     public void InitPadSetting()
     {
+        keyChanged = false;
+
         fontList[index].color = deactiveFontColor;
         keySelect.color = deactiveColor;
         keySelect.transform.position = fontList[index].transform.position;
@@ -86,7 +92,7 @@ public class GamePadCustomizing : UIInteract
         {
             for (int i = 0; i < fontList.Count; i++)
             {
-                fontList[index].text = PadCodeText(KeySettingManager.instance.changePadGroup[i]);
+                fontList[i].text = PadCodeText(KeySettingManager.instance.changePadGroup[i]);
                 if (KeySettingManager.instance.changeRT[i])
                 {
                     fontList[i].text = "RT";
@@ -103,7 +109,7 @@ public class GamePadCustomizing : UIInteract
         {
             for (int i = 0; i < fontList.Count; i++)
             {
-                fontList[index].text = PadCodeText(KeySettingManager.instance.defaultPadGroup[i]);
+                fontList[i].text = PadCodeText(KeySettingManager.instance.defaultPadGroup[i]);
                 if (KeySettingManager.instance.defaultRT[i])
                 {
                     fontList[i].text = "RT";
@@ -124,9 +130,10 @@ public class GamePadCustomizing : UIInteract
     {
         if (padKeyName.TryGetValue(keycode, out string pName))
         {
+            //Debug.Log($"{keycode.ToString()}패드 입력,{pName}의 입력이 저장되었습니다");
             return pName;
         }
-        else  Debug.Log($"{keycode.ToString()}의 입력이 제대로 이루어지지 않았습니다");
+        //else  Debug.Log($"{keycode.ToString()}의 입력이 제대로 이루어지지 않았습니다");
 
         return "NONE";
     }
@@ -166,13 +173,13 @@ public class GamePadCustomizing : UIInteract
         if (!onHandle) return;
 
         moveValue = Input.GetAxisRaw("Vertical");
-       
+
         if (ableChange)
         {
-            if(Input.GetKeyDown(KeyCode.Joystick1Button0))
-                ChangePadSetting();
+            Debug.Log("changepadsetting 호출");
+            ChangePadSetting();
         }
-        else
+        else if (!ableChange)
         {
             if (moveValue > 0 && !moved)
             {
@@ -201,18 +208,67 @@ public class GamePadCustomizing : UIInteract
                 moved = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.Joystick1Button0))
+            if (Input.GetKeyDown(KeyCode.JoystickButton0))
             {
+                Debug.Log("체크 호출");
                 CheckPadSetting();
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Joystick1Button1))
+            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))
             {
-                onHandle = false;
-                gameObject.SetActive(false);
-                settingUI.ShowChoiceScreen();
+                if (!CheckNullCode())
+                {
+                    if(keyChanged)
+                        CallRecheckUI();
+                    else
+                    {
+                        gameObject.SetActive(false);
+                        onHandle = false;
+                        settingUI.ShowChoiceScreen();
+                    }
+
+                }
+                else
+                {
+                    Debug.Log("빈칸으로 설정을 완료할 수 없습니다");
+                }
+
             }
         }
+    }
+
+    bool keyChanged;
+
+    public void CallRecheckUI()
+    {
+        Debug.Log("Call Check");
+        onHandle = false;
+        customRecheck.ActionActive(StartSaveData, CancelSaveData);
+    }
+
+    public void StartSaveData()
+    {
+        gameObject.SetActive(false);
+        KeySettingManager.instance.SavePadData();
+        settingUI.ShowChoiceScreen();
+    }
+
+    public void CancelSaveData()
+    {
+        gameObject.SetActive(false);
+        KeySettingManager.instance.ReturnPadData();
+        settingUI.ShowChoiceScreen();
+    }
+
+    public bool CheckNullCode()
+    {
+        for (int i = 0; i < fontList.Count; i++)
+        {
+            if (fontList[i].text == "")
+                return true;
+        }
+
+        return false;
     }
 
     public void UpdateUI()
@@ -230,26 +286,34 @@ public class GamePadCustomizing : UIInteract
 
     public void ChangePadSetting()
     {
-        foreach (KeyCode currentPad in System.Enum.GetValues(typeof(KeyCode)))
+        foreach (KeyCode currentPad in Enum.GetValues(typeof(KeyCode)))
         {
             if ((int)currentPad < 330) continue;
 
             if (Input.GetKeyDown(currentPad))
             {
-                keyInput = currentPad;
-                if (ChangeXboxPadSetting(keyInput))
+                if ((int)currentPad > 349)
                 {
+                    //Debug.Log($"{currentPad}는 불필요합니다");
                     ableChange = false;
-                    SetPadByKeycode(keyInput);
-                    fontList[index].text = KeySettingManager.instance.SetPadName(keyInput);
-                    keySelect.color = deactiveColor;
-                    keyInput = KeyCode.None;
+                    break;
                 }
-                else
+
+                Debug.Log("패드입력 호출");
+                keyChanged = true;
+                ableChange = false;
+                keyInput = currentPad;
+                SetPadByKeycode(keyInput);
+                fontList[index].text = KeySettingManager.instance.SetPadName(keyInput);
+
+                if (!KeySettingManager.instance.changeTrigger && KeySettingManager.instance.sameValue)
                 {
-                    Debug.Log("존재하는 패드 입력이 아닙니다");
-                    continue;
+                    if (KeySettingManager.instance.changePadGroup[KeySettingManager.instance.changeIndex] == KeyCode.None)
+                    fontList[KeySettingManager.instance.changeIndex].text = "";
                 }
+                
+                fontList[index].color = deactiveFontColor;
+                keySelect.color = deactiveColor;
             }
         }
 
@@ -291,87 +355,138 @@ public class GamePadCustomizing : UIInteract
                 JumpPad(padcode);                
                 break;
             case 2:
-                DimensionPad(padcode);
-                break;
-            case 3:
-                SkillPad(padcode);
-                break;
-            case 4:
                 DownAttackPad(padcode);
                 break;
-            case 5:
+            case 3:
                 InteractPad(padcode);
+                break;
+            case 4:
+                DimensionPad(padcode);
                 break;
             default:
                 break;
         }
+        //Debug.Log($"beforepadcode {KeySettingManager.instance.beforePadCode}");
+        //Debug.Log($"currentIndex {index}, inpputpadcode {padcode}");
+        KeySettingManager.instance.ChangePadData(padcode, index, false);
     }
 
     bool rTrigger, lTrigger;
-
+    string changeAxis = "";
     public void SetPadByTrigger(string axis)
     {
         ableChange = false;
-        fontList[index].text = axis;
-        keySelect.color = deactiveColor;
         if (axis == "RT")
         {
+            changeAxis = "LT";
             rTrigger = true;
             lTrigger = false;
         }
         else if (axis == "LT")
         {
+            changeAxis = "RT";
             lTrigger = true;
             rTrigger = false;
         }
 
-        CheckTrigger(axis);
-
         switch (index)
         {
             case 0:
+                KeySettingManager.instance.AttackPadCode = KeyCode.None;
+                if (KeySettingManager.instance.atkRT)
+                {
+                    KeySettingManager.instance.saveRT = true;
+                }
+                else if(KeySettingManager.instance.atkLT)
+                {
+                    KeySettingManager.instance.saveLT = true;
+                }
                 KeySettingManager.instance.atkRT = rTrigger;
                 KeySettingManager.instance.atkLT = lTrigger;
                 break;
             case 1:
+                KeySettingManager.instance.JumpPadCode = KeyCode.None;
+                if (KeySettingManager.instance.jumpRT)
+                {
+                    KeySettingManager.instance.saveRT = true;
+                }
+                else if (KeySettingManager.instance.jumpLT)
+                {
+                    KeySettingManager.instance.saveLT = true;
+                }
                 KeySettingManager.instance.jumpRT = rTrigger;
                 KeySettingManager.instance.jumpLT = lTrigger;
                 break;
             case 2:
-                KeySettingManager.instance.dimensionRT = rTrigger;
-                KeySettingManager.instance.dimensionLT = lTrigger;
-                break;
-            case 3:
-                KeySettingManager.instance.skillRT = rTrigger;
-                KeySettingManager.instance.skillLT = lTrigger;
-                break;
-            case 4:
+                KeySettingManager.instance.DownAttackPadCode = KeyCode.None;
+                if (KeySettingManager.instance.downAtkRT)
+                {
+                    KeySettingManager.instance.saveRT = true;
+                }
+                else if (KeySettingManager.instance.downAtkLT)
+                {
+                    KeySettingManager.instance.saveLT = true;
+                }
                 KeySettingManager.instance.downAtkRT = rTrigger;
                 KeySettingManager.instance.downAtkLT = lTrigger;
                 break;
-            case 5:
+            case 3:
+                KeySettingManager.instance.InteractPadCode = KeyCode.None;
+                if (KeySettingManager.instance.interactRT)
+                {
+                    KeySettingManager.instance.saveRT = true;
+                }
+                else if (KeySettingManager.instance.interactLT)
+                {
+                    KeySettingManager.instance.saveLT = true;
+                }
                 KeySettingManager.instance.interactRT = rTrigger;
                 KeySettingManager.instance.interactLT = lTrigger;
+                break;
+            case 4:
+                KeySettingManager.instance.dimensionPadCode = KeyCode.None;
+                if (KeySettingManager.instance.dimensionRT)
+                {
+                    KeySettingManager.instance.saveRT = true;
+                }
+                else if (KeySettingManager.instance.dimensionLT)
+                {
+                    KeySettingManager.instance.saveLT = true;
+                }
+                KeySettingManager.instance.dimensionRT = rTrigger;
+                KeySettingManager.instance.dimensionLT = lTrigger;
                 break;
             default:
                 break;
         }
 
-        KeySettingManager.instance.SavePadData();
+       
+
+        KeySettingManager.instance.ChangePadData(KeySettingManager.instance.beforePadCode, index, true, axis);
         keySelect.color = deactiveColor;
         fontList[index].color = deactiveFontColor;
+
+        fontList[index].text = axis;
+        if (KeySettingManager.instance.changeTrigger && KeySettingManager.instance.sameTrigger)
+        {
+            if (KeySettingManager.instance.changePadGroup[KeySettingManager.instance.changeIndex] == KeyCode.None)
+            fontList[KeySettingManager.instance.changeIndex].text = "";
+        }
+        keyChanged = true;
     }
 
     #region 패드 키입력 설정
     public void AttackPad(KeyCode keycode)
     {
-        KeySettingManager.instance.AttackPadCode = keycode;
+        KeySettingManager.instance.beforePadCode = KeySettingManager.instance.AttackPadCode;
+        KeySettingManager.instance.AttackPadCode = keycode;       
         KeySettingManager.instance.atkRT = false;
         KeySettingManager.instance.atkLT = false;
     }
 
     public void JumpPad(KeyCode keycode)
     {
+        KeySettingManager.instance.beforePadCode = KeySettingManager.instance.JumpPadCode;
         KeySettingManager.instance.JumpPadCode = keycode;
         KeySettingManager.instance.jumpRT = false;
         KeySettingManager.instance.jumpLT = false;
@@ -379,6 +494,7 @@ public class GamePadCustomizing : UIInteract
 
     public void DownAttackPad(KeyCode keycode)
     {
+        KeySettingManager.instance.beforePadCode = KeySettingManager.instance.DownAttackPadCode;
         KeySettingManager.instance.DownAttackPadCode = keycode;
         KeySettingManager.instance.downAtkRT= false;
         KeySettingManager.instance.downAtkLT = false;
@@ -386,20 +502,22 @@ public class GamePadCustomizing : UIInteract
 
     public void DimensionPad(KeyCode keycode)
     {
+        KeySettingManager.instance.beforePadCode = KeySettingManager.instance.dimensionPadCode;
         KeySettingManager.instance.dimensionPadCode = keycode;
         KeySettingManager.instance.dimensionRT = false;
         KeySettingManager.instance.dimensionLT = false;
     }
 
-    public void SkillPad(KeyCode keycode)
-    {
-        KeySettingManager.instance.SkillPadCode = keycode;
-        KeySettingManager.instance.skillRT = false;
-        KeySettingManager.instance.skillLT = false;
-    }
+    //public void SkillPad(KeyCode keycode)
+    //{
+    //    KeySettingManager.instance.SkillPadCode = keycode;
+    //    KeySettingManager.instance.skillRT = false;
+    //    KeySettingManager.instance.skillLT = false;
+    //}
 
     public void InteractPad(KeyCode keycode)
     {
+        KeySettingManager.instance.beforePadCode = KeySettingManager.instance.InteractPadCode;
         KeySettingManager.instance.InteractPadCode = keycode;
         KeySettingManager.instance.interactRT = false;
         KeySettingManager.instance.interactLT = false;
@@ -416,29 +534,5 @@ public class GamePadCustomizing : UIInteract
         }
 
         return check;
-    }
-
-    public void CheckTrigger(string t)
-    {
-        switch (t)
-        {
-            case "RT":
-                ChangeTrigger(KeySettingManager.instance.changeRT);
-                break;
-            case "LT":
-                ChangeTrigger(KeySettingManager.instance.changeLT);
-                break;
-            default:
-                Debug.Log("패드 트리거 검사가 정상 실행되지 않았습니다");
-                break;
-        }
-    }
-
-    public void ChangeTrigger(List<bool> tGroup)
-    {
-        for (int i = 0; i < tGroup.Count; i++)
-        {
-            tGroup[i] = false;
-        }
     }
 }

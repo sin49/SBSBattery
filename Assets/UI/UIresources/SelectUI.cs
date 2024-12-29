@@ -64,6 +64,8 @@ public class SelectUI : MonoBehaviour
 
     public void ActiveUI(int index = 0)
     {
+        GameManager.instance.mouseTimeMove = false;
+        Cursor.lockState = CursorLockMode.None;
         pauseui.pauseInteract = false;
         //tokenText.text = PlayerInventory.instance.TokenValue.ToString();
         this.index = index;
@@ -81,6 +83,7 @@ public class SelectUI : MonoBehaviour
     void TitleBackEvent()
     {
         Time.timeScale = 1;
+        GameManager.instance.mouseTimeMove = true;
         //GameManager.instance.LoadingSceneWithKariEffect("TitleTest");
         GameManager.instance.LoadingSceneWithKariEffect("CheckTitleTest");
     }
@@ -211,6 +214,15 @@ public class SelectUI : MonoBehaviour
             return;
         if (uiGroupActive && !settingActive)
         {
+            if(Input.GetKey(KeySettingManager.instance.upKeycode))
+            {
+                moveValue = 1;
+            }
+            else if(Input.GetKey(KeySettingManager.instance.downKeycode))
+            {
+                moveValue = -1;
+            }
+            else
             moveValue = Input.GetAxisRaw("Vertical");
 
             if ((Input.GetKeyDown(KeyCode.UpArrow) || moveValue > 0) && !moved)

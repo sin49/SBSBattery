@@ -14,6 +14,12 @@ public class TUtorialBox : MonoBehaviour
     {
         Canvas.gameObject.SetActive(false);
     }
+
+    private void OnDisable()
+    {
+        Canvas.gameObject.SetActive(false);
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))

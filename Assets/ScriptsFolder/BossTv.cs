@@ -179,7 +179,7 @@ public class BossTv : RemoteObject
         actions.Add(BossLaser2D);
         actions.Add(BossFall);
         animator =GetComponent<Animator>();
-        SearchTutorial();
+        //SearchTutorial();
     }
 
     public void SearchTutorial()
@@ -235,7 +235,7 @@ public class BossTv : RemoteObject
                 CanControl = true;
                 Active();
                 Debug.Log("¾²·¯¶ß¸²");
-                ClearCanvas();
+                //ClearCanvas();
             }
         }
     }
@@ -246,6 +246,8 @@ public class BossTv : RemoteObject
     {
         if (clear != null)
             clear.transform.GetChild(0).gameObject.SetActive(true);
+        else
+            GameManager.instance.LoadingSceneWithKariEffect("CheckTitleTest");
     }
 
     IEnumerator phasechangeeventStack()

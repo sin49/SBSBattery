@@ -66,6 +66,15 @@ public class TestSettingUI : UIInteract
 
         if (settingActive)
         {
+            if (Input.GetKey(KeySettingManager.instance.upKeycode))
+            {
+                movevalue = 1;
+            }
+            else if (Input.GetKey(KeySettingManager.instance.downKeycode))
+            {
+                movevalue = 1;
+            }
+            else
             movevalue = Input.GetAxisRaw("Vertical");
 
             if (!choiceSetting)

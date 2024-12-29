@@ -33,6 +33,7 @@ public class MouseTransform : Player
             {                
                 attackBufferTimer = 0;
                 attackInputValue = 1;
+                Debug.Log("마우스 공격 호출");
                 if (!activeCursor)
                 {
                     CursorFormActive();

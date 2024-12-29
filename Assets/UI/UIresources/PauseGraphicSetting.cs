@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using JetBrains.Annotations;
+using Unity.VisualScripting;
 
 public class PauseGraphicSetting : UIInteract
 {
@@ -103,7 +104,6 @@ public class PauseGraphicSetting : UIInteract
 
             if (Input.GetKeyUp(KeyCode.UpArrow) || moveValue == 0)
             {
-                Debug.Log("¿ß¬  πÊ«‚≈∞ ∂ÿø•");
                 moved = false;
             }
                 
@@ -123,8 +123,7 @@ public class PauseGraphicSetting : UIInteract
             }
 
             if (Input.GetKeyUp(KeyCode.DownArrow) || moveValue == 0)
-            {
-                Debug.Log("æ∆∑° πÊ«‚≈∞ ∂ÿø•");
+            {                
                 moved = false;
             }
 
@@ -202,7 +201,7 @@ public class PauseGraphicSetting : UIInteract
                 horiMoved = false;
 
             if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space) 
-                || Input.GetKeyDown(KeyCode.Joystick1Button0)|| Input.GetKeyDown(KeyCode.Return))
+                || Input.GetKeyDown(KeyCode.JoystickButton0)|| Input.GetKeyDown(KeyCode.Return))
             {
                 SelectSetting();
             }
@@ -263,8 +262,24 @@ public class PauseGraphicSetting : UIInteract
 
     }
 
+    public void CheckArrow(int n)
+    {
+        switch (n)
+        {
+            case 0:
+            case 1:
+                SetIndex(0);
+                break;
+            case 2:
+            case 3:
+                SetIndex(1);
+                break;
+        }
+    }
+
     public void SetIndex(int n)
     {
+        if (index == n) return;
         beforeIndex = index;
         index = n;
         UpdateUI();
@@ -344,5 +359,41 @@ public class PauseGraphicSetting : UIInteract
     {
         graphicList[beforeIndex].GetComponent<Image>().sprite = deactiveButton;
         fontList[beforeIndex].color = deactiveFontColor;
+    }
+
+    public void ResolutionDecrease()
+    {
+        if (resolutionIndex > 0)
+        {
+            resolutionIndex--;
+            UpdateResolutionUI();
+        }
+    }
+
+    public void ResolutionIncrease()
+    {
+        if (resolutionIndex < resolutionString.Count - 1)
+        {
+            resolutionIndex++;
+            UpdateResolutionUI();
+        }
+    }
+
+    public void ScreenDecrease()
+    {
+        if (screenIndex > 0)
+        {
+            screenIndex--;
+            UpdateScreenUI();
+        }
+    }
+
+    public void ScreenIncrease()
+    {
+        if (screenIndex < screenString.Count - 1)
+        {
+            screenIndex++;
+            UpdateScreenUI();
+        }
     }
 }

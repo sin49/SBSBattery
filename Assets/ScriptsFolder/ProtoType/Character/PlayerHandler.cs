@@ -513,7 +513,7 @@ public class PlayerHandler : MonoBehaviour
 
 
     }
-    bool inputJump, inputDimension, inputInteract, inputSkill;
+    bool inputJump, inputDimension, inputInteract, inputSkill, inputAttack;
     void KeysettingCharactermove()
     {
         if (GameManager.instance.tutoInteract) return;
@@ -643,12 +643,18 @@ public class PlayerHandler : MonoBehaviour
             }
             if ((!Input.GetKey(KeySettingManager.instance.InteractKeycode)) && !KeySettingManager.instance.SkillPad() && Skill1InputTimer <= 0)
                 inputSkill = false;
-            if ((Input.GetKey(KeySettingManager.instance.AttackKeycode) || KeySettingManager.instance.AttackPad()) && Skill1InputTimer <= 0/* &&
+            if ((Input.GetKey(KeySettingManager.instance.AttackKeycode) || KeySettingManager.instance.AttackPad()) /*&& Skill1InputTimer <= 0*//* &&
 PlayerInventory.instance.checkessesntialitem("item01")*/)
             {
-                if (CurrentPlayer.attackInputValue < 1 && !CurrentPlayer.attackLimitInput)
-                    CurrentPlayer.attackBufferTimer = CurrentPlayer.attackBufferTimeMax;
+                if (!inputAttack)
+                {
+                    inputAttack = true;
+                    if (CurrentPlayer.attackInputValue < 1 && !CurrentPlayer.attackLimitInput)
+                        CurrentPlayer.attackBufferTimer = CurrentPlayer.attackBufferTimeMax;
+                }
             }
+            if (!Input.GetKey(KeySettingManager.instance.AttackKeycode) && !KeySettingManager.instance.AttackPad())
+                inputAttack = false;
             if (Skill1InputTimer > 0)
             {
                 Skill1InputTimer -= Time.fixedDeltaTime;

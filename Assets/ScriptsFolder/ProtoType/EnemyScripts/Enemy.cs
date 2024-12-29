@@ -655,6 +655,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     {
         //if (movepattern == EnemyMovePattern.patrol)
         //{여기를 시스템화를 위한 밑작업으로 빼두기
+        if (onFlat) return;
 
         if (eStat.movepattern == EnemyMovePattern.patrol)
         {

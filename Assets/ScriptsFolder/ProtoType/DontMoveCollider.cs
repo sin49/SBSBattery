@@ -12,7 +12,7 @@ public class DontMoveCollider : MonoBehaviour
 
     private void Awake()
     {
-        boxCollider = GetComponent<BoxCollider>();
+        //boxCollider = GetComponent<BoxCollider>();
     }
 
     private void OnTriggerStay(Collider other)
