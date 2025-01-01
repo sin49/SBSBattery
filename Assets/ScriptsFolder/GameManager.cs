@@ -330,13 +330,13 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("마우스 비활성화");
+                    //Debug.Log("마우스 비활성화");
                     Cursor.visible = false;
                 }
             }
             else
             {
-                Debug.Log("마우스 움직임");
+                //Debug.Log("마우스 움직임");
                 Cursor.visible = true;
                 InitMouseTimer();
             }

@@ -15,7 +15,7 @@ public class DownAttackCollider : MeleeCollider
     }
     public void DeactiveCollider()
     {
-        Debug.Log("내려찍기 비활성화 실행");
+        //Debug.Log("내려찍기 비활성화 실행");
         this.gameObject.SetActive(false);
     }
     protected override void OnTriggerEnter(Collider other)
@@ -40,8 +40,9 @@ public class DownAttackCollider : MeleeCollider
                     Debug.Log("몬스터 Damage받음");
                 }
 
-                saveEffect.transform.position = new(other.transform.position.x, other.transform.position.y + .5f, other.transform.position.z);
-                saveEffect.Play();
+                //saveEffect.transform.position = new(other.transform.position.x, other.transform.position.y + .5f, other.transform.position.z);
+                //saveEffect.Play();
+
             }
 
 

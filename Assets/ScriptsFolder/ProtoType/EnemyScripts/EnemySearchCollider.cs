@@ -17,7 +17,7 @@ public class EnemySearchCollider : MonoBehaviour, colliderDisplayer
     bool iswallcollide(Transform player)
     {
         Vector3 directiontoplayer = player.position - tap.transform.position+Vector3.up;
-        Debug.Log(directiontoplayer);
+        //Debug.Log(directiontoplayer);
         float distance = directiontoplayer.magnitude;
         
         if (Physics.Raycast(tap.transform.position, directiontoplayer.normalized, out RaycastHit hit, distance,1<< 7))

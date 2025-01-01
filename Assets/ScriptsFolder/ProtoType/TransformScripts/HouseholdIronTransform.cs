@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Xml;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -265,30 +266,30 @@ public class HouseholdIronTransform : Player
             switch (PlayerStat.instance.MoveState)
             {
                 case PlayerMoveState.Xmove:
-                    if (Input.GetKey(KeySettingManager.instance.upKeycode))
+                    if (Input.GetKey(KeySettingManager.instance.rightKeycode))
                         hori = 1;
-                    else if (Input.GetKey(KeySettingManager.instance.downKeycode))
+                    else if (Input.GetKey(KeySettingManager.instance.leftKeycode))
                         hori = -1;
                     else
                     hori = Input.GetAxisRaw("Horizontal");
                     rushVert = 0;
-                    if (Input.GetKey(KeySettingManager.instance.upKeycode) || hori >= 0.4f)
+                    if (Input.GetKey(KeySettingManager.instance.rightKeycode) || hori >= 0.4f)
                         rushHori = 1;
-                    else if (Input.GetKey(KeySettingManager.instance.downKeycode) || hori < -0.4f)
+                    else if (Input.GetKey(KeySettingManager.instance.leftKeycode) || hori < -0.4f)
                         rushHori = -1;
                     break;
                 case PlayerMoveState.XmoveReverse:
-                    if (Input.GetKey(KeySettingManager.instance.upKeycode))
+                    if (Input.GetKey(KeySettingManager.instance.rightKeycode))
                         hori = -1;
-                    else if (Input.GetKey(KeySettingManager.instance.downKeycode))
+                    else if (Input.GetKey(KeySettingManager.instance.leftKeycode))
                         hori = 1;
                     else
                     hori = -1 * Input.GetAxisRaw("Horizontal");
 
                     rushVert = 0;
-                    if (Input.GetKey(KeySettingManager.instance.upKeycode) || hori < -0.4f)
+                    if (Input.GetKey(KeySettingManager.instance.rightKeycode) || hori < -0.4f)
                         rushHori = -1;
-                    else if (Input.GetKey(KeySettingManager.instance.downKeycode) || hori >= 0.4f)
+                    else if (Input.GetKey(KeySettingManager.instance.leftKeycode) || hori >= 0.4f)
                         rushHori = 1;
                     break;
 
@@ -348,19 +349,20 @@ public class HouseholdIronTransform : Player
                     rushVert = -rushVert;
                     break;
                 case PlayerMoveState.ZXMove3D:
-                    if (Input.GetKey(KeySettingManager.instance.rightKeycode))
+                    if (Input.GetKey(KeySettingManager.instance.upKeycode))
                         hori = 1;
-                    else if (Input.GetKey(KeySettingManager.instance.leftKeycode))
+                    else if (Input.GetKey(KeySettingManager.instance.downKeycode))
                         hori = -1;
                     else
                     hori = Input.GetAxisRaw("Vertical");
-                    if (Input.GetKey(KeySettingManager.instance.upKeycode))
+                    if (Input.GetKey(KeySettingManager.instance.rightKeycode))
                         Vert = -1;
-                    else if (Input.GetKey(KeySettingManager.instance.downKeycode))
+                    else if (Input.GetKey(KeySettingManager.instance.leftKeycode))
                         Vert = 1;
                     else
                     Vert = -1 * Input.GetAxisRaw("Horizontal");
-                    
+
+                    Debug.Log($"zxmove hori {hori}, vert {Vert}\n               rushHori {rushHori}, rushVert {rushVert}");
                     ZXmoveRushHorizontal();
                     ZXmoveRushVertical() ;
                     break;
@@ -841,7 +843,7 @@ public class HouseholdIronTransform : Player
     private void OnCollisionEnter(Collision collision)
     {
 
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("PlayerRestrict"))
         {
             
             //Debug.Log($"ÄÝ¸®Áð ³×ÀÓ{collision.gameObject.name} ,ÄÝ¸®Áð Ã¼Å© -> ¶¥¿¡ ´ê¾Ò´Ù >> ´Ù¸®¹Ì Âï±â ³¡");
@@ -926,7 +928,7 @@ public class HouseholdIronTransform : Player
             rushVert = -1;
         }
 
-        if ((!Input.GetKey(KeySettingManager.instance.upKeycode) && !Input.GetKey(KeySettingManager.instance.downKeycode)) && Vert ==0)
+        if ((!Input.GetKey(KeySettingManager.instance.upKeycode) && !Input.GetKey(KeySettingManager.instance.downKeycode)) /*&& Vert ==0*/)
         {
             if ((Input.GetKey(KeySettingManager.instance.rightKeycode) || hori >= 0.4f) || (Input.GetKey(KeySettingManager.instance.leftKeycode) || hori < -0.4f))
             {
@@ -940,7 +942,7 @@ public class HouseholdIronTransform : Player
     // ZX move °ü·Ã
     public void ZXmoveRushHorizontal()
     {
-        if (Input.GetKey(KeySettingManager.instance.upKeycode) || hori>= 0.4f)
+        if (Input.GetKey(KeySettingManager.instance.upKeycode) || hori >= 0.4f)
         {
             rushHori = 1;
         }
@@ -952,7 +954,7 @@ public class HouseholdIronTransform : Player
 
         if ((!Input.GetKey(KeySettingManager.instance.upKeycode) && !Input.GetKey(KeySettingManager.instance.downKeycode) && hori == 0))
         {
-            if ((Input.GetKey(KeySettingManager.instance.rightKeycode) || Vert >= 0.4f ) || (Input.GetKey(KeySettingManager.instance.leftKeycode) || Vert < -0.4f))
+            if ((Input.GetKey(KeySettingManager.instance.rightKeycode) || Vert >= 0.4f) || (Input.GetKey(KeySettingManager.instance.leftKeycode) || Vert < -0.4f))
             {
                 rushHori = 0;
             }
@@ -960,22 +962,20 @@ public class HouseholdIronTransform : Player
     }
 
     public void ZXmoveRushVertical()
-    {        
-        
-
+    {
         if (Input.GetKey(KeySettingManager.instance.rightKeycode) || Vert < -0.4f)
         {
             rushVert = -1;
         }
 
-        if (Input.GetKey(KeySettingManager.instance.leftKeycode) || Vert >=0.4f)
+        if (Input.GetKey(KeySettingManager.instance.leftKeycode) || Vert >= 0.4f)
         {
             rushVert = 1;
         }
 
-        if ((!Input.GetKey(KeySettingManager.instance.rightKeycode) && !Input.GetKey(KeySettingManager.instance.leftKeycode) && hori == 0))
+        if ((!Input.GetKey(KeySettingManager.instance.rightKeycode) && !Input.GetKey(KeySettingManager.instance.leftKeycode) && Vert == 0))
         {
-            if ((Input.GetKey(KeySettingManager.instance.upKeycode) || Vert >= 0.4f) || (Input.GetKey(KeySettingManager.instance.downKeycode) || Vert< -0.4f))
+            if ((Input.GetKey(KeySettingManager.instance.upKeycode) || hori >= 0.4f) || (Input.GetKey(KeySettingManager.instance.downKeycode) || hori < -0.4f))
             {
                 rushVert = 0;
             }

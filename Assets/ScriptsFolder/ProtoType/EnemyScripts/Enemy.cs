@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -125,7 +127,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
      public bool activeAttack; // 공격 가능한 상태인지 체크            
 
     [Header("기절상태")]
-    [HideInInspector]public  bool onStun;
+    /*[HideInInspector]*/public  bool onStun;
     protected bool die, hitted;
     
     private void OnEnable()
@@ -328,7 +330,6 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
     private void Update()
     {
-
         TestAttack();
         if (!onStun)
         {
@@ -337,23 +338,23 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
             
         }
-        else
-        {
-            if (onFlat)
-            {
-                if (timer < flatTime)
-                {
-                    timer += Time.deltaTime;
-                }
-                else
-                {
-                    RollBackFormFlatState();
-                }
-            }
 
+        if (onFlat)
+        {
+            isMove = false;
+            MoveAnimationPlay();
+            if (timer < flatTime)
+            {
+                timer += Time.deltaTime;
+            }
+            else
+            {
+                Debug.Log("롤백이 호출되었는지 확인해보자");
+                RollBackFormFlatState();
+            }
         }
 
-       
+        //Debug.Log($"update => onflat:{onFlat}, onstun:{onStun}");
     }
     
     protected virtual void MoveAnimationPlay()
@@ -481,6 +482,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         //StopCoroutine("HittedEnd");
         if (!onStun)
         {
+            //Debug.Log("스턴 없어서 피격 애니메이션 호출");
             rb.velocity = Vector3.zero;
             if (attackCollider != null)
                 attackCollider.SetActive(false);
@@ -495,6 +497,8 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
             //InitAttackCoolTime();                
             StartCoroutine(corutine);
         }
+        //else
+            //Debug.Log("스턴 걸려서 피격 애니메이션 없음");
     }
 
     #region 피격 코루틴
@@ -573,7 +577,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     public float flatScaleY;
     public float flatTime=0;
     public float timer;
-    [HideInInspector] public bool onFlat;
+    /*[HideInInspector]*/ public bool onFlat;
     Vector3 originScale;
     Vector3 flatScale;
     //납작하게 되는 함수
@@ -581,23 +585,28 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     {
         if (flatObject == null)
             return;
-
+        Debug.Log("납작해지는 함수 호출");
         StartStun();
 
+        //Debug.Log($"flat {onFlat}, stun {onStun}");
+        flatTime = flat;
         onFlat = true;
         flatObject.transform.localScale = flatScale;
-        flatTime = flat;
 
         Debug.Log(flat);
 
         if (mae != null && mae.skinRenderer != null)
         {
-            Material[] materials = mae.skinRenderer.materials;
-            materials[1] = mae.hittedMat;
-            mae.skinRenderer.materials = materials;
+            if (mae.skinRenderer.materials.Length > 1)
+            {
+                Material[] materials = mae.skinRenderer.materials;
+                materials[1] = mae.hittedMat;
+                mae.skinRenderer.materials = materials;
+            }
         }
     }
 
+    IEnumerator flatHitted;
     public virtual void RollBackFormFlatState()
     {
         EndStun();
@@ -607,28 +616,50 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
         timer = 0;
         if (mae != null && mae.skinRenderer != null)
         {
-            Material[] materials = mae.skinRenderer.materials;
-            materials[1] = mae.idleMat;
-            mae.skinRenderer.materials = materials;
+            if (mae.skinRenderer.materials.Length > 1)
+            {
+                Material[] materials = mae.skinRenderer.materials;
+                materials[1] = mae.idleMat;
+                mae.skinRenderer.materials = materials;
+            }
         }
 
         flatObject.transform.localScale = originScale;
-    }    
+
+        if (flatHitted == null)
+        {
+            flatHitted = hittedbackByFlat();
+            StartCoroutine(flatHitted);
+        }
+    }
+
+    IEnumerator hittedbackByFlat()
+    {
+        yield return new WaitForSeconds(0.5f);
+        hitted = false;
+    }
 
     public void StartStun() // 납작해지게 하는 다리미 내려찍기에 맞았을 때 호출되는 함수
     {
         onStun = true;
-     
-        if(reachAttack!=null)
-        reachAttack.onStun = false;
+
+        if (flatHitted != null)
+        {
+            StopCoroutine(flatHitted);
+            flatHitted = null;
+        }
+            
+
+        if (reachAttack != null)
+            reachAttack.onStun = false;
     }
 
     public void EndStun()
     {
         onStun = false;
-   
-        if(reachAttack!=null)
-        reachAttack.onStun = false;
+
+        if (reachAttack != null)
+            reachAttack.onStun = false;
     }
     #endregion
 
@@ -653,9 +684,8 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
 
     public override void Move()
     {
-        //if (movepattern == EnemyMovePattern.patrol)
-        //{여기를 시스템화를 위한 밑작업으로 빼두기
-        if (onFlat) return;
+        //Debug.Log($"onflat:{onFlat}, onstun:{onStun}");
+        //Debug.Log("이동 동작");
 
         if (eStat.movepattern == EnemyMovePattern.patrol)
         {
@@ -667,6 +697,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                     StartCoroutine(tap.InitPatrolTarget());
                 //enemymovepattern();
                 MoveAction?.Invoke();
+                //Debug.Log("정찰하는 몬스터의 이동 패턴");
             }
         }
         else
@@ -677,6 +708,7 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
                 transform.rotation = Quaternion.LookRotation(target);
                 //enemymovepattern();
                 MoveAction?.Invoke();
+                Debug.Log("플레이어를 탐지하는 이동패턴");
             }
         }
 

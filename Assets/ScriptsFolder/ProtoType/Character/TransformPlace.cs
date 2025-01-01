@@ -52,7 +52,7 @@ public class TransformPlace: MonoBehaviour
         if (other.CompareTag("PlayerAttack"))
         {
             if (PlayerHandler.instance.CurrentType == type) return;
-            Debug.Log("트랜스폼 플레이스 체크");
+            //Debug.Log("트랜스폼 플레이스 체크");
             DownAttackCollider p;
             if (other.TryGetComponent<DownAttackCollider>(out p))
             {

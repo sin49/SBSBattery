@@ -64,6 +64,7 @@ public class SelectUI : MonoBehaviour
 
     public void ActiveUI(int index = 0)
     {
+        if(GameManager.instance != null)
         GameManager.instance.mouseTimeMove = false;
         Cursor.lockState = CursorLockMode.None;
         pauseui.pauseInteract = false;

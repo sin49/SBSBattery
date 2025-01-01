@@ -751,6 +751,38 @@ MonoBehaviour:
     type: 3}
   hittedEffect: {fileID: 7374270257298354224, guid: 473fd5de294468b4eafe582de4304c27,
     type: 3}
+--- !u!1 &1854089744988516317
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9209829660573040190}
+  m_Layer: 9
+  m_Name: realDownPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9209829660573040190
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1854089744988516317}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 9179263764361926136}
+  m_Father: {fileID: 6248263193908544099}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1906366522468217231
 GameObject:
   m_ObjectHideFlags: 0
@@ -1163,13 +1195,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3118036604779978058}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.479, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.4790001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6474115998912604005}
-  m_Father: {fileID: 6248263193908544099}
+  m_Father: {fileID: 9209829660573040190}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3255305293903324326
 GameObject:
@@ -2914,7 +2946,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 9179263764361926136}
+  - {fileID: 9209829660573040190}
   - {fileID: 2087152660105114164}
   - {fileID: 1874225285198787781}
   - {fileID: 7144094099410898771}
@@ -3004,7 +3036,7 @@ MonoBehaviour:
   direction: {x: 0, y: 0, z: 0}
   backForce: 0
   stunTime: 0
-  flatObject: {fileID: 3118036604779978058}
+  flatObject: {fileID: 1854089744988516317}
   flatScaleY: 0.4
   flatTime: 0
   timer: 0

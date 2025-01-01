@@ -115,7 +115,7 @@ public class Player : Character,environmentObject
         if (!hit.collider.TryGetComponent<BrokenPlatform>(out BrokenPlatform br)
             && !hit.collider.TryGetComponent<TransformPlace>(out TransformPlace tp))
         {
-            Debug.Log($"부서지는 플랫폼이 아니라서 실행됨{hit.collider}");
+            //Debug.Log($"부서지는 플랫폼이 아니라서 실행됨{hit.collider}");
             d_col.DeactiveCollider();
         }
         
@@ -313,7 +313,7 @@ public class Player : Character,environmentObject
             }
             if (Physics.Raycast(this.transform.position + Vector3.right * playersizeX + Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance, ~LayerMask.GetMask("RaycastIgnore")))
             {
-                Debug.Log($"레이오브젝트 : {hit.collider}");
+                //Debug.Log($"레이오브젝트 : {hit.collider}");
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject") || hit.collider.CompareTag("PlayerRestrict"))
                 {                   
                     groundCheckEvnet(hit);
@@ -324,7 +324,7 @@ public class Player : Character,environmentObject
             }
             if (Physics.Raycast(this.transform.position - Vector3.right * playersizeX + Vector3.forward * playersizeX, Vector3.down, out hit, JumprayDistance, ~LayerMask.GetMask("RaycastIgnore")))
             {
-                Debug.Log($"레이오브젝트 : {hit.collider}");
+                //Debug.Log($"레이오브젝트 : {hit.collider}");
                 if (hit.collider.CompareTag("Ground") || hit.collider.CompareTag("InteractivePlatform") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("GameController") || hit.collider.CompareTag("CursorObject") || hit.collider.CompareTag("PlayerRestrict"))
                 {
                     groundCheckEvnet(hit);
@@ -902,12 +902,12 @@ public class Player : Character,environmentObject
 
                     break;
                 case PlayerMoveState.XmoveReverse:
-                    if (Input.GetKey(KeySettingManager.instance.upKeycode))
+                    if (Input.GetKey(KeySettingManager.instance.rightKeycode))
                     {
                         hori = -1;
 
                     }
-                    else if (Input.GetKey(KeySettingManager.instance.downKeycode))
+                    else if (Input.GetKey(KeySettingManager.instance.leftKeycode))
                     {
                         hori = 1;
                     }
@@ -1205,7 +1205,7 @@ public class Player : Character,environmentObject
     [Header("공격 전진")] public float attackForce;
     void AttackMove()
     {
-        Debug.Log("공격 중 이동되는 함수 호출됨");
+        //Debug.Log("공격 중 이동되는 함수 호출됨");
         if (!wallcheck)
         {
             playerRb.AddForce(transform.GetChild(0).forward * attackForce);
@@ -1222,7 +1222,7 @@ public class Player : Character,environmentObject
                     playerRb.AddForce(transform.GetChild(0).forward * attackForce, ForceMode.Impulse);
                 }
             }*/
-            Debug.Log("전진하자");
+            //Debug.Log("전진하자");
         }
     }
 
@@ -1238,7 +1238,7 @@ public class Player : Character,environmentObject
         if (GameManager.instance.tutoInteract || !GameManager.instance.downAttackTuto) return;
         if (!downAttack)
         {
-            Debug.Log("내려찍기");
+            //Debug.Log("내려찍기");
             downAttack = true;
             StartCoroutine(GoDownAttack());
         }
@@ -1572,7 +1572,7 @@ IEnumerator jumpForceLimitCorutine()
     //애니메이션 없이 근접 공격
     IEnumerator TestMeleeAttack()
     {
-        Debug.Log("TestMeleeAttack코루틴 호출");
+        //Debug.Log("TestMeleeAttack코루틴 호출");
         AttackMove();
 
         meleeCollider.SetActive(true);
