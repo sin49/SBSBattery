@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,6 +31,12 @@ public class PauseSoundSetting : UIInteract
     Vector2 scale = new Vector2(0.7f, 0.7f);
 
     [HideInInspector] public bool selected;
+
+    private void Start()
+    {
+        ResisterLang();
+        ChangeLanguage();
+    }
 
     private void OnEnable()
     {
@@ -301,6 +308,16 @@ public class PauseSoundSetting : UIInteract
     //설정 갱신
     public void UpdateUI()
     {
+        if (beforeIndex > interactList.Count - 3)
+        {
+            DeactiveButton();
+        }
+        else
+        {
+            interactList[beforeIndex].GetComponent<Image>().sprite = deactiveVolume;
+        }
+
+        // 저장 || 취소 버튼 작용
         if (index > interactList.Count - 3)
         {
             if (!onButton)
@@ -315,6 +332,7 @@ public class PauseSoundSetting : UIInteract
         }
         else
         {
+            // 슬라이더 작용
             if (onButton)
             {
                 onButton = false;
@@ -322,16 +340,6 @@ public class PauseSoundSetting : UIInteract
             }
             interactList[index].GetComponent<Image>().sprite = activeVolume;
         }
-
-        if (beforeIndex > interactList.Count - 3)
-        {
-            DeactiveButton();
-        }
-        else
-        {
-            interactList[beforeIndex].GetComponent<Image>().sprite = deactiveVolume;
-        }
-
     }
     //볼륨 증가
     public void UpdatePlusVolume()
@@ -417,4 +425,38 @@ public class PauseSoundSetting : UIInteract
                 break;
         }
     }
+
+    #region 언어변경
+    [Header("소리설정 타이틀")]
+    public TextMeshProUGUI titleFont;
+
+    public void ResisterLang()
+    {
+        LanguageManager.instance.LanguageEventResister(ChangeLanguage);
+    }
+
+    public void ChangeLanguage()
+    {
+        if (LanguageManager.instance.isKor)
+        {
+            titleFont.text = LanguageManager.instance.soundKor[0];
+
+            for (int i = 0; i < fontList.Count; i++)
+            {
+                fontList[i].text = LanguageManager.instance.soundKor[i+1];
+                fontList[i].characterSpacing = LanguageManager.instance.soundSpacingKor[i + 1];
+            }
+        }
+        else
+        {
+            titleFont.text = LanguageManager.instance.soundEng[0];
+            
+            for (int i = 0; i < fontList.Count; i++)
+            {
+                fontList[i].text = LanguageManager.instance.soundEng[i+1];
+                fontList[i].characterSpacing = LanguageManager.instance.soundSpacingEng[i + 1];
+            }
+        }
+    }
+    #endregion
 }

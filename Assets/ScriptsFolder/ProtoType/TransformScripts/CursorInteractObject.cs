@@ -4,7 +4,7 @@ using UnityEngine.Rendering;
 public class CursorInteractObject : MonoBehaviour
 {
     public bool caught, thrown;
-
+    public bool drop;
     public Collider cursorTargetCollider;
     SphereCollider sphere;
     BoxCollider box;
@@ -96,6 +96,15 @@ public class CursorInteractObject : MonoBehaviour
                     }*/
                 }
             }
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("DeleteObject") && gameObject.tag == "CursorObject")
+        {
+            if(RespawnSignal.Instance !=null)
+            RespawnSignal.Instance.SignalStart();
+            Destroy(gameObject);
         }
     }
 }

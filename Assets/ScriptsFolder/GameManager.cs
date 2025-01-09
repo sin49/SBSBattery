@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("loadscenebycheckpoint실행");
         GetCheckpointData(n);
-
+        LanguageManager.instance.ResetLangEvent();
         LoadingSceneWithKariEffect(LoadCheckpointSceneName);
     }
     public void LoadLastCheckPoint()
@@ -275,9 +275,9 @@ public class GameManager : MonoBehaviour
         Debug.Log($"로딩 씬 연출(최소 {MinimumLoadingTime}초 소모....)");
         yield return new WaitForSeconds(MinimumLoadingTime); // 로딩 종료 연출 시간 (필요에 따라 조정)
 
-
         syncoperation.allowSceneActivation = true;
         LoadingEffect.LoadingComplete = true;
+
         //if(SceneManager.GetActiveScene().name== LoadLastestStage())로딩 지금은 금방 끝나니 나중에 체크하기
         // 다음 씬에서 맞는 체크포인트 위치에 플레이어를 생성합니다.
         Debug.Log("로딩 끝");
@@ -322,6 +322,8 @@ public class GameManager : MonoBehaviour
 
         if (mouseTimeMove) // 일시정지 UI가 활성화 되지 않았을 때
         {
+            if (KeySettingManager.instance.CheckKeyInput()) Cursor.visible = false;
+
             if (mouseX == 0 && mouseY == 0)
             {
                 if (mouseTimer > 0)

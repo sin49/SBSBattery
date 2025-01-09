@@ -4,10 +4,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using Unity.VisualScripting;
 
 public class KeyboardCustomizing : UIInteract
 {
     //public List<Image> imageList;
+    public List<TextMeshProUGUI> keyName = new List<TextMeshProUGUI>();
 
     public Color deactiveColor;
     public Color activeColor;
@@ -19,6 +21,8 @@ public class KeyboardCustomizing : UIInteract
 
     public Image keySelect;
     public CustomRecheckUI customRecheck;
+
+
     private void OnEnable()
     {
         fontList[index].color = deactiveFontColor;//
@@ -34,6 +38,8 @@ public class KeyboardCustomizing : UIInteract
     {
         if (KeySettingManager.instance != null)
             InitKeySettingText();
+        ResisterLang();
+        ChangeLanguage();
     }
     string s = "Arrow";
     public void InitKeySettingText()
@@ -271,5 +277,40 @@ public class KeyboardCustomizing : UIInteract
             if (KeySettingManager.instance.changeKeyGroup[KeySettingManager.instance.changeIndex] == KeyCode.None)
                 fontList[KeySettingManager.instance.changeIndex].text = "";
         }
+    }
+
+    public void ResisterLang()
+    {
+        LanguageManager.instance.LanguageEventResister(ChangeLanguage);
+    }
+
+    [Header("키설정 타이틀")]
+    public TextMeshProUGUI titleFont;
+
+    public void ChangeLanguage()
+    {
+        if (LanguageManager.instance.isKor)
+        {
+            titleFont.text = LanguageManager.instance.keySetKor[0];
+            titleFont.characterSpacing = LanguageManager.instance.keysetSpacingKor[0];
+
+            for (int i = 0; i < fontList.Count; i++)
+            {
+                keyName[i].text = LanguageManager.instance.keySetKor[i+1];
+                keyName[i].characterSpacing = LanguageManager.instance.keysetSpacingEng[i + 1];
+            }
+        }
+        else
+        {
+            titleFont.text = LanguageManager.instance.keySetEng[0];
+            titleFont.characterSpacing = LanguageManager.instance.keysetSpacingEng[0];
+
+            for (int i = 0; i < fontList.Count; i++)
+            {
+                keyName[i].text = LanguageManager.instance.keySetEng[i+1];
+                keyName[i].characterSpacing = LanguageManager.instance.keysetSpacingEng[i + 1];
+            }
+        }
+
     }
 }

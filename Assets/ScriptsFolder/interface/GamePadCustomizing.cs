@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.UI;
@@ -25,7 +26,8 @@ public class PadSaveData
 
 public class GamePadCustomizing : UIInteract
 {
-    public List<Image> imageList = new List<Image>();
+    public List<TextMeshProUGUI> padName = new List<TextMeshProUGUI>();
+    [HideInInspector] public List<Image> imageList = new List<Image>();
 
     public Color deactiveColor;
     public Color activeColor;
@@ -61,6 +63,12 @@ public class GamePadCustomizing : UIInteract
         };
 
     public CustomRecheckUI customRecheck;
+
+    private void Start()
+    {
+        ResisterLang();
+        ChangeLanguage();
+    }
 
     private void OnEnable()
     {
@@ -535,4 +543,39 @@ public class GamePadCustomizing : UIInteract
 
         return check;
     }
+    #region 언어변경
+    [Header("게임패드 타이틀")]
+    public TextMeshProUGUI titleFont;
+
+    public void ResisterLang()
+    {
+        LanguageManager.instance.LanguageEventResister(ChangeLanguage);
+    }
+
+    public void ChangeLanguage()
+    {
+        if (LanguageManager.instance.isKor)
+        {
+            titleFont.text = LanguageManager.instance.padSetKor[0];
+            titleFont.characterSpacing = LanguageManager.instance.padsetSpacingKor[0];
+
+            for (int i = 0; i < fontList.Count; i++)
+            {
+                padName[i].text = LanguageManager.instance.padSetKor[i+1];
+                padName[i].characterSpacing = LanguageManager.instance.padsetSpacingKor[i + 1];
+            }
+        }
+        else
+        {
+            titleFont.text = LanguageManager.instance.padSetEng[0];
+            titleFont.characterSpacing = LanguageManager.instance.padsetSpacingEng[0];
+
+            for (int i = 0; i < fontList.Count; i++)
+            {
+                padName[i].text = LanguageManager.instance.padSetEng[i + 1];
+                padName[i].characterSpacing = LanguageManager.instance.padsetSpacingEng[i + 1];
+            }
+        }
+    }
+    #endregion
 }

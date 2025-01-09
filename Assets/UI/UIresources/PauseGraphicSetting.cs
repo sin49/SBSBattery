@@ -30,12 +30,26 @@ public class PauseGraphicSetting : UIInteract
     public Sprite activeButton, deactiveButton;
 
     public List<GameObject> buttonList;
-    
+
+    private void Awake()
+    {
+        ResisterLang();
+        ChangeLanguage();
+
+        korPack = LanguageManager.instance.soundKor;
+        engPack = LanguageManager.instance.soundEng;
+    }
+
     private void OnEnable()
     {
         InitGraphicSetting();
     }
 
+    private void Start()
+    {
+        korPack = LanguageManager.instance.graphicKor;
+        engPack = LanguageManager.instance.graphicEng;
+    }
 
     public void InitGraphicSetting()
     {
@@ -396,4 +410,40 @@ public class PauseGraphicSetting : UIInteract
             UpdateScreenUI();
         }
     }
+
+    #region 언어변경
+    [Header("그래픽 설정 타이틀")]
+    public TextMeshProUGUI titleFont;
+
+    public void ResisterLang()
+    {
+        LanguageManager.instance.LanguageEventResister(ChangeLanguage);
+    }
+
+    public void ChangeLanguage()
+    {
+        if (LanguageManager.instance.isKor)
+        {
+            titleFont.text = LanguageManager.instance.graphicKor[0];
+            titleFont.characterSpacing = LanguageManager.instance.graphicSpacingKor[0];
+
+            for (int i = 0; i < fontList.Count; i++)
+            {
+                fontList[i].text = LanguageManager.instance.graphicKor[i+1];
+                fontList[i].characterSpacing = LanguageManager.instance.graphicSpacingKor[i + 1];
+            }
+        }
+        else
+        {
+            titleFont.text = LanguageManager.instance.graphicEng[0];
+            titleFont.characterSpacing = LanguageManager.instance.graphicSpacingEng[0];
+
+            for (int i = 0; i < fontList.Count; i++)
+            {
+                fontList[i].text = LanguageManager.instance.graphicEng[i+1];
+                fontList[i].characterSpacing = LanguageManager.instance.graphicSpacingEng[i + 1];
+            }
+        }
+    }
+    #endregion
 }

@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.InputSystem.Layouts;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ChoiceCheckPointUI : UIInteract
@@ -19,41 +23,64 @@ public class ChoiceCheckPointUI : UIInteract
     public int stageCount;
 
     public GameObject currentStageButton;
+    public List<GameObject> stageGroup = new List<GameObject>();
     public List<CheckList> checkLists = new List<CheckList>();
     public Sprite activeButton, deactiveButton;
     int index, beforeIndex;
 
     List<Image> buttonList = new List<Image>();
 
-    private void OnEnable()
+    private void Awake()
     {
         InitCheckPointButton();
+    }
+
+    private void OnEnable()
+    {
+        buttonList[index].sprite = activeButton;
+        fontList[index].color = activeFontColor;
+        currentIndex = checkLists[index].checkStageIndex;
+
+        onHandle = true;
     }
 
     private void OnDisable()
     {
         onHandle = false;
-        checkLists.Clear();
-        buttonList.Clear();
-        fontList.Clear();
+        //checkLists.Clear();
+        //buttonList.Clear();
+        //fontList.Clear();
     }
 
     public void InitCheckPointButton()
     {
-        //currentStageButton.SetActive(true);
         checkLists = currentStageButton.GetComponentsInChildren<CheckList>().ToList();
         fontList = currentStageButton.GetComponentsInChildren<TextMeshProUGUI>().ToList();
-        
+
+
         for (int i = 0; i < checkLists.Count; i++)
         {
             buttonList.Add(checkLists[i].GetComponent<Image>());
+            checkLists[i].GetComponent<Button>().onClick.AddListener(SelectCheckPoint);
+            checkLists[i].GetComponent<Button>().onClick.AddListener(checkPointUI.ActiveSound);
+            //checkLists[i].gameObject.AddComponent<UnityEngine.EventSystems.EventTrigger>();
+            //UnityEngine.EventSystems.EventTrigger.Entry entry
+            //    = new UnityEngine.EventSystems.EventTrigger.Entry();
+            //entry.eventID = EventTriggerType.PointerEnter;
+            //entry.callback.AddListener((data) => OnPointerEnter(i));
+            //Debug.Log($"ÀÎµ¦½º °ª : {i}");
+            //checkLists[i].GetComponent<UnityEngine.EventSystems.EventTrigger>().triggers.Add(entry);
         }
-
-        buttonList[index].sprite = activeButton;
-        currentIndex = checkLists[index].checkStageIndex;
-
-        onHandle = true;
     }
+
+    private void OnPointerEnter(int n)
+    {
+        Debug.Log($"trigger index {n}");
+        Debug.Log("´­·¶½À´Ï´Ù");
+        checkPointUI.SelectSound();
+        SetIndex(n);
+    }
+
     bool moved;
     float moveValue;
     // Update is called once per frame
@@ -92,18 +119,25 @@ public class ChoiceCheckPointUI : UIInteract
             moved = false;
 
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.C) 
-            || Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.Space))
+            || Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.Space))
         {
             SelectCheckPoint();
             checkPointUI.ActiveSound();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Joystick1Button1))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))
         {
             CheckListExit();
             checkPointUI.DeactiveSound();
         }
 
+    }
+
+    public void SetIndex(int n)
+    {
+        beforeIndex = index;
+        index = n;
+        UpdateUI();
     }
 
     public void ButtonInteractCheck()
@@ -132,9 +166,7 @@ public class ChoiceCheckPointUI : UIInteract
     public void CheckListExit()
     {
         onHandle = false;
-
         checkLists[index].GetComponent<Image>().sprite = deactiveButton;
-        
         beforeIndex = index = 0;
 
         checkPointUI.ReturnFromChoiceUI();

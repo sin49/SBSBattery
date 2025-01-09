@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 [Serializable]
@@ -10,22 +11,35 @@ public class CollisionisTriggerEvent : InputEvent
     public Collider targetcollider;
 
     bool tf;
+    //private void Awake()
+    //{
+    //    isTriggerEventHandler b = null;
+
+    //    if (targetcollider.GetComponent<isTriggerEventHandler>())
+    //    {
+    //        b = targetcollider.GetComponent<isTriggerEventHandler>();
+
+    //    }
+    //    else
+    //    {
+    //        b = targetcollider.AddComponent<isTriggerEventHandler>();
+    //    }
+
+    //    b.registerEvent(TriggerEnterEvent, TriggerExitEvent);
+    //}
+
     private void Awake()
     {
-        isTriggerEventHandler b = null;
-        if (targetcollider.GetComponent<isTriggerEventHandler>())
-        {
-            b = targetcollider.GetComponent<isTriggerEventHandler>();
+        isTriggerEventHandler b = targetcollider.GetComponent<isTriggerEventHandler>();
 
-        }
-        else
+        if (b == null)
         {
             b = targetcollider.AddComponent<isTriggerEventHandler>();
         }
 
         b.registerEvent(TriggerEnterEvent, TriggerExitEvent);
     }
-   
+
     void TriggerEnterEvent(Collider other)
     {
         Debug.Log("check");

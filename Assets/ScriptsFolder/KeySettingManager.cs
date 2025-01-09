@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem.Editor;
 using UnityEngine.UI;
 
 [Serializable]
@@ -778,5 +779,18 @@ public class KeySettingManager : MonoBehaviour
         }
 
         return t;
+    }
+
+    public bool CheckKeyInput()
+    {
+        if (Input.GetKey(AttackKeycode) || Input.GetKey(jumpKeycode) || Input.GetKey(InteractKeycode)
+            || Input.GetKey(DimensionChangeKeycode) || Input.GetKey(DownAttackKeycode) || Input.GetKey(downKeycode)
+            || Input.GetKey(upKeycode) || Input.GetKey(rightKeycode) || Input.GetKey(leftKeycode))
+        {
+            return true;
+        }
+        else
+            return false;
+
     }
 }

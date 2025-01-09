@@ -22,6 +22,8 @@ public class GameOverUI : UIInteract
     private void Awake()
     {
         InitDeactive();
+        ResisterLang();
+        ChangeLanguage();
     }
 
     public void InitDeactive()
@@ -132,6 +134,29 @@ public class GameOverUI : UIInteract
             buttonList[beforeIndex].sprite = deactiveButton;
             fontList[index].color = activeFontColor;
             fontList[beforeIndex].color = deactiveFontColor;
+        }
+    }
+
+    public void ResisterLang()
+    {
+        LanguageManager.instance.LanguageEventResister(ChangeLanguage);
+    }
+
+    public void ChangeLanguage()
+    {
+        if (LanguageManager.instance.isKor)
+        {
+            for (int i = 0; i < fontList.Count; i++)
+            {
+                fontList[i].text = LanguageManager.instance.gameoverKor[i];
+            }
+        }
+        else
+        {
+            for (int i = 0; i < fontList.Count; i++)
+            {
+                fontList[i].text = LanguageManager.instance.gameoverEng[i];
+            }
         }
     }
 }

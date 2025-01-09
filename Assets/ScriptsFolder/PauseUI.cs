@@ -39,6 +39,7 @@ public class PauseUI : MonoBehaviour
         pauseInteract = true;
         Time.timeScale = 1f;
         ButtonSoundEffectPlayer_=gameObject.GetComponent<ButtonSoundEffectPlayer>();
+        GameManager.instance.mouseTimeMove = true;
         //SelectedUIImage= SelectedUIChecker.GetComponent<Image>();
     }
     //public void ReturnPauseUI()
@@ -164,6 +165,7 @@ public class PauseUI : MonoBehaviour
         {
             ButtonSoundEffectPlayer_.PlayActiveAudio();
             Time.timeScale = 1f;
+            GameManager.instance.mouseTimeMove = true;
         }
         pauseUI.gameObject.SetActive(pauseActive);
     }

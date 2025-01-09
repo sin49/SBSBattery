@@ -32,7 +32,14 @@ public class TestRecheckUI : UIInteract
     {
         //if (this.gameObject.activeSelf)
         //    this.gameObject.SetActive(false);
+        ResisterLang();
     }
+
+    private void Start()
+    {
+        ChangeLanguage();
+    }
+
     public void ActiveUI(string Desc, Action OKEvent, Action CancelEvent)
     {
         Description.text = Desc;
@@ -267,5 +274,34 @@ public class TestRecheckUI : UIInteract
         reCheckActive = false;
         title.DeleteData();
         gameObject.SetActive(false);
+    }
+
+    public void ResisterLang()
+    {
+        LanguageManager.instance.LanguageEventResister(ChangeLanguage);
+    }
+
+    public void ChangeLanguage()
+    {
+        if (LanguageManager.instance.isKor)
+        {
+            Description.text = LanguageManager.instance.recheckKor[0];
+            Description.characterSpacing = LanguageManager.instance.recheckSpacingKor[0];
+            for (int i = 0; i < fontList.Count; i++)
+            {
+                fontList[i].text = LanguageManager.instance.recheckKor[i+1];
+                fontList[i].characterSpacing = LanguageManager.instance.recheckSpacingKor[i + 1];
+            }
+        }
+        else
+        {
+            Description.text = LanguageManager.instance.recheckEng[0];
+            Description.characterSpacing = LanguageManager.instance.recheckSpacingEng[0];
+            for (int i = 0; i < fontList.Count; i++)
+            {
+                fontList[i].text = LanguageManager.instance.recheckEng[i+1];
+                fontList[i].characterSpacing = LanguageManager.instance.recheckSpacingEng[i + 1];
+            }
+        }
     }
 }

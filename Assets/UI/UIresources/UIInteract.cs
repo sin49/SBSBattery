@@ -9,4 +9,7 @@ public class UIInteract : MonoBehaviour
     public Color activeFontColor;
 
     public List<TextMeshProUGUI> fontList = new List<TextMeshProUGUI> ();
+
+    protected List<string> korPack = new List<string>();
+    protected List<string> engPack = new List<string>();
 }

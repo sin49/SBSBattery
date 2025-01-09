@@ -88,16 +88,9 @@ public class MouseFormCursor : MonoBehaviour
                 Enemy fire;
                 if (other.TryGetComponent<Enemy>(out fire))
                 {
-                    Debug.Log("ºÒ¸ó Àâ¾Ò³ª?");
                     fire.StopCoroutine(fire.corutine);
                     fire.cancelattakc();
                     fire.corutine = null;
-                   
-                    Debug.Log("ºÒ¸ó È­¿°¹æ»ç Ãë¼ÒµÇ³ª?");
-                }
-                else
-                {
-                    Debug.Log("ºÒ¸ó ¾ÈÀâÈû");
                 }
             }
         }
@@ -113,12 +106,12 @@ public class MouseFormCursor : MonoBehaviour
             Enemy enemy;
             if (interactObj.TryGetComponent<Enemy>(out enemy))
             {
-                Debug.Log("¸ó½ºÅÍ °í°´´ÔÀÌ½Ã³×¿ä");
+                //Debug.Log("¸ó½ºÅÍ °í°´´ÔÀÌ½Ã³×¿ä");
                 ThrowMonster();
             }
             else
             {
-                Debug.Log("ÇÃ·§Æû °í°´´ÔÀÌ½Ã³×¿ä");
+                //Debug.Log("ÇÃ·§Æû °í°´´ÔÀÌ½Ã³×¿ä");
                 DropPlatformObject();
             }
             if(cursorInteract.CompareTag("CursorObject"))
@@ -134,9 +127,7 @@ public class MouseFormCursor : MonoBehaviour
         {
             enemy.gameObject.layer = LayerMask.NameToLayer("Default");
 
-            enemy.GetComponent<Collider>().isTrigger = false;
-            enemy.GetComponent<Rigidbody>().useGravity = true;
-            enemy.GetComponent<Rigidbody>().isKinematic = false;
+            ReturnRigidbody();
             enemy.GetComponent<Rigidbody>().AddForce(transform.forward * forwardThrowForce + transform.up * upThrowForce, ForceMode.VelocityChange);
 
             interactObj = null;
@@ -153,9 +144,9 @@ public class MouseFormCursor : MonoBehaviour
     public void DropPlatformObject()
     {
         interactObj.gameObject.layer = LayerMask.NameToLayer("Default");
-        interactObj.GetComponent<Collider>().isTrigger = false;
-        interactObj.GetComponent<Rigidbody>().useGravity = true;
-        interactObj.GetComponent<Rigidbody>().isKinematic = false;
+        ReturnRigidbody();
+        //interactObj.drop = true;
+        interactObj.caught = false;
         interactObj = null;
         onCatch = false;
         soundEffectListPlayer.PlayAudio(1);
@@ -167,5 +158,12 @@ public class MouseFormCursor : MonoBehaviour
             (PlayerHandler.instance.CurrentPlayer.transform.GetChild(0).up * upPos);
         cursorParent.transform.position = (PlayerHandler.instance.CurrentPlayer.transform.GetChild(0).position + saveCursorPos);
         cursorParent.transform.rotation = PlayerHandler.instance.CurrentPlayer.transform.GetChild(0).rotation;
+    }
+
+    public void ReturnRigidbody()
+    {
+        interactObj.GetComponent<Collider>().isTrigger = false;
+        interactObj.GetComponent<Rigidbody>().useGravity = true;
+        interactObj.GetComponent<Rigidbody>().isKinematic = false;
     }
 }

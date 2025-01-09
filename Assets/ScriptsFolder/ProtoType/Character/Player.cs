@@ -670,7 +670,7 @@ public class Player : Character,environmentObject
 
         transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
     }
-   
+
     public IEnumerator moveportalanimation(Transform t)
     {
 

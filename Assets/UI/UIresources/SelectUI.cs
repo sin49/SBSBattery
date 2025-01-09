@@ -26,12 +26,6 @@ public class SelectUI : MonoBehaviour
 
     [Header("코인관련 UI")] public GameObject coinPanel;
     [Header("일시정지 UI")] public GameObject pauseIconPanel;
-    //void initlizeUI()
-    //{
-    //    index = 0;
-    //    OnHandle = true;
-    //    UpdateUI();
-    //}
 
     public GameObject uiGroup;
     public GameObject settingUI;
@@ -51,6 +45,21 @@ public class SelectUI : MonoBehaviour
     public bool settingActive;
     public bool reCheckActive;
 
+    List<string> korPack = new List<string>();
+    List<string> engPack = new List<string>();
+
+    private void Awake()
+    {
+        ResisterLang();
+    }
+
+    private void Start()
+    {
+        ChangeLanguage();
+
+        korPack = LanguageManager.instance.pauseKor;
+        engPack = LanguageManager.instance.pauseEng;
+    }
 
     void swapUI()
     {
@@ -75,12 +84,6 @@ public class SelectUI : MonoBehaviour
         //UpdateUI();
     }
 
-    //public void DeactiveUI()
-    //{
-
-    //    initlizeUI();
-    //    //pauseui.ReturnPauseUI();
-    //}
     void TitleBackEvent()
     {
         Time.timeScale = 1;
@@ -105,6 +108,7 @@ public class SelectUI : MonoBehaviour
 
     public void SelectButton()
     {
+        string text = "";
         if (buttonselected)
             return;
         switch (index)
@@ -132,8 +136,15 @@ public class SelectUI : MonoBehaviour
                 ButtonList[index].GetComponent<Image>().color = originColor;
                 ButtonList[index].transform.localScale = originScale;
                 SelectedUI.SetActive(false);
-
-                testRecheckUI.ActiveUI("타이틀로 돌아갑니다.", TitleBackEvent, ButtonselectedDisable);
+                if(LanguageManager.instance.isKor)
+                {
+                    text = LanguageManager.instance.recheckKor[1];
+                }
+                else
+                {
+                    text = LanguageManager.instance.recheckEng[1];
+                }
+                testRecheckUI.ActiveUI(text, TitleBackEvent, ButtonselectedDisable);
                 pauseui.pauseInteract = false;
                 buttonselected = true;
                 break;
@@ -141,8 +152,15 @@ public class SelectUI : MonoBehaviour
                 ButtonList[index].GetComponent<Image>().color = originColor;
                 ButtonList[index].transform.localScale = originScale;
                 SelectedUI.SetActive(false);
-
-                testRecheckUI.ActiveUI("게임을 종료합니다.", ExitEvent, ButtonselectedDisable);
+                if(LanguageManager.instance.isKor)
+                {
+                    text = LanguageManager.instance.recheckKor[2];
+                }
+                else
+                {
+                    text = LanguageManager.instance.recheckEng[2];
+                }
+                testRecheckUI.ActiveUI(text, ExitEvent, ButtonselectedDisable);
                 pauseui.pauseInteract = false;
                 buttonselected = true;
                 break;
@@ -201,6 +219,7 @@ public class SelectUI : MonoBehaviour
     {
         pauseui.PauseUiActive();
     }
+
     private void OnEnable()
     {
         ////initlizeUI();
@@ -268,7 +287,39 @@ public class SelectUI : MonoBehaviour
         //{
         //    DeactiveUI();
         //}
-    }    
+    }
+
+    [Header("일시정지 타이틀")]
+    public TextMeshProUGUI pauseTitle;
+
+    public void ResisterLang()
+    {
+        LanguageManager.instance.LanguageEventResister(ChangeLanguage);
+    }
+
+    public void ChangeLanguage()
+    {
+        if (LanguageManager.instance.isKor)
+        {
+            pauseTitle.text = LanguageManager.instance.pauseKor[0];
+            pauseTitle.characterSpacing = LanguageManager.instance.pauseSpacingKor[0];
+            for (int i = 0; i < fontList.Count; i++)
+            {
+                fontList[i].text = LanguageManager.instance.pauseKor[i+1];
+                fontList[i].characterSpacing = LanguageManager.instance.pauseSpacingKor[i + 1];
+            }
+        }
+        else
+        {
+            pauseTitle.text = LanguageManager.instance.pauseEng[0];
+            pauseTitle.characterSpacing = LanguageManager.instance.pauseSpacingEng[0];
+            for (int i = 0; i < fontList.Count; i++)
+            {
+                fontList[i].text = LanguageManager.instance.pauseEng[i+1];
+                fontList[i].characterSpacing = LanguageManager.instance.pauseSpacingEng[i + 1];
+            }
+        }
+    }
 
     #region 추가작업
     public void ShowPauseUI()

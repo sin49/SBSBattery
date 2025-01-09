@@ -5,7 +5,12 @@ using UnityEngine;
 public class CursorInteractObjectCheck : MonoBehaviour
 {
     public GameObject cursorParent;
+    public CursorInteractObject cursorplatform;
 
+    private void Awake()
+    {
+        cursorplatform = GetComponent<CursorInteractObject>();
+    }
     //private void Update()
     //{
     //    RaycastHit forwardRay;
@@ -34,18 +39,34 @@ public class CursorInteractObjectCheck : MonoBehaviour
     //    }
     //}
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Ground"))
-        {
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (other.CompareTag("Ground"))
+    //    {
+    //        Debug.Log($"커서플랫폼 충돌체크 :{other}");
+    //        //PlayerHandler.instance.CurrentPlayer.cantmove = true;
+    //        Vector3 v = (other.transform.position - PlayerHandler.instance.CurrentPlayer.transform.position).normalized;
+    //        //if (v.x > v.z)
+    //        //    v.z = 0;
+    //        //else
+    //        //    v.x = 0;
+    //        v.y = 0;
+    //        cursorParent.transform.Translate(v * -1, Space.World);
 
-            Vector3 v = (other.transform.position - PlayerHandler.instance.CurrentPlayer.transform.position).normalized;
-            //if (v.x > v.z)
-            //    v.z = 0;
-            //else
-            //    v.x = 0;
-            v.y = 0;
-            cursorParent.transform.Translate(v*-1, Space.World);
+    //    }
+    //}
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (cursorplatform.caught)
+        {
+            if (other.CompareTag("Ground"))
+            {
+                Debug.Log($"충돌체크 {other}");
+                cursorplatform.caught = false;
+                MouseTransform player = PlayerHandler.instance.CurrentPlayer.GetComponent<MouseTransform>();
+                player.CursorFormDeactive();
+            }
         }
     }
     //닿았을 때 

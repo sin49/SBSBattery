@@ -202,14 +202,18 @@ public class TitleScreen : UIInteract
 
     private void Awake()
     {
+        Debug.Log("title screen awake");
         ButtionSoundEffectPlayer_ = gameObject.GetComponent<ButtonSoundEffectPlayer>();
         onHandle = true;
+        LangResister();
+        //ChangeLanguage();
     }
     private void Start()
     {
         InitText();
 
-
+        korPack = LanguageManager.instance.titleKor;
+        engPack = LanguageManager.instance.titleEng;
     }
     // Update is called once per frame
     void Update()
@@ -217,5 +221,30 @@ public class TitleScreen : UIInteract
         if (!onHandle)
             return;
         handletitle();
+    }
+
+    public void LangResister()
+    {
+        LanguageManager.instance.LanguageEventResister(ChangeLanguage);
+    }
+
+    public void ChangeLanguage()
+    {
+        if (LanguageManager.instance.isKor)
+        {
+            for (int i = 0; i < fontList.Count; i++)
+            {
+                fontList[i].text = LanguageManager.instance.titleKor[i];
+                fontList[i].characterSpacing = LanguageManager.instance.titleSpacingKor[i];
+            }
+        }
+        else
+        {
+            for (int i = 0; i < fontList.Count; i++)
+            {
+                fontList[i].text = LanguageManager.instance.titleEng[i];
+                fontList[i].characterSpacing = LanguageManager.instance.titleSpacingEng[i];
+            }
+        }
     }
 }

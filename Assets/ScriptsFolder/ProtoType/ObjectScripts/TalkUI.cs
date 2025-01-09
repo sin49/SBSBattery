@@ -35,7 +35,8 @@ public class TalkUI : MonoBehaviour
     GameObject currentMiddle;
 
     [Header("텍스트 사운드 스크립트")] public TextSound ts;
-
+    [Header("캐릭터 이름")] public TextMeshProUGUI cName;
+    
     private void Awake()
     {
         if (instance == null)

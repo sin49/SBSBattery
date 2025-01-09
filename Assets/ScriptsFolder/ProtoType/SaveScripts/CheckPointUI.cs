@@ -1,5 +1,11 @@
+using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
+using System.Dynamic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -22,10 +28,27 @@ public class CheckPointUI : UIInteract
     public TitleScreen title;
     [Header("일시정지 UI에서 추가")]
     public SelectUI selectUI;
-    //private void Awake()
-    //{
-    //    gameObject.SetActive(false);
-    //}
+
+    [Header("체크포인트 타이틀")]
+    public TextMeshProUGUI cpTitle;
+    private void Awake()
+    {
+        ResisterLang();
+        foreach (Button btn in buttonList)
+        {
+            btn.onClick.AddListener(SelectButton);
+            btn.onClick.AddListener(ActiveSound);
+        }
+        gameObject.SetActive(false);
+    }
+
+    public void SetIndex(int n)
+    {
+        SelectSound();
+        beforeIndex = index;
+        index = n;
+        UpdateUI();
+    }
 
     private void OnEnable()
     {
@@ -87,13 +110,13 @@ public class CheckPointUI : UIInteract
             moved = false;
 
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space) 
-            || Input.GetKeyDown(KeyCode.Joystick1Button0)|| Input.GetKeyDown(KeyCode.C))
+            || Input.GetKeyDown(KeyCode.JoystickButton0)|| Input.GetKeyDown(KeyCode.C))
         {
             SelectButton();
             ActiveSound();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Joystick1Button1))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))
         {
             CheckListExit();
             DeactiveSound();
@@ -228,4 +251,24 @@ public class CheckPointUI : UIInteract
             return false;
             
     }
+    #region 언어변경
+    public void ResisterLang()
+    {
+        LanguageManager.instance.LanguageEventResister(ChangeLanguage);
+    }
+
+    public void ChangeLanguage()
+    {
+        if (LanguageManager.instance.isKor)
+        {
+            cpTitle.text = LanguageManager.instance.cpKor[0];
+            cpTitle.characterSpacing = LanguageManager.instance.cpSpacingKor[0];
+        }
+        else
+        {
+            cpTitle.text = LanguageManager.instance.cpEng[0];
+            cpTitle.characterSpacing = LanguageManager.instance.cpSpacingEng[0];
+        }
+    }
+    #endregion
 }

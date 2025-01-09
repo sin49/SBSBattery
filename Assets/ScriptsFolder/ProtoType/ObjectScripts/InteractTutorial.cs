@@ -18,6 +18,7 @@ public class InteractTutorial : MonoBehaviour
 
     public List<Sprite> batteryIcon = new List<Sprite>();
     [Header("대사(문자열)")] public List<string> talkTexts = new List<string>();
+    [Header("대사(영문)")] public List<string> engTexts = new List<string>();
     [Header("표정(문자열)")] public List<string> iconString = new List<string>();
     [Header("튜토리얼 이미지(문자열)")] public List<string> middleText = new List<string>();
     [Header("튜토리얼 이미지")] public GameObject imageTutorial;
@@ -72,7 +73,7 @@ public class InteractTutorial : MonoBehaviour
                 string[] value = read.Split(",");
                 //Debug.Log(value.Length);
                 int index;
-                string icon, text, middle;
+                string icon, text, middle, eng;
                 if (!string.IsNullOrEmpty(value[0]))
                 {
                     index = int.Parse(value[0]); // 번호
@@ -80,12 +81,18 @@ public class InteractTutorial : MonoBehaviour
                     text = value[1]; // 대본
                     icon = value[2]; // 배터리 이미지
                     middle = value[3]; // 튜토리얼 이미지(선택사항)
+
                     if (checkIndex == index && checkIndex <= endindex)
                     {
                         Debug.Log("인덱스 번호 일치함");
                         iconString.Add(icon);
                         talkTexts.Add(text);
                         middleText.Add(middle);
+                        if (value.Length >= 4)
+                        {
+                            eng = value[4];
+                            engTexts.Add(eng);
+                        }
                         checkIndex++;
                     }                    
                 }
@@ -100,7 +107,7 @@ public class InteractTutorial : MonoBehaviour
         if (interact)
         {
             if ((Input.GetKeyDown(KeySettingManager.instance.jumpKeycode) || Input.GetKeyDown(KeyCode.Space) 
-                || Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.Joystick1Button1) || Input.GetKeyDown(KeyCode.Return)) && !end && !textPlaying)
+                || Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.JoystickButton1) || Input.GetKeyDown(KeyCode.Return)) && !end && !textPlaying)
             {
                 if (!textSkip && !textEnd)
                 {
@@ -122,7 +129,6 @@ public class InteractTutorial : MonoBehaviour
                         if (TalkUI.instance != null)
                             TalkUI.instance.gameObject.SetActive(false);
                         GetCharacterKey();
-                        //CharacterHandler.instance.moveRestric = false;
                         GameManager.instance.tutoInteract = false;
                         PlayerHandler.instance.CurrentPlayer.cantmove = false;
                         end = true;
@@ -170,16 +176,25 @@ public class InteractTutorial : MonoBehaviour
     IEnumerator TextAnim()
     {
         textEnd = false;
-
+        string str = "";
+        if(LanguageManager.instance.isKor && talkIndex >= engTexts.Count)
+        {
+            str = talkTexts[talkIndex];
+        }
+        else
+        {
+            str = engTexts[talkIndex];
+        }
         TalkUI.instance.talkText.text = "";
-        for (int n = 0; n < talkTexts[talkIndex].Length; n++)
+        for (int n = 0; n < str.Length; n++)
         {
 
             if (textSkip)
             {
-                TalkUI.instance.talkText.text = talkTexts[talkIndex];
+                TalkUI.instance.talkText.text = str;
                 string replace = TalkUI.instance.talkText.text.Replace("|", "\n");
-                TalkUI.instance.talkText.text = replace;
+                string changeTalk = replace.Replace("`", ",");
+                TalkUI.instance.talkText.text = changeTalk;
                 TalkUI.instance.TextSoundPlay();
                 textSkip = false;
                 textEnd = true;
@@ -187,7 +202,7 @@ public class InteractTutorial : MonoBehaviour
             }
             else
             {
-                TalkUI.instance.talkText.text += talkTexts[talkIndex][n];
+                TalkUI.instance.talkText.text += str[n];
                 if (TalkUI.instance.talkText.text.Contains("|"))
                 {
                     string replace = TalkUI.instance.talkText.text.Replace("|", "\n");

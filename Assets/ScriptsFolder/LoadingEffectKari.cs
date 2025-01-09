@@ -145,11 +145,11 @@ public class LoadingEffectKari : MonoBehaviour
                 EffectEnd?.Invoke(LoadSceneName);
                 if (EffectEnd != null)
                 {
-                    Debug.Log("EffectEnd 이벤트 실행됨");
+                    //Debug.Log("EffectEnd 이벤트 실행됨");
                 }
                 else
                 {
-                    Debug.Log("EffectEnd 이벤트 실행되지 않음");
+                    //Debug.Log("EffectEnd 이벤트 실행되지 않음");
                 }
                 //this.gameObject.SetActive(false);
             }
