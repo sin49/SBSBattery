@@ -227,6 +227,7 @@ public class HouseholdIronTransform : Player
             }
         }
     }
+    #region 다리미 이동/회전
     bool oncorutine;
     IEnumerator rotatedelaycorutine()
     {
@@ -263,6 +264,7 @@ public class HouseholdIronTransform : Player
         {
             hori = 0;
             Vert = 0;
+            Debug.Log("움직임 제한");
             switch (PlayerStat.instance.MoveState)
             {
                 case PlayerMoveState.Xmove:
@@ -271,7 +273,12 @@ public class HouseholdIronTransform : Player
                     else if (Input.GetKey(KeySettingManager.instance.leftKeycode))
                         hori = -1;
                     else
-                    hori = Input.GetAxisRaw("Horizontal");
+                    {
+                        if (!mob)
+                            hori = Input.GetAxisRaw("Horizontal");
+                        else
+                            hori = SimpleInput.GetAxis("Horizontal2");
+                    }
                     rushVert = 0;
                     if (Input.GetKey(KeySettingManager.instance.rightKeycode) || hori >= 0.4f)
                         rushHori = 1;
@@ -284,7 +291,12 @@ public class HouseholdIronTransform : Player
                     else if (Input.GetKey(KeySettingManager.instance.leftKeycode))
                         hori = 1;
                     else
-                    hori = -1 * Input.GetAxisRaw("Horizontal");
+                    {
+                        if(!mob)
+                        hori = -1 * Input.GetAxisRaw("Horizontal");
+                        else
+                        hori = -SimpleInput.GetAxis("Horizontal2");
+                    }
 
                     rushVert = 0;
                     if (Input.GetKey(KeySettingManager.instance.rightKeycode) || hori < -0.4f)
@@ -299,7 +311,12 @@ public class HouseholdIronTransform : Player
                     else if (Input.GetKey(KeySettingManager.instance.downKeycode))
                         Vert = -1;
                     else
-                    Vert = Input.GetAxisRaw("Horizontal");
+                    {
+                        if(!mob)
+                        Vert = Input.GetAxisRaw("Horizontal");
+                        else
+                        Vert = SimpleInput.GetAxis("Horizontal2");
+                    }
                     ZmoveRushVert();
                     break;
                 case PlayerMoveState.ZmoveReverse:
@@ -308,7 +325,12 @@ public class HouseholdIronTransform : Player
                     else if (Input.GetKey(KeySettingManager.instance.downKeycode))
                         Vert = 1;
                     else
-                    Vert = -1 * Input.GetAxisRaw("Horizontal");
+                    {
+                        if (!mob)
+                            Vert = -1 * Input.GetAxisRaw("Horizontal");
+                        else
+                            Vert = -SimpleInput.GetAxis("Horizontal2");
+                    }
 
                     rushHori = 0;
                     ZmoveRushVert();
@@ -316,16 +338,24 @@ public class HouseholdIronTransform : Player
                     break;
                 case PlayerMoveState.XZMove3D:
                     if (Input.GetKey(KeySettingManager.instance.rightKeycode))
-                        Vert = 1;
-                    else if (Input.GetKey(KeySettingManager.instance.leftKeycode))
-                        Vert = -1;
-                    else
-                    Vert = Input.GetAxisRaw("Vertical");
-                    if (Input.GetKey(KeySettingManager.instance.upKeycode))
                         hori = 1;
-                    else if (Input.GetKey(KeySettingManager.instance.downKeycode))
+                    else if (Input.GetKey(KeySettingManager.instance.leftKeycode))
                         hori = -1;
-                    hori = Input.GetAxisRaw("Horizontal");
+                    else
+                    {
+                        if (!mob)
+                            hori = Input.GetAxisRaw("Horizontal");
+                        else
+                            hori = SimpleInput.GetAxis("Horizontal2");
+                    }
+                    if (Input.GetKey(KeySettingManager.instance.upKeycode))
+                        Vert = 1;
+                    else if (Input.GetKey(KeySettingManager.instance.downKeycode))
+                        Vert = -1;
+                    if (!mob)
+                        Vert = Input.GetAxisRaw("Vertical");
+                    else
+                        Vert = SimpleInput.GetAxis("Vertical2");
                     XZmoveRushHorizontal();
                     XZmoveRushVertical();
                     break;
@@ -335,13 +365,23 @@ public class HouseholdIronTransform : Player
                     else if (Input.GetKey(KeySettingManager.instance.leftKeycode))
                         Vert = 1;
                     else
-                    Vert = -1 * Input.GetAxisRaw("Vertical");
+                    {
+                        if (!mob)
+                            Vert = -1 * Input.GetAxisRaw("Horizontal");
+                        else
+                            Vert = -SimpleInput.GetAxis("Horizontal2");
+                    }
                     if (Input.GetKey(KeySettingManager.instance.upKeycode))
                         hori = -1;
                     else if (Input.GetKey(KeySettingManager.instance.downKeycode))
                         hori = 1;
                     else
-                    hori = -1 * Input.GetAxisRaw("Horizontal");
+                    {
+                        if (!mob)
+                            hori = -1 * Input.GetAxisRaw("Vertical");
+                        else
+                            hori = -SimpleInput.GetAxis("Vertical2");
+                    }
 
                     XZmoveRushHorizontal();
                     rushHori = -rushHori;
@@ -354,13 +394,23 @@ public class HouseholdIronTransform : Player
                     else if (Input.GetKey(KeySettingManager.instance.downKeycode))
                         hori = -1;
                     else
-                    hori = Input.GetAxisRaw("Vertical");
+                    {
+                        if (!mob)
+                            hori = Input.GetAxisRaw("Vertical");
+                        else
+                            hori = SimpleInput.GetAxis("Vertical2");
+                    }
                     if (Input.GetKey(KeySettingManager.instance.rightKeycode))
                         Vert = -1;
                     else if (Input.GetKey(KeySettingManager.instance.leftKeycode))
                         Vert = 1;
                     else
-                    Vert = -1 * Input.GetAxisRaw("Horizontal");
+                    {
+                        if (!mob)
+                            Vert = -1 * Input.GetAxisRaw("Horizontal");
+                        else
+                            Vert = -SimpleInput.GetAxis("Horizontal2");
+                    }
 
                     Debug.Log($"zxmove hori {hori}, vert {Vert}\n               rushHori {rushHori}, rushVert {rushVert}");
                     ZXmoveRushHorizontal();
@@ -372,13 +422,23 @@ public class HouseholdIronTransform : Player
                     else if (Input.GetKey(KeySettingManager.instance.leftKeycode))
                         hori = 1;
                     else
-                    hori = -1 * Input.GetAxisRaw("Vertical");
+                    {
+                        if (!mob)
+                            hori = -1 * Input.GetAxisRaw("Vertical");
+                        else
+                            hori = -SimpleInput.GetAxis("Vertical2");
+                    }
                     if (Input.GetKey(KeySettingManager.instance.upKeycode))
                         Vert = 1;
                     else if (Input.GetKey(KeySettingManager.instance.downKeycode))
                         Vert = -1;
                     else
-                    Vert = Input.GetAxisRaw("Horizontal");
+                    {
+                        if (!mob)
+                            Vert = Input.GetAxisRaw("Horizontal");
+                        else
+                            Vert = SimpleInput.GetAxis("Horizontal2");
+                    }
 
                     ZXmoveRushHorizontal();
                     ZXmoveRushVertical();
@@ -454,7 +514,7 @@ public class HouseholdIronTransform : Player
 
         return moveResult;
     }
-
+    #endregion
     public float rotateTime;
     float rushRotateSpeed = 4.5f;
     bool onRushRot, onlyRot;

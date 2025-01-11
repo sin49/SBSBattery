@@ -117,23 +117,25 @@ public class LanguageSetting : UIInteract
 
     public void InitLanguage()
     {
-        if (PlayerPrefs.HasKey("SaveLanguage"))
+        if (LanguageManager.instance.isKor)
         {
-            string loadLanguage = PlayerPrefs.GetString("SaveLanguage");
-
-            for (int i = 0; i < LanguageGroup.Count; i++)
+            titleFont.text = LanguageManager.instance.languageKor[0];
+            titleFont.characterSpacing = LanguageManager.instance.languageSpacingKor[0];
+            for (int i = 0; i < fontList.Count; i++)
             {
-                if (loadLanguage == LanguageGroup[i])
-                {
-                    index = i;
-                    fontList[1].text = LanguageGroup[index];
-                }
-            }
+                fontList[i].text = LanguageManager.instance.languageKor[i+1];
+                fontList[i].characterSpacing = LanguageManager.instance.languageSpacingKor[i+1];
+            }            
         }
         else
         {
-            index = 0;
-            fontList[1].text = LanguageGroup[0];
+            titleFont.text = LanguageManager.instance.languageEng[0];
+            titleFont.characterSpacing = LanguageManager.instance.languageSpacingEng[0];
+            for (int i = 0; i < fontList.Count; i++)
+            {
+                fontList[i].text = LanguageManager.instance.languageEng[i + 1];
+                fontList[i].characterSpacing = LanguageManager.instance.languageSpacingEng[i + 1];
+            }
         }
 
         onHandle = true;

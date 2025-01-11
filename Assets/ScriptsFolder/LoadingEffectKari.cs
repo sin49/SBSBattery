@@ -111,10 +111,10 @@ public class LoadingEffectKari : MonoBehaviour
     }
     void loadingVigintteoff()
     {
-        Debug.Log("loadingvigintteoff 호출됨");
+        //Debug.Log("loadingvigintteoff 호출됨");
         if (!FadeOff)
         {
-            Debug.Log("loadingvigintteoff 위 코드");
+            //Debug.Log("loadingvigintteoff 위 코드");
             if (PlayerHandler.instance != null)
                 PlayerHandler.instance.CurrentCamera.gameObject.SetActive(true);
             gameovercamera.gameObject.SetActive(false);
@@ -159,7 +159,7 @@ public class LoadingEffectKari : MonoBehaviour
 
         else if (LoadingComplete)
         {
-            Debug.Log("loadingvigintteoff 아래코드");
+            //Debug.Log("loadingvigintteoff 아래코드");
             if (loadingImage != null)
                 loadingImage.SetActive(false);
             if (PlayerHandler.instance != null && PlayerHandler.instance.CurrentPlayer)

@@ -521,7 +521,7 @@ public class PlayerHandler : MonoBehaviour
         {
             CurrentPlayer.Move();
         }
-        if ((Input.GetKey(KeySettingManager.instance.DimensionChangeKeycode) || KeySettingManager.instance.DimensionPad()) && !Changing && !DImensionChangeDisturb && GameManager.instance.dimensionTuto)
+        if ((Input.GetKey(KeySettingManager.instance.DimensionChangeKeycode) || KeySettingManager.instance.DimensionPad() || SimpleInput.GetButton("DimensionChange")) && !Changing && !DImensionChangeDisturb && GameManager.instance.dimensionTuto)
         {            
             if (ladderCheck || ladderInteract || inputDimension) return;
             inputDimension = true;
@@ -530,7 +530,8 @@ public class PlayerHandler : MonoBehaviour
 
         }
 
-        if (!Input.GetKey(KeySettingManager.instance.DimensionChangeKeycode) && !KeySettingManager.instance.DimensionPad() && !Changing)
+        if (!Input.GetKey(KeySettingManager.instance.DimensionChangeKeycode) && !KeySettingManager.instance.DimensionPad() 
+            && !SimpleInput.GetButton("DimensionChange")&& !Changing)
             inputDimension = false;
 
         if (InteractTimer > 0)
@@ -539,7 +540,7 @@ public class PlayerHandler : MonoBehaviour
 
         if (interactobject != null && !CurrentPlayer.downAttack&& calculateInteractobjectNRemoteObjectDistance())
         {
-            if ((Input.GetKey(KeySettingManager.instance.InteractKeycode) || KeySettingManager.instance.InteractPad()) && InteractTimer <= 0)
+            if ((Input.GetKey(KeySettingManager.instance.InteractKeycode) || KeySettingManager.instance.InteractPad() || SimpleInput.GetButton("Interact")) && InteractTimer <= 0)
             {
                 if (!inputInteract)
                 {
@@ -554,14 +555,14 @@ public class PlayerHandler : MonoBehaviour
             }
         }
 
-        if (!Input.GetKey(KeySettingManager.instance.InteractKeycode) && !KeySettingManager.instance.InteractPad())
+        if (!Input.GetKey(KeySettingManager.instance.InteractKeycode) && !SimpleInput.GetButton("Interact") && !KeySettingManager.instance.InteractPad())
             inputInteract = false;
 
         if(!jumprestrict)
         if (CurrentPlayer.onInterarctive && (int)PlayerStat.instance.MoveState < 4)
         {
 
-            if ((Input.GetKey(KeySettingManager.instance.jumpKeycode) || KeySettingManager.instance.JumpPad()) && !Input.GetKey(KeyCode.DownArrow)
+            if ((Input.GetKey(KeySettingManager.instance.jumpKeycode) || KeySettingManager.instance.JumpPad() || SimpleInput.GetButton("Jump")) && !Input.GetKey(KeyCode.DownArrow)
                  && !inputJump)
             {
                     inputJump = true;
@@ -582,7 +583,7 @@ public class PlayerHandler : MonoBehaviour
         }
         else
         {
-            if ((Input.GetKey(KeySettingManager.instance.jumpKeycode) || KeySettingManager.instance.JumpPad()) && !inputJump
+            if ((Input.GetKey(KeySettingManager.instance.jumpKeycode) || KeySettingManager.instance.JumpPad() || SimpleInput.GetButton("Jump")) && !inputJump
                   )
             {
                     inputJump = true;
@@ -607,7 +608,7 @@ public class PlayerHandler : MonoBehaviour
         //    CurrentPlayer.jumphold();
         //}
 
-        if (!Input.GetKey(KeySettingManager.instance.jumpKeycode) && !KeySettingManager.instance.JumpPad())
+        if (!Input.GetKey(KeySettingManager.instance.jumpKeycode) && !KeySettingManager.instance.JumpPad() && !SimpleInput.GetButton("Jump"))
             inputJump = false;
             
 
@@ -625,13 +626,13 @@ public class PlayerHandler : MonoBehaviour
 
 
 
-            if ((Input.GetKey(KeySettingManager.instance.DownAttackKeycode) || KeySettingManager.instance.DownAttackPad())&& !CurrentPlayer.onGround/*&&
+            if ((Input.GetKey(KeySettingManager.instance.DownAttackKeycode) || KeySettingManager.instance.DownAttackPad() || SimpleInput.GetButton("DownAttack"))&& !CurrentPlayer.onGround/*&&
                 PlayerInventory.instance.checkessesntialitem("item01")*/)
             {
                 CurrentPlayer.DownAttack();
             }
 
-            if (/*doubleUpInput &&*/ (Input.GetKey(KeySettingManager.instance.InteractKeycode) || KeySettingManager.instance.SkillPad())&& CurrentType != TransformType.Default)
+            if (/*doubleUpInput &&*/ (Input.GetKey(KeySettingManager.instance.InteractKeycode) || KeySettingManager.instance.InteractPad() || SimpleInput.GetButton("Interact")) && CurrentType != TransformType.Default)
             {
                 if (!inputSkill)
                 {
@@ -641,9 +642,9 @@ public class PlayerHandler : MonoBehaviour
                     Skill1InputTimer = Skill1InputCheck;
                 }
             }
-            if ((!Input.GetKey(KeySettingManager.instance.InteractKeycode)) && !KeySettingManager.instance.SkillPad() && Skill1InputTimer <= 0)
+            if ((!Input.GetKey(KeySettingManager.instance.InteractKeycode)) && !KeySettingManager.instance.SkillPad() && !SimpleInput.GetButton("Interact") && Skill1InputTimer <= 0)
                 inputSkill = false;
-            if ((Input.GetKey(KeySettingManager.instance.AttackKeycode) || KeySettingManager.instance.AttackPad()) /*&& Skill1InputTimer <= 0*//* &&
+            if ((Input.GetKey(KeySettingManager.instance.AttackKeycode) || KeySettingManager.instance.AttackPad() || SimpleInput.GetButton("Attack")) /*&& Skill1InputTimer <= 0*//* &&
 PlayerInventory.instance.checkessesntialitem("item01")*/)
             {
                 if (!inputAttack)
@@ -653,7 +654,7 @@ PlayerInventory.instance.checkessesntialitem("item01")*/)
                         CurrentPlayer.attackBufferTimer = CurrentPlayer.attackBufferTimeMax;
                 }
             }
-            if (!Input.GetKey(KeySettingManager.instance.AttackKeycode) && !KeySettingManager.instance.AttackPad())
+            if (!Input.GetKey(KeySettingManager.instance.AttackKeycode) && !KeySettingManager.instance.AttackPad() && !SimpleInput.GetButton("Attack"))
                 inputAttack = false;
             if (Skill1InputTimer > 0)
             {

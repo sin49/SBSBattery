@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
+using System.Xml;
 
 public class PauseGraphicSetting : UIInteract
 {
@@ -13,17 +14,19 @@ public class PauseGraphicSetting : UIInteract
     public List<GameObject> graphicList = new List<GameObject>();
     public GameObject screw;
 
-    [Header("해상도 관련")]
-    public TextMeshProUGUI resolutionTMP;
-    public List<string> resolutionString = new List<string>();
-    public List<Resolution> resolutionList = new List<Resolution>();
+    [Header("수직동기화 관련")]
+    public TextMeshProUGUI vsyncTMP; // 수직동기화 선택TMP
+    public List<string> vsyncString = new List<string>(); //수직동기화 선택
+    public float[] vsyncSpacing = new float[2];
+
 
     [Header("화면모드 관련")]
-    public TextMeshProUGUI screenTMP;
-    public List<string> screenString = new List<string>();
+    public TextMeshProUGUI screenTMP; // 화면모드 선택TMP
+    public List<string> screenString = new List<string>(); // 화면모드 선택
+    public float[] screenSpacing = new float[2];
 
     int index, beforeIndex;
-    int resolutionIndex, screenIndex;
+    int vsyncIndex, screenIndex;
 
     bool onButton, graphicActive;
     public Sprite activeArrow, deactiveArrow;
@@ -58,40 +61,73 @@ public class PauseGraphicSetting : UIInteract
             obj.SetActive(true);            
         }
 
+        if (beforeIndex > graphicList.Count - 3)
+        {
+            DeactiveButton();
+        }
+        else
+        {
+            graphicList[beforeIndex].GetComponent<Image>().sprite = deactiveArrow;
+        }
+
         if (index > graphicList.Count - 3)
+        {
             onButton = true;
-
-        switch (beforeIndex)
+            ActiveButton();
+        }
+        else
         {
-            case 0:
-            case 1:
-                graphicList[beforeIndex].GetComponent<Image>().sprite = deactiveArrow;
-                break;
-            case 2:
-            case 3:
-                DeactiveButton();
-                break;
-            default:
-                Debug.Log("out of range");
-                break;
+            onButton = false;
+            graphicList[index].GetComponent<Image>().sprite = activeArrow;
         }
 
-        switch (index)
-        {
-            case 0:
-            case 1:
-                graphicList[index].GetComponent<Image>().sprite = activeArrow;
-                break;
-            case 2:
-            case 3:
-                ActiveButton();
-                break;
-            default:
-                Debug.Log("out of range");
-                break;
-        }
+        UpdateGraphicData();
+
+        //switch (beforeIndex)
+        //{
+        //    case 0:
+        //    case 1:
+        //        graphicList[beforeIndex].GetComponent<Image>().sprite = deactiveArrow;
+        //        break;
+        //    case 2:
+        //    case 3:
+        //        DeactiveButton();
+        //        break;
+        //    default:
+        //        Debug.Log("out of range");
+        //        break;
+        //}
+
+        //switch (index)
+        //{
+        //    case 0:
+        //    case 1:
+        //        graphicList[index].GetComponent<Image>().sprite = activeArrow;
+        //        break;
+        //    case 2:
+        //    case 3:
+        //        ActiveButton();
+        //        break;
+        //    default:
+        //        Debug.Log("out of range");
+        //        break;
+        //}
         graphicActive = true;
     }
+
+    public void UpdateGraphicData()
+    {
+        if (PlayerPrefs.HasKey("VsyncData"))
+            vsyncIndex = PlayerPrefs.GetInt("VsyncData");
+        vsyncTMP.text = vsyncString[vsyncIndex];
+        vsyncTMP.characterSpacing = vsyncSpacing[vsyncIndex];
+
+        if (PlayerPrefs.HasKey("ScreenModeData"))
+            screenIndex = PlayerPrefs.GetInt("ScreenModeData");
+        screenTMP.text = screenString[screenIndex];
+        screenTMP.characterSpacing = screenSpacing[screenIndex];
+    }
+
     bool moved, horiMoved;
     float moveValue;
     float horiValue;
@@ -103,31 +139,117 @@ public class PauseGraphicSetting : UIInteract
             moveValue = Input.GetAxisRaw("Vertical");
             horiValue = Input.GetAxisRaw("Horizontal");
 
-            if ((Input.GetKeyDown(KeyCode.UpArrow) || moveValue > 0) && !moved)
-            {
-                moved = true;
+            HorizontalInput(); // 수직입력
+            VerticalInput(); // 수평입력
+            EnterInput(); // 확인입력
 
-                if (index > 0)
+        }        
+    }
+
+    #region 입력
+    public void HorizontalInput()
+    {
+        if ((Input.GetKeyDown(KeyCode.UpArrow) || moveValue > 0) && !moved)
+        {
+            moved = true;
+
+            if (index > 0)
+            {
+                beforeIndex = index;
+                index--;
+                UpdateUI();
+            }
+            Debug.Log("두 번 나오나");
+        }
+
+        if (Input.GetKeyUp(KeyCode.UpArrow) || moveValue == 0)
+        {
+            moved = false;
+        }
+
+
+        if ((Input.GetKeyDown(KeyCode.DownArrow) || moveValue < 0) && !moved)
+        {
+            moved = true;
+
+            if (onButton)
+                return;
+            if (index < graphicList.Count - 1)
+            {
+                beforeIndex = index;
+                index++;
+                UpdateUI();
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.DownArrow) || moveValue == 0)
+        {
+            moved = false;
+        }
+    }
+    public void VerticalInput()
+    {
+        if ((Input.GetKeyDown(KeyCode.LeftArrow) || horiValue < 0) && !horiMoved)
+        {
+            horiMoved = true;
+            if (!onButton)
+            {
+                switch (index)
+                {
+                    case 0:
+                        if (vsyncIndex > 0)
+                            vsyncIndex--;
+                        UpdateResolutionUI();
+                        break;
+                    case 1:
+                        if (screenIndex > 0)
+                            screenIndex--;
+                        UpdateScreenUI();
+                        break;
+                    default:
+                        Debug.Log("out of range");
+                        break;
+                }
+            }
+            else
+            {
+                if (index > graphicList.Count - 2)
                 {
                     beforeIndex = index;
                     index--;
                     UpdateUI();
                 }
-                Debug.Log("두 번 나오나");
             }
 
-            if (Input.GetKeyUp(KeyCode.UpArrow) || moveValue == 0)
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftArrow) || horiValue == 0)
+            horiMoved = false;
+
+        if ((Input.GetKeyDown(KeyCode.RightArrow) || horiValue > 0) && !horiMoved)
+        {
+            horiMoved = true;
+            if (!onButton)
             {
-                moved = false;
+                switch (index)
+                {
+                    case 0:
+                        if (vsyncIndex < vsyncString.Count - 1)
+                            vsyncIndex++;
+                        UpdateResolutionUI();
+                        break;
+                    case 1:
+                        if (screenIndex < screenString.Count - 1)
+                            screenIndex++;
+                        UpdateScreenUI();
+                        break;
+                    default:
+                        Debug.Log("out of range");
+                        break;
+                }
             }
-                
-
-            if ((Input.GetKeyDown(KeyCode.DownArrow) || moveValue < 0) && !moved)
+            else
             {
-                moved = true;
-
-                if (onButton)
-                    return;
                 if (index < graphicList.Count - 1)
                 {
                     beforeIndex = index;
@@ -135,94 +257,22 @@ public class PauseGraphicSetting : UIInteract
                     UpdateUI();
                 }
             }
+        }
 
-            if (Input.GetKeyUp(KeyCode.DownArrow) || moveValue == 0)
-            {                
-                moved = false;
-            }
-
-            if ((Input.GetKeyDown(KeyCode.LeftArrow) || horiValue < 0) && !horiMoved)
-            {
-                horiMoved = true;
-                if (!onButton)
-                {
-                    switch (index)
-                    {
-                        case 0:
-                            if (resolutionIndex > 0)
-                                resolutionIndex--;
-                            UpdateResolutionUI();
-                            break;
-                        case 1:
-                            if (screenIndex > 0)
-                                screenIndex--;
-                            UpdateScreenUI();
-                            break;
-                        default:
-                            Debug.Log("out of range");
-                            break;
-                    }
-                }
-                else
-                {
-                    if (index > graphicList.Count - 2)
-                    {
-                        beforeIndex = index;
-                        index--;
-                        UpdateUI();
-                    }
-                }
-
-            }
-
-            if (Input.GetKeyUp(KeyCode.LeftArrow) || horiValue == 0)
-                horiMoved = false;
-
-            if ((Input.GetKeyDown(KeyCode.RightArrow) || horiValue > 0) && !horiMoved)
-            {
-                horiMoved = true;
-                if (!onButton)
-                {
-                    switch (index)
-                    {
-                        case 0:
-                            if (resolutionIndex < resolutionString.Count - 1)
-                                resolutionIndex++;
-                            UpdateResolutionUI();
-                            break;
-                        case 1:
-                            if (screenIndex < screenString.Count - 1)
-                                screenIndex++;
-                            UpdateScreenUI();
-                            break;
-                        default:
-                            Debug.Log("out of range");
-                            break;
-                    }
-                }
-                else
-                {
-                    if (index < graphicList.Count - 1)
-                    {
-                        beforeIndex = index;
-                        index++;
-                        UpdateUI();
-                    }
-                }
-            }
-
-            if (Input.GetKeyDown(KeyCode.RightArrow) || horiValue == 0)
-                horiMoved = false;
-
-            if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space) 
-                || Input.GetKeyDown(KeyCode.JoystickButton0)|| Input.GetKeyDown(KeyCode.Return))
-            {
-                SelectSetting();
-            }
-
-        }        
+        if (Input.GetKeyDown(KeyCode.RightArrow) || horiValue == 0)
+            horiMoved = false;
     }
+    public void EnterInput()
+    {
+        if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space)
+                || Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.Return))
+        {
+            SelectSetting();
+        }
+    }
+    #endregion
 
+    #region 버튼 선택 작용
     public void SelectSetting()
     {
         switch (index)
@@ -250,7 +300,7 @@ public class PauseGraphicSetting : UIInteract
 
     public void ChoiceVSyncMode()
     {
-        switch (resolutionIndex)
+        switch (vsyncIndex)
         {
             case 0:
                 QualitySettings.vSyncCount = 0;
@@ -260,6 +310,7 @@ public class PauseGraphicSetting : UIInteract
                 break;
         }
 
+        PlayerPrefs.SetInt("VsyncData", vsyncIndex);
     }
 
     public void ChoiceScreenMode()
@@ -273,9 +324,63 @@ public class PauseGraphicSetting : UIInteract
                 GameManager.instance.ChangeFullscreen();
                 break;
         }
+        PlayerPrefs.SetInt("ScreenModeData", screenIndex);
+    }
+    #endregion
 
+    #region 수직동기화 업데이트
+    public void ResolutionDecrease()
+    {
+        if (vsyncIndex > 0)
+        {
+            vsyncIndex--;
+            UpdateResolutionUI();
+        }
     }
 
+    public void ResolutionIncrease()
+    {
+        if (vsyncIndex < vsyncString.Count - 1)
+        {
+            vsyncIndex++;
+            UpdateResolutionUI();
+        }
+    }
+
+    //해상도 갱신 준비
+    public void UpdateResolutionUI()
+    {
+        vsyncTMP.text = vsyncString[vsyncIndex];
+    }
+    #endregion
+
+    #region 화면모드 업데이트
+    public void ScreenDecrease()
+    {
+        if (screenIndex > 0)
+        {
+            screenIndex--;
+            UpdateScreenUI();
+        }
+    }
+
+    public void ScreenIncrease()
+    {
+        if (screenIndex < screenString.Count - 1)
+        {
+            screenIndex++;
+            UpdateScreenUI();
+        }
+    }
+
+    //화면 모드 갱신 준비
+    public void UpdateScreenUI()
+    {
+        screenTMP.text = screenString[screenIndex];
+    }
+    #endregion
+
+    #region 이벤트 (버튼 + 이벤트 트리거)
     public void CheckArrow(int n)
     {
         switch (n)
@@ -298,6 +403,46 @@ public class PauseGraphicSetting : UIInteract
         index = n;
         UpdateUI();
     }
+
+    [Header("수직동기화 화살표")] 
+    public List<GameObject> vsyncArrow = new List<GameObject>();
+    [Header("화면모드 화살표")]
+    public List<GameObject> screenArrow = new List<GameObject>();
+    public void UpdateArrow()
+    {
+        if (vsyncIndex <= 0)
+        {
+            vsyncArrow[0].SetActive(false);
+        }
+        else if (vsyncIndex >= vsyncString.Count-1)
+        {
+            vsyncArrow[1].SetActive(false);
+        }
+        else
+        {
+            foreach (GameObject arrow in vsyncArrow)
+            {
+                arrow.SetActive(true);
+            }
+        }
+
+        if (screenIndex <= 0)
+        {
+            screenArrow[0].SetActive(false);
+        }
+        else if (screenIndex >= screenString.Count - 1)
+        {
+            screenArrow[1].SetActive(false);
+        }
+        else
+        {
+            foreach (GameObject arrow in screenArrow)
+            {
+                arrow.SetActive(true);
+            }
+        }
+    }
+    #endregion
 
     //현재 화면에서 나감
     public void CurrentSettingExit()
@@ -352,16 +497,6 @@ public class PauseGraphicSetting : UIInteract
             graphicList[beforeIndex].GetComponent<Image>().sprite = deactiveArrow;
         }
     }
-    //해상도 갱신 준비
-    public void UpdateResolutionUI()
-    {
-        resolutionTMP.text = resolutionString[resolutionIndex];
-    }
-    //화면 모드 갱신 준비
-    public void UpdateScreenUI()
-    {
-        screenTMP.text = screenString[screenIndex];
-    }
 
     public void ActiveButton()
     {
@@ -375,45 +510,11 @@ public class PauseGraphicSetting : UIInteract
         fontList[beforeIndex].color = deactiveFontColor;
     }
 
-    public void ResolutionDecrease()
-    {
-        if (resolutionIndex > 0)
-        {
-            resolutionIndex--;
-            UpdateResolutionUI();
-        }
-    }
-
-    public void ResolutionIncrease()
-    {
-        if (resolutionIndex < resolutionString.Count - 1)
-        {
-            resolutionIndex++;
-            UpdateResolutionUI();
-        }
-    }
-
-    public void ScreenDecrease()
-    {
-        if (screenIndex > 0)
-        {
-            screenIndex--;
-            UpdateScreenUI();
-        }
-    }
-
-    public void ScreenIncrease()
-    {
-        if (screenIndex < screenString.Count - 1)
-        {
-            screenIndex++;
-            UpdateScreenUI();
-        }
-    }
-
     #region 언어변경
     [Header("그래픽 설정 타이틀")]
     public TextMeshProUGUI titleFont;
+    [Header("언어팩에 작용할 폰트 리스트")]
+    public List<TextMeshProUGUI> languageList = new List<TextMeshProUGUI>();
 
     public void ResisterLang()
     {
@@ -422,28 +523,84 @@ public class PauseGraphicSetting : UIInteract
 
     public void ChangeLanguage()
     {
+        int index = 0;
+
         if (LanguageManager.instance.isKor)
         {
             titleFont.text = LanguageManager.instance.graphicKor[0];
             titleFont.characterSpacing = LanguageManager.instance.graphicSpacingKor[0];
-
             for (int i = 0; i < fontList.Count; i++)
             {
-                fontList[i].text = LanguageManager.instance.graphicKor[i+1];
+                fontList[i].text = LanguageManager.instance.graphicKor[i + 1];
                 fontList[i].characterSpacing = LanguageManager.instance.graphicSpacingKor[i + 1];
+                index++;
+            }
+            for (int i = 0; i < vsyncString.Count; i++)
+            {
+                vsyncString[i] = LanguageManager.instance.graphicKor[index + 1];
+                vsyncSpacing[i] = LanguageManager.instance.graphicSpacingKor[index + 1];
+                index++;
+            }
+            for (int i = 0; i < screenString.Count; i++)
+            {
+                screenString[i] = LanguageManager.instance.graphicKor[index + 1];
+                screenSpacing[i] = LanguageManager.instance.graphicSpacingKor[index + 1];
+                index++;
             }
         }
         else
         {
             titleFont.text = LanguageManager.instance.graphicEng[0];
             titleFont.characterSpacing = LanguageManager.instance.graphicSpacingEng[0];
-
             for (int i = 0; i < fontList.Count; i++)
             {
-                fontList[i].text = LanguageManager.instance.graphicEng[i+1];
+                fontList[i].text = LanguageManager.instance.graphicEng[i + 1];
                 fontList[i].characterSpacing = LanguageManager.instance.graphicSpacingEng[i + 1];
+                index++;
             }
+            for (int i = 0; i < vsyncString.Count; i++)
+            {
+                vsyncString[i] = LanguageManager.instance.graphicEng[index + 1];
+                vsyncSpacing[i] = LanguageManager.instance.graphicSpacingEng[index + 1];
+                index++;
+            }
+            for (int i = 0; i < screenString.Count; i++)
+            {
+                screenString[i] = LanguageManager.instance.graphicEng[index + 1];
+                screenSpacing[i] = LanguageManager.instance.graphicSpacingEng[index + 1];
+                index++;
+            }
+
+            vsyncTMP.text = vsyncString[vsyncIndex];
+            vsyncTMP.characterSpacing = vsyncSpacing[vsyncIndex];
+            screenTMP.text = screenString[screenIndex];
+            screenTMP.characterSpacing = screenSpacing[screenIndex];
         }
     }
+    //public void ChangeLanguage()
+    //{
+    //    if (LanguageManager.instance.isKor)
+    //    {
+    //        titleFont.text = LanguageManager.instance.graphicKor[0];
+    //        titleFont.characterSpacing = LanguageManager.instance.graphicSpacingKor[0];
+
+    //        for (int i = 0; i < fontList.Count; i++)
+    //        {
+    //            languageList[i].text = LanguageManager.instance.graphicKor[i+1];
+    //            languageList[i].characterSpacing = LanguageManager.instance.graphicSpacingKor[i + 1];
+    //        }
+    //    }
+    //    else
+    //    {
+    //        titleFont.text = LanguageManager.instance.graphicEng[0];
+    //        titleFont.characterSpacing = LanguageManager.instance.graphicSpacingEng[0];
+
+    //        for (int i = 0; i < fontList.Count; i++)
+    //        {
+    //            languageList[i].text = LanguageManager.instance.graphicEng[i+1];
+    //            languageList[i].characterSpacing = LanguageManager.instance.graphicSpacingEng[i + 1];
+    //        }
+    //    }
+    //}
     #endregion
 }

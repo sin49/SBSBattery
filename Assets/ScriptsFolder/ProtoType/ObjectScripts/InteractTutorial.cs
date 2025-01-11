@@ -22,6 +22,8 @@ public class InteractTutorial : MonoBehaviour
     [Header("표정(문자열)")] public List<string> iconString = new List<string>();
     [Header("튜토리얼 이미지(문자열)")] public List<string> middleText = new List<string>();
     [Header("튜토리얼 이미지")] public GameObject imageTutorial;
+    [Header("한글 이름")] public List<string> kName = new List<string>();
+    [Header("영문 이름")] public List<string> eName = new List<string>();
 
     [Header("현재 튜토리얼")] public string currentTutorial;
 
@@ -73,7 +75,7 @@ public class InteractTutorial : MonoBehaviour
                 string[] value = read.Split(",");
                 //Debug.Log(value.Length);
                 int index;
-                string icon, text, middle, eng;
+                string icon, text, middle, eng, korName, engName;
                 if (!string.IsNullOrEmpty(value[0]))
                 {
                     index = int.Parse(value[0]); // 번호
@@ -81,6 +83,9 @@ public class InteractTutorial : MonoBehaviour
                     text = value[1]; // 대본
                     icon = value[2]; // 배터리 이미지
                     middle = value[3]; // 튜토리얼 이미지(선택사항)
+                    eng = value[4];
+                    korName = value[5];
+                    engName = value[6];
 
                     if (checkIndex == index && checkIndex <= endindex)
                     {
@@ -88,11 +93,10 @@ public class InteractTutorial : MonoBehaviour
                         iconString.Add(icon);
                         talkTexts.Add(text);
                         middleText.Add(middle);
-                        if (value.Length >= 4)
-                        {
-                            eng = value[4];
-                            engTexts.Add(eng);
-                        }
+                        engTexts.Add(eng);
+                        kName.Add(korName);
+                        eName.Add(engName);
+                        
                         checkIndex++;
                     }                    
                 }
@@ -180,10 +184,12 @@ public class InteractTutorial : MonoBehaviour
         if(LanguageManager.instance.isKor && talkIndex >= engTexts.Count)
         {
             str = talkTexts[talkIndex];
+            TalkUI.instance.cName.text = kName[talkIndex];
         }
         else
         {
             str = engTexts[talkIndex];
+            TalkUI.instance.cName.text = eName[talkIndex];
         }
         TalkUI.instance.talkText.text = "";
         for (int n = 0; n < str.Length; n++)
@@ -193,8 +199,8 @@ public class InteractTutorial : MonoBehaviour
             {
                 TalkUI.instance.talkText.text = str;
                 string replace = TalkUI.instance.talkText.text.Replace("|", "\n");
-                string changeTalk = replace.Replace("`", ",");
-                TalkUI.instance.talkText.text = changeTalk;
+                replace = replace.Replace("`", ",");
+                TalkUI.instance.talkText.text = replace;
                 TalkUI.instance.TextSoundPlay();
                 textSkip = false;
                 textEnd = true;
@@ -203,11 +209,9 @@ public class InteractTutorial : MonoBehaviour
             else
             {
                 TalkUI.instance.talkText.text += str[n];
-                if (TalkUI.instance.talkText.text.Contains("|"))
-                {
-                    string replace = TalkUI.instance.talkText.text.Replace("|", "\n");
-                    TalkUI.instance.talkText.text = replace;
-                }
+                string replace = TalkUI.instance.talkText.text.Replace("|", "\n");
+                replace = replace.Replace("`", ",");
+                TalkUI.instance.talkText.text = replace;
                 //TalkUI.instance.TextSoundPlay();
                 yield return new WaitForSecondsRealtime(TalkUI.instance.textSpeed); ;
             }

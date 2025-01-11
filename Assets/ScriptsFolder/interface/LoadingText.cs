@@ -17,12 +17,12 @@ public class LoadingText : MonoBehaviour
     {
         if (LanguageManager.instance.isKor)
         {
-            Debug.Log("한글");
+            //Debug.Log("한글");
             loadFont.text = LanguageManager.instance.loadingKor[0];
         }
         else
         {
-            Debug.Log("영문");
+            //Debug.Log("영문");
             loadFont.text = LanguageManager.instance.loadingEng[0];
         }
     }

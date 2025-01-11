@@ -34,14 +34,24 @@ public class PauseUI : MonoBehaviour
 
     private void Awake()
     {
+        PauseInit();
+        //SelectedUIImage= SelectedUIChecker.GetComponent<Image>();
+    }
+
+    public void PauseInit()
+    {
         pauseUI.gameObject.SetActive(false);
         pauseActive = false;
         pauseInteract = true;
         Time.timeScale = 1f;
-        ButtonSoundEffectPlayer_=gameObject.GetComponent<ButtonSoundEffectPlayer>();
-        GameManager.instance.mouseTimeMove = true;
-        //SelectedUIImage= SelectedUIChecker.GetComponent<Image>();
+        ButtonSoundEffectPlayer_ = gameObject.GetComponent<ButtonSoundEffectPlayer>();
     }
+
+    private void Start()
+    {
+        GameManager.instance.mouseTimeMove = true;
+    }
+
     //public void ReturnPauseUI()
     //{
     //   UISelected = false;
@@ -54,13 +64,13 @@ public class PauseUI : MonoBehaviour
     //    //UISelected = false;
 
     //    UpdatePauseUI();
-      
+
     //}
     //void activeUI()
     //{
-    
+
     //        SettingUI.ActiveUI();
-     
+
     //}
     //void UpdatePauseUI()
     //{

@@ -48,7 +48,7 @@ public class TitleScreen : UIInteract
         }
         else
         {
-            Debug.Log("파일이 존재하지 않습니다");
+            //Debug.Log("파일이 존재하지 않습니다");
         }
     }
     public void Setting()
@@ -56,7 +56,7 @@ public class TitleScreen : UIInteract
         onHandle = false;
         if (!settingUI.gameObject.activeSelf)
         {
-            Debug.Log("설정창 활성화시키자");
+            //Debug.Log("설정창 활성화시키자");
             settingUI.gameObject.SetActive(true);
             settingAudio.active = true;
         }

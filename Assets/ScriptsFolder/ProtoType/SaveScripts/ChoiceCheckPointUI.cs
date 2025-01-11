@@ -30,13 +30,17 @@ public class ChoiceCheckPointUI : UIInteract
 
     List<Image> buttonList = new List<Image>();
 
-    private void Awake()
-    {
-        InitCheckPointButton();
-    }
-
     private void OnEnable()
     {
+        checkLists = currentStageButton.GetComponentsInChildren<CheckList>().ToList();
+        fontList = currentStageButton.GetComponentsInChildren<TextMeshProUGUI>().ToList();
+        for (int i = 0; i < checkLists.Count; i++)
+        {
+            buttonList.Add(checkLists[i].GetComponent<Image>());
+            checkLists[i].GetComponent<Button>().onClick.AddListener(SelectCheckPoint);
+            checkLists[i].GetComponent<Button>().onClick.AddListener(checkPointUI.ActiveSound);
+        }
+
         buttonList[index].sprite = activeButton;
         fontList[index].color = activeFontColor;
         currentIndex = checkLists[index].checkStageIndex;
@@ -52,26 +56,26 @@ public class ChoiceCheckPointUI : UIInteract
         //fontList.Clear();
     }
 
-    public void InitCheckPointButton()
-    {
-        checkLists = currentStageButton.GetComponentsInChildren<CheckList>().ToList();
-        fontList = currentStageButton.GetComponentsInChildren<TextMeshProUGUI>().ToList();
+    //public void InitCheckPointButton()
+    //{
+    //    checkLists = currentStageButton.GetComponentsInChildren<CheckList>().ToList();
+    //    fontList = currentStageButton.GetComponentsInChildren<TextMeshProUGUI>().ToList();
 
 
-        for (int i = 0; i < checkLists.Count; i++)
-        {
-            buttonList.Add(checkLists[i].GetComponent<Image>());
-            checkLists[i].GetComponent<Button>().onClick.AddListener(SelectCheckPoint);
-            checkLists[i].GetComponent<Button>().onClick.AddListener(checkPointUI.ActiveSound);
-            //checkLists[i].gameObject.AddComponent<UnityEngine.EventSystems.EventTrigger>();
-            //UnityEngine.EventSystems.EventTrigger.Entry entry
-            //    = new UnityEngine.EventSystems.EventTrigger.Entry();
-            //entry.eventID = EventTriggerType.PointerEnter;
-            //entry.callback.AddListener((data) => OnPointerEnter(i));
-            //Debug.Log($"ÀÎµ¦½º °ª : {i}");
-            //checkLists[i].GetComponent<UnityEngine.EventSystems.EventTrigger>().triggers.Add(entry);
-        }
-    }
+    //    for (int i = 0; i < checkLists.Count; i++)
+    //    {
+    //        buttonList.Add(checkLists[i].GetComponent<Image>());
+    //        checkLists[i].GetComponent<Button>().onClick.AddListener(SelectCheckPoint);
+    //        checkLists[i].GetComponent<Button>().onClick.AddListener(checkPointUI.ActiveSound);
+    //        //checkLists[i].gameObject.AddComponent<UnityEngine.EventSystems.EventTrigger>();
+    //        //UnityEngine.EventSystems.EventTrigger.Entry entry
+    //        //    = new UnityEngine.EventSystems.EventTrigger.Entry();
+    //        //entry.eventID = EventTriggerType.PointerEnter;
+    //        //entry.callback.AddListener((data) => OnPointerEnter(i));
+    //        //Debug.Log($"ÀÎµ¦½º °ª : {i}");
+    //        //checkLists[i].GetComponent<UnityEngine.EventSystems.EventTrigger>().triggers.Add(entry);
+    //    }
+    //}
 
     private void OnPointerEnter(int n)
     {
@@ -161,6 +165,7 @@ public class ChoiceCheckPointUI : UIInteract
         Time.timeScale = 1;
         GameManager.instance.mouseTimeMove = true;
         GameManager.instance.LoadChoiceCheckPoint(currentIndex);
+        gameObject.SetActive(false);
     }
 
     public void CheckListExit()
@@ -172,5 +177,9 @@ public class ChoiceCheckPointUI : UIInteract
         checkPointUI.ReturnFromChoiceUI();
         currentStageButton.SetActive(false);
         gameObject.SetActive(false);
+
+        checkLists.Clear();
+        fontList.Clear();
+        buttonList.Clear();
     }
 }

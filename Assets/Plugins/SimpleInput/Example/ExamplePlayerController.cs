@@ -9,8 +9,8 @@ public class ExamplePlayerController : MonoBehaviour
 	public string verticalAxis = "Vertical";
 	public string jumpButton = "Jump";
 
-	private float inputHorizontal;
-	private float inputVertical;
+    public float inputHorizontal;
+    public float inputVertical;
 
 	void Awake()
 	{

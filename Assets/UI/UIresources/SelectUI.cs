@@ -413,6 +413,8 @@ public class SelectUI : MonoBehaviour
         pauseui.pauseInteract = false;
         coinPanel.SetActive(false);
         pauseIconPanel.SetActive(false);
+        //uiGroup.SetActive(false);
+        //checkPointUI.SetActive(false);
         uiAnimator.Play("PauseChangeSetting");
         StartCoroutine(ShowCheckPointUi());
     }
@@ -426,12 +428,12 @@ public class SelectUI : MonoBehaviour
         {
             while (uiAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
             {
-                //Debug.Log(uiAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+                Debug.Log(uiAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime);
                 yield return null;
             }
-
-            uiGroup.SetActive(false);
+            Debug.Log("체크포인트 불러지는지?");
             checkPointUI.SetActive(true);
+            uiGroup.SetActive(false);
         }
     }
 

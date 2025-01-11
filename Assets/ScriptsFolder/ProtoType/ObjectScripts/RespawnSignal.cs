@@ -7,14 +7,14 @@ public class RespawnSignal : MonoBehaviour
 {
     public static RespawnSignal Instance;
 
+    [Header("재생성 알림UI")]
+    public GameObject spawnUISignal;
+
     private void Awake()
     {
         Instance = this;
+        spawnUISignal.SetActive(false);
     }
-
-    [Header("재생성 알림UI")]
-    public GameObject spawnUISignal;
-    IEnumerator cor;
 
     public void SignalStart()
     {
@@ -27,6 +27,8 @@ public class RespawnSignal : MonoBehaviour
         cor = Respawn();
         StartCoroutine(cor);
     }
+
+    IEnumerator cor;
 
     IEnumerator Respawn()
     {

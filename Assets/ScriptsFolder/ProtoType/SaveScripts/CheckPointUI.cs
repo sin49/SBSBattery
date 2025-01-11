@@ -34,11 +34,17 @@ public class CheckPointUI : UIInteract
     private void Awake()
     {
         ResisterLang();
+        InitButtonEvent();
+    }
+
+    public void InitButtonEvent()
+    {
         foreach (Button btn in buttonList)
         {
             btn.onClick.AddListener(SelectButton);
             btn.onClick.AddListener(ActiveSound);
         }
+
         gameObject.SetActive(false);
     }
 
@@ -53,12 +59,6 @@ public class CheckPointUI : UIInteract
     private void OnEnable()
     {
         InitSaveUI();
-    }
-
-    private void OnDisable()
-    {
-        onHandle = false;
-        buttonPanel.SetActive(false);
     }
 
     public void InitSaveUI()
@@ -196,6 +196,8 @@ public class CheckPointUI : UIInteract
     {
         onHandle = false;
         gameObject.SetActive(false);
+        buttonPanel.SetActive(false);
+
 
         if (SceneManager.GetActiveScene().name == "CheckTitleTest")
         {
