@@ -59,6 +59,8 @@ namespace SimpleInputNamespace
 			thumbTR = thumb.rectTransform;
 			background = GetComponent<Graphic>();
 
+			Debug.Log($"transform.position {thumbTR.position}\nrectTransform.anchoredPosition {thumbTR.anchoredPosition}\ntransform.localPosition {thumbTR.localPosition} ");
+
 			if( isDynamicJoystick )
 			{
 				opacity = 0f;
@@ -80,8 +82,7 @@ namespace SimpleInputNamespace
 			deadzoneRadiusSqr = deadzoneRadius * deadzoneRadius;
 
 			joystickInitialPos = joystickTR.anchoredPosition;
-			//thumbTR.localPosition = Vector3.zero;
-			thumbTR.anchoredPosition = Vector3.zero;
+			thumbTR.localPosition = Vector3.zero;
 		}
 
 		private void Start()
@@ -183,8 +184,7 @@ namespace SimpleInputNamespace
 				m_value = direction * _1OverMovementAreaRadius * valueMultiplier;
 			}
 
-			//thumbTR.localPosition = direction;
-			thumbTR.anchoredPosition = direction;
+			thumbTR.localPosition = direction;
 
 			xAxis.value = m_value.x;
 			yAxis.value = m_value.y;
@@ -195,9 +195,8 @@ namespace SimpleInputNamespace
 			joystickHeld = false;
 			m_value = Vector2.zero;
 
-			//thumbTR.localPosition = Vector3.zero;
-			thumbTR.anchoredPosition = Vector3.zero;
-			if( !isDynamicJoystick && canFollowPointer )
+			thumbTR.localPosition = Vector3.zero;
+			if ( !isDynamicJoystick && canFollowPointer )
 				joystickTR.anchoredPosition = joystickInitialPos;
 
 			xAxis.value = 0f;

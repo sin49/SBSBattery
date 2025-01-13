@@ -109,6 +109,20 @@ public class TestSettingUI : UIInteract
         CheckButtonIndex();
         //CheckArrowActive();
     }
+
+    public void CheckButtonIndex() //화살표 클릭에 따라 인덱스 체크(문자열 비교)
+    {
+        foreach (string str in textList)
+        {
+            if (fontList[rangeIndex].text == str)
+            {
+                int changeIndex = textList.IndexOf(str);
+                beforeIndex = index;
+                index = changeIndex;
+                break;
+            }
+        }
+    }
     #endregion
 
 
@@ -134,6 +148,7 @@ public class TestSettingUI : UIInteract
 
         beforeIndex = 0;
         beforeRangeIndex = 0;
+        CheckArrowActive();
     }
 
     bool moved;
@@ -146,49 +161,16 @@ public class TestSettingUI : UIInteract
         {            
             movevalue = Input.GetAxisRaw("Vertical");
 
-            if (!choiceSetting)
-            {
-                if ((Input.GetKeyDown(KeyCode.UpArrow) || movevalue > 0) && !moved)
-                {
-                    moved = true;
-                    if (index > 0)
-                    {
-                        beforeIndex = index;
-                        index--;
+            //버튼 선택중
+            VerticalInput(); 
 
-                        beforeRangeIndex = rangeIndex;
-                        rangeIndex--;
-                        UpdateUI();
-                    }                    
-                }
-
-                if (Input.GetKeyUp(KeyCode.UpArrow) && movevalue ==0)
-                    moved = false;
-
-                if (Input.GetKeyUp(KeyCode.DownArrow) && movevalue == 0)
-                    moved = false;
-
-                if ((Input.GetKeyDown(KeyCode.DownArrow) || movevalue < 0) && !moved)
-                {
-                    moved = true;
-                    if (index < textList.Count - 1)
-                    {
-                        beforeIndex = index;
-                        index++;
-
-                        beforeRangeIndex = rangeIndex;
-                        rangeIndex++;
-                        UpdateUI();
-                    }
-                }
-            }
-
+            //버튼 선택
             if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Space) || 
                 Input.GetKeyDown(KeyCode.JoystickButton0)|| Input.GetKeyDown(KeyCode.Return))
             {
                 ChoiceInteractUI();
             }
-
+            // 뒤로가기
             if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))
             {
                 SettingExit();
@@ -212,11 +194,9 @@ public class TestSettingUI : UIInteract
         switch (index)
         {
             case 0:
-                Debug.Log("소리 설정");
                 NextSelectSetting(sound);
                 break;
             case 1:
-                Debug.Log("그래픽 설정");
                 NextSelectSetting(graphic);
                 break;
             case 2:
@@ -285,43 +265,47 @@ public class TestSettingUI : UIInteract
         GetComponent<Image>().enabled = false;
     }
 
-    public void SettingExit()
+    #region UI업데이트
+
+    public void VerticalInput()
     {
-        fontList[rangeIndex].color = deactiveFontColor;
-        buttonList[rangeIndex].sprite = deactiveButton;
-        settingActive = false;
-        if (SceneManager.GetActiveScene().name != "CheckTitleTest" && SceneManager.GetActiveScene().name != "TitleTest")
+        if (((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeySettingManager.instance.upKeycode)) || movevalue > 0) && !moved)
         {
-            settingAnimator.Play("SettingChangePause");
-            StartCoroutine(SCP());
-        }
-        else
-        {
-            gameObject.SetActive(false);
-            title.SettingBackScreen();
-        }
-
-    }
-
-    IEnumerator SCP()
-    {
-        yield return new WaitForSecondsRealtime(0.1f);
-
-        if (settingAnimator.GetCurrentAnimatorStateInfo(0).IsName("SettingChangePause"))
-        {
-            while (settingAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+            moved = true;
+            if (index > 0)
             {
-                yield return null;
+                beforeIndex = index;
+                index--;
+
+                beforeRangeIndex = rangeIndex;
+                rangeIndex--;
+                UpdateUI();
             }
-
-            gameObject.SetActive(false);
-
-            uiSelect.uiGroup.SetActive(true);
-            uiSelect.PauseBackSetting();
-
-            uiSelect.coinPanel.SetActive(true);
-            uiSelect.pauseIconPanel.SetActive(true);
         }
+
+        if (Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeySettingManager.instance.upKeycode) || movevalue == 0)
+            moved = false;
+
+        if (!choiceSetting)
+        {
+
+            if ((Input.GetKeyDown(KeyCode.DownArrow) || movevalue < 0) && !moved)
+            {
+                moved = true;
+                if (index < textList.Count - 1)
+                {
+                    beforeIndex = index;
+                    index++;
+
+                    beforeRangeIndex = rangeIndex;
+                    rangeIndex++;
+                    UpdateUI();
+                }
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeySettingManager.instance.downKeycode) || movevalue == 0)
+            moved = false;
     }
 
     public void UpdateUI()
@@ -371,9 +355,13 @@ public class TestSettingUI : UIInteract
         {
             arrowGroup[0].SetActive(false);
             arrowGroup[0].GetComponent<Image>().sprite = deactiveArrow;
+            arrowGroup[1].SetActive(true);
+            arrowGroup[1].GetComponent<Image>().sprite = activeArrow;
         }
         else if (index >= textList.Count - 1)
         {
+            arrowGroup[0].SetActive(true);
+            arrowGroup[0].GetComponent<Image>().sprite = activeArrow;
             arrowGroup[1].SetActive(false);
             arrowGroup[1].GetComponent<Image>().sprite = deactiveArrow;
         }
@@ -383,18 +371,42 @@ public class TestSettingUI : UIInteract
             arrowGroup[1].SetActive(true);
         }
     }
-
-    public void CheckButtonIndex() //화살표 클릭에 따라 인덱스 체크(문자열 비교)
+    public void SettingExit()
     {
-        foreach (string str in textList)
-        {            
-            if (fontList[rangeIndex].text == str)
+        fontList[rangeIndex].color = deactiveFontColor;
+        buttonList[rangeIndex].sprite = deactiveButton;
+        settingActive = false;
+        if (SceneManager.GetActiveScene().name != "CheckTitleTest" && SceneManager.GetActiveScene().name != "TitleTest")
+        {
+            settingAnimator.Play("SettingChangePause");
+            StartCoroutine(SCP());
+        }
+        else
+        {
+            gameObject.SetActive(false);
+            title.SettingBackScreen();
+        }
+    }
+    #endregion
+
+    IEnumerator SCP()
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
+
+        if (settingAnimator.GetCurrentAnimatorStateInfo(0).IsName("SettingChangePause"))
+        {
+            while (settingAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
             {
-                int changeIndex = textList.IndexOf(str);
-                beforeIndex = index;
-                index = changeIndex;
-                break;
+                yield return null;
             }
+
+            gameObject.SetActive(false);
+
+            uiSelect.uiGroup.SetActive(true);
+            uiSelect.PauseBackSetting();
+
+            uiSelect.coinPanel.SetActive(true);
+            uiSelect.pauseIconPanel.SetActive(true);
         }
     }
 
@@ -404,7 +416,7 @@ public class TestSettingUI : UIInteract
         index = 0;
         DeactiveButton();
         ActiveButton();
-
+        
         if (SceneManager.GetActiveScene().name != "CheckTitleTest" && SceneManager.GetActiveScene().name != "TitleTest")
         {
             StartCoroutine(EndSettingAnimation());
@@ -413,7 +425,7 @@ public class TestSettingUI : UIInteract
             settingActive = true;
     }
 
-    IEnumerator EndSettingAnimation()
+    IEnumerator EndSettingAnimation() // UI 애니메이션 연출
     {
         while (settingAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
@@ -430,16 +442,15 @@ public class TestSettingUI : UIInteract
         buttonList[rangeIndex].sprite = activeButton;
         choiceSetting = false;
         settingActive = true;
-
     }
 
-    public void ActiveButton()
+    public void ActiveButton() // 버튼 활성화 UI 업데이트
     {
         buttonList[rangeIndex].sprite = activeButton;
         fontList[rangeIndex].color = activeFontColor;
     }
 
-    public void DeactiveButton()
+    public void DeactiveButton() // 버튼 비활성화 UI 업데이트 
     {
         buttonList[beforeRangeIndex].sprite = deactiveButton;
         fontList[beforeRangeIndex].color = deactiveFontColor;

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -29,6 +30,8 @@ public class EpilogueVideoPlayer : MonoBehaviour
             gauge.fillAmount = 0;
         }
         DeleteTutorialKey();
+
+        skipTMP.text = SkipLanguage();
     }
 
     void OnVideoEnd(VideoPlayer vp)
@@ -98,5 +101,21 @@ public class EpilogueVideoPlayer : MonoBehaviour
         GameManager.instance.downTuto = false; GameManager.instance.interactTuto = false; GameManager.instance.downAttackTuto = false;
         GameManager.instance.dimensionTuto = false; GameManager.instance.tutoInteract = false; GameManager.instance.downTuto = false;
         GameManager.instance.tutorialEnd = false;
+    }
+
+    [Header("½ºÅµ ¾ð¾î")]
+    public TextMeshProUGUI skipTMP;
+    //public string kor, eng;
+    public string SkipLanguage()
+    {
+        if (LanguageManager.instance != null)
+        {
+            if (LanguageManager.instance.isKor)
+                return "½ºÅµ: SPACE";
+            else
+                return "SKIP: SPACE";
+        }
+
+        return "";
     }
 }

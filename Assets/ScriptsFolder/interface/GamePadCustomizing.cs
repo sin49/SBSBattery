@@ -53,13 +53,7 @@ public class GamePadCustomizing : UIInteract
             {KeyCode.JoystickButton2, "X"},
             {KeyCode.JoystickButton3, "Y"},
             {KeyCode.JoystickButton4, "LB"},
-            {KeyCode.JoystickButton5, "RB"},
-            //{KeyCode.Joystick1Button0, "A" },
-            //{KeyCode.Joystick1Button1, "B"},
-            //{KeyCode.Joystick1Button2, "X"},
-            //{KeyCode.Joystick1Button3, "Y"},
-            //{KeyCode.Joystick1Button4, "LB"},
-            //{KeyCode.Joystick1Button5, "RB"}
+            {KeyCode.JoystickButton5, "RB"}
         };
 
     public CustomRecheckUI customRecheck;

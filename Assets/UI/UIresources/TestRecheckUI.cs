@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -28,21 +30,23 @@ public class TestRecheckUI : UIInteract
 
     public TitleScreen title;
     public SelectUI selectui;
-    private void Awake()
-    {
-        //if (this.gameObject.activeSelf)
-        //    this.gameObject.SetActive(false);
-        ResisterLang();
-    }
+
+    [Header("재확인 변경하는 텍스트 관련")]
+    List<string> langText = new List<string>();
+    List<float> langSpacing = new List<float>();
 
     private void Start()
     {
+        ResisterLang();
         ChangeLanguage();
     }
-
-    public void ActiveUI(string Desc, Action OKEvent, Action CancelEvent)
+    int saveIndex;
+    public void ActiveUI(int Desc, Action OKEvent, Action CancelEvent)
     {
-        Description.text = Desc;
+        if (langText.Count != 0)
+            Description.text = langText[Desc];
+        else
+            saveIndex = Desc;
         this.OKEvent += OKEvent;
         this.CancelEvent += CancelEvent;
         gameObject.SetActive(true);
@@ -178,8 +182,14 @@ public class TestRecheckUI : UIInteract
             moved = false;
 
         if ((Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Return) 
-            || Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.Space)) && reCheckActive)
+            || Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.Space)) && reCheckActive)
         {
+            CheckOK();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))
+        {
+            ok = false;
             CheckOK();
         }
 
@@ -194,6 +204,7 @@ public class TestRecheckUI : UIInteract
         }
         else
         {
+            Debug.Log("재확인 취소버튼");
             CancelButtonInput();
             DeactiveSound();
         }
@@ -215,11 +226,6 @@ public class TestRecheckUI : UIInteract
             title.ButtionSoundEffectPlayer_.PlayDeActiveAudio();
     }
 
-    private void OnDisable()
-    {
-        reCheckActive = false;
-        CancelButtonInput();
-    }
     void DeActiveUI()
     {
 
@@ -275,7 +281,7 @@ public class TestRecheckUI : UIInteract
         title.DeleteData();
         gameObject.SetActive(false);
     }
-
+    #region 언어변경
     public void ResisterLang()
     {
         LanguageManager.instance.LanguageEventResister(ChangeLanguage);
@@ -283,6 +289,10 @@ public class TestRecheckUI : UIInteract
 
     public void ChangeLanguage()
     {
+        langText.Clear();
+        langSpacing.Clear();
+
+        int z = 0;
         if (LanguageManager.instance.isKor)
         {
             Description.text = LanguageManager.instance.recheckKor[0];
@@ -291,6 +301,18 @@ public class TestRecheckUI : UIInteract
             {
                 fontList[i].text = LanguageManager.instance.recheckKor[i+1];
                 fontList[i].characterSpacing = LanguageManager.instance.recheckSpacingKor[i + 1];
+                z++;
+            }
+            for (int i = 0; i < langText.Count; i++)
+            {
+                langText.Add(LanguageManager.instance.recheckKor[z+1]);
+                langSpacing.Add(LanguageManager.instance.recheckSpacingKor[z+1]);
+            }
+
+            if (saveIndex == 0)
+            {
+                Description.text = LanguageManager.instance.recheckKor[0];
+                Description.characterSpacing = LanguageManager.instance.recheckSpacingKor[0];
             }
         }
         else
@@ -301,7 +323,21 @@ public class TestRecheckUI : UIInteract
             {
                 fontList[i].text = LanguageManager.instance.recheckEng[i+1];
                 fontList[i].characterSpacing = LanguageManager.instance.recheckSpacingEng[i + 1];
+                z++;
             }
+            for (int i = 0; i < fontList.Count; i++)
+            {
+                langText.Add(LanguageManager.instance.recheckEng[z + i +1]);
+                langSpacing.Add(LanguageManager.instance.recheckSpacingEng[z + i +1]);
+            }
+
+            if (saveIndex == 0)
+            {
+                Description.text = LanguageManager.instance.recheckEng[0];
+                Description.characterSpacing = LanguageManager.instance.recheckSpacingEng[0];
+            }
+
         }
     }
+    #endregion
 }

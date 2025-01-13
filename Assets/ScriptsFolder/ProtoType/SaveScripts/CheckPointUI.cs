@@ -1,11 +1,6 @@
-using JetBrains.Annotations;
-using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -256,7 +251,10 @@ public class CheckPointUI : UIInteract
     #region 언어변경
     public void ResisterLang()
     {
-        LanguageManager.instance.LanguageEventResister(ChangeLanguage);
+        if (LanguageManager.instance != null)
+            LanguageManager.instance.LanguageEventResister(ChangeLanguage);
+        else
+            Debug.Log("언어 이벤트 호출 안됨");
     }
 
     public void ChangeLanguage()

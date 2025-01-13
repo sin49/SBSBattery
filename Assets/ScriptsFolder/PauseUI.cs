@@ -102,11 +102,11 @@ public class PauseUI : MonoBehaviour
                 ButtonSoundEffectPlayer_.PlaySelectAudio();
             }
             if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)
-                || Input.GetKeyDown(KeyCode.Joystick1Button0))
+                || Input.GetKeyDown(KeyCode.JoystickButton0))
             {
                 ButtonSoundEffectPlayer_.PlayActiveAudio();
             }
-            if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Joystick1Button1))
+            if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.JoystickButton1))
             {
                 ButtonSoundEffectPlayer_.PlayDeActiveAudio();
             }

@@ -2,10 +2,6 @@ using System;
 using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Editor;
-using UnityEngine.Rendering;
-using UnityEngine.SceneManagement;
 
 
 

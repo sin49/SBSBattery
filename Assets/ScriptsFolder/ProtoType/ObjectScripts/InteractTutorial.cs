@@ -201,7 +201,6 @@ public class InteractTutorial : MonoBehaviour
                 string replace = TalkUI.instance.talkText.text.Replace("|", "\n");
                 replace = replace.Replace("`", ",");
                 TalkUI.instance.talkText.text = replace;
-                TalkUI.instance.TextSoundPlay();
                 textSkip = false;
                 textEnd = true;
                 break;

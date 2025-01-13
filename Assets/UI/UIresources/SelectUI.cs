@@ -108,7 +108,6 @@ public class SelectUI : MonoBehaviour
 
     public void SelectButton()
     {
-        string text = "";
         if (buttonselected)
             return;
         switch (index)
@@ -136,31 +135,17 @@ public class SelectUI : MonoBehaviour
                 ButtonList[index].GetComponent<Image>().color = originColor;
                 ButtonList[index].transform.localScale = originScale;
                 SelectedUI.SetActive(false);
-                if(LanguageManager.instance.isKor)
-                {
-                    text = LanguageManager.instance.recheckKor[1];
-                }
-                else
-                {
-                    text = LanguageManager.instance.recheckEng[1];
-                }
-                testRecheckUI.ActiveUI(text, TitleBackEvent, ButtonselectedDisable);
+
+                testRecheckUI.ActiveUI(1, TitleBackEvent, ButtonselectedDisable);
                 pauseui.pauseInteract = false;
                 buttonselected = true;
                 break;
             case 5://재확인 시키기
                 ButtonList[index].GetComponent<Image>().color = originColor;
                 ButtonList[index].transform.localScale = originScale;
-                SelectedUI.SetActive(false);
-                if(LanguageManager.instance.isKor)
-                {
-                    text = LanguageManager.instance.recheckKor[2];
-                }
-                else
-                {
-                    text = LanguageManager.instance.recheckEng[2];
-                }
-                testRecheckUI.ActiveUI(text, ExitEvent, ButtonselectedDisable);
+                SelectedUI.SetActive(false);              
+
+                testRecheckUI.ActiveUI(2, ExitEvent, ButtonselectedDisable);
                 pauseui.pauseInteract = false;
                 buttonselected = true;
                 break;
@@ -259,10 +244,6 @@ public class SelectUI : MonoBehaviour
             if (Input.GetKeyUp(KeyCode.UpArrow) || moveValue == 0)
                 moved = false;
             
-            /*if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                swapUI();
-            }*/
             if ((Input.GetKeyDown(KeyCode.DownArrow) || moveValue < 0) && !moved)
             {
                 moved = true;
@@ -283,10 +264,6 @@ public class SelectUI : MonoBehaviour
                 SelectButton();
             }
         }
-        //if (Input.GetKeyDown(KeyCode.X))
-        //{
-        //    DeactiveUI();
-        //}
     }
 
     [Header("일시정지 타이틀")]

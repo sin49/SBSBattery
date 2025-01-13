@@ -1,16 +1,7 @@
 using Cinemachine;
-using JetBrains.Annotations;
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Xml;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Editor;
-using UnityEngine.Rendering;
-using UnityEngine.UI;
+
 
 public class HouseholdIronTransform : Player
 {

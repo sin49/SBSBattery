@@ -142,7 +142,7 @@ public class TitleScreen : UIInteract
 
         }
         else if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.C) 
-             || Input.GetKeyDown(KeyCode.Joystick1Button0)|| Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+             || Input.GetKeyDown(KeyCode.JoystickButton0)|| Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
         {
             //ButtionSoundEffectPlayer_.PlayActiveAudio();
             //titletexts[index].ButtonActive();
@@ -158,6 +158,7 @@ public class TitleScreen : UIInteract
 
     public void SelectButton()
     {
+        Debug.Log("타이틀에서 버튼 눌림");
         if (!PlayerPrefs.HasKey("CheckPointIndex") && index == 1) return;
         ButtionSoundEffectPlayer_.PlayActiveAudio();
         titletexts[index].ButtonActive();
@@ -205,7 +206,6 @@ public class TitleScreen : UIInteract
         Debug.Log("title screen awake");
         ButtionSoundEffectPlayer_ = gameObject.GetComponent<ButtonSoundEffectPlayer>();
         onHandle = true;
-        LangResister();
         //ChangeLanguage();
     }
     private void Start()
@@ -214,6 +214,9 @@ public class TitleScreen : UIInteract
 
         korPack = LanguageManager.instance.titleKor;
         engPack = LanguageManager.instance.titleEng;
+
+        LangResister();
+        ChangeLanguage();
     }
     // Update is called once per frame
     void Update()
@@ -225,7 +228,10 @@ public class TitleScreen : UIInteract
 
     public void LangResister()
     {
-        LanguageManager.instance.LanguageEventResister(ChangeLanguage);
+        if (LanguageManager.instance != null)
+            LanguageManager.instance.LanguageEventResister(ChangeLanguage);
+        else
+            Debug.Log("언어 이벤트가 호출되지 않았습니다");
     }
 
     public void ChangeLanguage()

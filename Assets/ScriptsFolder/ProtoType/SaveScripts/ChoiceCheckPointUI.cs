@@ -3,11 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ChoiceCheckPointUI : UIInteract
@@ -46,14 +42,6 @@ public class ChoiceCheckPointUI : UIInteract
         currentIndex = checkLists[index].checkStageIndex;
 
         onHandle = true;
-    }
-
-    private void OnDisable()
-    {
-        onHandle = false;
-        //checkLists.Clear();
-        //buttonList.Clear();
-        //fontList.Clear();
     }
 
     //public void InitCheckPointButton()
@@ -172,6 +160,7 @@ public class ChoiceCheckPointUI : UIInteract
     {
         onHandle = false;
         checkLists[index].GetComponent<Image>().sprite = deactiveButton;
+        fontList[beforeIndex].color = deactiveFontColor;
         beforeIndex = index = 0;
 
         checkPointUI.ReturnFromChoiceUI();
