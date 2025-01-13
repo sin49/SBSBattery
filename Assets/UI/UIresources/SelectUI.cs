@@ -77,7 +77,7 @@ public class SelectUI : MonoBehaviour
         GameManager.instance.mouseTimeMove = false;
         Cursor.lockState = CursorLockMode.None;
         pauseui.pauseInteract = false;
-        //tokenText.text = PlayerInventory.instance.TokenValue.ToString();
+        tokenText.text = PlayerInventory.instance.TokenValue.ToString();
         this.index = index;
         ShowPauseUI();
 
@@ -265,7 +265,7 @@ public class SelectUI : MonoBehaviour
             }
         }
     }
-
+    #region 언어 변경
     [Header("일시정지 타이틀")]
     public TextMeshProUGUI pauseTitle;
 
@@ -297,6 +297,7 @@ public class SelectUI : MonoBehaviour
             }
         }
     }
+    #endregion
 
     #region 추가작업
     public void ShowPauseUI()
