@@ -77,7 +77,7 @@ public class SelectUI : MonoBehaviour
         GameManager.instance.mouseTimeMove = false;
         Cursor.lockState = CursorLockMode.None;
         pauseui.pauseInteract = false;
-        tokenText.text = PlayerInventory.instance.TokenValue.ToString();
+        //tokenText.text = PlayerInventory.instance.TokenValue.ToString();
         this.index = index;
         ShowPauseUI();
 
@@ -200,9 +200,10 @@ public class SelectUI : MonoBehaviour
         ButtonList[index].GetComponent<Image>().color = originColor;
         ButtonList[index].transform.localScale = originScale;
     }
+
     public void ResumeGame()
     {
-        pauseui.PauseUiActive();
+        pauseui.PauseUiActive();        
     }
 
     private void OnEnable()

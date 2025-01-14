@@ -16,28 +16,27 @@ public class TouchInterface : MonoBehaviour
 
     private void Awake()
     {
-        if (Application.platform == RuntimePlatform.Android)
+        fontList = buttonParent.GetComponentsInChildren<TextMeshProUGUI>();
+        foreach (var font in fontList)
         {
-            fontList = buttonParent.GetComponentsInChildren<TextMeshProUGUI>();
-            foreach (var font in fontList)
-            {
-                font.color = fontColor;
-            }
-
-            pauseBtn.onClick.AddListener(OnClickPause);
+            font.color = fontColor;
         }
-        else
-            DeactiveTUI();
+
+        pauseBtn.onClick.AddListener(OnClickPause);
     }
+
+    public PauseUI pauseui;
 
     private void Start()
     {
         if(Application.platform == RuntimePlatform.Android)
             PlayerHandler.instance.PlayerDeathEvent += DeactiveTUI;
+        pauseui.ResisterPauseDeactive(ActiveTUI);
     }
 
     public void OnClickPause()
     {
+        pauseui.PauseUiActive();
         DeactiveTUI();
     }
 

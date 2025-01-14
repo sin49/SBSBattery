@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -160,6 +161,14 @@ public class PauseUI : MonoBehaviour
     //    }
     //}    
 
+    Action deactiveAction;
+
+
+    public void ResisterPauseDeactive(Action a)
+    {
+        deactiveAction += a;
+    }
+
     public void PauseUiActive()
     {
         //initializeUI();
@@ -176,6 +185,7 @@ public class PauseUI : MonoBehaviour
             ButtonSoundEffectPlayer_.PlayActiveAudio();
             Time.timeScale = 1f;
             GameManager.instance.mouseTimeMove = true;
+            deactiveAction?.Invoke();
         }
         pauseUI.gameObject.SetActive(pauseActive);
     }
