@@ -886,7 +886,10 @@ public class Player : Character,environmentObject
             }
             else
             {
-
+                if (!GameManager.instance.mob)
+                    Vert = Input.GetAxisRaw("Vertical");
+                else
+                    Vert = SimpleInput.GetAxis("Vertical2");
             }
         }
         else
@@ -905,7 +908,7 @@ public class Player : Character,environmentObject
                     }
                     else
                     {
-                        if(!mob)
+                        if(!GameManager.instance.mob)
                             hori = Input.GetAxisRaw("Horizontal");
                         else
                             hori = SimpleInput.GetAxis("Horizontal2");
@@ -924,7 +927,7 @@ public class Player : Character,environmentObject
                     }
                     else
                     {
-                        if (!mob)
+                        if (!GameManager.instance.mob)
                             hori = -1 * Input.GetAxisRaw("Horizontal");
                         else
                             hori = -1 * SimpleInput.GetAxis("Horizontal2");
@@ -938,7 +941,7 @@ public class Player : Character,environmentObject
                         Vert = -1;
                     else
                     {
-                        if (!mob)
+                        if (!GameManager.instance.mob)
                             Vert = Input.GetAxisRaw("Horizontal");
                         else
                             Vert = SimpleInput.GetAxis("Horizontal2");
@@ -951,7 +954,7 @@ public class Player : Character,environmentObject
                         Vert = 1;
                     else
                     {
-                        if (!mob)
+                        if (!GameManager.instance.mob)
                             Vert = -1 * Input.GetAxisRaw("Horizontal");
                         else
                             Vert = -1 * SimpleInput.GetAxis("Horizontal2");
@@ -964,7 +967,7 @@ public class Player : Character,environmentObject
                         hori = -1;
                     else
                     {
-                        if (!mob)
+                        if (!GameManager.instance.mob)
                             hori = Input.GetAxisRaw("Horizontal");
                         else
                             hori = SimpleInput.GetAxis("Horizontal2");
@@ -975,7 +978,7 @@ public class Player : Character,environmentObject
                         Vert = -1;
                     else
                     {
-                        if (!mob)
+                        if (!GameManager.instance.mob)
                             Vert = Input.GetAxisRaw("Vertical");
                         else
                             Vert = SimpleInput.GetAxis("Vertical2");
@@ -989,7 +992,7 @@ public class Player : Character,environmentObject
                         hori = 1;
                     else
                     {
-                        if (!mob)
+                        if (!GameManager.instance.mob)
                             hori = -1 * Input.GetAxisRaw("Horizontal");
                         else
                             hori = -1 * SimpleInput.GetAxis("Horizontal2");
@@ -1000,7 +1003,7 @@ public class Player : Character,environmentObject
                         Vert = 1;
                     else
                     {
-                        if (!mob)
+                        if (!GameManager.instance.mob)
                             Vert = -1 * Input.GetAxisRaw("Vertical");
                         else
                             Vert = -1 * SimpleInput.GetAxis("Vertical2");
@@ -1018,7 +1021,7 @@ public class Player : Character,environmentObject
                     }
                     else
                     {
-                        if (!mob)
+                        if (!GameManager.instance.mob)
                             Vert = -Input.GetAxisRaw("Horizontal");
                         else
                             Vert = -SimpleInput.GetAxis("Horizontal2");
@@ -1033,7 +1036,7 @@ public class Player : Character,environmentObject
                     }
                     else
                     {
-                        if (!mob)
+                        if (!GameManager.instance.mob)
                             hori = 1 * Input.GetAxisRaw("Vertical");
                         else
                             hori = SimpleInput.GetAxis("Vertical2");
@@ -1046,7 +1049,7 @@ public class Player : Character,environmentObject
                         hori = 1;
                     else
                     {
-                        if (!mob)
+                        if (!GameManager.instance.mob)
                             hori = -1 * Input.GetAxisRaw("Vertical");
                         else
                             hori = -SimpleInput.GetAxis("Vertical2");
@@ -1057,7 +1060,7 @@ public class Player : Character,environmentObject
                         Vert = -1;
                     else
                     {
-                        if (!mob)
+                        if (!GameManager.instance.mob)
                             Vert = Input.GetAxisRaw("Horizontal");
                         else
                             Vert = SimpleInput.GetAxis("Horizontal2");

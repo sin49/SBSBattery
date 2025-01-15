@@ -26,6 +26,10 @@ public class CheckPointUI : UIInteract
 
     [Header("체크포인트 타이틀")]
     public TextMeshProUGUI cpTitle;
+
+    [Header("뒤로가기 버튼")]
+    public Button backButton;
+
     private void Awake()
     {
         ResisterLang();
@@ -40,11 +44,21 @@ public class CheckPointUI : UIInteract
             btn.onClick.AddListener(ActiveSound);
         }
 
+        backButton.onClick.AddListener(OnclickBack);
+
         gameObject.SetActive(false);
+    }
+    
+    public void OnclickBack()
+    {
+        CheckListExit();
+        DeactiveSound();
     }
 
     public void SetIndex(int n)
     {
+        if (!buttonList[n].interactable) return;
+
         SelectSound();
         beforeIndex = index;
         index = n;

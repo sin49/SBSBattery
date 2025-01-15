@@ -16,13 +16,19 @@ public class TouchInterface : MonoBehaviour
 
     private void Awake()
     {
-        fontList = buttonParent.GetComponentsInChildren<TextMeshProUGUI>();
-        foreach (var font in fontList)
+        if (Application.platform == RuntimePlatform.Android)
         {
-            font.color = fontColor;
-        }
+            Debug.Log("안드로이드");
+            fontList = buttonParent.GetComponentsInChildren<TextMeshProUGUI>();
+            foreach (var font in fontList)
+            {
+                font.color = fontColor;
+            }
 
-        pauseBtn.onClick.AddListener(OnClickPause);
+            pauseBtn.onClick.AddListener(OnClickPause);
+        }
+        else
+            Debug.Log("유니티");
     }
 
     public PauseUI pauseui;

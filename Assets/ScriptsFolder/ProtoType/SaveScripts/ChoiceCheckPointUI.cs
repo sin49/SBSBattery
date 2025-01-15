@@ -26,6 +26,20 @@ public class ChoiceCheckPointUI : UIInteract
 
     List<Image> buttonList = new List<Image>();
 
+    [Header("뒤로가기 버튼")]
+    public Button backButton;
+
+    private void Awake()
+    {
+        backButton.onClick.AddListener(OnclickBack);
+    }
+
+    public void OnclickBack()
+    {
+        CheckListExit();
+        checkPointUI.DeactiveSound();
+    }
+
     private void OnEnable()
     {
         checkLists = currentStageButton.GetComponentsInChildren<CheckList>().ToList();
@@ -33,6 +47,7 @@ public class ChoiceCheckPointUI : UIInteract
         for (int i = 0; i < checkLists.Count; i++)
         {
             buttonList.Add(checkLists[i].GetComponent<Image>());
+            checkLists[i].GetComponent<Button>().onClick.RemoveAllListeners();
             checkLists[i].GetComponent<Button>().onClick.AddListener(SelectCheckPoint);
             checkLists[i].GetComponent<Button>().onClick.AddListener(checkPointUI.ActiveSound);
         }
@@ -127,6 +142,8 @@ public class ChoiceCheckPointUI : UIInteract
 
     public void SetIndex(int n)
     {
+        if (!checkLists[n].GetComponent<Button>().interactable) return;
+
         beforeIndex = index;
         index = n;
         UpdateUI();

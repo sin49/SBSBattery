@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using TMPro;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -38,7 +38,65 @@ public class GameManager : MonoBehaviour
 
         InitMouseTimer();
         mouseTimeMove = true;
+
+        if (Application.platform == RuntimePlatform.Android)
+            mob = true;
+        else
+            mob = false;
+
+        InitScreenResolution();
     }
+
+    public void InitScreenResolution()
+    {
+        int targetWidth = 1280;
+        int targetHeight = 720;
+        // Calculate the device's aspect ratio
+        float deviceAspectRatio = (float)Screen.width / Screen.height;
+
+        // Calculate the target pixel count
+        int targetPixelCount = targetWidth * targetHeight;
+
+        // Compute adjusted resolution to match target pixel count
+        float adjustedHeight = Mathf.Sqrt(targetPixelCount / deviceAspectRatio);
+        float adjustedWidth = adjustedHeight * deviceAspectRatio;
+
+        // Ensure the resolution is a multiple of 2 for better GPU performance
+        adjustedWidth = Mathf.RoundToInt(adjustedWidth / 2f) * 2;
+        adjustedHeight = Mathf.RoundToInt(adjustedHeight / 2f) * 2;
+
+        // Log the adjusted resolution for debugging
+        Debug.Log($"Adjusted Resolution: {adjustedWidth}x{adjustedHeight}");
+
+        // Set the screen resolution (fullscreen mode)
+        Screen.SetResolution((int)adjustedWidth, (int)adjustedHeight, true);
+
+        // Adjust render scale for Universal Render Pipeline (URP)
+        if (GraphicsSettings.currentRenderPipeline is UniversalRenderPipelineAsset urpAsset)
+        {
+            float renderScale = Mathf.Clamp((float)adjustedWidth / targetWidth, 0.5f, 1.0f);
+            urpAsset.renderScale = renderScale;
+            Debug.Log($"Render Scale set to: {renderScale}");
+        }
+        else
+        {
+            Debug.LogWarning("Render scale adjustment skipped: Not using Universal Render Pipeline.");
+        }
+
+        // Update all CanvasScaler components in the scene
+        CanvasScaler[] canvasScalers = FindObjectsOfType<CanvasScaler>();
+        if (canvasScalers.Length == 0)
+        {
+            Debug.LogWarning("No CanvasScaler found. Ensure your UI uses CanvasScaler for proper scaling.");
+        }
+        //foreach (CanvasScaler canvasScaler in canvasScalers)
+        //{
+        //    canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        //    canvasScaler.referenceResolution = new Vector2(targetWidth, targetHeight);
+        //}
+    }
+
+    public bool mob;
 
     public string loadingscenename = "LoadingTest";
     public string currentscenename;
