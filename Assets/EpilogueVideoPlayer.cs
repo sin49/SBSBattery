@@ -48,7 +48,7 @@ public class EpilogueVideoPlayer : MonoBehaviour
             skipButton.SetActive(true);
             if (skipButton.activeSelf)
             {
-                if (Input.GetKey(KeyCode.Escape) || Input.GetKey(KeyCode.Space))
+                if (Input.GetKey(KeyCode.Escape) || Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0))
                     UpdateSkipGauge();
                 else
                     CancelSKipKey();

@@ -265,7 +265,7 @@ public class HouseholdIronTransform : Player
                         hori = -1;
                     else
                     {
-                        if (!mob)
+                        if (!GameManager.instance.mob)
                             hori = Input.GetAxisRaw("Horizontal");
                         else
                             hori = SimpleInput.GetAxis("Horizontal2");
@@ -283,7 +283,7 @@ public class HouseholdIronTransform : Player
                         hori = 1;
                     else
                     {
-                        if(!mob)
+                        if(!GameManager.instance.mob)
                         hori = -1 * Input.GetAxisRaw("Horizontal");
                         else
                         hori = -SimpleInput.GetAxis("Horizontal2");
@@ -303,7 +303,7 @@ public class HouseholdIronTransform : Player
                         Vert = -1;
                     else
                     {
-                        if(!mob)
+                        if(!GameManager.instance.mob)
                         Vert = Input.GetAxisRaw("Horizontal");
                         else
                         Vert = SimpleInput.GetAxis("Horizontal2");
@@ -317,7 +317,7 @@ public class HouseholdIronTransform : Player
                         Vert = 1;
                     else
                     {
-                        if (!mob)
+                        if (!GameManager.instance.mob)
                             Vert = -1 * Input.GetAxisRaw("Horizontal");
                         else
                             Vert = -SimpleInput.GetAxis("Horizontal2");
@@ -334,7 +334,7 @@ public class HouseholdIronTransform : Player
                         hori = -1;
                     else
                     {
-                        if (!mob)
+                        if (!GameManager.instance.mob)
                             hori = Input.GetAxisRaw("Horizontal");
                         else
                             hori = SimpleInput.GetAxis("Horizontal2");
@@ -343,7 +343,7 @@ public class HouseholdIronTransform : Player
                         Vert = 1;
                     else if (Input.GetKey(KeySettingManager.instance.downKeycode))
                         Vert = -1;
-                    if (!mob)
+                    if (!GameManager.instance.mob)
                         Vert = Input.GetAxisRaw("Vertical");
                     else
                         Vert = SimpleInput.GetAxis("Vertical2");
@@ -357,7 +357,7 @@ public class HouseholdIronTransform : Player
                         Vert = 1;
                     else
                     {
-                        if (!mob)
+                        if (!GameManager.instance.mob)
                             Vert = -1 * Input.GetAxisRaw("Horizontal");
                         else
                             Vert = -SimpleInput.GetAxis("Horizontal2");
@@ -368,7 +368,7 @@ public class HouseholdIronTransform : Player
                         hori = 1;
                     else
                     {
-                        if (!mob)
+                        if (!GameManager.instance.mob)
                             hori = -1 * Input.GetAxisRaw("Vertical");
                         else
                             hori = -SimpleInput.GetAxis("Vertical2");
@@ -386,7 +386,7 @@ public class HouseholdIronTransform : Player
                         hori = -1;
                     else
                     {
-                        if (!mob)
+                        if (!GameManager.instance.mob)
                             hori = Input.GetAxisRaw("Vertical");
                         else
                             hori = SimpleInput.GetAxis("Vertical2");
@@ -397,7 +397,7 @@ public class HouseholdIronTransform : Player
                         Vert = 1;
                     else
                     {
-                        if (!mob)
+                        if (!GameManager.instance.mob)
                             Vert = -1 * Input.GetAxisRaw("Horizontal");
                         else
                             Vert = -SimpleInput.GetAxis("Horizontal2");
@@ -414,7 +414,7 @@ public class HouseholdIronTransform : Player
                         hori = 1;
                     else
                     {
-                        if (!mob)
+                        if (!GameManager.instance.mob)
                             hori = -1 * Input.GetAxisRaw("Vertical");
                         else
                             hori = -SimpleInput.GetAxis("Vertical2");
@@ -425,7 +425,7 @@ public class HouseholdIronTransform : Player
                         Vert = -1;
                     else
                     {
-                        if (!mob)
+                        if (!GameManager.instance.mob)
                             Vert = Input.GetAxisRaw("Horizontal");
                         else
                             Vert = SimpleInput.GetAxis("Horizontal2");
