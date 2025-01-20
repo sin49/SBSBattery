@@ -112,7 +112,7 @@ public class InteractTutorial : MonoBehaviour
         {
             if ((Input.GetKeyDown(KeySettingManager.instance.jumpKeycode) || Input.GetKeyDown(KeyCode.Space) 
                 || Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.JoystickButton1) 
-                || Input.GetKeyDown(KeyCode.Return)) || Input.GetMouseButtonDown(0) && !end && !textPlaying)
+                || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0)) && !end && !textPlaying)
             {
                 if (!textSkip && !textEnd)
                 {

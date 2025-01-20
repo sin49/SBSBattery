@@ -55,6 +55,7 @@ public class ChoiceCheckPointUI : UIInteract
         buttonList[index].sprite = activeButton;
         fontList[index].color = activeFontColor;
         currentIndex = checkLists[index].checkStageIndex;
+        backButton.gameObject.SetActive(true);
 
         onHandle = true;
     }
@@ -183,6 +184,8 @@ public class ChoiceCheckPointUI : UIInteract
         checkPointUI.ReturnFromChoiceUI();
         currentStageButton.SetActive(false);
         gameObject.SetActive(false);
+        backButton.gameObject.SetActive(false);
+        checkPointUI.backButton.gameObject.SetActive(true);
 
         checkLists.Clear();
         fontList.Clear();

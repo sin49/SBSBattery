@@ -80,6 +80,8 @@ public class CheckPointUI : UIInteract
 
         checkList[index].sprite = activeButton;
         fontList[index].color = activeFontColor;
+
+        backButton.gameObject.SetActive(true);
     }
     bool moved;
     float moveValue;
@@ -155,8 +157,6 @@ public class CheckPointUI : UIInteract
     
     public void SelectButton()
     {
-        onHandle = false;
-
         ActiveChoiceListUI();
         //if (index <= 3)
         //{
@@ -199,6 +199,7 @@ public class CheckPointUI : UIInteract
         checkPointPanel.GetComponent<ChoiceCheckPointUI>().currentStageButton = choiceList[index];
         checkPointPanel.SetActive(true);
         choiceList[index].SetActive(true);
+        backButton.gameObject.SetActive(false);
     }
 
     public void CheckListExit()
