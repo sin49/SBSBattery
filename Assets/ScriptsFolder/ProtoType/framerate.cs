@@ -21,7 +21,7 @@ public class framerate : MonoBehaviour
 
         float fps = 1.0f / Time.deltaTime;
         float ms = Time.deltaTime * 1000.0f;
-        string text = string.Format($"[{Mathf.RoundToInt(fps)}] FPS ({Mathf.RoundToInt( ms)}ms)");
+        string text = string.Format($"ScreenSize[{Screen.width} X {Screen.height}]\n[{Mathf.RoundToInt(fps)}] FPS ({Mathf.RoundToInt( ms)}ms)");
 
         GUIStyle style = new GUIStyle();
         style.fontSize = fontsize;

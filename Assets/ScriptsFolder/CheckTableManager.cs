@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -70,8 +71,28 @@ public class CheckTableManager : MonoBehaviour
                 checkpoints.Add(Cdata);
 
             }
+
+            OnlyTestAllCheckPoint();
         }
 
     }
 
+    public List<int> group = new List<int>();
+
+    public void OnlyTestAllCheckPoint()
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, "CheckPointData.json");
+        for (int i = 0; i < checkpoints.Count; i++)
+        {
+            group.Add(checkpoints[i].index);
+        }
+        
+        SavePoint sp = new SavePoint();
+        sp.points = group;
+
+        string data = JsonUtility.ToJson(sp);
+        File.WriteAllText(filePath, data);
+
+        PlayerPrefs.SetInt("CheckPointIndex", 1);
+    }
 }
