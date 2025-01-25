@@ -129,7 +129,8 @@ public class HouseholdIronTransform : Player
         CheckRushTime();
         RushRayCheck();
         IronDownAttackTimeCheck();
-
+        if(downAttack)
+            EnvironmentPower = Vector3.zero;
     }
 
     public override void DownAttack()
@@ -322,7 +323,7 @@ public class HouseholdIronTransform : Player
                         else
                             Vert = -SimpleInput.GetAxis("Horizontal2");
                     }
-
+ 
                     rushHori = 0;
                     ZmoveRushVert();
                     rushVert = -rushVert;
@@ -456,12 +457,12 @@ public class HouseholdIronTransform : Player
                 Vector3 moveVelocity = Vector3.zero;
                 Vector3 vector = regularMove.normalized * rushSpeed;
                 Vector3 forwardForce = transform.GetChild(0).forward * rushSpeed;
-                moveVelocity = forwardForce - playerRb.velocity.x * Vector3.right - playerRb.velocity.z * Vector3.forward;
+                moveVelocity = forwardForce - playerRb.velocity.x * Vector3.right - playerRb.velocity.z * Vector3.forward  ;
                
                 if (!wallcheck)
                     playerRb.AddForce(moveVelocity, ForceMode.VelocityChange);
                 else
-                    playerRb.AddForce(Vector3.zero, ForceMode.VelocityChange);
+                    playerRb.AddForce(Vector3.zero+EnvironmentPower, ForceMode.VelocityChange);
 
                 if (moveVelocity == Vector3.zero)
                 {
@@ -489,6 +490,7 @@ public class HouseholdIronTransform : Player
                 }
                 //Humonoidanimator.RunAnimation(isRun);
             }
+
         }
         else
             base.Move();

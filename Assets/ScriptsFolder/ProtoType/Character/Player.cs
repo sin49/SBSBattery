@@ -29,7 +29,7 @@ public class Player : Character,environmentObject
     [Header("PlayerSoundPlayer")]
     public PlayerSoundPlayer SoundPlayer;
 
-    Vector3 EnvironmentPower;
+   protected Vector3 EnvironmentPower;
 
     public direction direction = direction.Right;
 
@@ -181,8 +181,9 @@ public class Player : Character,environmentObject
         SoundPlayer = GetComponent<PlayerSoundPlayer>();
         d_col = downAttackCollider.GetComponent<DownAttackCollider>();
     }
+
     // Start is called before the first frame update
-   protected virtual void Start()
+    protected virtual void Start()
     {
 
         if (PlayerStat.instance.formInvincible)
@@ -454,6 +455,7 @@ public class Player : Character,environmentObject
     public float jumpanimtimer;
     protected virtual void FixedUpdate()
     {
+
         if (cantmove||PlayerHandler.instance.CantHandle                                                                                                                                                                                                                                                                                                                                                         )
         {
             isRun = false;
@@ -1133,10 +1135,10 @@ public class Player : Character,environmentObject
 
             playerRb.velocity = new Vector3(newDecelateVector.x, CurrentVelocity.y, newDecelateVector.z);
             //else
-            //           playerRb.velocity = new Vector3(0,playerRb.velocity.y, playerRb.velocity.z);
+
 
         }
-
+        playerRb.velocity = new Vector3(0, playerRb.velocity.y, playerRb.velocity.z);
 
         EnvironmentPower = Vector3.zero;
 
