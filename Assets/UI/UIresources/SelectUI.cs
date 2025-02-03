@@ -272,6 +272,7 @@ public class SelectUI : MonoBehaviour
 
     public void ResisterLang()
     {
+        if(LanguageManager.instance !=null)
         LanguageManager.instance.LanguageEventResister(ChangeLanguage);
     }
 

@@ -45,7 +45,10 @@ public class GameManager : MonoBehaviour
             mob = false;
 
         InitScreenResolution();
+        JustTestKey();
     }
+
+    public float saveRatio;
 
     public void InitScreenResolution()
     {
@@ -67,6 +70,7 @@ public class GameManager : MonoBehaviour
 
         // Log the adjusted resolution for debugging
         Debug.Log($"Adjusted Resolution: {adjustedWidth}x{adjustedHeight}");
+        Debug.Log($"Current Resolution: {Screen.width}x{Screen.height}");
 
         // Set the screen resolution (fullscreen mode)
         Screen.SetResolution((int)adjustedWidth, (int)adjustedHeight, true);
@@ -94,6 +98,12 @@ public class GameManager : MonoBehaviour
         //    canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         //    canvasScaler.referenceResolution = new Vector2(targetWidth, targetHeight);
         //}
+
+        float w = Screen.width / targetWidth;
+        float h = Screen.height / targetHeight;
+
+        saveRatio = MathF.Min(w, h);
+
     }
 
     public bool mob;
@@ -340,7 +350,7 @@ public class GameManager : MonoBehaviour
         // 다음 씬에서 맞는 체크포인트 위치에 플레이어를 생성합니다.
         Debug.Log("로딩 끝");
         Debug.Log("연출 끝");
-
+        //InitScreenResolution();
     }
     public float MinimumLoadingTime;
 
@@ -350,7 +360,7 @@ public class GameManager : MonoBehaviour
     {
         Keycard = s;
     }
-
+    #region 스크린모드
     public FullScreenMode screenMode;
 
     public void ChangeWindowed()
@@ -362,6 +372,7 @@ public class GameManager : MonoBehaviour
     {
         Screen.SetResolution(1920, 1080, true);
     }
+    #endregion
 
     #region 마우스 관련
     float mouseTimer;
@@ -407,6 +418,11 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
+
+    public void JustTestKey()
+    {
+        PlayerPrefs.SetInt("TransformTuto", 1);
+    }
 }
 // public void ReLoadingScene()
 // {

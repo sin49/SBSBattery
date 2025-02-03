@@ -1138,7 +1138,7 @@ public class Player : Character,environmentObject
 
 
         }
-        playerRb.velocity = new Vector3(0, playerRb.velocity.y, playerRb.velocity.z);
+        //playerRb.velocity = new Vector3(0, playerRb.velocity.y, playerRb.velocity.z);
 
         EnvironmentPower = Vector3.zero;
 
