@@ -109,10 +109,12 @@ public class PlayerXChangePortal : InteractiveObject
         else
         yield return StartCoroutine(PlayerHandler.instance.CurrentPlayer.moveportalanimation(teleportertransform));
         _animation.SetTrigger("Close");
+        if(Destination != null)
         Destination. _animation.SetTrigger("Open");
       
         closed = true;
         soundEffectListPlayer.PlayAudio(1);
+        if(Destination != null)
         Destination.closed = true;
 
         Debug.Log("Æ÷Å» ´ÝÈû");
