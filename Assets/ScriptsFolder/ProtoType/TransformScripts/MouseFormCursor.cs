@@ -88,6 +88,7 @@ public class MouseFormCursor : MonoBehaviour
                 Enemy fire;
                 if (other.TryGetComponent<Enemy>(out fire))
                 {
+                    if(fire.corutine !=null)
                     fire.StopCoroutine(fire.corutine);
                     fire.cancelattakc();
                     fire.corutine = null;

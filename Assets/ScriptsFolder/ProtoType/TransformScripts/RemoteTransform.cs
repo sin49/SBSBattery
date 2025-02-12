@@ -115,7 +115,7 @@ public class RemoteTransform : Player
             if (laserchargettime > lasermaxchargetime)
                 laserchargettime = lasermaxchargetime;
         }
-        if (!Input.GetKey(KeySettingManager.instance.AttackKeycode) && laserchargemode)
+        if ((!Input.GetKey(KeySettingManager.instance.AttackKeycode) && !SimpleInput.GetButton("Attack"))&& laserchargemode)
         {
             laserchargemode = false;
             AttackKeyUp();

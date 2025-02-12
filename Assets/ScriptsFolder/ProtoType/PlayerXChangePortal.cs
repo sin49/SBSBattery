@@ -66,6 +66,7 @@ public class PlayerXChangePortal : InteractiveObject
     {
         
         portalcollider.enabled = true;
+        if(Destination != null)
         Destination.portalcollider.enabled = false;
             Debug.Log("ししししし");
             PlayerHandler.instance.CurrentPlayer.transform.position = Destination.teleportertransform.position;

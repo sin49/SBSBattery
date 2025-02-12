@@ -110,6 +110,14 @@ public class LanguageManager : MonoBehaviour
     [HideInInspector] public List<float> cpSpacingKor = new List<float>();
     [HideInInspector] public List<float> cpSpacingEng = new List<float>();
 
+    [Header("모바일 터치")]
+    public int touchIndex;
+    public int touchEndIndex;
+    [HideInInspector]public List<string> touchKor = new List<string>();
+    [HideInInspector] public List<string> touchEng = new List<string>();
+    [HideInInspector] public List<float> touchSpacingKor = new List<float>();
+    [HideInInspector] public List<float> touchSpacingEng = new List<float>();
+
     [Header("언어 설정 상태")]
     public bool isKor;
 
@@ -244,6 +252,13 @@ public class LanguageManager : MonoBehaviour
             cpSpacingKor.Add(korSpacing);
             cpSpacingEng.Add(engSpacing);
         }
+        else if (index >= touchIndex && index <= touchEndIndex)
+        {
+            touchKor.Add(kor);
+            touchEng.Add(eng);
+            touchSpacingKor.Add(korSpacing);
+            touchSpacingEng.Add(engSpacing);
+        }
     }
 
     Action languageEvent;
@@ -261,5 +276,6 @@ public class LanguageManager : MonoBehaviour
     public void ResetLangEvent()
     {
         languageEvent = null;
+        Debug.Log("언어 액션 널 실행");
     }
 }

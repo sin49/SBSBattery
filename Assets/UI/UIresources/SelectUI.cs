@@ -136,7 +136,7 @@ public class SelectUI : MonoBehaviour
                 ButtonList[index].transform.localScale = originScale;
                 SelectedUI.SetActive(false);
 
-                testRecheckUI.ActiveUI(1, TitleBackEvent, ButtonselectedDisable);
+                testRecheckUI.ActiveUI(0, TitleBackEvent, ButtonselectedDisable);
                 pauseui.pauseInteract = false;
                 buttonselected = true;
                 break;
@@ -145,7 +145,7 @@ public class SelectUI : MonoBehaviour
                 ButtonList[index].transform.localScale = originScale;
                 SelectedUI.SetActive(false);              
 
-                testRecheckUI.ActiveUI(2, ExitEvent, ButtonselectedDisable);
+                testRecheckUI.ActiveUI(1, ExitEvent, ButtonselectedDisable);
                 pauseui.pauseInteract = false;
                 buttonselected = true;
                 break;

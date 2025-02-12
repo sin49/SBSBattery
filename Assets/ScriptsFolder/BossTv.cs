@@ -112,6 +112,7 @@ public class BossTv : RemoteObject
        
 
         PlayerHandler.instance.DimensionChange();
+        GameManager.instance.StartAction();
         monitorrenderer.material = phase2mat;
         LHand.HP = phase2status.HandHP;
         RHand.HP = phase2status.HandHP;

@@ -37,12 +37,14 @@ public class TestRecheckUI : UIInteract
 
     private void Start()
     {
+        Debug.Log("재확인 Start");
         ResisterLang();
         ChangeLanguage();
     }
     int saveIndex;
     public void ActiveUI(int Desc, Action OKEvent, Action CancelEvent)
     {
+        Debug.Log("재확인 ActiveUI");
         if (langText.Count != 0)
             Description.text = langText[Desc];
         else

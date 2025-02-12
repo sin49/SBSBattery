@@ -819,6 +819,7 @@ public class Player : Character,environmentObject
     }
     public void rotateBy3Dto2D()
     {
+        Debug.Log("시점 전환 확인용");
         Vector3 rotateVector = Vector3.zero;
         if ((int)PlayerStat.instance.MoveState <= 1)
         {
@@ -868,9 +869,9 @@ public class Player : Character,environmentObject
         if (cantmove) return;
         hori = 0;
         Vert = 0;
-
-         //inputHorizontal = SimpleInput.GetAxis("Horizontal2");
-         inputVertical = SimpleInput.GetAxis("Vertical2");
+        #region 시점에 따른 이동결정
+        //inputHorizontal = SimpleInput.GetAxis("Horizontal2");
+        inputVertical = SimpleInput.GetAxis("Vertical2");
         if(inputHorizontal > 0)
             hori = 1;
         if (inputHorizontal <0)
@@ -1071,7 +1072,7 @@ public class Player : Character,environmentObject
             }
 
         }
-
+        #endregion
 
         if (!canAttack && onGround)
         {
@@ -1138,7 +1139,8 @@ public class Player : Character,environmentObject
 
 
         }
-        //playerRb.velocity = new Vector3(0, playerRb.velocity.y, playerRb.velocity.z);
+        if (onBelt)
+        playerRb.velocity = new Vector3(0, playerRb.velocity.y, playerRb.velocity.z);
 
         EnvironmentPower = Vector3.zero;
 
@@ -1734,6 +1736,7 @@ IEnumerator jumpForceLimitCorutine()
 
         }
         #endregion
+
     }
     private void OnTriggerStay(Collider other)
     {
@@ -1741,8 +1744,12 @@ IEnumerator jumpForceLimitCorutine()
         {
             jumpRaycastCheck();
         }
+
+        if (other.TryGetComponent<ConvayerBelt>(out ConvayerBelt con))
+            onBelt = true;
     }
     public bool onInterarctive;
+    bool onBelt;
     private void OnCollisionStay(Collision collision)
     {
         //#region 바닥 상호작용
@@ -1786,6 +1793,7 @@ IEnumerator jumpForceLimitCorutine()
             }
         }
 
+
         #region 적 상호작용
         if (collision.gameObject.CompareTag("Enemy"))
         {
@@ -1804,7 +1812,11 @@ IEnumerator jumpForceLimitCorutine()
         #endregion
     }
 
-
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent<ConvayerBelt>(out ConvayerBelt con))
+            onBelt = false;
+    }
 
 
 

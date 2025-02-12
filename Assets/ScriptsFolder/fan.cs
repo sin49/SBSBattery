@@ -40,7 +40,7 @@ public class fan : RemoteObject
         {
             Air.gameObject.SetActive(true);
             Particle.gameObject.SetActive(true);
-           
+
         }
         else
         {
@@ -53,9 +53,14 @@ public class fan : RemoteObject
         Air.conveyorSpeed = AirPower;
         animator.SetBool("Active", onActive);
         initairdistance();
-        if(onActive&& soundEffectListPlayer!=null)
+    }
+
+    private void FixedUpdate()
+    {
+        if (onActive && soundEffectListPlayer != null)
             soundEffectListPlayer.PlayAudioNoCancel(2);
     }
+
     public override void Active()
     {
         if (onActive)

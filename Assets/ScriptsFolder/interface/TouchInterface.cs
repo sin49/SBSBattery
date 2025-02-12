@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +11,8 @@ public class TouchInterface : MonoBehaviour
     TextMeshProUGUI[] fontList;
     public Color fontColor;
     public Button pauseBtn;
+
+    public List<TextMeshProUGUI> touchName = new List<TextMeshProUGUI>();
 
     private void Awake()
     {
@@ -29,6 +29,8 @@ public class TouchInterface : MonoBehaviour
         }
         else
             Debug.Log("À¯´ÏÆ¼");
+
+        ResisterLang();
     }
 
     public PauseUI pauseui;
@@ -58,5 +60,31 @@ public class TouchInterface : MonoBehaviour
         pauseBtn.gameObject.SetActive(true);
         buttonParent.SetActive(true);
         joystick.SetActive(true);
+        ChangeLanguage();
+    }
+
+    public void ResisterLang()
+    {
+        if(LanguageManager.instance != null)
+        LanguageManager.instance.LanguageEventResister(ChangeLanguage);
+    }
+
+    public void ChangeLanguage()
+    {
+        if (LanguageManager.instance.isKor)
+        {
+            for (int i = 0; i < touchName.Count; i++)
+            {
+                touchName[i].text = LanguageManager.instance.touchKor[i];
+            }
+        }
+        else
+        {
+            for (int i = 0; i < touchName.Count; i++)
+            {
+                touchName[i].text = LanguageManager.instance.touchEng[i];
+            }
+
+        }
     }
 }

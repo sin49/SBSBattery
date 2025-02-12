@@ -16,13 +16,13 @@ public class ButtonTouch : UIInteract, IPointerDownHandler, IPointerUpHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         GetComponent<Image>().sprite = activeButton;
-        tmp.color = activeFontColor;
+        //tmp.color = activeFontColor;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         GetComponent<Image>().sprite = deactiveButton;
-        tmp.color = deactiveFontColor;
+        //tmp.color = deactiveFontColor;
     }
 
     private void Awake()

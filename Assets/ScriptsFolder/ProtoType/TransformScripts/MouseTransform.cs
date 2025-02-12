@@ -140,7 +140,10 @@ public class MouseTransform : Player
         }
         cursor.InitCursorPos();
         secondForm.SetActive(true);
-        soundplayer_.FormChangePlay();
+        if (soundplayer_ != null)
+            soundplayer_.FormChangePlay();
+        else
+            Debug.Log("mouse sound is null");
     }
 
     public void SecondFormDeactive()

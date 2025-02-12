@@ -179,6 +179,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("선택한 체크포인트로 이동");
         GetCheckpointData(n);
+        LanguageManager.instance.ResetLangEvent();
         LoadingSceneWithKariEffect(LoadCheckpointSceneName);
     }
 
@@ -422,6 +423,20 @@ public class GameManager : MonoBehaviour
     public void JustTestKey()
     {
         PlayerPrefs.SetInt("TransformTuto", 1);
+    }
+
+    Action bossAction;
+
+    public void ResisterAction(Action a)
+    {
+        bossAction += a;
+    }
+
+    public void StartAction()
+    {
+        Debug.Log("동작");
+        bossAction?.Invoke();
+        bossAction = null;
     }
 }
 // public void ReLoadingScene()

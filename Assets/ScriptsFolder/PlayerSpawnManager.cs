@@ -149,7 +149,7 @@ public class PlayerSpawnManager : MonoBehaviour
                 continue;
             ChkPointsDic.Add(Checkpoints[n].index, Checkpoints[n]);
             //Debug.Log($"{ChkPointsDic[n].index}, {ChkPointsDic[n]}");
-            Debug.Log($"CHkPointsDis 사이즈 :{ChkPointsDic.Count}");
+            //Debug.Log($"CHkPointsDis 사이즈 :{ChkPointsDic.Count}");
         }        
 
         //PlayerSpawn이 아니라 0번 체크포인트를 찿아서 스폰되도록

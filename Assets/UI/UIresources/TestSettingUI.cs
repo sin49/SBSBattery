@@ -42,6 +42,7 @@ public class TestSettingUI : UIInteract
 
     private void Start()
     {
+        Debug.Log("settingui start");
         ResisterLang();
         ChangeLanguage();
         AddArrowClick();
@@ -197,10 +198,11 @@ public class TestSettingUI : UIInteract
                 NextSelectSetting(sound);
                 break;
             case 1:
-                NextSelectSetting(graphic);
+                NextSelectSetting(language);
                 break;
             case 2:
-                NextSelectSetting(keyCustom);
+                //NextSelectSetting(keyCustom);
+                SettingExit();
                 break;
             case 3:
                 NextSelectSetting(padCustom);
@@ -220,7 +222,11 @@ public class TestSettingUI : UIInteract
         {
             case 0:
             case 1:
+                ActiveSound();
+                break;
             case 2:
+                DeactiveSound();
+                break;
             case 3:
             case 4:
                 ActiveSound();

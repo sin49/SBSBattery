@@ -129,7 +129,7 @@ public class HouseholdIronTransform : Player
         CheckRushTime();
         RushRayCheck();
         IronDownAttackTimeCheck();
-        if(downAttack)
+        if(ironDownAttack)
             EnvironmentPower = Vector3.zero;
     }
 
@@ -198,6 +198,7 @@ public class HouseholdIronTransform : Player
             else
             {
                 downEnd = false;
+                ironDownAttack = false;
                 SecondFormDeactive();
                 downAtkEndTimer = downAtkEndTimeMax;
                 PlayerHandler.instance.CantHandle = false;
@@ -907,7 +908,7 @@ public class HouseholdIronTransform : Player
 
                 //soundPlayer.PlayDownAttackEndSound();
 
-                ironDownAttack = false;
+                //ironDownAttack = false;
 
                 downEnd = true;
                 if (!ironDownAtkEffect.gameObject.activeSelf)
