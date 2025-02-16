@@ -118,6 +118,14 @@ public class LanguageManager : MonoBehaviour
     [HideInInspector] public List<float> touchSpacingKor = new List<float>();
     [HideInInspector] public List<float> touchSpacingEng = new List<float>();
 
+    [Header("설정 저장")]
+    public int setSaveIndex;
+    public int setSaveEndIndex;
+    [HideInInspector] public List<string> setSaveKor = new List<string>();
+    [HideInInspector] public List<string> setSaveEng = new List<string>();
+    [HideInInspector] public List<float> setSaveSpacingKor = new List<float>();
+    [HideInInspector] public List<float> setSaveSpacingEng = new List<float>();
+
     [Header("언어 설정 상태")]
     public bool isKor;
 
@@ -258,6 +266,13 @@ public class LanguageManager : MonoBehaviour
             touchEng.Add(eng);
             touchSpacingKor.Add(korSpacing);
             touchSpacingEng.Add(engSpacing);
+        }
+        else if (index >= setSaveIndex && index <= setSaveEndIndex)
+        {
+            setSaveKor.Add(kor);
+            setSaveEng.Add(eng);
+            setSaveSpacingKor.Add(korSpacing);
+            setSaveSpacingEng.Add(engSpacing);
         }
     }
 

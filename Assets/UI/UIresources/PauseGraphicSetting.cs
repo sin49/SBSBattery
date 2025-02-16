@@ -1,11 +1,17 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using JetBrains.Annotations;
-using Unity.VisualScripting;
-using System.Xml;
+using System;
+using System.IO;
+using System.Linq;
+
+[Serializable]
+public class ResolutionGroup
+{
+    public string resolutionName;
+    public int width, height;
+}
 
 public class PauseGraphicSetting : UIInteract
 {
@@ -25,8 +31,14 @@ public class PauseGraphicSetting : UIInteract
     public List<string> screenString = new List<string>(); // 화면모드 선택
     public float[] screenSpacing = new float[2];
 
+    [Header("해상도 설정")]
+    public TextMeshProUGUI resolutionTMP;
+    public List<string> resolutionTitle = new List<string>();
+    public List<string> resolutionString = new List<string>();
+    public List<ResolutionGroup> resolutionValue = new List<ResolutionGroup>();
+
     int index, beforeIndex;
-    int vsyncIndex, screenIndex;
+    int vsyncIndex, screenIndex, resolutionIndex;
 
     bool onButton, graphicActive;
     public Sprite activeArrow, deactiveArrow;
@@ -34,13 +46,52 @@ public class PauseGraphicSetting : UIInteract
 
     public List<GameObject> buttonList;
 
+    public CustomRecheckUI cRecheck;
+
+    [Header("해상도 CSV파일")]
+    public TextAsset resolutionCSV;
+    
     private void Awake()
     {
         ResisterLang();
         ChangeLanguage();
-
+        ReadCSV();
         korPack = LanguageManager.instance.soundKor;
         engPack = LanguageManager.instance.soundEng;
+    }
+
+    public void ReadCSV()
+    {
+        bool firstLine = true;
+        StringReader readCSV = new StringReader(resolutionCSV.text); // CSV파일의 텍스트를 StreamReader클래스로 
+
+        while (true)
+        {
+            string data = readCSV.ReadLine();
+
+            if (firstLine)
+            {
+                firstLine = false;
+                continue;
+            }
+
+            if (string.IsNullOrEmpty(data))
+            {
+                break;
+            }
+
+            //해상도 CSV파일의 요소: 인덱스 0번, 해상도 이름 1번, 가로 2번, 세로 3번
+
+            ResolutionGroup rg = new ResolutionGroup();
+
+            string[] values = data.Split(",");
+            resolutionString.Add(values[0]);
+            rg.resolutionName = values[0];
+            rg.width = int.Parse(values[1]);
+            rg.height = int.Parse(values[2]);
+
+            resolutionValue.Add(rg);
+        }
     }
 
     private void OnEnable()
@@ -117,15 +168,39 @@ public class PauseGraphicSetting : UIInteract
 
     public void UpdateGraphicData()
     {
+        // 수직동기화 데이터 확인
         if (PlayerPrefs.HasKey("VsyncData"))
             vsyncIndex = PlayerPrefs.GetInt("VsyncData");
         vsyncTMP.text = vsyncString[vsyncIndex];
         vsyncTMP.characterSpacing = vsyncSpacing[vsyncIndex];
 
+        // 화면모드 데이터 확인
         if (PlayerPrefs.HasKey("ScreenModeData"))
             screenIndex = PlayerPrefs.GetInt("ScreenModeData");
         screenTMP.text = screenString[screenIndex];
         screenTMP.characterSpacing = screenSpacing[screenIndex];
+
+        // 해상도 데이터 확인
+        string dataName = "ResolutionData.json";
+        string filePath = Path.Combine(Application.persistentDataPath, dataName);
+
+        if (File.Exists(filePath))
+        {
+            var a = File.ReadAllText(filePath);
+            ResolutionGroup rg = JsonUtility.FromJson<ResolutionGroup>(a);
+
+            for (int i = 0; i < resolutionString.Count; i++)
+            {
+                if (resolutionString[i] == rg.resolutionName)
+                {
+                    resolutionIndex = i;
+                    break;
+                }
+            }
+        }
+
+        resolutionTMP.text = resolutionString[resolutionIndex];
+
     }
 
     bool moved, horiMoved;
@@ -206,6 +281,11 @@ public class PauseGraphicSetting : UIInteract
                             screenIndex--;
                         UpdateScreenUI();
                         break;
+                    case 2:
+                        if (resolutionIndex > 0)
+                            resolutionIndex--;
+                        UpdateResValueUI();
+                        break;
                     default:
                         Debug.Log("out of range");
                         break;
@@ -243,6 +323,11 @@ public class PauseGraphicSetting : UIInteract
                             screenIndex++;
                         UpdateScreenUI();
                         break;
+                    case 2:
+                        if (resolutionIndex < resolutionString.Count - 1)
+                            resolutionIndex++;
+                        UpdateResValueUI();
+                        break;
                     default:
                         Debug.Log("out of range");
                         break;
@@ -275,20 +360,47 @@ public class PauseGraphicSetting : UIInteract
     #region 버튼 선택 작용
     public void SelectSetting()
     {
-        switch (index)
+        if (Application.platform == RuntimePlatform.Android)
         {
-            case 0:
-                Debug.Log("수직동기화 기능 구현해야함");
-                break;
-            case 1:
-                Debug.Log("화면모드 적용 기능 구현해야함");
-                break;
-            case 2:
-                SaveGraphicSetting();
-                break;
-            case 3:
-                CurrentSettingExit();
-                break;
+            switch (index)
+            {
+                case 0:
+                    //Debug.Log("수직동기화 기능 구현해야함");
+                    break;
+                case 1:
+                    //Debug.Log("화면모드 적용 기능 구현해야함");
+                    break;
+                case 2:
+                    //SaveGraphicSetting();
+                    graphicActive = false;
+                    cRecheck.ActionActive(SaveGraphicSetting, CurrentSettingExit);
+                    break;
+                case 3:
+                    CurrentSettingExit();
+                    break;
+            }
+        }
+        else
+        {
+            switch (index)
+            {
+                case 0:
+                    //Debug.Log("수직동기화 기능 구현해야함");
+                    break;
+                case 1:
+                    //Debug.Log("화면모드 적용 기능 구현해야함");
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    //SaveGraphicSetting();
+                    graphicActive = false;
+                    cRecheck.ActionActive(SaveGraphicSetting, CurrentSettingExit);
+                    break;
+                case 4:
+                    CurrentSettingExit();
+                    break;
+            }
         }
     }
 
@@ -296,6 +408,8 @@ public class PauseGraphicSetting : UIInteract
     {
         ChoiceVSyncMode();
         ChoiceScreenMode();
+        ChoiceResolutionMode();
+        graphicActive = true;
     }
 
     public void ChoiceVSyncMode()
@@ -325,6 +439,23 @@ public class PauseGraphicSetting : UIInteract
                 break;
         }
         PlayerPrefs.SetInt("ScreenModeData", screenIndex);
+    }
+
+    public void ChoiceResolutionMode()
+    {
+        GameManager.instance.SetResolution(resolutionValue[resolutionIndex].resolutionName, resolutionValue[resolutionIndex].width, resolutionValue[resolutionIndex].height);
+
+        string dataName = "ResolutionData.json";
+        string filePath = Path.Combine(Application.persistentDataPath, dataName);
+
+        ResolutionGroup rg = new ResolutionGroup();
+        rg.resolutionName = resolutionValue[resolutionIndex].resolutionName;
+        rg.width = resolutionValue[resolutionIndex].width;
+        rg.height = resolutionValue[resolutionIndex].height;
+
+        string data = JsonUtility.ToJson(rg);
+        File.WriteAllText(filePath, data);
+        //Debug.Log("해상도 적용");
     }
     #endregion
 
@@ -380,6 +511,32 @@ public class PauseGraphicSetting : UIInteract
     }
     #endregion
 
+    #region 해상도 업데이트
+
+    public void ResValueDecrease()
+    {
+        if (resolutionIndex > 0)
+        {
+            resolutionIndex--;
+            UpdateResValueUI();
+        }
+    }
+
+    public void ResValueIncrease()
+    {
+        if (resolutionIndex < resolutionString.Count - 1)
+        {
+            resolutionIndex++;
+            UpdateResValueUI();
+        }
+    }
+
+    public void UpdateResValueUI()
+    {
+        resolutionTMP.text = resolutionString[resolutionIndex];
+    }
+    #endregion
+
     #region 이벤트 (버튼 + 이벤트 트리거)
     public void CheckArrow(int n)
     {
@@ -392,6 +549,10 @@ public class PauseGraphicSetting : UIInteract
             case 2:
             case 3:
                 SetIndex(1);
+                break;
+            case 4:
+            case 5:
+                SetIndex(2);
                 break;
         }
     }
@@ -408,6 +569,8 @@ public class PauseGraphicSetting : UIInteract
     public List<GameObject> vsyncArrow = new List<GameObject>();
     [Header("화면모드 화살표")]
     public List<GameObject> screenArrow = new List<GameObject>();
+    [Header("해상도 화살표")]
+    public List<GameObject> resolutionArrow = new List<GameObject>();
     public void UpdateArrow()
     {
         if (vsyncIndex <= 0)
@@ -437,6 +600,22 @@ public class PauseGraphicSetting : UIInteract
         else
         {
             foreach (GameObject arrow in screenArrow)
+            {
+                arrow.SetActive(true);
+            }
+        }
+
+        if (resolutionIndex <= 0)
+        {
+            resolutionArrow[0].SetActive(false);
+        }
+        else if (resolutionIndex >= resolutionString.Count - 1)
+        {
+            resolutionArrow[1].SetActive(false);
+        }
+        else
+        {
+            foreach (GameObject arrow in resolutionArrow)
             {
                 arrow.SetActive(true);
             }

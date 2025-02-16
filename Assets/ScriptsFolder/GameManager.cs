@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -44,16 +43,20 @@ public class GameManager : MonoBehaviour
         else
             mob = false;
 
-        InitScreenResolution();
+        if (Application.platform == RuntimePlatform.Android)
+            InitScreenResolution();
+        else
+            LoadResolutionData();
         JustTestKey();
     }
 
     public float saveRatio;
 
-    public void InitScreenResolution()
+    #region 해상도 강제 조정?
+    public static void InitScreenResolution(int targetWidth = 1280, int targetHeight = 720)
     {
-        int targetWidth = 1280;
-        int targetHeight = 720;
+        //int targetWidth = 1280;
+        //int targetHeight = 720;
         // Calculate the device's aspect ratio
         float deviceAspectRatio = (float)Screen.width / Screen.height;
 
@@ -102,9 +105,94 @@ public class GameManager : MonoBehaviour
         float w = Screen.width / targetWidth;
         float h = Screen.height / targetHeight;
 
-        saveRatio = MathF.Min(w, h);
+        //saveRatio = MathF.Min(w, h);
 
     }
+
+    public void LoadResolutionData()
+    {
+        string dataName = "ResolutionData.json";
+        string filePath = Path.Combine(Application.persistentDataPath, dataName);
+
+        if (File.Exists(filePath))
+        {
+            var a= File.ReadAllText(filePath);
+            ResolutionGroup rg = JsonUtility.FromJson<ResolutionGroup>(a);
+
+            InitScreenResolutionDesktop(rg.resolutionName, rg.width, rg.height);
+        }
+        else
+        {
+            InitScreenResolutionDesktop();
+        }        
+    }
+
+    public static void InitScreenResolutionDesktop(string resolutionName = "FHD", int targetWidth = 1920, int targetHeight = 1080)
+    {
+        //int targetWidth = 1280;
+        //int targetHeight = 720;
+        // Calculate the device's aspect ratio
+        float deviceAspectRatio = (float)Screen.width / Screen.height;
+
+        // Calculate the target pixel count
+        int targetPixelCount = targetWidth * targetHeight;
+
+        // Compute adjusted resolution to match target pixel count
+        float adjustedHeight = Mathf.Sqrt(targetPixelCount / deviceAspectRatio);
+        float adjustedWidth = adjustedHeight * deviceAspectRatio;
+
+        // Ensure the resolution is a multiple of 2 for better GPU performance
+        adjustedWidth = Mathf.RoundToInt(adjustedWidth / 2f) * 2;
+        adjustedHeight = Mathf.RoundToInt(adjustedHeight / 2f) * 2;
+
+        // Log the adjusted resolution for debugging
+        Debug.Log($"Adjusted Resolution: {adjustedWidth}x{adjustedHeight}");
+        Debug.Log($"Current Resolution: {Screen.width}x{Screen.height}");
+
+        // Set the screen resolution (fullscreen mode)
+        Screen.SetResolution((int)adjustedWidth, (int)adjustedHeight, true);
+
+        // Adjust render scale for Universal Render Pipeline (URP)
+        if (GraphicsSettings.currentRenderPipeline is UniversalRenderPipelineAsset urpAsset)
+        {
+            float renderScale = Mathf.Clamp((float)adjustedWidth / targetWidth, 0.5f, 1.0f);
+            urpAsset.renderScale = renderScale;
+            Debug.Log($"Render Scale set to: {renderScale}");
+        }
+        else
+        {
+            Debug.LogWarning("Render scale adjustment skipped: Not using Universal Render Pipeline.");
+        }
+
+        // Update all CanvasScaler components in the scene
+        CanvasScaler[] canvasScalers = FindObjectsOfType<CanvasScaler>();
+        if (canvasScalers.Length == 0)
+        {
+            Debug.LogWarning("No CanvasScaler found. Ensure your UI uses CanvasScaler for proper scaling.");
+        }
+        //foreach (CanvasScaler canvasScaler in canvasScalers)
+        //{
+        //    canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        //    canvasScaler.referenceResolution = new Vector2(targetWidth, targetHeight);
+        //}
+
+        float w = Screen.width / targetWidth;
+        float h = Screen.height / targetHeight;
+
+        //saveRatio = MathF.Min(w, h);
+
+        string dataName = "ResolutionData.json";
+        string filePath = Path.Combine(Application.persistentDataPath, dataName);
+
+        ResolutionGroup rg = new ResolutionGroup();
+        rg.resolutionName = resolutionName;
+        rg.width = targetWidth;
+        rg.height = targetHeight;
+
+        string data = JsonUtility.ToJson(rg);
+        File.WriteAllText(filePath, data);
+    }
+    #endregion
 
     public bool mob;
 
@@ -352,6 +440,15 @@ public class GameManager : MonoBehaviour
         Debug.Log("로딩 끝");
         Debug.Log("연출 끝");
         //InitScreenResolution();
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            InitScreenResolution();
+        }
+        else
+        {
+            LoadResolutionData();
+        }
+
     }
     public float MinimumLoadingTime;
 
@@ -366,12 +463,19 @@ public class GameManager : MonoBehaviour
 
     public void ChangeWindowed()
     {
-        Screen.SetResolution(1024, 720, false);
+        Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
     }
 
     public void ChangeFullscreen()
     {
-        Screen.SetResolution(1920, 1080, true);
+        Screen.fullScreenMode = FullScreenMode.Windowed;
+    }
+    #endregion
+
+    #region 해상도설정
+    public void SetResolution(string resolutionName, int width, int height)
+    {
+        InitScreenResolutionDesktop(resolutionName, width, height);
     }
     #endregion
 
@@ -425,7 +529,9 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("TransformTuto", 1);
     }
 
+    #region action이벤트 관련
     Action bossAction;
+    Action touchInteraction;
 
     public void ResisterAction(Action a)
     {
@@ -438,6 +544,17 @@ public class GameManager : MonoBehaviour
         bossAction?.Invoke();
         bossAction = null;
     }
+
+    public void ResisterTouchInteraction(Action a)
+    {
+        touchInteraction += a;
+    }
+
+    public void StartInteract()
+    {
+        touchInteraction?.Invoke();
+    }
+    #endregion
 }
 // public void ReLoadingScene()
 // {

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -25,14 +27,13 @@ public class TestSettingUI : UIInteract
     public Sprite deactiveButton;
 
     public Animator settingAnimator;
-    Vector3 settingScale = new(0.8f, 0.8f, 0.8f);
 
 
     bool choiceSetting;
 
     public GameObject choice, sound, graphic, keyCustom, padCustom, language;
-
-    [HideInInspector] public GameObject canvas;
+    public List<GameObject> settingList = new List<GameObject>();
+    public Transform target;
 
     public List<string> textList = new List<string>();
     public List<float> spacingList = new List<float>();
@@ -43,10 +44,32 @@ public class TestSettingUI : UIInteract
     private void Start()
     {
         Debug.Log("settingui start");
+        SetList();
         ResisterLang();
         ChangeLanguage();
         AddArrowClick();
         gameObject.SetActive(false);
+    }
+
+    public void SetList()
+    {
+        for (int i = 0; i < target.childCount; i++)
+        {
+            settingList.Add(target.GetChild(i).gameObject);
+        }
+        Debug.Log(settingList.Count);
+
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            settingList.RemoveRange(5, settingList.Count - 5);
+
+            //if (Application.platform == RuntimePlatform.Android)
+            //{
+            //    settingList.RemoveRange(1, 3);
+            //}
+
+            settingList.RemoveRange(1, 3);
+        }
     }
 
     #region 화살표 이벤트(버튼 + eventTrigger)
@@ -126,7 +149,6 @@ public class TestSettingUI : UIInteract
     }
     #endregion
 
-
     private void OnEnable()
     {        
         for (int i = 0; i < buttonList.Count; i++)
@@ -191,49 +213,42 @@ public class TestSettingUI : UIInteract
 
     public void ChoiceInteractUI()
     {
-        
-        switch (index)
+        if(Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)
         {
-            case 0:
-                NextSelectSetting(sound);
-                break;
-            case 1:
-                NextSelectSetting(language);
-                break;
-            case 2:
-                //NextSelectSetting(keyCustom);
-                SettingExit();
-                break;
-            case 3:
-                NextSelectSetting(padCustom);
-                break;
-            case 4:
-                NextSelectSetting(language);
-                break;
-            case 5:
-                SettingExit();
-                break;
-            default:
-                Debug.Log("범위 초과함");
-                break;
-        }
+            switch (index)
+            {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    NextSelectSetting(settingList[index]);
+                    ActiveSound();
+                    break;
+                case 5:
+                    SettingExit();
+                    DeactiveSound();
+                    break;
+                default:
+                    Debug.Log("범위 초과함");
+                    break;
+            }
 
-        switch (index)
+        }
+        else if (Application.platform == RuntimePlatform.Android /*|| Application.platform == RuntimePlatform.WindowsEditor*/)
         {
-            case 0:
-            case 1:
-                ActiveSound();
-                break;
-            case 2:
-                DeactiveSound();
-                break;
-            case 3:
-            case 4:
-                ActiveSound();
-                break;
-            case 5:
-                DeactiveSound();
-                break;
+            switch (index)
+            {
+                case 0:
+                case 1:
+                    NextSelectSetting(settingList[index]);
+                    ActiveSound();
+                    break;
+                case 2:
+                    SettingExit();
+                    DeactiveSound();
+                    break;
+            }            
         }
     }
 
@@ -469,28 +484,55 @@ public class TestSettingUI : UIInteract
     [Header("설정 타이틀")]
     public TextMeshProUGUI titleFont;
 
+    [Header("CSV 인덱스 설정")] public int csvindex, csvMaxindex;
     public void ChangeLanguage()
     {
+        //List<string> lang = new List<string>(); List<string> spacing = new List<string>();
+        textList.Clear();
+        spacingList.Clear();
+        List<string> t = new List<string>();
+        List<float> s = new List<float>();
+        Debug.Log($"kor count: {LanguageManager.instance.settingKor.Count}\neng count: {LanguageManager.instance.settingEng.Count}");
         if (LanguageManager.instance.isKor)
         {
-            titleFont.text = LanguageManager.instance.settingKor[0];
-            titleFont.characterSpacing = LanguageManager.instance.settingSpacingKor[0];
-            for (int i = 0; i< textList.Count; i++)
-            {
-                textList[i] = LanguageManager.instance.settingKor[i+1];
-                spacingList[i] = LanguageManager.instance.settingSpacingKor[i + 1];
-            }
+            t = LanguageManager.instance.settingKor.ToList(); s = LanguageManager.instance.settingSpacingKor.ToList();
+            titleFont.text = t[0];
+            titleFont.characterSpacing = s[0];
+            //for (int i = 0; i < LanguageManager.instance.settingKor.Count-1; i++)
+            //{
+            //    textList[i] = LanguageManager.instance.settingKor[i + 1];
+            //    spacingList[i] = LanguageManager.instance.settingSpacingKor[i + 1];
+            //}
+            textList = t;
+            spacingList = s;
         }
         else
         {
-            titleFont.text = LanguageManager.instance.settingEng[0];
-            titleFont.characterSpacing = LanguageManager.instance.settingSpacingEng[0];
-            for (int i = 0; i < textList.Count; i++)
-            {
-                textList[i] = LanguageManager.instance.settingEng[i+1];
-                spacingList[i] = LanguageManager.instance.settingSpacingEng[i + 1];
-            }
+            t = LanguageManager.instance.settingEng.ToList(); s = LanguageManager.instance.settingSpacingEng.ToList();
+            titleFont.text = t[0];
+            titleFont.characterSpacing = s[0];
+            //for (int i = 0; i < LanguageManager.instance.settingEng.Count - 1; i++)
+            //{
+            //    textList[i] = LanguageManager.instance.settingEng[i + 1];
+            //    spacingList[i] = LanguageManager.instance.settingSpacingEng[i + 1];
+            //}
+            textList = t;
+            spacingList = s;
         }
+        textList.RemoveAt(0);
+        spacingList.RemoveAt(0);
+
+        //if(Application.platform == RuntimePlatform.Android)
+        //{
+        //    textList.RemoveRange(2, 3);
+        //    spacingList.RemoveRange(2, 3);
+        //}
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            textList.RemoveRange(1, 3);
+            spacingList.RemoveRange(1, 3);
+        }
+        Debug.Log($"kor count after: {LanguageManager.instance.settingKor.Count}\neng count: {LanguageManager.instance.settingEng.Count}");
         UpdateLanguage();
     }
     

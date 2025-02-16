@@ -31,12 +31,12 @@ public class CheckTableManager : MonoBehaviour
     private void Update()
     {
         //µð¹ö±ë¿ë
-        if (checkpoints != null)
-            Listlength = checkpoints.Count;
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            GameManager.instance.loadscenebycheckpoint(0);
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-            GameManager.instance.loadscenebycheckpoint(1);
+        //if (checkpoints != null)
+        //    Listlength = checkpoints.Count;
+        //if (Input.GetKeyDown(KeyCode.Alpha3))
+        //    GameManager.instance.loadscenebycheckpoint(0);
+        //if (Input.GetKeyDown(KeyCode.Alpha4))
+        //    GameManager.instance.loadscenebycheckpoint(1);
     }
     void loadCheckCSV()
     {

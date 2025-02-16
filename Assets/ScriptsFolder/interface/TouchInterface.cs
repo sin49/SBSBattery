@@ -39,7 +39,8 @@ public class TouchInterface : MonoBehaviour
     {
         if(Application.platform == RuntimePlatform.Android)
             PlayerHandler.instance.PlayerDeathEvent += DeactiveTUI;
-        pauseui.ResisterPauseDeactive(ActiveTUI);
+        //pauseui.ResisterPauseDeactive(ActiveTUI);
+        ResisterInteraction();
     }
 
     public void OnClickPause()
@@ -61,6 +62,25 @@ public class TouchInterface : MonoBehaviour
         buttonParent.SetActive(true);
         joystick.SetActive(true);
         ChangeLanguage();
+    }
+
+    public void TouchInteraction()
+    {
+        if (GameManager.instance != null)
+        {
+            if (!GameManager.instance.pauseActive)
+                ActiveTUI();
+            else
+                DeactiveTUI();
+        }
+    }
+
+    public void ResisterInteraction()
+    {
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.ResisterTouchInteraction(TouchInteraction);
+        }
     }
 
     public void ResisterLang()

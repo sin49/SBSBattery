@@ -32,6 +32,8 @@ public class PauseSoundSetting : UIInteract
 
     [HideInInspector] public bool selected;
 
+    public CustomRecheckUI cRecheck;
+
     private void Start()
     {
         ResisterLang();
@@ -144,7 +146,9 @@ public class PauseSoundSetting : UIInteract
             case 2:
                 break;
             case 3:
-                SaveSoundValue();
+                //SaveSoundValue();
+                cantControl = true;
+                cRecheck.ActionActive(SaveSoundValue, SettingCancel);
                 break;
             case 4:
                 SettingCancel();
@@ -264,6 +268,7 @@ public class PauseSoundSetting : UIInteract
     public void CurrentSettingExit()
     {
         onButton = false;
+        cantControl = false;
         foreach (GameObject obj in buttonList)
         {
             obj.SetActive(false);            

@@ -90,7 +90,7 @@ public class PauseUI : MonoBehaviour
     //}
     private void Update()
     {
-        if (GameManager.instance.tutoInteract) return;
+        if (GameManager.instance.tutoInteract || PlayerHandler.instance.Changing) return;
 
         if((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeySettingManager.instance.PausePadCode)) && pauseInteract&&!PlayerHandler.instance.isDie)
             PauseUiActive();
@@ -187,6 +187,7 @@ public class PauseUI : MonoBehaviour
             GameManager.instance.mouseTimeMove = true;
             deactiveAction?.Invoke();
         }
+        GameManager.instance.StartInteract();
         pauseUI.gameObject.SetActive(pauseActive);
     }
 }

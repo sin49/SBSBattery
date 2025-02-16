@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +17,15 @@ public class CustomRecheckUI : UIInteract
 
     Action yesEvent;
     Action noEvent;
+
+
+    private void Awake()
+    {
+        for (int i = 0; i < buttonList.Count; i++)
+        {
+            buttonList[i].GetComponent<Button>().onClick.AddListener(ChoiceButton);
+        }
+    }
 
     private void OnEnable()
     {
@@ -123,4 +133,13 @@ public class CustomRecheckUI : UIInteract
         gameObject.SetActive(false);
         onHandle = false;
     }
+
+    public void SetIndex(int n)
+    {
+        if (index == n) return;
+        beforeIndex = index;
+        index = n;
+        UpdateUI();
+    }
+
 }

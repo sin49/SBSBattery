@@ -142,7 +142,8 @@ public class Player : Character,environmentObject
         jumpBufferTimer = 0;
         doubleZinput = false;
         flyTimer = flyTime;
-  
+
+        delayTimer = 0;
     }
     private void OnBecameInvisible()
     {
@@ -230,6 +231,36 @@ public class Player : Character,environmentObject
             dontMoveTimer -= Time.deltaTime;
         else
             canAttack = true;
+
+        DelayBugCheck();
+    }
+    float delayTimer;
+    bool contact;
+    //[Header("끼이는 버그 발생 시 초과시간")]
+    //public float waitBugTime;
+
+    public void DelayBugCheck()
+    {
+        if (downAttack && !onGround)
+        {
+            Debug.Log("플레이어가 끼어서 행동을 하지 못함");
+            delayTimer += Time.deltaTime;
+            if (delayTimer > 5)
+            {
+                downAttack = false;
+                delayTimer = 0;
+                onGround = true;
+                PlayerStat.instance.jump = true;
+                PlayerStat.instance.doubleJump = true;
+                doublejumpComplete = false;
+
+                jumpBufferTimer = 0;
+                doubleZinput = false;
+                flyTimer = flyTime;
+            }
+        }
+        else
+            delayTimer = 0;
     }
 
     public void BaseBufferTimer()
@@ -1727,7 +1758,7 @@ IEnumerator jumpForceLimitCorutine()
             collision.gameObject.CompareTag("GameController") || collision.collider.CompareTag("CursorObject"))
         {
             onGround = false;
-
+            contact = false;
         }
         if (collision.gameObject.CompareTag("InteractivePlatform"))
         {
@@ -1736,8 +1767,20 @@ IEnumerator jumpForceLimitCorutine()
 
         }
         #endregion
-
+        if (collision.gameObject.CompareTag("PlayerRestrict"))
+        {
+            contact = false;
+        }
     }
+
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("PlayerRestrict"))
+    //    {
+    //        contact = true;
+    //    }
+    //}
+
     private void OnTriggerStay(Collider other)
     {
         if ((other.CompareTag("Ground")) ||( other.CompareTag("CursorObject")))
@@ -1756,8 +1799,14 @@ IEnumerator jumpForceLimitCorutine()
         if ((collision.gameObject.CompareTag("Ground") || collision.collider.CompareTag("CursorObject")))
         {
             jumpRaycastCheck();
+            contact = true;
         }
         //#endregion
+
+        if (collision.gameObject.CompareTag("PlayerRestrict"))
+        {
+            contact = true;
+        }
 
         if (collision.gameObject.CompareTag("InteractivePlatform") )
         {

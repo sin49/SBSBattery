@@ -24,6 +24,7 @@ public class SEPlayer : MonoBehaviour
     protected void AddAudioSource(GameObject obj)
     {
         audiosource = obj.AddComponent<AudioSource>();
+        audiosource.Play();
         audiosource.minDistance = audiosource.maxDistance;
         audiosource.dopplerLevel = 0;
         audiosource.loop = false;
