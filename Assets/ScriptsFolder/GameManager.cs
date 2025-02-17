@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
     public float saveRatio;
 
     #region 해상도 강제 조정?
+    public FullScreenMode screen = FullScreenMode.FullScreenWindow;
     public static void InitScreenResolution(int targetWidth = 1280, int targetHeight = 720)
     {
         //int targetWidth = 1280;
@@ -119,7 +120,7 @@ public class GameManager : MonoBehaviour
             var a= File.ReadAllText(filePath);
             ResolutionGroup rg = JsonUtility.FromJson<ResolutionGroup>(a);
 
-            InitScreenResolutionDesktop(rg.resolutionName, rg.width, rg.height);
+            InitScreenResolutionDesktop(rg.resolutionName, rg.width, rg.height, screen);
         }
         else
         {
@@ -127,7 +128,7 @@ public class GameManager : MonoBehaviour
         }        
     }
 
-    public static void InitScreenResolutionDesktop(string resolutionName = "FHD", int targetWidth = 1920, int targetHeight = 1080)
+    public static void InitScreenResolutionDesktop(string resolutionName = "FHD", int targetWidth = 1920, int targetHeight = 1080, FullScreenMode screen = FullScreenMode.FullScreenWindow)
     {
         //int targetWidth = 1280;
         //int targetHeight = 720;
@@ -150,7 +151,7 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Current Resolution: {Screen.width}x{Screen.height}");
 
         // Set the screen resolution (fullscreen mode)
-        Screen.SetResolution((int)adjustedWidth, (int)adjustedHeight, true);
+        Screen.SetResolution((int)adjustedWidth, (int)adjustedHeight, screen);
 
         // Adjust render scale for Universal Render Pipeline (URP)
         if (GraphicsSettings.currentRenderPipeline is UniversalRenderPipelineAsset urpAsset)
@@ -463,19 +464,19 @@ public class GameManager : MonoBehaviour
 
     public void ChangeWindowed()
     {
-        Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+        screen = FullScreenMode.Windowed;
     }
 
     public void ChangeFullscreen()
     {
-        Screen.fullScreenMode = FullScreenMode.Windowed;
+        screen = FullScreenMode.FullScreenWindow;
     }
     #endregion
 
     #region 해상도설정
     public void SetResolution(string resolutionName, int width, int height)
     {
-        InitScreenResolutionDesktop(resolutionName, width, height);
+        InitScreenResolutionDesktop(resolutionName, width, height, screen);
     }
     #endregion
 
