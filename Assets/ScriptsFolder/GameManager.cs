@@ -52,6 +52,16 @@ public class GameManager : MonoBehaviour
 
     public float saveRatio;
 
+    //private void OnGUI()
+    //{
+    //    var style = new GUIStyle("Text");
+    //    style.fontSize = 50;
+    //    style.normal.textColor = Color.blue;
+
+    //    GUI.Box(new(0, 0, 400, 400), $"Screen width: {Screen.width}\nScreen Height: {Screen.height}", style);
+
+    //}
+
     #region 해상도 강제 조정?
     public FullScreenMode screen = FullScreenMode.FullScreenWindow;
     public static void InitScreenResolution(int targetWidth = 1280, int targetHeight = 720)
