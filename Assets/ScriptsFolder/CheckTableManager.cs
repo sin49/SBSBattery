@@ -72,7 +72,7 @@ public class CheckTableManager : MonoBehaviour
 
             }
 
-            OnlyTestAllCheckPoint();
+            //OnlyTestAllCheckPoint();
         }
 
     }

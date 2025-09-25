@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BreakableWall : MonoBehaviour,DamagedByPAttack
+public class BreakableWall : MonoBehaviour, DamagedByPAttack
 {
    
     public int hp;
@@ -33,7 +33,6 @@ public class BreakableWall : MonoBehaviour,DamagedByPAttack
         if (other.CompareTag("PlayerAttack"))
         {
             Damaged(1);
-            other.gameObject.SetActive(false);
         }
     }
 }

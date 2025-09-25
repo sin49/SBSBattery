@@ -615,14 +615,14 @@ public class PlayerHandler : MonoBehaviour
         if (!ladderInteract)
         {
 
-            if (Input.GetKey(KeySettingManager.instance.DeformKeycode))
-            {
-                if (CurrentType != TransformType.Default) { 
-                            Deform();
+            //if (Input.GetKey(KeySettingManager.instance.DeformKeycode))
+            //{
+            //    if (CurrentType != TransformType.Default) { 
+            //                Deform();
                     
 
-                }
-            }
+            //    }
+            //}
 
 
 

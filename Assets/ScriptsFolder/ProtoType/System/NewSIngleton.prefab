@@ -446,6 +446,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 1
+--- !u!1 &589254884618718742
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3244677710371039640}
+  m_Layer: 0
+  m_Name: StickMoveRange
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3244677710371039640
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589254884618718742}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1110647323275391120}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -625, y: 0}
+  m_SizeDelta: {x: -1250, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &751511227109883296
 GameObject:
   m_ObjectHideFlags: 0
@@ -2767,8 +2802,8 @@ MonoBehaviour:
   thumb: {fileID: 3148509602689156325}
   movementAreaRadius: 75
   deadzoneRadius: 0
-  isDynamicJoystick: 0
-  dynamicJoystickMovementArea: {fileID: 0}
+  isDynamicJoystick: 1
+  dynamicJoystickMovementArea: {fileID: 3244677710371039640}
   canFollowPointer: 0
 --- !u!1 &3893974227517376318
 GameObject:
@@ -4038,6 +4073,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3244677710371039640}
   - {fileID: 4468098335384436917}
   - {fileID: 3812388057884851817}
   - {fileID: 4717617604702907675}
@@ -7232,7 +7268,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uD1A0\uD070 \uD68D\uB4DD!"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: bab62e14d34cf1946a1709911527911e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cbf6936d121f0774fa4ab9ff6e3733b4, type: 2}
   m_sharedMaterial: {fileID: -9092327952532981572, guid: bab62e14d34cf1946a1709911527911e,
     type: 2}
   m_fontSharedMaterials: []
@@ -7297,7 +7333,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 127.39749, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &9161241458244702318
@@ -8709,6 +8745,17 @@ PrefabInstance:
     - target: {fileID: 6272037764929648976, guid: 4923c74ac6079bf4394050ed71afb738,
         type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6497623859857843130, guid: 4923c74ac6079bf4394050ed71afb738,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: bab62e14d34cf1946a1709911527911e,
+        type: 2}
+    - target: {fileID: 6497623859857843130, guid: 4923c74ac6079bf4394050ed71afb738,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6736756008069487292, guid: 4923c74ac6079bf4394050ed71afb738,

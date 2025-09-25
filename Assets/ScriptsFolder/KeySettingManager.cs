@@ -785,4 +785,21 @@ public class KeySettingManager : MonoBehaviour
             return false;
 
     }
+
+    Action keyboardMappingAction;
+
+    public void RegisterMappingAction(Action a)
+    {
+        keyboardMappingAction += a;
+    }
+
+    public void StartMappingAction()
+    {
+        keyboardMappingAction?.Invoke();
+    }
+
+    public void RemoveMappingAction()
+    {
+        keyboardMappingAction = null;
+    }
 }

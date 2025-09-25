@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -86,6 +85,7 @@ public class SelectUI : MonoBehaviour
 
     void TitleBackEvent()
     {
+        GameManager.instance.loading = true;
         Time.timeScale = 1;
         GameManager.instance.mouseTimeMove = true;
         //GameManager.instance.LoadingSceneWithKariEffect("TitleTest");
@@ -93,7 +93,11 @@ public class SelectUI : MonoBehaviour
     }
     void ExitEvent()
     {
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+#endif
     }
     void ButtonselectedDisable()
     {
@@ -401,17 +405,17 @@ public class SelectUI : MonoBehaviour
 
     IEnumerator ShowCheckPointUi()
     {
-        Debug.Log("사운드/해상도 선택 UI 들어옴");
+        //Debug.Log("사운드/해상도 선택 UI 들어옴");
         yield return new WaitForSecondsRealtime(0.1f);
 
         if (uiAnimator.GetCurrentAnimatorStateInfo(0).IsName("PauseChangeSetting"))
         {
             while (uiAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
             {
-                Debug.Log(uiAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+                //Debug.Log(uiAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime);
                 yield return null;
             }
-            Debug.Log("체크포인트 불러지는지?");
+            //Debug.Log("체크포인트 불러지는지?");
             checkPointUI.SetActive(true);
             uiGroup.SetActive(false);
         }
@@ -426,7 +430,7 @@ public class SelectUI : MonoBehaviour
         {
             while (uiAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
             {
-                Debug.Log(uiAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+                //Debug.Log(uiAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime);
                 yield return null;
             }
 

@@ -5,13 +5,14 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System;
 using JetBrains.Annotations;
+using UnityEngine.UIElements;
 
 public class LanguageManager : MonoBehaviour
 {
     public static LanguageManager instance;
 
     public TextAsset languageCSV;
-
+    public TextAsset characterUiCSV;
     #region 언어팩 변수
     [Header("타이틀")]
     public int titleIndex;
@@ -132,10 +133,44 @@ public class LanguageManager : MonoBehaviour
     int saveIndex;
     #endregion
 
+    #region 캐릭터UI 언어팩 변수
+    public List<string> characterKor;
+    public List<string> characterEng;
+
+    public List<float> charSpacingKor;
+    public List<float> wordSpacingKor;
+
+    public List<float> charSpacingEng;
+    public List<float> wordSpacingEng;
+
+    public List<float> lineSpacing;
+
+    public List<Vector3> tmpPosKor;
+    public List<Vector3> tmpPosEng;
+    #endregion
+
     private void Awake()
     {
         if (instance == null)
             instance = this;
+
+        if (PlayerPrefs.HasKey("Language"))
+        {
+            int saveInt = PlayerPrefs.GetInt("Language");
+            if (saveInt == 1)
+            {
+                isKor = false;
+            }
+            else if (saveInt == 2)
+            {
+                isKor = true;
+            }
+        }
+        else
+        {
+            isKor = true;
+            PlayerPrefs.SetInt("Language", 2);
+        }
 
         ReadFileCSV();
     }
@@ -148,14 +183,14 @@ public class LanguageManager : MonoBehaviour
     public void ReadFileCSV()
     {
         StringReader stringRead = new StringReader(languageCSV.text);
-
+        
         bool firstLine = true;
 
         while (true)
         {
             string readLine =  stringRead.ReadLine();
 
-            if (readLine == null || string.IsNullOrEmpty(readLine)) return;
+            if (readLine == null || string.IsNullOrEmpty(readLine)) break;
             
             if (firstLine)
             {
@@ -165,6 +200,26 @@ public class LanguageManager : MonoBehaviour
 
             string[] value = readLine.Split(",");
             InitLanguageGroup(value);
+        }
+
+        StringReader stringCharacter = new StringReader(characterUiCSV.text);
+
+        bool firstLineChar = true;
+
+        while (true)
+        {
+            string readLine = stringCharacter.ReadLine();
+
+            if (readLine == null || string.IsNullOrEmpty(readLine)) return;
+
+            if (firstLineChar)
+            {
+                firstLineChar = false;
+                continue;
+            }
+
+            string[] value = readLine.Split(",");
+            InitLanguageCharGroup(value);
         }
     }
 
@@ -276,21 +331,64 @@ public class LanguageManager : MonoBehaviour
         }
     }
 
+    public void InitLanguageCharGroup(string[] values)
+    {
+        Debug.Log("불림");
+        int index = int.Parse(values[0]);
+
+        string charKor = values[1].Replace("@", "\n");
+        string fixCharKor = charKor.Replace("^", ","); characterKor.Add(fixCharKor);
+        string charEng = values[2].Replace("@", "\n");
+        string fixCharEng = charEng.Replace("^", ","); characterEng.Add(fixCharEng);
+        
+        Debug.Log($"4번째 데이터{values[3]}");
+        Debug.Log($"데이터 타입 확인: {values[3].GetType()}");
+        Debug.Log($"Int형 변환: {int.Parse(values[3])}");
+        Debug.Log($"int -> float 형 변환: {(float)int.Parse(values[3])} ");
+        Debug.Log($"시작부터 float 형 변환: {float.Parse(values[3])}");
+
+        float charSpacingKor = float.Parse(values[3]); this.charSpacingKor.Add(charSpacingKor);
+        float wordSpacingKor = float.Parse(values[4]); this.wordSpacingKor.Add(wordSpacingKor);
+
+        float charSpacingEng = float.Parse(values[5]); this.charSpacingEng.Add(charSpacingEng);
+        float wordSpacingEng = float.Parse(values[6]); this.wordSpacingEng.Add(wordSpacingEng);
+
+        float lineSpacing = float.Parse(values[7]); this.lineSpacing.Add(lineSpacing);
+
+        string[] kVector = values[8].Split("`");
+        Vector3 korVector = new Vector3(float.Parse(kVector[0]), float.Parse(kVector[1]), float.Parse(kVector[2]));
+        tmpPosKor.Add(korVector);
+
+        string[] eVector = values[9].Split("`");
+        Vector3 engVector = new Vector3(float.Parse(eVector[0]), float.Parse(eVector[1]), float.Parse(eVector[2]));
+        tmpPosEng.Add(engVector);
+
+
+        //this.wordSpacingKor.Add(wordSpacingKor);
+        //this.charSpacingEng.Add(charSpacingEng);
+        //this.wordSpacingEng.Add(wordSpacingEng);
+        //this.lineSpacing.Add(lineSpacing);
+        //tmpPosKor.Add(korVector);
+        //tmpPosEng.Add(engVector);
+    }
+
     Action languageEvent;
 
     public void LanguageEventResister(Action a)
-    {
+    {        
         languageEvent += a;
     }
 
     public void LangEventCall()
     {
         languageEvent?.Invoke();
+
     }
 
     public void ResetLangEvent()
     {
         languageEvent = null;
         Debug.Log("언어 액션 널 실행");
+        //Debug.Log($"action count: {languagee}")
     }
 }

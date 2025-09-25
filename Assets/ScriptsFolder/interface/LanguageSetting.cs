@@ -160,6 +160,15 @@ public class LanguageSetting : UIInteract
         {
             SettingExit();
         }
+
+        if (settingUI != null)
+        {
+            Debug.Log($"설정 UI 있음{settingUI.gameObject}");
+        }
+        else
+        {
+            Debug.Log("LanguageSetting쪽에서 SettingUI오브젝트가 살아있지 않음");
+        }
     }
 
     public void SelectUI()
@@ -210,8 +219,8 @@ public class LanguageSetting : UIInteract
             {
                 //beforeIndex = index;
                 index--;
-                arrowGroup[0].GetComponent<Image>().sprite = activeArrow;
-                arrowGroup[1].GetComponent<Image>().sprite = deactiveArrow;
+                //arrowGroup[0].GetComponent<Image>().sprite = activeArrow;
+                //arrowGroup[1].GetComponent<Image>().sprite = deactiveArrow;
                 UpdateLanguageUI();
             }
         }
@@ -339,6 +348,15 @@ public class LanguageSetting : UIInteract
             LanguageManager.instance.isKor = isKor;
         }
 
+        if (LanguageManager.instance.isKor)
+        {
+            PlayerPrefs.SetInt("Language", 2);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("Language", 1);
+        }
+        
         LanguageManager.instance.LangEventCall();
         Debug.Log($"after eventCall {str}");
         UpdateArrow();
@@ -374,7 +392,6 @@ public class LanguageSetting : UIInteract
         {
             arrowGroup[0].SetActive(true);
             arrowGroup[1].SetActive(false);
-
         }
         else if (index <= 0)
         {

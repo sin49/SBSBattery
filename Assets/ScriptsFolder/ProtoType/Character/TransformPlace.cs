@@ -20,12 +20,14 @@ public class TransformPlace: MonoBehaviour
 
         if (!PlayerPrefs.HasKey("TransformTuto") || PlayerHandler.instance.CurrentType == type) return;
 
-            other.transform.position = this.transform.position;
-            PlayerHandler.instance.LastTransformPlace = this;
-            gameObject.SetActive(false);
+        other.transform.position = this.transform.position;
+        PlayerHandler.instance.LastTransformPlace = this;
+        gameObject.SetActive(false);
 
-            other.GetComponent<Player>().FormChange(type);
-   
+        if (PlayerHandler.instance.CurrentType == TransformType.ironform)
+            other.GetComponent<HouseholdIronTransform>().DownAttackEnd();
+        other.GetComponent<Player>().FormChange(type);
+
     }
 
     //private void OnTriggerStay(Collider other)

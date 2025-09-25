@@ -82,6 +82,18 @@ public class CheckPointUI : UIInteract
         fontList[index].color = activeFontColor;
 
         backButton.gameObject.SetActive(true);
+        if (backButton.transform.GetChild(0).TryGetComponent<TextMeshProUGUI>(out TextMeshProUGUI tmp))
+        {
+            if(LanguageManager.instance.isKor)
+            {
+                tmp.text = "뒤로가기";
+            }
+            else
+            {
+                tmp.text = "Back";
+            }
+        }
+        
     }
     bool moved;
     float moveValue;

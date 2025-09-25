@@ -1,11 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -41,6 +38,12 @@ public class TestSettingUI : UIInteract
     public List<GameObject> arrowGroup = new List<GameObject>();
     public Sprite activeArrow, deactiveArrow;
 
+    private void Awake()
+    {
+        AddArrowClick();
+        
+    }
+
     private void Start()
     {
         Debug.Log("settingui start");
@@ -75,6 +78,7 @@ public class TestSettingUI : UIInteract
     #region 화살표 이벤트(버튼 + eventTrigger)
     public void AddArrowClick()
     {
+        Debug.Log($"arrowGroup 버튼 이벤트 등록, arrowcount{arrowGroup.Count}");
         arrowGroup[0].GetComponent<Button>().onClick.AddListener(OnClickUpArrow); // 0 => uparrow
         arrowGroup[1].GetComponent<Button>().onClick.AddListener(OnClickDownArrow); // 1 => downarrow
     }
@@ -374,10 +378,14 @@ public class TestSettingUI : UIInteract
     {
         if (index <= 0)
         {
-            arrowGroup[0].SetActive(false);
-            arrowGroup[0].GetComponent<Image>().sprite = deactiveArrow;
-            arrowGroup[1].SetActive(true);
-            arrowGroup[1].GetComponent<Image>().sprite = activeArrow;
+            if (arrowGroup[0] == null) { Debug.Log("널 값이라서 미싱처리임"); }
+            else
+            {
+                arrowGroup[0].SetActive(false);
+                arrowGroup[0].GetComponent<Image>().sprite = deactiveArrow;
+                arrowGroup[1].SetActive(true);
+                arrowGroup[1].GetComponent<Image>().sprite = activeArrow;
+            }
         }
         else if (index >= textList.Count - 1)
         {
@@ -467,8 +475,12 @@ public class TestSettingUI : UIInteract
 
     public void ActiveButton() // 버튼 활성화 UI 업데이트
     {
-        buttonList[rangeIndex].sprite = activeButton;
-        fontList[rangeIndex].color = activeFontColor;
+        if (gameObject != null)
+        {
+            Debug.Log($"{gameObject.name} index{rangeIndex}, buttonlist Count:{buttonList.Count}, fontList count: {fontList.Count}");
+            buttonList[rangeIndex].sprite = activeButton;
+            fontList[rangeIndex].color = activeFontColor;
+        }
     }
 
     public void DeactiveButton() // 버튼 비활성화 UI 업데이트 
@@ -492,7 +504,7 @@ public class TestSettingUI : UIInteract
         spacingList.Clear();
         List<string> t = new List<string>();
         List<float> s = new List<float>();
-        Debug.Log($"kor count: {LanguageManager.instance.settingKor.Count}\neng count: {LanguageManager.instance.settingEng.Count}");
+        //Debug.Log($"kor count: {LanguageManager.instance.settingKor.Count}\neng count: {LanguageManager.instance.settingEng.Count}");
         if (LanguageManager.instance.isKor)
         {
             t = LanguageManager.instance.settingKor.ToList(); s = LanguageManager.instance.settingSpacingKor.ToList();
@@ -532,7 +544,7 @@ public class TestSettingUI : UIInteract
             textList.RemoveRange(1, 3);
             spacingList.RemoveRange(1, 3);
         }
-        Debug.Log($"kor count after: {LanguageManager.instance.settingKor.Count}\neng count: {LanguageManager.instance.settingEng.Count}");
+        //Debug.Log($"kor count after: {LanguageManager.instance.settingKor.Count}\neng count: {LanguageManager.instance.settingEng.Count}");
         UpdateLanguage();
     }
     

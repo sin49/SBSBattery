@@ -171,8 +171,8 @@ public class HouseholdIronTransform : Player
         playerRb.velocity = Vector3.zero;
         playerRb.AddForce(-transform.up * downAtkSpeed, ForceMode.Impulse);
         downAttackCollider.SetActive(true);
-        if (downAttackCollider.activeSelf)
-            Debug.Log("내려찍기가 활성화 되었습니다");
+        //if (downAttackCollider.activeSelf)
+        //    Debug.Log("내려찍기가 활성화 되었습니다");
         //Debug.Log("다리미 찍기");
     }
 
@@ -197,12 +197,7 @@ public class HouseholdIronTransform : Player
                 downAtkEndTimer -= Time.deltaTime;
             else
             {
-                downEnd = false;
-                ironDownAttack = false;
-                SecondFormDeactive();
-                downAtkEndTimer = downAtkEndTimeMax;
-                PlayerHandler.instance.CantHandle = false;
-                onDownCoolTime = true;
+                DownAttackEnd();
                 onInvincible = false;
             }
         }
@@ -220,6 +215,17 @@ public class HouseholdIronTransform : Player
             }
         }
     }
+
+    public void DownAttackEnd()
+    {
+        downEnd = false;
+        ironDownAttack = false;
+        SecondFormDeactive();
+        downAtkEndTimer = downAtkEndTimeMax;
+        PlayerHandler.instance.CantHandle = false;
+        onDownCoolTime = true;
+    }
+
     #region 다리미 이동/회전
     bool oncorutine;
     IEnumerator rotatedelaycorutine()
@@ -257,7 +263,7 @@ public class HouseholdIronTransform : Player
         {
             hori = 0;
             Vert = 0;
-            Debug.Log("움직임 제한");
+            //Debug.Log("움직임 제한");
             switch (PlayerStat.instance.MoveState)
             {
                 case PlayerMoveState.Xmove:
@@ -405,7 +411,7 @@ public class HouseholdIronTransform : Player
                             Vert = -SimpleInput.GetAxis("Horizontal2");
                     }
 
-                    Debug.Log($"zxmove hori {hori}, vert {Vert}\n               rushHori {rushHori}, rushVert {rushVert}");
+                    //Debug.Log($"zxmove hori {hori}, vert {Vert}\n               rushHori {rushHori}, rushVert {rushVert}");
                     ZXmoveRushHorizontal();
                     ZXmoveRushVertical() ;
                     break;
@@ -897,7 +903,7 @@ public class HouseholdIronTransform : Player
     private void OnCollisionEnter(Collision collision)
     {
 
-        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("PlayerRestrict"))
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("PlayerRestrict") || collision.gameObject.CompareTag("Enemy"))
         {
             
             //Debug.Log($"콜리즌 네임{collision.gameObject.name} ,콜리즌 체크 -> 땅에 닿았다 >> 다리미 찍기 끝");

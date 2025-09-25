@@ -56,6 +56,18 @@ public class ChoiceCheckPointUI : UIInteract
         fontList[index].color = activeFontColor;
         currentIndex = checkLists[index].checkStageIndex;
         backButton.gameObject.SetActive(true);
+        if (backButton.transform.GetChild(0).TryGetComponent<TextMeshProUGUI>(out TextMeshProUGUI tmp))
+        {
+            if (LanguageManager.instance.isKor)
+            {
+                tmp.text = "뒤로가기";
+            }
+            else
+            {
+                tmp.text = "Back";
+            }
+
+        }
 
         onHandle = true;
     }
@@ -169,6 +181,7 @@ public class ChoiceCheckPointUI : UIInteract
     {
         onHandle = false;
         Time.timeScale = 1;
+        GameManager.instance.loading = true;
         GameManager.instance.mouseTimeMove = true;
         GameManager.instance.LoadChoiceCheckPoint(currentIndex);
         gameObject.SetActive(false);

@@ -371,7 +371,7 @@ public class EnemyTrackingAndPatrol : MonoBehaviour
     }
     public virtual Vector3 TrackingMove()
     {
-        Debug.Log("플레이어 추격");
+        //Debug.Log("플레이어 추격");
         testTarget = PlayerHandler.instance.CurrentPlayer.transform.position - transform.position;
         testTarget.y = 0;
         disToPlayer = testTarget.magnitude;

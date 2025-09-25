@@ -1660,7 +1660,7 @@ MonoBehaviour:
   doubleZinput: 0
   jumpkeyinputCheck: 0.02
   inputCheck: 0
-  restrictForce: 1
+  restrictForce: 3.58
   velocityMove: {x: 0, y: 0, z: 0}
   rigidbodyPos: {x: 0, y: 0, z: 0}
   onstairforce: 4
@@ -2937,6 +2937,7 @@ GameObject:
   - component: {fileID: 8854460605276781726}
   - component: {fileID: 2663314242661817638}
   - component: {fileID: 8048595550320088646}
+  - component: {fileID: 3627383372769377157}
   m_Layer: 0
   m_Name: GroundMelee2D
   m_TagString: PlayerAttack
@@ -3033,6 +3034,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e18407ae69b6a8c4da6baf0862ae5d14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3627383372769377157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8917807653965726783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a56fb305de65458479bc2223e984cdc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 3
 --- !u!1 &9110791556870492227
 GameObject:
   m_ObjectHideFlags: 0

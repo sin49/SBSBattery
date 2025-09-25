@@ -37,6 +37,23 @@ public class InteractTutorial : MonoBehaviour
     //    talkUI.SetActive(false);        
     //}
 
+    public void CallByTutoEvent()
+    {
+        if (SaveCheck())
+        {
+            Debug.Log("데이터가 레지스트리에 저장 되어있습니다");
+            return;
+        }
+
+        interact = true;
+        GameManager.instance.tutoInteract = true;
+        if(PlayerHandler.instance != null)
+        PlayerHandler.instance.CurrentPlayer.cantmove = true;
+        RegisterAction();
+        if(TalkUI.instance !=null)
+        TalkUI.instance.gameObject.SetActive(true);
+    }
+
     private void Awake()
     {
         if(imageTutorial !=null)
@@ -105,14 +122,38 @@ public class InteractTutorial : MonoBehaviour
         }
     }
 
+    bool InputByPad()
+    {
+        bool inputPad = false;
+
+        if(Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.JoystickButton1))
+        {
+            inputPad = true;
+        }
+
+        return inputPad;
+    }
+
+    bool InputByKey()
+    {
+        bool inputKey = false;
+
+        if (Input.GetKeyDown(KeySettingManager.instance.jumpKeycode) || 
+            Input.GetKeyDown(KeyCode.Space) || 
+            Input.GetKeyDown(KeyCode.Return))
+        {
+            inputKey = true;
+        }
+
+        return inputKey;
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (interact)
         {
-            if ((Input.GetKeyDown(KeySettingManager.instance.jumpKeycode) || Input.GetKeyDown(KeyCode.Space) 
-                || Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.JoystickButton1) 
-                || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0)) && !end && !textPlaying)
+            if (( InputByKey() || InputByPad() || Input.GetMouseButtonDown(0)) && !end && !textPlaying)
             {
                 if (!textSkip && !textEnd)
                 {
@@ -182,13 +223,15 @@ public class InteractTutorial : MonoBehaviour
     {
         textEnd = false;
         string str = "";
-        if(LanguageManager.instance.isKor && talkIndex >= engTexts.Count)
+        if(LanguageManager.instance.isKor/* && talkIndex >= engTexts.Count*/)
         {
+            Debug.Log("한국어가 호출됩니다");
             str = talkTexts[talkIndex];
             TalkUI.instance.cName.text = kName[talkIndex];
         }
         else
         {
+            Debug.Log("영어가 호출됩니다");
             str = engTexts[talkIndex];
             TalkUI.instance.cName.text = eName[talkIndex];
         }
@@ -235,7 +278,7 @@ public class InteractTutorial : MonoBehaviour
         TalkUI.instance.TextSoundPlay();
         StartCoroutine(TextAnim());
     }
-
+    #region 키 검사?
     public void GetCharacterKey()
     {
         switch (currentTutorial)
@@ -279,6 +322,26 @@ public class InteractTutorial : MonoBehaviour
             case "변신":
                 GameManager.instance.transformTuto = true;
                 PlayerPrefs.SetInt("TransformTuto", 1);
+                break;
+            case "다리미튜토":
+                GameManager.instance.ironTuto = true;
+                PlayerPrefs.SetInt("IronTuto", 1);
+                break;
+            case "레이저튜토":
+                GameManager.instance.laserTuto = true;
+                PlayerPrefs.SetInt("LaserTuto", 1);
+                break;
+            case "강화상호작용":
+                GameManager.instance.reinforcementTuto = true;
+                PlayerPrefs.SetInt("Reinforcement", 1);
+                break;
+            case "카드키":
+                GameManager.instance.cardKey = true;
+                PlayerPrefs.SetInt("CardKey", 1);
+                break;
+            case "던지기":
+                GameManager.instance.mouseThrow = true;
+                PlayerPrefs.SetInt("MouseThrow", 1);
                 break;
             case "클리어":
                 GameManager.instance.LoadingSceneWithKariEffect("CheckTitleTest");
@@ -381,9 +444,45 @@ public class InteractTutorial : MonoBehaviour
                     textPlaying = true;
                 }
                 break;
+            case "다리미튜토":
+                if(PlayerPrefs.HasKey("IronTuto"))
+                {
+                    GameManager.instance.ironTuto = true;
+                    textPlaying = true;
+                }
+                break;
+            case "레이저튜토":
+                if(PlayerPrefs.HasKey("LaserTuto"))
+                {
+                    GameManager.instance.laserTuto = true;
+                    textPlaying = true;
+                }
+                break;
+            case "강화상호작용":
+                if(PlayerPrefs.HasKey("Reinforcement"))
+                {
+                    GameManager.instance.reinforcementTuto = true;
+                    textPlaying = true;
+                }
+                break;
+            case "카드키":
+                if (PlayerPrefs.HasKey("CardKey"))
+                {
+                    GameManager.instance.cardKey = true;
+                    textPlaying = true;
+                }
+                break;
+            case "던지기":
+                if(PlayerPrefs.HasKey("MouseThrow"))
+                {
+                    GameManager.instance.mouseThrow = true;
+                    textPlaying = true;
+                }
+                break;
             default:
                 break;
         }
         return textPlaying;
     }
+    #endregion
 }

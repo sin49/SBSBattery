@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using Unity.VisualScripting;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 public class KeyboardCustomizing : UIInteract
 {
@@ -156,6 +157,7 @@ public class KeyboardCustomizing : UIInteract
         KeySettingManager.instance.SaveKeyData();
         gameObject.SetActive(false);
         settingUI.ShowChoiceScreen();
+        KeySettingManager.instance.StartMappingAction();
     }
 
     public void CancelSaveKey()
@@ -201,9 +203,9 @@ public class KeyboardCustomizing : UIInteract
     {
         foreach (KeyCode keyInput in System.Enum.GetValues(typeof(KeyCode)))
         {
-            if (keyInput == KeyCode.Return || keyInput == KeyCode.Escape || ((int)keyInput >= 330 && (int)keyInput <= 509))
+            if (keyInput == KeyCode.Return || keyInput == KeyCode.Escape || ((int)keyInput >= 330 && (int)keyInput <= 509) || !LimitKeyData(keyInput))
             {
-                Debug.Log("esc키 혹은 패드입력을 받지 않습니다");
+                Debug.Log("esc키 혹은 패드입력 및 일부 키보드 제한으로 인해 해당 입력을 받지 않습니다");                
                 continue;
             }
 
@@ -221,7 +223,7 @@ public class KeyboardCustomizing : UIInteract
             }
         }
     }
-
+    
     public void ChangeKeyCode()
     {
         fontList[index].text = currentKey.ToString();
@@ -312,5 +314,23 @@ public class KeyboardCustomizing : UIInteract
             }
         }
 
+    }
+    //8~9 | 13 | 32 | 39 | 44~59 | 61 | 91~93  | 96~122 |  96~122 | 273~276 | 301 | 303~308
+    public bool LimitKeyData(KeyCode inputKey)
+    {
+        int[] ableInput = { 8, 9, 32, 39, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 59, 61, 91, 92, 93, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 273, 274, 275, 276, 301, 303, 304, 305, 306, 307, 308 };
+
+        bool restrict = false;
+
+        int keyNumber = (int)inputKey;
+        for (int i = 0; i < ableInput.Length; i++)
+        {
+            if (keyNumber == ableInput[i])
+            {
+                restrict = true;
+                break;
+            }
+        }
+        return restrict;
     }
 }

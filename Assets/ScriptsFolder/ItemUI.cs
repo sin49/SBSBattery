@@ -29,7 +29,28 @@ public class ItemUI : MonoBehaviour
     {
         Title.text = i.itemname;
         Description.text = i.itemdescription;
+        if(LanguageManager.instance != null)
+            LanguageCheck();
         this.gameObject.SetActive(true);
         //ani.Play("Create");
+    }
+
+    public void LanguageCheck()
+    {
+        if (!LanguageManager.instance.isKor)
+        {
+            if (Description.text.Contains("토큰"))
+            {
+                Description.text = "Token acquired!";
+            }
+            else if (Description.text.Contains("체력"))
+            {
+                Description.text = "Max HP increased!";
+            }
+            else if (Description.text.Contains("스피드"))
+            {
+                Description.text = "Speed increased!!";
+            }
+        }
     }
 }

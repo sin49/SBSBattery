@@ -26,6 +26,7 @@ public class IronRushCollider : PlayerAttack
 
     public override void DamageCollider(Collider other)
     {
+        Debug.Log("다리미 콜라이더 충돌 수행");
         DamagedByPAttack Script;
         if (other.TryGetComponent<DamagedByPAttack>(out Script))
         {

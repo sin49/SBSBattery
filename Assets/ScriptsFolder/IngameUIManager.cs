@@ -72,7 +72,11 @@ public class IngameUIManager : MonoBehaviour
             {
                 InteractTargetUI.transform.position = PlayerHandler.instance.CurrentCamera.WorldToScreenPoint(target.transform.position);
             }
-            InteractTargetUI.SetActive(true);
+            if (LanguageManager.instance.isKor)
+                interactText.text = "상호작용";
+            else
+                interactText.text = "Interact";
+            InteractTargetUI.SetActive(true);            
             //InteractTargetUI.transform.localScale = target.transform.localScale;
         }
      

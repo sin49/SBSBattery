@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using TMPro;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,6 +27,12 @@ public class CustomRecheckUI : UIInteract
         {
             buttonList[i].GetComponent<Button>().onClick.AddListener(ChoiceButton);
         }
+        ResisterChange();
+    }
+
+    private void Start()
+    {
+        ChangeLanguage();
     }
 
     private void OnEnable()
@@ -142,4 +150,26 @@ public class CustomRecheckUI : UIInteract
         UpdateUI();
     }
 
+    public TextMeshProUGUI mainTMP;
+
+    public void ResisterChange()
+    {
+        LanguageManager.instance.LanguageEventResister(ChangeLanguage);
+    }
+
+    public void ChangeLanguage()
+    {
+        if (LanguageManager.instance.isKor)
+        {
+            mainTMP.text = LanguageManager.instance.recheckKor[0];
+            fontList[0].text = LanguageManager.instance.recheckKor[1];
+            fontList[1].text = LanguageManager.instance.recheckKor[2];
+        }
+        else
+        {
+            mainTMP.text = LanguageManager.instance.recheckEng[0];
+            fontList[0].text = LanguageManager.instance.recheckEng[1];
+            fontList[1].text = LanguageManager.instance.recheckEng[2];
+        }
+    }
 }

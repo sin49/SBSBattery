@@ -180,7 +180,7 @@ public class BossTv : RemoteObject
         actions.Add(BossLaser2D);
         actions.Add(BossFall);
         animator =GetComponent<Animator>();
-        //SearchTutorial();
+        SearchTutorial();
     }
 
     public void SearchTutorial()
@@ -236,7 +236,7 @@ public class BossTv : RemoteObject
                 CanControl = true;
                 Active();
                 Debug.Log("쓰러뜨림");
-                //ClearCanvas();
+                ClearCanvas();
             }
         }
     }
@@ -271,26 +271,26 @@ public class BossTv : RemoteObject
         }
         if (PlayerHandler.instance != null)
             target = PlayerHandler.instance.CurrentPlayer.transform;
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Debug.Log("테스트 왼팔이 때짐");
-            LHand.HP = 1;
-            LHand.Damaged(1);
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    Debug.Log("테스트 왼팔이 때짐");
+        //    LHand.HP = 1;
+        //    LHand.Damaged(1);
+        //}
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            Debug.Log("테스트 오른팔이 때짐");
-            RHand.HP = 1;
-            RHand.Damaged(1);
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha2))
+        //{
+        //    Debug.Log("테스트 오른팔이 때짐");
+        //    RHand.HP = 1;
+        //    RHand.Damaged(1);
+        //}
 
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            Debug.Log("테스트 모니터가 조종 당함");
-            if (CanControl)
-                Active();
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha3))
+        //{
+        //    Debug.Log("테스트 모니터가 조종 당함");
+        //    if (CanControl)
+        //        Active();
+        //}
         if (CanControl)
         {
             

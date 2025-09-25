@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
         // currentscenename을 로딩 전에 설정합니다.
         //??뭐지 이코드 이거 정상 작동함?
         currentscenename = SceneManager.GetActiveScene().name;
-        //LoadTutorialKey();
+        LoadTutorialKey();
 
         lockDoor = "잠겨있음";
         unlockDoor = "상호작용";
@@ -47,10 +47,22 @@ public class GameManager : MonoBehaviour
             InitScreenResolution();
         else
             LoadResolutionData();
-        JustTestKey();
+        //JustTestKey();
+        //if (PlayerPrefs.HasKey("Reinforcement"))
+        //{
+        //    PlayerPrefs.DeleteKey("Reinforcement");
+        //    Debug.Log("값이 저장되어있지만 테스트 중이기에 삭제합니다");
+        //}
+
+        //if (PlayerPrefs.HasKey("IronTuto")) PlayerPrefs.DeleteKey("IronTuto");
+        //if (PlayerPrefs.HasKey("LaserTuto")) PlayerPrefs.DeleteKey("LaserTuto");
+        //if (PlayerPrefs.HasKey("Reinforcement")) PlayerPrefs.DeleteKey("Reinforcement");
+        //if (PlayerPrefs.HasKey("CardKey")) PlayerPrefs.DeleteKey("CardKey");
+        //if (PlayerPrefs.HasKey("MouseThrow")) PlayerPrefs.DeleteKey("MouseThrow");
     }
 
     public float saveRatio;
+    public static string saveResolution;
 
     #region 해상도 강제 조정?
     public static void InitScreenResolution(int targetWidth = 1280, int targetHeight = 720)
@@ -109,6 +121,8 @@ public class GameManager : MonoBehaviour
 
     }
 
+
+
     public void LoadResolutionData()
     {
         string dataName = "ResolutionData.json";
@@ -116,7 +130,7 @@ public class GameManager : MonoBehaviour
 
         if (File.Exists(filePath))
         {
-            var a= File.ReadAllText(filePath);
+            var a = File.ReadAllText(filePath);
             ResolutionGroup rg = JsonUtility.FromJson<ResolutionGroup>(a);
 
             InitScreenResolutionDesktop(rg.resolutionName, rg.width, rg.height);
@@ -124,67 +138,39 @@ public class GameManager : MonoBehaviour
         else
         {
             InitScreenResolutionDesktop();
-        }        
+        }
     }
 
     public static void InitScreenResolutionDesktop(string resolutionName = "FHD", int targetWidth = 1920, int targetHeight = 1080)
     {
-        //int targetWidth = 1280;
-        //int targetHeight = 720;
-        // Calculate the device's aspect ratio
-        float deviceAspectRatio = (float)Screen.width / Screen.height;
-
-        // Calculate the target pixel count
-        int targetPixelCount = targetWidth * targetHeight;
-
-        // Compute adjusted resolution to match target pixel count
-        float adjustedHeight = Mathf.Sqrt(targetPixelCount / deviceAspectRatio);
-        float adjustedWidth = adjustedHeight * deviceAspectRatio;
-
-        // Ensure the resolution is a multiple of 2 for better GPU performance
-        adjustedWidth = Mathf.RoundToInt(adjustedWidth / 2f) * 2;
-        adjustedHeight = Mathf.RoundToInt(adjustedHeight / 2f) * 2;
-
-        // Log the adjusted resolution for debugging
-        Debug.Log($"Adjusted Resolution: {adjustedWidth}x{adjustedHeight}");
-        Debug.Log($"Current Resolution: {Screen.width}x{Screen.height}");
-
-        // Set the screen resolution (fullscreen mode)
-        Screen.SetResolution((int)adjustedWidth, (int)adjustedHeight, true);
-
-        // Adjust render scale for Universal Render Pipeline (URP)
-        if (GraphicsSettings.currentRenderPipeline is UniversalRenderPipelineAsset urpAsset)
-        {
-            float renderScale = Mathf.Clamp((float)adjustedWidth / targetWidth, 0.5f, 1.0f);
-            urpAsset.renderScale = renderScale;
-            Debug.Log($"Render Scale set to: {renderScale}");
-        }
-        else
-        {
-            Debug.LogWarning("Render scale adjustment skipped: Not using Universal Render Pipeline.");
-        }
-
-        // Update all CanvasScaler components in the scene
-        CanvasScaler[] canvasScalers = FindObjectsOfType<CanvasScaler>();
-        if (canvasScalers.Length == 0)
-        {
-            Debug.LogWarning("No CanvasScaler found. Ensure your UI uses CanvasScaler for proper scaling.");
-        }
-        //foreach (CanvasScaler canvasScaler in canvasScalers)
+        //if (PlayerPrefs.HasKey(resolutionName))
         //{
-        //    canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        //    canvasScaler.referenceResolution = new Vector2(targetWidth, targetHeight);
+        //    switch (PlayerPrefs.GetInt("ScreenModeData"))
+        //    {
+        //        case 0:
+        //            currentScreen = FullScreenMode.Windowed;
+        //            break;
+        //        case 1:
+        //            currentScreen = FullScreenMode.FullScreenWindow;
+        //            break;
+        //    }
+        //}
+        //else
+        //{
+        //    currentScreen = FullScreenMode.FullScreenWindow;
+        //    PlayerPrefs.SetInt("ScreenModeData", 1);
         //}
 
-        float w = Screen.width / targetWidth;
-        float h = Screen.height / targetHeight;
 
-        //saveRatio = MathF.Min(w, h);
+        // Set the screen resolution (fullscreen mode)
+        Screen.SetResolution((int)targetWidth, (int)targetHeight, screenMode);
+
 
         string dataName = "ResolutionData.json";
         string filePath = Path.Combine(Application.persistentDataPath, dataName);
 
         ResolutionGroup rg = new ResolutionGroup();
+        saveResolution = resolutionName;
         rg.resolutionName = resolutionName;
         rg.width = targetWidth;
         rg.height = targetHeight;
@@ -205,11 +191,11 @@ public class GameManager : MonoBehaviour
 
     public bool pauseActive;
 
-    public bool attackTuto, jumpTuto, moveTuto, downTuto, 
-        interactTuto, downAttackTuto, 
+    public bool attackTuto, jumpTuto, moveTuto, downTuto,
+        interactTuto, downAttackTuto,
         dimensionTuto, itemTuto, transformTuto;
     public bool tutoInteract, tutorialEnd;
-
+    [HideInInspector] public bool ironTuto, laserTuto, reinforcementTuto, cardKey, mouseThrow;
 
     public int LoadCheckpointindex;
     public string LoadCheckpointSceneName;
@@ -222,6 +208,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public string lockDoor;
     [HideInInspector] public string unlockDoor;
 
+    public bool loading;
     public void GetCheckpointData(int n)
     {
         Debug.Log("GetCheckpointData실행");
@@ -251,9 +238,11 @@ public class GameManager : MonoBehaviour
 
     public void loadscenebycheckpoint(int n)
     {
+        loading = true;
         Debug.Log("loadscenebycheckpoint실행");
         GetCheckpointData(n);
         LanguageManager.instance.ResetLangEvent();
+        KeySettingManager.instance.RemoveMappingAction();
         LoadingSceneWithKariEffect(LoadCheckpointSceneName);
     }
     public void LoadLastCheckPoint()
@@ -265,9 +254,10 @@ public class GameManager : MonoBehaviour
 
     public void LoadChoiceCheckPoint(int n)
     {
-        Debug.Log("선택한 체크포인트로 이동");
+        //Debug.Log("선택한 체크포인트로 이동");
         GetCheckpointData(n);
         LanguageManager.instance.ResetLangEvent();
+        KeySettingManager.instance.RemoveMappingAction();
         LoadingSceneWithKariEffect(LoadCheckpointSceneName);
     }
 
@@ -283,6 +273,11 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.HasKey("TutorialEnd")) PlayerPrefs.DeleteKey("TutorialEnd");
         if (PlayerPrefs.HasKey("ItemTuto")) PlayerPrefs.DeleteKey("ItemTuto");
         if (PlayerPrefs.HasKey("TransformTuto")) PlayerPrefs.DeleteKey("TransformTuto");
+        if (PlayerPrefs.HasKey("IronTuto")) PlayerPrefs.DeleteKey("IronTuto");
+        if (PlayerPrefs.HasKey("LaserTuto")) PlayerPrefs.DeleteKey("LaserTuto");
+        if (PlayerPrefs.HasKey("Reinforcement")) PlayerPrefs.DeleteKey("Reinforcement");
+        if (PlayerPrefs.HasKey("CardKey")) PlayerPrefs.DeleteKey("CardKey");
+        if (PlayerPrefs.HasKey("MouseThrow")) PlayerPrefs.DeleteKey("MouseThrow");
     }
 
     public void ActiveGameOver()
@@ -295,14 +290,15 @@ public class GameManager : MonoBehaviour
 
     public void LoadTutorialKey()
     {
-        if(SceneManager.GetActiveScene().name != "CheckTitleTest" && SceneManager.GetActiveScene().name != "Tutorial")
-        {
-            attackTuto = true; jumpTuto = true; moveTuto = true;
-            downTuto = true; interactTuto = true; downAttackTuto = true;
-            dimensionTuto = true; tutorialEnd = true;
+        //if(SceneManager.GetActiveScene().name != "CheckTitleTest" && SceneManager.GetActiveScene().name != "Tutorial")
+        //{
+        //    attackTuto = true; jumpTuto = true; moveTuto = true;
+        //    downTuto = true; interactTuto = true; downAttackTuto = true;
+        //    dimensionTuto = true; tutorialEnd = true; /*transformTuto = true; ironTuto = true;*/
+        //    //laserTuto = true; reinforcementTuto = true; cardKey = true; mouseThrow = true;
 
-            return;
-        }
+        //    return;
+        //}
 
         if (PlayerPrefs.HasKey("AttackTuto")) attackTuto = true;
         if (PlayerPrefs.HasKey("JumpTuto")) jumpTuto = true;
@@ -314,6 +310,11 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.HasKey("TutorialEnd")) tutorialEnd = true;
         if (PlayerPrefs.HasKey("ItemTuto")) itemTuto = true;
         if (PlayerPrefs.HasKey("TransformTuto")) transformTuto = true;
+        if (PlayerPrefs.HasKey("IronTuto")) ironTuto = true;
+        if (PlayerPrefs.HasKey("LaserTuto")) laserTuto = true;
+        if (PlayerPrefs.HasKey("Reinforcement")) reinforcementTuto = true;
+        if (PlayerPrefs.HasKey("CardKey")) cardKey = true;
+        if (PlayerPrefs.HasKey("MouseThrow")) mouseThrow = true;
     }
 
     public void DeleteSaveSetting()
@@ -364,7 +365,7 @@ public class GameManager : MonoBehaviour
         if (File.Exists(path))
         {
             File.Delete(path);
-        }        
+        }
     }
 
     public void LoadingScene(string scenename)
@@ -416,7 +417,9 @@ public class GameManager : MonoBehaviour
     }
     public IEnumerator LoadingTest(string scenename)
     {
-
+        LanguageManager.instance.ResetLangEvent();
+        KeySettingManager.instance.RemoveMappingAction();
+        touchInteraction = null;
         AsyncOperation loadingSceneOperation = SceneManager.LoadSceneAsync(loadingscenename);
         loadingSceneOperation.allowSceneActivation = true;
 
@@ -459,16 +462,17 @@ public class GameManager : MonoBehaviour
         Keycard = s;
     }
     #region 스크린모드
-    public FullScreenMode screenMode;
+    public static FullScreenMode currentScreen;
+    public static bool screenMode = true;
 
     public void ChangeWindowed()
     {
-        Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+        screenMode = false;
     }
 
     public void ChangeFullscreen()
     {
-        Screen.fullScreenMode = FullScreenMode.Windowed;
+        screenMode = true;
     }
     #endregion
 
@@ -488,7 +492,7 @@ public class GameManager : MonoBehaviour
     {
         mouseTimer = mouseInitTime;
     }
-    [HideInInspector]public bool mouseTimeMove = true;
+    [HideInInspector] public bool mouseTimeMove = true;
     public void CheckMouseActiveTime()
     {
         mouseX = Input.GetAxisRaw("Mouse X");

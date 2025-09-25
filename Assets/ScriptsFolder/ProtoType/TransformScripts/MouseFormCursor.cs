@@ -44,7 +44,9 @@ public class MouseFormCursor : MonoBehaviour
     {
         if (interactObj != null)
         {
-            interactObj.transform.position = cursorParent.transform.position + PlayerHandler.instance.CurrentPlayer.transform.GetChild(0).forward * interactObj.ColliderEndPoint();
+            interactObj.transform.position = cursorParent.transform.position 
+                + PlayerHandler.instance.CurrentPlayer.transform.GetChild(0).forward 
+                * interactObj.ColliderEndPoint();
             interactObj.transform.rotation = playerRotate.transform.rotation;
         }
 
@@ -106,13 +108,11 @@ public class MouseFormCursor : MonoBehaviour
         {
             Enemy enemy;
             if (interactObj.TryGetComponent<Enemy>(out enemy))
-            {
-                //Debug.Log("¸ó½ºÅÍ °í°´´ÔÀÌ½Ã³×¿ä");
+            {                
                 ThrowMonster();
             }
             else
             {
-                //Debug.Log("ÇÃ·§Æû °í°´´ÔÀÌ½Ã³×¿ä");
                 DropPlatformObject();
             }
             if(cursorInteract.CompareTag("CursorObject"))

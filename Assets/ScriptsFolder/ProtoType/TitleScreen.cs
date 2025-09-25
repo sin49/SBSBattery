@@ -1,10 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TitleScreen : UIInteract
@@ -33,6 +30,8 @@ public class TitleScreen : UIInteract
         Debug.Log(startscenename);
         GameManager.instance.DeleteSaveSetting();
         GameManager.instance.saveCheckPointIndexKey(0);
+        LanguageManager.instance.ResetLangEvent();
+        KeySettingManager.instance.RemoveMappingAction();
         GameManager.instance.LoadingSceneWithKariEffect(startscenename);
         GameManager.instance.loadcheckpointTransformType = 0;
 

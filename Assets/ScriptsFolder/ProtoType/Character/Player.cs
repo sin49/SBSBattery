@@ -110,16 +110,21 @@ public class Player : Character,environmentObject
     {
         onGround = true;
         if (!hit.collider.TryGetComponent<BrokenPlatform>(out BrokenPlatform br)
-            && !hit.collider.TryGetComponent<TransformPlace>(out TransformPlace tp))
+            && !hit.collider.TryGetComponent<TransformPlace>(out TransformPlace tp)
+            && !hit.collider.TryGetComponent<BreakableWall>(out BreakableWall bw))
         {
-            //Debug.Log($"부서지는 플랫폼이 아니라서 실행됨{hit.collider}");
-            d_col.DeactiveCollider();
+            if (!hit.collider.CompareTag("Enemy"))
+            {
+                Debug.Log($"부서지는 플랫폼이 아니라서 실행됨{hit.collider}");
+                d_col.DeactiveCollider();
+            }
         }
         
-        if (hit.collider.CompareTag("PlayerRestrict"))
-        {
-            playerRb.AddForce(-transform.GetChild(0).forward * restrictForce, ForceMode.Impulse);
-        }
+        //if (hit.collider.CompareTag("PlayerRestrict"))
+        //{
+        //    cantmove = true;
+        //    playerRb.AddForce(-transform.GetChild(0).forward * restrictForce, ForceMode.Impulse);
+        //}
 
         if (downAttack)
         {
@@ -654,43 +659,43 @@ public class Player : Character,environmentObject
 
         //PlayerStat.instance.Trans3D
         //PlayerStat.instance.direction = direction;
-        if ((hori == -1 && vert == 0) || ((hori >= -1 && hori < -0.85f) && (((vert >= 0 && vert < 0.25f) || vert <= 0 && vert > -0.25f)))) // Left
+        if ((hori == -1 && vert == 0) || ((hori >= -1 && hori < 0f) && (((vert >= 0 && vert < 0.25f) || vert <= 0 && vert > -0.25f)))) // Left
         {
             rotateVector = new Vector3(0, 180, 0);
 
             //Debug.Log("hori 음수 vert 0");
         }
-        else if ((hori == 1 && vert == 0) || ((hori <= 1 && hori > 0.85f) && (((vert >= 0 && vert < 0.25f) || vert <= 0 && vert > -0.25f)))) // Right
+        else if ((hori == 1 && vert == 0) || ((hori <= 1 && hori > 0f) && (((vert >= 0 && vert < 0.25f) || vert <= 0 && vert > -0.25f)))) // Right
         {
             rotateVector = new Vector3(0, 0, 0);
             //Debug.Log("hori 양수 vert 0");
         }
-        else if ((hori == 0 && vert == 1) || ((vert <= 1 && vert > 0.85f) && ((hori >= 0 && hori < 0.25f) || (hori <=0 && hori >-0.25f)))) // Up
+        else if ((hori == 0 && vert == 1) || ((vert <= 1 && vert > 0f) && ((hori >= 0 && hori < 0.25f) || (hori <=0 && hori >-0.25f)))) // Up 
         {
             rotateVector = new Vector3(0, -90, 0);
-            //Debug.Log("hori 0 vert 양수");
+            Debug.Log("hori 0 vert 양수 -90획득");
         }
-        else if ((hori == 0 && vert == -1) || ((vert >=-1 && vert < -0.85f) && ((hori >=0 && hori < 0.25f) || (hori <= 0 && hori > -0.25f)))) // Down
+        else if ((hori == 0 && vert == -1) || ((vert >=-1 && vert < 0f) && ((hori >=0 && hori < 0.25f) || (hori <= 0 && hori > -0.25f)))) // Down
         {
             rotateVector = new Vector3(0, 90, 0);
-            //Debug.Log("hori 0 vert 음수");
+            Debug.Log("hori 0 vert 음수 90획득");
         }
-        else if ((hori == -1 && vert == 1) || ((hori >= -1 && hori < -0.2f) && (vert <= 1 && vert >= 0.2f))) // UpLeft
+        else if ( !CheckDemension2D() && (/*(hori == -1 && vert == 1) ||*/ ((hori >= -1 && hori < 0f) && (vert <= 1 && vert >= 0f)))) // UpLeft
         {
             rotateVector = new Vector3(0, -135, 0);
             //Debug.Log("hori 음수 vert 양수");
         }
-        else if ((hori == 1 && vert == 1) || ((hori > 0.2f && hori <= 1) && (vert > 0.2f && vert <= 1))) // UpRight
+        else if (!CheckDemension2D() && (/*(hori == 1 && vert == 1) ||*/ ((hori > 0f && hori <= 1) && (vert > 0f && vert <= 1)))) // UpRight
         {
             rotateVector = new Vector3(0, -45, 0);
             //Debug.Log("hori 양수 vert 양수");
         }
-        else if ((hori == -1 && vert == -1) || ((hori >= -1 && hori < -0.2f ) && (vert >= -1 && hori < -0.2f))) // DownLeft
+        else if (!CheckDemension2D() && (/*(hori == -1 && vert == -1) ||*/ ((hori >= -1 && hori < 0f ) && (vert >= -1 && hori < 0f)))) // DownLeft
         {
             rotateVector = new Vector3(0, 135, 0);
             //Debug.Log("hori 음수 vert 음수");
         }
-        else if ((hori == 1 && vert == -1) || ((hori <= 1 && hori > 0.2f) && (vert >= -1f && vert <-0.2f))) // DownRight
+        else if (!CheckDemension2D() && (/*(hori == 1 && vert == -1) ||*/ ((hori <= 1 && hori > 0.2f) && (vert >= -1f && vert <-0.2f)))) // DownRight
         {
             rotateVector = new Vector3(0, 45, 0);
             //Debug.Log("hori 양수 vert 음수");
@@ -848,6 +853,21 @@ public class Player : Character,environmentObject
         isRun = false;
 
     }
+
+    public bool CheckDemension2D()
+    {
+        PlayerStat state = PlayerStat.instance;
+        bool isTwoD = false;
+
+        if (state.MoveState == PlayerMoveState.Xmove || state.MoveState == PlayerMoveState.XmoveReverse
+            || state.MoveState == PlayerMoveState.Zmove || state.MoveState == PlayerMoveState.ZmoveReverse)
+        {
+            isTwoD = true;
+        }
+
+        return isTwoD;
+    }
+
     public void rotateBy3Dto2D()
     {
         Debug.Log("시점 전환 확인용");
@@ -1964,5 +1984,8 @@ IEnumerator jumpForceLimitCorutine()
     }
     #endregion
 
+    public virtual void ChangeAttackForTrans()
+    {
 
+    }
 }
