@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
@@ -96,6 +93,11 @@ public class EpilogueVideoPlayer : MonoBehaviour
         if (PlayerPrefs.HasKey("DownAttackTuto")) PlayerPrefs.DeleteKey("DownAttackTuto");
         if (PlayerPrefs.HasKey("DimensionTuto")) PlayerPrefs.DeleteKey("DimensionTuto");
         if (PlayerPrefs.HasKey("TutorialEnd")) PlayerPrefs.DeleteKey("TutorialEnd");
+        if (PlayerPrefs.HasKey("IronTuto")) PlayerPrefs.DeleteKey("IronTuto");
+        if (PlayerPrefs.HasKey("LaserTuto")) PlayerPrefs.DeleteKey("LaserTuto");
+        if (PlayerPrefs.HasKey("Reinforcement")) PlayerPrefs.DeleteKey("Reinforcement");
+        if (PlayerPrefs.HasKey("CardKey")) PlayerPrefs.DeleteKey("CardKey");
+        if (PlayerPrefs.HasKey("MouseThrow")) PlayerPrefs.DeleteKey("MouseThrow");
 
         GameManager.instance.attackTuto = false; GameManager.instance.jumpTuto = false; GameManager.instance.moveTuto = false;
         GameManager.instance.downTuto = false; GameManager.instance.interactTuto = false; GameManager.instance.downAttackTuto = false;
@@ -110,10 +112,21 @@ public class EpilogueVideoPlayer : MonoBehaviour
     {
         if (LanguageManager.instance != null)
         {
-            if (LanguageManager.instance.isKor)
-                return "½ºÅµ: SPACE";
-            else
-                return "SKIP: SPACE";
+            if (Application.platform == RuntimePlatform.WindowsPlayer)
+            {
+                if (LanguageManager.instance.isKor)
+                    return "½ºÅµ: SPACE";
+                else
+                    return "SKIP: SPACE";
+            }
+            else if (Application.platform == RuntimePlatform.Android)
+            {
+                if (LanguageManager.instance.isKor)
+                    return "½ºÅµ: ²Ù¿í ´©¸£¼¼¿ä!";
+                else
+                    return "SKIP: Keep in touch!";
+            }
+
         }
 
         return "";
