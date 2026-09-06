@@ -1,0 +1,1097 @@
+using Cinemachine;
+using System.Collections;
+using UnityEngine;
+
+
+public class HouseholdIronTransform : Player
+{
+    [Header("다리미 2형태")]
+    public GameObject ironSecondForm;
+    [Header("돌진 이동속도")]
+    public float speedValue;
+    float rushSpeed;
+    float saveSpeed;
+    [Header("돌진 지속시간")]
+    public float rushTimeMax;
+    float rushTimer;
+    [HideInInspector] public bool canRushAttack; // 돌진 공격을 받는 주기?를 위한 변수
+    [HideInInspector] public bool onRush;
+    [Header("돌진 재사용 대기시간")]
+    public float rushCoolTimeMax;
+    float rushCoolTimer;
+    [Header("돌진 공격 피해량")]
+    public float rushDamage;
+    [Header("돌진 공격 주기")]
+    public float rushCycleMax;
+    public float rushAtkTimeMax;
+    public float rushAtkWaitTime;
+    float rushCycleTimer, rushAtkTimer, rushAtkWaitTiemer;
+    [Header("방향 전환 딜레이 시간")]
+    public float rotateTimeMax;
+    float rotateTimer;
+    [Header("돌진 이펙트")]
+    public ParticleSystem ironDashEffect;
+    [Header("돌진 캔슬을 위한 레이")]
+    public float rushRay;
+    public float rayHeightValue;
+    public float rayUpValue, rayMiddleValue, rayDownValue;
+
+    public HouseHoldFormSoundPlayer soundPlayer;
+
+    bool readyRush, downEnd, rushEnd;
+    bool ironAttack = true;
+
+    [Header("특수 능력 관련 변수\n")]
+    [Header("다림질 찍기 속도")]public float downAtkSpeed;
+    [Header("다림질 체공 시간")]public float ironFlyTime;
+    [Header("찍기 후 조작 불가 시간\n(이 때, 무적 적용됨)")]
+    public float downAtkEndTimeMax;
+    float downAtkEndTimer;
+    [Header("다림질 공격력")]public float ironDownDamage;
+    [Header("다림질 재사용 대기 시간")]public float ironDownCoolTimeMax;
+    [Header("다림질 이펙트")] public ParticleSystem ironDownAtkEffect;
+    float downCoolTimer;
+    bool onDownCoolTime;
+    [Header("다림질 내려찍기에 몬스터가 납작해지는 시간")] public float flatTime;
+    float rushHori, rushVert;
+    direction saveDirection = direction.none;
+    directionZ saveDirectionZ = directionZ.none;
+    protected override void Awake()
+    {
+        base.Awake();
+        InitTimer();
+        soundPlayer = this.GetComponent<HouseHoldFormSoundPlayer>();
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.ironUIobject.SetActive(true);
+            GameManager.instance.ironRushIcon.fillAmount = 0;
+        }
+    }
+   
+   protected override void Start()
+    {
+        base.Start();
+        saveSpeed = PlayerStat.instance.moveSpeed;
+        rushSpeed = PlayerStat.instance.moveSpeed + speedValue;
+    }
+
+    public void InitTimer()
+    {
+        rushCoolTimer = rushCoolTimeMax;
+        rotateTimer = rotateTimeMax;
+        rushCycleTimer = rushCycleMax;
+        rushAtkTimer = rushAtkTimeMax;
+        downAtkEndTimer = downAtkEndTimeMax;
+        downCoolTimer = ironDownCoolTimeMax;
+        rushTimer = rushTimeMax;
+    }
+
+    public void RushRayCheck()
+    {
+        if (!Application.isPlaying || Application.isPlaying)
+        {
+            Debug.DrawRay(transform.GetChild(0).position + transform.GetChild(0).up * rayHeightValue, transform.GetChild(0).forward * rayUpValue, Color.red, 0.2f);
+            Debug.DrawRay(transform.GetChild(0).position, transform.GetChild(0).forward * rayMiddleValue, Color.red, 0.2f);
+            Debug.DrawRay(transform.GetChild(0).position - transform.GetChild(0).up * rayHeightValue, transform.GetChild(0).forward * rayDownValue, Color.red, 0.2f);
+        }
+        RaycastHit upRay;
+        RaycastHit middleRay;
+        RaycastHit downRay;
+        if (onRush)
+        {
+
+
+            if (Physics.Raycast(transform.GetChild(0).position, transform.GetChild(0).forward, out middleRay, rayMiddleValue, LayerMask.GetMask("Platform")))
+            {
+                Debug.Log("중간 레이 충돌");
+                RushCancel();
+            }
+            else if (Physics.Raycast(transform.GetChild(0).position + transform.GetChild(0).up * rayHeightValue, transform.GetChild(0).forward, out upRay, rayUpValue, LayerMask.GetMask("Platform")))
+            {
+                Debug.Log($"위쪽 레이 충돌, 충돌한 오브젝트:{upRay.collider}");
+                RushCancel();
+            }
+            else if (Physics.Raycast(transform.GetChild(0).position - transform.GetChild(0).up * rayHeightValue, transform.GetChild(0).forward, out downRay, rayDownValue, LayerMask.GetMask("Platform")))
+            {
+                Debug.Log("아래쪽 레이 충돌");
+                RushCancel();
+            }
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        RushRayCheck();
+    }
+    private void Update()
+    {
+        BaseBufferTimer();
+        CheckRushTime();
+        RushRayCheck();
+        IronDownAttackTimeCheck();
+        if(ironDownAttack)
+            EnvironmentPower = Vector3.zero;
+    }
+
+    public override void DownAttack()
+    {
+        if (onDownCoolTime || onRush)
+            return;
+        else
+        {
+            if (!downAttack)
+            {
+                downAttack = true;
+                ironDownAttack = true;
+                onInvincible = true;
+                PlayerHandler.instance.CantHandle = true;
+                StartFreeze();
+                StartCoroutine(IronDownAttack());
+            }
+        }
+    }
+    
+    IEnumerator IronDownAttack()
+    {                
+        SecondFormActive();
+        soundPlayer.PlayInitDownAttackSound();
+        playerRb.useGravity = false;
+        while (playerRb.velocity != Vector3.zero)
+        {
+            playerRb.velocity = Vector3.zero;
+            yield return null;
+        }
+        playerRb.velocity = Vector3.zero;
+        playerRb.AddForce(transform.up * 30f);
+
+        yield return new WaitForSeconds(ironFlyTime);
+
+        EndFreeze();
+        playerRb.useGravity = true;
+        playerRb.velocity = Vector3.zero;
+        playerRb.AddForce(-transform.up * downAtkSpeed, ForceMode.Impulse);
+        downAttackCollider.SetActive(true);
+        //if (downAttackCollider.activeSelf)
+        //    Debug.Log("내려찍기가 활성화 되었습니다");
+        //Debug.Log("다리미 찍기");
+    }
+
+    public void StartFreeze()
+    {
+        playerRb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+    }
+
+    public void EndFreeze()
+    {
+        playerRb.constraints = RigidbodyConstraints.FreezeRotation;
+    }
+
+
+    // 다림질 시간 관련 체크
+    public void IronDownAttackTimeCheck()
+    {
+        //다림질 찍기 후 유지시간 -> 조작이 불가능하도록 함
+        if (downEnd)
+        {
+            if (downAtkEndTimer > 0)
+                downAtkEndTimer -= Time.deltaTime;
+            else
+            {
+                DownAttackEnd();
+                onInvincible = false;
+            }
+        }
+
+        //다림질 찍기 유지시간 이후부터
+        //재사용 대기시간 적용함
+        if (onDownCoolTime)
+        {
+            if (downCoolTimer > 0)
+                downCoolTimer -= Time.deltaTime;
+            else
+            {
+                onDownCoolTime = false;
+                downCoolTimer = ironDownCoolTimeMax;
+            }
+        }
+    }
+
+    public void DownAttackEnd()
+    {
+        downEnd = false;
+        ironDownAttack = false;
+        SecondFormDeactive();
+        downAtkEndTimer = downAtkEndTimeMax;
+        PlayerHandler.instance.CantHandle = false;
+        onDownCoolTime = true;
+    }
+
+    #region 다리미 이동/회전
+    bool oncorutine;
+    IEnumerator rotatedelaycorutine()
+    {
+
+        oncorutine = true;
+        onRushRot = true;
+        playerRb.velocity = new Vector3(playerRb.velocity.x * 0.5f, playerRb.velocity.y, playerRb.velocity.z * 0.5f);
+        soundPlayer.PlayRushStop();
+        yield return new WaitForSeconds(0.5f);
+
+
+        onRushRot = false;
+        yield return new WaitForSeconds(0.25f  );
+        oncorutine = false;
+    }
+    float lasthori;
+    float lastvert;
+    public override void rotate(float hori, float vert)
+    {
+        if (onRush) {
+            if (!onRushRot && (lasthori != hori || lastvert != vert) && !oncorutine)
+                StartCoroutine(rotatedelaycorutine());
+            else
+                return;
+        }
+        base.rotate(hori, vert);
+
+        lasthori = hori;
+        lastvert = vert;
+    }
+    public override void Move()
+    {
+        if (onRush)
+        {
+            hori = 0;
+            Vert = 0;
+            //Debug.Log("움직임 제한");
+            switch (PlayerStat.instance.MoveState)
+            {
+                case PlayerMoveState.Xmove:
+                    if (Input.GetKey(KeySettingManager.instance.rightKeycode))
+                        hori = 1;
+                    else if (Input.GetKey(KeySettingManager.instance.leftKeycode))
+                        hori = -1;
+                    else
+                    {
+                        if (!GameManager.instance.mob)
+                            hori = Input.GetAxisRaw("Horizontal");
+                        else
+                            hori = SimpleInput.GetAxis("Horizontal2");
+                    }
+                    rushVert = 0;
+                    if (Input.GetKey(KeySettingManager.instance.rightKeycode) || hori >= 0.4f)
+                        rushHori = 1;
+                    else if (Input.GetKey(KeySettingManager.instance.leftKeycode) || hori < -0.4f)
+                        rushHori = -1;
+                    break;
+                case PlayerMoveState.XmoveReverse:
+                    if (Input.GetKey(KeySettingManager.instance.rightKeycode))
+                        hori = -1;
+                    else if (Input.GetKey(KeySettingManager.instance.leftKeycode))
+                        hori = 1;
+                    else
+                    {
+                        if(!GameManager.instance.mob)
+                        hori = -1 * Input.GetAxisRaw("Horizontal");
+                        else
+                        hori = -SimpleInput.GetAxis("Horizontal2");
+                    }
+
+                    rushVert = 0;
+                    if (Input.GetKey(KeySettingManager.instance.rightKeycode) || hori < -0.4f)
+                        rushHori = -1;
+                    else if (Input.GetKey(KeySettingManager.instance.leftKeycode) || hori >= 0.4f)
+                        rushHori = 1;
+                    break;
+
+                case PlayerMoveState.Zmove:
+                    if (Input.GetKey(KeySettingManager.instance.upKeycode))
+                        Vert = 1;
+                    else if (Input.GetKey(KeySettingManager.instance.downKeycode))
+                        Vert = -1;
+                    else
+                    {
+                        if(!GameManager.instance.mob)
+                        Vert = Input.GetAxisRaw("Horizontal");
+                        else
+                        Vert = SimpleInput.GetAxis("Horizontal2");
+                    }
+                    ZmoveRushVert();
+                    break;
+                case PlayerMoveState.ZmoveReverse:
+                    if (Input.GetKey(KeySettingManager.instance.upKeycode))
+                        Vert = -1;
+                    else if (Input.GetKey(KeySettingManager.instance.downKeycode))
+                        Vert = 1;
+                    else
+                    {
+                        if (!GameManager.instance.mob)
+                            Vert = -1 * Input.GetAxisRaw("Horizontal");
+                        else
+                            Vert = -SimpleInput.GetAxis("Horizontal2");
+                    }
+ 
+                    rushHori = 0;
+                    ZmoveRushVert();
+                    rushVert = -rushVert;
+                    break;
+                case PlayerMoveState.XZMove3D:
+                    if (Input.GetKey(KeySettingManager.instance.rightKeycode))
+                        hori = 1;
+                    else if (Input.GetKey(KeySettingManager.instance.leftKeycode))
+                        hori = -1;
+                    else
+                    {
+                        if (!GameManager.instance.mob)
+                            hori = Input.GetAxisRaw("Horizontal");
+                        else
+                            hori = SimpleInput.GetAxis("Horizontal2");
+                    }
+                    if (Input.GetKey(KeySettingManager.instance.upKeycode))
+                        Vert = 1;
+                    else if (Input.GetKey(KeySettingManager.instance.downKeycode))
+                        Vert = -1;
+                    if (!GameManager.instance.mob)
+                        Vert = Input.GetAxisRaw("Vertical");
+                    else
+                        Vert = SimpleInput.GetAxis("Vertical2");
+                    XZmoveRushHorizontal();
+                    XZmoveRushVertical();
+                    break;
+                case PlayerMoveState.XZMove3DReverse:
+                    if (Input.GetKey(KeySettingManager.instance.rightKeycode))
+                        Vert = -1;
+                    else if (Input.GetKey(KeySettingManager.instance.leftKeycode))
+                        Vert = 1;
+                    else
+                    {
+                        if (!GameManager.instance.mob)
+                            Vert = -1 * Input.GetAxisRaw("Horizontal");
+                        else
+                            Vert = -SimpleInput.GetAxis("Horizontal2");
+                    }
+                    if (Input.GetKey(KeySettingManager.instance.upKeycode))
+                        hori = -1;
+                    else if (Input.GetKey(KeySettingManager.instance.downKeycode))
+                        hori = 1;
+                    else
+                    {
+                        if (!GameManager.instance.mob)
+                            hori = -1 * Input.GetAxisRaw("Vertical");
+                        else
+                            hori = -SimpleInput.GetAxis("Vertical2");
+                    }
+
+                    XZmoveRushHorizontal();
+                    rushHori = -rushHori;
+                    XZmoveRushVertical();
+                    rushVert = -rushVert;
+                    break;
+                case PlayerMoveState.ZXMove3D:
+                    if (Input.GetKey(KeySettingManager.instance.upKeycode))
+                        hori = 1;
+                    else if (Input.GetKey(KeySettingManager.instance.downKeycode))
+                        hori = -1;
+                    else
+                    {
+                        if (!GameManager.instance.mob)
+                            hori = Input.GetAxisRaw("Vertical");
+                        else
+                            hori = SimpleInput.GetAxis("Vertical2");
+                    }
+                    if (Input.GetKey(KeySettingManager.instance.rightKeycode))
+                        Vert = -1;
+                    else if (Input.GetKey(KeySettingManager.instance.leftKeycode))
+                        Vert = 1;
+                    else
+                    {
+                        if (!GameManager.instance.mob)
+                            Vert = -1 * Input.GetAxisRaw("Horizontal");
+                        else
+                            Vert = -SimpleInput.GetAxis("Horizontal2");
+                    }
+
+                    //Debug.Log($"zxmove hori {hori}, vert {Vert}\n               rushHori {rushHori}, rushVert {rushVert}");
+                    ZXmoveRushHorizontal();
+                    ZXmoveRushVertical() ;
+                    break;
+                case PlayerMoveState.ZXMove3DReverse:
+                    if (Input.GetKey(KeySettingManager.instance.rightKeycode))
+                        hori = -1;
+                    else if (Input.GetKey(KeySettingManager.instance.leftKeycode))
+                        hori = 1;
+                    else
+                    {
+                        if (!GameManager.instance.mob)
+                            hori = -1 * Input.GetAxisRaw("Vertical");
+                        else
+                            hori = -SimpleInput.GetAxis("Vertical2");
+                    }
+                    if (Input.GetKey(KeySettingManager.instance.upKeycode))
+                        Vert = 1;
+                    else if (Input.GetKey(KeySettingManager.instance.downKeycode))
+                        Vert = -1;
+                    else
+                    {
+                        if (!GameManager.instance.mob)
+                            Vert = Input.GetAxisRaw("Horizontal");
+                        else
+                            Vert = SimpleInput.GetAxis("Horizontal2");
+                    }
+
+                    ZXmoveRushHorizontal();
+                    ZXmoveRushVertical();
+
+                    rushHori = -rushHori;
+                    rushVert = -rushVert;
+                    break;
+                    //회전하는 부분?
+            }
+
+            Vector3 moveInput = new Vector3(hori, 0, Vert);
+            Vector3 regularMove = new Vector3(rushHori, 0, rushVert);
+            if (rushHori != 0 || rushVert != 0)
+            {
+                //soundPlayer.rushsoundpause();
+                rotate(regularMove.x, regularMove.z);
+                //SoundPlayer.PlayMoveSound();
+            }
+
+            if (!onRushRot)
+            {
+                soundPlayer.rushingAudio();
+
+                Vector3 moveVelocity = Vector3.zero;
+                Vector3 vector = regularMove.normalized * rushSpeed;
+                Vector3 forwardForce = transform.GetChild(0).forward * rushSpeed;
+                moveVelocity = forwardForce - playerRb.velocity.x * Vector3.right - playerRb.velocity.z * Vector3.forward  ;
+               
+                if (!wallcheck)
+                    playerRb.AddForce(moveVelocity, ForceMode.VelocityChange);
+                else
+                    playerRb.AddForce(Vector3.zero+EnvironmentPower, ForceMode.VelocityChange);
+
+                if (moveVelocity == Vector3.zero)
+                {
+                    Vector3 CurrentVelocity = playerRb.velocity;
+
+                    var newDecelateVector = Vector3.Lerp(CurrentVelocity, Vector3.zero, Decelatate * Time.fixedDeltaTime);
+
+
+                    playerRb.velocity = new Vector3(newDecelateVector.x, CurrentVelocity.y, newDecelateVector.z);
+                    //else
+                    //           playerRb.velocity = new Vector3(0,playerRb.velocity.y, playerRb.velocity.z);
+
+                }
+            }
+
+            if (!isJump)
+            {
+                if (MoveCheck(hori, Vert))
+                {
+                    isRun = true;
+                }
+                else
+                {
+                    isRun = false;
+                }
+                //Humonoidanimator.RunAnimation(isRun);
+            }
+
+        }
+        else
+            base.Move();
+    }
+
+    bool MoveCheck(float hori, float vert)
+    {
+        bool moveResult = false;
+
+        if (hori != 0 || vert != 0)
+        {
+            moveResult = true;
+        }
+
+        return moveResult;
+    }
+    #endregion
+    public float rotateTime;
+    float rushRotateSpeed = 4.5f;
+    bool onRushRot, onlyRot;
+    Vector3 currentRotateVector;
+    // 돌진 회전
+    public void RushRotate(float hori, float vert)
+    {
+        Vector3 rotateVector = Vector3.zero;
+        Vector3 saveRotateVector = Vector3.zero;
+        // Check horizontal and vertical inputs and determine the direction
+        if (hori == 1)
+        {
+            saveDirection = direction;
+            direction = direction.Right;
+        }
+        else if (hori == -1)
+        {
+            saveDirection = direction;
+            direction = direction.Left;
+        }
+        else
+            direction = direction.none;
+        if (vert == 1)
+        {
+            saveDirectionZ = directionz;
+            directionz = directionZ.back;
+        }
+        else if (vert == -1)
+        {
+            saveDirectionZ = directionz;
+            directionz = directionZ.forward;
+        }
+        else
+            directionz = directionZ.none;
+
+        //PlayerStat.instance.Trans3D
+        //PlayerStat.instance.direction = direction;
+        if (hori == -1 && vert == 0) // Left
+        {
+            rotateVector = new Vector3(0, 180, 0);
+            
+        }
+        else if (hori == 1 && vert == 0) // Right
+        {
+            rotateVector = new Vector3(0, 0, 0);
+            
+        }
+        else if (hori == 0 && vert == 1) // Up
+        {
+            rotateVector = new Vector3(0, -90, 0);
+            
+        }
+        else if (hori == 0 && vert == -1) // Down
+        {
+            rotateVector = new Vector3(0, 90, 0);
+            
+        }
+        else if (hori == -1 && vert == 1) // UpLeft
+        {
+            rotateVector = new Vector3(0, -135, 0);
+            
+
+        }
+        else if (hori == 1 && vert == 1) // UpRight
+        {
+            rotateVector = new Vector3(0, -45, 0);
+            
+        }
+        else if (hori == -1 && vert == -1) // DownLeft
+        {
+            rotateVector = new Vector3(0, 135, 0);
+            
+        }
+        else if (hori == 1 && vert == -1) // DownRight
+        {
+            rotateVector = new Vector3(0, 45, 0);            
+        }
+        rotateVector += new Vector3(0, 90, 0);
+
+        transform.GetChild(0).rotation = Quaternion.Euler(rotateVector);
+    }
+    
+    bool inputHori, inputVert;
+    float saveHori, saveVert;
+    
+
+    public void ReverseDirection()
+    {
+        if (saveDirection == direction.Right && direction == direction.Left)
+        {
+            onlyRot = true;
+        }
+        else if (saveDirectionZ == directionZ.forward && directionz == directionZ.back)
+        {
+            onlyRot = true;
+        }
+        else if (saveDirection == direction.Left && direction == direction.Right)
+        {
+            onlyRot = true;
+        }
+        else if (saveDirectionZ == directionZ.back && directionz == directionZ.forward)
+        {
+            onlyRot = true;
+        }
+        else
+        {
+            onlyRot = false;
+        }
+    }
+
+    IEnumerator RushRotation(Vector3 lastVector)
+    {
+        Debug.Log($"회전 코루틴 호출{(lastVector - currentRotateVector).magnitude}");
+        float rotateSpeed = (lastVector - currentRotateVector).magnitude / rotateTime;
+        Debug.Log($"돌진 회전 속도{rotateSpeed}");
+        float timer=0;
+        while (timer < rotateTime)
+        {
+            transform.GetChild(0).Rotate(0, rotateSpeed * Time.fixedDeltaTime, 0);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        transform.GetChild(0).rotation = Quaternion.Euler(lastVector);
+
+        yield return new WaitForSeconds(.5f);
+        onRushRot = false;
+
+    }
+
+    public void CheckRushTime()
+    {
+        if (onRush && !rushEnd)
+        {
+            //돌진 지속 시간
+            if (rushTimer > 0)
+            {
+                rushTimer -= Time.deltaTime;
+                if (GameManager.instance != null)
+                {
+                    GameManager.instance.ironRushIcon.fillAmount = rushTimer / rushTimeMax;
+                }
+            }
+            else
+            {
+                RushEnd();
+                DeactiveRushIcon();
+
+            }
+
+            //돌진 공격 주기?
+            if (rushAtkTimer > 0)
+            {
+                rushAtkTimer -= Time.deltaTime;
+            }
+            else
+            {
+                meleeCollider.SetActive(true);
+                rushAtkTimer = rushAtkTimeMax;
+            }
+        }
+
+        // 돌진 재사용 대기시간
+        if (!readyRush)
+        {
+            if (rushCoolTimer > 0)
+                rushCoolTimer -= Time.deltaTime;
+            else
+            {
+                readyRush = true;
+                rushCoolTimer = rushCoolTimeMax;
+            }
+        }
+    }
+    public void ActiveRushIcon()
+    {
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.ironRushIcon.gameObject.SetActive(true);            
+        }
+    }
+
+    public void DeactiveRushIcon()
+    {
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.ironRushIcon.gameObject.SetActive(false);
+            GameManager.instance.ironRushIcon.fillAmount = 1;
+        }
+
+    }
+
+    public override void Damaged(float damage)
+    {
+        base.Damaged(damage);
+        if (onRush && PlayerHandler.instance.CantHandle)
+        {            
+            InitRush();
+        }
+    }
+    public override void TransformDamagedEvent()
+    {
+        InitRush();
+    }
+    void InitRush()
+    {
+        Humonoidanimator.ResetTrigger("RushStart");
+        ironDashEffect.Stop();
+        onRush = false;
+        rushTimer = rushTimeMax;
+        canRushAttack = false;
+        rushAtkTimer = rushAtkTimeMax;
+        SecondFormDeactive();
+    }
+
+    public override bool TransformInvincibleEvent()
+    {
+        return onRush;
+    }
+
+    public override void PlayerJumpEvent()
+    {
+        if(!onRush)
+            base.PlayerJumpEvent();
+    }
+
+    #region 돌진 관련
+    //돌진 공격
+    public override void Attack()
+    {
+        if (downAttack || PlayerStat.instance.pState == PlayerState.hitted)
+            return;
+        else
+        {
+            if (ironAttack && attackInputValue < 1)
+            {
+                if (attackBufferTimer > 0 && readyRush)
+                {
+                    Debug.Log("공격함수 실행중");
+                    attackBufferTimer = 0;
+                    attackInputValue = 1;
+                    ironAttack = false;
+
+                    rushHori = 0;
+                    rushVert = 0;
+
+                    if (!onRush)
+                    {
+                        RushStart();
+                    }
+                    else
+                    {
+                        RushEnd();
+                        DeactiveRushIcon();
+                    }
+                }
+            }
+        }
+    }
+
+    //돌진 시작
+    public void RushStart()
+    {
+        PlayerHandler.instance.CantHandle = true;
+        saveDirection = direction;
+        saveDirectionZ = directionz;
+        onInvincible = true;        
+        readyRush = true;
+        Humonoidanimator.SetTrigger("RushStart");
+        StartCoroutine(RushStartCheck());
+    }
+    
+    IEnumerator RushStartCheck()
+    {
+        yield return new WaitForSeconds(0.5f);
+        float timer=0;
+        if (Humonoidanimator.GetCurrentAnimatorStateInfo(0).IsName("RushStart"))
+        {
+            while (Humonoidanimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.75f)
+            {
+                timer += Time.deltaTime;
+                Debug.Log(timer);
+                yield return null;
+            }
+
+            Player player = PlayerHandler.instance.CurrentPlayer;
+            Destroy(Instantiate(player.changeEffect, player.transform.position, Quaternion.identity), 1.5f);
+            PlayerHandler.instance.CantHandle = false;
+
+            SecondFormActive();
+            ActiveRushIcon();
+            if (!ironDashEffect.gameObject.activeSelf)
+            {
+                ironDashEffect.gameObject.SetActive(true);
+            }
+            ironDashEffect.Play();
+            onRush = true;
+            rushEnd = false;
+            ironAttack = true;
+            readyRush = true;
+        }
+    }
+
+    //돌진 끝
+    public void RushEnd()
+    {
+        PlayerHandler.instance.CantHandle = true;
+        playerRb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePosition;
+        meleeCollider.SetActive(false);
+       
+        rushEnd = true;
+        readyRush = false;
+        rushTimer = rushTimeMax;
+        ironDashEffect.Stop();
+
+        SecondFormDeactive();
+        Humonoidanimator.Play("RushEnd");
+        StartCoroutine(RushEndCheck());
+    }    
+
+    IEnumerator RushEndCheck()
+    {
+        playerRb.velocity = new(0, playerRb.velocity.y, 0);
+        soundPlayer.rushsoundend();
+        yield return new WaitForSeconds(0.5f);
+
+        AnimatorClipInfo[] clipGroup = Humonoidanimator.GetCurrentAnimatorClipInfo(0);
+        Debug.Log($"rushend 현재 재생되고있는 애니메이션{clipGroup[0].clip.name}");
+        if (Humonoidanimator.GetCurrentAnimatorStateInfo(0).IsName("RushEnd"))
+        {
+            while (Humonoidanimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+            {
+                playerRb.velocity = Vector3.zero;
+                //Debug.Log($"돌진 종료 체크{Humonoidanimator.GetCurrentAnimatorStateInfo(0).normalizedTime}");
+                yield return null;
+            }
+            PlayerHandler.instance.CantHandle = false;
+            playerRb.constraints = RigidbodyConstraints.FreezeRotation;
+            onInvincible = false;
+            ironAttack = true;
+       
+            onRush = false;            
+        }
+    }
+
+    //충돌로 인한 돌진 캔슬
+    public void RushCancel()
+    {
+        Humonoidanimator.SetTrigger("RushCancel");
+        soundPlayer.WallCollidePlay();
+        ironDashEffect.Stop();
+        SecondFormDeactive();
+        DeactiveRushIcon();
+        onRush = false;
+        rushEnd = true;
+        rushTimer = rushTimeMax;
+        rushAtkTimer = rushAtkTimeMax;
+        rushCoolTimer = rushCoolTimeMax;
+        readyRush = false;
+        onInvincible = false;
+    }
+    #endregion
+    public CinemachineImpulseSource source;
+
+    bool ironDownAttack;
+    /*private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Ground"))
+        {
+            Debug.Log("땅에 닿았다");
+            if (ironDownAttack)
+            {
+                source.GenerateImpulse();
+                PlayerHandler.instance.CantHandle = true;
+                ironDownAttack = false;
+                //soundPlayer.PlayDownAttackEndSound();
+                downEnd = true;
+                if (!ironDownAtkEffect.gameObject.activeSelf)
+                {
+                    ironDownAtkEffect.gameObject.SetActive(true);
+                    ironDownAtkEffect.Play();
+                }
+            }
+        }
+    }*/
+
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("PlayerRestrict") || collision.gameObject.CompareTag("Enemy"))
+        {
+            
+            //Debug.Log($"콜리즌 네임{collision.gameObject.name} ,콜리즌 체크 -> 땅에 닿았다 >> 다리미 찍기 끝");
+            if (ironDownAttack)
+            {
+                source.GenerateImpulse();
+                PlayerHandler.instance.CantHandle = true;
+
+                //soundPlayer.PlayDownAttackEndSound();
+
+                //ironDownAttack = false;
+
+                downEnd = true;
+                if (!ironDownAtkEffect.gameObject.activeSelf)
+                {
+                    ironDownAtkEffect.gameObject.SetActive(true);
+                    ironDownAtkEffect.Play();
+                }
+            }
+        }
+    }
+
+    #region 변신 2형태에 대한 처리
+    public void SecondFormActive()
+    {
+        Destroy(Instantiate(changeEffect, transform.position, Quaternion.identity), 2f);
+        for (int i = 0; i < Humonoidanimator.transform.childCount; i++)
+        {
+            Humonoidanimator.transform.GetChild(i).gameObject.SetActive(false);
+        }
+        ironSecondForm.SetActive(true);
+    }
+
+    public void SecondFormDeactive()
+    {
+
+        Destroy(Instantiate(changeEffect, transform.position, Quaternion.identity), 2f);
+        for (int i = 0; i < Humonoidanimator.transform.childCount; i++)
+        {
+            Humonoidanimator.transform.GetChild(i).gameObject.SetActive(true);
+        }
+        ironSecondForm.SetActive(false);
+        meleeCollider.SetActive(false);
+    }
+    #endregion
+
+    #region 돌진 방향    
+
+    // XZ move 관련
+    float XZmoveRushHorizontal()
+    {
+        if (Input.GetKey(KeySettingManager.instance.rightKeycode) || hori >= 0.4f)
+        {
+            rushHori = 1;
+        }
+
+        if (Input.GetKey(KeySettingManager.instance.leftKeycode) || hori < -0.4f)
+        {
+            rushHori = -1;
+        }
+
+        if ((!Input.GetKey(KeySettingManager.instance.leftKeycode) && !Input.GetKey(KeySettingManager.instance.rightKeycode)) && hori == 0)
+        {
+            if ((Input.GetKey(KeySettingManager.instance.upKeycode) || Vert >= 0.4f) || (Input.GetKey(KeySettingManager.instance.downKeycode) || Vert < -0.4f))
+            {
+                rushHori = 0;
+            }
+        }
+
+        return rushHori;
+    }
+
+    float XZmoveRushVertical()
+    {
+        if (Input.GetKey(KeySettingManager.instance.upKeycode) || Vert >= 0.4f)
+        {
+            rushVert = 1;
+        }
+
+        if (Input.GetKey(KeySettingManager.instance.downKeycode) || Vert < -0.4f)
+        {
+            rushVert = -1;
+        }
+
+        if ((!Input.GetKey(KeySettingManager.instance.upKeycode) && !Input.GetKey(KeySettingManager.instance.downKeycode)) /*&& Vert ==0*/)
+        {
+            if ((Input.GetKey(KeySettingManager.instance.rightKeycode) || hori >= 0.4f) || (Input.GetKey(KeySettingManager.instance.leftKeycode) || hori < -0.4f))
+            {
+                rushVert = 0;
+            }
+        }
+
+        return rushVert;
+    }
+
+    // ZX move 관련
+    public void ZXmoveRushHorizontal()
+    {
+        if (Input.GetKey(KeySettingManager.instance.upKeycode) || hori >= 0.4f)
+        {
+            rushHori = 1;
+        }
+
+        if (Input.GetKey(KeySettingManager.instance.downKeycode) || hori < -0.4f)
+        {
+            rushHori = -1;
+        }
+
+        if ((!Input.GetKey(KeySettingManager.instance.upKeycode) && !Input.GetKey(KeySettingManager.instance.downKeycode) && hori == 0))
+        {
+            if ((Input.GetKey(KeySettingManager.instance.rightKeycode) || Vert >= 0.4f) || (Input.GetKey(KeySettingManager.instance.leftKeycode) || Vert < -0.4f))
+            {
+                rushHori = 0;
+            }
+        }
+    }
+
+    public void ZXmoveRushVertical()
+    {
+        if (Input.GetKey(KeySettingManager.instance.rightKeycode) || Vert < -0.4f)
+        {
+            rushVert = -1;
+        }
+
+        if (Input.GetKey(KeySettingManager.instance.leftKeycode) || Vert >= 0.4f)
+        {
+            rushVert = 1;
+        }
+
+        if ((!Input.GetKey(KeySettingManager.instance.rightKeycode) && !Input.GetKey(KeySettingManager.instance.leftKeycode) && Vert == 0))
+        {
+            if ((Input.GetKey(KeySettingManager.instance.upKeycode) || hori >= 0.4f) || (Input.GetKey(KeySettingManager.instance.downKeycode) || hori < -0.4f))
+            {
+                rushVert = 0;
+            }
+        }
+    }
+
+    public void XmoveRushHori()
+    {
+        if (Input.GetKey(KeySettingManager.instance.rightKeycode))
+        {
+            rushHori = 1;
+        }
+
+        if (Input.GetKey(KeySettingManager.instance.leftKeycode))
+        {
+            rushHori = -1;
+        }
+    }
+
+    public void ZmoveRushHori()
+    {
+        if (Input.GetKey(KeySettingManager.instance.upKeycode))
+        {
+            rushHori = 1;
+        }
+
+        if (Input.GetKey(KeySettingManager.instance.downKeycode))
+        {
+            rushHori = -1;
+        }
+    }
+
+    public void XmoveRushVert()
+    {
+        if (Input.GetKey(KeySettingManager.instance.upKeycode))
+        {
+            rushVert = 1;
+        }
+
+        if (Input.GetKey(KeySettingManager.instance.downKeycode))
+        {
+            rushVert = -1;
+        }
+    }
+
+    public void ZmoveRushVert()
+    {
+        if (Input.GetKey(KeySettingManager.instance.rightKeycode) || Vert >= 0.4f)
+        {
+            rushVert = 1;
+        }
+
+        if (Input.GetKey(KeySettingManager.instance.leftKeycode) || Vert < -0.4f)
+        {
+            rushVert = -1;
+        }
+    }
+    #endregion
+}

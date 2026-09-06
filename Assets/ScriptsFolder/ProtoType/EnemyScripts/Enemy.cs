@@ -441,13 +441,15 @@ public class Enemy: Character,DamagedByPAttack,environmentObject
     
     [Header("경직 시간")] 
     [Range(0, 2)]public float stunTime;
-    
+
+    [Header("(디버그,포폴)피격대미지계수증가")]
+    private float HittedDamageNumber=5;
     public override void Damaged(float damage)
     {
         base.Damaged(damage);
         if (corutine != null)
             StopCoroutine(corutine);
-        eStat.hp -= damage;
+        eStat.hp -= damage* HittedDamageNumber;
         stopBlinkCorutine();
         if (mae.hittedEffect != null)
         {

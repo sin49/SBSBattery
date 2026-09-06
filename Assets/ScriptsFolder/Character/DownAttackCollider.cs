@@ -1,0 +1,112 @@
+using UnityEngine;
+
+public class DownAttackCollider : MeleeCollider
+{
+
+   protected override void Start()
+    {
+        saveEffect = Instantiate(hitEffect).GetComponent<ParticleSystem>();
+        damage = PlayerStat.instance.atk;
+        gameObject.SetActive(false);
+    }
+    protected override void Update()
+    {
+        
+    }
+    public void DeactiveCollider()
+    {
+        Debug.Log("내려찍기 비활성화 실행");
+        this.gameObject.SetActive(false);
+    }
+    protected override void OnTriggerEnter(Collider other)
+    {
+        if (
+                (int)PlayerStat.instance.MoveState >= 4)
+        {
+            if (other.CompareTag("Enemy"))
+            {
+                Debug.Log("몬스터 확인");
+                //DamageCollider(other);
+                DamagedByPAttack script;
+                if (other.TryGetComponent<DamagedByPAttack>(out script))
+                {
+                    if (GetComponentInParent<HouseholdIronTransform>())
+                    {
+                        HouseholdIronTransform iron = GetComponentInParent<HouseholdIronTransform>();
+                        other.GetComponent<Enemy>().FlatByIronDwonAttack(iron.flatTime);
+                        CheckMonster(other);
+                    }
+                    script.Damaged(damage);
+                    Debug.Log("몬스터 Damage받음");
+                    DeactiveCollider();
+                }
+
+                //saveEffect.transform.position = new(other.transform.position.x, other.transform.position.y + .5f, other.transform.position.z);
+                //saveEffect.Play();
+
+            }
+
+
+            if (other.CompareTag("Ground"))
+            {
+                //Debug.Log("그라운드");
+                TransformPlace transformPlace;
+                if (other.TryGetComponent<TransformPlace>(out transformPlace))
+                {
+                    Debug.Log("트랜스폼오브젝트 탐지");
+                    transformPlace.transformStart(PlayerHandler.instance.CurrentPlayer.gameObject);
+                    //PlayerHandler.instance.CurrentPlayer.onTransform = true;
+                    DeactiveCollider();
+                }
+                else
+                {
+                    BrokenPlatform brokenPlatform;
+                    ObjectScale ironInteract;
+                    if (other.TryGetComponent<BrokenPlatform>(out brokenPlatform))
+                    {
+                        Debug.Log("부서지는 플랫폼");
+                        PlayerHandler.instance.CurrentPlayer.BounceByBroeknPlatform();
+                    }
+                    else if (TryGetComponent<ObjectScale>(out ironInteract))
+                    {
+                        return;
+                    }
+                    //    DeactiveCollider();
+
+                }
+            }
+        }
+    }
+    #region 튕김 방향
+    public float DecideDirection()
+    {
+        float r = 0;
+        switch (PlayerStat.instance.direction)
+        {
+            case direction.Right:
+                r = -1;
+                break;
+            case direction.Left:
+                r = 1;
+                break;
+        }
+        return r;
+    }
+    #endregion
+
+    public void CheckMonster(Collider other)
+    {
+        fireenemy fireMonster;
+        if (other.TryGetComponent<fireenemy>(out fireMonster))
+        {
+            fireMonster.StopCoroutine();
+            ParticleSystem[] effects = fireMonster.fireeffects;
+            foreach (ParticleSystem fires in effects)
+            {
+                fires.gameObject.SetActive(false);
+            }
+            fireMonster.breathsmallcollider.gameObject.SetActive(false);
+            fireMonster.breathcollider.gameObject.SetActive(false);
+        }
+    }
+}
