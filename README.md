@@ -1,6 +1,15 @@
-배터리 프로젝트
+BattaBatta (2D/3D 하이브리드 액션 플랫포머)
 
-김규태 포트폴리오....
+ 개요
+2D와 3D 시점을 넘나드는 기믹이 특징인 하이브리드 플랫포머 게임으로, 2024 지스타(G-Star)에 출품되었으며 모바일 플랫폼으로 정식 출시된 프로젝트입니다
+메인 클라이언트 프로그래머로서 게임의 코어 아키텍처 설계와 최적화를 주도했으며, 기획 및 아트 직군과의 원활한 협업을 위해 유니티 Custom Editor와 Scriptable Object를 활용한 자체 데이터 파이프라인을 구축했습니다
+
+ 주요 기술 
+* Engine/Language: Unity, C#
+* Architecture: FSM(Finite State Machine), Observer Pattern (Event-Driven)
+* Optimization: Coroutine, Profiler
+* Tooling & Pipeline: Custom Editor, Scriptable Object, Cinemachine, Post-Processing, Git
+
 
 
 | 구분 | 파일명 (링크) | 담당 역할 및 핵심 기술 |
