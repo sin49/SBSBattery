@@ -30,8 +30,13 @@ public class CollisionisTriggerEvent : InputEvent
 
     private void Awake()
     {
+        if(targetcollider == null)
+        {
+            Debug.LogError("targetcollider is null");
+            return;
+        }
         isTriggerEventHandler b = null;
-        if (!b.TryGetComponent<isTriggerEventHandler>(out b))
+        if (!targetcollider.TryGetComponent<isTriggerEventHandler>(out b))
         {
             b = targetcollider.AddComponent<isTriggerEventHandler>();
         }
